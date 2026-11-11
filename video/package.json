@@ -1,0 +1,20 @@
+{
+  "name": "sf-promises-video",
+  "private": true,
+  "scripts": {
+    "data": "python3 make_data.py",
+    "studio": "npm run data && remotion studio src/index.ts",
+    "still": "npm run data && remotion still src/index.ts PromisesVideo out/frame.png --frame=",
+    "render": "npm run data && remotion render src/index.ts PromisesVideo out/promises.mp4 --muted"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.542",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.542"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

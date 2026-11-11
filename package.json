@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@ai-sdk/openai-compatible": "^3.0.90",
+    "@archildata/ai-sdk": "^0.0.24",
+    "@archildata/sqlite": "^0.0.24",
+    "ai": "^7.0.169",
+    "disk": "^1.12.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "promise_id": "P05",
+  "advocate_role": "broken_advocate",
+  "claims": [
+    {
+      "claim_text": "Plan abandoned July 2025, net gain 403, not 1,500",
+      "quote": "the plan was no longer the right approach",
+      "evidence_type": "count",
+      "source_file_path": "mocks/source_P05.md",
+      "source_hash": "7fb06d1c1d7fc6e8695a97595db5ffea020f6e6b02b4b53039916ed5a2fdb168",
+      "page_number": 1
+    }
+  ]
+}

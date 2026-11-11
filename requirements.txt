@@ -1,0 +1,5 @@
+archil
+requests
+httpx
+pdfplumber
+pytest

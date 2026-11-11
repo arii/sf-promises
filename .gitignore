@@ -1,0 +1,7 @@
+.env
+node_modules/
+__pycache__/
+*.db
+video/node_modules/
+video/out/
+video/public/rec/

@@ -1,0 +1,22 @@
+{
+  "promise_id": "P02",
+  "advocate_role": "kept_advocate",
+  "claims": [
+    {
+      "claim_text": "Center opened at 822 Geary, accepting clients April 28",
+      "quote": "will begin accepting clients on April 28",
+      "evidence_type": "opening",
+      "source_file_path": "mocks/source_P02.md",
+      "source_hash": "0e21c3a121055bf49d7642f04a58f04ca8bc6562d72c9939178c0bcd2ad42e1c",
+      "page_number": 1
+    },
+    {
+      "claim_text": "Construction completed April 2025",
+      "quote": "Construction began at the end of February 2024 and was completed in April 2025",
+      "evidence_type": "opening",
+      "source_file_path": "mocks/source_P02.md",
+      "source_hash": "0e21c3a121055bf49d7642f04a58f04ca8bc6562d72c9939178c0bcd2ad42e1c",
+      "page_number": 1
+    }
+  ]
+}

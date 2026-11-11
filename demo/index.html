@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: dark;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f1a26">
+  <title>SF Promises</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="shell">
+    <!-- Topbar with Brand Mark and GitHub Link -->
+    <header class="topbar">
+      <a href="#top" class="brand" aria-label="SF Promises — top">
+        <span class="brand-mark">SF</span>
+        <span>SF Promises</span>
+      </a>
+      <div class="topbar-right">
+        <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" class="github-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>arii/sf-promises ↗</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- Hero Section -->
+      <section class="hero" id="top">
+        <p class="kicker">THE RECORD OF OUR CITY · SAN FRANCISCO</p>
+        <h1>SF Promises</h1>
+        <p class="promise-line">From mayoral pledges at City Hall to the Valkyries packing Chase Center, Dead &amp; Company in Golden Gate Park, Waymo on our streets, and affordable homes rising at Mission Rock — SF Promises tracks commitments across all of San Francisco.</p>
+
+        <!-- Live SQLite Tally Box -->
+        <div class="tally-card" aria-label="Database Status">
+          <div class="tally-hero-line" id="tally-hero-line">
+            <span class="tally-item total"><strong id="tally-total">62</strong> tracked promises</span>
+            <span class="tally-sep" aria-hidden="true">·</span>
+            <span class="tally-item"><span class="dot-status dot-kept" aria-hidden="true"></span> <strong id="tally-kept">26</strong> kept</span>
+            <span class="tally-sep" aria-hidden="true">·</span>
+            <span class="tally-item"><span class="dot-status dot-in_progress" aria-hidden="true"></span> <strong id="tally-progress">11</strong> in progress</span>
+            <span class="tally-sep" aria-hidden="true">·</span>
+            <span class="tally-item"><span class="dot-status dot-broken" aria-hidden="true"></span> <strong id="tally-broken">21</strong> broken</span>
+            <span class="tally-sep" id="tally-sep-stalled" aria-hidden="true" style="display: none;">·</span>
+            <span class="tally-item" id="tally-item-stalled" style="display: none;"><span class="dot-status dot-stalled" aria-hidden="true"></span> <strong id="tally-stalled">0</strong> stalled</span>
+            <span class="tally-sep" aria-hidden="true">·</span>
+            <span class="tally-item"><span class="dot-status dot-undecided" aria-hidden="true"></span> <strong id="tally-undecided">4</strong> undecided</span>
+          </div>
+          <div class="tally-subline">
+            <span><strong>Reconciliation:</strong> <span class="recon-counts">…</span></span>
+            <span class="tally-sep" aria-hidden="true">·</span>
+            <span><strong>Deterministic Verification:</strong> 0 model calls in Arbitrator (100% code checks)</span>
+          </div>
+          <div class="snapshot-banner font-mono" id="snapshot-banner" style="margin-top: 10px; font-size: 0.8rem; opacity: 0.85;">
+            Snapshot generated Nov 10, 2026 from verified SQLite database (commit cde0e2f) · Live from Archil
+          </div>
+        </div>
+      </section>
+
+      <!-- SF SHOWCASE: ACROSS THE CITY (Interactive City Spectrum) -->
+      <section class="sf-showcase-section" id="sf-showcase" aria-label="Across San Francisco">
+        <div class="showcase-header">
+          <p class="kicker">ACROSS OUR CITY · SPORTS, CULTURE, TRANSIT, NEIGHBORHOODS</p>
+          <h2>Civic accountability across all of San Francisco</h2>
+          <p class="showcase-lead">
+            Promises in San Francisco belong to the whole city. Select an iconic commitment below to inspect its record, evidence, and provenance:
+          </p>
+        </div>
+
+        <!-- 5 Iconic Showcase Tabs -->
+        <div class="showcase-tabs-bar" role="tablist" id="showcase-tabs-bar">
+          <button type="button" class="showcase-tab-btn active" data-showcase-id="P02" role="tab" aria-selected="true" title="Mayor Daniel Lurie: 24/7 Crisis Stabilization Center at 822 Geary St">
+            <span class="showcase-tab-icon">🏛️</span>
+            <div class="showcase-tab-info">
+              <span class="showcase-tab-tag">Tenderloin · 822 Geary</span>
+              <span class="showcase-tab-name">Mayor Lurie: 24/7 Crisis Center</span>
+            </div>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-showcase-id="P04" role="tab" aria-selected="false" title="Golden State Valkyries: Chase Center Inaugural Season Attendance">
+            <span class="showcase-tab-icon">🏀</span>
+            <div class="showcase-tab-info">
+              <span class="showcase-tab-tag">Mission Bay · Chase Center</span>
+              <span class="showcase-tab-name">Valkyries: Lead WNBA Attendance</span>
+            </div>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-showcase-id="P11" role="tab" aria-selected="false" title="Dead & Company: Farewell Tour Oracle Park Finale">
+            <span class="showcase-tab-icon">🎸</span>
+            <div class="showcase-tab-info">
+              <span class="showcase-tab-tag">Haight &amp; Golden Gate Park</span>
+              <span class="showcase-tab-name">Dead &amp; Co: Final Career Tour</span>
+            </div>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-showcase-id="P10" role="tab" aria-selected="false" title="SF Giants: Mission Rock 40% Affordable Housing Target">
+            <span class="showcase-tab-icon">⚾</span>
+            <div class="showcase-tab-info">
+              <span class="showcase-tab-tag">South Beach · Oracle Park</span>
+              <span class="showcase-tab-name">SF Giants: 40% Affordable Homes</span>
+            </div>
+          </button>
+          <button type="button" class="showcase-tab-btn" data-showcase-id="P21" role="tab" aria-selected="false" title="City of San Francisco: Car-Free JFK Drive Promenade in Golden Gate Park">
+            <span class="showcase-tab-icon">🛴</span>
+            <div class="showcase-tab-info">
+              <span class="showcase-tab-tag">Golden Gate Park</span>
+              <span class="showcase-tab-name">JFK Drive: Car-Free Promenade</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Dynamic Featured Showcase Display Card -->
+        <div class="showcase-card" id="showcase-card-display" style="--card-accent: var(--kept);">
+          <div class="showcase-card-header">
+            <div class="showcase-badges">
+              <span class="promise-id-badge font-mono" id="sc-badge-id">P02</span>
+              <span class="verdict-chip kept" id="sc-badge-verdict">KEPT</span>
+              <span class="domain-pill" id="sc-domain-pill">🏛️ Civic &amp; Public Safety</span>
+              <span class="neighborhood-pill" id="sc-neighborhood-pill">Tenderloin (822 Geary St)</span>
+            </div>
+            <button type="button" class="btn-inspect-modal" id="btn-showcase-inspect">
+              Inspect Provenance &amp; All Bundles &rarr;
+            </button>
+          </div>
+
+          <blockquote class="showcase-quote" id="sc-quote-text">
+            “That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,”
+          </blockquote>
+
+          <div class="showcase-meta-grid">
+            <div class="meta-field-item">
+              <span class="meta-field-label">Entity &amp; Role</span>
+              <span class="meta-field-val" id="sc-meta-entity">Mayor Daniel Lurie (Mayor of San Francisco)</span>
+            </div>
+            <div class="meta-field-item">
+              <span class="meta-field-label">Promised Date</span>
+              <span class="meta-field-val font-mono" id="sc-meta-promised">Jan 7, 2025</span>
+            </div>
+            <div class="meta-field-item">
+              <span class="meta-field-label">Due Date</span>
+              <span class="meta-field-val font-mono" id="sc-meta-due">May 1, 2025</span>
+            </div>
+            <div class="meta-field-item">
+              <span class="meta-field-label">Opened / Realized</span>
+              <span class="meta-field-val font-mono" id="sc-meta-opened" style="color: #A7F3D0; font-weight: 700;">April 28, 2025</span>
+            </div>
+            <div class="meta-field-item">
+              <span class="meta-field-label">Relevance Gate</span>
+              <span class="meta-field-val" id="sc-meta-rel">
+                <span class="badge-verified">✓ Verified</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="showcase-evidence-box">
+            <div>
+              <span style="color: var(--muted); margin-right: 6px;">Primary Evidence:</span>
+              <span class="evidence-fact-text" id="sc-evidence-fact">16-bed 24/7 crisis stabilization center opened April 28, 2025 at 822 Geary St.</span>
+            </div>
+            <div class="evidence-source-row" style="padding-top: 0; border-top: none;">
+              <a href="https://www.sfpublicworkstv.org/april2025" target="_blank" rel="noopener noreferrer" class="source-url-link" id="sc-source-link">
+                www.sfpublicworkstv.org/april2025
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 01: 6-STAGE INTERACTIVE VERIFICATION PIPELINE ANIMATION -->
+      <!-- Modeled directly from Sf-Promises-Pipeline-Animation.html -->
+      <section class="pipeline-interactive-section" id="pipeline-interactive" aria-label="Pipeline Live Demonstration">
+        <div class="pipeline-header">
+          <p class="kicker">01 — HOW DATA MOVES &amp; AGENT ARCHITECTURE</p>
+          <h2>One promise, checked in the open.</h2>
+          <p class="pipeline-lead">Follow the record from a public document to a decision across four sandboxes (A, B, C, D) running as separated processes. Models draft in parallel; only Arbitrator code can write to the verified database.</p>
+          <div class="saved-run-banner" role="note" aria-label="Saved run notice" style="margin-top: 12px; padding: 10px 16px; border-radius: 8px; background: rgba(245, 158, 11, 0.14); border: 2px solid #F59E0B; color: #FDE68A; font-weight: 800; font-size: 0.95rem; letter-spacing: 0.02em; text-align: center;">SAVED RUN — replay of verified pipeline run, not live execution</div>
+        </div>
+
+        <!-- Pipeline Controls Bar -->
+        <div class="pipeline-actions-row">
+          <label class="run-select-label font-mono" for="run-select">REPLAY</label>
+          <select id="run-select" class="run-select" aria-label="Choose a promise to replay through the pipeline"></select>
+          <button type="button" class="btn-play-action btn-primary-filled" id="btn-run-selected" title="Play the selected run through all 6 stages">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Play</span>
+          </button>
+          <button type="button" class="btn-play-action btn-step-advance" id="btn-step-next">
+            <span>Next Stage &rarr;</span>
+          </button>
+          <button type="button" class="btn-play-action btn-pipeline-reset-pill" id="btn-pipeline-reset">
+            <span>Reset ↺</span>
+          </button>
+        </div>
+
+        <!-- Packet Transit Card (Unified Progress Tracker) -->
+        <div class="packet-transit-card">
+          <div class="packet-transit-header font-mono">
+            <span class="packet-label" id="pipeline-stage-indicator">STAGE 0 / 6 &nbsp;·&nbsp; READY TO RUN</span>
+            <span class="packet-status-text" id="packet-status-text">waiting to start</span>
+          </div>
+
+          <!-- The Transit Track Line with 6 Milestones -->
+          <div class="packet-track-container">
+            <div class="packet-track-bg-line"></div>
+            <div class="packet-track-fill-line" id="packet-track-fill" style="width: 0%;"></div>
+            
+            <div class="packet-milestones-row">
+              <div class="milestone-node">
+                <div class="milestone-circle" id="ms-circle-1">1</div>
+              </div>
+              <div class="milestone-node">
+                <div class="milestone-circle" id="ms-circle-2">2</div>
+              </div>
+              <div class="milestone-node">
+                <div class="milestone-circle" id="ms-circle-3">3</div>
+              </div>
+              <div class="milestone-node">
+                <div class="milestone-circle" id="ms-circle-4">4</div>
+              </div>
+              <div class="milestone-node">
+                <div class="milestone-circle" id="ms-circle-5">5</div>
+              </div>
+              <div class="milestone-node">
+                <div class="milestone-circle" id="ms-circle-6">6</div>
+              </div>
+            </div>
+
+            <!-- Pulsing Moving Packet Ball -->
+            <div class="packet-ball-dot" id="packet-ball-dot" style="left: 0%;">
+              <div class="packet-ball-inner" id="packet-ball-inner"></div>
+            </div>
+          </div>
+
+          <div class="milestone-labels-row font-mono">
+            <span>Fetch</span>
+            <span>Extract</span>
+            <span>Gate</span>
+            <span>Advocates</span>
+            <span>Arbitrator</span>
+            <span>Output</span>
+          </div>
+        </div>
+
+        <!-- THE 6 STAGE CARDS GRID (Col Spans: 4, 4, 4, 12, 7, 5) -->
+        <div class="pipeline-6stages-grid">
+          <!-- Stage 1: Fetch -->
+          <section class="stage-card span-4" id="stage-card-1">
+            <div class="stage-card-header">
+              <div class="stage-title-group">
+                <span class="stage-num-badge blue">1</span>
+                <h3 class="stage-heading">Fetch</h3>
+              </div>
+              <span class="stage-state-pill font-mono" id="stage-badge-1">IDLE</span>
+            </div>
+            <p class="stage-lead-text">Download original document. Cryptographically verified before processing.</p>
+            <div class="source-file-terminal" style="background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px;">
+              <div class="source-clean-row">
+                <a href="https://www.sfpublicworkstv.org/april2025" target="_blank" rel="noopener noreferrer" class="source-clean-link" id="stage1-source-url">Saved source: sfpublicworkstv.org/april2025 ↗</a>
+                <span class="badge-verified-subtle font-mono" id="stage1-hash-match" style="display: none;">SHA-256 Verified</span>
+              </div>
+              <div class="source-fetch-bar" style="margin-top: 10px;">
+                <div class="source-fetch-fill" id="stage1-fetch-fill"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Stage 2: Extract -->
+          <section class="stage-card span-4" id="stage-card-2">
+            <div class="stage-card-header">
+              <div class="stage-title-group">
+                <span class="stage-num-badge yellow">2</span>
+                <h3 class="stage-heading">Extract</h3>
+              </div>
+              <span class="stage-state-pill font-mono" id="stage-badge-2">Model drafts</span>
+            </div>
+            <p class="stage-lead-text">Copy the promise word-for-word. No paraphrase, no fixing.</p>
+            <div class="extract-quote-box">
+              <div class="font-mono" style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.5); text-transform: uppercase;">Verbatim Quote</div>
+              <div class="verbatim-quote-text" id="stage2-quote-content">
+                “That’s exactly what this 24/7 police-friendly stabilization center will be...”
+              </div>
+              <div style="display: flex; gap: 8px; font-size: 0.72rem; margin-top: 8px;" class="font-mono">
+                <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">Speaker: Mayor</span>
+                <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">Date: 2025-01-07</span>
+              </div>
+              <div class="flash-warning-box" id="stage2-flash-box" style="display: none; margin-top: 8px;">
+                ⚠ FLASH: “shelter units” was altered in the draft. Original said “1,500 new shelter beds”. Flagged for Arbitrator.
+              </div>
+            </div>
+          </section>
+
+          <!-- Stage 3: Relevance Gate -->
+          <section class="stage-card span-4" id="stage-card-3">
+            <div class="stage-card-header">
+              <div class="stage-title-group">
+                <span class="stage-num-badge green">3</span>
+                <h3 class="stage-heading">Relevance Gate</h3>
+              </div>
+              <span class="stage-state-pill font-mono" id="stage-badge-3" style="background: rgba(16, 185, 129, 0.2); color: #A7F3D0;">Sandbox D</span>
+            </div>
+            <p class="stage-lead-text">Evaluates 4 spec criteria: real promise, measurable, SF relevant, interesting.</p>
+            <div class="relevance-collapsed-card" style="background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px;">
+              <div class="relevance-score-hero">
+                <span class="relevance-hero-score font-mono" id="stage3-score-total">8 / 8</span>
+                <span class="badge-verified" id="stage3-score-badge">✓ Gate Passed</span>
+              </div>
+              <div class="relevance-hero-track">
+                <div class="relevance-hero-fill" id="stage3-score-fill" style="width: 100%;"></div>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-top: 8px;" id="stage3-criteria-summary">
+                Criteria: real_promise (2/2) · measurable (2/2) · sf_relevant (2/2) · interesting: concrete address/metric (2/2)
+              </div>
+            </div>
+          </section>
+
+          <!-- Stage 4: Dual Advocates (Full Width Span 12) -->
+          <section class="stage-card span-12" id="stage-card-4">
+            <div class="stage-card-header">
+              <div class="stage-title-group">
+                <span class="stage-num-badge purple">4</span>
+                <h3 class="stage-heading">Dual Advocates</h3>
+              </div>
+              <span class="stage-state-pill font-mono">Sandboxes A &amp; B</span>
+            </div>
+
+            <div class="advocates-split-grid">
+              <!-- Sandbox A: Kept Advocate -->
+              <div class="advocate-sub-box" id="adv-box-kept">
+                <div class="advocate-sub-header">
+                  <span class="stage-state-pill font-mono" style="background: rgba(16, 185, 129, 0.2); color: #A7F3D0;">SANDBOX A</span>
+                  <span class="font-mono font-bold" id="adv-status-kept" style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.4);">WAITING</span>
+                </div>
+                <h4 style="color: #A7F3D0; margin: 6px 0 2px; font-size: 1.05rem;">Kept Advocate</h4>
+                <p style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.6); margin: 0 0 10px;">Affirming sources only — argue it should stay.</p>
+                <div class="extract-quote-box" id="adv-findings-kept" style="min-height: 60px; font-size: 0.82rem; line-height: 1.45;">
+                  <span style="color: rgba(255, 255, 255, 0.35);">Waiting for gate to open…</span>
+                </div>
+                <div class="bouncing-dots-row" id="adv-dots-kept">
+                  <span class="bounce-dot"></span>
+                  <span class="bounce-dot"></span>
+                  <span class="bounce-dot"></span>
+                  <span class="bounce-dot"></span>
+                  <span class="bounce-dot"></span>
+                </div>
+              </div>
+
+              <!-- Glowing Center Barrier -->
+              <div class="isolation-divider-center">
+                <div class="divider-glow-line"></div>
+                <div class="isolation-lock-pill font-mono">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <span>SEPARATED<br>CANNOT SEE<br>EACH OTHER</span>
+                </div>
+                <div class="divider-glow-line"></div>
+              </div>
+
+              <!-- Sandbox B: Broken Advocate -->
+              <div class="advocate-sub-box" id="adv-box-broken">
+                <div class="advocate-sub-header">
+                  <span class="stage-state-pill font-mono" style="background: rgba(239, 68, 68, 0.2); color: #FCA5A5;">SANDBOX B</span>
+                  <span class="font-mono font-bold" id="adv-status-broken" style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.4);">WAITING</span>
+                </div>
+                <h4 style="color: #FCA5A5; margin: 6px 0 2px; font-size: 1.05rem;">Broken Advocate</h4>
+                <p style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.6); margin: 0 0 10px;">Contradicting sources only — argue it should fall.</p>
+                <div class="extract-quote-box" id="adv-findings-broken" style="min-height: 60px; font-size: 0.82rem; line-height: 1.45;">
+                  <span style="color: rgba(255, 255, 255, 0.35);">Waiting for gate to open…</span>
+                </div>
+                <div class="bouncing-dots-row" id="adv-dots-broken">
+                  <span class="bounce-dot"></span>
+                  <span class="bounce-dot"></span>
+                  <span class="bounce-dot"></span>
+                  <span class="bounce-dot"></span>
+                  <span class="bounce-dot"></span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Stage 5: Arbitrator (Span 7) -->
+          <section class="stage-card span-7" id="stage-card-5">
+            <div class="stage-card-header">
+              <div class="stage-title-group">
+                <span class="stage-num-badge purple">5</span>
+                <h3 class="stage-heading">Arbitrator</h3>
+              </div>
+              <span class="stage-state-pill font-mono" style="background: #8B5CF6; color: #fff; font-weight: 900;">SANDBOX C · CODE, 0 MODEL CALLS</span>
+            </div>
+            <p class="stage-lead-text">No guessing. Code re-checks everything the advocates claimed.</p>
+
+            <div class="arbitrator-check-rows">
+              <div class="arb-check-item" id="check-row-domain">
+                <span class="arb-check-circle" id="circle-check-domain">1</span>
+                <div>
+                  <div class="arb-check-name">Domain Allowlist <span id="tag-check-domain" style="display: none; color: #10B981;">PASS</span></div>
+                  <div class="arb-check-desc">Allowlist: 30+ official + vetted news domains (checks.py)</div>
+                </div>
+              </div>
+              <div class="arb-check-item" id="check-row-hash">
+                <span class="arb-check-circle" id="circle-check-hash">2</span>
+                <div>
+                  <div class="arb-check-name">Hash Integrity <span id="tag-check-hash" style="display: none; color: #10B981;">PASS</span></div>
+                  <div class="arb-check-desc">Re-check saved bytes against recorded SHA-256</div>
+                </div>
+              </div>
+              <div class="arb-check-item" id="check-row-quote">
+                <span class="arb-check-circle" id="circle-check-quote">3</span>
+                <div>
+                  <div class="arb-check-name">Exact Quote Match <span id="tag-check-quote" style="display: none; color: #10B981;">PASS</span></div>
+                  <div class="arb-check-desc">Exact substring character check in saved file</div>
+                </div>
+              </div>
+              <div class="arb-check-item" id="check-row-speaker">
+                <span class="arb-check-circle" id="circle-check-speaker">4</span>
+                <div>
+                  <div class="arb-check-name">Speaker Attendance <span id="tag-check-speaker" style="display: none; color: #10B981;">PASS</span></div>
+                  <div class="arb-check-desc" id="check-desc-speaker">n/a, not a minutes source (named in text)</div>
+                </div>
+              </div>
+              <div class="arb-check-item" id="check-row-date">
+                <span class="arb-check-circle" id="circle-check-date">5</span>
+                <div>
+                  <div class="arb-check-name">Date Window <span id="tag-check-date" style="display: none; color: #10B981;">PASS</span></div>
+                  <div class="arb-check-desc">Evidence date consistent with promise window</div>
+                </div>
+              </div>
+              <div class="arb-check-item" id="check-row-evidence">
+                <span class="arb-check-circle" id="circle-check-evidence">6</span>
+                <div>
+                  <div class="arb-check-name">Evidence Type <span id="tag-check-evidence" style="display: none; color: #10B981;">PASS</span></div>
+                  <div class="arb-check-desc">Evidence type tierable by rubric</div>
+                </div>
+              </div>
+              <div class="arb-check-item" id="check-row-rubric">
+                <span class="arb-check-circle" id="circle-check-rubric">7</span>
+                <div>
+                  <div class="arb-check-name">Verdict Rubric <span id="tag-check-rubric" style="display: none; color: #10B981;">PASS</span></div>
+                  <div class="arb-check-desc" id="check-desc-rubric">Deterministic rubric maps passing claims &rarr; verdict</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flash-warning-box" id="arb-divert-alert" style="display: none; margin-top: 10px;">
+              ⚠ Exact Quote Match failed — quote does not match source. Stopping. Packet diverts to quarantine.
+            </div>
+          </section>
+
+          <!-- Stage 6: Output with Stamp (Span 5) -->
+          <section class="stage-card span-5" id="stage-card-6">
+            <div class="stage-card-header">
+              <div class="stage-title-group">
+                <span class="stage-num-badge white">6</span>
+                <h3 class="stage-heading">Output</h3>
+              </div>
+              <span class="stage-state-pill font-mono" id="stage-badge-6">WAITING</span>
+            </div>
+
+            <!-- Waiting state before Stage 6 -->
+            <div class="output-waiting-state" id="output-waiting-container">
+              <div style="width: 52px; height: 52px; margin: 0 auto 12px; border-radius: 50%; border: 2px dashed rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
+              </div>
+              <p style="margin: 0; font-size: 0.88rem; color: rgba(255, 255, 255, 0.65);">
+                Waiting for Arbitrator…<br>Nothing is published before this step.
+              </p>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; text-align: left; opacity: 0.6;">
+                <div style="border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 8px 10px;">
+                  <div style="color: #A7F3D0; font-size: 0.72rem; font-weight: 700;">✓ PROMISES</div>
+                  <div style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.5);">Public table</div>
+                </div>
+                <div style="border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 8px 10px;">
+                  <div style="color: #FDE68A; font-size: 0.72rem; font-weight: 700;">⚠ QUARANTINED</div>
+                  <div style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.5);">Held for review</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 6: Outcome for P02 (Kept Stamp) -->
+            <div id="output-kept-result" style="display: none;">
+              <div class="stamp-box-container">
+                <div class="stamp-kept font-mono">KEPT ✓</div>
+                <div class="stamp-caption kept-color font-mono">ARBITRATOR SIGNED · 7 / 7 CHECKS PASS</div>
+              </div>
+              <div class="destination-result-card kept-style">
+                <div style="font-weight: 900; color: #A7F3D0; display: flex; align-items: center; gap: 6px; font-size: 0.95rem;">
+                  <span>✓ Packet landed in promises table</span>
+                </div>
+                <p id="output-kept-desc" style="margin: 4px 0 8px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.75);"></p>
+                <div style="display: flex; gap: 6px; font-size: 0.72rem;" class="font-mono">
+                  <span style="background: #10B981; color: #071120; padding: 2px 8px; border-radius: 999px; font-weight: 900;">● IN TRACKER</span>
+                  <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">verified record</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 6: Outcome for non-kept recorded verdicts (filled from data) -->
+            <div id="output-verdict-result" style="display: none;">
+              <div class="stamp-box-container">
+                <div id="output-verdict-stamp" class="stamp-broken font-mono">BROKEN ✕</div>
+                <div id="output-verdict-caption" class="stamp-caption font-mono"></div>
+              </div>
+              <div class="destination-result-card" id="output-verdict-card">
+                <div style="font-weight: 900; display: flex; align-items: center; gap: 6px; font-size: 0.95rem;">
+                  <span id="output-verdict-headline"></span>
+                </div>
+                <p id="output-verdict-desc" style="margin: 4px 0 8px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.75);"></p>
+                <div style="display: flex; gap: 6px; font-size: 0.72rem;" class="font-mono">
+                  <span id="output-verdict-pill" style="padding: 2px 8px; border-radius: 999px; font-weight: 900;"></span>
+                  <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">recorded verdict</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 6: Outcome for N01 (Quarantined Stamp) -->
+            <div id="output-quarantine-result" style="display: none;">
+              <div class="stamp-box-container">
+                <div class="stamp-quarantined font-mono">QUARANTINED ⚠</div>
+                <div class="stamp-caption amber-color font-mono">ARBITRATOR BLOCKED · QUOTE CHECK FAILED</div>
+              </div>
+              <div class="destination-result-card quarantine-style">
+                <div style="font-weight: 900; color: #FDE68A; display: flex; align-items: center; gap: 6px; font-size: 0.95rem;">
+                  <span>⚠ Packet diverted down — not published</span>
+                </div>
+                <p style="margin: 4px 0 8px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.75);">
+                  <strong style="color: #fff;">Reason: Exact quote match failed.</strong> The extracted quote does not match the source file. Held for human review.
+                </p>
+                <div style="display: flex; gap: 6px; font-size: 0.72rem;" class="font-mono">
+                  <span style="background: #F59E0B; color: #1A1200; padding: 2px 8px; border-radius: 999px; font-weight: 900;">● HELD — NOT PUBLIC</span>
+                  <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">quarantine / watchdog test</span>
+                </div>
+              </div>
+              <div style="margin-top: 8px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); display: flex; align-items: center; gap: 6px;">
+                <span>↳ Diverted path shown — it never reaches the promises table.</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Why This Design Architecture Card -->
+        <div style="margin-top: 20px;">
+          <div class="why-design-card" style="max-width: 100%;">
+            <div class="why-design-title font-mono">WHY THIS DESIGN?</div>
+            <ul class="why-design-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 10px;">
+              <li>
+                <span style="color: #FACC15;">•</span>
+                <span><strong>Isolation prevents leakage:</strong> Parallel advocates in Sandbox A &amp; B cannot see or copy each other's work.</span>
+              </li>
+              <li>
+                <span style="color: #10B981;">•</span>
+                <span><strong>Determinism prevents drift:</strong> Models only draft in sandboxes; 100% Python code verifies and decides.</span>
+              </li>
+              <li>
+                <span style="color: #C4B5FD;">•</span>
+                <span><strong>Quarantine prevents harm:</strong> Any unverified or altered quote is immediately held in quarantine, never published.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- All Tracked Promises & Quarantine Registry Section -->
+      <section class="table-section" id="data-tables-section" aria-label="Data Tables">
+        <div class="tabs-container">
+          <div class="tab-buttons-group">
+            <button type="button" class="tab-nav-btn active" id="tab-btn-promises">
+              Tracked Promises <span class="tab-badge font-mono" id="tab-count-promises">62</span>
+            </button>
+            <button type="button" class="tab-nav-btn" id="tab-btn-quarantine">
+              Quarantine Registry <span class="tab-badge font-mono" id="tab-count-quarantine">12</span>
+            </button>
+          </div>
+          <div class="reconciliation-strip font-mono" style="font-size: 0.8rem; color: #E2E8F0; text-align: right;">
+            <span><strong>Status:</strong> <span class="recon-counts">…</span></span>
+            <br>
+            <span style="font-size: 0.75rem; color: var(--muted);">P-series = civic promises; S-series = secondary scrapes. ID gaps = quarantined or awaiting intake.</span>
+          </div>
+        </div>
+
+        <!-- Domain Filter Pills: Dynamically derived from SQLite Export -->
+        <div class="domain-filter-pills-bar" id="domain-pills-bar">
+          <button type="button" class="btn-domain-pill active" data-category="all" id="btn-domain-all">All of SF</button>
+          <button type="button" class="btn-domain-pill" data-category="Sports">🏀 Sports (4)</button>
+          <button type="button" class="btn-domain-pill" data-category="Culture &amp; Music">🎸 Culture &amp; Music (2)</button>
+          <button type="button" class="btn-domain-pill" data-category="Transit &amp; Streets">🛴 Transit &amp; Streets (12)</button>
+          <button type="button" class="btn-domain-pill" data-category="Housing &amp; Neighborhoods">🏘️ Housing &amp; Neighborhoods (15)</button>
+          <button type="button" class="btn-domain-pill" data-category="Civic &amp; Public Safety">🏛️ Civic Governance (18)</button>
+          <button type="button" class="btn-domain-pill" data-category="Environment &amp; Energy">⚡ Energy &amp; Climate (2)</button>
+          <button type="button" class="btn-domain-pill" data-category="Infrastructure &amp; Tech">🏗️ Infrastructure &amp; Tech (2)</button>
+          <button type="button" class="btn-domain-pill" data-category="Bay Area &amp; Regional">🌉 Bay Area &amp; Regional (7)</button>
+          <button type="button" class="btn-domain-pill" data-category="Uncategorized" style="display: none;">❓ Uncategorized (0)</button>
+        </div>
+
+        <!-- Filters Bar & Controls -->
+        <div class="filters-bar" id="filters-bar">
+          <div class="filter-group">
+            <label for="filter-entity">Entity</label>
+            <select id="filter-entity" class="filter-select">
+              <option value="all">All Entities</option>
+              <option value="politicians">Politicians</option>
+              <option value="city_government">City Government</option>
+              <option value="sports">Sports</option>
+              <option value="companies">Companies</option>
+              <option value="culture">Culture</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-verdict">Verdict</label>
+            <select id="filter-verdict" class="filter-select">
+              <option value="all">All Verdicts</option>
+              <option value="kept">Kept</option>
+              <option value="in_progress">In Progress</option>
+              <option value="broken">Broken</option>
+              <option value="stalled">Stalled</option>
+              <option value="undecided">Undecided</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-category">Category</label>
+            <select id="filter-category" class="filter-select">
+              <option value="all">All Categories</option>
+              <option value="Sports">🏀 Sports</option>
+              <option value="Culture &amp; Music">🎸 Culture &amp; Music</option>
+              <option value="Transit &amp; Streets">🛴 Transit &amp; Streets</option>
+              <option value="Housing &amp; Neighborhoods">🏘️ Housing &amp; Neighborhoods</option>
+              <option value="Civic &amp; Public Safety">🏛️ Civic &amp; Public Safety</option>
+              <option value="Environment &amp; Energy">⚡ Environment &amp; Energy</option>
+              <option value="Infrastructure &amp; Tech">🏗️ Infrastructure &amp; Tech</option>
+              <option value="Bay Area &amp; Regional">🌉 Bay Area &amp; Regional</option>
+              <option value="Uncategorized">❓ Uncategorized</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-sort">Sort</label>
+            <select id="filter-sort" class="filter-select font-mono">
+              <option value="default">Default (Promised Date)</option>
+              <option value="id_asc">ID (#01 &rarr; #87)</option>
+              <option value="date_desc">Date (Newest first)</option>
+              <option value="date_asc">Date (Oldest first)</option>
+              <option value="verdict">Verdict</option>
+              <option value="entity">Entity (A &rarr; Z)</option>
+            </select>
+          </div>
+
+          <input type="text" id="search-input" class="search-input" placeholder="Search by number, speaker, or keyword..." aria-label="Search promises">
+        </div>
+
+        <div class="table-results-status-bar font-mono" style="margin: -6px 0 12px; font-size: 0.82rem; color: #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+          <div>Showing <strong id="table-showing-count">62</strong> of <span id="table-total-count">62</span> commitments</div>
+          <div id="active-filter-indicator" style="font-size: 0.78rem; color: var(--blue);">Active: All commitments</div>
+        </div>
+
+        <!-- Table 1: Tracked Promises -->
+        <p class="font-mono" style="margin: 0 0 8px; font-size: 0.78rem; color: var(--muted);">Click any row to inspect its provenance &amp; evidence.</p>
+        <div class="data-table-container" id="promises-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Entity &amp; Neighborhood</th>
+                <th>Verbatim Promise Quote</th>
+                <th>Dates</th>
+                <th>Verdict</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="promises-table-body">
+              <!-- Dynamically populated from SQLite export -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table 2: Quarantine Registry (Planted Bad Examples N01-N12) -->
+        <div class="data-table-container hidden" id="quarantine-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Planted Test Case &amp; Defect</th>
+                <th>Failing Check</th>
+                <th>Arbitrator Reason for Rejection</th>
+                <th>Diverted To</th>
+              </tr>
+            </thead>
+            <tbody id="quarantine-table-body">
+              <!-- Dynamically populated from quarantined items -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 02: Built With & Inspired By Section -->
+      <section class="built-section" id="built-section" aria-label="Credits & Heritage">
+        <p class="kicker">02 — BUILT WITH + INSPIRED BY</p>
+        <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(2rem, 3.8vw, 2.7rem); margin: 4px 0 8px; font-weight: 600;">Standing on open work.</h2>
+
+        <div class="two-col-plain">
+          <div>
+            <h3>Built With</h3>
+            <ul class="plain-credits-list">
+              <li><strong>Archil Cloud Disks</strong> — Persistent disk + <span class="font-mono">/mnt/archil</span> mount. Infrastructure only: Lane A created the 20-table schema and the pipeline populated it.</li>
+              <li><strong>Keenable API</strong> — Web API called over HTTP for ranked search + page content. Never wrote a file or touched SQLite; "Fetched: keenable keyed" headers in 38 sources are provenance labels, not authorship.</li>
+              <li><strong>SF Legistar API</strong> — Board of Supervisors agendas, resolutions, and official votes.</li>
+              <li><strong>DataSF</strong> — 311 service tickets and operational civic signals.</li>
+              <li><strong>Granicus / Board Minutes</strong> — Primary official San Francisco meeting records and transcripts.</li>
+              <li><strong>Meta / Nebius Token Factory</strong> — Drafting only in sandboxes; 0 model calls in Arbitrator.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Inspired By</h3>
+            <ul class="plain-credits-list">
+              <li><a href="https://github.com/xternal/openpromises" target="_blank" rel="noopener"><strong>OpenPromises</strong></a> — Core verification principles and promise card validation.</li>
+              <li><a href="https://github.com/cluster2600/kept.vote" target="_blank" rel="noopener"><strong>kept.vote</strong></a> — Civic commitment accountability.</li>
+              <li><a href="https://councilhound.net" target="_blank" rel="noopener"><strong>CouncilHound</strong></a> — City council tracking.</li>
+              <li><a href="https://ken.promisetracker-v2.dev.codeforafrica.org" target="_blank" rel="noopener"><strong>PromiseTracker (Code for Africa)</strong></a> — Public promise tracking.</li>
+              <li><a href="https://councildataproject.org/" target="_blank" rel="noopener"><strong>Council Data Project</strong></a> — Open civic transcripts and voting records.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03: Limitations & next improvements (WRITEUP.md §4, audited Nov 11) -->
+      <section class="built-section" id="limitations" aria-label="Limitations and next improvements">
+        <p class="kicker">03 — LIMITATIONS &amp; NEXT IMPROVEMENTS</p>
+        <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 4px 0 8px; font-weight: 600;">What we'd improve next.</h2>
+        <p style="font-size: 0.9rem; color: var(--muted); margin: 0 0 12px; max-width: 70ch;">Independent re-runs match the stored verdicts everywhere the code governs — the gaps below are where humans still decide, and where the next rubric revision should go.</p>
+        <div class="two-col-plain">
+          <div>
+            <ul class="plain-credits-list">
+              <li><strong>No durability.</strong> A kept opening is never rechecked; later history (e.g. the P83 closure) never re-enters unless a person re-opens the case.</li>
+              <li><strong>Allowlist trade-off.</strong> Unlisted domains drop even primary sources, so a verdict can rest on a retrospective instead of the best source (<button type="button" class="case-ref-link" data-pid="P83">P83</button>).</li>
+              <li><strong>Negative promises.</strong> "Never do X again" forces proving an absence; the rubric has no absence handling (<button type="button" class="case-ref-link" data-pid="P11">P11</button>).</li>
+            </ul>
+          </div>
+          <div>
+            <ul class="plain-credits-list">
+              <li><strong>Framing disputes.</strong> Tiers measure source strength, not factual disagreement — agreed numbers with opposite framing punt to undecided (<button type="button" class="case-ref-link" data-pid="P64">P64</button>).</li>
+              <li><strong>Ambiguity can't win.</strong> Rule 7 sits below Rules 3–5, so live wording disputes are settled by a recorded human reading (<button type="button" class="case-ref-link" data-pid="P11">P11</button>).</li>
+              <li><strong>Re-opens are principles, not code.</strong> Corrections are append-only new rows, but the reasoning lives in notes, not in the rubric (<button type="button" class="case-ref-link" data-pid="P11">P11</button>, <button type="button" class="case-ref-link" data-pid="P64">P64</button>).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <span class="footer-brand-title">SF Promises — arii/sf-promises</span>
+        <span>Built by Ariel Anders · Archil AI Hackathon</span>
+      </div>
+      <div class="footer-links-group">
+        <a href="#pipeline-interactive" class="btn-footer-link">How It Works &uarr;</a>
+        <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" style="color: var(--blue);">GitHub ↗</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 4-PART PROVENANCE & VERIFICATION INSPECTION MODAL -->
+  <div class="modal-backdrop hidden" id="inspect-modal" role="dialog" aria-modal="true" aria-labelledby="modal-promise-title">
+    <div class="modal-dialog-large">
+      <div class="modal-header-bar">
+        <div class="modal-header-left">
+          <h2 id="modal-promise-title" class="font-mono">P02</h2>
+          <span class="verdict-chip kept" id="modal-verdict-chip">KEPT</span>
+          <span class="font-mono" id="modal-relevance-chip" style="font-size: 0.8rem; background: var(--line-soft); padding: 3px 8px; border-radius: 4px;">Relevance 8/8</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="btn-close-inspect" aria-label="Close modal">&times;</button>
+      </div>
+
+      <div class="modal-scrollable-body">
+        <!-- Part 1: Provenance Bundle -->
+        <div class="inspection-bundle-box">
+          <span class="bundle-title">Part 1: Provenance Bundle (Fingerprinted Document)</span>
+          <div class="bundle-flat-list">
+            <div class="flat-data-row">
+              <span class="flat-key-name">Source URL:</span>
+              <span class="flat-val-content">
+                <a href="https://www.sfpublicworkstv.org/april2025" target="_blank" rel="noopener noreferrer" id="modal-source-url">https://www.sfpublicworkstv.org/april2025</a>
+              </span>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">source_id:</span>
+              <span class="flat-val-content font-mono" id="modal-source-id">Se03acc33e8e1</span>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">SHA-256 Hash:</span>
+              <div class="flat-val-content font-mono" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span style="font-size: 0.8rem; word-break: break-all; color: #A7F3D0;" id="modal-full-hash">e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05</span>
+                <button type="button" class="btn-copy-hash" id="btn-copy-modal-hash" style="padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; background: rgba(255,255,255,0.12); border: 1px solid var(--line); color: var(--ink); cursor: pointer;">Copy</button>
+              </div>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">Saved File Path:</span>
+              <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: var(--muted);" id="modal-file-path">sources/e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05.md</span>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">Fetched At:</span>
+              <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: var(--muted);" id="modal-fetch-time">Loading…</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 2: Extracted Promise & Relevance Bundle -->
+        <div class="inspection-bundle-box">
+          <span class="bundle-title">Part 2: Extracted Promise &amp; Relevance Bundle</span>
+          <div class="bundle-flat-list">
+            <div class="flat-data-row">
+              <span class="flat-key-name">Verbatim Text:</span>
+              <blockquote class="flat-val-content" style="margin: 0; font-style: italic;">
+                <a id="modal-promise-quote-link" href="https://www.sfpublicworkstv.org/april2025" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.4);">
+                  <span id="modal-promise-text">“That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,”</span> ↗
+                </a>
+              </blockquote>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">Speaker &amp; Role:</span>
+              <span class="flat-val-content" id="modal-speaker">Mayor Daniel Lurie (Mayor of San Francisco)</span>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">Promised Date:</span>
+              <span class="flat-val-content font-mono" id="modal-promised-date">2025-01-07</span>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">Due Date:</span>
+              <span class="flat-val-content font-mono" id="modal-due-date">2025-05-01</span>
+            </div>
+            <div class="flat-data-row" id="modal-opened-row">
+              <span class="flat-key-name">Opened Date:</span>
+              <span class="flat-val-content font-mono" style="color: #A7F3D0; font-weight: 700;" id="modal-opened-date">2025-04-28</span>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">Relevance Gate:</span>
+              <span class="flat-val-content" id="modal-relevance-breakdown">8 / 8 (real_promise: 2, measurable: 2, sf_relevant: 2, interesting: 2) — Published through gate</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 3: Dual Advocate Bundles (Sandboxes A & B) -->
+        <div class="inspection-bundle-box">
+          <span class="bundle-title">Part 3: Dual Advocate Bundles (Sandboxes A &amp; B)</span>
+          <div class="advocates-modal-grid">
+            <div class="advocate-bundle-half" style="border-top: 3px solid var(--kept);">
+              <h4 style="color: var(--kept);">Kept Advocate (Sandbox A)</h4>
+              <p style="font-size: 0.82rem; color: var(--muted); margin: 0 0 6px;">File: <code id="modal-kept-file">…</code></p>
+              <div id="modal-kept-claims-list">
+                <p style="font-size: 0.85rem; color: var(--muted); font-style: italic;">Loading…</p>
+              </div>
+            </div>
+
+            <div class="advocate-bundle-half" style="border-top: 3px solid var(--broken);">
+              <h4 style="color: var(--broken);">Broken Advocate (Sandbox B)</h4>
+              <p style="font-size: 0.82rem; color: var(--muted); margin: 0 0 6px;">File: <code id="modal-broken-file">…</code></p>
+              <div id="modal-broken-claims-list">
+                <p style="font-size: 0.85rem; color: var(--muted); font-style: italic;">Loading…</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Part 4: Arbitrator Reasoning & 7 Deterministic Checks -->
+        <div class="inspection-bundle-box">
+          <span class="bundle-title">Part 4: Arbitrator Reasoning &amp; 7 Deterministic Checks</span>
+          <div class="bundle-flat-list">
+            <div class="flat-data-row">
+              <span class="flat-key-name">Verdict Reason:</span>
+              <span class="flat-val-content" id="modal-verdict-reason">Loading…</span>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">Python Checks:</span>
+              <div class="flat-val-content">
+                <ul style="margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem;" id="modal-checks-list">
+                  <li>Loading…</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Script and App Logic -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
