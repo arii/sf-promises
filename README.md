@@ -1,6 +1,7 @@
 # SF Promises
 
 ## https://arii.github.io/sf-promises/
+### 🤗 Hugging Face Dataset & Database: [onasafari/sf-promises](https://huggingface.co/datasets/onasafari/sf-promises)
 
 ### 🏆 Hackathon Award Winner: Best Use Of Keenable
 **SF Promises** was created during the **Archil "Agents need solid ground" Hackathon** on November 10, 2026. Across **1 night with 33 projects and 46 builders**, SF Promises was awarded **1 of 5 hackathon honors: "Best Use Of Keenable"** for its high-integrity temporal source retrieval and deterministic verification pipeline.
