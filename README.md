@@ -2,6 +2,9 @@
 
 ## https://arii.github.io/sf-promises/
 
+### Hackathon Version
+The original submission code created during the Archil AI Hackathon (Nov 10, 2026) is preserved in the [hackathon-2026-11-10 release](https://github.com/arii/sf-promises/releases/tag/hackathon-2026-11-10) at commit `64972c8`.
+
 SF Promises tracks public commitments across all of San Francisco, not just City Hall, but sports teams, concerts, robotaxis, tech companies, and neighborhood developments.
 
 It starts with a promise made in public, finds the official source, and re-checks the promise against later official evidence. The verdict is kept, in progress, broken, stalled, or undecided. Every promise links to its source, so a reader can verify it.

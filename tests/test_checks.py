@@ -240,7 +240,7 @@ def test_evidence_type_fail():
 
 
 # ==============================================================================
-# v2 Quality Gate Suite (PLAN.md Section 7 Step 3)
+# Lifecycle Quality Gate Suite
 # ==============================================================================
 from datetime import date
 from src.checks import check_forward_looking_quote, check_geography_and_entity, VALID_SF_LOCATIONS

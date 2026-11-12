@@ -23,7 +23,7 @@
       .trim();
   }
 
-  // Helper: Format verdict labels with v2 lifecycle nuances
+  // Helper: Format verdict labels with lifecycle nuances
   function formatVerdictLabel(verdict) {
     if (!verdict) return 'UNKNOWN';
     const v = String(verdict).toUpperCase();

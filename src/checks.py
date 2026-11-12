@@ -189,7 +189,7 @@ def check_evidence_type(evidence_type: str | None) -> tuple[bool, str]:
 
 
 # ==============================================================================
-# v2 Deterministic Gates (PLAN.md Gates 1, 3, 4)
+# Deterministic Gates
 # ==============================================================================
 
 VALID_SF_LOCATIONS = {
