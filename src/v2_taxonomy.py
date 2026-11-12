@@ -6,7 +6,7 @@ ENTITY_TYPES = frozenset({
 })
 SECTORS = frozenset({
     "Housing & Land Use", "Transit & Streets", "Homelessness & Behavioral Health",
-    "Public Safety & Justice", "Energy & Infrastructure", "Autonomous Vehicles",
+    "Public Safety & Justice", "Energy & Infrastructure", "Environment & Energy", "Autonomous Vehicles",
     "Parks & Recreation", "Sports, Culture & Retail", "Governance & Finance",
 })
 LOCATIONS = frozenset({

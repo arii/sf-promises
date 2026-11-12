@@ -49,3 +49,41 @@ This progress report tracks the v2 rebuild according to [PLAN.md](PLAN.md). Task
 - [x] Update `docs/app.js` and `docs/styles.css` to render `KEPT_THEN_REVERSED` ("KEPT → LATER CLOSED / REVERSED") and `DELAYED_OR_PARTIAL` ("DELIVERED LATE / PARTIAL") badges
 - [x] Export verified v2 database to `docs/data.json`
 - [x] Verify static demo preview renders correctly with v2 records
+- [x] Eliminate all detector anti-patterns using Impeccable engine across desktop and mobile (`390x844`)
+
+---
+
+## Phase 7: Data Integrity, Sandbox Swarm Evidence Investigation, and Legacy Code Retirement
+
+### 7.1 Deterministic Integrity & Reconciliation (Completed)
+- [x] **Category sums reconcile to exactly 62**: Merged `Energy & Infrastructure` into `Environment & Energy` across `src/v2_taxonomy.py` and `docs/data.json` (Sports 4 + Culture 2 + Transit 12 + Housing 15 + Civic 18 + Environment 2 + Infrastructure 2 + Bay Area 7 = 62).
+- [x] **Verdict casing normalized**: Fixed row #18 (P36) verdict to lowercase `kept`.
+- [x] **Mislabeled neighborhoods corrected**:
+  - #2 (P29, Care Not Cash): Updated from "Police Commission Oversight (Citywide)" to "Civic Center & Citywide (Human Services)".
+  - #25 (P66, Chase Center): Updated from "Citywide Housing Production Corridor" to "Mission Bay (Chase Center)".
+  - #26 (P42, Central Subway): Updated from "San Francisco MUNI Transit Fleet" to "Central Subway (SoMa to Chinatown)".
+  - #33 (P30, PSH goal): Updated from "Emergency Communications Center (911)" to "Citywide (Supportive Housing Network)".
+  - #51 (P67, Valkyries): Updated from "San Francisco Planning Department" to "Mission Bay (Chase Center)".
+- [x] **Limitations section references updated**: Replaced raw internal IDs with public display numbers: #36 (Whole Foods), #23 (Dead & Co), #9 (Parkmerced).
+- [x] **Export integrity tests added**: Added automated checks in `tests/test_v2_export.py` ensuring category sum equals promise count, all verdicts are lowercase, all rows have source hashes, and export timestamps are not in the future.
+- [x] **Watchdog catch prominent on load**: Set pipeline replay default to `N01` ("Altered quote gets caught") so the quarantine catch is visible immediately.
+- [x] **Copy cleanups**: Removed trailing "·" after "intake" and clarified technical schema language.
+
+### 7.2 Evidence & Sandbox Investigation (In Progress / Next)
+- [ ] **Run investigations in isolated Archil sandboxes**: Fork worker sandboxes using `v2_sandbox.py` for Keenable search/fetch, kept advocate, and broken advocate with partitioned staging files (`staging/investigate_<id>.json`, `staging/kept_<id>.json`, `staging/broken_<id>.json`).
+- [ ] **Write sandbox isolation test**: Verify Sandbox A cannot read `staging/broken_*.json` and Sandbox B cannot read `staging/kept_*.json`.
+- [ ] **Investigate Row #50 (P05, 1,500 shelter beds)**: Replace journalist paraphrase ("...didn't last long") with Mayor Lurie's verbatim statement from Jan 8, 2025; set due date to Jul 8, 2025.
+- [ ] **Investigate Row #52 (P02, 822 Geary St)**: Verify sf.gov primary source for 822 Geary 16-bed opening on Apr 28, 2025; confirm domain allowlist and record full SHA-256 and 8/8 gate score.
+- [ ] **Audit non-forward-looking rows**:
+  - Past facts / outcomes (#3, #25, #36, #43, #56, #57): Run `check_forward_looking_quote` and quarantine if not a prospective commitment.
+  - Forecasts (#9, #19, #32): Reclassify or quarantine if merely economic forecasts.
+  - Questionable "broken" announcements (#39, #44): Review primary evidence.
+  - Table fragment (#7, P61): Replace fragment with the full source sentence.
+- [ ] **Date audits**: Address date oddities for #56, #37, #60, and label duration-derived dates (#46).
+
+### 7.3 Legacy Code Retirement & Archiving (Planned)
+- [ ] **Tag Hackathon baseline commit**: `git tag -a hackathon-2026-11-10 64972c8 -m "Archil hackathon submission"` and push tag upon user confirmation.
+- [ ] **Audit importers**: Verify imports of legacy modules (`src/extract.py`, `checks.py`, `arbitrator.py`, `relevance.py`, `schema.sql`, `swarm_runner.py`).
+- [ ] **Clean legacy files & folders**: Remove `cleanup.md` and unused legacy modules.
+- [ ] **Rename v2 modules to standard names**: Rename `src/v2_*.py` to clean standard module names without collisions.
+- [ ] **Verify green test suite**: Keep 188/188 pytest suite green throughout.

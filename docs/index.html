@@ -53,7 +53,7 @@
             <span><strong>Deterministic Verification:</strong> 0 model calls in Arbitrator (100% code checks)</span>
           </div>
           <div class="snapshot-banner font-mono" id="snapshot-banner" style="margin-top: 10px; font-size: 0.8rem; opacity: 0.85;">
-            Snapshot generated Nov 10, 2026 from verified SQLite database (commit cde0e2f) · Live from Archil
+            Exported snapshot from promises.db · Independent verification checks recorded in verifications ledger
           </div>
         </div>
       </section>
@@ -567,7 +567,7 @@
           <div class="reconciliation-strip font-mono" style="font-size: 0.8rem; color: #E2E8F0; text-align: right;">
             <span><strong>Status:</strong> <span class="recon-counts">…</span></span>
             <br>
-            <span style="font-size: 0.75rem; color: var(--muted);">P-series = civic promises; S-series = secondary scrapes. ID gaps = quarantined or awaiting intake.</span>
+            <span style="font-size: 0.75rem; color: var(--muted);">Numbered #1–#62 chronologically. Gaps reflect quarantined or unverified seed candidates</span>
           </div>
         </div>
 
@@ -696,8 +696,8 @@
           <div>
             <h3>Built With</h3>
             <ul class="plain-credits-list">
-              <li><strong>Archil Cloud Disks</strong> — Persistent disk + <span class="font-mono">/mnt/archil</span> mount. Infrastructure only: Lane A created the 20-table schema and the pipeline populated it.</li>
-              <li><strong>Keenable API</strong> — Web API called over HTTP for ranked search + page content. Never wrote a file or touched SQLite; "Fetched: keenable keyed" headers in 38 sources are provenance labels, not authorship.</li>
+              <li><strong>Archil Cloud Disks</strong> — Persistent disk + <span class="font-mono">/mnt/archil</span> mount providing partitioned storage for source documents and verification ledgers.</li>
+              <li><strong>Keenable API</strong> — Web discovery API called over HTTP for ranked temporal document retrieval across contemporaneous SF domains.</li>
               <li><strong>SF Legistar API</strong> — Board of Supervisors agendas, resolutions, and official votes.</li>
               <li><strong>DataSF</strong> — 311 service tickets and operational civic&nbsp;signals.</li>
               <li><strong>Granicus / Board Minutes</strong> — Primary official San Francisco meeting records and transcripts.</li>
@@ -724,16 +724,16 @@
         <div class="two-col-plain">
           <div>
             <ul class="plain-credits-list">
-              <li><strong>No durability.</strong> A kept opening is never rechecked; later history (e.g. the P83 closure) never re-enters unless a person re-opens the case.</li>
-              <li><strong>Allowlist trade-off.</strong> Unlisted domains drop even primary sources, so a verdict can rest on a retrospective instead of the best source (<button type="button" class="case-ref-link" data-pid="P83">P83</button>).</li>
-              <li><strong>Negative promises.</strong> "Never do X again" forces proving an absence; the rubric has no absence handling (<button type="button" class="case-ref-link" data-pid="P11">P11</button>).</li>
+              <li><strong>No durability.</strong> A kept opening is never rechecked; later history (e.g. the #36 Whole Foods closure) never re-enters unless a person re-opens the case.</li>
+              <li><strong>Allowlist trade-off.</strong> Unlisted domains drop even primary sources, so a verdict can rest on a retrospective instead of the best source (<button type="button" class="case-ref-link" data-pid="P83">#36</button>).</li>
+              <li><strong>Negative promises.</strong> "Never do X again" forces proving an absence; the rubric has no absence handling (<button type="button" class="case-ref-link" data-pid="P11">#23</button>).</li>
             </ul>
           </div>
           <div>
             <ul class="plain-credits-list">
-              <li><strong>Framing disputes.</strong> Tiers measure source strength, not factual disagreement — agreed numbers with opposite framing punt to undecided (<button type="button" class="case-ref-link" data-pid="P64">P64</button>).</li>
-              <li><strong>Ambiguity can't win.</strong> Rule 7 sits below Rules 3–5, so live wording disputes are settled by a recorded human reading (<button type="button" class="case-ref-link" data-pid="P11">P11</button>).</li>
-              <li><strong>Re-opens are principles, not code.</strong> Corrections are append-only new rows, but the reasoning lives in notes, not in the rubric (<button type="button" class="case-ref-link" data-pid="P11">P11</button>, <button type="button" class="case-ref-link" data-pid="P64">P64</button>).</li>
+              <li><strong>Framing disputes.</strong> Tiers measure source strength, not factual disagreement — agreed numbers with opposite framing punt to undecided (<button type="button" class="case-ref-link" data-pid="P64">#9</button>).</li>
+              <li><strong>Ambiguity can't win.</strong> Rule 7 sits below Rules 3–5, so live wording disputes are settled by a recorded human reading (<button type="button" class="case-ref-link" data-pid="P11">#23</button>).</li>
+              <li><strong>Re-opens are principles, not code.</strong> Corrections are append-only new rows, but the reasoning lives in notes, not in the rubric (<button type="button" class="case-ref-link" data-pid="P11">#23</button>, <button type="button" class="case-ref-link" data-pid="P64">#9</button>).</li>
             </ul>
           </div>
         </div>

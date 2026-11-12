@@ -527,7 +527,7 @@
       });
       runSelect.appendChild(g);
     });
-    runSelect.value = 'P02';
+    runSelect.value = 'N01';
   }
 
   function renderStage1Source(runType) {

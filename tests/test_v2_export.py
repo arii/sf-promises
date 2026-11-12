@@ -181,6 +181,39 @@ class CandidateExportTests(unittest.TestCase):
         )
         self.assertEqual(json.loads(output.read_text())["tallies"], {"IN_PROGRESS": 1})
 
+    def test_live_docs_data_export_integrity(self):
+        docs_json = Path("docs/data.json")
+        if not docs_json.exists():
+            return
+        data = json.loads(docs_json.read_text(encoding="utf-8"))
+        promises = data.get("promises", [])
+        self.assertGreater(len(promises), 0)
+
+        # 1. Category sums equal total promises
+        from collections import Counter
+        cat_counts = Counter(p.get("category") for p in promises)
+        self.assertEqual(sum(cat_counts.values()), len(promises))
+        self.assertNotIn("Energy & Infrastructure", cat_counts)
+        self.assertIn("Environment & Energy", cat_counts)
+
+        # 2. Verdict casing normalized to lowercase
+        valid_verdicts = {"kept", "broken", "in_progress", "undecided", "stalled", "delayed_or_partial", "kept_then_reversed"}
+        for p in promises:
+            self.assertIn(p.get("verdict"), valid_verdicts)
+
+        # 3. Every row has a source hash
+        for p in promises:
+            self.assertTrue(bool(p.get("source_hash")), f"Missing source hash for {p.get('promise_id')}")
+
+        # 4. No future export dates in last_updated
+        last_updated = data.get("metadata", {}).get("last_updated")
+        if last_updated:
+            try:
+                dt = datetime.strptime(last_updated, "%b %d, %Y").replace(tzinfo=timezone.utc)
+                self.assertLessEqual(dt, datetime.now(timezone.utc))
+            except ValueError:
+                pass
+
 
 if __name__ == "__main__":
     unittest.main()

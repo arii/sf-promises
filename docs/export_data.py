@@ -15,8 +15,8 @@ from datetime import datetime, timezone
 
 DB_PATH = "/mnt/archil/workspace/promises.db"
 STAGING_DIR = "/mnt/archil/workspace/staging"
-OUT_JSON = "demo/data.json"
-OUT_JS = "demo/data.js"
+OUT_JSON = "docs/data.json"
+OUT_JS = "docs/data.js"
 
 # Rich SF Neighborhoods mapping
 NEIGHBORHOOD_MAP = {
@@ -48,8 +48,8 @@ NEIGHBORHOOD_MAP = {
     "P26": "Citywide Vacant Homes",
     "P27": "Affordable Housing Trust Fund",
     "P28": "SF General & Community Health Clinics",
-    "P29": "Police Commission Oversight (Citywide)",
-    "P30": "Emergency Communications Center (911)",
+    "P29": "Civic Center & Citywide (Human Services)",
+    "P30": "Citywide (Supportive Housing Network)",
     "P31": "Commercial Corridors & Small Businesses",
     "P35": "Mental Health SF (Citywide)",
     "P36": "CleanPowerSF Renewable Grid",
@@ -58,7 +58,7 @@ NEIGHBORHOOD_MAP = {
     "P39": "Northern California EV Network",
     "P40": "Northern California Utility Fleet",
     "P41": "Central Subway (SoMa to Chinatown)",
-    "P42": "San Francisco MUNI Transit Fleet",
+    "P42": "Central Subway (SoMa to Chinatown)",
     "P43": "San Francisco Driverless Testing Zones",
     "P44": "Citywide Commercial AV Service Zones",
     "P57": "Bay Area Fiber Network",
@@ -69,8 +69,8 @@ NEIGHBORHOOD_MAP = {
     "P62": "Mission Bay Commercial Campus",
     "P64": "Parkmerced Neighborhood Transformation",
     "P65": "Central Subway Project Corridor",
-    "P66": "Citywide Housing Production Corridor",
-    "P67": "San Francisco Planning Department",
+    "P66": "Mission Bay (Chase Center)",
+    "P67": "Mission Bay (Chase Center)",
     "P80": "San Francisco Bay Area Women's Sports",
     "P81": "Commercial Robotaxi Operating Zones",
     "P82": "Chase Center (WNBA Championship Target)",
