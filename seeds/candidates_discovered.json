@@ -1,0 +1,26 @@
+{
+  "discovered_at": "2026-11-12T22:17:19.959795+00:00",
+  "total_count": 2,
+  "candidates": [
+    {
+      "candidate_id": "DISC-20261112-001",
+      "entity": "SFMTA transit",
+      "title": "San Francisco Marks 10th Anniversary of Muni Forward Program, Advancing Faster and More Reliable Service",
+      "url": "https://sf.gov/news/san-francisco-marks-10th-anniversary-muni-forward-program-advancing-faster-and-more-reliable",
+      "tier": "TIER1_GOV",
+      "published_at": "2024-09-30T00:00:00Z",
+      "snippet": "**San Francisco, CA** \u2013 As September\u2019s Transit Month comes to a close, Mayor London N. Breed and the San Francisco Municipal Transportation Authority (SFMTA) mark 10 years of the City\u2019s Muni Forward program.\n\n\u201cOur work isn\u2019t stopping here,\u201d **said SFMTA Transit Director Julie Kirschbaum**. \u201cIn the near future, we will focus on transforming Muni rail. The Train Control Upgrade Program will allow longer trains, and reduce crowding, so the rail system meets its full potential. We will be installing new boarding islands and transit plazas, among other improvements, on the K Ingleside, M Ocean View and J Church Lines. And we are developing longer-term improvements to alleviate delays on the N Judah and T Third lines.\u201d",
+      "relevance_score": 8
+    },
+    {
+      "candidate_id": "DISC-20261112-002",
+      "entity": "SFMTA transit",
+      "title": "Mayor Breed and SFMTA Leaders Highlight Reliable, Clean and Safe Muni as Daily Ridership Grows 25%",
+      "url": "https://sf.gov/news--mayor-breed-and-sfmta-leaders-highlight-reliable-clean-and-safe-muni-daily-ridership-grows-25",
+      "tier": "TIER1_GOV",
+      "published_at": "2024-02-28T00:00:00Z",
+      "snippet": "**San Francisco, CA \u2013** Today Mayor London N. Breed and leaders of the San Francisco Municipal Transportation Agency (SFMTA) highlighted recent efforts to make Muni more reliable, safe and clean for riders and operators, as well as expanded initiatives to build on this work.\nAs of this month, SFMTA Muni daily ridership has increased by 25% in the last year, the highest it has been since ridership plummeted at the start of the pandemic in 2020, and Muni carried nearly half of all transit trips in the Bay Area in 2023 \u2013 more than the next eight largest transit operators combined. This reflects the investments that SFMTA has made to deliver clean, safe, and reliable transit service.\n\n\u201cDespite our financial challenges, Muni ridership is up 25 percent from last year, largely because of our focus on making transit fast, frequent, reliable, clean and safe,\u201d **said SFMTA Executive Director Jeffrey Tumlin.**\n\nin service at once. Demand curves have flattened since the pandemic, which allows operators to be scheduled with more time spent in service. SFMTA Transit Planners now pinpoint crowding in 15-minute increments and refine service to address it:\n- The most frequent buses are arriving on time 90%\n\nthe near total refurbishment of the T line platforms including LED lighting, painting and replacement of broken and graffitied glass. SFMTA will next replace all the benches and trash cans from Sunnydale to Pier 39.\n*Cleaner Vehicles*. During the pandemic, SFMTA temporarily increased the",
+      "relevance_score": 8
+    }
+  ]
+}
