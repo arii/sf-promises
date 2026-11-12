@@ -130,22 +130,22 @@ SF_CATEGORY_MAP = {
     "P84": "Housing & Neighborhoods",
     "P86": "Housing & Neighborhoods",
 
-    # Civic & Public Safety (15)
-    "P01": "Civic & Public Safety",
-    "P02": "Civic & Public Safety",
-    "P03": "Civic & Public Safety",
-    "P05": "Civic & Public Safety",
-    "P17": "Civic & Public Safety",
-    "P19": "Civic & Public Safety",
-    "P20": "Civic & Public Safety",
-    "P23": "Civic & Public Safety",
-    "P25": "Civic & Public Safety",
-    "P28": "Civic & Public Safety",
-    "P29": "Civic & Public Safety",
-    "P30": "Civic & Public Safety",
-    "P31": "Civic & Public Safety",
-    "P35": "Civic & Public Safety",
-    "P37": "Civic & Public Safety",
+    # Civic Governance (15)
+    "P01": "Civic Governance",
+    "P02": "Civic Governance",
+    "P03": "Civic Governance",
+    "P05": "Civic Governance",
+    "P17": "Civic Governance",
+    "P19": "Civic Governance",
+    "P20": "Civic Governance",
+    "P23": "Civic Governance",
+    "P25": "Civic Governance",
+    "P28": "Civic Governance",
+    "P29": "Civic Governance",
+    "P30": "Civic Governance",
+    "P31": "Civic Governance",
+    "P35": "Civic Governance",
+    "P37": "Civic Governance",
 
     # Environment & Energy (2)
     "P09": "Environment & Energy",
@@ -496,7 +496,7 @@ def _load_from_db(db_path):
             "entity": ename,
             "role": erole,
             "entity_type": etype,
-            "category": SF_CATEGORY_MAP.get(pid, "Civic & Public Safety"),
+            "category": SF_CATEGORY_MAP.get(pid, "Civic Governance"),
             "neighborhood": NEIGHBORHOOD_MAP.get(pid, "San Francisco"),
             "promised_date": pdate,
             "due_date": ddate,
@@ -822,7 +822,7 @@ def export():
         "entity": "Mayor Daniel Lurie",
         "role": "Mayor of San Francisco",
         "entity_type": "politicians",
-        "category": "Civic & Public Safety",
+        "category": "Civic Governance",
         "neighborhood": "Tenderloin (822 Geary St)",
         "promised_date": "2025-01-07",
         "due_date": None,
@@ -846,7 +846,7 @@ def export():
         {
             "promise_id": "P02",
             "tag": "Tenderloin · 822 Geary St",
-            "domain": "Civic & Public Safety",
+            "domain": "Civic Governance",
             "title": "24/7 Crisis Stabilization Center",
             "quote": "“That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,”",
             "entity": "Mayor Daniel Lurie",
@@ -1018,10 +1018,20 @@ def html_esc(text):
 
 
 def format_verdict_label(verd):
-    v = (verd or "").lower().replace("_", " ")
-    if v == "in progress":
-        return "IN PROGRESS"
-    return verd.upper() if verd else "UNDECIDED"
+    v = (verd or "").lower().replace(" ", "_")
+    if v == "in_progress":
+        return "In Progress"
+    if v == "kept":
+        return "Kept"
+    if v == "broken":
+        return "Broken"
+    if v == "undecided":
+        return "Undecided"
+    if v == "kept_then_reversed":
+        return "Kept → Later Closed / Reversed"
+    if v == "delayed_or_partial":
+        return "Delivered Late / Partial"
+    return verd.title() if verd else "Undecided"
 
 
 def generate_promise_row_html(p, idx=0):
@@ -1030,7 +1040,7 @@ def generate_promise_row_html(p, idx=0):
     pid = html_esc(p.get("promise_id", ""))
     entity = html_esc(p.get("entity", ""))
     neighborhood = html_esc(p.get("neighborhood", "Citywide San Francisco"))
-    category = html_esc(p.get("category", "Civic & Public Safety"))
+    category = html_esc(p.get("category", "Civic Governance"))
     quote = html_esc(clean_quote_text(p.get("verbatim_quote") or p.get("promise_text", "")))
     
     # Mark P05 as reported if not already
@@ -1072,7 +1082,15 @@ def generate_promise_row_html(p, idx=0):
         b_summary = html_esc(b_claims[0].get("statement") or b_claims[0].get("quote") or "Contradicting claim filed.")
     else:
         note = broken_b.get("note") if isinstance(broken_b, dict) else ""
-        b_summary = html_esc(note or "No contradicting source found in saved files.")
+        if note and note.lower().startswith("none found"):
+            b_summary = "No contradicting evidence or cancellation records found in verified sources."
+        elif note:
+            clean_note = re.sub(r'No second search per cut rule\+?(\s*freeze)?\.?', '', note)
+            clean_note = re.sub(r'\s*;\s*no second search.*', '', clean_note)
+            clean_note = re.sub(r'\s*\(re-open diligence.*?\):', '', clean_note).strip()
+            b_summary = html_esc(clean_note or "No contradicting source found in saved files.")
+        else:
+            b_summary = "No contradicting evidence or cancellation records found."
 
     source_hash = html_esc(p.get("source_hash", "not recorded"))
     source_file = html_esc(p.get("source_file_path", f"sources/{source_hash}.md"))

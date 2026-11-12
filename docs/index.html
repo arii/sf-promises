@@ -50,19 +50,19 @@
           <div class="hero-stacked-chart-box">
             <div class="stacked-bar-header font-mono">
               <span>OUTCOME DISTRIBUTION</span>
-              <span>54 VERIFIED</span>
+              <span id="outcome-dist-verified">54 VERIFIED</span>
             </div>
-            <div class="proportional-stacked-bar" role="img" aria-label="Outcome breakdown: 46% Kept, 19% In Progress, 31% Broken, 4% Undecided">
-              <div class="bar-segment seg-kept" style="width: 46.3%;" title="Kept: 25 (46.3%)"></div>
-              <div class="bar-segment seg-progress" style="width: 18.5%;" title="In Progress: 10 (18.5%)"></div>
-              <div class="bar-segment seg-broken" style="width: 31.5%;" title="Broken: 17 (31.5%)"></div>
-              <div class="bar-segment seg-undecided" style="width: 3.7%;" title="Undecided: 2 (3.7%)"></div>
+            <div class="proportional-stacked-bar" id="hero-stacked-bar" role="img" aria-label="Outcome breakdown: 46% Kept, 19% In Progress, 31% Broken, 4% Undecided">
+              <div class="bar-segment seg-kept" id="bar-seg-kept" style="width: 46.3%;" title="Kept: 25 (46.3%)"></div>
+              <div class="bar-segment seg-progress" id="bar-seg-progress" style="width: 18.5%;" title="In Progress: 10 (18.5%)"></div>
+              <div class="bar-segment seg-broken" id="bar-seg-broken" style="width: 31.5%;" title="Broken: 17 (31.5%)"></div>
+              <div class="bar-segment seg-undecided" id="bar-seg-undecided" style="width: 3.7%;" title="Undecided: 2 (3.7%)"></div>
             </div>
             <div class="stacked-legend-grid font-mono">
-              <div class="legend-col"><span class="legend-swatch seg-kept"></span> 25 Kept (46%)</div>
-              <div class="legend-col"><span class="legend-swatch seg-progress"></span> 10 In Progress (19%)</div>
-              <div class="legend-col"><span class="legend-swatch seg-broken"></span> 17 Broken (31%)</div>
-              <div class="legend-col"><span class="legend-swatch seg-undecided"></span> 2 Undecided (4%)</div>
+              <div class="legend-col"><span class="legend-swatch seg-kept"></span> <span id="legend-text-kept">25 Kept (46%)</span></div>
+              <div class="legend-col"><span class="legend-swatch seg-progress"></span> <span id="legend-text-progress">10 In Progress (19%)</span></div>
+              <div class="legend-col"><span class="legend-swatch seg-broken"></span> <span id="legend-text-broken">17 Broken (31%)</span></div>
+              <div class="legend-col"><span class="legend-swatch seg-undecided"></span> <span id="legend-text-undecided">2 Undecided (4%)</span></div>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
           <button type="button" class="btn-domain-pill" data-category="Airport &amp; Airlines">Airport &amp; Airlines (4)</button>
           <button type="button" class="btn-domain-pill" data-category="Transit &amp; Streets">Transit &amp; Streets (8)</button>
           <button type="button" class="btn-domain-pill" data-category="Housing &amp; Neighborhoods">Housing &amp; Neighborhoods (13)</button>
-          <button type="button" class="btn-domain-pill" data-category="Civic &amp; Public Safety">Civic Governance (15)</button>
+          <button type="button" class="btn-domain-pill" data-category="Civic Governance">Civic Governance (15)</button>
           <button type="button" class="btn-domain-pill" data-category="Sports">Sports (3)</button>
           <button type="button" class="btn-domain-pill" data-category="Culture &amp; Music">Culture &amp; Music (1)</button>
           <button type="button" class="btn-domain-pill" data-category="Environment &amp; Energy">Environment &amp; Energy (2)</button>
@@ -156,7 +156,7 @@
                 <option value="Airport &amp; Airlines">Airport &amp; Airlines</option>
                 <option value="Transit &amp; Streets">Transit &amp; Streets</option>
                 <option value="Housing &amp; Neighborhoods">Housing &amp; Neighborhoods</option>
-                <option value="Civic &amp; Public Safety">Civic Governance</option>
+                <option value="Civic Governance">Civic Governance</option>
                 <option value="Sports">Sports</option>
                 <option value="Culture &amp; Music">Culture &amp; Music</option>
                 <option value="Environment &amp; Energy">Environment &amp; Energy</option>
@@ -2686,45 +2686,74 @@
       </div>
 
       <div class="modal-scrollable-body">
-        <!-- Part 1: Provenance Bundle -->
-        <div class="inspection-bundle-box">
-          <span class="bundle-title">Part 1: Provenance Bundle (Fingerprinted Document)</span>
-          <div class="bundle-flat-list">
-            <div class="flat-data-row">
-              <span class="flat-key-name">Source URL:</span>
-              <span class="flat-val-content">
-                <a href="https://www.sfpublicworkstv.org/april2025" target="_blank" rel="noopener noreferrer" id="modal-source-url">https://www.sfpublicworkstv.org/april2025</a>
-              </span>
+        <!-- Plain-English What Was Promised Summary Card -->
+        <div class="modal-summary-card">
+          <div class="modal-summary-kicker font-mono">WHAT WAS PROMISED</div>
+          <blockquote class="modal-summary-quote" id="modal-summary-claim">
+            “That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,”
+          </blockquote>
+          <div class="modal-summary-grid">
+            <div class="modal-summary-item">
+              <span class="modal-summary-label">PROMISED BY</span>
+              <span class="modal-summary-val" id="modal-summary-speaker">Mayor Daniel Lurie</span>
             </div>
-            <div class="flat-data-row">
-              <span class="flat-key-name">source_id:</span>
-              <span class="flat-val-content font-mono" id="modal-source-id">Se03acc33e8e1</span>
+            <div class="modal-summary-item">
+              <span class="modal-summary-label">TARGET / DUE DATE</span>
+              <span class="modal-summary-val font-mono" id="modal-summary-due">April 2025</span>
             </div>
-            <div class="flat-data-row">
-              <span class="flat-key-name">SHA-256 Hash:</span>
-              <div class="flat-val-content font-mono" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                <span style="font-size: 0.8rem; word-break: break-all; color: #A7F3D0;" id="modal-full-hash">e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05</span>
-                <button type="button" class="btn-copy-hash" id="btn-copy-modal-hash" style="padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; background: rgba(255,255,255,0.12); border: 1px solid var(--line); color: var(--ink); cursor: pointer;">Copy</button>
-              </div>
-            </div>
-            <div class="flat-data-row">
-              <span class="flat-key-name">Saved File Path:</span>
-              <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: var(--muted);" id="modal-file-path">sources/e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05.md</span>
-            </div>
-            <div class="flat-data-row">
-              <span class="flat-key-name">Fetched At:</span>
-              <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: var(--muted);" id="modal-fetch-time">Loading…</span>
-            </div>
-            <div class="flat-data-row">
-              <span class="flat-key-name">Audit Run ID:</span>
-              <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: #93C5FD;" id="modal-run-id">accd67e91c05426bbc5b279b83cf9537</span>
-            </div>
-            <div class="flat-data-row">
-              <span class="flat-key-name">Sandbox Worker:</span>
-              <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: #93C5FD;" id="modal-sandbox-id">01a1cd80-01b2-79da-8ad0-2ae1ed5f5942 (fork of sf-promises-golden)</span>
+            <div class="modal-summary-item">
+              <span class="modal-summary-label">OUTCOME SUMMARY</span>
+              <span class="modal-summary-val" id="modal-summary-outcome">Kept — Police-friendly stabilization center opened at 822 Geary St on April 28, 2025.</span>
             </div>
           </div>
         </div>
+
+        <!-- Collapsible Technical Provenance & Cryptographic Audit Logs Drawer -->
+        <details class="tech-audit-drawer" id="modal-tech-audit-drawer">
+          <summary class="tech-audit-summary font-mono">
+            <span>Part 1: Technical Provenance &amp; Cryptographic Audit Logs</span>
+            <span class="tech-audit-badge font-mono">View Raw Hashes &amp; Sandbox IDs ▾</span>
+          </summary>
+          <div class="tech-audit-content">
+            <div class="inspection-bundle-box" style="margin-top: 12px; margin-bottom: 0;">
+              <div class="bundle-flat-list">
+                <div class="flat-data-row">
+                  <span class="flat-key-name">Source URL:</span>
+                  <span class="flat-val-content">
+                    <a href="https://www.sfpublicworkstv.org/april2025" target="_blank" rel="noopener noreferrer" id="modal-source-url">https://www.sfpublicworkstv.org/april2025</a>
+                  </span>
+                </div>
+                <div class="flat-data-row">
+                  <span class="flat-key-name">source_id:</span>
+                  <span class="flat-val-content font-mono" id="modal-source-id">Se03acc33e8e1</span>
+                </div>
+                <div class="flat-data-row">
+                  <span class="flat-key-name">SHA-256 Hash:</span>
+                  <div class="flat-val-content font-mono" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <span style="font-size: 0.8rem; word-break: break-all; color: #A7F3D0;" id="modal-full-hash">e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05</span>
+                    <button type="button" class="btn-copy-hash" id="btn-copy-modal-hash" style="padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; background: rgba(255,255,255,0.12); border: 1px solid var(--line); color: var(--ink); cursor: pointer;">Copy</button>
+                  </div>
+                </div>
+                <div class="flat-data-row">
+                  <span class="flat-key-name">Saved File Path:</span>
+                  <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: var(--muted);" id="modal-file-path">sources/e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05.md</span>
+                </div>
+                <div class="flat-data-row">
+                  <span class="flat-key-name">Fetched At:</span>
+                  <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: var(--muted);" id="modal-fetch-time">Loading…</span>
+                </div>
+                <div class="flat-data-row">
+                  <span class="flat-key-name">Audit Run ID:</span>
+                  <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: #93C5FD;" id="modal-run-id">accd67e91c05426bbc5b279b83cf9537</span>
+                </div>
+                <div class="flat-data-row">
+                  <span class="flat-key-name">Sandbox Worker:</span>
+                  <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: #93C5FD;" id="modal-sandbox-id">01a1cd80-01b2-79da-8ad0-2ae1ed5f5942 (fork of sf-promises-golden)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
 
         <!-- Part 2: Extracted Promise & Relevance Bundle -->
         <div class="inspection-bundle-box">

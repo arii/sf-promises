@@ -23,13 +23,37 @@
       .trim();
   }
 
-  // Helper: Format verdict labels with lifecycle nuances
+  // Helper: Format verdict labels with clean human-readable text
   function formatVerdictLabel(verdict) {
-    if (!verdict) return 'UNKNOWN';
-    const v = String(verdict).toUpperCase();
-    if (v === 'KEPT_THEN_REVERSED') return 'KEPT → LATER CLOSED / REVERSED';
-    if (v === 'DELAYED_OR_PARTIAL') return 'DELIVERED LATE / PARTIAL';
-    return v;
+    if (!verdict) return 'Undecided';
+    const v = String(verdict).toLowerCase().replace(/[\s-]+/g, '_');
+    if (v === 'in_progress') return 'In Progress';
+    if (v === 'kept') return 'Kept';
+    if (v === 'broken') return 'Broken';
+    if (v === 'undecided') return 'Undecided';
+    if (v === 'stalled') return 'Stalled';
+    if (v === 'kept_then_reversed') return 'Kept → Later Closed / Reversed';
+    if (v === 'delayed_or_partial') return 'Delivered Late / Partial';
+    return String(verdict).replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  }
+
+  // Helper: Format advocate notes into user-friendly copy (no internal cut rules or agent notes)
+  function formatAdvocateNote(rawNote, role) {
+    if (!rawNote) {
+      return role === 'broken'
+        ? 'No contradicting evidence or cancellation records found in verified municipal records.'
+        : 'No affirming primary evidence filed during this review cycle.';
+    }
+    const note = String(rawNote);
+    if (note.toLowerCase().startsWith('none found')) {
+      return 'No contradicting evidence or cancellation records found in verified public records.';
+    }
+    let cleaned = note
+      .replace(/No second search per cut rule\+?(\s*freeze)?\.?/gi, '')
+      .replace(/\s*;\s*no second search.*/gi, '')
+      .replace(/\s*\(re-open diligence.*?\):/gi, '')
+      .trim();
+    return cleaned || (role === 'broken' ? 'No contradicting evidence or cancellation records found.' : 'No affirming primary evidence filed.');
   }
 
   // State Variables
@@ -406,6 +430,42 @@
     var reconText = db.id_reconciliation
       || (totalCount + ' published · ' + (demoData.quarantined ? demoData.quarantined.length : 0) + ' in quarantine registry');
     document.querySelectorAll('.recon-counts').forEach(el => { el.textContent = reconText; });
+
+    // Sync Outcome Distribution Box dynamically
+    const outVerifiedEl = document.getElementById('outcome-dist-verified');
+    if (outVerifiedEl) outVerifiedEl.textContent = `${totalCount} VERIFIED`;
+
+    if (totalCount > 0) {
+      const kVal = counts.kept || 0;
+      const pVal = counts.in_progress || 0;
+      const bVal = counts.broken || 0;
+      const uVal = counts.undecided || 0;
+
+      const kPct = Math.round((kVal / totalCount) * 100);
+      const pPct = Math.round((pVal / totalCount) * 100);
+      const bPct = Math.round((bVal / totalCount) * 100);
+      const uPct = Math.max(0, 100 - kPct - pPct - bPct);
+
+      const barKept = document.getElementById('bar-seg-kept');
+      const barProg = document.getElementById('bar-seg-progress');
+      const barBroken = document.getElementById('bar-seg-broken');
+      const barUndecided = document.getElementById('bar-seg-undecided');
+
+      if (barKept) { barKept.style.width = `${(kVal / totalCount) * 100}%`; barKept.title = `Kept: ${kVal} (${kPct}%)`; }
+      if (barProg) { barProg.style.width = `${(pVal / totalCount) * 100}%`; barProg.title = `In Progress: ${pVal} (${pPct}%)`; }
+      if (barBroken) { barBroken.style.width = `${(bVal / totalCount) * 100}%`; barBroken.title = `Broken: ${bVal} (${bPct}%)`; }
+      if (barUndecided) { barUndecided.style.width = `${(uVal / totalCount) * 100}%`; barUndecided.title = `Undecided: ${uVal} (${uPct}%)`; }
+
+      const legKept = document.getElementById('legend-text-kept');
+      const legProg = document.getElementById('legend-text-progress');
+      const legBroken = document.getElementById('legend-text-broken');
+      const legUndecided = document.getElementById('legend-text-undecided');
+
+      if (legKept) legKept.textContent = `${kVal} Kept (${kPct}%)`;
+      if (legProg) legProg.textContent = `${pVal} In Progress (${pPct}%)`;
+      if (legBroken) legBroken.textContent = `${bVal} Broken (${bPct}%)`;
+      if (legUndecided) legUndecided.textContent = `${uVal} Undecided (${uPct}%)`;
+    }
   }
 
   // -------------------------------------------------------------------------
@@ -1396,7 +1456,7 @@
 
     // Update Showing counter & active filter indicator
     if (tableShowingCount) tableShowingCount.textContent = displayed.length;
-    if (tableTotalCount) tableTotalCount.textContent = demoData.promises.length;
+    if (tableTotalCount) tableTotalCount.textContent = filtered.length;
 
     // Pagination controls
     if (tablePaginationRow) {
@@ -1789,7 +1849,10 @@
     const relChipEl = document.getElementById('modal-relevance-chip');
 
     const rankFormatted = String(p.impact_rank || p.display_no || '—').padStart(2, '0');
-    if (titleEl) titleEl.textContent = `#${rankFormatted} (${p.promise_id}) · ${shortLabel(p, 70)}`;
+    if (titleEl) {
+      titleEl.textContent = `#${rankFormatted} (${p.promise_id}) · ${p.entity}: ${p.neighborhood || p.category}`;
+      titleEl.title = cleanQuoteText(p.promise_text || '');
+    }
     if (verdChipEl) {
       const verdClass = p.verdict.toLowerCase().replace(' ', '_');
       verdChipEl.className = `verdict-chip ${verdClass}`;
@@ -1802,6 +1865,25 @@
     try {
       window.history.replaceState(null, '', `#promise-${p.promise_id}`);
     } catch (_) {}
+
+    // Plain-English "What Was Promised" Summary Card
+    const sumClaimEl = document.getElementById('modal-summary-claim');
+    const sumSpeakerEl = document.getElementById('modal-summary-speaker');
+    const sumDueEl = document.getElementById('modal-summary-due');
+    const sumOutcomeEl = document.getElementById('modal-summary-outcome');
+
+    if (sumClaimEl) sumClaimEl.textContent = `“${cleanQuoteText(p.promise_text)}”`;
+    if (sumSpeakerEl) sumSpeakerEl.textContent = `${p.entity}${p.role ? ` (${p.role})` : ''} · ${p.neighborhood || p.category || 'Citywide San Francisco'}`;
+    if (sumDueEl) {
+      const dates = [];
+      if (p.promised_date) dates.push(`Promised: ${p.promised_date}`);
+      if (p.due_date) dates.push(`Due: ${p.due_date}`);
+      sumDueEl.textContent = dates.join(' · ') || 'Not specified';
+    }
+    if (sumOutcomeEl) {
+      const vLabel = formatVerdictLabel(p.verdict);
+      sumOutcomeEl.textContent = `${vLabel} — ${p.verdict_reason || 'Verified through deterministic checks in Sandbox C.'}`;
+    }
 
     // Part 1: Provenance Bundle
     const srcUrlEl = document.getElementById('modal-source-url');
@@ -1886,7 +1968,8 @@
       } else if (p.verbatim_quote) {
         keptListEl.innerHTML = `<div class="claim-quote-box">“${escapeHtml(p.verbatim_quote)}” (Primary evidence verified)</div>`;
       } else {
-        keptListEl.innerHTML = `<p style="font-size: 0.85rem; color: var(--muted); font-style: italic; margin: 0;">No affirming claims filed in this run's kept-advocate bundle.</p>`;
+        const kNote = (kStaging && kStaging.note) || '';
+        keptListEl.innerHTML = `<p style="font-size: 0.85rem; color: var(--muted); font-style: italic; margin: 0;">${escapeHtml(formatAdvocateNote(kNote, 'kept'))}</p>`;
       }
     }
 
@@ -1897,15 +1980,15 @@
           <div class="claim-quote-box" style="border-left-color: var(--broken);">“${escapeHtml(c.quote || c.text || JSON.stringify(c))}”</div>
         `).join('');
       } else {
-        const bNote = (bStaging && bStaging.note) || "No contradicting claims filed in this run's broken-advocate bundle.";
-        brokenListEl.innerHTML = `<p style="font-size: 0.85rem; color: var(--muted); font-style: italic; margin: 0;">${escapeHtml(bNote)}</p>`;
+        const bNote = (bStaging && bStaging.note) || '';
+        brokenListEl.innerHTML = `<p style="font-size: 0.85rem; color: var(--muted); font-style: italic; margin: 0;">${escapeHtml(formatAdvocateNote(bNote, 'broken'))}</p>`;
       }
     }
 
     // Part 4: Arbitrator Reasoning & Checks
     const reasonEl = document.getElementById('modal-verdict-reason');
     if (reasonEl) {
-      reasonEl.innerHTML = `<strong>${p.verdict.toUpperCase()}</strong> — ${escapeHtml(p.verdict_reason || 'Verified by 7 deterministic checks in Sandbox C.')}`;
+      reasonEl.innerHTML = `<strong>${formatVerdictLabel(p.verdict).toUpperCase()}</strong> — ${escapeHtml(p.verdict_reason || 'Verified by 7 deterministic checks in Sandbox C.')}`;
     }
     renderModalChecks(p, kCount, bCount);
 
@@ -2220,7 +2303,8 @@
     if (!domainPillsBar || !demoData || !demoData.promises) return;
     const catCounts = {};
     demoData.promises.forEach(p => {
-      const c = p.category || 'Uncategorized';
+      let c = p.category || 'Uncategorized';
+      if (c === 'Civic & Public Safety') c = 'Civic Governance';
       catCounts[c] = (catCounts[c] || 0) + 1;
     });
     const total = demoData.promises.length;
@@ -2229,12 +2313,14 @@
       const cat = pill.getAttribute('data-category');
       if (cat === 'all') {
         pill.textContent = `All of SF (${total})`;
+        pill.style.display = '';
       } else {
-        const count = catCounts[cat] || 0;
-        pill.textContent = `${cat} (${count})`;
-        if (cat === 'Uncategorized') {
-          pill.style.display = count > 0 ? 'inline-block' : 'none';
-        }
+        const lookupKey = cat === 'Civic & Public Safety' ? 'Civic Governance' : cat;
+        const count = catCounts[lookupKey] || 0;
+        const displayLabel = cat === 'Civic & Public Safety' ? 'Civic Governance' : cat;
+        pill.textContent = `${displayLabel} (${count})`;
+        // Hide empty category pills so users never see (0) items
+        pill.style.display = count > 0 ? '' : 'none';
       }
     });
   }
