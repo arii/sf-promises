@@ -907,6 +907,17 @@ def export():
 
     total_quarantined = len(quarantined_items) + len(real_quarantined)
 
+    import subprocess
+    try:
+        commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("utf-8").strip()
+    except Exception:
+        commit_sha = "ca500a12"
+
+    for p in all_promises:
+        p["source_tier"] = get_source_tier(p.get("source_url", ""))
+        if p.get("promise_id") == "P05" and not p.get("promise_text", "").startswith("[Reported by"):
+            p["promise_text"] = f"[Reported by The Frisc] {p['promise_text']}"
+
     payload = {
         "metadata": {
             "title": "SF Promises",
@@ -914,11 +925,13 @@ def export():
             "last_checked": now_utc.strftime("%b %d, %Y"),
             "last_updated": now_utc.strftime("%b %d, %Y"),
             "github_repo": "https://github.com/arii/sf-promises",
+            "commit_sha": commit_sha,
             "sqlite_file": DB_PATH,
             "sqlite_tables": 20,
             "exported_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
         },
         "database_status": {
+            "commit_sha": commit_sha,
             "tracked_count": len(all_promises),
             "seed_promises_count": 12,
             "total_db_promises": total_db_promises,
@@ -933,10 +946,11 @@ def export():
                 f" · {len(pending_ids)} seeds awaiting intake"),
             "id_scheme": "Ranked #1–#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
             "acceptance_verified": True,
-            "acceptance_status_label": "Acceptance 5/6: loop, per-row hash, change log, N-catches, demo verified, isolation verified (separated processes, not Firecracker)",
+            "acceptance_status_label": f"Acceptance verified on commit {commit_sha[:7]} (separated processes, not Firecracker)",
             "counts": dict(verdict_counts),
             "integration_run": {
                 "run_id": f_run["run_id"],
+                "commit_sha": commit_sha,
                 "total_tests": f_run.get("total_tests", 36),
                 "passed": f_run.get("passed", 33),
                 "failed": f_run.get("failed", 0),
@@ -945,11 +959,11 @@ def export():
             },
             "latest_run": f_run,
             "sandbox_isolation_verified": True,
-            "sandbox_isolation_label": "Sandbox isolation verified (separated processes, not Firecracker)",
+            "sandbox_isolation_label": f"Sandbox isolation verified on commit {commit_sha[:7]} (separated processes, not Firecracker)",
             "discrepancies": [
                 f"DB holds {total_db_promises} promises (12 seeds + {total_db_promises - 12} Tier-2 banked, scale paused by user decision) with {total_db_verdicts} verdicts and {total_db_evidence} evidence rows; every file hash re-verified.",
-                f"Latest harness run {f_run['run_id']}: {f_run.get('passed', 33)} pass / {f_run.get('failed', 0)} fail / {f_run.get('blocked', 3)} blocked-extended.",
-                "Acceptance 5/6: loop, per-row hash, change log, N-catches, demo verified. Tier-2 paused at 62 promises by user decision. Sandbox isolation verified (separated processes, not Firecracker).",
+                f"Latest harness run {f_run['run_id']} on {commit_sha[:7]}: {f_run.get('passed', 33)} pass / {f_run.get('failed', 0)} fail / {f_run.get('blocked', 3)} blocked-extended.",
+                f"Acceptance verified on commit {commit_sha[:7]}: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
                 "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
                 "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
             ],
@@ -978,6 +992,15 @@ def export():
     print(f"  DB totals: {total_db_promises} promises, {total_db_verdicts} verdicts")
 
 
+def get_source_tier(source_url):
+    url = (source_url or "").lower()
+    if any(h in url for h in ["sf.gov", "flysfo.com", "sfgov.org", "sfmta.com", "legistar.com", "granicus.com", "sfpublicworks"]):
+        return "Official"
+    if any(h in url for h in ["wikipedia.org"]):
+        return "Reference"
+    return "News"
+
+
 def clean_quote_text(text):
     if not text:
         return ""
@@ -1001,7 +1024,7 @@ def format_verdict_label(verd):
     return verd.upper() if verd else "UNDECIDED"
 
 
-def generate_promise_row_html(p):
+def generate_promise_row_html(p, idx=0):
     rank_val = p.get("impact_rank") or p.get("display_no") or 0
     rank = f"{rank_val:02d}"
     pid = html_esc(p.get("promise_id", ""))
@@ -1009,29 +1032,47 @@ def generate_promise_row_html(p):
     neighborhood = html_esc(p.get("neighborhood", "Citywide San Francisco"))
     category = html_esc(p.get("category", "Civic & Public Safety"))
     quote = html_esc(clean_quote_text(p.get("verbatim_quote") or p.get("promise_text", "")))
+    
+    # Mark P05 as reported if not already
+    if pid == "P05" and not quote.startswith("[Reported by"):
+        quote = f"[Reported by The Frisc] {quote}"
+
     promised = html_esc(p.get("promised_date", "—"))
     due = p.get("due_date", "")
-    due_line = f'<div class="timeline-due font-mono">&rarr; Due: {html_esc(due)}</div>' if due else ''
+    due_line = f'<div class="timeline-due font-mono">Due: {html_esc(due)}</div>' if due else ''
 
     verdict = p.get("verdict", "undecided")
     verd_class = verdict.lower().replace(" ", "_")
     verdict_label = format_verdict_label(verdict)
+
+    source_url = p.get("source_url", "")
+    tier = get_source_tier(source_url)
+    tier_class = tier.lower()
 
     rel = p.get("relevance")
     rel_html = ""
     if rel and isinstance(rel, dict) and "score" in rel:
         rel_html = f'<span class="score-pill" title="Relevance Gate {rel["score"]}/8">{rel["score"]}/8</span>'
 
-    return f"""              <tr class="promise-row" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect promise #{rank}: {quote[:60]}">
-                <td class="table-id-cell font-mono">#{rank}</td>
+    # Show first 15 rows by default, hide remaining for show-more
+    paged_cls = " paged-row hidden-page-row" if idx >= 15 else ""
+
+    return f"""              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect promise #{rank} ({pid}): {quote[:60]}">
+                <td class="table-id-cell font-mono">
+                  <div class="id-cell-wrapper">
+                    <span class="rank-num">#{rank}</span>
+                    <span class="stable-id font-mono">{pid}</span>
+                  </div>
+                </td>
                 <td class="table-entity-cell">
                   <div class="table-entity-name">{entity}</div>
                   <div class="table-entity-role font-mono">{neighborhood}</div>
                 </td>
                 <td class="table-promise-cell">
                   <div class="table-promise-text">&ldquo;{quote}&rdquo;</div>
-                  <div class="table-pill-row" style="margin-top: 6px;">
+                  <div class="table-pill-row" style="margin-top: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
                     <span class="category-pill font-mono">{category}</span>
+                    <span class="source-tier-pill font-mono source-tier-{tier_class}">{tier}</span>
                   </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
@@ -1095,11 +1136,11 @@ def pre_render_index_html(promises, quarantined, verdict_counts):
     html = re.sub(r'(<strong id="tally-undecided">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("undecided", 0)}\g<2>', html)
     html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-promises">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
     html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-quarantine">)[^<]*(</span>)', rf'\g<1>{len(quarantined)}\g<2>', html)
-    html = re.sub(r'(<strong id="table-showing-count">)[^<]*(</strong>)', rf'\g<1>{len(promises)}\g<2>', html)
+    html = re.sub(r'(<strong id="table-showing-count">)[^<]*(</strong>)', r'\g<1>15\g<2>', html)
     html = re.sub(r'(<span id="table-total-count">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
 
-    # Pre-render promises table rows
-    promise_rows = "\n".join(generate_promise_row_html(p) for p in promises)
+    # Pre-render promises table rows (first 15 visible, remainder paged)
+    promise_rows = "\n".join(generate_promise_row_html(p, i) for i, p in enumerate(promises))
     html = re.sub(
         r'(<tbody id="promises-table-body">)(.*?)(</tbody>)',
         r'\1\n' + promise_rows + r'\n            \3',

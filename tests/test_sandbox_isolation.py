@@ -2,7 +2,13 @@
 
 import pytest
 from pathlib import Path
-from src.advocates import stage_advocate, check_staging_isolation, AdvocateClaim, AdvocateBundle
+from src.advocates import (
+    stage_advocate,
+    check_staging_isolation,
+    check_sandbox_network,
+    AdvocateClaim,
+    AdvocateBundle
+)
 
 
 def test_kept_sandbox_cannot_read_broken_staging(tmp_path):
@@ -50,3 +56,52 @@ def test_allowed_role_staging_access(tmp_path):
     check_staging_isolation(role="kept", target_path=kept_file)
     check_staging_isolation(role="broken", target_path=broken_file)
     check_staging_isolation(role="investigate", target_path=inv_file)
+
+
+def test_advocate_cannot_write_to_other_role_staging(tmp_path):
+    staging_dir = tmp_path / "staging"
+    staging_dir.mkdir()
+    broken_file = staging_dir / "broken_P02.json"
+    kept_file = staging_dir / "kept_P02.json"
+
+    # Kept advocate attempting to write to broken file must fail
+    with pytest.raises(PermissionError, match="Isolation violation.*kept advocate cannot write"):
+        check_staging_isolation(role="kept", target_path=broken_file, mode="write")
+
+    # Broken advocate attempting to write to kept file must fail
+    with pytest.raises(PermissionError, match="Isolation violation.*broken advocate cannot write"):
+        check_staging_isolation(role="broken", target_path=kept_file, mode="write")
+
+    # Valid writes pass
+    check_staging_isolation(role="kept", target_path=kept_file, mode="write")
+    check_staging_isolation(role="broken", target_path=broken_file, mode="write")
+
+
+def test_advocate_cannot_touch_core_database(tmp_path):
+    db_file = tmp_path / "promises.db"
+
+    # No role can read or write directly to core database promises.db
+    with pytest.raises(PermissionError, match="cannot write core database"):
+        check_staging_isolation(role="kept", target_path=db_file, mode="write")
+
+    with pytest.raises(PermissionError, match="cannot read core database"):
+        check_staging_isolation(role="broken", target_path=db_file, mode="read")
+
+
+def test_advocate_network_egress_blocked():
+    # Kept and broken advocates cannot perform raw outbound network calls
+    with pytest.raises(ConnectionRefusedError, match="Network egress blocked in advocate sandbox"):
+        check_sandbox_network(role="kept", target_url="https://api.external.com/data")
+
+    with pytest.raises(ConnectionRefusedError, match="Network egress blocked in advocate sandbox"):
+        check_sandbox_network(role="broken", target_url="https://raw.githubusercontent.com/leak")
+
+
+def test_fetcher_network_allowlist_enforcement():
+    # Fetcher allowed on official municipal / news allowlist
+    check_sandbox_network(role="fetcher", target_url="https://sf.gov/news/budget-2024")
+    check_sandbox_network(role="fetcher", target_url="https://www.flysfo.com/about/press-releases")
+
+    # Fetcher blocked on unapproved external domain
+    with pytest.raises(ConnectionRefusedError, match="not on allowlist"):
+        check_sandbox_network(role="fetcher", target_url="https://untrusted-site.xyz/fake-news")

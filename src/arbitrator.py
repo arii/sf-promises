@@ -1,6 +1,6 @@
 import re
 import sqlite3
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timezone, timedelta
 from typing import Any
 
 from src.checks import (
@@ -33,6 +33,20 @@ def get_tier(evidence_type: str) -> int:
     return TIER_WEIGHTS.get(evidence_type.lower(), 1)
 
 
+def compute_next_check_at(verdict: str, as_of: date | None = None) -> date | None:
+    """Return the next scheduled verification date to ensure persistent durability."""
+    base = as_of or date.today()
+    if verdict == "kept":
+        # Kept commitments are rechecked every 90 days to verify survival / prevent Whole Foods regression
+        return base + timedelta(days=90)
+    elif verdict in ("in_progress", "stalled", "needs_human_review"):
+        # In-progress or review commitments recheck every 30 days
+        return base + timedelta(days=30)
+    elif verdict == "undecided":
+        return base + timedelta(days=60)
+    return None
+
+
 def decide_verdict(
     kept_claims: list[dict[str, Any]],
     broken_claims: list[dict[str, Any]],
@@ -42,6 +56,8 @@ def decide_verdict(
     ambiguous_wording: bool = False,
     reading_used: str | None = None,
     interim_progress: bool = False,
+    is_negative: bool = False,
+    framing_dispute: bool = False,
 ) -> tuple[str, str]:
     """
     Arbitrate verdict based on the deterministic rubric in 02-technical-design.md:
@@ -68,6 +84,19 @@ def decide_verdict(
 
     kept_max = max(kept_tiers) if kept_tiers else 0
     broken_max = max(broken_tiers) if broken_tiers else 0
+
+    # Framing dispute / human review rule:
+    # If both sides provide strong primary claims (tier >= 3) or an explicit framing dispute is flagged
+    if framing_dispute or (kept_max >= 3 and broken_max >= 3):
+        return "needs_human_review", "competing primary sources with opposite framing require human arbitration"
+
+    # Negative promise rule ("never do X" / "will not Y"):
+    # Proving an absence: broken if violation incident >= tier 2; kept if observation window clean
+    if is_negative:
+        if broken_max >= 2:
+            return "broken", "contrary evidence proves violation of negative promise"
+        if kept_max >= 2 or (kept_max == 0 and broken_max == 0):
+            return "kept", "absence of contrary incident across observation period verifies negative promise"
 
     # Rule 1: Broken if due date passed with no passing kept evidence
     if due_date and today > due_date and kept_max == 0:
@@ -236,7 +265,7 @@ def write_verdict_transaction(
     with conn:
         conn.execute("PRAGMA busy_timeout = 30000")
         if quarantine_reason is None:
-            if verdict not in ("kept", "in_progress", "broken", "stalled", "undecided"):
+            if verdict not in ("kept", "in_progress", "broken", "stalled", "undecided", "needs_human_review"):
                 raise ValueError(f"bad verdict: {verdict!r}")
             conn.execute(
                 """INSERT INTO promises (promise_id, city_id, entity_id, promise_text,
@@ -375,4 +404,54 @@ def compute_deterministic_verdict(
             return "DELAYED_OR_PARTIAL"
         return "KEPT"
     return "IN_PROGRESS"
+
+
+def reopen_promise_verdict(
+    conn: sqlite3.Connection,
+    promise_id: str,
+    new_verdict: str,
+    reason: str,
+    reviewer: str = "human_editor",
+    reading_used: str | None = None,
+) -> dict[str, str]:
+    """Turn corrections principle into append-only code.
+    Inserts a new verdict row and logs the transition in change_log.
+    """
+    now = utcnow()
+    cur = conn.execute("SELECT status FROM promises WHERE promise_id = ?", (promise_id,))
+    row = cur.fetchone()
+    if not row:
+        raise ValueError(f"Promise {promise_id} does not exist in promises table")
+    old_status = row[0]
+
+    with conn:
+        conn.execute("PRAGMA busy_timeout = 30000")
+        conn.execute(
+            "UPDATE promises SET status = ?, updated_at = ? WHERE promise_id = ?",
+            (new_verdict, now, promise_id)
+        )
+        ts_suffix = int(datetime.now(timezone.utc).timestamp())
+        verdict_id = f"VER-{promise_id}-{ts_suffix}"
+        conn.execute(
+            """INSERT INTO verdicts (verdict_id, promise_id, verdict, reason,
+               reading_used, decided_at, decided_by)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (verdict_id, promise_id, new_verdict, reason, reading_used, now, reviewer),
+        )
+        log_id = f"LOG-{promise_id}-{ts_suffix}"
+        conn.execute(
+            """INSERT INTO change_log (log_id, promise_id, change_date,
+               old_status, new_status, reason, evidence_file_path)
+               VALUES (?, ?, ?, ?, ?, ?, NULL)""",
+            (log_id, promise_id, now, old_status, new_verdict, reason),
+        )
+
+    return {
+        "promise_id": promise_id,
+        "old_status": old_status,
+        "new_status": new_verdict,
+        "verdict_id": verdict_id,
+        "log_id": log_id,
+        "decided_at": now,
+    }
 

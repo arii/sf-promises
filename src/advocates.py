@@ -31,10 +31,30 @@ class AdvocateBundle(BaseModel):
     claims: list[AdvocateClaim] = Field(max_length=8)
 
 
-def check_staging_isolation(*, role: Literal["kept", "broken", "investigate"], target_path: str | Path) -> None:
-    """Enforce that an advocate or investigator in a specific role cannot read other roles' files."""
+def check_staging_isolation(
+    *,
+    role: Literal["kept", "broken", "investigate"],
+    target_path: str | Path,
+    mode: Literal["read", "write"] = "read"
+) -> None:
+    """Enforce that an advocate or investigator in a specific role cannot read or write other roles' files or core database."""
     path_str = str(target_path)
     filename = Path(target_path).name
+
+    # Core database protection: no advocate or investigator can touch promises.db
+    if "promises.db" in filename or "promises.db" in path_str:
+        raise PermissionError(f"Isolation violation: role '{role}' cannot {mode} core database promises.db")
+
+    if mode == "write":
+        if role == "kept" and not filename.startswith("kept_"):
+            raise PermissionError(f"Isolation violation: kept advocate cannot write to non-kept staging path: {filename}")
+        if role == "broken" and not filename.startswith("broken_"):
+            raise PermissionError(f"Isolation violation: broken advocate cannot write to non-broken staging path: {filename}")
+        if role == "investigate" and not filename.startswith("investigate_"):
+            raise PermissionError(f"Isolation violation: investigator cannot write to advocate staging path: {filename}")
+        return
+
+    # Read checks
     if role == "kept" and (filename.startswith("broken_") or "/broken_" in path_str):
         raise PermissionError(f"Isolation violation: kept advocate cannot read broken staging file: {filename}")
     if role == "broken" and (filename.startswith("kept_") or "/kept_" in path_str):
@@ -44,6 +64,21 @@ def check_staging_isolation(*, role: Literal["kept", "broken", "investigate"], t
         or filename.startswith("broken_") or "/broken_" in path_str
     ):
         raise PermissionError(f"Isolation violation: investigator cannot read advocate staging file: {filename}")
+
+
+def check_sandbox_network(role: str, target_url: str) -> None:
+    """Negative network boundary check: advocate workers are not permitted raw egress."""
+    target_lower = target_url.lower()
+    if role in ("kept", "broken"):
+        # Advocate sandboxes must operate purely on pre-fetched local sources in source_root
+        raise ConnectionRefusedError(f"Network egress blocked in advocate sandbox for role '{role}': {target_url}")
+    if role == "fetcher":
+        # Fetcher can only access approved municipal/news allowlisted domains
+        from src.checks import DOMAIN_ALLOWLIST
+        import urllib.parse
+        host = urllib.parse.urlparse(target_url).hostname or ""
+        if not any(host == d or host.endswith("." + d) for d in DOMAIN_ALLOWLIST):
+            raise ConnectionRefusedError(f"Network egress blocked: domain '{host}' not on allowlist")
 
 
 def stage_advocate(*, staging_root, source_root, promise_id, role, response):

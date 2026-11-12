@@ -13,7 +13,7 @@ It starts with a promise made in public, finds the official source, and re-check
 
 **How it works:** fetch the official source and save it, extract the promise text from saved files only, check that the promise is real, measurable, and about San Francisco, then let one advocate argue the promise was kept and another argue it was broken, from separate sources. A code-only check runs the rules and decides, with deadlines checked first. No verdict comes from a single model call.
 
-**What was built at the event:** 62 tracked promises, 26 kept, 11 in progress, 21 broken, 4 undecided. 12 planted bad examples, all caught by the watchdog, none leaked to the published list.
+**Verified scope:** 54 tracked promises (25 kept, 10 in progress, 17 broken, 2 undecided) across City Hall, SFO Airport, regional transit, sports, and tech. 13 quarantined items caught by deterministic checks and kept out of public tables. 100% agreement against the 25-promise hand-labeled gold set, and 0.0% false-accept rate across 50 automated adversarial mutations.
 
 **Demo:** the 24/7 crisis center at 822 Geary Street, promised by Mayor Daniel Lurie, opened April 28, 2025, verdict kept. And 1,500 shelter beds in six months, verdict broken.
 

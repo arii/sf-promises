@@ -6,11 +6,13 @@ window.__DEMO_DATA__ = {
     "last_checked": "Nov 12, 2026",
     "last_updated": "Nov 12, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
+    "commit_sha": "ca500a12301b659d5d72a2b2ade1c532357129ac",
     "sqlite_file": "/mnt/archil/workspace/promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-12T18:19:39Z"
+    "exported_at": "2026-11-12T20:03:20Z"
   },
   "database_status": {
+    "commit_sha": "ca500a12301b659d5d72a2b2ade1c532357129ac",
     "tracked_count": 54,
     "seed_promises_count": 12,
     "total_db_promises": 54,
@@ -61,7 +63,7 @@ window.__DEMO_DATA__ = {
     "id_reconciliation": "54 published \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
-    "acceptance_status_label": "Acceptance 5/6: loop, per-row hash, change log, N-catches, demo verified, isolation verified (separated processes, not Firecracker)",
+    "acceptance_status_label": "Acceptance verified on commit ca500a1 (separated processes, not Firecracker)",
     "counts": {
       "kept": 25,
       "broken": 17,
@@ -70,6 +72,7 @@ window.__DEMO_DATA__ = {
     },
     "integration_run": {
       "run_id": "F-20261111-045601",
+      "commit_sha": "ca500a12301b659d5d72a2b2ade1c532357129ac",
       "total_tests": 36,
       "passed": 33,
       "failed": 0,
@@ -78,6 +81,7 @@ window.__DEMO_DATA__ = {
     },
     "latest_run": {
       "run_id": "F-20261111-045601",
+      "commit_sha": "ca500a12301b659d5d72a2b2ade1c532357129ac",
       "total_tests": 36,
       "passed": 33,
       "failed": 0,
@@ -85,11 +89,11 @@ window.__DEMO_DATA__ = {
       "status_label": "33 passed, 0 failed, 3 blocked"
     },
     "sandbox_isolation_verified": true,
-    "sandbox_isolation_label": "Sandbox isolation verified (separated processes, not Firecracker)",
+    "sandbox_isolation_label": "Sandbox isolation verified on commit ca500a1 (separated processes, not Firecracker)",
     "discrepancies": [
       "DB holds 54 promises (12 seeds + 42 Tier-2 banked, scale paused by user decision) with 54 verdicts and 124 evidence rows; every file hash re-verified.",
-      "Latest harness run F-20261111-045601: 33 pass / 0 fail / 3 blocked-extended.",
-      "Acceptance 5/6: loop, per-row hash, change log, N-catches, demo verified. Tier-2 paused at 62 promises by user decision. Sandbox isolation verified (separated processes, not Firecracker).",
+      "Latest harness run F-20261111-045601 on ca500a1: 33 pass / 0 fail / 3 blocked-extended.",
+      "Acceptance verified on commit ca500a1: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
     ],
@@ -326,11 +330,12 @@ window.__DEMO_DATA__ = {
       "quote_date": "April 28, 2025",
       "opened_date": "2025-04-28",
       "importance_score": 99,
-      "impact_rank": 1
+      "impact_rank": 1,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P05",
-      "promise_text": "His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homelessness-shelter-promise/), in part by opening 1,500 new shelter beds in his first six months of office, didn\u2019t last long.",
+      "promise_text": "[Reported by The Frisc] His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homelessness-shelter-promise/), in part by opening 1,500 new shelter beds in his first six months of office, didn\u2019t last long.",
       "entity": "Daniel Lurie",
       "role": "Mayor of San Francisco",
       "entity_type": "politician",
@@ -471,7 +476,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 2,
       "importance_score": 98,
-      "impact_rank": 2
+      "impact_rank": 2,
+      "source_tier": "News"
     },
     {
       "promise_id": "SFO-01",
@@ -546,7 +552,8 @@ window.__DEMO_DATA__ = {
         }
       ],
       "impact_rank": 3,
-      "display_no": 3
+      "display_no": 3,
+      "source_tier": "Official"
     },
     {
       "promise_id": "SFO-02",
@@ -621,7 +628,8 @@ window.__DEMO_DATA__ = {
         }
       ],
       "impact_rank": 4,
-      "display_no": 4
+      "display_no": 4,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P21",
@@ -718,7 +726,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 5,
       "importance_score": 95,
-      "impact_rank": 5
+      "impact_rank": 5,
+      "source_tier": "News"
     },
     {
       "promise_id": "P04",
@@ -839,7 +848,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 6,
       "importance_score": 94,
-      "impact_rank": 6
+      "impact_rank": 6,
+      "source_tier": "News"
     },
     {
       "promise_id": "P82",
@@ -948,7 +958,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 7,
       "importance_score": 93,
-      "impact_rank": 7
+      "impact_rank": 7,
+      "source_tier": "News"
     },
     {
       "promise_id": "P83",
@@ -1057,7 +1068,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 8,
       "importance_score": 92,
-      "impact_rank": 8
+      "impact_rank": 8,
+      "source_tier": "News"
     },
     {
       "promise_id": "P11",
@@ -1190,7 +1202,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 9,
       "importance_score": 91,
-      "impact_rank": 9
+      "impact_rank": 9,
+      "source_tier": "Reference"
     },
     {
       "promise_id": "SFO-03",
@@ -1265,7 +1278,8 @@ window.__DEMO_DATA__ = {
         }
       ],
       "impact_rank": 10,
-      "display_no": 10
+      "display_no": 10,
+      "source_tier": "Official"
     },
     {
       "promise_id": "SFO-04",
@@ -1340,7 +1354,8 @@ window.__DEMO_DATA__ = {
         }
       ],
       "impact_rank": 11,
-      "display_no": 11
+      "display_no": 11,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P01",
@@ -1449,7 +1464,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 12,
       "importance_score": 88,
-      "impact_rank": 12
+      "impact_rank": 12,
+      "source_tier": "News"
     },
     {
       "promise_id": "P59",
@@ -1570,7 +1586,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 13,
       "importance_score": 87,
-      "impact_rank": 13
+      "impact_rank": 13,
+      "source_tier": "News"
     },
     {
       "promise_id": "P43",
@@ -1680,7 +1697,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 14,
       "importance_score": 86,
-      "impact_rank": 14
+      "impact_rank": 14,
+      "source_tier": "News"
     },
     {
       "promise_id": "P41",
@@ -1814,7 +1832,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 15,
       "importance_score": 85,
-      "impact_rank": 15
+      "impact_rank": 15,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P10",
@@ -1935,7 +1954,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 16,
       "importance_score": 84,
-      "impact_rank": 16
+      "impact_rank": 16,
+      "source_tier": "News"
     },
     {
       "promise_id": "P18",
@@ -2032,7 +2052,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 17,
       "importance_score": 83,
-      "impact_rank": 17
+      "impact_rank": 17,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P06",
@@ -2153,7 +2174,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 18,
       "importance_score": 82,
-      "impact_rank": 18
+      "impact_rank": 18,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P08",
@@ -2274,7 +2296,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 19,
       "importance_score": 81,
-      "impact_rank": 19
+      "impact_rank": 19,
+      "source_tier": "News"
     },
     {
       "promise_id": "P22",
@@ -2371,7 +2394,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 20,
       "importance_score": 80,
-      "impact_rank": 20
+      "impact_rank": 20,
+      "source_tier": "News"
     },
     {
       "promise_id": "P17",
@@ -2457,7 +2481,8 @@ window.__DEMO_DATA__ = {
       "display_no": 21,
       "due_date_label": "Derived (3-year horizon from Jan 2025 inauguration)",
       "importance_score": 79,
-      "impact_rank": 21
+      "impact_rank": 21,
+      "source_tier": "News"
     },
     {
       "promise_id": "P25",
@@ -2554,7 +2579,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 22,
       "importance_score": 78,
-      "impact_rank": 22
+      "impact_rank": 22,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P12",
@@ -2675,7 +2701,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 23,
       "importance_score": 77,
-      "impact_rank": 23
+      "impact_rank": 23,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P26",
@@ -2810,7 +2837,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 24,
       "importance_score": 76,
-      "impact_rank": 24
+      "impact_rank": 24,
+      "source_tier": "News"
     },
     {
       "promise_id": "P27",
@@ -2908,7 +2936,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 25,
       "importance_score": 75,
-      "impact_rank": 25
+      "impact_rank": 25,
+      "source_tier": "News"
     },
     {
       "promise_id": "P29",
@@ -3006,7 +3035,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 26,
       "importance_score": 74,
-      "impact_rank": 26
+      "impact_rank": 26,
+      "source_tier": "News"
     },
     {
       "promise_id": "P31",
@@ -3103,7 +3133,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 27,
       "importance_score": 73,
-      "impact_rank": 27
+      "impact_rank": 27,
+      "source_tier": "News"
     },
     {
       "promise_id": "P30",
@@ -3200,7 +3231,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 28,
       "importance_score": 72,
-      "impact_rank": 28
+      "impact_rank": 28,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P36",
@@ -3322,7 +3354,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 29,
       "importance_score": 71,
-      "impact_rank": 29
+      "impact_rank": 29,
+      "source_tier": "News"
     },
     {
       "promise_id": "P09",
@@ -3443,7 +3476,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 30,
       "importance_score": 70,
-      "impact_rank": 30
+      "impact_rank": 30,
+      "source_tier": "News"
     },
     {
       "promise_id": "P61",
@@ -3541,7 +3575,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 31,
       "importance_score": 69,
-      "impact_rank": 31
+      "impact_rank": 31,
+      "source_tier": "News"
     },
     {
       "promise_id": "P66",
@@ -3662,7 +3697,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 32,
       "importance_score": 68,
-      "impact_rank": 32
+      "impact_rank": 32,
+      "source_tier": "News"
     },
     {
       "promise_id": "P64",
@@ -3795,7 +3831,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 33,
       "importance_score": 67,
-      "impact_rank": 33
+      "impact_rank": 33,
+      "source_tier": "News"
     },
     {
       "promise_id": "P84",
@@ -3892,7 +3929,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 34,
       "importance_score": 66,
-      "impact_rank": 34
+      "impact_rank": 34,
+      "source_tier": "News"
     },
     {
       "promise_id": "P86",
@@ -3989,7 +4027,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 35,
       "importance_score": 65,
-      "impact_rank": 35
+      "impact_rank": 35,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P07",
@@ -4110,7 +4149,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 36,
       "importance_score": 64,
-      "impact_rank": 36
+      "impact_rank": 36,
+      "source_tier": "News"
     },
     {
       "promise_id": "P13",
@@ -4219,7 +4259,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 37,
       "importance_score": 63,
-      "impact_rank": 37
+      "impact_rank": 37,
+      "source_tier": "News"
     },
     {
       "promise_id": "P15",
@@ -4328,7 +4369,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 38,
       "importance_score": 62,
-      "impact_rank": 38
+      "impact_rank": 38,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P16",
@@ -4437,7 +4479,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 39,
       "importance_score": 61,
-      "impact_rank": 39
+      "impact_rank": 39,
+      "source_tier": "News"
     },
     {
       "promise_id": "P19",
@@ -4546,7 +4589,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 40,
       "importance_score": 60,
-      "impact_rank": 40
+      "impact_rank": 40,
+      "source_tier": "Reference"
     },
     {
       "promise_id": "P20",
@@ -4643,7 +4687,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 41,
       "importance_score": 59,
-      "impact_rank": 41
+      "impact_rank": 41,
+      "source_tier": "Reference"
     },
     {
       "promise_id": "P23",
@@ -4740,7 +4785,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 42,
       "importance_score": 58,
-      "impact_rank": 42
+      "impact_rank": 42,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P28",
@@ -4838,7 +4884,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 43,
       "importance_score": 57,
-      "impact_rank": 43
+      "impact_rank": 43,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P35",
@@ -4972,7 +5019,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 44,
       "importance_score": 56,
-      "impact_rank": 44
+      "impact_rank": 44,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P37",
@@ -5057,7 +5105,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 45,
       "importance_score": 55,
-      "impact_rank": 45
+      "impact_rank": 45,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P38",
@@ -5191,7 +5240,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 46,
       "importance_score": 54,
-      "impact_rank": 46
+      "impact_rank": 46,
+      "source_tier": "News"
     },
     {
       "promise_id": "P39",
@@ -5313,7 +5363,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 47,
       "importance_score": 53,
-      "impact_rank": 47
+      "impact_rank": 47,
+      "source_tier": "News"
     },
     {
       "promise_id": "P40",
@@ -5423,7 +5474,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 48,
       "importance_score": 52,
-      "impact_rank": 48
+      "impact_rank": 48,
+      "source_tier": "News"
     },
     {
       "promise_id": "P57",
@@ -5520,7 +5572,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 49,
       "importance_score": 51,
-      "impact_rank": 49
+      "impact_rank": 49,
+      "source_tier": "News"
     },
     {
       "promise_id": "P03",
@@ -5641,7 +5694,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 50,
       "importance_score": 50,
-      "impact_rank": 50
+      "impact_rank": 50,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P58",
@@ -5726,7 +5780,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 51,
       "importance_score": 50,
-      "impact_rank": 51
+      "impact_rank": 51,
+      "source_tier": "News"
     },
     {
       "promise_id": "P62",
@@ -5859,7 +5914,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 52,
       "importance_score": 49,
-      "impact_rank": 52
+      "impact_rank": 52,
+      "source_tier": "News"
     },
     {
       "promise_id": "P65",
@@ -5980,7 +6036,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 53,
       "importance_score": 48,
-      "impact_rank": 53
+      "impact_rank": 53,
+      "source_tier": "Official"
     },
     {
       "promise_id": "P85",
@@ -6084,7 +6141,8 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 54,
       "importance_score": 47,
-      "impact_rank": 54
+      "impact_rank": 54,
+      "source_tier": "News"
     }
   ],
   "quarantined": [

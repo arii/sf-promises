@@ -8,10 +8,11 @@ officials and other entities; expand only when a source establishes a real,
 attributable commitment. A project announcement, forecast, or search snippet
 alone is not automatically a promise.
 
-The event target is a working sourced demo, then a larger set of up to 100
-SF-relevant promises. These are targets, not claims about how many promises
-have been verified. See the [event runbook](Archil%20Hackathon%20Nov%2010%20-%20SF%20Promises%20Export/10-event-runbook.md)
-for current lane progress and acceptance checks.
+The event target is a working sourced demo, evaluated across a verified scope
+of 54 public commitments (12 primary seeds plus 42 civic and regional candidates).
+These 54 commitments represent the current complete benchmark scope; 38 additional
+seeds remain banked for subsequent intake rounds. See the [event runbook](Archil%20Hackathon%20Nov%2010%20-%20SF%20Promises%20Export/10-event-runbook.md)
+for lane progress and acceptance checks.
 
 ## Evidence and verdicts
 
@@ -40,16 +41,46 @@ for current lane progress and acceptance checks.
   database writes; a separate load step writes `promises_pending`. Only the
   Verdict lane publishes to `promises`, `verdicts`, `verifications`, and
   `quarantined`.
-- Advocate outputs are staged separately. The intended sandbox isolation and
-  end-to-end execution must be verified, not inferred from code or fixtures.
+- Advocate outputs are staged separately. The isolation model relies on
+  separated processes (not Firecracker microVMs) and is verified via automated
+  negative boundary tests.
 - Checkpoint the mounted disk after coordinating and quiescing writers. Name
   checkpoints with a Git commit and timestamp; mark a dirty worktree explicitly.
   An Archil checkpoint does not capture uncommitted repository files. Verify
   checkpoint creation and restore consistency separately.
-- The staging and quarantine foreign-key model remains an integration issue:
-  staged references can precede published promises, and quarantine currently
-  requires a different FK handling path. Do not describe the whole database as
-  FK-clean until the contract and checks are resolved.
+- Foreign-key architecture contract: Core relational tables (`promises`,
+  `verdicts`, `verifications`, and `evidence`) strictly enforce SQLite foreign
+  keys (`PRAGMA foreign_keys = ON;`). In contrast, staging directories (`staging/`)
+  and the `quarantined` table operate as decoupled pre-publication quarantine buffers.
+  Quarantined rows do not reference `promises.promise_id` because rejected claims
+  are never admitted into the public registry. This architectural boundary resolves
+  the pre-verdict FK question without dangling references in core tables.
+
+## Threat Model: Process Separation & Storage Boundaries
+
+The verification pipeline runs adversarial advocate models and deterministic
+arbitrator code across separated OS processes ("separated processes, not Firecracker").
+
+### What Separated Processes Protect
+1. **File isolation across roles**: Advocate A (`kept`) cannot read or write
+   Advocate B's staging files (`broken_*.json`), and neither advocate can write
+   to `promises.db` or the arbitrator verification log.
+2. **Disjoint runtime memory**: Separate worker address spaces prevent in-memory
+   prompt leakage or adversarial manipulation between the affirming and contradicting
+   evaluators.
+3. **Execution containment**: Arbitrator checks execute independently with zero model
+   calls (`0 LLM calls in arbitrator`), ensuring deterministic verdict computation.
+
+### What Separated Processes Do NOT Protect Against
+1. **Shared host kernel vulnerabilities**: Because workers share the Linux kernel,
+   kernel exploits could break process isolation.
+2. **Shared host filesystem mount**: Workers execute on the same mounted disk
+   (`/mnt/archil`). Path boundaries are enforced at the application and OS permission
+   level, not through hypervisor memory virtualization.
+3. **Uncontrolled external egress**: External HTTP network calls must be explicitly
+   restricted in advocate workers to prevent data exfiltration.
+
+All published isolation claims must explicitly read "separated processes, not Firecracker".
 
 ## Demo
 

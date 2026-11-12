@@ -149,22 +149,54 @@ async function main() {
     await sleep(600);
     await client.captureScreenshot('demo/screenshot_quarantine.png');
 
-    // 7. Tracked Promises Table (Desktop)
-    console.log('Capturing Tracked Promises Table (Desktop)...');
+    // 7. Tracked Promises Table (Desktop 1280px)
+    console.log('Capturing Tracked Promises Table (1280px)...');
     await client.eval('document.getElementById("tab-btn-promises").click()');
     await sleep(500);
     await client.captureScreenshot('demo/screenshot_table_desktop.png');
+    await client.captureScreenshot('demo/screenshot_1280_table.png');
 
-    // 8. Tracked Promises Table (Mobile)
-    console.log('Capturing Tracked Promises Table (Mobile)...');
+    // 8. Tablet View (768px)
+    console.log('Capturing Tablet View (768px)...');
+    await client.send('Emulation.setDeviceMetricsOverride', {
+      width: 768,
+      height: 1024,
+      deviceScaleFactor: 2,
+      mobile: false
+    });
+    await client.eval('window.scrollTo(0, 0)');
+    await sleep(400);
+    await client.captureScreenshot('demo/screenshot_768_main.png');
+    await client.eval('document.getElementById("data-tables-section").scrollIntoView({ behavior: "instant", block: "start" })');
+    await sleep(400);
+    await client.captureScreenshot('demo/screenshot_768_table.png');
+
+    // 9. Mobile View (390px)
+    console.log('Capturing Mobile View (390px)...');
     await client.send('Emulation.setDeviceMetricsOverride', {
       width: 390,
       height: 844,
       deviceScaleFactor: 2,
       mobile: true
     });
+    await client.eval('window.scrollTo(0, 0)');
     await sleep(500);
+    await client.captureScreenshot('demo/screenshot_390_main.png');
+    await client.eval('document.getElementById("data-tables-section").scrollIntoView({ behavior: "instant", block: "start" })');
+    await sleep(400);
     await client.captureScreenshot('demo/screenshot_table_mobile.png');
+    await client.captureScreenshot('demo/screenshot_390_table.png');
+
+    // Verify 390px horizontal scroll constraint
+    const mobileOverflow = await client.eval('document.body.scrollWidth > window.innerWidth');
+    const scrollWidth = await client.eval('document.body.scrollWidth');
+    const innerWidth = await client.eval('window.innerWidth');
+    console.log(`Mobile width check: scrollWidth=${scrollWidth}, innerWidth=${innerWidth}, hasOverflow=${mobileOverflow}`);
+    if (mobileOverflow) {
+      console.warn('WARNING: Body has horizontal overflow on mobile 390px!');
+    } else {
+      console.log('PASS: Body fits within 390px mobile viewport without horizontal overflow.');
+    }
 
     client.close();
     console.log('All screenshots captured successfully.');

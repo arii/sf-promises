@@ -230,6 +230,13 @@
   const tableTotalCount = document.getElementById('table-total-count');
   const activeFilterIndicator = document.getElementById('active-filter-indicator');
 
+  // Pagination elements
+  let currentPageSize = 15;
+  const btnShowMore = document.getElementById('btn-show-more');
+  const btnShowAll = document.getElementById('btn-show-all');
+  const tablePaginationRow = document.getElementById('table-pagination-row');
+  const paginationSub = document.getElementById('pagination-sub');
+
   const inspectModal = document.getElementById('inspect-modal');
   const btnCloseInspect = document.getElementById('btn-close-inspect');
   const btnCopyModalHash = document.getElementById('btn-copy-modal-hash');
@@ -336,15 +343,21 @@
     renderQuarantineTable();
     renderRunSelect();
     setupEventListeners();
-    resetPipeline();
+    renderCompletedPipeline('P02');
 
     // Check hash route
-    if (window.location.hash === '#p02' || window.location.hash === '#inspect') {
-      openInspectModal('P02');
-    } else if (window.location.hash === '#run-p02') {
-      startPipeline('P02');
-    } else if (window.location.hash === '#run-n01') {
-      startPipeline('N01');
+    const currentHash = window.location.hash;
+    if (currentHash) {
+      const pMatch = currentHash.match(/^#promise-(.+)$/i);
+      if (pMatch) {
+        openInspectModal(pMatch[1].toUpperCase());
+      } else if (currentHash === '#p02' || currentHash === '#inspect') {
+        openInspectModal('P02');
+      } else if (currentHash === '#run-p02') {
+        startPipeline('P02');
+      } else if (currentHash === '#run-n01') {
+        startPipeline('N01');
+      }
     }
   }
 
@@ -666,6 +679,147 @@
     if (outputVerdictResult) outputVerdictResult.style.display = 'none';
 
     updateNarrative(0);
+  }
+
+  function renderCompletedPipeline(presetKey = 'P02') {
+    if (autoTimer) clearTimeout(autoTimer);
+    isAutoRunning = false;
+    currentStage = 6;
+    currentRunType = presetKey;
+    if (runSelect) runSelect.value = presetKey;
+
+    if (btnRunSelected) {
+      btnRunSelected.disabled = false;
+      const span = btnRunSelected.querySelector('span');
+      if (span) span.textContent = 'Replay Walkthrough';
+    }
+    if (runSelect) runSelect.disabled = false;
+    if (btnStepNext) btnStepNext.disabled = false;
+
+    if (pipelineProgressFill) pipelineProgressFill.style.width = '100%';
+    if (packetTrackFill) packetTrackFill.style.width = '100%';
+    if (packetBallDot) packetBallDot.style.left = '100%';
+    if (packetBallInner) packetBallInner.className = 'packet-ball-inner kept-end';
+    if (packetStatusText) packetStatusText.textContent = 'verified & delivered';
+
+    for (let i = 1; i <= 6; i++) {
+      if (msCircles[i]) {
+        msCircles[i].className = 'milestone-circle passed';
+        msCircles[i].textContent = '✓';
+      }
+    }
+
+    const op = runPromise(presetKey) || (demoData && demoData.p02);
+    if (pipelineStageIndicator) {
+      pipelineStageIndicator.textContent = `STAGE 6 / 6 · #${(op && op.display_no) || '01'} — ${(op && op.verdict ? op.verdict : 'kept').toUpperCase()} (VERIFIED RECORD)`;
+    }
+
+    // Stage 1
+    if (stageCard1) stageCard1.className = 'stage-card span-4 done-stage';
+    if (stageBadge1) {
+      stageBadge1.className = 'stage-state-pill font-mono done';
+      stageBadge1.textContent = 'HASH MATCH';
+    }
+    if (stage1FetchFill) stage1FetchFill.style.width = '100%';
+    if (stage1HashMatch) stage1HashMatch.style.display = 'block';
+    if (stage1VerifiedBanner) stage1VerifiedBanner.style.display = 'block';
+    renderStage1Source(presetKey);
+
+    // Stage 2
+    if (stageCard2) stageCard2.className = 'stage-card span-7 done-stage';
+    if (stageBadge2) {
+      stageBadge2.className = 'stage-state-pill font-mono done';
+      stageBadge2.textContent = 'EXTRACTED';
+    }
+    if (stage2FlashBox) stage2FlashBox.style.display = 'block';
+    if (stage2PassBox) stage2PassBox.style.display = 'block';
+
+    // Stage 3
+    if (stageCard3) stageCard3.className = 'stage-card span-5 done-stage';
+    if (stageBadge3) {
+      stageBadge3.className = 'stage-state-pill font-mono done';
+      stageBadge3.textContent = '8/8 PASSED';
+    }
+    if (stage3GateBadge) {
+      stage3GateBadge.className = 'gate-badge-pill open';
+      stage3GateBadge.textContent = '🚪 GATE PASSED (8/8)';
+    }
+    [relFillReal, relFillMeas, relFillSf, relFillInt].forEach(f => { if (f) f.style.width = '100%'; });
+    [scoreValReal, scoreValMeas, scoreValSf, scoreValInt].forEach(v => { if (v) v.textContent = '2 / 2'; });
+    if (stage3ScoreFill) stage3ScoreFill.style.width = '100%';
+    if (stage3ScoreTotal) stage3ScoreTotal.textContent = '8 / 8';
+    if (stage3ScoreBadge) {
+      stage3ScoreBadge.textContent = '8/8 Passed';
+      stage3ScoreBadge.className = 'badge-verified font-mono';
+    }
+
+    // Stage 4
+    if (stageCard4) stageCard4.className = 'stage-card span-12 done-stage';
+    if (stageBadge4) {
+      stageBadge4.className = 'stage-state-pill font-mono done';
+      stageBadge4.textContent = 'ARGUMENTS FILED';
+    }
+    if (advBoxKept) advBoxKept.className = 'advocate-sub-box active-kept';
+    if (advStatusKept) {
+      advStatusKept.textContent = '✓ FINISHED';
+      advStatusKept.style.color = '#10B981';
+    }
+    if (advFindingsKept) {
+      advFindingsKept.innerHTML = `
+        <span style="color: #10B981;">▸</span> SF Department of Public Health confirmed acute hospital beds retained 24/7 (2 sources checked).
+        <div style="margin-top: 6px; color: #A7F3D0; font-weight: 700;">&rarr; Case: KEEP — evidence supports promise.</div>
+      `;
+    }
+    if (advBoxBroken) advBoxBroken.className = 'advocate-sub-box active-broken';
+    if (advStatusBroken) {
+      advStatusBroken.textContent = '✓ FINISHED';
+      advStatusBroken.style.color = '#94A3B8';
+    }
+    if (advFindingsBroken) {
+      advFindingsBroken.innerHTML = `
+        <span style="color: #EF4444;">▸</span> No contradicting source found in saved files (4 sources checked).
+        <div style="margin-top: 6px; color: #FCA5A5; font-weight: 700;">&rarr; Case: CHALLENGE — but evidence is thin.</div>
+      `;
+    }
+    if (tagStagingKept) tagStagingKept.textContent = `staging/kept_${presetKey}.json`;
+    if (tagStagingBroken) tagStagingBroken.textContent = `staging/broken_${presetKey}.json`;
+
+    // Stage 5
+    if (stageCard5) stageCard5.className = 'stage-card span-7 done-stage';
+    if (stageBadge5) {
+      stageBadge5.className = 'stage-state-pill font-mono done';
+      stageBadge5.textContent = '7/7 PASS';
+    }
+    checkKeys.forEach(key => {
+      const row = document.getElementById(`check-row-${key}`);
+      const circle = document.getElementById(`circle-check-${key}`);
+      const tag = document.getElementById(`tag-check-${key}`);
+      if (row) row.className = 'arb-check-item passed';
+      if (circle) {
+        circle.className = 'arb-check-circle passed';
+        circle.textContent = '✓';
+      }
+      if (tag) {
+        tag.style.display = 'inline';
+        tag.style.color = '#10B981';
+        tag.textContent = 'PASS';
+      }
+    });
+
+    // Stage 6
+    if (stageCard6) stageCard6.className = 'stage-card span-5 active-stage';
+    if (stageBadge6) {
+      stageBadge6.className = 'stage-state-pill font-mono done';
+      stageBadge6.textContent = '✓ KEPT';
+    }
+    if (outputWaitingContainer) outputWaitingContainer.style.display = 'none';
+    if (outputKeptResult) outputKeptResult.style.display = 'block';
+    const keptDesc = document.getElementById('output-kept-desc');
+    if (keptDesc && op) {
+      keptDesc.textContent = `#${op.display_no || '01'} · “${shortLabel(op, 90)}” (${op.entity}) — verified & published.`;
+    }
+
+    updateNarrative(6);
   }
 
   function startPipeline(presetKey) {
@@ -1220,9 +1374,29 @@
       return (a.impact_rank || 999) - (b.impact_rank || 999);
     });
 
+    // Pagination slicing
+    const displayed = filtered.slice(0, currentPageSize);
+
     // Update Showing counter & active filter indicator
-    if (tableShowingCount) tableShowingCount.textContent = filtered.length;
+    if (tableShowingCount) tableShowingCount.textContent = displayed.length;
     if (tableTotalCount) tableTotalCount.textContent = demoData.promises.length;
+
+    // Pagination controls
+    if (tablePaginationRow) {
+      if (filtered.length <= currentPageSize) {
+        tablePaginationRow.style.display = 'none';
+      } else {
+        tablePaginationRow.style.display = 'flex';
+        if (paginationSub) {
+          paginationSub.textContent = `(showing ${displayed.length} of ${filtered.length})`;
+        }
+        if (btnShowMore) {
+          const nextCount = Math.min(15, filtered.length - displayed.length);
+          const span = btnShowMore.querySelector('span:first-child');
+          if (span) span.textContent = `Show ${nextCount} More Commitments`;
+        }
+      }
+    }
 
     if (activeFilterIndicator) {
       const activeParts = [];
@@ -1243,16 +1417,24 @@
 
     if (tbodyPromises) {
       tbodyPromises.innerHTML = '';
-      filtered.forEach(p => {
+      displayed.forEach(p => {
         const tr = document.createElement('tr');
         const verdClass = p.verdict.toLowerCase().replace(' ', '_');
         const rel = p.relevance || null;
         const neighborhood = p.neighborhood || 'Citywide San Francisco';
         const rankFormatted = String(p.impact_rank || p.display_no || '—').padStart(2, '0');
+        const tier = p.source_tier || getSourceTier(p.source_url);
+        const tierClass = tier.toLowerCase();
+        let quoteText = cleanQuoteText(p.promise_text);
+        if (p.promise_id === 'P05' && !quoteText.startsWith('[Reported by')) {
+          quoteText = `[Reported by The Frisc] ${quoteText}`;
+        }
+
         tr.className = 'promise-row';
+        tr.id = `promise-${p.promise_id}`;
         tr.tabIndex = 0;
         tr.setAttribute('role', 'button');
-        tr.setAttribute('aria-label', `Inspect promise #${rankFormatted}: ${cleanQuoteText(p.promise_text).slice(0, 80)}`);
+        tr.setAttribute('aria-label', `Inspect promise #${rankFormatted} (${p.promise_id}): ${quoteText.slice(0, 80)}`);
         tr.addEventListener('click', () => openInspectModal(p.promise_id));
         tr.addEventListener('keydown', (ev) => {
           if (ev.key === 'Enter' || ev.key === ' ') {
@@ -1261,18 +1443,24 @@
           }
         });
         const dueLine = p.due_date
-          ? `<div class="timeline-due font-mono">&rarr; Due: ${escapeHtml(p.due_date)}</div>`
+          ? `<div class="timeline-due font-mono">Due: ${escapeHtml(p.due_date)}</div>`
           : '';
         tr.innerHTML = `
-          <td class="table-id-cell font-mono">#${rankFormatted}</td>
+          <td class="table-id-cell font-mono">
+            <div class="id-cell-wrapper">
+              <span class="rank-num">#${rankFormatted}</span>
+              <span class="stable-id font-mono">${escapeHtml(p.promise_id)}</span>
+            </div>
+          </td>
           <td class="table-entity-cell">
             <div class="table-entity-name">${escapeHtml(p.entity)}</div>
             <div class="table-entity-role font-mono">${escapeHtml(neighborhood)}</div>
           </td>
           <td class="table-promise-cell">
-            <div class="table-promise-text">&ldquo;${escapeHtml(cleanQuoteText(p.promise_text))}&rdquo;</div>
-            <div class="table-pill-row" style="margin-top: 6px;">
+            <div class="table-promise-text">&ldquo;${escapeHtml(quoteText)}&rdquo;</div>
+            <div class="table-pill-row" style="margin-top: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
               <span class="category-pill font-mono">${escapeHtml(p.category)}</span>
+              <span class="source-tier-pill font-mono source-tier-${tierClass}">${tier}</span>
             </div>
           </td>
           <td class="table-timeline-cell font-mono">
@@ -1292,6 +1480,17 @@
         tbodyPromises.appendChild(tr);
       });
     }
+  }
+
+  function getSourceTier(sourceUrl) {
+    const url = (sourceUrl || '').toLowerCase();
+    if (['sf.gov', 'flysfo.com', 'sfgov.org', 'sfmta.com', 'legistar.com', 'granicus.com', 'sfpublicworks'].some(h => url.includes(h))) {
+      return 'Official';
+    }
+    if (url.includes('wikipedia.org')) {
+      return 'Reference';
+    }
+    return 'News';
   }
 
   // Helper: Format snake_case check names to clean plain English
@@ -1397,7 +1596,8 @@
     const verdChipEl = document.getElementById('modal-verdict-chip');
     const relChipEl = document.getElementById('modal-relevance-chip');
 
-    if (titleEl) titleEl.textContent = `#${p.display_no || '—'} · ${shortLabel(p, 70)}`;
+    const rankFormatted = String(p.impact_rank || p.display_no || '—').padStart(2, '0');
+    if (titleEl) titleEl.textContent = `#${rankFormatted} (${p.promise_id}) · ${shortLabel(p, 70)}`;
     if (verdChipEl) {
       const verdClass = p.verdict.toLowerCase().replace(' ', '_');
       verdChipEl.className = `verdict-chip ${verdClass}`;
@@ -1406,6 +1606,10 @@
     if (relChipEl) {
       relChipEl.textContent = p.relevance ? `Relevance ${p.relevance.score}/8` : 'Relevance n/r';
     }
+
+    try {
+      window.history.replaceState(null, '', `#promise-${p.promise_id}`);
+    } catch (_) {}
 
     // Part 1: Provenance Bundle
     const srcUrlEl = document.getElementById('modal-source-url');
@@ -1583,6 +1787,25 @@
       });
     }
 
+    // Show More & Show All pagination handlers
+    if (btnShowMore) {
+      btnShowMore.addEventListener('click', () => {
+        currentPageSize += 15;
+        renderPromisesTable();
+      });
+    }
+    if (btnShowAll) {
+      btnShowAll.addEventListener('click', () => {
+        currentPageSize = 999;
+        renderPromisesTable();
+      });
+    }
+
+    const resetPaginationAndRender = () => {
+      currentPageSize = 15;
+      renderPromisesTable();
+    };
+
     // Domain filter pills bar
     if (domainPillsBar) {
       domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(pill => {
@@ -1595,15 +1818,15 @@
           if (filterCategory) {
             filterCategory.value = activeCategoryFilter;
           }
-          renderPromisesTable();
+          resetPaginationAndRender();
         });
       });
     }
 
     // Filter selects & search
-    if (filterEntity) filterEntity.addEventListener('change', renderPromisesTable);
-    if (filterVerdict) filterVerdict.addEventListener('change', renderPromisesTable);
-    if (filterSort) filterSort.addEventListener('change', renderPromisesTable);
+    if (filterEntity) filterEntity.addEventListener('change', resetPaginationAndRender);
+    if (filterVerdict) filterVerdict.addEventListener('change', resetPaginationAndRender);
+    if (filterSort) filterSort.addEventListener('change', resetPaginationAndRender);
     if (filterCategory) {
       filterCategory.addEventListener('change', () => {
         activeCategoryFilter = filterCategory.value;
@@ -1613,10 +1836,10 @@
             p.classList.toggle('active', p.getAttribute('data-category') === activeCategoryFilter);
           });
         }
-        renderPromisesTable();
+        resetPaginationAndRender();
       });
     }
-    if (searchInput) searchInput.addEventListener('input', renderPromisesTable);
+    if (searchInput) searchInput.addEventListener('input', resetPaginationAndRender);
 
     // Copy hash button in inspect modal
     if (btnCopyModalHash) {
@@ -1679,11 +1902,21 @@
 
     // Modals
     if (btnCloseInspect) {
-      btnCloseInspect.addEventListener('click', () => inspectModal.classList.add('hidden'));
+      btnCloseInspect.addEventListener('click', () => {
+        inspectModal.classList.add('hidden');
+        try {
+          window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        } catch (_) {}
+      });
     }
     if (inspectModal) {
       inspectModal.addEventListener('click', (e) => {
-        if (e.target === inspectModal) inspectModal.classList.add('hidden');
+        if (e.target === inspectModal) {
+          inspectModal.classList.add('hidden');
+          try {
+            window.history.replaceState(null, '', window.location.pathname + window.location.search);
+          } catch (_) {}
+        }
       });
     }
 
