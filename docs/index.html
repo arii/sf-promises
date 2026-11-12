@@ -14,10 +14,13 @@
   <div class="shell">
     <!-- Topbar with Brand Mark and GitHub Link -->
     <header class="topbar">
-      <a href="#top" class="brand" aria-label="SF Promises · top">
-        <span class="brand-mark">SF</span>
-        <span>SF Promises</span>
-      </a>
+      <div class="topbar-left">
+        <a href="#top" class="brand" aria-label="SF Promises · top">
+          <span class="brand-mark">SF</span>
+          <span>SF Promises</span>
+        </a>
+        <div class="hackathon-tag font-mono">Archil Hackathon Winner · Best Use of Keenable</div>
+      </div>
       <div class="topbar-right">
         <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" class="github-link">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
@@ -29,27 +32,23 @@
     <main class="wrap">
       <!-- Hero Section -->
       <section class="hero" id="top">
-        <div class="award-banner" aria-label="Hackathon Award Recognition">
-          <span class="award-badge-pill">🏆 AWARD WINNER</span>
-          <span><strong>Best Use Of Keenable</strong> (1 of 5 awards) · Archil <em>Agents need solid ground</em> Hackathon · Nov 10, 2026 · 33 projects · 46 builders · 1 night</span>
-        </div>
         <h1>SF Promises</h1>
-        <p class="promise-line">From mayoral pledges at City Hall to the Valkyries packing Chase Center, Dead &amp; Company in Golden Gate Park, Waymo on our streets, and affordable homes rising at Mission Rock — SF Promises tracks commitments across all of San Francisco.</p>
+        <p class="promise-line">Public commitments across San Francisco — from City Hall and SFO Airport to Chase Center and our neighborhood streets — independently verified against cryptographically archived primary evidence.</p>
 
         <!-- Live SQLite Tally Box -->
         <div class="tally-card" aria-label="Database Status">
           <div class="tally-hero-line" id="tally-hero-line">
-            <span class="tally-item total"><strong id="tally-total">62</strong> tracked promises</span>
+            <span class="tally-item total"><strong id="tally-total">54</strong> tracked commitments</span>
             <span class="tally-sep" aria-hidden="true">·</span>
-            <span class="tally-item"><span class="dot-status dot-kept" aria-hidden="true"></span> <strong id="tally-kept">26</strong> kept</span>
+            <span class="tally-item"><span class="dot-status dot-kept" aria-hidden="true"></span> <strong id="tally-kept">25</strong> kept</span>
             <span class="tally-sep" aria-hidden="true">·</span>
-            <span class="tally-item"><span class="dot-status dot-in_progress" aria-hidden="true"></span> <strong id="tally-progress">11</strong> in progress</span>
+            <span class="tally-item"><span class="dot-status dot-in_progress" aria-hidden="true"></span> <strong id="tally-progress">10</strong> in progress</span>
             <span class="tally-sep" aria-hidden="true">·</span>
-            <span class="tally-item"><span class="dot-status dot-broken" aria-hidden="true"></span> <strong id="tally-broken">21</strong> broken</span>
+            <span class="tally-item"><span class="dot-status dot-broken" aria-hidden="true"></span> <strong id="tally-broken">17</strong> broken</span>
             <span class="tally-sep" id="tally-sep-stalled" aria-hidden="true" style="display: none;">·</span>
             <span class="tally-item" id="tally-item-stalled" style="display: none;"><span class="dot-status dot-stalled" aria-hidden="true"></span> <strong id="tally-stalled">0</strong> stalled</span>
             <span class="tally-sep" aria-hidden="true">·</span>
-            <span class="tally-item"><span class="dot-status dot-undecided" aria-hidden="true"></span> <strong id="tally-undecided">4</strong> undecided</span>
+            <span class="tally-item"><span class="dot-status dot-undecided" aria-hidden="true"></span> <strong id="tally-undecided">2</strong> undecided</span>
           </div>
           <div class="tally-subline">
             <span><strong>Reconciliation:</strong> <span class="recon-counts">…</span></span>
@@ -67,45 +66,52 @@
         <div class="showcase-header">
           <h2>Civic accountability across all of San Francisco</h2>
           <p class="showcase-lead">
-            Promises in San Francisco belong to the whole city. Select an iconic commitment below to inspect its record, evidence, and provenance:
+            Commitments belong to the whole city. Select an iconic promise below to inspect its record, evidence, and provenance:
           </p>
         </div>
 
-        <!-- 5 Iconic Showcase Tabs -->
+        <!-- 6 Iconic Showcase Tabs -->
         <div class="showcase-tabs-bar" role="tablist" id="showcase-tabs-bar">
           <button type="button" class="showcase-tab-btn active" data-showcase-id="P02" role="tab" aria-selected="true" title="Mayor Daniel Lurie: 24/7 Crisis Stabilization Center at 822 Geary St">
-            <span class="showcase-tab-icon">🏛️</span>
+            <span class="showcase-tab-cat">Civic</span>
             <div class="showcase-tab-info">
               <span class="showcase-tab-tag">Tenderloin · 822 Geary</span>
               <span class="showcase-tab-name">Mayor Lurie: 24/7 Crisis Center</span>
             </div>
           </button>
+          <button type="button" class="showcase-tab-btn" data-showcase-id="SFO-01" role="tab" aria-selected="false" title="San Francisco International Airport: Runway 28L Accelerated Reopening">
+            <span class="showcase-tab-cat">Airport</span>
+            <div class="showcase-tab-info">
+              <span class="showcase-tab-tag">SFO · Airfield</span>
+              <span class="showcase-tab-name">SFO: Runway 28L Reopening</span>
+            </div>
+          </button>
           <button type="button" class="showcase-tab-btn" data-showcase-id="P04" role="tab" aria-selected="false" title="Golden State Valkyries: Chase Center Inaugural Season Attendance">
-            <span class="showcase-tab-icon">🏀</span>
+            <span class="showcase-tab-cat">Sports</span>
             <div class="showcase-tab-info">
               <span class="showcase-tab-tag">Mission Bay · Chase Center</span>
               <span class="showcase-tab-name">Valkyries: Lead WNBA Attendance</span>
             </div>
           </button>
-          <button type="button" class="showcase-tab-btn" data-showcase-id="P11" role="tab" aria-selected="false" title="Dead & Company: Farewell Tour Oracle Park Finale">
-            <span class="showcase-tab-icon">🎸</span>
+          <button type="button" class="showcase-tab-btn" data-showcase-id="P21" role="tab" aria-selected="false" title="City of San Francisco: Car-Free JFK Drive Promenade in Golden Gate Park">
+            <span class="showcase-tab-cat">Transit</span>
             <div class="showcase-tab-info">
-              <span class="showcase-tab-tag">Haight &amp; Golden Gate Park</span>
-              <span class="showcase-tab-name">Dead &amp; Co: Final Career Tour</span>
+              <span class="showcase-tab-tag">Golden Gate Park</span>
+              <span class="showcase-tab-name">JFK Drive: Car-Free Promenade</span>
             </div>
           </button>
           <button type="button" class="showcase-tab-btn" data-showcase-id="P10" role="tab" aria-selected="false" title="SF Giants: Mission Rock 40% Affordable Housing Target">
-            <span class="showcase-tab-icon">⚾</span>
+            <span class="showcase-tab-cat">Housing</span>
             <div class="showcase-tab-info">
               <span class="showcase-tab-tag">South Beach · Oracle Park</span>
               <span class="showcase-tab-name">SF Giants: 40% Affordable Homes</span>
             </div>
           </button>
-          <button type="button" class="showcase-tab-btn" data-showcase-id="P21" role="tab" aria-selected="false" title="City of San Francisco: Car-Free JFK Drive Promenade in Golden Gate Park">
-            <span class="showcase-tab-icon">🛴</span>
+          <button type="button" class="showcase-tab-btn" data-showcase-id="P11" role="tab" aria-selected="false" title="Dead & Company: Farewell Tour Oracle Park Finale">
+            <span class="showcase-tab-cat">Culture</span>
             <div class="showcase-tab-info">
-              <span class="showcase-tab-tag">Golden Gate Park</span>
-              <span class="showcase-tab-name">JFK Drive: Car-Free Promenade</span>
+              <span class="showcase-tab-tag">Haight &amp; Golden Gate Park</span>
+              <span class="showcase-tab-name">Dead &amp; Co: Final Career Tour</span>
             </div>
           </button>
         </div>
@@ -173,36 +179,35 @@
         <div class="tabs-container">
           <div class="tab-buttons-group">
             <button type="button" class="tab-nav-btn active" id="tab-btn-promises">
-              Tracked Promises <span class="tab-badge font-mono" id="tab-count-promises">62</span>
+              Verified Commitments <span class="tab-badge font-mono" id="tab-count-promises">54</span>
             </button>
             <button type="button" class="tab-nav-btn" id="tab-btn-quarantine">
-              Quarantine Registry <span class="tab-badge font-mono" id="tab-count-quarantine">12</span>
+              Quarantine Registry <span class="tab-badge font-mono" id="tab-count-quarantine">13</span>
             </button>
           </div>
-          <div class="reconciliation-strip font-mono" style="font-size: 0.8rem; color: #E2E8F0; text-align: right;">
-            <span><strong>Status:</strong> <span class="recon-counts">…</span></span>
-            <br>
-            <span style="font-size: 0.75rem; color: var(--muted);">Numbered #1–#62 chronologically. Gaps reflect quarantined or unverified seed candidates</span>
+          <div class="view-mode-toggle" role="group" aria-label="Display View Mode">
+            <button type="button" class="btn-view-mode active" id="btn-view-cards" title="Editorial Cards View">Cards</button>
+            <button type="button" class="btn-view-mode" id="btn-view-directory" title="Compact Directory Table">Directory</button>
           </div>
         </div>
 
         <!-- Domain Filter Pills: Dynamically derived from SQLite Export -->
         <div class="domain-filter-pills-bar" id="domain-pills-bar">
           <button type="button" class="btn-domain-pill active" data-category="all" id="btn-domain-all">All of SF</button>
-          <button type="button" class="btn-domain-pill" data-category="Sports">🏀 Sports (4)</button>
-          <button type="button" class="btn-domain-pill" data-category="Culture &amp; Music">🎸 Culture &amp; Music (2)</button>
-          <button type="button" class="btn-domain-pill" data-category="Transit &amp; Streets">🛴 Transit &amp; Streets (12)</button>
-          <button type="button" class="btn-domain-pill" data-category="Housing &amp; Neighborhoods">🏘️ Housing &amp; Neighborhoods (15)</button>
-          <button type="button" class="btn-domain-pill" data-category="Civic &amp; Public Safety">🏛️ Civic Governance (18)</button>
-          <button type="button" class="btn-domain-pill" data-category="Environment &amp; Energy">⚡ Energy &amp; Climate (2)</button>
-          <button type="button" class="btn-domain-pill" data-category="Infrastructure &amp; Tech">🏗️ Infrastructure &amp; Tech (2)</button>
-          <button type="button" class="btn-domain-pill" data-category="Bay Area &amp; Regional">🌉 Bay Area &amp; Regional (7)</button>
-          <button type="button" class="btn-domain-pill" data-category="Uncategorized" style="display: none;">❓ Uncategorized (0)</button>
+          <button type="button" class="btn-domain-pill" data-category="Airport &amp; Airlines">Airport &amp; Airlines (4)</button>
+          <button type="button" class="btn-domain-pill" data-category="Transit &amp; Streets">Transit &amp; Streets (8)</button>
+          <button type="button" class="btn-domain-pill" data-category="Housing &amp; Neighborhoods">Housing &amp; Neighborhoods (13)</button>
+          <button type="button" class="btn-domain-pill" data-category="Civic &amp; Public Safety">Civic Governance (15)</button>
+          <button type="button" class="btn-domain-pill" data-category="Sports">Sports (3)</button>
+          <button type="button" class="btn-domain-pill" data-category="Culture &amp; Music">Culture &amp; Music (1)</button>
+          <button type="button" class="btn-domain-pill" data-category="Environment &amp; Energy">Environment &amp; Energy (2)</button>
+          <button type="button" class="btn-domain-pill" data-category="Infrastructure &amp; Tech">Infrastructure &amp; Tech (2)</button>
+          <button type="button" class="btn-domain-pill" data-category="Bay Area &amp; Regional">Bay Area &amp; Regional (6)</button>
         </div>
 
         <!-- Filters Bar & Controls -->
         <div class="filters-bar" id="filters-bar">
-          <input type="text" id="search-input" class="search-input" placeholder="Search by number, speaker, or keyword..." aria-label="Search promises">
+          <input type="text" id="search-input" class="search-input" placeholder="Search by speaker, keyword, or neighborhood..." aria-label="Search promises">
 
           <div class="filters-dropdowns-row">
             <div class="filter-group">
@@ -210,9 +215,9 @@
               <select id="filter-entity" class="filter-select">
                 <option value="all">All Entities</option>
                 <option value="politicians">Politicians</option>
-                <option value="city_government">City Government</option>
+                <option value="city_government">City Government &amp; Airport</option>
                 <option value="sports">Sports</option>
-                <option value="companies">Companies</option>
+                <option value="companies">Companies &amp; Airlines</option>
                 <option value="culture">Culture</option>
               </select>
             </div>
@@ -233,25 +238,24 @@
               <label for="filter-category">Category</label>
               <select id="filter-category" class="filter-select">
                 <option value="all">All Categories</option>
-                <option value="Sports">🏀 Sports</option>
-                <option value="Culture &amp; Music">🎸 Culture &amp; Music</option>
-                <option value="Transit &amp; Streets">🛴 Transit &amp; Streets</option>
-                <option value="Housing &amp; Neighborhoods">🏘️ Housing &amp; Neighborhoods</option>
-                <option value="Civic &amp; Public Safety">🏛️ Civic &amp; Public Safety</option>
-                <option value="Environment &amp; Energy">⚡ Environment &amp; Energy</option>
-                <option value="Infrastructure &amp; Tech">🏗️ Infrastructure &amp; Tech</option>
-                <option value="Bay Area &amp; Regional">🌉 Bay Area &amp; Regional</option>
-                <option value="Uncategorized">❓ Uncategorized</option>
+                <option value="Airport &amp; Airlines">Airport &amp; Airlines</option>
+                <option value="Transit &amp; Streets">Transit &amp; Streets</option>
+                <option value="Housing &amp; Neighborhoods">Housing &amp; Neighborhoods</option>
+                <option value="Civic &amp; Public Safety">Civic Governance</option>
+                <option value="Sports">Sports</option>
+                <option value="Culture &amp; Music">Culture &amp; Music</option>
+                <option value="Environment &amp; Energy">Environment &amp; Energy</option>
+                <option value="Infrastructure &amp; Tech">Infrastructure &amp; Tech</option>
+                <option value="Bay Area &amp; Regional">Bay Area &amp; Regional</option>
               </select>
             </div>
 
             <div class="filter-group">
               <label for="filter-sort">Sort</label>
               <select id="filter-sort" class="filter-select font-mono">
-                <option value="default">Default (Promised Date)</option>
-                <option value="id_asc">ID (#01 &rarr; #87)</option>
-                <option value="date_desc">Date (Newest first)</option>
-                <option value="date_asc">Date (Oldest first)</option>
+                <option value="rank">Impact &amp; Debate Rank</option>
+                <option value="default">Promised Date (Newest first)</option>
+                <option value="date_asc">Promised Date (Oldest first)</option>
                 <option value="verdict">Verdict</option>
                 <option value="entity">Entity (A &rarr; Z)</option>
               </select>
@@ -259,20 +263,24 @@
           </div>
         </div>
 
-        <div class="table-results-status-bar font-mono" style="margin: -6px 0 12px; font-size: 0.82rem; color: #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
-          <div>Showing <strong id="table-showing-count">62</strong> of <span id="table-total-count">62</span> commitments</div>
+        <div class="table-results-status-bar font-mono" style="margin: -6px 0 14px; font-size: 0.82rem; color: #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+          <div>Showing <strong id="table-showing-count">54</strong> of <span id="table-total-count">54</span> commitments</div>
           <div id="active-filter-indicator" style="font-size: 0.78rem; color: var(--blue);">Active: All commitments</div>
         </div>
 
-        <!-- Table 1: Tracked Promises -->
-        <p class="font-mono" style="margin: 0 0 8px; font-size: 0.8rem; color: var(--muted); text-wrap: pretty;">Click any row to inspect complete cryptographic evidence, hashes, and source documents.</p>
-        <div class="data-table-container" id="promises-table-container">
+        <!-- View 1: Editorial Promise Cards Grid (Default View) -->
+        <div class="promises-cards-grid" id="promises-cards-grid">
+          <!-- Dynamically populated from SQLite export -->
+        </div>
+
+        <!-- View 2: Compact Directory Table (Alternative View) -->
+        <div class="data-table-container hidden" id="promises-table-container">
           <table class="data-table">
             <thead>
               <tr>
                 <th style="width: 6%;">#</th>
-                <th style="width: 22%;">Entity &amp; Neighborhood</th>
-                <th style="width: 44%;">Verbatim Commitment Quote</th>
+                <th style="width: 24%;">Entity &amp; Area</th>
+                <th style="width: 42%;">Verbatim Commitment Quote</th>
                 <th style="width: 14%;">Timeline</th>
                 <th style="width: 14%;">Verdict &amp; Evidence</th>
               </tr>
@@ -729,34 +737,36 @@
         </div>
       </section>
 
-      <!-- Limitations & Methodology -->
-      <section class="built-section" id="limitations" aria-label="Methodology and Limitations">
-        <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(1.8rem, 3.2vw, 2.3rem); margin: 4px 0 8px; font-weight: 600;">Methodology &amp; Transparent Limitations</h2>
-        <p style="font-size: 0.92rem; color: var(--muted); margin: 0 0 16px; max-width: 72ch;">Deterministic code verifies every claim against stored evidence. The boundaries below represent real civic trade-offs where human governance and evidentiary thresholds apply:</p>
-        <div class="two-col-plain">
-          <div>
-            <ul class="plain-credits-list">
-              <li><strong>Point-in-Time Milestones:</strong> A verified opening is recorded when achieved; subsequent operational changes (e.g. the Mid-Market Whole Foods closure, <button type="button" class="case-ref-link" data-pid="P83">#36</button>) require subsequent intake and re-evaluation.</li>
-              <li><strong>Official Domain Filter:</strong> Strict municipal and official domain allowlisting prevents counterfeit evidence, but may exclude valid investigative journalism until verified in public records.</li>
-              <li><strong>Absence Commitments:</strong> Promises phrased as "we will never do X" require proving an absence (<button type="button" class="case-ref-link" data-pid="P11">#23</button>), which requires conservative evidentiary standards.</li>
-            </ul>
-          </div>
-          <div>
-            <ul class="plain-credits-list">
-              <li><strong>Framing vs. Statistics:</strong> When both sides cite the same verified numbers but disagree on political framing (<button type="button" class="case-ref-link" data-pid="P64">#9</button>), the arbitrator designates the verdict as <em>Undecided</em>.</li>
-              <li><strong>Exact Substring Matching:</strong> To prevent hallucinated evidence, candidate quotes must match the saved document byte-for-byte, rejecting loose paraphrases.</li>
-              <li><strong>Immutable Audit Trail:</strong> No records or verdicts are ever silently deleted; corrections are appended as new ledger entries with complete timestamped provenance.</li>
-            </ul>
+      <!-- Limitations & Methodology Accordion (Discreet Disclosure) -->
+      <details class="methodology-accordion" id="limitations" aria-label="Methodology and Limitations">
+        <summary class="font-mono">Methodology &amp; Verification Trade-offs</summary>
+        <div class="methodology-content">
+          <p style="font-size: 0.88rem; color: var(--muted); margin: 0 0 14px;">Deterministic code verifies every claim against stored evidence. The boundaries below represent real civic trade-offs where human governance and evidentiary thresholds apply:</p>
+          <div class="two-col-plain">
+            <div>
+              <ul class="plain-credits-list">
+                <li><strong>No durability:</strong> A kept opening is recorded when achieved; subsequent operational changes (e.g. the Mid-Market Whole Foods closure, <button type="button" class="case-ref-link" data-pid="P83">#36</button>) require subsequent intake and re-evaluation.</li>
+                <li><strong>Allowlist trade-off:</strong> Strict municipal and official domain allowlisting prevents counterfeit evidence, but may exclude valid investigative journalism until verified in public records.</li>
+                <li><strong>Negative promises:</strong> Promises phrased as "we will never do X" require proving an absence (<button type="button" class="case-ref-link" data-pid="P11">#23</button>), which requires conservative evidentiary standards.</li>
+              </ul>
+            </div>
+            <div>
+              <ul class="plain-credits-list">
+                <li><strong>Framing disputes:</strong> When both sides cite the same verified numbers but disagree on political framing (<button type="button" class="case-ref-link" data-pid="P64">#9</button>), the arbitrator designates the verdict as <em>Undecided</em>.</li>
+                <li><strong>Ambiguity can't win:</strong> To prevent hallucinated evidence, candidate quotes must match the saved document byte-for-byte, rejecting loose paraphrases.</li>
+                <li><strong>Re-opens are principles:</strong> No records or verdicts are ever silently deleted; corrections are appended as new ledger entries with complete timestamped provenance.</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </section>
+      </details>
     </main>
 
     <!-- Footer -->
     <footer class="app-footer">
       <div class="footer-left">
         <span class="footer-brand-title">SF Promises · arii/sf-promises</span>
-        <span>Built by Ariel Anders · 🏆 Winner: <strong>Best Use Of Keenable</strong> (1 of 5 awards) at the Archil "Agents need solid ground" Hackathon (Nov 10, 2026 · 33 projects · 46 builders · 1 night)</span>
+        <span>Built by Ariel Anders · Winner: <strong>Best Use Of Keenable</strong> (1 of 5 awards) at the Archil "Agents need solid ground" Hackathon (Nov 10, 2026 · 33 projects · 46 builders · 1 night)</span>
       </div>
       <div class="footer-links-group">
         <a href="#pipeline-interactive" class="btn-footer-link">How It Works &uarr;</a>

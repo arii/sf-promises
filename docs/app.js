@@ -43,6 +43,7 @@
   let selectedShowcasePid = 'P02';
   let activeTab = 'promises';
   let activeCategoryFilter = 'all';
+  let activeViewMode = 'cards';
 
   // DOM Elements: Header & Tally
   const tallyTotal = document.getElementById('tally-total');
@@ -217,6 +218,9 @@
   const tabCountQuarantine = document.getElementById('tab-count-quarantine');
   const tableContainerPromises = document.getElementById('promises-table-container');
   const tableContainerQuarantine = document.getElementById('quarantine-table-container');
+  const promisesCardsGrid = document.getElementById('promises-cards-grid');
+  const btnViewCards = document.getElementById('btn-view-cards');
+  const btnViewDirectory = document.getElementById('btn-view-directory');
   const tbodyPromises = document.getElementById('promises-table-body');
   const tbodyQuarantine = document.getElementById('quarantine-table-body');
 
@@ -1169,10 +1173,10 @@
   }
 
   // -------------------------------------------------------------------------
-  // ALL PROMISES TABLE & DOMAIN FILTERING
+  // ALL PROMISES TABLE & EDITORIAL CARDS
   // -------------------------------------------------------------------------
   function renderPromisesTable() {
-    if (!tbodyPromises || !demoData || !demoData.promises) return;
+    if ((!tbodyPromises && !promisesCardsGrid) || !demoData || !demoData.promises) return;
 
     const entityFilter = filterEntity ? filterEntity.value : 'all';
     const verdictFilter = filterVerdict ? filterVerdict.value : 'all';
@@ -1197,12 +1201,12 @@
     });
 
     // Sorting
-    const sortVal = filterSort ? filterSort.value : 'default';
+    const sortVal = filterSort ? filterSort.value : 'rank';
     filtered.sort((a, b) => {
-      if (sortVal === 'id_asc') {
-        const na = parseInt(a.display_no || '999', 10);
-        const nb = parseInt(b.display_no || '999', 10);
-        return na - nb;
+      if (sortVal === 'rank' || sortVal === 'default') {
+        const ra = a.impact_rank || parseInt(a.display_no || '999', 10);
+        const rb = b.impact_rank || parseInt(b.display_no || '999', 10);
+        return ra - rb;
       }
       if (sortVal === 'date_desc') {
         return (b.promised_date || '').localeCompare(a.promised_date || '');
@@ -1216,7 +1220,7 @@
       if (sortVal === 'entity') {
         return (a.entity || '').localeCompare(b.entity || '');
       }
-      return (parseInt(a.display_no || '999', 10)) - (parseInt(b.display_no || '999', 10));
+      return (a.impact_rank || 999) - (b.impact_rank || 999);
     });
 
     // Update Showing counter & active filter indicator
@@ -1235,56 +1239,112 @@
         activeFilterIndicator.textContent = `Active: ${activeParts.join(' · ')} (${filtered.length} found)`;
         activeFilterIndicator.style.color = 'var(--blue)';
       } else {
-        activeFilterIndicator.textContent = 'Active: All commitments';
+        activeFilterIndicator.textContent = 'Active: All commitments (Sorted by Civic Impact)';
         activeFilterIndicator.style.color = '#E2E8F0';
       }
     }
 
-    tbodyPromises.innerHTML = '';
-    filtered.forEach(p => {
-      const tr = document.createElement('tr');
-      const verdClass = p.verdict.toLowerCase().replace(' ', '_');
-      const rel = p.relevance || null;
-      const neighborhood = p.neighborhood || 'Citywide San Francisco';
-      tr.className = 'promise-row';
-      tr.tabIndex = 0;
-      tr.setAttribute('role', 'button');
-      tr.setAttribute('aria-label', `Inspect promise ${p.display_no || p.promise_id}: ${cleanQuoteText(p.promise_text).slice(0, 80)}`);
-      tr.addEventListener('click', () => openInspectModal(p.promise_id));
-      tr.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') {
-          ev.preventDefault();
-          openInspectModal(p.promise_id);
-        }
-      });
-      const dueLine = p.due_date
-        ? `<div class="timeline-due font-mono">&rarr; Due: ${escapeHtml(p.due_date)}</div>`
-        : '';
-      tr.innerHTML = `
-        <td class="table-id-cell font-mono">#${p.display_no || '—'}</td>
-        <td class="table-entity-cell">
-          <div class="table-entity-name">${escapeHtml(p.entity)}</div>
-          <div class="table-entity-role font-mono">${escapeHtml(neighborhood)}</div>
-        </td>
-        <td class="table-promise-cell">
-          <div class="table-promise-text">“${escapeHtml(cleanQuoteText(p.promise_text))}”</div>
-        </td>
-        <td class="table-timeline-cell font-mono">
-          <div class="timeline-date">${escapeHtml(p.promised_date || '—')}</div>
-          ${dueLine}
-        </td>
-        <td class="table-verdict-cell">
-          <div class="verdict-wrapper">
-            <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
-            <div class="verdict-sub-row font-mono">
-              ${rel ? `<span class="score-pill" title="Relevance Gate ${rel.score}/8">${rel.score}/8</span>` : ''}
-              <span class="btn-inspect-inline">Inspect &rarr;</span>
+    // 1. Render Editorial Cards Grid
+    if (promisesCardsGrid) {
+      promisesCardsGrid.innerHTML = '';
+      filtered.forEach(p => {
+        const card = document.createElement('article');
+        const verdClass = p.verdict.toLowerCase().replace(' ', '_');
+        const neighborhood = p.neighborhood || 'San Francisco';
+        const rankFormatted = String(p.impact_rank || p.display_no || '—').padStart(2, '0');
+        card.className = `editorial-card verdict-${verdClass}`;
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `Inspect promise #${rankFormatted}: ${cleanQuoteText(p.promise_text).slice(0, 80)}`);
+        card.addEventListener('click', () => openInspectModal(p.promise_id));
+        card.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            ev.preventDefault();
+            openInspectModal(p.promise_id);
+          }
+        });
+
+        const dueText = p.due_date ? `Due: ${escapeHtml(p.due_date)}` : '';
+        const openedText = p.opened_date ? `Opened: ${escapeHtml(p.opened_date)}` : '';
+
+        card.innerHTML = `
+          <div>
+            <div class="card-topline font-mono">
+              <span class="card-rank">#${rankFormatted}</span>
+              <span class="card-category-tag">${escapeHtml(p.category)}</span>
+              <span class="card-neighborhood-tag" title="${escapeHtml(neighborhood)}">${escapeHtml(neighborhood)}</span>
+              <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
             </div>
+            <blockquote class="card-quote">“${escapeHtml(cleanQuoteText(p.promise_text))}”</blockquote>
+            <div class="card-speaker-row">
+              <span class="card-speaker-name">${escapeHtml(p.entity)}</span>
+              <span class="card-speaker-role font-mono">${escapeHtml(p.role || '')}</span>
+            </div>
+            <p class="card-outcome">${escapeHtml(p.verdict_reason || 'Verified through primary records.')}</p>
           </div>
-        </td>
-      `;
-      tbodyPromises.appendChild(tr);
-    });
+          <div class="card-footer-meta font-mono">
+            <div class="card-dates">
+              <span>Promised: ${escapeHtml(p.promised_date || '—')}</span>
+              ${dueText ? `<span style="color: var(--muted);">${dueText}</span>` : ''}
+              ${openedText ? `<span style="color: #A7F3D0; font-weight: 600;">✓ ${openedText}</span>` : ''}
+            </div>
+            <button type="button" class="btn-card-inspect">Inspect Evidence &rarr;</button>
+          </div>
+        `;
+        promisesCardsGrid.appendChild(card);
+      });
+    }
+
+    // 2. Render Compact Directory Table Rows
+    if (tbodyPromises) {
+      tbodyPromises.innerHTML = '';
+      filtered.forEach(p => {
+        const tr = document.createElement('tr');
+        const verdClass = p.verdict.toLowerCase().replace(' ', '_');
+        const rel = p.relevance || null;
+        const neighborhood = p.neighborhood || 'Citywide San Francisco';
+        const rankFormatted = String(p.impact_rank || p.display_no || '—').padStart(2, '0');
+        tr.className = 'promise-row';
+        tr.tabIndex = 0;
+        tr.setAttribute('role', 'button');
+        tr.setAttribute('aria-label', `Inspect promise #${rankFormatted}: ${cleanQuoteText(p.promise_text).slice(0, 80)}`);
+        tr.addEventListener('click', () => openInspectModal(p.promise_id));
+        tr.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter' || ev.key === ' ') {
+            ev.preventDefault();
+            openInspectModal(p.promise_id);
+          }
+        });
+        const dueLine = p.due_date
+          ? `<div class="timeline-due font-mono">&rarr; Due: ${escapeHtml(p.due_date)}</div>`
+          : '';
+        tr.innerHTML = `
+          <td class="table-id-cell font-mono">#${rankFormatted}</td>
+          <td class="table-entity-cell">
+            <div class="table-entity-name">${escapeHtml(p.entity)}</div>
+            <div class="table-entity-role font-mono">${escapeHtml(neighborhood)}</div>
+          </td>
+          <td class="table-promise-cell">
+            <div class="table-promise-text">“${escapeHtml(cleanQuoteText(p.promise_text))}”</div>
+          </td>
+          <td class="table-timeline-cell font-mono">
+            <div class="timeline-date">${escapeHtml(p.promised_date || '—')}</div>
+            ${dueLine}
+          </td>
+          <td class="table-verdict-cell">
+            <div class="verdict-wrapper">
+              <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
+              <div class="verdict-sub-row font-mono">
+                ${rel ? `<span class="score-pill" title="Relevance Gate ${rel.score}/8">${rel.score}/8</span>` : ''}
+                <span class="btn-inspect-inline">Inspect &rarr;</span>
+              </div>
+            </div>
+          </td>
+        `;
+        tbodyPromises.appendChild(tr);
+      });
+    }
+  }
   }
 
   // Helper: Format snake_case check names to clean plain English
@@ -1628,14 +1688,45 @@
       });
     }
 
+    // View mode switching (Cards vs Directory Table)
+    if (btnViewCards) {
+      btnViewCards.addEventListener('click', () => {
+        activeViewMode = 'cards';
+        btnViewCards.classList.add('active');
+        if (btnViewDirectory) btnViewDirectory.classList.remove('active');
+        if (activeTab === 'promises') {
+          if (promisesCardsGrid) promisesCardsGrid.classList.remove('hidden');
+          if (tableContainerPromises) tableContainerPromises.classList.add('hidden');
+        }
+      });
+    }
+
+    if (btnViewDirectory) {
+      btnViewDirectory.addEventListener('click', () => {
+        activeViewMode = 'directory';
+        btnViewDirectory.classList.add('active');
+        if (btnViewCards) btnViewCards.classList.remove('active');
+        if (activeTab === 'promises') {
+          if (promisesCardsGrid) promisesCardsGrid.classList.add('hidden');
+          if (tableContainerPromises) tableContainerPromises.classList.remove('hidden');
+        }
+      });
+    }
+
     // Table tab switching
     if (tabBtnPromises) {
       tabBtnPromises.addEventListener('click', () => {
         activeTab = 'promises';
         tabBtnPromises.classList.add('active');
         tabBtnQuarantine.classList.remove('active');
-        tableContainerPromises.classList.remove('hidden');
-        tableContainerQuarantine.classList.add('hidden');
+        if (activeViewMode === 'cards') {
+          if (promisesCardsGrid) promisesCardsGrid.classList.remove('hidden');
+          if (tableContainerPromises) tableContainerPromises.classList.add('hidden');
+        } else {
+          if (promisesCardsGrid) promisesCardsGrid.classList.add('hidden');
+          if (tableContainerPromises) tableContainerPromises.classList.remove('hidden');
+        }
+        if (tableContainerQuarantine) tableContainerQuarantine.classList.add('hidden');
       });
     }
 
@@ -1644,8 +1735,9 @@
         activeTab = 'quarantine';
         tabBtnQuarantine.classList.add('active');
         tabBtnPromises.classList.remove('active');
-        tableContainerQuarantine.classList.remove('hidden');
-        tableContainerPromises.classList.add('hidden');
+        if (promisesCardsGrid) promisesCardsGrid.classList.add('hidden');
+        if (tableContainerPromises) tableContainerPromises.classList.add('hidden');
+        if (tableContainerQuarantine) tableContainerQuarantine.classList.remove('hidden');
       });
     }
 
@@ -1719,10 +1811,7 @@
         pill.textContent = `All of SF (${total})`;
       } else {
         const count = catCounts[cat] || 0;
-        const currentText = pill.textContent;
-        const match = currentText.match(/^([^\w\s]+|\p{Emoji})\s*/u);
-        const icon = match ? match[0] : '';
-        pill.textContent = `${icon}${cat} (${count})`;
+        pill.textContent = `${cat} (${count})`;
         if (cat === 'Uncategorized') {
           pill.style.display = count > 0 ? 'inline-block' : 'none';
         }

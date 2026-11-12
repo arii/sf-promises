@@ -22,6 +22,8 @@ DOMAIN_ALLOWLIST = {
     "sfmta.com",
     "missionlocal.org",
     "daniellurie.com",
+    "flysfo.com",
+    "trinitysf.com",
     "newspack-missionlocal.s3.amazonaws.com",
     # Parent decision 19:45: exact hosts for P01/P07/P09/P11 validation seeds.
     # Exact hosts only, NOT parent domains (N07 random blog must still fail).

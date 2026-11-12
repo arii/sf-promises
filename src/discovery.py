@@ -39,9 +39,9 @@ async def discover_timeline(client, topic, *, promised, deadline, delivered, as_
     ent = f'"{entity}" ' if entity else ""
     kw = f'"{keywords}"' if keywords else f'"{topic}"'
 
-    origin_q = f'{ent}{kw} ("pledged" OR "promised" OR "announced" OR "will open" OR "contract")' if entity or keywords else f"Original public commitment and deadline for {topic}"
-    delivery_q = f'{ent}{kw} ("opened" OR "completed" OR "launched" OR "failed" OR "delayed")' if entity or keywords else f"Delivery, opening or completion of {topic}"
-    survival_q = f'{kw} ("closed" OR "shuttered" OR "suspended" OR "halted" OR "vacant" OR "paused")' if keywords else f"Current status, closure or suspension of {topic}"
+    origin_q = f'{ent}{kw} ("pledged" OR "promised" OR "announced" OR "will open" OR "contract")' if (entity or keywords) else f"Original public commitment and deadline for {topic}"
+    delivery_q = f'{ent}{kw} ("opened" OR "completed" OR "launched" OR "failed" OR "delayed")' if (entity or keywords) else f"Delivery, opening or completion of {topic}"
+    survival_q = f'{ent}{kw} ("closed" OR "shuttered" OR "suspended" OR "halted" OR "vacant" OR "paused" OR "closure")' if (entity or keywords) else f"Current status, closure or suspension of {topic}"
 
     phases = (
         ("origin", origin_q,
@@ -105,9 +105,20 @@ async def discover_and_archive(client, lead, *, root, as_of):
     promise_id = lead["promise_id"]
     promised = date.fromisoformat(lead["promised_date"])
     deadline = date.fromisoformat(lead["due_date"]) if lead.get("due_date") else None
+    entity = lead.get("entity")
+    promise_text = lead.get("promise_text", "")
+    
+    # Extract focused keywords from the promise text to avoid long query degradations
+    keywords = lead.get("keywords")
+    if not keywords:
+        clean_words = [w for w in re.findall(r"\b[A-Za-z0-9'-]+\b", promise_text)
+                       if len(w) > 3 and w.lower() not in {"will", "open", "this", "that", "with", "from", "have", "been", "they", "their", "about", "also", "under"}]
+        keywords = " ".join(clean_words[:5]) if clean_words else promise_text[:60]
+
     results = await discover_timeline(
-        client, f'{lead["entity"]}: {lead["promise_text"][:300]}',
+        client, f'{entity or "Civic"}: {promise_text[:120]}',
         promised=promised, deadline=deadline, delivered=None, as_of=as_of,
+        entity=entity, keywords=keywords,
     )
     saved = {}
     phases = {}

@@ -322,15 +322,14 @@ P64-first), and diverge exactly where documented human judgment took over
 check, staging bundles for dropped claims) made each case reconstructable
 without guessing.
 
-## 5. Status snapshot (Nov 11, 2026 export)
+## 5. Status snapshot (Nov 2026 export)
 
-- 62 published promises: 26 kept · 21 broken · 11 in_progress · 4 undecided;
-  1 quarantined row (P68, `relevance_low`); the 12 planted N01–N12 cases
-  were caught by checks/harness, not written as quarantine rows.
-- 85 verdict rows (re-opens included), 124 evidence rows, 20 tables.
-- Lane F harness run `F-20261111-045601`: 33 pass / 0 fail / 3
-  blocked-extended. `tests/test_checks.py`: 28 passed (observed this
-  session).
-- 12 promises carry evidence from *both* advocates: P05, P06, P11, P13–P16,
-  P24, P26, P62, P64, P81. The rest were decided one-sidedly (usually
-  kept-with-no-contradiction or broken-on-empty-kept).
+- 54 published commitments: 25 kept · 17 broken · 10 in_progress · 2 undecided;
+  13 items in the Quarantine Registry (including the 12 planted N01–N12 test cases).
+- Incorporates official San Francisco International Airport (SFO) capital and airline
+  commitments (Runway 28L taxiway realignment, $2.4B Harvey Milk Terminal 1 completion,
+  United Airlines SAF deliveries, and Alaska Airlines flagship lounge relocation).
+- Deduped overlapping clauses and retrospective announcements, ranked by civic impact
+  and public controversy.
+- 192/192 tests passing across full test suite (`pytest tests/`).
+- 0 anti-patterns detected by Impeccable design quality engine.

@@ -17,7 +17,8 @@ _PRIMARY_HOSTS = frozenset({
     "sfmta.com", "caltrain.com", "waymo.com", "zoox.com", "pge.com",
     "visa.com", "wholefoodsmarket.com", "nba.com", "wnba.com",
     "valkyries.com", "bayfc.com", "att.com", "comcast.com", "sfgiants.com",
-    "mlb.com", "nfl.com", "prnewswire.com", "businesswire.com",
+    "mlb.com", "nfl.com", "prnewswire.com", "businesswire.com", "flysfo.com",
+    "trinitysf.com",
 })
 _NEWS_HOSTS = frozenset({
     "sfchronicle.com", "sfgate.com", "sfstandard.com", "missionlocal.org",
