@@ -45,3 +45,21 @@
   - Created `tests/test_adversarial_mutations.py` testing 50 automated adversarial mutations with a 0.0% false-accept rate.
   - Setup `.github/workflows/ci.yml` running pytest and JavaScript syntax validation on every push.
   - Full test suite: **198/198 tests passing green**.
+
+### 3. Progressive Disclosure & Library-Driven UX (Guide 1 & Feedback Follow-up)
+- **Library Vendoring (`docs/list.min.js`)**:
+  - Integrated `list.js` (19KB, zero runtime dependencies) directly into GitHub Pages static distribution for client-side multi-facet search, sorting, and filtering.
+- **In-Line Accordion Rows (`tr.promise-accordion-row`)**:
+  - Main table rows now clamp long verbatim quotes to 2 lines (`-webkit-line-clamp: 2`).
+  - Clicking any row or expand chevron smoothly expands an inline accordion drawer displaying the full unabridged quote, primary source link with source tier badge, SHA-256 hash with 1-click clipboard copy, advocate findings (Sandbox A vs Sandbox B), and deep inspect modal launcher.
+- **Sticky Table Headers & Directional Sorting**:
+  - Set `position: sticky; top: 0; background: #0f172a;` on `thead`.
+  - Added interactive sort headers with visual directional arrows (`▲`/`▼`) on `# Rank`, `Entity & Area`, `Verbatim Commitment`, `Timeline`, and `Verdict`.
+- **Removable Filter Chips Tray**:
+  - Added `#active-chips-tray` with individual removable chips (`×`) for entity, verdict, category, and search query, plus a `"Clear all ×"` button.
+- **Row Density Toggle**:
+  - Added segmented switch (`Comfortable` vs `Compact`) toggling row padding and quote line-clamping (2 lines vs 1 line).
+- **Responsive & Design Verification**:
+  - Mobile card fallback (<768px) smoothly incorporates accordion drawers without horizontal scroll (`scrollWidth=390, innerWidth=390`).
+  - Impeccable tool detector exited with code 0.
+  - Automated screenshot tests captured at 1280px, 768px, and 390px, including active accordion state (`demo/screenshot_accordion_open.png`).
