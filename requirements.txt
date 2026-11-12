@@ -1,4 +1,8 @@
-archil
+archil>=0.16.0
+keenable
+langgraph
+langgraph-checkpoint-sqlite
+pydantic>=2
 requests
 httpx
 pdfplumber

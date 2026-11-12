@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SF Promises · Candidate Review</title>
+  <link rel="stylesheet" href="v2-preview.css">
+  <script src="v2-preview.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a href="../docs/index.html">SF Promises</a><span>Candidate review</span></header>
+  <main>
+    <p class="eyebrow">SAN FRANCISCO · V2</p>
+    <h1>Review a candidate snapshot</h1>
+    <p class="notice"><strong>Not published or verified.</strong> This local preview does not authorize publication or establish that a verdict is supported by evidence.</p>
+    <p>Choose a v2 candidate JSON export. The file stays in your browser and is not uploaded.</p>
+    <label class="file-label" for="snapshot-file">Candidate JSON</label>
+    <input id="snapshot-file" type="file" accept=".json,application/json">
+    <p id="snapshot-time" class="muted"></p>
+    <section aria-labelledby="results-heading">
+      <div class="section-header"><h2 id="results-heading">Promises</h2><p id="status" role="status" aria-live="polite">Choose a candidate snapshot to begin.</p></div>
+      <div id="tallies" aria-label="Verdict tallies"></div>
+      <div class="filters">
+        <label>Verdict <select id="verdict-filter"><option value="all">All verdicts</option></select></label>
+        <label>Entity type <select id="entity-filter"><option value="all">All entities</option></select></label>
+        <label>Sector <select id="sector-filter"><option value="all">All sectors</option></select></label>
+      </div>
+      <div id="promise-list"></div>
+    </section>
+  </main>
+</body>
+</html>

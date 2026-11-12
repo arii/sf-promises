@@ -1,0 +1,572 @@
+{
+  "discovery_only": true,
+  "leads": [
+    {
+      "promise_id": "P85",
+      "promise_text": "At the [June 9 Transportation Authority Board meeting](/events/transportation-authority-board-131), our board approved $230,700 in Prop L transportation sales tax funds for the Central Subway North Beach Extension Study, a two-year effort to evaluate extending light rail service from Chinatown to North Beach.",
+      "entity": "Transportation Authority Board",
+      "promised_date": "2026-06-09",
+      "due_date": "2028-05-31",
+      "source_id": "S1e43ffac93a7",
+      "source_url": "https://www.sfcta.org/blogs/transportation-authority-board-approves-230700-study-central-subway-extension-north-beach"
+    },
+    {
+      "promise_id": "P59",
+      "promise_text": "Once given access, riders will be able to use the Zoox app to hail a ride within its service area, which covers the SoMa, Mission, and Design District neighborhoods of San Francisco.",
+      "entity": "Zoox",
+      "promised_date": "2025-11-18",
+      "due_date": "2025-11-18",
+      "source_id": "Sc203459be8eb",
+      "source_url": "https://techcrunch.com/2025/11/18/zoox-to-begin-offering-robotaxi-rides-to-public-in-san-francisco/"
+    },
+    {
+      "promise_id": "P60",
+      "promise_text": "Zoox said its goal is to remove the waitlist altogether in 2026.",
+      "entity": "Zoox",
+      "promised_date": "2025-11-18",
+      "due_date": "2026-12-31",
+      "source_id": "Sda28a704eca0",
+      "source_url": "https://techcrunch.com/2025/11/18/zoox-to-begin-offering-robotaxi-rides-to-public-in-san-francisco/"
+    },
+    {
+      "promise_id": "P31",
+      "promise_text": "By adopting the Family Zoning Plan in December 2025, San Francisco met its state law obligations to approve a compliant rezoning plan by January 31, 2026.",
+      "entity": "Daniel Lurie",
+      "promised_date": "2025-06-24",
+      "due_date": "2026-01-31",
+      "source_id": "S37e84a7ead43",
+      "source_url": "https://sfplanning.org/sf-family-zoning-plan"
+    },
+    {
+      "promise_id": "S2",
+      "promise_text": "- **Prioritizes public safety** by avoiding cuts to sworn officers while investing in the police officers, firefighters, sheriff’s deputies, 911 dispatchers, and other first responders who keep San Franciscans safe and play a critical role in the city’s comeback.",
+      "entity": "Daniel Lurie",
+      "promised_date": "2025-05-27",
+      "due_date": null,
+      "source_id": "S19b9b050c838",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-signs-balanced-responsible-budget-driving-san-franciscos-recovery"
+    },
+    {
+      "promise_id": "P80",
+      "promise_text": "Bay FC announced today that the club’s home match Saturday, Aug. 23 vs. Washington Spirit will be hosted at San Francisco’s Oracle Park, home of Major League Baseball’s San Francisco Giants.",
+      "entity": "Bay FC",
+      "promised_date": "2025-04-22",
+      "due_date": "2025-08-23",
+      "source_id": "Saa39c01a5108",
+      "source_url": "https://bayfc.com/press-releases/bay-fc-aiming-for-history-will-host-washington-spirit-at-iconic-oracle-park-in-san-francisco-aug-23-presented-by-visa"
+    },
+    {
+      "promise_id": "P04",
+      "promise_text": "The Valkyries have sold out all 44 regular-season games at Chase Center over their first two seasons, to lead the WNBA in attendance.",
+      "entity": "Golden State Valkyries",
+      "promised_date": "2025-03-26",
+      "due_date": null,
+      "source_id": "S6a517bcb0178",
+      "source_url": "https://www.sfchronicle.com/sports/article/valkyries-wnba-championship-22499436.php"
+    },
+    {
+      "promise_id": "S3",
+      "promise_text": "**SAN FRANCISCO** – Mayor Daniel Lurie today unveiled “[Breaking the Cycle](http://media.api.sf.gov/documents/3.17_Executive_Directive.pdf),” a new vision to break cycles of homelessness, addiction, and government failure by fundamentally transforming the city’s health and homelessness response.",
+      "entity": "Daniel Lurie",
+      "promised_date": "2025-03-18",
+      "due_date": null,
+      "source_id": "Sa08f78779548",
+      "source_url": "https://sf.gov/news-mayor-lurie-unveils-breaking-the-cycle-vision-for-tackling-san-franciscos-homelessness-and-behavioral-health-crisis"
+    },
+    {
+      "promise_id": "S1",
+      "promise_text": "Through actions like making the Drug Market Agency Coordination Center permanent, leveraging public/private partnership, and eliminating burdensome bureaucratic delays, we must treat this crisis as the emergency it is.",
+      "entity": "Daniel Lurie",
+      "promised_date": "2025-01-08",
+      "due_date": null,
+      "source_id": "Sc6aa285f56cc",
+      "source_url": "https://www-temp.sf.gov/news/mayor-daniel-lurie-partners-board-supervisors-tackle-fentanyl-crisis-head"
+    },
+    {
+      "promise_id": "P02",
+      "promise_text": "That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,",
+      "entity": "Daniel Lurie",
+      "promised_date": "2025-01-07",
+      "due_date": null,
+      "source_id": "Se03acc33e8e1",
+      "source_url": "https://www.sfpublicworkstv.org/april2025"
+    },
+    {
+      "promise_id": "P03",
+      "promise_text": "Mayor Lurie today also introduced a legislative package with six ordinances proposing structural changes to help businesses and property owners to secure the permits they need more easily and efficiently.",
+      "entity": "Daniel Lurie",
+      "promised_date": "2025-01-07",
+      "due_date": null,
+      "source_id": "S19e038938b5c",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-pieces-of-permitsf-announces-legislation-with-major-reforms-to-cut-red-tape-drive-economic-recovery"
+    },
+    {
+      "promise_id": "P67",
+      "promise_text": "The Golden State Valkyries have announced the team’s 2025 inaugural season schedule, featuring a home opener on May 16 against the Los Angeles Sparks at Chase Center.",
+      "entity": "Golden State Valkyries",
+      "promised_date": "2024-12-02",
+      "due_date": "2025-05-16",
+      "source_id": "Sd4529d56a0ef",
+      "source_url": "https://valkyries.wnba.com/news/2025-schedule-release-20241202"
+    },
+    {
+      "promise_id": "P01",
+      "promise_text": "The measure, dubbed the Fentanyl State of Emergency Ordinance, marks Lurie’s first big step in fulfilling a campaign promise",
+      "entity": "Daniel Lurie",
+      "promised_date": "2024-11-05",
+      "due_date": null,
+      "source_id": "Sbeb41e4e006f",
+      "source_url": "https://edition.pagesuite.com/tribune/article_popover.aspx?guid=4996c790-cac8-49aa-8783-9c015e1acea1"
+    },
+    {
+      "promise_id": "P05",
+      "promise_text": "His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homelessness-shelter-promise/), in part by opening 1,500 new shelter beds in his first six months of office, didn’t last long.",
+      "entity": "Daniel Lurie",
+      "promised_date": "2024-11-05",
+      "due_date": null,
+      "source_id": "S6b445cb1ab31",
+      "source_url": "https://thefrisc.com/one-year-of-luries-approach-to-sfs-homelessness-drugs-mental-health/"
+    },
+    {
+      "promise_id": "P12",
+      "promise_text": "The SFMTA allows Lime and Spin to operate scooter share services in San Francisco through June 30, 2026.",
+      "entity": "SFMTA",
+      "promised_date": "2024-07-01",
+      "due_date": "2026-06-30",
+      "source_id": "Sd075e69257f6",
+      "source_url": "https://www.sfmta.com/projects/powered-scooter-share-permit-program"
+    },
+    {
+      "promise_id": "P17",
+      "promise_text": "Lurie promised to hire 425 new San Francisco Police Department officers during the first three years of his administration, prevent local city departments from indefinitely delaying building permits, impose more oversight on nonprofits working with the city, and address the city’s homelessness and public drug-use crises.",
+      "entity": "Daniel Lurie",
+      "promised_date": "2024",
+      "due_date": "2028-01-31",
+      "source_id": "S9c00e2bb9684",
+      "source_url": "https://www.influencewatch.org/person/daniel-lurie/"
+    },
+    {
+      "promise_id": "P23",
+      "promise_text": "The Hospitality Task Force will break down siloes to increase the police presence across the areas that drive our city’s economy – not just during large conferences but 365 days a year.",
+      "entity": "Daniel Lurie",
+      "promised_date": "2024",
+      "due_date": null,
+      "source_id": "S23ac27d17f3d",
+      "source_url": "https://www.sf.gov/mayor-lurie-launches-sfpd-hospitality-task-force-major-new-effort-to-strengthen-public-safety-drive-economic-comeback"
+    },
+    {
+      "promise_id": "P82",
+      "promise_text": "I’m telling you right now, we will win a WNBA championship in the first five years of this franchise.",
+      "entity": "Joe Lacob",
+      "promised_date": "2023-10-05",
+      "due_date": "2028-10-05",
+      "source_id": "S7ce6c45c9f3a",
+      "source_url": "https://nytimes.com/athletic/7742640/2026/10/31/wnba-finals-champion-valkyries-dream"
+    },
+    {
+      "promise_id": "P81",
+      "promise_text": "The approval includes the ability for both companies to charge fares for rides at any time of day.",
+      "entity": "California Public Utilities Commission",
+      "promised_date": "2023-08-10",
+      "due_date": null,
+      "source_id": "S4aec5e6af503",
+      "source_url": "https://cpuc.ca.gov/news-and-updates/all-news/cpuc-approves-permits-for-cruise-and-waymo-to-charge-fares-for-passenger-service-in-sf-2023"
+    },
+    {
+      "promise_id": "P44",
+      "promise_text": "Waymo disclosed Tuesday it’s now giving more than 100,000 paid robotaxi rides every week across its three main commercial markets in Los Angeles, San Francisco and Phoenix.",
+      "entity": "Waymo",
+      "promised_date": "2023-05",
+      "due_date": null,
+      "source_id": "Se3b12128d999",
+      "source_url": "https://techcrunch.com/2024/08/20/waymo-is-now-giving-100000-robotaxi-rides-week/"
+    },
+    {
+      "promise_id": "P18",
+      "promise_text": "San Francisco’s requirement is 82,200 homes by 2031.",
+      "entity": "London Breed",
+      "promised_date": "2023-01-31",
+      "due_date": "2031-12-31",
+      "source_id": "S7a34352ce89b",
+      "source_url": "https://citypln-m-extnl.sfgov.org/Commissions/CPC/4_10_2025/Commission%20Packet/2021-005878CWP.pdf"
+    },
+    {
+      "promise_id": "P26",
+      "promise_text": "In the first year alone, it is expected that 4,500 new units will return on the market— more than our annual goals— with no increase in taxes, no construction time, no multi-million dollar price tag, and no waiting.",
+      "entity": "Dean Preston",
+      "promised_date": "2022-11-08",
+      "due_date": null,
+      "source_id": "S4ce5690e59c3",
+      "source_url": "https://costa-hawkins.com/wp-content/uploads/2026/09/A172067.pdf"
+    },
+    {
+      "promise_id": "P11",
+      "promise_text": "We never said we'll never play again, but we'll never tour again.",
+      "entity": "Mickey Hart",
+      "promised_date": "2022-09-23",
+      "due_date": null,
+      "source_id": "Sd19eac519a89",
+      "source_url": "https://en.wikipedia.org/wiki/Dead_%26_Company_Summer_Tour_2023"
+    },
+    {
+      "promise_id": "P08",
+      "promise_text": "When Mayor London Breed announced $5 million last year for repairs to San Francisco’s crumbling housing stock for homeless people, the requests flooded in.",
+      "entity": "London Breed",
+      "promised_date": "2022-05-01",
+      "due_date": null,
+      "source_id": "S2fa8b19cdda5",
+      "source_url": "https://www.sfchronicle.com/sf/article/homeless-housing-sro-breed-17767837.php"
+    },
+    {
+      "promise_id": "P21",
+      "promise_text": "to permanently ban automobile traffic on a portion of the western half of J.F.K. Drive",
+      "entity": "London Breed",
+      "promised_date": "2022-04",
+      "due_date": null,
+      "source_id": "S6685fe8d7b3d",
+      "source_url": "https://sf.streetsblog.org/2022/04/26/hurrah-for-j-f-k-promenade-forever"
+    },
+    {
+      "promise_id": "P43",
+      "promise_text": "Since [sharing](https://blog.waymo.com/2022/03/to-our-fellow-san-franciscans) that we were ready to take the next step and begin testing fully autonomous operations in the city, we’ve begun fully autonomous rides with our San Francisco employees.",
+      "entity": "Waymo",
+      "promised_date": "2022-03-30",
+      "due_date": "2022-03-30",
+      "source_id": "Sf53e112937b0",
+      "source_url": "https://waymo.com/blog/2022/03/taking-our-next-step-in-city-by-bay/"
+    },
+    {
+      "promise_id": "P83",
+      "promise_text": "Whole Foods Market will open its new 64,737-square-foot San Francisco flagship store at Trinity Place (1185 Market Street) in San Francisco’s Mid-Market neighborhood on Thursday, March 10.",
+      "entity": "Whole Foods Market",
+      "promised_date": "2022-02-17",
+      "due_date": "2022-03-10",
+      "source_id": "S49884a310666",
+      "source_url": "https://www.webwire.com/ViewPressRel.asp?aId=285415"
+    },
+    {
+      "promise_id": "P09",
+      "promise_text": "As of this week, Pacific Gas and Electric Company (PG&E) has constructed and energized more than 600 miles of underground powerlines since its ambitious 10,000-Mile Undergrounding program started in mid-2021.",
+      "entity": "Patti Poppe",
+      "promised_date": "2021-06-01",
+      "due_date": null,
+      "source_id": "S36990114e2a2",
+      "source_url": "https://investor.pgecorp.com/news-events/press-releases/press-release-details/2023/600-Miles-and-Counting-PGE-Hits-Significant-Milestone-as-Crews-Safely-Complete-Construction-Energization-of-350-More-Miles-of-Underground-Powerlines-in-2023/"
+    },
+    {
+      "promise_id": "P40",
+      "promise_text": "In addition, PG&E is announcing today its own commitment to further electrify its vehicle fleet by 2030, including 100% of its light-duty fleet, 10% of its medium-duty fleet and 5% of its heavy-duty fleet.",
+      "entity": "PG&E",
+      "promised_date": "2020-10-01",
+      "due_date": "2030-12-31",
+      "source_id": "S4d6de2bf1068",
+      "source_url": "https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/Electric-Vehicle-Drivers-Apply-for-800-Clean-Fuel-Rebate-Before-End-of-Year/default.aspx"
+    },
+    {
+      "promise_id": "P30",
+      "promise_text": "Under the Mayor’s Homelessness Recovery Plan, the City set a goal of buying or leasing 1,500 new units of PSH over the course of two years.",
+      "entity": "London Breed",
+      "promised_date": "2020-07",
+      "due_date": "2022-06-30",
+      "source_id": "S63cfb85525f6",
+      "source_url": "https://www.sf.gov/news--san-francisco-receives-new-state-homekey-awards-733-million-support-purchase-and-operations"
+    },
+    {
+      "promise_id": "P86",
+      "promise_text": "The plan calls for more than 2,600 homes.",
+      "entity": "Associate Capital",
+      "promised_date": "2020-04",
+      "due_date": null,
+      "source_id": "S3223fa9b02c7",
+      "source_url": "http://sfbos.archive.sf.gov/sites/default/files/2025_10_15_PRESS_RELEASE_INNOVATIVE_SOPHIE_MAXWELL_BUILDING_OPENS_AT_SFS_BOOMING_POWER_STATION.pdf"
+    },
+    {
+      "promise_id": "P38",
+      "promise_text": "Here’s how PG&E is working to make PSPS events smaller in size, shorter in length and smarter for customers.",
+      "entity": "PG&E",
+      "promised_date": "2020-02-07",
+      "due_date": "2020-12-31",
+      "source_id": "Sd2a17c8ccaf2",
+      "source_url": "https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/PGE-Outlines-Actions-Its-Taking-to-Keep-Customers-and-Communities-Safe-During-2020-Wildfire-Season/default.aspx?print=1"
+    },
+    {
+      "promise_id": "P37",
+      "promise_text": "Mayor Breed also announced the next steps in her efforts to help people living unsheltered on the City’s streets, with an initiative to create at least 2,000 more places for people across the spectrum of housing, behavioral health, and shelter over the next two years.",
+      "entity": "London Breed",
+      "promised_date": "2020-01-15",
+      "due_date": "2022-01-15",
+      "source_id": "Sd659523fe97f",
+      "source_url": "https://hsh.archive.sf.gov/wp-content/uploads/2020/01/1000-Shelter-Bed-Press-Conference.pdf"
+    },
+    {
+      "promise_id": "P28",
+      "promise_text": "Over the past two years, SFDPH has opened 250 additional residential care and treatment beds.",
+      "entity": "London Breed",
+      "promised_date": "2020-01-08",
+      "due_date": null,
+      "source_id": "S9384fe0d2bda",
+      "source_url": "https://www.sf.gov/news--department-public-health-opens-70-new-behavioral-health-beds-part-expansion-treat-people"
+    },
+    {
+      "promise_id": "P35",
+      "promise_text": "This program is improving behavioral health services for people living in San Francisco with serious mental health issues and/or substance use disorders who are experiencing homelessness.",
+      "entity": "London Breed",
+      "promised_date": "2019-11-12",
+      "due_date": null,
+      "source_id": "S82f01dbd3448",
+      "source_url": "https://api.sf.gov/documents/12808/DPH_MHSF_Implementation_Report_2023.pdf"
+    },
+    {
+      "promise_id": "P62",
+      "promise_text": "will hold 1,500 employees when it is expected to open in 2024.",
+      "entity": "Visa",
+      "promised_date": "2019-11-06",
+      "due_date": "2024-12-31",
+      "source_id": "Sc4d60c4996a0",
+      "source_url": "https://www.bisnow.com/news/san-francisco/office/visa-to-build-global-hq-at-giants-tishman-speyers-mission-rock-101678"
+    },
+    {
+      "promise_id": "P42",
+      "promise_text": "WHEREAS, Under Contract Modification No. 122, Contractor will produce a revised project schedule, under which Contractor will bring the work to substantial completion on or before June 29, 2020; and,",
+      "entity": "Tutor Perini Corporation",
+      "promised_date": "2019-09-17",
+      "due_date": "2020-06-29",
+      "source_id": "S97aa89d42ea4",
+      "source_url": "https://www.sfmta.com/index%2Ephp/media/19380/download?inline"
+    },
+    {
+      "promise_id": "P66",
+      "promise_text": "Chase Center, which will have a capacity of 18,064, is due to open with a Metallica concert on September 6 before the Warriors play their first pre-season game at the venue against the Los Angeles Lakers on October 5.",
+      "entity": "Golden State Warriors",
+      "promised_date": "2019-08-28",
+      "due_date": "2019-09-06",
+      "source_id": "S7b9033c10fd9",
+      "source_url": "https://www.thestadiumbusiness.com/2019/08/28/warriors-lift-lid-chase-center/"
+    },
+    {
+      "promise_id": "P25",
+      "promise_text": "Though that legislation required that the hall close on December 31st, 2021, there has been no movement from the Board towards that closure.",
+      "entity": "San Francisco Board of Supervisors",
+      "promised_date": "2019-06-04",
+      "due_date": "2021-12-31",
+      "source_id": "S2b9025ba0cdf",
+      "source_url": "https://media.api.sf.gov/documents/JUVENILE_JUSTICE_REALIGNMENT_BLOCK_GRANT_ANNUAL_PLAN_20260420.pdf"
+    },
+    {
+      "promise_id": "P22",
+      "promise_text": "Embarcadero Navigation Center (12/30/19) opened with 200 beds (despite a lawsuit from neighbors that delayed the site’s opening until the end of 2019).",
+      "entity": "London Breed",
+      "promised_date": "2019-03",
+      "due_date": "2019-12-30",
+      "source_id": "S960774ffd1cf",
+      "source_url": "https://www.dhcs.ca.gov/wp-content/uploads/2025/10/San-Francisco-PY4-Annual-Narrative.pdf"
+    },
+    {
+      "promise_id": "P07",
+      "promise_text": "build 3.5M homes by 2025",
+      "entity": "Gavin Newsom",
+      "promised_date": "2018-11-06",
+      "due_date": null,
+      "source_id": "Sb1fb6aa4be89",
+      "source_url": "https://src.senate.ca.gov/governor-gavin-newsoms-top-15-worst-flip-flops-and-fails"
+    },
+    {
+      "promise_id": "P16",
+      "promise_text": "In October 2018, Mayor London Breed announced a commitment to open at least 1,000 additional shelter beds, including Navigation Center beds, by the end of 2020.",
+      "entity": "London Breed",
+      "promised_date": "2018-10",
+      "due_date": "2020-12-31",
+      "source_id": "S763eb80e2095",
+      "source_url": "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_admin/0-0-0-67712"
+    },
+    {
+      "promise_id": "P39",
+      "promise_text": "The program forecasted to install up to 7,500 charging ports over a three-year period focusing on two key market segments: workplaces and multi-unit dwellings.",
+      "entity": "PG&E",
+      "promised_date": "2018",
+      "due_date": "2020-12-31",
+      "source_id": "S5445c39db566",
+      "source_url": "https://docs.cpuc.ca.gov/PublishedDocs/Efile/G000/M373/K419/373419331.PDF"
+    },
+    {
+      "promise_id": "P84",
+      "promise_text": "After about a decade of planning, developer Forest City Realty Trust Inc. (NYSE: FCE.A) finally scored approval for its massive Pier 70 overhaul that could bring up to 2,150 new homes, 1.75 million square feet of commercial office, and up to 445,000 square feet of retail, light industrial and arts space on 28 acres.",
+      "entity": "Forest City Realty Trust Inc.",
+      "promised_date": "2017-10-31",
+      "due_date": null,
+      "source_id": "S260e098cc346",
+      "source_url": "https://bizjournals.com/sanfrancisco/news/2017/10/31/forest-city-pier-70-san-francisco-approval-housing.html"
+    },
+    {
+      "promise_id": "P36",
+      "promise_text": "Additionally, CleanPowerSF has conservatively committed to increasing the renewable percentage of its basic *Green* service, from 35 percent at program launch, to at least 50 percent by 2020.",
+      "entity": "Ed Lee",
+      "promised_date": "2017-04-20",
+      "due_date": "2020-12-31",
+      "source_id": "S5008d7810833",
+      "source_url": "https://sfenvironment.org/press/mayor-lee-announces-bold-new-target-50-percent-renewable-energy-2020"
+    },
+    {
+      "promise_id": "P57",
+      "promise_text": "By early 2017, Comcast will have its gigabit internet service available in 15 cities/metropolitan areas.",
+      "entity": "Comcast",
+      "promised_date": "2016-11-01",
+      "due_date": "2017-03-31",
+      "source_id": "Sefc8fda8bf79",
+      "source_url": "https://www.neowin.net/news/comcast-is-expanding-its-gigabit-internet-service-will-be-in-15-us-cities-by-early-2017/"
+    },
+    {
+      "promise_id": "P58",
+      "promise_text": "AT&T plans to triple that amount by the end of the year",
+      "entity": "Leland Kim (AT&T spokesman)",
+      "promised_date": "2016-05-17",
+      "due_date": "2016-12-31",
+      "source_id": "S33d33e3798db",
+      "source_url": "https://www.govtech.com/network/ATT-Launches-Fiber-Internet-in-San-Francisco-Bay-Area.html"
+    },
+    {
+      "promise_id": "P10",
+      "promise_text": "Also, 40% of the project’s residential portion is below-market-rate units, mostly targeting middle-income families.",
+      "entity": "San Francisco Giants",
+      "promised_date": "2015-01-01",
+      "due_date": null,
+      "source_id": "S8400d9972a3d",
+      "source_url": "https://www.sfchronicle.com/sf/article/s-f-giants-brass-celebrates-opening-mission-rock-18161986.php"
+    },
+    {
+      "promise_id": "P06",
+      "promise_text": "In 2014, San Francisco became the third city in the country to adopt Vision Zero with the goal of zero traffic deaths.",
+      "entity": "City and County of San Francisco",
+      "promised_date": "2014-01-01",
+      "due_date": null,
+      "source_id": "S82a9d0952ba7",
+      "source_url": "https://www.sfmta.com/tl/media/45938/download?inline"
+    },
+    {
+      "promise_id": "P15",
+      "promise_text": "The late Mayor Ed Lee pledged in 2014 to add 5,000 new units to the housing stock every year, for a total of 30,000 units by 2020.",
+      "entity": "Ed Lee",
+      "promised_date": "2014",
+      "due_date": "2020-12-31",
+      "source_id": "Sce65d2e2367a",
+      "source_url": "https://civilgrandjury.archive.sf.gov/2017_2018/PressRelease.Housing.pdf"
+    },
+    {
+      "promise_id": "P41",
+      "promise_text": "In May 2013, the SFMTA contracted with Tutor Perini Corporation (Contractor) to construct the Central Subway Stations, Surface, Trackway and Systems under SFMTA Contract No. 1300 for a Contract Amount of $839,676,400, all work to be completed in 1700 days, with Final Completion date May 11, 2018.",
+      "entity": "Tutor Perini Corporation",
+      "promised_date": "2013-05",
+      "due_date": "2018-05-11",
+      "source_id": "Se8a9a7f4ebed",
+      "source_url": "https://www.sfmta.com/ja/media/35570/download?inline"
+    },
+    {
+      "promise_id": "P27",
+      "promise_text": "The 30-year fund would receive $20 million in its first year and increasing amounts thereafter, up to $50 million annually.",
+      "entity": "Ed Lee",
+      "promised_date": "2012",
+      "due_date": null,
+      "source_id": "S2adc21305bf2",
+      "source_url": "https://www.spur.org/news/2012-07-26/housing-trust-fund-heads-voters-november"
+    },
+    {
+      "promise_id": "P65",
+      "promise_text": "Substantial completion of the contract was originally scheduled for February 10, 2018",
+      "entity": "SFMTA",
+      "promised_date": "2012",
+      "due_date": "2018-02-10",
+      "source_id": "S319446382722",
+      "source_url": "https://www.sfmta.com/index%2Ephp/media/42253/download?inline"
+    },
+    {
+      "promise_id": "P64",
+      "promise_text": "the Project is anticipated to include (1) up to 8,000 new residential units",
+      "entity": "Treasure Island Development Authority",
+      "promised_date": "2011-06-07",
+      "due_date": null,
+      "source_id": "S3df00693ee93",
+      "source_url": "https://sfbos.org/ftp/uploadedfiles/bdsupvrs/resolutions11/r0241-11.pdf"
+    },
+    {
+      "promise_id": "P20",
+      "promise_text": "At the time, Lee promised not to seek election if appointed, a statement that helped to gain support for his appointment.",
+      "entity": "Ed Lee",
+      "promised_date": "2011-01-07",
+      "due_date": "2011-11-08",
+      "source_id": "S6736a72c86a2",
+      "source_url": "https://en.wikipedia.org/wiki/Ed_Lee"
+    },
+    {
+      "promise_id": "P61",
+      "promise_text": "2009 (Revised) July 28, 2009 $4,586M 12/04/15",
+      "entity": "San Francisco Public Utilities Commission (SFPUC)",
+      "promised_date": "2009-07-28",
+      "due_date": "2015-12-04",
+      "source_id": "S6f14ce22ccc6",
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/WSIP-Quarterly-Report-FY2025-2026-Q4.pdf"
+    },
+    {
+      "promise_id": "P19",
+      "promise_text": "In his budget proposal for fiscal year 2007–2008, Newsom announced his intention to provide universal health care for all city residents, based on long-time City Supervisor Tom Ammiano 's plan.",
+      "entity": "Gavin Newsom",
+      "promised_date": "2007-04",
+      "due_date": null,
+      "source_id": "Sb1f01bbe657f",
+      "source_url": "https://en.wikipedia.org/wiki/Healthy_San_Francisco"
+    },
+    {
+      "promise_id": "P13",
+      "promise_text": "In his first year as mayor, he introduced an ambitious 10-year plan to end chronic homelessness by creating 3,000 housing units with supportive services and replacing emergency shelter beds with 24-hour clinics.",
+      "entity": "Gavin Newsom",
+      "promised_date": "2004-06-30",
+      "due_date": "2014-06-30",
+      "source_id": "S13f24e3da880",
+      "source_url": "https://www.khsu.org/regional-interests/2019-08-02/timeline-the-frustrating-political-history-of-homelessness-in-san-francisco"
+    },
+    {
+      "promise_id": "P14",
+      "promise_text": "As Mayor, Newsom had also launched an ambitious 10-year plan in 2004 to end chronic homelessness and pledged to build 3,000 new units of supportive housing.",
+      "entity": "Gavin Newsom",
+      "promised_date": "2004-06-30",
+      "due_date": "2014-06-30",
+      "source_id": "Se14a38d9e8d8",
+      "source_url": "https://www.khsu.org/regional-interests/2020-02-19/gov-newsom-once-again-takes-on-homelessness-this-time-statewide"
+    },
+    {
+      "promise_id": "P24",
+      "promise_text": "In February 2004, the City and County of San Francisco began issuing marriage licenses to same-sex couples.",
+      "entity": "Gavin Newsom",
+      "promised_date": "2004-02-12",
+      "due_date": null,
+      "source_id": "S56afab45d6c1",
+      "source_url": "https://ajud.assembly.ca.gov/sites/ajud.assembly.ca.gov/files/reports/1008%20Prop%208%20background%20paper.pdf"
+    },
+    {
+      "promise_id": "P29",
+      "promise_text": "Care Not Cash officially launched in May 2004, reducing the amount of money homeless residents received from a maximum of $410 per month to $59.",
+      "entity": "Gavin Newsom",
+      "promised_date": "2002-11-05",
+      "due_date": null,
+      "source_id": "Se14a38d9e8d8",
+      "source_url": "https://www.khsu.org/regional-interests/2020-02-19/gov-newsom-once-again-takes-on-homelessness-this-time-statewide"
+    },
+    {
+      "promise_id": "P87",
+      "promise_text": "NFL owners had gone as far as awarding the new stadium the rights to host [Super Bowl XXXVII](https://encyclopedia.thefreedictionary.com/Super+Bowl+XXXVII).",
+      "entity": "NFL",
+      "promised_date": "1997-06-03",
+      "due_date": "2003-01-26",
+      "source_id": "S37622a65b5b9",
+      "source_url": "https://encyclopedia.thefreedictionary.com/Levi%27s+Stadium"
+    }
+  ],
+  "duplicate_text_groups": [],
+  "shared_source_groups": [
+    [
+      "P14",
+      "P29"
+    ]
+  ],
+  "snapshot_path": "docs/data.json",
+  "snapshot_sha256": "85491f8631f40ef01625dde7a53d9c1eb983561760699c55201a5d2a191e59c5"
+}

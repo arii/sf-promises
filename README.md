@@ -80,6 +80,83 @@ The extended CSV is currently used by the validation harness; do not remove it
 until its inputs and independent test expectations have been migrated and
 verified. Keep `mocks/` for deterministic offline tests.
 
+## Archil sandbox example
+
+Install the Python dependencies with `pip install -r requirements.txt`, then
+export `ARCHIL_API_KEY` (an account key starting with `key-`, from the
+[Archil console](https://console.archil.com)) and `ARCHIL_REGION`. Run:
+
+```bash
+python3 src/archil_sandbox_example.py
+```
+
+The example creates a separate sandbox, writes a file to its persistent root
+filesystem, stops and starts it, reads the file, and stops it again. It does
+not modify `sf-promises-golden` or mount the shared project disk. The stopped
+sandbox and its root disk remain in Archil and may incur storage charges;
+delete the example sandbox in the console when no longer needed. Persistent
+sandboxes are available in Archil's public AWS regions, not public GCP regions.
+
+For one-off checks against a mounted disk, Archil's `Disk.exec()` starts a
+fresh microVM for one command and then shuts it down. Agent tool adapters can
+expose disk reads, writes and execution to models; their permissions and
+outputs still require validation. See the [Python SDK](https://docs.archil.com/sdks/python.md)
+and [serverless execution](https://docs.archil.com/compute/serverless-execution.md).
+
+## V2 development status
+
+V2 is incomplete and does not publish verdicts. Its offline pieces use a
+separate schema, content-addressed sources, preliminary gates, separate
+advocate bundles and review-only snapshots. A successful preliminary screen
+is not proof of a claim. See `PROGRESS_REPORT.md` for verified increments and
+blockers; do not use the incomplete components to replace the live site.
+
+Run the Python tests from the repository root with `python3 -m pytest`. To
+regenerate unverified snapshot leads without overwriting an existing file:
+
+```bash
+python3 -m src.v2_seeds docs/data.json seeds/leads-review.json
+```
+
+The resulting leads are not authoritative records or saved evidence. The
+live sandbox pilot requires a valid Archil account key and a verified golden
+template; the OpenRouter credential must also work before live extraction.
+
+To create a new, separate v2 database (the parent directory must exist):
+
+```bash
+python3 -m src.v2_database /path/to/new-v2.sqlite
+```
+
+The command refuses to overwrite an existing file. It does not migrate older
+v2 databases; enable SQLite foreign keys on every connection. It marks the
+database with a v2 application ID and schema version.
+
+To load a saved extraction response and its archived fetch metadata:
+
+```bash
+python3 -m src.v2_load --database /path/to/new-v2.sqlite --sources /path/to/sources \
+  --promise-id P01 --slug example --metadata /path/to/metadata.json \
+  --metadata-sha256 HASH --response /path/to/extraction.json
+```
+
+This writes unverified proposals to pending, not published promises. The
+command requires a newly initialized, supported v2 database and rechecks the
+saved source and metadata; it never creates a missing database.
+
+For an existing v2 database and source archive, write a new review-only file
+outside `docs/` (the output directory must already exist):
+
+```bash
+python3 -m src.v2_export --database /path/to/v2.sqlite --sources /path/to/sources --output /path/to/candidate.json
+```
+
+Open `demo/v2-preview.html` and choose that JSON file to inspect its tallies,
+filters and evidence locally. The preview does not publish or independently
+verify claims. The export can include local archive paths; review it before
+sharing. Evidence ingested after the cutoff is excluded, but a complete
+historical snapshot cannot be reconstructed if existing records were changed.
+
 ## Archil checkpoints
 
 After coordinating and quiescing database writers, create an Archil checkpoint
