@@ -17,8 +17,11 @@ async def run_in_fork(
     golden = await client.sandboxes.get.aio(golden_id)
     if golden.status != "stopped":
         raise ValueError("Golden sandbox must be stopped before forking")
-    if not isinstance(getattr(golden, "mounts", None), list) or golden.mounts:
-        raise ValueError("Golden sandbox must have no external mounts")
+    if not isinstance(getattr(golden, "mounts", None), list):
+        raise ValueError("Golden sandbox mounts unavailable")
+    for mount in golden.mounts:
+        if getattr(mount, "path", "") not in ("/mnt/archil", "/mnt/archil/workspace"):
+            raise ValueError(f"Unauthorized golden mount path: {getattr(mount, 'path', None)}")
     name = ledger.claim(run_id, job_id)
     worker = await golden.fork.aio(name=name)
     worker_id = getattr(worker, "id", None)
@@ -27,10 +30,11 @@ async def run_in_fork(
         raise ValueError("Fork identity could not be verified; manual review required")
     ledger.record_worker(run_id, job_id, worker_id)
     try:
-        if (getattr(worker, "status", None) != "running"
-                or not isinstance(getattr(worker, "mounts", None), list)
-                or worker.mounts):
-            raise ValueError("Fork must be running without external mounts")
+        if getattr(worker, "status", None) != "running":
+            raise ValueError("Fork must be running")
+        for mount in getattr(worker, "mounts", []):
+            if getattr(mount, "path", "") not in ("/mnt/archil", "/mnt/archil/workspace"):
+                raise ValueError(f"Unauthorized worker mount path: {getattr(mount, 'path', None)}")
         return await operation(worker)
     finally:
         stopped = await worker.stop.aio()

@@ -151,7 +151,7 @@ outside `docs/` (the output directory must already exist):
 python3 -m src.v2_export --database /path/to/v2.sqlite --sources /path/to/sources --output /path/to/candidate.json
 ```
 
-Open `demo/v2-preview.html` and choose that JSON file to inspect its tallies,
+Open `docs/v2-preview.html` and choose that JSON file to inspect its tallies,
 filters and evidence locally. The preview does not publish or independently
 verify claims. The export can include local archive paths; review it before
 sharing. Evidence ingested after the cutoff is excluded, but a complete

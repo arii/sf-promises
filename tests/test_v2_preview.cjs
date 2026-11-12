@@ -17,7 +17,7 @@ async function main() {
     page.on('console', message => {
       if (['error', 'warning'].includes(message.type())) errors.push(message.text());
     });
-    await page.goto(pathToFileURL(path.resolve('demo/v2-preview.html')).href);
+    await page.goto(pathToFileURL(path.resolve('docs/v2-preview.html')).href);
     assert.match(await page.locator('#status').innerText(), /choose/i);
     const data = {
       snapshot_kind: 'candidate_not_published',

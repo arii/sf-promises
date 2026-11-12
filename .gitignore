@@ -2,6 +2,12 @@
 node_modules/
 __pycache__/
 *.db
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+data/
 video/node_modules/
 video/out/
 video/public/rec/
+

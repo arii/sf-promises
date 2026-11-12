@@ -414,6 +414,19 @@ a:hover {
   border: 1px solid var(--orange-border);
 }
 
+.verdict-chip.kept_then_reversed {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
+.verdict-chip.delayed_or_partial {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+
 .badge-verified {
   font-size: 0.76rem;
   font-weight: 700;

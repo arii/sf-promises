@@ -23,6 +23,15 @@
       .trim();
   }
 
+  // Helper: Format verdict labels with v2 lifecycle nuances
+  function formatVerdictLabel(verdict) {
+    if (!verdict) return 'UNKNOWN';
+    const v = String(verdict).toUpperCase();
+    if (v === 'KEPT_THEN_REVERSED') return 'KEPT → LATER CLOSED / REVERSED';
+    if (v === 'DELAYED_OR_PARTIAL') return 'DELIVERED LATE / PARTIAL';
+    return v;
+  }
+
   // State Variables
   let demoData = null;
   let currentRunType = 'P02'; // promise_id to replay, or 'N01' (watchdog test)
@@ -411,7 +420,7 @@
     if (scBadgeVerdict) {
       const verdClass = pData.verdict.toLowerCase().replace(' ', '_');
       scBadgeVerdict.className = `verdict-chip ${verdClass}`;
-      scBadgeVerdict.textContent = pData.verdict.toUpperCase();
+      scBadgeVerdict.textContent = formatVerdictLabel(pData.verdict);
 
       // Card accent border
       const accentVar = verdClass === 'kept' ? 'var(--kept)' : verdClass === 'in_progress' ? 'var(--blue)' : 'var(--purple)';
@@ -1259,7 +1268,7 @@
           ${escapeHtml(p.promised_date || '—')}${dueLine ? '<br>' + dueLine : ''}
         </td>
         <td>
-          <span class="verdict-chip ${verdClass}">${p.verdict.toUpperCase()}</span>
+          <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
         </td>
         <td>
           ${rel
@@ -1378,7 +1387,7 @@
     if (verdChipEl) {
       const verdClass = p.verdict.toLowerCase().replace(' ', '_');
       verdChipEl.className = `verdict-chip ${verdClass}`;
-      verdChipEl.textContent = p.verdict.toUpperCase();
+      verdChipEl.textContent = formatVerdictLabel(p.verdict);
     }
     if (relChipEl) {
       relChipEl.textContent = p.relevance ? `Relevance ${p.relevance.score}/8` : 'Relevance n/r';

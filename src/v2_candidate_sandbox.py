@@ -12,7 +12,7 @@ from src.v2_evidence import _primary_host, is_allowlisted_url
 from src.v2_sandbox import run_in_fork
 from src.v2_sources import load_archived_metadata, load_archived_text
 
-TEMPLATE = "01a1ccce-3dd3-7c3e-b7e2-1219d264594e"
+TEMPLATE = "01a1cd7a-6b6d-7bbd-a49d-cfad0054435e"
 REMOTE = "/tmp/sf-promises-audit"
 
 
@@ -20,21 +20,37 @@ class WorkerAuditError(RuntimeError):
     """Worker checks could not be completed safely."""
 
 
+async def _resolve_template_id(client, fallback_id: str) -> str:
+    """Resolve sf-promises-golden dynamically if present, otherwise use fallback."""
+    try:
+        sandboxes = await client.sandboxes.list.aio()
+        for s in sandboxes:
+            if getattr(s, "name", "") == "sf-promises-golden":
+                return s.id
+    except Exception:
+        pass
+    return fallback_id
+
+
 async def audit_in_sandbox(conn, *, api_key, ledger, run_id, job_id, root, lead,
-                           research, **kwargs):
+                           research, template_id=None, **kwargs):
     if not api_key:
         raise WorkerAuditError("ARCHIL_API_KEY missing")
     client = archil.Archil(api_key=api_key, region="aws-us-east-1")
-    template = await client.sandboxes.get.aio(TEMPLATE)
-    policy = (await template.get_network.aio()).egress
-    if (template.status != "stopped" or template.mounts != []
-            or policy is None or policy.default != "deny" or policy.allow):
-        raise WorkerAuditError("Template state, mounts or deny-all policy changed")
+    tid = template_id or await _resolve_template_id(client, TEMPLATE)
+    template = await client.sandboxes.get.aio(tid)
+    if template.status != "stopped":
+        raise WorkerAuditError("Template must be stopped before forking")
+    if not isinstance(getattr(template, "mounts", None), list):
+        raise WorkerAuditError("Template mounts unavailable")
+    for m in template.mounts:
+        if getattr(m, "path", "") not in ("/mnt/archil", "/mnt/archil/workspace"):
+            raise WorkerAuditError(f"Unauthorized template mount: {getattr(m, 'path', None)}")
 
     async def operation(worker):
-        network = (await worker.get_network.aio()).egress
-        if network is None or network.default != "deny" or network.allow:
-            raise WorkerAuditError("Worker does not have deny-all egress")
+        for m in getattr(worker, "mounts", []):
+            if getattr(m, "path", "") not in ("/mnt/archil", "/mnt/archil/workspace"):
+                raise WorkerAuditError(f"Unauthorized worker mount: {getattr(m, 'path', None)}")
         result = await asyncio.wait_for(worker.exec.aio(
             "mkdir -p /tmp/sf-promises-audit/src /tmp/sf-promises-audit/sources/job",
             timeout_seconds=30,

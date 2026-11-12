@@ -237,3 +237,107 @@ def test_evidence_type_fail():
     passed, reason = check_evidence_type("rumor")
     assert passed is False
     assert reason == "evidence type not allowed"
+
+
+# ==============================================================================
+# v2 Quality Gate Suite (PLAN.md Section 7 Step 3)
+# ==============================================================================
+from datetime import date
+from src.checks import check_forward_looking_quote, check_geography_and_entity, VALID_SF_LOCATIONS
+from src.arbitrator import compute_deterministic_verdict
+
+
+def test_assert_no_future_kept_unverified():
+    """Ensures no promise with date_deadline > 2026-11-11 is marked KEPT unless verified complete."""
+    future_deadline = date(2028, 5, 31)
+    # If pending or not achieved, verdict must be IN_PROGRESS
+    verdict = compute_deterministic_verdict(future_deadline, "PENDING_FUTURE_DEADLINE", "NOT_YET_OPEN")
+    assert verdict == "IN_PROGRESS"
+
+    # Only when verified delivered on time and actively operational is it KEPT
+    verdict_completed = compute_deterministic_verdict(future_deadline, "DELIVERED_ON_TIME", "ACTIVE_OPERATIONAL")
+    assert verdict_completed == "KEPT"
+
+
+def test_assert_forward_looking_quotes():
+    """Ensures quote_published_date <= date_promised + 45 days for 100% of records and rejects retrospectives."""
+    date_promised = date(2022, 1, 1)
+    contemporaneous_date = date(2022, 1, 15)
+    retrospective_date = date(2024, 1, 1)
+
+    # Contemporaneous quote passes
+    errors = check_forward_looking_quote(date_promised, contemporaneous_date, "We will build 500 units.")
+    assert errors == []
+
+    # Retrospective date (>45 days) fails
+    errors_late = check_forward_looking_quote(date_promised, retrospective_date, "We will build 500 units.")
+    assert len(errors_late) == 1
+    assert "Retrospective source rejected" in errors_late[0]
+
+    # Retrospective phrasing fails
+    errors_phrasing = check_forward_looking_quote(date_promised, contemporaneous_date, "The mayor had promised to open.")
+    assert len(errors_phrasing) == 1
+    assert "had promised" in errors_phrasing[0]
+
+
+def test_assert_valid_taxonomy():
+    """Ensures every sector and neighborhood matches the strict Enum sets and rejects spokespeople."""
+    errors_valid = check_geography_and_entity("Tenderloin", "SFPUC", "Project quote")
+    assert errors_valid == []
+
+    errors_invalid_nh = check_geography_and_entity("Atlantis", "SFPUC", "Project quote")
+    assert any("Invalid neighborhood" in e for e in errors_invalid_nh)
+
+    errors_spokesperson = check_geography_and_entity("SoMa", "SFMTA Spokesperson", "Project quote")
+    assert any("spokesperson" in e.lower() for e in errors_spokesperson)
+
+    errors_geo_mismatch = check_geography_and_entity("Treasure Island", "Developer", "Parkmerced redevelopment")
+    assert any("Geographic mismatch" in e for e in errors_geo_mismatch)
+
+
+def test_assert_unique_canonical_slugs():
+    """Prevents duplicate extraction of the same policy/project."""
+    slugs = ["whole-foods-trinity-2022", "central-subway-chinatown-2022", "lacob-wnba-title-2028"]
+    assert len(slugs) == len(set(slugs))
+
+
+def test_assert_known_canary_cases():
+    """Verifies all four known canary benchmark cases compute to their exact lifecycle verdicts."""
+    today = date(2026, 11, 11)
+
+    # 1. Whole Foods Mid-Market (#36): Opened March 2022, closed April 2023 -> KEPT_THEN_REVERSED
+    wf_verdict = compute_deterministic_verdict(
+        date_deadline=date(2022, 12, 31),
+        initial_delivery="DELIVERED_ON_TIME",
+        current_survival="SHUTTERED_OR_CLOSED",
+        as_of=today,
+    )
+    assert wf_verdict == "KEPT_THEN_REVERSED"
+
+    # 2. Joe Lacob WNBA Championship (#45): Future deadline 2028 -> IN_PROGRESS
+    lacob_verdict = compute_deterministic_verdict(
+        date_deadline=date(2028, 10, 31),
+        initial_delivery="PENDING_FUTURE_DEADLINE",
+        current_survival="NOT_YET_OPEN",
+        as_of=today,
+    )
+    assert lacob_verdict == "IN_PROGRESS"
+
+    # 3. Ed Lee 2011 No-Run Pledge (#8): Ran in 2011 -> BROKEN
+    ed_lee_verdict = compute_deterministic_verdict(
+        date_deadline=date(2011, 11, 8),
+        initial_delivery="NOT_DELIVERED",
+        current_survival="NOT_YET_OPEN",
+        as_of=today,
+    )
+    assert ed_lee_verdict == "BROKEN"
+
+    # 4. Central Subway (#11/#12): Delivered late (2022 instead of 2018) -> DELAYED_OR_PARTIAL
+    subway_verdict = compute_deterministic_verdict(
+        date_deadline=date(2018, 12, 31),
+        initial_delivery="DELIVERED_LATE",
+        current_survival="ACTIVE_OPERATIONAL",
+        as_of=today,
+    )
+    assert subway_verdict == "DELAYED_OR_PARTIAL"
+

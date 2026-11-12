@@ -16,7 +16,8 @@ async def search_window(client, query: str, after: str, before: str):
     return results.results
 
 
-async def discover_timeline(client, topic, *, promised, deadline, delivered, as_of):
+async def discover_timeline(client, topic, *, promised, deadline, delivered, as_of,
+                            entity: str | None = None, keywords: str | None = None):
     """Return bounded search leads, not evidence or inferred dates."""
     if (not isinstance(topic, str) or not topic.strip() or len(topic) > 500
             or type(promised) is not date or type(as_of) is not date
@@ -34,11 +35,19 @@ async def discover_timeline(client, topic, *, promised, deadline, delivered, as_
         if year <= date.max.year:
             day = min(deadline.day, calendar.monthrange(year, month)[1])
             delivery_end = min(as_of, date(year, month, day))
+
+    ent = f'"{entity}" ' if entity else ""
+    kw = f'"{keywords}"' if keywords else f'"{topic}"'
+
+    origin_q = f'{ent}{kw} ("pledged" OR "promised" OR "announced" OR "will open" OR "contract")' if entity or keywords else f"Original public commitment and deadline for {topic}"
+    delivery_q = f'{ent}{kw} ("opened" OR "completed" OR "launched" OR "failed" OR "delayed")' if entity or keywords else f"Delivery, opening or completion of {topic}"
+    survival_q = f'{kw} ("closed" OR "shuttered" OR "suspended" OR "halted" OR "vacant" OR "paused")' if keywords else f"Current status, closure or suspension of {topic}"
+
     phases = (
-        ("origin", f"Original public commitment and deadline for {topic}",
+        ("origin", origin_q,
          max(date.min, promised - timedelta(days=min(14, (promised - date.min).days))), origin_end),
-        ("delivery", f"Delivery, opening or completion of {topic}", promised, delivery_end),
-        ("survival", f"Current status, closure or suspension of {topic}", delivered or promised, as_of),
+        ("delivery", delivery_q, promised, delivery_end),
+        ("survival", survival_q, delivered or promised, as_of),
     )
     results = {}
     for phase, query, after, before in phases:

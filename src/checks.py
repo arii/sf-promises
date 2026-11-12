@@ -186,3 +186,65 @@ def check_evidence_type(evidence_type: str | None) -> tuple[bool, str]:
     if not evidence_type or str(evidence_type).strip().lower() not in EVIDENCE_TYPES:
         return False, "evidence type not allowed"
     return True, "pass"
+
+
+# ==============================================================================
+# v2 Deterministic Gates (PLAN.md Gates 1, 3, 4)
+# ==============================================================================
+
+VALID_SF_LOCATIONS = {
+    "Citywide", "Mid-Market & Civic Center", "Tenderloin", "SoMa", "Mission Bay & Mission Rock",
+    "Treasure Island", "Parkmerced", "Pier 70 & Dogpatch", "Chinatown & North Beach",
+    "Golden Gate Park", "The Embarcadero", "Union Square & Financial District",
+    "Twin Peaks", "Haight-Ashbury", "Presidio & Doyle Drive", "Bayview-Hunters Point",
+    "Regional / Northern California",
+}
+
+
+def check_forward_looking_quote(
+    date_promised: date,
+    quote_published_date: date,
+    verbatim_quote: str,
+) -> list[str]:
+    """Gate 1: Forward-Looking Claim Check (Eliminates Retrospective Quotes)."""
+    errors = []
+    # 1. Source document cannot be a retrospective written years after the promise
+    if (quote_published_date - date_promised).days > 45:
+        errors.append(
+            f"Retrospective source rejected: quote published on {quote_published_date} "
+            f"is >45 days after promise date {date_promised}. Search with published_before={date_promised}."
+        )
+    # 2. Reject retrospective critique phrasing
+    retrospective_red_flags = [
+        "didn't last long", "failed to", "had promised", "pledged in 20",
+        "was originally scheduled", "sold out all", "opened with",
+    ]
+    lower_q = verbatim_quote.lower()
+    for phrase in retrospective_red_flags:
+        if phrase in lower_q:
+            errors.append(f"Quote contains retrospective phrasing ('{phrase}'). Find original T0 pledge.")
+    return errors
+
+
+def check_geography_and_entity(neighborhood: str, entity_name: str, quote: str) -> list[str]:
+    """Gate 3: Strict SF Geography & Sector Dictionary (Eliminates Hallucinated Titles)."""
+    errors = []
+    if neighborhood not in VALID_SF_LOCATIONS:
+        errors.append(f"Invalid neighborhood '{neighborhood}'. Must be one of {VALID_SF_LOCATIONS}.")
+    if "spokesman" in entity_name.lower() or "spokesperson" in entity_name.lower():
+        errors.append(f"Entity '{entity_name}' is a spokesperson. Use the parent organization.")
+    if neighborhood == "Treasure Island" and "parkmerced" in quote.lower():
+        errors.append("Geographic mismatch: Quote is about Parkmerced, not Treasure Island.")
+    return errors
+
+
+def check_tiered_evidence(sources: list[dict]) -> list[str]:
+    """Gate 4: Tiered Evidence Rule.
+    A promise cannot be resolved using only TIER3_CANARY sources (Reddit, social media, blogs).
+    Requires at least one corroborating TIER1_GOV or TIER2_NEWS document.
+    """
+    tiers = {s.get("source_tier") or s.get("tier") for s in sources}
+    if tiers == {"TIER3_CANARY"} or (tiers and not tiers.intersection({"TIER1_GOV", "TIER2_NEWS"})):
+        return ["Tier 3 canary signal requires corroborating TIER1_GOV or TIER2_NEWS source."]
+    return []
+

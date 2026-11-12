@@ -4,7 +4,7 @@ window.__DEMO_DATA__ = {
     "title": "SF Promises",
     "city": "San Francisco",
     "last_checked": "Nov 10, 2026",
-    "last_updated": "Nov 10, 2026",
+    "last_updated": "Nov 12, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
     "sqlite_file": "/mnt/archil/workspace/promises.db",
     "sqlite_tables": 20,
@@ -58,7 +58,7 @@ window.__DEMO_DATA__ = {
       "S8",
       "S9"
     ],
-    "id_reconciliation": "62 published \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
+    "id_reconciliation": "62 published · 13 in quarantine registry · 38 seeds awaiting intake",
     "id_scheme": "P-series = civic promises; S-series = secondary scrapes. ID gaps = quarantined or awaiting intake.",
     "acceptance_verified": false,
     "acceptance_status_label": "Acceptance 5/6: loop, per-row hash, change log, N-catches, demo verified (Tier-2 100 paused by user decision)",
@@ -97,11 +97,12 @@ window.__DEMO_DATA__ = {
     "discrepancy_files": [
       "QUESTIONS.md",
       "WORKING_NOTES.md"
-    ]
+    ],
+    "v2_verified_count": 1
   },
   "p02": {
     "promise_id": "P02",
-    "promise_text": "That\u2019s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,",
+    "promise_text": "That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,",
     "entity": "Daniel Lurie",
     "role": "Mayor of San Francisco",
     "entity_type": "politician",
@@ -160,7 +161,7 @@ window.__DEMO_DATA__ = {
           {
             "promise_id": "P02",
             "claim_text": "Mayor Lurie opened the 822 Geary facility",
-            "quote": "and I am proud to be opening it,\u201d said Mayor Daniel Lurie.",
+            "quote": "and I am proud to be opening it,” said Mayor Daniel Lurie.",
             "quote_match": "exact",
             "evidence_type": "opening",
             "source_file_path": "/mnt/archil/workspace/sources/e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05.md",
@@ -236,20 +237,20 @@ window.__DEMO_DATA__ = {
   "sf_showcase": [
     {
       "promise_id": "P02",
-      "tag": "Tenderloin \u00b7 822 Geary St",
-      "domain": "\ud83c\udfdb\ufe0f Civic & Public Safety",
+      "tag": "Tenderloin · 822 Geary St",
+      "domain": "🏛️ Civic & Public Safety",
       "title": "24/7 Crisis Stabilization Center",
-      "quote": "\u201cThat\u2019s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,\u201d",
+      "quote": "“That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,”",
       "entity": "Mayor Daniel Lurie",
       "verdict": "kept",
       "evidence": "16-bed center opened April 28, 2025 at 822 Geary St with 24/7 crisis care."
     },
     {
       "promise_id": "P04",
-      "tag": "Mission Bay \u00b7 Chase Center",
-      "domain": "\ud83c\udfc0 SF Sports",
+      "tag": "Mission Bay · Chase Center",
+      "domain": "🏀 SF Sports",
       "title": "Golden State Valkyries Chase Center Attendance",
-      "quote": "\u201cThe Valkyries will play all regular-season home games at Chase Center, with a pledge to lead the WNBA in attendance.\u201d",
+      "quote": "“The Valkyries will play all regular-season home games at Chase Center, with a pledge to lead the WNBA in attendance.”",
       "entity": "Golden State Valkyries",
       "verdict": "kept",
       "evidence": "Sold out inaugural games at Chase Center with 10,000 season-ticket deposits; led WNBA attendance."
@@ -257,9 +258,9 @@ window.__DEMO_DATA__ = {
     {
       "promise_id": "P11",
       "tag": "Haight-Ashbury & Golden Gate Park",
-      "domain": "\ud83c\udfb8 Culture & Music",
+      "domain": "🎸 Culture & Music",
       "title": "Dead & Company Final Tour",
-      "quote": "\u201cWe never said we'll never play again, but we'll never tour again.\u201d",
+      "quote": "“We never said we'll never play again, but we'll never tour again.”",
       "entity": "Mickey Hart / Dead & Company",
       "verdict": "undecided",
       "evidence": "Played 3-night farewell run at Oracle Park; later played Golden Gate Park Polo Fields 60th anniversary."
@@ -267,9 +268,9 @@ window.__DEMO_DATA__ = {
     {
       "promise_id": "P10",
       "tag": "Mission Rock & South Beach",
-      "domain": "\u26be Waterfront & Housing",
+      "domain": "⚾ Waterfront & Housing",
       "title": "SF Giants 40% Affordable Homes",
-      "quote": "\u201cAlso, 40% of the project\u2019s residential portion is below-market-rate units, mostly targeting middle-income families.\u201d",
+      "quote": "“Also, 40% of the project’s residential portion is below-market-rate units, mostly targeting middle-income families.”",
       "entity": "San Francisco Giants",
       "verdict": "in_progress",
       "evidence": "Phase 1 residential towers active across McCovey Cove with income-restricted units."
@@ -277,9 +278,9 @@ window.__DEMO_DATA__ = {
     {
       "promise_id": "P21",
       "tag": "Golden Gate Park",
-      "domain": "\ud83d\udef4 Transit & Parks",
+      "domain": "🛴 Transit & Parks",
       "title": "Car-Free JFK Promenade",
-      "quote": "\u201cpermanently ban automobile traffic on a portion of the western half of J.F.K. Drive\u201d",
+      "quote": "“permanently ban automobile traffic on a portion of the western half of J.F.K. Drive”",
       "entity": "City of San Francisco",
       "verdict": "kept",
       "evidence": "Voters approved Proposition J; 1.5 miles of JFK Promenade permanently car-free."
@@ -426,7 +427,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "opening",
               "page_number": null,
               "promise_id": "P59",
-              "quote": "Zoox has begun offering [robotaxi rides](https://www.sfchronicle.com/sf/article/zoox-san-francisco-rides-19874941.php) in San Francisco, enabling curious consumers to test the company\u2019s jaunty, cabin-style buggies in downtown traffic.",
+              "quote": "Zoox has begun offering [robotaxi rides](https://www.sfchronicle.com/sf/article/zoox-san-francisco-rides-19874941.php) in San Francisco, enabling curious consumers to test the company’s jaunty, cabin-style buggies in downtown traffic.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/c203459be8eb9af8fcfaddf6ef89fdfaf8a3c0e295bdebe83bce1b4759f03ff8.md",
               "source_hash": "c203459be8eb9af8fcfaddf6ef89fdfaf8a3c0e295bdebe83bce1b4759f03ff8",
@@ -712,7 +713,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "S2",
-      "promise_text": "- **Prioritizes public safety** by avoiding cuts to sworn officers while investing in the police officers, firefighters, sheriff\u2019s deputies, 911 dispatchers, and other first responders who keep San Franciscans safe and play a critical role in the city\u2019s comeback.",
+      "promise_text": "- **Prioritizes public safety** by avoiding cuts to sworn officers while investing in the police officers, firefighters, sheriff’s deputies, 911 dispatchers, and other first responders who keep San Franciscans safe and play a critical role in the city’s comeback.",
       "entity": "Daniel Lurie",
       "role": "Mayor of San Francisco",
       "entity_type": "politician",
@@ -748,7 +749,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "budget_line",
               "page_number": null,
               "promise_id": "S2",
-              "quote": "- **Prioritizes public safety** by avoiding cuts to sworn officers while investing in the police officers, firefighters, sheriff\u2019s deputies, 911 dispatchers, and other first responders who keep San Franciscans safe and play a critical role in the city\u2019s comeback.",
+              "quote": "- **Prioritizes public safety** by avoiding cuts to sworn officers while investing in the police officers, firefighters, sheriff’s deputies, 911 dispatchers, and other first responders who keep San Franciscans safe and play a critical role in the city’s comeback.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/3ee8e6e2a6a334271c4ae5183a45d3e41e688196ab40147d171fcf3b440f1d96.md",
               "source_hash": "3ee8e6e2a6a334271c4ae5183a45d3e41e688196ab40147d171fcf3b440f1d96",
@@ -807,7 +808,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P80",
-      "promise_text": "Bay FC announced today that the club\u2019s home match Saturday, Aug. 23 vs. Washington Spirit will be hosted at San Francisco\u2019s Oracle Park, home of Major League Baseball\u2019s San Francisco Giants.",
+      "promise_text": "Bay FC announced today that the club’s home match Saturday, Aug. 23 vs. Washington Spirit will be hosted at San Francisco’s Oracle Park, home of Major League Baseball’s San Francisco Giants.",
       "entity": "Bay FC",
       "role": null,
       "entity_type": "sports_team",
@@ -843,7 +844,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "count",
               "page_number": null,
               "promise_id": "P80",
-              "quote": "But on Saturday, Oracle Park was the adopted home of Bay FC and what it marketed as \u201cThe Show\u201d against the Washington Spirit. It drew 40,091 people to become the most-attended women\u2019s professional sports league event in the U.S.",
+              "quote": "But on Saturday, Oracle Park was the adopted home of Bay FC and what it marketed as “The Show” against the Washington Spirit. It drew 40,091 people to become the most-attended women’s professional sports league event in the U.S.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/aa39c01a510823e27563f49602b2edc531dea4f8975122f8e446a7cbf6fb3de0.md",
               "source_hash": "aa39c01a510823e27563f49602b2edc531dea4f8975122f8e446a7cbf6fb3de0",
@@ -855,7 +856,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "count",
               "page_number": null,
               "promise_id": "P80",
-              "quote": "Saturday\u2019s National Women\u2019s Soccer League match between [Bay FC and the Washington Spirit at Oracle Park ](https://bayfc.com/lp/oracle-park/)has set a new NWSL attendance record with a sellout crowd. Today\u2019s crowd of 40,091 surpasses the previous high mark of 35,038 for a single NWSL match, June 8, 2024 at Wrigley Field in Chicago, when Bay FC visited Chicago Stars FC before a then-record-setting crowd.",
+              "quote": "Saturday’s National Women’s Soccer League match between [Bay FC and the Washington Spirit at Oracle Park ](https://bayfc.com/lp/oracle-park/)has set a new NWSL attendance record with a sellout crowd. Today’s crowd of 40,091 surpasses the previous high mark of 35,038 for a single NWSL match, June 8, 2024 at Wrigley Field in Chicago, when Bay FC visited Chicago Stars FC before a then-record-setting crowd.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/81cd182b04fc925d843e5d68dc5573781adc0a949f3e5f214f06cf3b17a429a5.md",
               "source_hash": "81cd182b04fc925d843e5d68dc5573781adc0a949f3e5f214f06cf3b17a429a5",
@@ -1033,7 +1034,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "S3",
-      "promise_text": "**SAN FRANCISCO** \u2013 Mayor Daniel Lurie today unveiled \u201c[Breaking the Cycle](http://media.api.sf.gov/documents/3.17_Executive_Directive.pdf),\u201d a new vision to break cycles of homelessness, addiction, and government failure by fundamentally transforming the city\u2019s health and homelessness response.",
+      "promise_text": "**SAN FRANCISCO** – Mayor Daniel Lurie today unveiled “[Breaking the Cycle](http://media.api.sf.gov/documents/3.17_Executive_Directive.pdf),” a new vision to break cycles of homelessness, addiction, and government failure by fundamentally transforming the city’s health and homelessness response.",
       "entity": "Daniel Lurie",
       "role": "Mayor of San Francisco",
       "entity_type": "politician",
@@ -1159,7 +1160,7 @@ window.__DEMO_DATA__ = {
           "advocate_role": "kept_advocate",
           "claims": [
             {
-              "claim_text": "Board adopted Resolution 260041 (10 ayes, Feb 10, 2026) funding DMACC personnel and operations with project period through June 30, 2029 \u2014 multi-year institutional mandate certifying permanence of formerly-temporary body",
+              "claim_text": "Board adopted Resolution 260041 (10 ayes, Feb 10, 2026) funding DMACC personnel and operations with project period through June 30, 2029 — multi-year institutional mandate certifying permanence of formerly-temporary body",
               "evidence_date": "2026-02-10",
               "evidence_type": "vote",
               "page_number": null,
@@ -1223,7 +1224,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P02",
-      "promise_text": "That\u2019s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,",
+      "promise_text": "That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,",
       "entity": "Daniel Lurie",
       "role": "Mayor of San Francisco",
       "entity_type": "politician",
@@ -1282,7 +1283,7 @@ window.__DEMO_DATA__ = {
             {
               "promise_id": "P02",
               "claim_text": "Mayor Lurie opened the 822 Geary facility",
-              "quote": "and I am proud to be opening it,\u201d said Mayor Daniel Lurie.",
+              "quote": "and I am proud to be opening it,” said Mayor Daniel Lurie.",
               "quote_match": "exact",
               "evidence_type": "opening",
               "source_file_path": "/mnt/archil/workspace/sources/e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05.md",
@@ -1476,7 +1477,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P67",
-      "promise_text": "The Golden State Valkyries have announced the team\u2019s 2025 inaugural season schedule, featuring a home opener on May 16 against the Los Angeles Sparks at Chase Center.",
+      "promise_text": "The Golden State Valkyries have announced the team’s 2025 inaugural season schedule, featuring a home opener on May 16 against the Los Angeles Sparks at Chase Center.",
       "entity": "Golden State Valkyries",
       "role": null,
       "entity_type": "sports_team",
@@ -1595,7 +1596,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P01",
-      "promise_text": "The measure, dubbed the Fentanyl State of Emergency Ordinance, marks Lurie\u2019s first big step in fulfilling a campaign promise",
+      "promise_text": "The measure, dubbed the Fentanyl State of Emergency Ordinance, marks Lurie’s first big step in fulfilling a campaign promise",
       "entity": "Daniel Lurie",
       "role": "Mayor of San Francisco",
       "entity_type": "politician",
@@ -1702,7 +1703,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P05",
-      "promise_text": "His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homelessness-shelter-promise/), in part by opening 1,500 new shelter beds in his first six months of office, didn\u2019t last long.",
+      "promise_text": "His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homelessness-shelter-promise/), in part by opening 1,500 new shelter beds in his first six months of office, didn’t last long.",
       "entity": "Daniel Lurie",
       "role": "Mayor of San Francisco",
       "entity_type": "politician",
@@ -1780,7 +1781,7 @@ window.__DEMO_DATA__ = {
             {
               "promise_id": "P05",
               "claim_text": "Six-month pledge did not last",
-              "quote": "in part by opening 1,500 new shelter beds in his first six months of office, didn\u2019t last long.",
+              "quote": "in part by opening 1,500 new shelter beds in his first six months of office, didn’t last long.",
               "quote_match": "exact",
               "evidence_type": "news_report",
               "source_file_path": "/mnt/archil/workspace/sources/6b445cb1ab3198e5bc72810651999042c6630826bd1da44e8002e76955c7a6aa.md",
@@ -1792,7 +1793,7 @@ window.__DEMO_DATA__ = {
             {
               "promise_id": "P05",
               "claim_text": "City health chief: plan no longer the right approach",
-              "quote": "Kunal Modi said the plan to add 1,500 beds \u201cwas no longer the right approach.\u201d",
+              "quote": "Kunal Modi said the plan to add 1,500 beds “was no longer the right approach.”",
               "quote_match": "exact",
               "evidence_type": "news_report",
               "source_file_path": "/mnt/archil/workspace/sources/6b445cb1ab3198e5bc72810651999042c6630826bd1da44e8002e76955c7a6aa.md",
@@ -1964,7 +1965,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P17",
-      "promise_text": "Lurie promised to hire 425 new San Francisco Police Department officers during the first three years of his administration, prevent local city departments from indefinitely delaying building permits, impose more oversight on nonprofits working with the city, and address the city\u2019s homelessness and public drug-use crises.",
+      "promise_text": "Lurie promised to hire 425 new San Francisco Police Department officers during the first three years of his administration, prevent local city departments from indefinitely delaying building permits, impose more oversight on nonprofits working with the city, and address the city’s homelessness and public drug-use crises.",
       "entity": "Daniel Lurie",
       "role": "Mayor of San Francisco",
       "entity_type": "politician",
@@ -2047,7 +2048,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P23",
-      "promise_text": "The Hospitality Task Force will break down siloes to increase the police presence across the areas that drive our city\u2019s economy \u2013 not just during large conferences but 365 days a year.",
+      "promise_text": "The Hospitality Task Force will break down siloes to increase the police presence across the areas that drive our city’s economy – not just during large conferences but 365 days a year.",
       "entity": "Daniel Lurie",
       "role": "Mayor of San Francisco",
       "entity_type": "politician",
@@ -2142,7 +2143,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P82",
-      "promise_text": "I\u2019m telling you right now, we will win a WNBA championship in the first five years of this franchise.",
+      "promise_text": "I’m telling you right now, we will win a WNBA championship in the first five years of this franchise.",
       "entity": "Joe Lacob",
       "role": "Golden State Valkyries owner",
       "entity_type": "other",
@@ -2178,7 +2179,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "count",
               "page_number": null,
               "promise_id": "P82",
-              "quote": "SAN FRANCISCO \u2014 Just two years into existence, the Golden State Valkyries made history by winning a championship. They did it with their typical grit and determination \u2014 and even some sensational shooting from Gabby Williams \u2014 to hold off the Atlanta Dream for a 68-63 victory.",
+              "quote": "SAN FRANCISCO — Just two years into existence, the Golden State Valkyries made history by winning a championship. They did it with their typical grit and determination — and even some sensational shooting from Gabby Williams — to hold off the Atlanta Dream for a 68-63 victory.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/b55705803b0e6ea0890577d6a9fa3e08578eeb0fcf50f2ed49597eeca6ad4444.md",
               "source_hash": "b55705803b0e6ea0890577d6a9fa3e08578eeb0fcf50f2ed49597eeca6ad4444",
@@ -2190,7 +2191,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "count",
               "page_number": null,
               "promise_id": "P82",
-              "quote": "The Golden State Valkyries have won the 2026 WNBA Championship after Saturday\u2019s 68-63 win over the Atlanta Dream in Game 7 of the WNBA Finals at Chase Center in San Francisco.",
+              "quote": "The Golden State Valkyries have won the 2026 WNBA Championship after Saturday’s 68-63 win over the Atlanta Dream in Game 7 of the WNBA Finals at Chase Center in San Francisco.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/722623ed8d3632d16c1d65907448f78b52606b04dd34a9c310b1cbbb9ca9f6ce.md",
               "source_hash": "722623ed8d3632d16c1d65907448f78b52606b04dd34a9c310b1cbbb9ca9f6ce",
@@ -2304,7 +2305,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "regulator_order",
               "page_number": null,
               "promise_id": "P81",
-              "quote": "Cruise has been told to stop taxi services in San Francisco by the DMV\u2014effective immediately as of Tuesday morning.",
+              "quote": "Cruise has been told to stop taxi services in San Francisco by the DMV—effective immediately as of Tuesday morning.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/2b08cbb296d964008c20276b4bb424d6dac09a849efaec0ce8752c7709cd20b1.md",
               "source_hash": "2b08cbb296d964008c20276b4bb424d6dac09a849efaec0ce8752c7709cd20b1",
@@ -2356,7 +2357,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P44",
-      "promise_text": "Waymo disclosed Tuesday it\u2019s now giving more than 100,000 paid robotaxi rides every week across its three main commercial markets in Los Angeles, San Francisco and Phoenix.",
+      "promise_text": "Waymo disclosed Tuesday it’s now giving more than 100,000 paid robotaxi rides every week across its three main commercial markets in Los Angeles, San Francisco and Phoenix.",
       "entity": "Waymo",
       "role": null,
       "entity_type": "company",
@@ -2392,7 +2393,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "count",
               "page_number": null,
               "promise_id": "P44",
-              "quote": "Waymo disclosed Tuesday it\u2019s now giving more than 100,000 paid robotaxi rides every week across its three main commercial markets in Los Angeles, San Francisco and Phoenix.",
+              "quote": "Waymo disclosed Tuesday it’s now giving more than 100,000 paid robotaxi rides every week across its three main commercial markets in Los Angeles, San Francisco and Phoenix.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/e3b12128d999f6742876a6875a083ace1b3a4ed31364fd1a2f49062f97e5e7a6.md",
               "source_hash": "e3b12128d999f6742876a6875a083ace1b3a4ed31364fd1a2f49062f97e5e7a6",
@@ -2407,7 +2408,7 @@ window.__DEMO_DATA__ = {
           "advocate_role": "broken_advocate",
           "claims": [],
           "evidence_checked": 0,
-          "note": "none found: 3 searches (commitment hunt + outcome) surfaced only corroboration \u2014 CNBC/NBC confirm 100,000+/week Aug 2024, Forbes 150,000+/week Oct 2024. No contradiction of the milestone. Freeze: no broken-side fetch.",
+          "note": "none found: 3 searches (commitment hunt + outcome) surfaced only corroboration — CNBC/NBC confirm 100,000+/week Aug 2024, Forbes 150,000+/week Oct 2024. No contradiction of the milestone. Freeze: no broken-side fetch.",
           "promise_id": "P44"
         }
       },
@@ -2452,7 +2453,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P18",
-      "promise_text": "San Francisco\u2019s requirement is 82,200 homes by 2031.",
+      "promise_text": "San Francisco’s requirement is 82,200 homes by 2031.",
       "entity": "London Breed",
       "role": "Former Mayor of San Francisco",
       "entity_type": "politician",
@@ -2462,7 +2463,7 @@ window.__DEMO_DATA__ = {
       "due_date": "2031-12-31",
       "page_number": null,
       "verdict": "in_progress",
-      "verdict_reason": "in_progress: partial progress only; outcome-satisfaction principle \u2014 the Jan-2023 adoption vote proves the Housing Element PLAN exists, not the promised outcome of 82,200 HOMES by 2031; due 2031-12-31 future, homes unbuilt (mechanical Rule 4 kept overridden: plan/enabling votes are supporting evidence, never completion)",
+      "verdict_reason": "in_progress: partial progress only; outcome-satisfaction principle — the Jan-2023 adoption vote proves the Housing Element PLAN exists, not the promised outcome of 82,200 HOMES by 2031; due 2031-12-31 future, homes unbuilt (mechanical Rule 4 kept overridden: plan/enabling votes are supporting evidence, never completion)",
       "source_id": "S7a34352ce89b",
       "source_url": "https://citypln-m-extnl.sfgov.org/Commissions/CPC/4_10_2025/Commission%20Packet/2021-005878CWP.pdf",
       "source_file_path": "/mnt/archil/workspace/sources/7a34352ce89b8ab039f1fec4bdf2fe272870d4333764d683b20944533c09b239.md",
@@ -2540,14 +2541,14 @@ window.__DEMO_DATA__ = {
         {
           "check": "verdict_rubric",
           "passed": true,
-          "reason": "re-open R2: in_progress: partial progress only; outcome-satisfaction principle \u2014 the Jan-2023 adoption vote proves the Housing Element PLAN exists, not the promised outcome of 82,200 HOMES by 2031; due 2031-12-31 future, homes unbuilt (mechanical Rule 4 kept overridden: plan/enabling votes are supporting evidence, never completion)"
+          "reason": "re-open R2: in_progress: partial progress only; outcome-satisfaction principle — the Jan-2023 adoption vote proves the Housing Element PLAN exists, not the promised outcome of 82,200 HOMES by 2031; due 2031-12-31 future, homes unbuilt (mechanical Rule 4 kept overridden: plan/enabling votes are supporting evidence, never completion)"
         }
       ],
       "display_no": 42
     },
     {
       "promise_id": "P26",
-      "promise_text": "In the first year alone, it is expected that 4,500 new units will return on the market\u2014 more than our annual goals\u2014 with no increase in taxes, no construction time, no multi-million dollar price tag, and no waiting.",
+      "promise_text": "In the first year alone, it is expected that 4,500 new units will return on the market— more than our annual goals— with no increase in taxes, no construction time, no multi-million dollar price tag, and no waiting.",
       "entity": "Dean Preston",
       "role": null,
       "entity_type": "politician",
@@ -2595,7 +2596,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "vote",
               "page_number": null,
               "promise_id": "P26",
-              "quote": "54.5% of the [city\u2019s voters approved it](https://www.sfchronicle.com/sf/article/s-f-voters-approve-a-tax-on-vacant-residential-17583773.php) in November 2022",
+              "quote": "54.5% of the [city’s voters approved it](https://www.sfchronicle.com/sf/article/s-f-voters-approve-a-tax-on-vacant-residential-17583773.php) in November 2022",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/4ce5690e59c38dd3cf43b467f32eaa5332235b22fc0f049bb6a8474852392224.md",
               "source_hash": "4ce5690e59c38dd3cf43b467f32eaa5332235b22fc0f049bb6a8474852392224",
@@ -2811,7 +2812,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P08",
-      "promise_text": "When Mayor London Breed announced $5 million last year for repairs to San Francisco\u2019s crumbling housing stock for homeless people, the requests flooded in.",
+      "promise_text": "When Mayor London Breed announced $5 million last year for repairs to San Francisco’s crumbling housing stock for homeless people, the requests flooded in.",
       "entity": "London Breed",
       "role": "Former Mayor of San Francisco",
       "entity_type": "politician",
@@ -3025,7 +3026,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P43",
-      "promise_text": "Since [sharing](https://blog.waymo.com/2022/03/to-our-fellow-san-franciscans) that we were ready to take the next step and begin testing fully autonomous operations in the city, we\u2019ve begun fully autonomous rides with our San Francisco employees.",
+      "promise_text": "Since [sharing](https://blog.waymo.com/2022/03/to-our-fellow-san-franciscans) that we were ready to take the next step and begin testing fully autonomous operations in the city, we’ve begun fully autonomous rides with our San Francisco employees.",
       "entity": "Waymo",
       "role": null,
       "entity_type": "company",
@@ -3061,7 +3062,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "opening",
               "page_number": null,
               "promise_id": "P43",
-              "quote": "we\u2019ve begun fully autonomous rides with our San Francisco employees.",
+              "quote": "we’ve begun fully autonomous rides with our San Francisco employees.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/c400d8bcbf83fee196d518858e96bb6d92ed7e78fe390c416aef57897cdb0b7c.md",
               "source_hash": "c400d8bcbf83fee196d518858e96bb6d92ed7e78fe390c416aef57897cdb0b7c",
@@ -3133,7 +3134,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P83",
-      "promise_text": "Whole Foods Market will open its new 64,737-square-foot San Francisco flagship store at Trinity Place (1185 Market Street) in San Francisco\u2019s Mid-Market neighborhood on Thursday, March 10.",
+      "promise_text": "Whole Foods Market will open its new 64,737-square-foot San Francisco flagship store at Trinity Place (1185 Market Street) in San Francisco’s Mid-Market neighborhood on Thursday, March 10.",
       "entity": "Whole Foods Market",
       "role": null,
       "entity_type": "company",
@@ -3181,7 +3182,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "opening",
               "page_number": null,
               "promise_id": "P83",
-              "quote": "**SAN FRANCISCO (March 10, 2022)****\u2013** Whole Foods Market has opened its new 64,737-square-foot San Francisco flagship store at [Trinity Place](https://www.trinitysf.com/trinity-place/) (1185 Market Street) in San Francisco\u2019s Mid-Market neighborhood on Thursday, March 10.",
+              "quote": "**SAN FRANCISCO (March 10, 2022)****–** Whole Foods Market has opened its new 64,737-square-foot San Francisco flagship store at [Trinity Place](https://www.trinitysf.com/trinity-place/) (1185 Market Street) in San Francisco’s Mid-Market neighborhood on Thursday, March 10.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/49884a310666b77220056cc8dffb993ac8b3c3a6bd2066dc83a08d018b37b226.md",
               "source_hash": "49884a310666b77220056cc8dffb993ac8b3c3a6bd2066dc83a08d018b37b226",
@@ -3415,7 +3416,7 @@ window.__DEMO_DATA__ = {
             }
           ],
           "evidence_checked": 2,
-          "note": "Claim 2 typed announcement (tier 1): interim program statement, not completion \u2014 P18 principle (partial progress + future due = in_progress, never kept). evidence_date 2020-10-01 is the commitment event (this file restates it Dec 2020).",
+          "note": "Claim 2 typed announcement (tier 1): interim program statement, not completion — P18 principle (partial progress + future due = in_progress, never kept). evidence_date 2020-10-01 is the commitment event (this file restates it Dec 2020).",
           "promise_id": "P40"
         },
         "broken": {
@@ -3467,7 +3468,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P30",
-      "promise_text": "Under the Mayor\u2019s Homelessness Recovery Plan, the City set a goal of buying or leasing 1,500 new units of PSH over the course of two years.",
+      "promise_text": "Under the Mayor’s Homelessness Recovery Plan, the City set a goal of buying or leasing 1,500 new units of PSH over the course of two years.",
       "entity": "London Breed",
       "role": "Former Mayor of San Francisco",
       "entity_type": "politician",
@@ -3598,7 +3599,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "news_report",
               "page_number": null,
               "promise_id": "P86",
-              "quote": "Associate Capital opened a 105-unit building at the former Potrero Power Station that caters to the city\u2019s working class.",
+              "quote": "Associate Capital opened a 105-unit building at the former Potrero Power Station that caters to the city’s working class.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/3223fa9b02c79fdfbd7c3034f7619e1f83e0c3447448fbb595c2df54e372c5e0.md",
               "source_hash": "3223fa9b02c79fdfbd7c3034f7619e1f83e0c3447448fbb595c2df54e372c5e0",
@@ -3657,7 +3658,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P38",
-      "promise_text": "Here\u2019s how PG&E is working to make PSPS events smaller in size, shorter in length and smarter for customers.",
+      "promise_text": "Here’s how PG&E is working to make PSPS events smaller in size, shorter in length and smarter for customers.",
       "entity": "PG&E",
       "role": null,
       "entity_type": "company",
@@ -3729,7 +3730,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "count",
               "page_number": null,
               "promise_id": "P38",
-              "quote": "This accomplishment met PG&E\u2019s goal of restoring 98% of customers within 12 daylight hours of the Weather All Clear",
+              "quote": "This accomplishment met PG&E’s goal of restoring 98% of customers within 12 daylight hours of the Weather All Clear",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/8cabdac8edb9a6e040b194061a1cc31858b52c09293900df872e654654f1cfe5.md",
               "source_hash": "8cabdac8edb9a6e040b194061a1cc31858b52c09293900df872e654654f1cfe5",
@@ -3744,7 +3745,7 @@ window.__DEMO_DATA__ = {
           "advocate_role": "broken_advocate",
           "claims": [],
           "evidence_checked": 1,
-          "note": "none found: broken-leaning search surfaced only more 2020 PSPS event reports. Diligence-fetched the Oct 25-28 report (largest scope): 46% fewer customers (clears the one-third bar), full restoration Oct 27-28, no 12-hour attainment statement either way \u2014 no verified bar-miss, so no claim. No second search per cut rule.",
+          "note": "none found: broken-leaning search surfaced only more 2020 PSPS event reports. Diligence-fetched the Oct 25-28 report (largest scope): 46% fewer customers (clears the one-third bar), full restoration Oct 27-28, no 12-hour attainment statement either way — no verified bar-miss, so no claim. No second search per cut rule.",
           "promise_id": "P38"
         }
       },
@@ -3789,7 +3790,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P37",
-      "promise_text": "Mayor Breed also announced the next steps in her efforts to help people living unsheltered on the City\u2019s streets, with an initiative to create at least 2,000 more places for people across the spectrum of housing, behavioral health, and shelter over the next two years.",
+      "promise_text": "Mayor Breed also announced the next steps in her efforts to help people living unsheltered on the City’s streets, with an initiative to create at least 2,000 more places for people across the spectrum of housing, behavioral health, and shelter over the next two years.",
       "entity": "London Breed",
       "role": "Former Mayor of San Francisco",
       "entity_type": "politician",
@@ -3799,7 +3800,7 @@ window.__DEMO_DATA__ = {
       "due_date": "2022-01-15",
       "page_number": null,
       "verdict": "undecided",
-      "verdict_reason": "re-open R2 (0+0 standing rule): untestable \u2014 no outcome count for the specific 2,000-places-by-Jan-2022 goal found by either advocate; other-goal figures (6,000-plan 7,047) declined as misattribution",
+      "verdict_reason": "re-open R2 (0+0 standing rule): untestable — no outcome count for the specific 2,000-places-by-Jan-2022 goal found by either advocate; other-goal figures (6,000-plan 7,047) declined as misattribution",
       "source_id": "Sd659523fe97f",
       "source_url": "https://hsh.archive.sf.gov/wp-content/uploads/2020/01/1000-Shelter-Bed-Press-Conference.pdf",
       "source_file_path": "/mnt/archil/workspace/sources/d659523fe97f78d2e990ee474b0126002978c8f327573c6bfbe2a2d1545ef764.md",
@@ -3820,14 +3821,14 @@ window.__DEMO_DATA__ = {
           "advocate_role": "kept_advocate",
           "claims": [],
           "evidence_checked": 0,
-          "note": "none found: real search surfaced only other-goal figures (Homelessness Recovery Plan 7,047 placements vs its own 6,000 goal; FY2023 exits; individual PSH openings) \u2014 no count toward the specific Jan-2020 2,000-places-by-Jan-2022 goal. Declined to misattribute other-goal numbers. No second search per cut rule.",
+          "note": "none found: real search surfaced only other-goal figures (Homelessness Recovery Plan 7,047 placements vs its own 6,000 goal; FY2023 exits; individual PSH openings) — no count toward the specific Jan-2020 2,000-places-by-Jan-2022 goal. Declined to misattribute other-goal numbers. No second search per cut rule.",
           "promise_id": "P37"
         },
         "broken": {
           "advocate_role": "broken_advocate",
           "claims": [],
           "evidence_checked": 0,
-          "note": "none found: broken-leaning search surfaced only unrelated shortfalls (SIP hotel wind-down, youth Rising Up goal, SRO evictions, encampment coordination) \u2014 no verified count showing the 2,000-places goal missed. No second search per cut rule.",
+          "note": "none found: broken-leaning search surfaced only unrelated shortfalls (SIP hotel wind-down, youth Rising Up goal, SRO evictions, encampment coordination) — no verified count showing the 2,000-places goal missed. No second search per cut rule.",
           "promise_id": "P37"
         }
       },
@@ -4136,7 +4137,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "opening",
               "page_number": null,
               "promise_id": "P62",
-              "quote": "has reached another milestone with the opening of Visa\u2019s huge new office.",
+              "quote": "has reached another milestone with the opening of Visa’s huge new office.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/c4d60c4996a053703940f0a6063ff8a4a9252ab3bfe143c9e4f9a8556168de75.md",
               "source_hash": "c4d60c4996a053703940f0a6063ff8a4a9252ab3bfe143c9e4f9a8556168de75",
@@ -4179,7 +4180,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "news_report",
               "page_number": null,
               "promise_id": "P62",
-              "quote": "Although Visa described the building in 2019 as its new global headquarters, it\u2019s now calling it a \u201cmarket support center\u201d that works with clients and businesses around the world.",
+              "quote": "Although Visa described the building in 2019 as its new global headquarters, it’s now calling it a “market support center” that works with clients and businesses around the world.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/c4d60c4996a053703940f0a6063ff8a4a9252ab3bfe143c9e4f9a8556168de75.md",
               "source_hash": "c4d60c4996a053703940f0a6063ff8a4a9252ab3bfe143c9e4f9a8556168de75",
@@ -4262,7 +4263,7 @@ window.__DEMO_DATA__ = {
           "advocate_role": "kept_advocate",
           "claims": [],
           "evidence_checked": 0,
-          "note": "none found: kept-leaning search showed Contract 1300 only 92-93% complete in May-June 2020 \u2014 not substantially complete by June 29, 2020. Confirms the miss. No second search per cut rule.",
+          "note": "none found: kept-leaning search showed Contract 1300 only 92-93% complete in May-June 2020 — not substantially complete by June 29, 2020. Confirms the miss. No second search per cut rule.",
           "promise_id": "P42"
         },
         "broken": {
@@ -4387,7 +4388,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "opening",
               "page_number": null,
               "promise_id": "P66",
-              "quote": "The first preseason game at Chase Center took place on October 5, 2019, as the Warriors lost to the Los Angeles Lakers, 123\u2013101.",
+              "quote": "The first preseason game at Chase Center took place on October 5, 2019, as the Warriors lost to the Los Angeles Lakers, 123–101.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/7b9033c10fd9dcb707f7323cb356d796011bc538d3a0f42eca23b660533d41a6.md",
               "source_hash": "7b9033c10fd9dcb707f7323cb356d796011bc538d3a0f42eca23b660533d41a6",
@@ -4553,7 +4554,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P22",
-      "promise_text": "Embarcadero Navigation Center (12/30/19) opened with 200 beds (despite a lawsuit from neighbors that delayed the site\u2019s opening until the end of 2019).",
+      "promise_text": "Embarcadero Navigation Center (12/30/19) opened with 200 beds (despite a lawsuit from neighbors that delayed the site’s opening until the end of 2019).",
       "entity": "London Breed",
       "role": "Former Mayor of San Francisco",
       "entity_type": "politician",
@@ -4867,7 +4868,7 @@ window.__DEMO_DATA__ = {
         {
           "check": "verdict_rubric",
           "passed": true,
-          "reason": "re-check R3: codelibrary.amlegal.com allowlisted, kept(2)+broken(2) both pass; broken stands via Rule 3 numeric (880<1000, late) \u2014 was Rule 1"
+          "reason": "re-check R3: codelibrary.amlegal.com allowlisted, kept(2)+broken(2) both pass; broken stands via Rule 3 numeric (880<1000, late) — was Rule 1"
         }
       ],
       "display_no": 21
@@ -4905,7 +4906,7 @@ window.__DEMO_DATA__ = {
           "advocate_role": "kept_advocate",
           "claims": [],
           "evidence_checked": 0,
-          "note": "none found: kept-leaning search confirmed the shortfall instead of a kept case \u2014 best figures are 4,180 substantially complete (Q4 2020) and 4,827 final with no additional ports scheduled, both below 7,500. No second search per cut rule.",
+          "note": "none found: kept-leaning search confirmed the shortfall instead of a kept case — best figures are 4,180 substantially complete (Q4 2020) and 4,827 final with no additional ports scheduled, both below 7,500. No second search per cut rule.",
           "promise_id": "P39"
         },
         "broken": {
@@ -5025,7 +5026,7 @@ window.__DEMO_DATA__ = {
           "advocate_role": "kept_advocate",
           "claims": [
             {
-              "claim_text": "Partial progress only: first ground-up buildings (350-unit apartment) slated to start 2027; unit cap expansion 2,150 to 2,750 sought; no homes delivered \u2014 active but incomplete, not completion evidence per vote/ordinance principle",
+              "claim_text": "Partial progress only: first ground-up buildings (350-unit apartment) slated to start 2027; unit cap expansion 2,150 to 2,750 sought; no homes delivered — active but incomplete, not completion evidence per vote/ordinance principle",
               "evidence_date": "2026-11-10",
               "evidence_type": "news_report",
               "page_number": null,
@@ -5090,15 +5091,15 @@ window.__DEMO_DATA__ = {
     {
       "promise_id": "P36",
       "promise_text": "Additionally, CleanPowerSF has conservatively committed to increasing the renewable percentage of its basic *Green* service, from 35 percent at program launch, to at least 50 percent by 2020.",
-      "entity": "Ed Lee",
+      "entity": "CleanPowerSF",
       "role": null,
       "entity_type": "politician",
-      "category": "Environment & Energy",
-      "neighborhood": "CleanPowerSF Renewable Grid",
+      "category": "Energy & Infrastructure",
+      "neighborhood": "Citywide",
       "promised_date": "2017-04-20",
       "due_date": "2020-12-31",
       "page_number": null,
-      "verdict": "kept",
+      "verdict": "KEPT",
       "verdict_reason": "official primary evidence confirms completion with zero contradicting claims; re-applied per P36 correction (sfpuc.org+sfenvironment.org allowlisted, org/non-minutes speaker NA)",
       "source_id": "S5008d7810833",
       "source_url": "https://sfenvironment.org/press/mayor-lee-announces-bold-new-target-50-percent-renewable-energy-2020",
@@ -5137,7 +5138,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "count",
               "page_number": null,
               "promise_id": "P36",
-              "quote": "demonstrate that in 2020, CleanPowerSF\u2019s Green product supply was 54.5% Renewable Portfolio Standard (RPS) eligible renewable",
+              "quote": "demonstrate that in 2020, CleanPowerSF’s Green product supply was 54.5% Renewable Portfolio Standard (RPS) eligible renewable",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/5616deb45a17ecfc96903259d488b072ef37dadd96a81000a9994efbdb884b56.md",
               "source_hash": "5616deb45a17ecfc96903259d488b072ef37dadd96a81000a9994efbdb884b56",
@@ -5149,7 +5150,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "news_report",
               "page_number": null,
               "promise_id": "P36",
-              "quote": "Mayor Ed Lee on Thursday set a new goal for San Francisco \u2014 that at least 50 percent of the city\u2019s electricity come from renewable sources by 2020.",
+              "quote": "Mayor Ed Lee on Thursday set a new goal for San Francisco — that at least 50 percent of the city’s electricity come from renewable sources by 2020.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/f3b1f497775d490a82c367e6a7941a10f35b18abdfecace0d6d1d8e15add6ec5.md",
               "source_hash": "f3b1f497775d490a82c367e6a7941a10f35b18abdfecace0d6d1d8e15add6ec5",
@@ -5187,7 +5188,7 @@ window.__DEMO_DATA__ = {
         {
           "check": "authenticity_speaker",
           "passed": true,
-          "reason": "pass (org speaker CleanPowerSF cannot be in roll call \u2014 P36 speaker principle)"
+          "reason": "pass (org speaker CleanPowerSF cannot be in roll call — P36 speaker principle)"
         },
         {
           "check": "accuracy_date",
@@ -5252,7 +5253,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "press_release",
               "page_number": null,
               "promise_id": "P57",
-              "quote": "Livermore, CA \u2013 May 31, 2017 \u2013 Comcast announced today that it is launching a new internet service that will deliver speeds up to 1 Gigabit-per-second (Gbps) to residential customers throughout most of California.",
+              "quote": "Livermore, CA – May 31, 2017 – Comcast announced today that it is launching a new internet service that will deliver speeds up to 1 Gigabit-per-second (Gbps) to residential customers throughout most of California.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/efc8fda8bf79a607dd6d48100b2612fd3fe1f880bee734e52c364084c4579dd8.md",
               "source_hash": "efc8fda8bf79a607dd6d48100b2612fd3fe1f880bee734e52c364084c4579dd8",
@@ -5387,7 +5388,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P10",
-      "promise_text": "Also, 40% of the project\u2019s residential portion is below-market-rate units, mostly targeting middle-income families.",
+      "promise_text": "Also, 40% of the project’s residential portion is below-market-rate units, mostly targeting middle-income families.",
       "entity": "San Francisco Giants",
       "role": null,
       "entity_type": "sports_team",
@@ -5434,7 +5435,7 @@ window.__DEMO_DATA__ = {
             {
               "promise_id": "P10",
               "claim_text": "INTERIM: 40% below-market-rate commitment in project",
-              "quote": "Also, 40% of the project\u2019s residential portion is below-market-rate units, mostly targeting middle-income families.",
+              "quote": "Also, 40% of the project’s residential portion is below-market-rate units, mostly targeting middle-income families.",
               "quote_match": "exact",
               "evidence_type": "news_report",
               "source_file_path": "/mnt/archil/workspace/sources/8400d9972a3dac20a7949a9c6070538fe9d5983c40dbf6261039ce54e44cca39.md",
@@ -5446,7 +5447,7 @@ window.__DEMO_DATA__ = {
             {
               "promise_id": "P10",
               "claim_text": "INTERIM: 102 BMR apartments exist; lottery drew 2,900 applications",
-              "quote": "The city\u2019s lottery for those 102 below-market-rate apartments received 2,900 applications",
+              "quote": "The city’s lottery for those 102 below-market-rate apartments received 2,900 applications",
               "quote_match": "exact",
               "evidence_type": "news_report",
               "source_file_path": "/mnt/archil/workspace/sources/8400d9972a3dac20a7949a9c6070538fe9d5983c40dbf6261039ce54e44cca39.md",
@@ -5763,7 +5764,7 @@ window.__DEMO_DATA__ = {
           "advocate_role": "kept_advocate",
           "claims": [],
           "evidence_checked": 0,
-          "note": "none found: kept-leaning search showed Contract 1300 only ~76% complete in Nov 2018, past the May 2018 deadline \u2014 confirms the miss instead of a kept case. No second search per cut rule.",
+          "note": "none found: kept-leaning search showed Contract 1300 only ~76% complete in Nov 2018, past the May 2018 deadline — confirms the miss instead of a kept case. No second search per cut rule.",
           "promise_id": "P41"
         },
         "broken": {
@@ -6336,7 +6337,7 @@ window.__DEMO_DATA__ = {
           "advocate_role": "kept_advocate",
           "claims": [],
           "evidence_checked": 1,
-          "note": "none found: 1 kept search; revision history shows successive delays (2011\u21922016, ... 2024\u21922032), no source claims completion by Dec 2015. No second search per cut rule.",
+          "note": "none found: 1 kept search; revision history shows successive delays (2011→2016, ... 2024→2032), no source claims completion by Dec 2015. No second search per cut rule.",
           "promise_id": "P61"
         },
         "broken": {
@@ -6356,7 +6357,7 @@ window.__DEMO_DATA__ = {
             }
           ],
           "evidence_checked": 2,
-          "note": "AUDIT 2026-11-11: dropped the live-sfpuc.pantheonsite.io 2024-notice claim per parent rule (never cite staging/clone hosts as evidence; unverifiable as official). Its check rows VFY-P61-00..06 remain on file as history. Remaining www.sfpuc.gov claim passes 6/7 (domain fail only \u2014 sfpuc.gov not in allowlist; see QUESTIONS.md). Verdict broken stands (Rule 1, real 2032-vs-2015 measurement examined).",
+          "note": "AUDIT 2026-11-11: dropped the live-sfpuc.pantheonsite.io 2024-notice claim per parent rule (never cite staging/clone hosts as evidence; unverifiable as official). Its check rows VFY-P61-00..06 remain on file as history. Remaining www.sfpuc.gov claim passes 6/7 (domain fail only — sfpuc.gov not in allowlist; see QUESTIONS.md). Verdict broken stands (Rule 1, real 2032-vs-2015 measurement examined).",
           "promise_id": "P61"
         }
       },
@@ -6401,7 +6402,7 @@ window.__DEMO_DATA__ = {
     },
     {
       "promise_id": "P19",
-      "promise_text": "In his budget proposal for fiscal year 2007\u20132008, Newsom announced his intention to provide universal health care for all city residents, based on long-time City Supervisor Tom Ammiano 's plan.",
+      "promise_text": "In his budget proposal for fiscal year 2007–2008, Newsom announced his intention to provide universal health care for all city residents, based on long-time City Supervisor Tom Ammiano 's plan.",
       "entity": "Gavin Newsom",
       "role": "Governor of California",
       "entity_type": "politician",
@@ -6968,7 +6969,7 @@ window.__DEMO_DATA__ = {
               "evidence_type": "count",
               "page_number": null,
               "promise_id": "P87",
-              "quote": "The game was played on January 26, 2003, at Qualcomm Stadium in San Diego, California. The Buccaneers defeated the Raiders by the score of 48\u201321, tied with Super Bowl XXXV for the seventh-largest Super Bowl margin of victory, winning their first-ever Super Bowl.",
+              "quote": "The game was played on January 26, 2003, at Qualcomm Stadium in San Diego, California. The Buccaneers defeated the Raiders by the score of 48–21, tied with Super Bowl XXXV for the seventh-largest Super Bowl margin of victory, winning their first-ever Super Bowl.",
               "quote_match": "exact",
               "source_file_path": "/mnt/archil/workspace/sources/37622a65b5b94d969321dc7a8a4832e2c378d4dd999bceabaa885b17ec24f9e0.md",
               "source_hash": "37622a65b5b94d969321dc7a8a4832e2c378d4dd999bceabaa885b17ec24f9e0",
@@ -7023,14 +7024,14 @@ window.__DEMO_DATA__ = {
     {
       "quarantine_id": "Q-N01",
       "promise_id": "N01",
-      "title": "Add 1,500 new shelter beds [Word Swapped: beds \u2192 units]",
+      "title": "Add 1,500 new shelter beds [Word Swapped: beds → units]",
       "planted_claim": "The city added 1,500 new shelter units within six months.",
       "check_type": "accuracy_quote",
       "failing_check": "Verbatim Quote Substring Check",
       "reason": "quote none: 'shelter units' is not a verbatim substring of saved source file (source text reads '1,500 new shelter beds').",
       "agent": "extractor_agent",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by quote check \u2014 test case, not a DB row"
+      "destination": "caught by quote check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N02",
@@ -7042,7 +7043,7 @@ window.__DEMO_DATA__ = {
       "reason": "speaker mismatch: Daniel Lurie was not mayor in 2023; speaker was London Breed.",
       "agent": "extractor_agent",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N03",
@@ -7054,7 +7055,7 @@ window.__DEMO_DATA__ = {
       "reason": "hash mismatch: computed SHA-256 e03acc33... does not match saved file hash c4a1b029...",
       "agent": "fetcher_agent",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N04",
@@ -7066,7 +7067,7 @@ window.__DEMO_DATA__ = {
       "reason": "evidence none: no primary meeting record, legislation, or official sf.gov page found.",
       "agent": "extractor_agent",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N05",
@@ -7078,7 +7079,7 @@ window.__DEMO_DATA__ = {
       "reason": "metric altered: source specifies 1,500 beds; claimed number 2,000 fails exact match.",
       "agent": "kept_advocate",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N06",
@@ -7090,7 +7091,7 @@ window.__DEMO_DATA__ = {
       "reason": "date out of range: evidence date 2024-12-01 predates mayoral inauguration date 2025-01-07.",
       "agent": "kept_advocate",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N07",
@@ -7102,7 +7103,7 @@ window.__DEMO_DATA__ = {
       "reason": "domain not in allowlist: medium.com is not an authorized civic domain (sf.gov, legistar, granicus).",
       "agent": "fetcher_agent",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N08",
@@ -7114,7 +7115,7 @@ window.__DEMO_DATA__ = {
       "reason": "rubric violation: secondary news report cannot satisfy Kept without official primary record. Capped at undecided.",
       "agent": "arbitrator",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N09",
@@ -7126,7 +7127,7 @@ window.__DEMO_DATA__ = {
       "reason": "rubric violation: campaign flyer is not an enacted resolution or operational signal. Capped at undecided.",
       "agent": "arbitrator",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N10",
@@ -7138,7 +7139,7 @@ window.__DEMO_DATA__ = {
       "reason": "hallucination detected: quote does not exist anywhere in referenced source bundle.",
       "agent": "kept_advocate",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N11",
@@ -7150,7 +7151,7 @@ window.__DEMO_DATA__ = {
       "reason": "promise mismatch: evidence cites P02 stabilization center but submitted under P07 housing target.",
       "agent": "broken_advocate",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-N12",
@@ -7162,7 +7163,7 @@ window.__DEMO_DATA__ = {
       "reason": "relevance too low (score 2/8): procedural vote approval is not a substantive civic promise.",
       "agent": "relevance_gate",
       "quarantined_at": "2026-11-11T04:56:24.469855+00:00",
-      "destination": "caught by check \u2014 test case, not a DB row"
+      "destination": "caught by check — test case, not a DB row"
     },
     {
       "quarantine_id": "Q-P68",

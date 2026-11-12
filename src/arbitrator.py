@@ -335,3 +335,44 @@ def run_rubric_check(
     plus (verdict, reason)."""
     verdict, reason = decide_verdict(kept_passing, broken_passing, **rubric_kwargs)
     return ("verdict_rubric", 1, reason), verdict, reason
+
+
+# ==============================================================================
+# v2 Deterministic Verdict Gate (PLAN.md Gate 2)
+# ==============================================================================
+
+TODAY = date(2026, 11, 11)
+
+
+def compute_deterministic_verdict(
+    date_deadline: date,
+    initial_delivery: str,
+    current_survival: str,
+    explicitly_abandoned: bool = False,
+    as_of: date | None = None,
+) -> str:
+    """Gate 2: Temporal Arithmetic & Future Deadline Gate.
+    Eliminates future deadline marked KEPT or premature BROKEN.
+    Computes final lifecycle verdict based on initial delivery and survival.
+    """
+    cutoff = as_of or TODAY
+
+    # Future deadlines cannot be BROKEN (unless explicitly cancelled) or KEPT (unless already achieved & verified)
+    if date_deadline > cutoff:
+        if explicitly_abandoned:
+            return "BROKEN"
+        if initial_delivery == "DELIVERED_ON_TIME" and current_survival == "ACTIVE_OPERATIONAL":
+            return "KEPT"
+        return "IN_PROGRESS"
+
+    # Past deadlines
+    if initial_delivery == "NOT_DELIVERED":
+        return "BROKEN"
+    if initial_delivery in ("DELIVERED_ON_TIME", "DELIVERED_LATE", "PARTIALLY_DELIVERED"):
+        if current_survival in ("SHUTTERED_OR_CLOSED", "REVOKED_OR_HALTED"):
+            return "KEPT_THEN_REVERSED"
+        if initial_delivery in ("DELIVERED_LATE", "PARTIALLY_DELIVERED"):
+            return "DELAYED_OR_PARTIAL"
+        return "KEPT"
+    return "IN_PROGRESS"
+
