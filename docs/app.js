@@ -218,9 +218,6 @@
   const tabCountQuarantine = document.getElementById('tab-count-quarantine');
   const tableContainerPromises = document.getElementById('promises-table-container');
   const tableContainerQuarantine = document.getElementById('quarantine-table-container');
-  const promisesCardsGrid = document.getElementById('promises-cards-grid');
-  const btnViewCards = document.getElementById('btn-view-cards');
-  const btnViewDirectory = document.getElementById('btn-view-directory');
   const tbodyPromises = document.getElementById('promises-table-body');
   const tbodyQuarantine = document.getElementById('quarantine-table-body');
 
@@ -1244,58 +1241,6 @@
       }
     }
 
-    // 1. Render Editorial Cards Grid
-    if (promisesCardsGrid) {
-      promisesCardsGrid.innerHTML = '';
-      filtered.forEach(p => {
-        const card = document.createElement('article');
-        const verdClass = p.verdict.toLowerCase().replace(' ', '_');
-        const neighborhood = p.neighborhood || 'San Francisco';
-        const rankFormatted = String(p.impact_rank || p.display_no || '—').padStart(2, '0');
-        card.className = `editorial-card verdict-${verdClass}`;
-        card.tabIndex = 0;
-        card.setAttribute('role', 'button');
-        card.setAttribute('aria-label', `Inspect promise #${rankFormatted}: ${cleanQuoteText(p.promise_text).slice(0, 80)}`);
-        card.addEventListener('click', () => openInspectModal(p.promise_id));
-        card.addEventListener('keydown', (ev) => {
-          if (ev.key === 'Enter' || ev.key === ' ') {
-            ev.preventDefault();
-            openInspectModal(p.promise_id);
-          }
-        });
-
-        const dueText = p.due_date ? `Due: ${escapeHtml(p.due_date)}` : '';
-        const openedText = p.opened_date ? `Opened: ${escapeHtml(p.opened_date)}` : '';
-
-        card.innerHTML = `
-          <div>
-            <div class="card-topline font-mono">
-              <span class="card-rank">#${rankFormatted}</span>
-              <span class="card-category-tag">${escapeHtml(p.category)}</span>
-              <span class="card-neighborhood-tag" title="${escapeHtml(neighborhood)}">${escapeHtml(neighborhood)}</span>
-              <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
-            </div>
-            <blockquote class="card-quote">“${escapeHtml(cleanQuoteText(p.promise_text))}”</blockquote>
-            <div class="card-speaker-row">
-              <span class="card-speaker-name">${escapeHtml(p.entity)}</span>
-              <span class="card-speaker-role font-mono">${escapeHtml(p.role || '')}</span>
-            </div>
-            <p class="card-outcome">${escapeHtml(p.verdict_reason || 'Verified through primary records.')}</p>
-          </div>
-          <div class="card-footer-meta font-mono">
-            <div class="card-dates">
-              <span>Promised: ${escapeHtml(p.promised_date || '—')}</span>
-              ${dueText ? `<span style="color: var(--muted);">${dueText}</span>` : ''}
-              ${openedText ? `<span style="color: #A7F3D0; font-weight: 600;">✓ ${openedText}</span>` : ''}
-            </div>
-            <button type="button" class="btn-card-inspect">Inspect Evidence &rarr;</button>
-          </div>
-        `;
-        promisesCardsGrid.appendChild(card);
-      });
-    }
-
-    // 2. Render Compact Directory Table Rows
     if (tbodyPromises) {
       tbodyPromises.innerHTML = '';
       filtered.forEach(p => {
@@ -1325,7 +1270,10 @@
             <div class="table-entity-role font-mono">${escapeHtml(neighborhood)}</div>
           </td>
           <td class="table-promise-cell">
-            <div class="table-promise-text">“${escapeHtml(cleanQuoteText(p.promise_text))}”</div>
+            <div class="table-promise-text">&ldquo;${escapeHtml(cleanQuoteText(p.promise_text))}&rdquo;</div>
+            <div class="table-pill-row" style="margin-top: 6px;">
+              <span class="category-pill font-mono">${escapeHtml(p.category)}</span>
+            </div>
           </td>
           <td class="table-timeline-cell font-mono">
             <div class="timeline-date">${escapeHtml(p.promised_date || '—')}</div>
@@ -1687,44 +1635,13 @@
       });
     }
 
-    // View mode switching (Cards vs Directory Table)
-    if (btnViewCards) {
-      btnViewCards.addEventListener('click', () => {
-        activeViewMode = 'cards';
-        btnViewCards.classList.add('active');
-        if (btnViewDirectory) btnViewDirectory.classList.remove('active');
-        if (activeTab === 'promises') {
-          if (promisesCardsGrid) promisesCardsGrid.classList.remove('hidden');
-          if (tableContainerPromises) tableContainerPromises.classList.add('hidden');
-        }
-      });
-    }
-
-    if (btnViewDirectory) {
-      btnViewDirectory.addEventListener('click', () => {
-        activeViewMode = 'directory';
-        btnViewDirectory.classList.add('active');
-        if (btnViewCards) btnViewCards.classList.remove('active');
-        if (activeTab === 'promises') {
-          if (promisesCardsGrid) promisesCardsGrid.classList.add('hidden');
-          if (tableContainerPromises) tableContainerPromises.classList.remove('hidden');
-        }
-      });
-    }
-
     // Table tab switching
     if (tabBtnPromises) {
       tabBtnPromises.addEventListener('click', () => {
         activeTab = 'promises';
         tabBtnPromises.classList.add('active');
-        tabBtnQuarantine.classList.remove('active');
-        if (activeViewMode === 'cards') {
-          if (promisesCardsGrid) promisesCardsGrid.classList.remove('hidden');
-          if (tableContainerPromises) tableContainerPromises.classList.add('hidden');
-        } else {
-          if (promisesCardsGrid) promisesCardsGrid.classList.add('hidden');
-          if (tableContainerPromises) tableContainerPromises.classList.remove('hidden');
-        }
+        if (tabBtnQuarantine) tabBtnQuarantine.classList.remove('active');
+        if (tableContainerPromises) tableContainerPromises.classList.remove('hidden');
         if (tableContainerQuarantine) tableContainerQuarantine.classList.add('hidden');
       });
     }
@@ -1733,8 +1650,7 @@
       tabBtnQuarantine.addEventListener('click', () => {
         activeTab = 'quarantine';
         tabBtnQuarantine.classList.add('active');
-        tabBtnPromises.classList.remove('active');
-        if (promisesCardsGrid) promisesCardsGrid.classList.add('hidden');
+        if (tabBtnPromises) tabBtnPromises.classList.remove('active');
         if (tableContainerPromises) tableContainerPromises.classList.add('hidden');
         if (tableContainerQuarantine) tableContainerQuarantine.classList.remove('hidden');
       });

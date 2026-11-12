@@ -3627,3 +3627,124 @@ a:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* Editorial Hackathon Recognition Callout */
+.award-callout-box {
+  margin: 20px 0 28px;
+  padding: 20px 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.award-kicker {
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 6px;
+}
+
+.award-title {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.award-summary {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* Responsive Mobile Table Transformation */
+@media (max-width: 768px) {
+  #promises-table-container.data-table-container {
+    border: none;
+    background: transparent;
+    overflow-x: visible;
+  }
+
+  #promises-table-container .data-table,
+  #promises-table-container .data-table thead,
+  #promises-table-container .data-table tbody,
+  #promises-table-container .data-table th,
+  #promises-table-container .data-table td,
+  #promises-table-container .data-table tr {
+    display: block;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  #promises-table-container .data-table thead {
+    display: none;
+  }
+
+  #promises-table-container .data-table tbody tr.promise-row {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  #promises-table-container .data-table tbody tr.promise-row:hover {
+    border-color: var(--blue);
+    background: var(--surface-raised);
+  }
+
+  #promises-table-container .data-table td {
+    padding: 0;
+    border: none;
+  }
+
+  #promises-table-container .data-table td.table-id-cell {
+    font-size: 0.8rem;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  #promises-table-container .data-table td.table-entity-cell .table-entity-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  #promises-table-container .data-table td.table-entity-cell .table-entity-role {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  #promises-table-container .data-table td.table-promise-cell {
+    padding: 8px 0;
+    border-top: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  #promises-table-container .data-table td.table-promise-cell .table-promise-text {
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  #promises-table-container .data-table td.table-timeline-cell {
+    font-size: 0.82rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #promises-table-container .data-table td.table-verdict-cell .verdict-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-top: 4px;
+  }
+}

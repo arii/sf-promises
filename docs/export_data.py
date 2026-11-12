@@ -970,10 +970,155 @@ def export():
         json.dump(payload, f, indent=2)
         f.write(";\n")
 
+    pre_render_index_html(all_promises, quarantined_items + real_quarantined, verdict_counts)
+
     print("Data export complete.")
     print(f"  Exported {len(all_promises)} promises with verdicts {dict(verdict_counts)}")
     print(f"  Quarantined items: {len(quarantined_items) + len(real_quarantined)}")
     print(f"  DB totals: {total_db_promises} promises, {total_db_verdicts} verdicts")
+
+
+def clean_quote_text(text):
+    if not text:
+        return ""
+    import re
+    t = re.sub(r"\*\*([^*]+)\*\*", r"\1", str(text))
+    t = re.sub(r"\*([^*]+)\*", r"\1", t)
+    t = re.sub(r"`([^`]+)`", r"\1", t)
+    return t.strip()
+
+
+def html_esc(text):
+    if not text:
+        return ""
+    return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+
+def format_verdict_label(verd):
+    v = (verd or "").lower().replace("_", " ")
+    if v == "in progress":
+        return "IN PROGRESS"
+    return verd.upper() if verd else "UNDECIDED"
+
+
+def generate_promise_row_html(p):
+    rank_val = p.get("impact_rank") or p.get("display_no") or 0
+    rank = f"{rank_val:02d}"
+    pid = html_esc(p.get("promise_id", ""))
+    entity = html_esc(p.get("entity", ""))
+    neighborhood = html_esc(p.get("neighborhood", "Citywide San Francisco"))
+    category = html_esc(p.get("category", "Civic & Public Safety"))
+    quote = html_esc(clean_quote_text(p.get("verbatim_quote") or p.get("promise_text", "")))
+    promised = html_esc(p.get("promised_date", "—"))
+    due = p.get("due_date", "")
+    due_line = f'<div class="timeline-due font-mono">&rarr; Due: {html_esc(due)}</div>' if due else ''
+
+    verdict = p.get("verdict", "undecided")
+    verd_class = verdict.lower().replace(" ", "_")
+    verdict_label = format_verdict_label(verdict)
+
+    rel = p.get("relevance")
+    rel_html = ""
+    if rel and isinstance(rel, dict) and "score" in rel:
+        rel_html = f'<span class="score-pill" title="Relevance Gate {rel["score"]}/8">{rel["score"]}/8</span>'
+
+    return f"""              <tr class="promise-row" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect promise #{rank}: {quote[:60]}">
+                <td class="table-id-cell font-mono">#{rank}</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">{entity}</div>
+                  <div class="table-entity-role font-mono">{neighborhood}</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;{quote}&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">{category}</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">{promised}</div>
+                  {due_line}
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip {verd_class}">{verdict_label}</span>
+                    <div class="verdict-sub-row font-mono">
+                      {rel_html}
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>"""
+
+
+def generate_quarantine_row_html(q, idx):
+    title = html_esc(q.get("title") or q.get("promise_id") or f"Test Case {idx + 1}")
+    planted = q.get("planted_claim")
+    reason = html_esc(q.get("reason", ""))
+    sub = f"&ldquo;{html_esc(clean_quote_text(planted))}&rdquo;" if planted else reason
+    check_type = html_esc(q.get("check_type", ""))
+    failing_check = html_esc(q.get("failing_check", ""))
+    destination = html_esc(q.get("destination", "quarantined (read-only)"))
+
+    return f"""              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test {idx + 1}</td>
+                <td>
+                  <strong style="color: var(--ink);">{title}</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">{sub}</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">{check_type}</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">{failing_check}</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  {reason}
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  {destination}
+                </td>
+              </tr>"""
+
+
+def pre_render_index_html(promises, quarantined, verdict_counts):
+    index_path = "docs/index.html"
+    if not os.path.exists(index_path):
+        return
+
+    with open(index_path, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    import re
+    # Update tally numbers in hero
+    html = re.sub(r'(<strong id="tally-total">)[^<]*(</strong>)', rf'\g<1>{len(promises)}\g<2>', html)
+    html = re.sub(r'(<strong id="tally-kept">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("kept", 0)}\g<2>', html)
+    html = re.sub(r'(<strong id="tally-progress">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("in_progress", 0)}\g<2>', html)
+    html = re.sub(r'(<strong id="tally-broken">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("broken", 0)}\g<2>', html)
+    html = re.sub(r'(<strong id="tally-undecided">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("undecided", 0)}\g<2>', html)
+    html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-promises">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
+    html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-quarantine">)[^<]*(</span>)', rf'\g<1>{len(quarantined)}\g<2>', html)
+    html = re.sub(r'(<strong id="table-showing-count">)[^<]*(</strong>)', rf'\g<1>{len(promises)}\g<2>', html)
+    html = re.sub(r'(<span id="table-total-count">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
+
+    # Pre-render promises table rows
+    promise_rows = "\n".join(generate_promise_row_html(p) for p in promises)
+    html = re.sub(
+        r'(<tbody id="promises-table-body">)(.*?)(</tbody>)',
+        r'\1\n' + promise_rows + r'\n            \3',
+        html,
+        flags=re.DOTALL
+    )
+
+    # Pre-render quarantine table rows
+    quarantine_rows = "\n".join(generate_quarantine_row_html(q, i) for i, q in enumerate(quarantined))
+    html = re.sub(
+        r'(<tbody id="quarantine-table-body">)(.*?)(</tbody>)',
+        r'\1\n' + quarantine_rows + r'\n            \3',
+        html,
+        flags=re.DOTALL
+    )
+
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"  Pre-rendered {len(promises)} promise rows and {len(quarantined)} quarantine rows into docs/index.html")
 
 
 if __name__ == "__main__":

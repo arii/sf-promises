@@ -19,7 +19,7 @@
           <span class="brand-mark">SF</span>
           <span>SF Promises</span>
         </a>
-        <div class="hackathon-tag font-mono">Archil Hackathon Winner · Best Use of Keenable</div>
+        <div class="hackathon-tag font-mono">Best Use of Keenable · Archil Hackathon</div>
       </div>
       <div class="topbar-right">
         <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" class="github-link">
@@ -45,131 +45,8 @@
             <span class="tally-item"><span class="dot-status dot-in_progress" aria-hidden="true"></span> <strong id="tally-progress">10</strong> in progress</span>
             <span class="tally-sep" aria-hidden="true">·</span>
             <span class="tally-item"><span class="dot-status dot-broken" aria-hidden="true"></span> <strong id="tally-broken">17</strong> broken</span>
-            <span class="tally-sep" id="tally-sep-stalled" aria-hidden="true" style="display: none;">·</span>
-            <span class="tally-item" id="tally-item-stalled" style="display: none;"><span class="dot-status dot-stalled" aria-hidden="true"></span> <strong id="tally-stalled">0</strong> stalled</span>
             <span class="tally-sep" aria-hidden="true">·</span>
             <span class="tally-item"><span class="dot-status dot-undecided" aria-hidden="true"></span> <strong id="tally-undecided">2</strong> undecided</span>
-          </div>
-          <div class="tally-subline">
-            <span><strong>Reconciliation:</strong> <span class="recon-counts">…</span></span>
-            <span class="tally-sep" aria-hidden="true">·</span>
-            <span><strong>Deterministic Verification:</strong> 0 model calls in Arbitrator (100% code checks)</span>
-          </div>
-          <div class="snapshot-banner font-mono" id="snapshot-banner" style="margin-top: 10px; font-size: 0.8rem; opacity: 0.85;">
-            Exported snapshot from promises.db · Independent verification checks recorded in verifications ledger
-          </div>
-        </div>
-      </section>
-
-      <!-- SF SHOWCASE: ACROSS THE CITY (Interactive City Spectrum) -->
-      <section class="sf-showcase-section" id="sf-showcase" aria-label="Across San Francisco">
-        <div class="showcase-header">
-          <h2>Civic accountability across all of San Francisco</h2>
-          <p class="showcase-lead">
-            Commitments belong to the whole city. Select an iconic promise below to inspect its record, evidence, and provenance:
-          </p>
-        </div>
-
-        <!-- 6 Iconic Showcase Tabs -->
-        <div class="showcase-tabs-bar" role="tablist" id="showcase-tabs-bar">
-          <button type="button" class="showcase-tab-btn active" data-showcase-id="P02" role="tab" aria-selected="true" title="Mayor Daniel Lurie: 24/7 Crisis Stabilization Center at 822 Geary St">
-            <span class="showcase-tab-cat">Civic</span>
-            <div class="showcase-tab-info">
-              <span class="showcase-tab-tag">Tenderloin · 822 Geary</span>
-              <span class="showcase-tab-name">Mayor Lurie: 24/7 Crisis Center</span>
-            </div>
-          </button>
-          <button type="button" class="showcase-tab-btn" data-showcase-id="SFO-01" role="tab" aria-selected="false" title="San Francisco International Airport: Runway 28L Accelerated Reopening">
-            <span class="showcase-tab-cat">Airport</span>
-            <div class="showcase-tab-info">
-              <span class="showcase-tab-tag">SFO · Airfield</span>
-              <span class="showcase-tab-name">SFO: Runway 28L Reopening</span>
-            </div>
-          </button>
-          <button type="button" class="showcase-tab-btn" data-showcase-id="P04" role="tab" aria-selected="false" title="Golden State Valkyries: Chase Center Inaugural Season Attendance">
-            <span class="showcase-tab-cat">Sports</span>
-            <div class="showcase-tab-info">
-              <span class="showcase-tab-tag">Mission Bay · Chase Center</span>
-              <span class="showcase-tab-name">Valkyries: Lead WNBA Attendance</span>
-            </div>
-          </button>
-          <button type="button" class="showcase-tab-btn" data-showcase-id="P21" role="tab" aria-selected="false" title="City of San Francisco: Car-Free JFK Drive Promenade in Golden Gate Park">
-            <span class="showcase-tab-cat">Transit</span>
-            <div class="showcase-tab-info">
-              <span class="showcase-tab-tag">Golden Gate Park</span>
-              <span class="showcase-tab-name">JFK Drive: Car-Free Promenade</span>
-            </div>
-          </button>
-          <button type="button" class="showcase-tab-btn" data-showcase-id="P10" role="tab" aria-selected="false" title="SF Giants: Mission Rock 40% Affordable Housing Target">
-            <span class="showcase-tab-cat">Housing</span>
-            <div class="showcase-tab-info">
-              <span class="showcase-tab-tag">South Beach · Oracle Park</span>
-              <span class="showcase-tab-name">SF Giants: 40% Affordable Homes</span>
-            </div>
-          </button>
-          <button type="button" class="showcase-tab-btn" data-showcase-id="P11" role="tab" aria-selected="false" title="Dead & Company: Farewell Tour Oracle Park Finale">
-            <span class="showcase-tab-cat">Culture</span>
-            <div class="showcase-tab-info">
-              <span class="showcase-tab-tag">Haight &amp; Golden Gate Park</span>
-              <span class="showcase-tab-name">Dead &amp; Co: Final Career Tour</span>
-            </div>
-          </button>
-        </div>
-
-        <!-- Dynamic Featured Showcase Display Card -->
-        <div class="showcase-card" id="showcase-card-display" style="--card-accent: var(--kept);">
-          <div class="showcase-card-header">
-            <div class="showcase-badges">
-              <span class="promise-id-badge font-mono" id="sc-badge-id">P02</span>
-              <span class="verdict-chip kept" id="sc-badge-verdict">KEPT</span>
-              <span class="domain-pill" id="sc-domain-pill">🏛️ Civic &amp; Public Safety</span>
-              <span class="neighborhood-pill" id="sc-neighborhood-pill">Tenderloin (822 Geary St)</span>
-            </div>
-            <button type="button" class="btn-inspect-modal" id="btn-showcase-inspect">
-              Inspect Provenance &amp; All Bundles &rarr;
-            </button>
-          </div>
-
-          <blockquote class="showcase-quote" id="sc-quote-text">
-            “That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,”
-          </blockquote>
-
-          <div class="showcase-meta-grid">
-            <div class="meta-field-item">
-              <span class="meta-field-label">Entity &amp; Role</span>
-              <span class="meta-field-val" id="sc-meta-entity">Mayor Daniel Lurie (Mayor of San Francisco)</span>
-            </div>
-            <div class="meta-field-item">
-              <span class="meta-field-label">Promised Date</span>
-              <span class="meta-field-val font-mono" id="sc-meta-promised">Jan 7, 2025</span>
-            </div>
-            <div class="meta-field-item">
-              <span class="meta-field-label">Due Date</span>
-              <span class="meta-field-val font-mono" id="sc-meta-due">May 1, 2025</span>
-            </div>
-            <div class="meta-field-item">
-              <span class="meta-field-label">Opened / Realized</span>
-              <span class="meta-field-val font-mono" id="sc-meta-opened" style="color: #A7F3D0; font-weight: 700;">April 28, 2025</span>
-            </div>
-            <div class="meta-field-item">
-              <span class="meta-field-label">Relevance Gate</span>
-              <span class="meta-field-val" id="sc-meta-rel">
-                <span class="badge-verified">✓ Verified</span>
-              </span>
-            </div>
-          </div>
-
-          <div class="showcase-evidence-box">
-            <div>
-              <span style="color: var(--muted); margin-right: 6px;">Primary Evidence:</span>
-              <span class="evidence-fact-text" id="sc-evidence-fact">16-bed 24/7 crisis stabilization center opened April 28, 2025 at 822 Geary St.</span>
-            </div>
-            <div class="evidence-source-row" style="padding-top: 0; border-top: none;">
-              <a href="https://www.sfpublicworkstv.org/april2025" target="_blank" rel="noopener noreferrer" class="source-url-link" id="sc-source-link">
-                www.sfpublicworkstv.org/april2025
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              </a>
-            </div>
           </div>
         </div>
       </section>
@@ -184,10 +61,6 @@
             <button type="button" class="tab-nav-btn" id="tab-btn-quarantine">
               Quarantine Registry <span class="tab-badge font-mono" id="tab-count-quarantine">13</span>
             </button>
-          </div>
-          <div class="view-mode-toggle" role="group" aria-label="Display View Mode">
-            <button type="button" class="btn-view-mode active" id="btn-view-cards" title="Editorial Cards View">Cards</button>
-            <button type="button" class="btn-view-mode" id="btn-view-directory" title="Compact Directory Table">Directory</button>
           </div>
         </div>
 
@@ -265,16 +138,11 @@
 
         <div class="table-results-status-bar font-mono" style="margin: -6px 0 14px; font-size: 0.82rem; color: #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
           <div>Showing <strong id="table-showing-count">54</strong> of <span id="table-total-count">54</span> commitments</div>
-          <div id="active-filter-indicator" style="font-size: 0.78rem; color: var(--blue);">Active: All commitments</div>
+          <div id="active-filter-indicator" style="font-size: 0.78rem; color: var(--blue);">Active: All commitments (Sorted by Civic Impact)</div>
         </div>
 
-        <!-- View 1: Editorial Promise Cards Grid (Default View) -->
-        <div class="promises-cards-grid" id="promises-cards-grid">
-          <!-- Dynamically populated from SQLite export -->
-        </div>
-
-        <!-- View 2: Compact Directory Table (Alternative View) -->
-        <div class="data-table-container hidden" id="promises-table-container">
+        <!-- Compact Directory Table (Primary View) -->
+        <div class="data-table-container" id="promises-table-container">
           <table class="data-table">
             <thead>
               <tr>
@@ -286,7 +154,1410 @@
               </tr>
             </thead>
             <tbody id="promises-table-body">
-              <!-- Dynamically populated from SQLite export -->
+              <tr class="promise-row" data-promise-id="P02" tabindex="0" role="button" aria-label="Inspect promise #01: The facility began accepting clients on April 28.">
+                <td class="table-id-cell font-mono">#01</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Daniel Lurie</div>
+                  <div class="table-entity-role font-mono">Tenderloin (822 Geary St)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;The facility began accepting clients on April 28.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2025-01-07</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P05" tabindex="0" role="button" aria-label="Inspect promise #02: His campaign promise to [end street homelessness](https://sf">
+                <td class="table-id-cell font-mono">#02</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Daniel Lurie</div>
+                  <div class="table-entity-role font-mono">Citywide Shelter Network</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homelessness-shelter-promise/), in part by opening 1,500 new shelter beds in his first six months of office, didn’t last long.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2024-11-05</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="SFO-01" tabindex="0" role="button" aria-label="Inspect promise #03: SFO announced today that Runway 28L will reopen ahead of sch">
+                <td class="table-id-cell font-mono">#03</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">San Francisco International Airport</div>
+                  <div class="table-entity-role font-mono">SFO (Airfield &amp; Runways)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;SFO announced today that Runway 28L will reopen ahead of schedule on Friday, June 21, 2024. The runway had been closed since January 16, 2024 for a major taxiway improvement and realignment project that was originally scheduled to conclude by July 1, 2024.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Airport &amp; Airlines</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2024-01-16</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2024-07-01</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="SFO-02" tabindex="0" role="button" aria-label="Inspect promise #04: San Francisco International Airport celebrated the completio">
+                <td class="table-id-cell font-mono">#04</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">San Francisco International Airport</div>
+                  <div class="table-entity-role font-mono">SFO (Harvey Milk Terminal 1)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;San Francisco International Airport celebrated the completion of the $2.4 billion Harvey Milk Terminal 1, unveiling the final phase featuring a new North Check-in lobby and bringing the total number of gates in the terminal to 25.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Airport &amp; Airlines</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2019-07-23</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2024-07-01</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P21" tabindex="0" role="button" aria-label="Inspect promise #05: to permanently ban automobile traffic on a portion of the we">
+                <td class="table-id-cell font-mono">#05</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">London Breed</div>
+                  <div class="table-entity-role font-mono">Golden Gate Park (JFK Promenade)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;to permanently ban automobile traffic on a portion of the western half of J.F.K. Drive&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Transit &amp; Streets</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2022-04</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 5/8">5/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P04" tabindex="0" role="button" aria-label="Inspect promise #06: The Valkyries have sold out all 44 regular-season games at C">
+                <td class="table-id-cell font-mono">#06</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Golden State Valkyries</div>
+                  <div class="table-entity-role font-mono">Mission Bay (Chase Center)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;The Valkyries have sold out all 44 regular-season games at Chase Center over their first two seasons, to lead the WNBA in attendance.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Sports</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2025-03-26</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P82" tabindex="0" role="button" aria-label="Inspect promise #07: I’m telling you right now, we will win a WNBA championship i">
+                <td class="table-id-cell font-mono">#07</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Joe Lacob</div>
+                  <div class="table-entity-role font-mono">Chase Center (WNBA Championship Target)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;I’m telling you right now, we will win a WNBA championship in the first five years of this franchise.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Sports</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2023-10-05</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2028-10-05</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 5/8">5/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P83" tabindex="0" role="button" aria-label="Inspect promise #08: Whole Foods Market will open its new 64,737-square-foot San ">
+                <td class="table-id-cell font-mono">#08</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Whole Foods Market</div>
+                  <div class="table-entity-role font-mono">Mid-Market (8th &amp; Market Flagship)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Whole Foods Market will open its new 64,737-square-foot San Francisco flagship store at Trinity Place (1185 Market Street) in San Francisco’s Mid-Market neighborhood on Thursday, March 10.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2022-02-17</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2022-03-10</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P11" tabindex="0" role="button" aria-label="Inspect promise #09: We never said we'll never play again, but we'll never tour a">
+                <td class="table-id-cell font-mono">#09</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Mickey Hart</div>
+                  <div class="table-entity-role font-mono">Haight-Ashbury Heritage &amp; Oracle Park</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;We never said we'll never play again, but we'll never tour again.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Culture &amp; Music</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2022-09-23</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 5/8">5/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="SFO-03" tabindex="0" role="button" aria-label="Inspect promise #10: United Airlines has expanded its commitment to fly 100% gree">
+                <td class="table-id-cell font-mono">#10</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">United Airlines</div>
+                  <div class="table-entity-role font-mono">SFO (Terminal 3 &amp; Fuel Infrastructure)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;United Airlines has expanded its commitment to fly 100% green by 2050 without relying on voluntary carbon offsets, taking delivery of Neste MY Sustainable Aviation Fuel via SFO pipeline infrastructure for regular commercial passenger operations.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Airport &amp; Airlines</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2020-12-10</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2050-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="SFO-04" tabindex="0" role="button" aria-label="Inspect promise #11: Alaska Airlines officially commenced flight operations from ">
+                <td class="table-id-cell font-mono">#11</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Alaska Airlines</div>
+                  <div class="table-entity-role font-mono">SFO (Harvey Milk Terminal 1 Concourse B)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Alaska Airlines officially commenced flight operations from Harvey Milk Terminal 1 at SFO, welcoming guests to a brand-new 11,000-square-foot lounge featuring 55% more seating and local culinary offerings.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Airport &amp; Airlines</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2023-04-18</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2024-07-24</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P01" tabindex="0" role="button" aria-label="Inspect promise #12: The measure, dubbed the Fentanyl State of Emergency Ordinanc">
+                <td class="table-id-cell font-mono">#12</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Daniel Lurie</div>
+                  <div class="table-entity-role font-mono">Tenderloin &amp; Civic Center</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;The measure, dubbed the Fentanyl State of Emergency Ordinance, marks Lurie’s first big step in fulfilling a campaign promise&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2024-11-05</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 6/8">6/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P59" tabindex="0" role="button" aria-label="Inspect promise #13: Once given access, riders will be able to use the Zoox app t">
+                <td class="table-id-cell font-mono">#13</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Zoox</div>
+                  <div class="table-entity-role font-mono">SoMa &amp; Financial District (Zoox Autonomous)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Once given access, riders will be able to use the Zoox app to hail a ride within its service area, which covers the SoMa, Mission, and Design District neighborhoods of San Francisco.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Transit &amp; Streets</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2025-11-18</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 5/8">5/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P43" tabindex="0" role="button" aria-label="Inspect promise #14: Since [sharing](https://blog.waymo.com/2022/03/to-our-fellow">
+                <td class="table-id-cell font-mono">#14</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Waymo</div>
+                  <div class="table-entity-role font-mono">San Francisco Driverless Testing Zones</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Since [sharing](https://blog.waymo.com/2022/03/to-our-fellow-san-franciscans) that we were ready to take the next step and begin testing fully autonomous operations in the city, we’ve begun fully autonomous rides with our San Francisco employees.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Transit &amp; Streets</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2022-03-30</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 5/8">5/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P41" tabindex="0" role="button" aria-label="Inspect promise #15: In May 2013, the SFMTA contracted with Tutor Perini Corporat">
+                <td class="table-id-cell font-mono">#15</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Tutor Perini Corporation</div>
+                  <div class="table-entity-role font-mono">Central Subway (SoMa to Chinatown)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;In May 2013, the SFMTA contracted with Tutor Perini Corporation (Contractor) to construct the Central Subway Stations, Surface, Trackway and Systems under SFMTA Contract No. 1300 for a Contract Amount of $839,676,400, all work to be completed in 1700 days, with Final Completion date May 11, 2018.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Transit &amp; Streets</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2013-05</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2018-05-11</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P10" tabindex="0" role="button" aria-label="Inspect promise #16: Also, 40% of the project’s residential portion is below-mark">
+                <td class="table-id-cell font-mono">#16</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">San Francisco Giants</div>
+                  <div class="table-entity-role font-mono">Mission Rock &amp; South Beach (Oracle Park)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Also, 40% of the project’s residential portion is below-market-rate units, mostly targeting middle-income families.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Sports</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2015-01-01</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P18" tabindex="0" role="button" aria-label="Inspect promise #17: San Francisco’s requirement is 82,200 homes by 2031.">
+                <td class="table-id-cell font-mono">#17</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">London Breed</div>
+                  <div class="table-entity-role font-mono">San Francisco Housing Element</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;San Francisco’s requirement is 82,200 homes by 2031.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2023-01-31</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2031-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P06" tabindex="0" role="button" aria-label="Inspect promise #18: In 2014, San Francisco became the third city in the country ">
+                <td class="table-id-cell font-mono">#18</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">City and County of San Francisco</div>
+                  <div class="table-entity-role font-mono">Citywide Streets (Vision Zero)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;In 2014, San Francisco became the third city in the country to adopt Vision Zero with the goal of zero traffic deaths.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Transit &amp; Streets</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2014-01-01</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P08" tabindex="0" role="button" aria-label="Inspect promise #19: When Mayor London Breed announced $5 million last year for r">
+                <td class="table-id-cell font-mono">#19</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">London Breed</div>
+                  <div class="table-entity-role font-mono">Tenderloin &amp; SoMa (SRO Housing)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;When Mayor London Breed announced $5 million last year for repairs to San Francisco’s crumbling housing stock for homeless people, the requests flooded in.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2022-05-01</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P22" tabindex="0" role="button" aria-label="Inspect promise #20: Embarcadero Navigation Center (12/30/19) opened with 200 bed">
+                <td class="table-id-cell font-mono">#20</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">London Breed</div>
+                  <div class="table-entity-role font-mono">The Embarcadero (Waterfront)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Embarcadero Navigation Center (12/30/19) opened with 200 beds (despite a lawsuit from neighbors that delayed the site’s opening until the end of 2019).&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2019-03</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2019-12-30</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P17" tabindex="0" role="button" aria-label="Inspect promise #21: Lurie promised to hire 425 new San Francisco Police Departme">
+                <td class="table-id-cell font-mono">#21</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Daniel Lurie</div>
+                  <div class="table-entity-role font-mono">SFPD District Stations &amp; Neighborhoods</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Lurie promised to hire 425 new San Francisco Police Department officers during the first three years of his administration, prevent local city departments from indefinitely delaying building permits, impose more oversight on nonprofits working with the city, and address the city’s homelessness and public drug-use crises.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2024</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2028-01-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P25" tabindex="0" role="button" aria-label="Inspect promise #22: Though that legislation required that the hall close on Dece">
+                <td class="table-id-cell font-mono">#22</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">San Francisco Board of Supervisors</div>
+                  <div class="table-entity-role font-mono">Juvenile Hall (Twin Peaks)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Though that legislation required that the hall close on December 31st, 2021, there has been no movement from the Board towards that closure.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2019-06-04</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2021-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P12" tabindex="0" role="button" aria-label="Inspect promise #23: The SFMTA allows Lime and Spin to operate scooter share serv">
+                <td class="table-id-cell font-mono">#23</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">SFMTA</div>
+                  <div class="table-entity-role font-mono">Citywide Micromobility &amp; Bike Lanes</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;The SFMTA allows Lime and Spin to operate scooter share services in San Francisco through June 30, 2026.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Transit &amp; Streets</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2024-07-01</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2026-06-30</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P26" tabindex="0" role="button" aria-label="Inspect promise #24: In the first year alone, it is expected that 4,500 new units">
+                <td class="table-id-cell font-mono">#24</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Dean Preston</div>
+                  <div class="table-entity-role font-mono">Citywide Vacant Homes</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;In the first year alone, it is expected that 4,500 new units will return on the market— more than our annual goals— with no increase in taxes, no construction time, no multi-million dollar price tag, and no waiting.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2022-11-08</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P27" tabindex="0" role="button" aria-label="Inspect promise #25: The 30-year fund would receive $20 million in its first year">
+                <td class="table-id-cell font-mono">#25</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Ed Lee</div>
+                  <div class="table-entity-role font-mono">Affordable Housing Trust Fund</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;The 30-year fund would receive $20 million in its first year and increasing amounts thereafter, up to $50 million annually.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2012</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P29" tabindex="0" role="button" aria-label="Inspect promise #26: Care Not Cash officially launched in May 2004, reducing the ">
+                <td class="table-id-cell font-mono">#26</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Gavin Newsom</div>
+                  <div class="table-entity-role font-mono">Civic Center &amp; Citywide (Human Services)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Care Not Cash officially launched in May 2004, reducing the amount of money homeless residents received from a maximum of $410 per month to $59.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2002-11-05</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P31" tabindex="0" role="button" aria-label="Inspect promise #27: By adopting the Family Zoning Plan in December 2025, San Fra">
+                <td class="table-id-cell font-mono">#27</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Daniel Lurie</div>
+                  <div class="table-entity-role font-mono">Commercial Corridors &amp; Small Businesses</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;By adopting the Family Zoning Plan in December 2025, San Francisco met its state law obligations to approve a compliant rezoning plan by January 31, 2026.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2025-06-24</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2026-01-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P30" tabindex="0" role="button" aria-label="Inspect promise #28: Under the Mayor’s Homelessness Recovery Plan, the City set a">
+                <td class="table-id-cell font-mono">#28</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">London Breed</div>
+                  <div class="table-entity-role font-mono">Citywide (Supportive Housing Network)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Under the Mayor’s Homelessness Recovery Plan, the City set a goal of buying or leasing 1,500 new units of PSH over the course of two years.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2020-07</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2022-06-30</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P36" tabindex="0" role="button" aria-label="Inspect promise #29: Additionally, CleanPowerSF has conservatively committed to i">
+                <td class="table-id-cell font-mono">#29</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">CleanPowerSF</div>
+                  <div class="table-entity-role font-mono">CleanPowerSF Renewable Grid</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Additionally, CleanPowerSF has conservatively committed to increasing the renewable percentage of its basic Green service, from 35 percent at program launch, to at least 50 percent by 2020.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Environment &amp; Energy</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2017-04-20</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2020-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P09" tabindex="0" role="button" aria-label="Inspect promise #30: As of this week, Pacific Gas and Electric Company (PG&amp;E)">
+                <td class="table-id-cell font-mono">#30</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Patti Poppe</div>
+                  <div class="table-entity-role font-mono">San Francisco Grid &amp; PG&amp;E Service Area</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;As of this week, Pacific Gas and Electric Company (PG&amp;E) has constructed and energized more than 600 miles of underground powerlines since its ambitious 10,000-Mile Undergrounding program started in mid-2021.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Environment &amp; Energy</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2021-06-01</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 6/8">6/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P61" tabindex="0" role="button" aria-label="Inspect promise #31: On July 28, 2009, the Commission approved a revised WSIP sch">
+                <td class="table-id-cell font-mono">#31</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">San Francisco Public Utilities Commission (SFPUC)</div>
+                  <div class="table-entity-role font-mono">Regional / Northern California (SFPUC Water System)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;On July 28, 2009, the Commission approved a revised WSIP schedule and budget of $4,586 million with an overall targeted program completion date of December 4, 2015.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Infrastructure &amp; Tech</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2009-07-28</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2015-12-04</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P66" tabindex="0" role="button" aria-label="Inspect promise #32: Chase Center, which will have a capacity of 18,064, is due t">
+                <td class="table-id-cell font-mono">#32</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Golden State Warriors</div>
+                  <div class="table-entity-role font-mono">Mission Bay (Chase Center)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Chase Center, which will have a capacity of 18,064, is due to open with a Metallica concert on September 6 before the Warriors play their first pre-season game at the venue against the Los Angeles Lakers on October 5.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2019-08-28</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2019-09-06</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P64" tabindex="0" role="button" aria-label="Inspect promise #33: the Project is anticipated to include (1) up to 8,000 new re">
+                <td class="table-id-cell font-mono">#33</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Treasure Island Development Authority</div>
+                  <div class="table-entity-role font-mono">Parkmerced (Southwest San Francisco)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;the Project is anticipated to include (1) up to 8,000 new residential units&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2011-06-07</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P84" tabindex="0" role="button" aria-label="Inspect promise #34: After about a decade of planning, developer Forest City Real">
+                <td class="table-id-cell font-mono">#34</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Forest City Realty Trust Inc.</div>
+                  <div class="table-entity-role font-mono">Pier 70 &amp; Dogpatch (Pier 70 Development)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;After about a decade of planning, developer Forest City Realty Trust Inc. (NYSE: FCE.A) finally scored approval for its massive Pier 70 overhaul that could bring up to 2,150 new homes, 1.75 million square feet of commercial office, and up to 445,000 square feet of retail, light industrial and arts space on 28 acres.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2017-10-31</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P86" tabindex="0" role="button" aria-label="Inspect promise #35: The plan calls for more than 2,600 homes.">
+                <td class="table-id-cell font-mono">#35</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Associate Capital</div>
+                  <div class="table-entity-role font-mono">Pier 70 &amp; Dogpatch (Potrero Power Station)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;The plan calls for more than 2,600 homes.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2020-04</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P07" tabindex="0" role="button" aria-label="Inspect promise #36: build 3.5M homes by 2025">
+                <td class="table-id-cell font-mono">#36</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Gavin Newsom</div>
+                  <div class="table-entity-role font-mono">Bay Area &amp; California Housing</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;build 3.5M homes by 2025&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Bay Area &amp; Regional</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2018-11-06</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P13" tabindex="0" role="button" aria-label="Inspect promise #37: In his first year as mayor, he introduced an ambitious 10-ye">
+                <td class="table-id-cell font-mono">#37</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Gavin Newsom</div>
+                  <div class="table-entity-role font-mono">Citywide 10-Year Homelessness Plan</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;In his first year as mayor, he introduced an ambitious 10-year plan to end chronic homelessness by creating 3,000 housing units with supportive services and replacing emergency shelter beds with 24-hour clinics.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2004-06-30</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2014-06-30</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P15" tabindex="0" role="button" aria-label="Inspect promise #38: The late Mayor Ed Lee pledged in 2014 to add 5,000 new units">
+                <td class="table-id-cell font-mono">#38</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Ed Lee</div>
+                  <div class="table-entity-role font-mono">San Francisco Housing Stock</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;The late Mayor Ed Lee pledged in 2014 to add 5,000 new units to the housing stock every year, for a total of 30,000 units by 2020.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2014</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2020-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P16" tabindex="0" role="button" aria-label="Inspect promise #39: In October 2018, Mayor London Breed announced a commitment t">
+                <td class="table-id-cell font-mono">#39</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">London Breed</div>
+                  <div class="table-entity-role font-mono">Citywide Navigation Center Network</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;In October 2018, Mayor London Breed announced a commitment to open at least 1,000 additional shelter beds, including Navigation Center beds, by the end of 2020.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Housing &amp; Neighborhoods</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2018-10</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2020-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P19" tabindex="0" role="button" aria-label="Inspect promise #40: In his budget proposal for fiscal year 2007–2008, Newsom ann">
+                <td class="table-id-cell font-mono">#40</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Gavin Newsom</div>
+                  <div class="table-entity-role font-mono">Universal Healthcare (Healthy San Francisco)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;In his budget proposal for fiscal year 2007–2008, Newsom announced his intention to provide universal health care for all city residents, based on long-time City Supervisor Tom Ammiano 's plan.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2007-04</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P20" tabindex="0" role="button" aria-label="Inspect promise #41: At the time, Lee promised not to seek election if appointed,">
+                <td class="table-id-cell font-mono">#41</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Ed Lee</div>
+                  <div class="table-entity-role font-mono">San Francisco City Hall</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;At the time, Lee promised not to seek election if appointed, a statement that helped to gain support for his appointment.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2011-01-07</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2011-11-08</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 5/8">5/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P23" tabindex="0" role="button" aria-label="Inspect promise #42: The Hospitality Task Force will break down siloes to increas">
+                <td class="table-id-cell font-mono">#42</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Daniel Lurie</div>
+                  <div class="table-entity-role font-mono">Union Square &amp; Downtown Hospitality Corridor</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;The Hospitality Task Force will break down siloes to increase the police presence across the areas that drive our city’s economy – not just during large conferences but 365 days a year.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2024</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P28" tabindex="0" role="button" aria-label="Inspect promise #43: Over the past two years, SFDPH has opened 250 additional res">
+                <td class="table-id-cell font-mono">#43</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">London Breed</div>
+                  <div class="table-entity-role font-mono">SF General &amp; Community Health Clinics</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Over the past two years, SFDPH has opened 250 additional residential care and treatment beds.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2020-01-08</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P35" tabindex="0" role="button" aria-label="Inspect promise #44: This program is improving behavioral health services for peo">
+                <td class="table-id-cell font-mono">#44</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">London Breed</div>
+                  <div class="table-entity-role font-mono">Mental Health SF (Citywide)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;This program is improving behavioral health services for people living in San Francisco with serious mental health issues and/or substance use disorders who are experiencing homelessness.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2019-11-12</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 5/8">5/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P37" tabindex="0" role="button" aria-label="Inspect promise #45: Mayor Breed also announced the next steps in her efforts to ">
+                <td class="table-id-cell font-mono">#45</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">London Breed</div>
+                  <div class="table-entity-role font-mono">Tenderloin &amp; Encampment Outreach</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Mayor Breed also announced the next steps in her efforts to help people living unsheltered on the City’s streets, with an initiative to create at least 2,000 more places for people across the spectrum of housing, behavioral health, and shelter over the next two years.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2020-01-15</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2022-01-15</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip undecided">UNDECIDED</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P38" tabindex="0" role="button" aria-label="Inspect promise #46: Here’s how PG&amp;E is working to make PSPS events smaller i">
+                <td class="table-id-cell font-mono">#46</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">PG&amp;E</div>
+                  <div class="table-entity-role font-mono">Northern California &amp; Bay Area Grid</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Here’s how PG&amp;E is working to make PSPS events smaller in size, shorter in length and smarter for customers.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Bay Area &amp; Regional</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2020-02-07</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2020-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 5/8">5/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P39" tabindex="0" role="button" aria-label="Inspect promise #47: The program forecasted to install up to 7,500 charging ports">
+                <td class="table-id-cell font-mono">#47</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">PG&amp;E</div>
+                  <div class="table-entity-role font-mono">Northern California EV Network</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;The program forecasted to install up to 7,500 charging ports over a three-year period focusing on two key market segments: workplaces and multi-unit dwellings.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Bay Area &amp; Regional</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2018</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2020-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P40" tabindex="0" role="button" aria-label="Inspect promise #48: In addition, PG&amp;E is announcing today its own commitment">
+                <td class="table-id-cell font-mono">#48</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">PG&amp;E</div>
+                  <div class="table-entity-role font-mono">Northern California Utility Fleet</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;In addition, PG&amp;E is announcing today its own commitment to further electrify its vehicle fleet by 2030, including 100% of its light-duty fleet, 10% of its medium-duty fleet and 5% of its heavy-duty fleet.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Bay Area &amp; Regional</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2020-10-01</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2030-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P57" tabindex="0" role="button" aria-label="Inspect promise #49: By early 2017, Comcast will have its gigabit internet servic">
+                <td class="table-id-cell font-mono">#49</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Comcast</div>
+                  <div class="table-entity-role font-mono">Bay Area Fiber Network</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;By early 2017, Comcast will have its gigabit internet service available in 15 cities/metropolitan areas.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Bay Area &amp; Regional</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2016-11-01</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2017-03-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P03" tabindex="0" role="button" aria-label="Inspect promise #50: Mayor Lurie today also introduced a legislative package with">
+                <td class="table-id-cell font-mono">#50</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Daniel Lurie</div>
+                  <div class="table-entity-role font-mono">City Hall &amp; Small Business Corridors</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Mayor Lurie today also introduced a legislative package with six ordinances proposing structural changes to help businesses and property owners to secure the permits they need more easily and efficiently.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Civic &amp; Public Safety</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2025-01-07</div>
+                  
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip kept">KEPT</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 6/8">6/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P58" tabindex="0" role="button" aria-label="Inspect promise #51: AT&amp;T plans to triple that amount by the end of the year">
+                <td class="table-id-cell font-mono">#51</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Leland Kim (AT&amp;T spokesman)</div>
+                  <div class="table-entity-role font-mono">Bay Area Gigabit Infrastructure</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;AT&amp;T plans to triple that amount by the end of the year&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Bay Area &amp; Regional</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2016-05-17</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2016-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip undecided">UNDECIDED</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 5/8">5/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P62" tabindex="0" role="button" aria-label="Inspect promise #52: will hold 1,500 employees when it is expected to open in 202">
+                <td class="table-id-cell font-mono">#52</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Visa</div>
+                  <div class="table-entity-role font-mono">Mission Bay Commercial Campus</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;will hold 1,500 employees when it is expected to open in 2024.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Infrastructure &amp; Tech</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2019-11-06</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2024-12-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P65" tabindex="0" role="button" aria-label="Inspect promise #53: Substantial completion of the contract was originally schedu">
+                <td class="table-id-cell font-mono">#53</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">SFMTA</div>
+                  <div class="table-entity-role font-mono">Central Subway Project Corridor</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;Substantial completion of the contract was originally scheduled for February 10, 2018&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Transit &amp; Streets</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2012</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2018-02-10</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip broken">BROKEN</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 7/8">7/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-row" data-promise-id="P85" tabindex="0" role="button" aria-label="Inspect promise #54: At the [June 9 Transportation Authority Board meeting](/even">
+                <td class="table-id-cell font-mono">#54</td>
+                <td class="table-entity-cell">
+                  <div class="table-entity-name">Transportation Authority Board</div>
+                  <div class="table-entity-role font-mono">Chinatown &amp; North Beach (Central Subway Extension)</div>
+                </td>
+                <td class="table-promise-cell">
+                  <div class="table-promise-text">&ldquo;At the [June 9 Transportation Authority Board meeting](/events/transportation-authority-board-131), our board approved $230,700 in Prop L transportation sales tax funds for the Central Subway North Beach Extension Study, a two-year effort to evaluate extending light rail service from Chinatown to North Beach.&rdquo;</div>
+                  <div class="table-pill-row" style="margin-top: 6px;">
+                    <span class="category-pill font-mono">Transit &amp; Streets</span>
+                  </div>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-date">2026-06-09</div>
+                  <div class="timeline-due font-mono">&rarr; Due: 2028-05-31</div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip in_progress">IN PROGRESS</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="score-pill" title="Relevance Gate 8/8">8/8</span>
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -304,7 +1575,227 @@
               </tr>
             </thead>
             <tbody id="quarantine-table-body">
-              <!-- Dynamically populated from quarantined items -->
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 1</td>
+                <td>
+                  <strong style="color: var(--ink);">Add 1,500 new shelter beds [Word Swapped: beds → units]</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;The city added 1,500 new shelter units within six months.&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">accuracy_quote</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Verbatim Quote Substring Check</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  quote none: 'shelter units' is not a verbatim substring of saved source file (source text reads '1,500 new shelter beds').
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by quote check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 2</td>
+                <td>
+                  <strong style="color: var(--ink);">Wrong Speaker Claim [Breed attribute to Lurie]</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;Mayor Daniel Lurie promised $5M for retail recovery.&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">authenticity_speaker</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Speaker Roll Call Verification</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  speaker mismatch: Daniel Lurie was not mayor in 2023; speaker was London Breed.
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 3</td>
+                <td>
+                  <strong style="color: var(--ink);">Corrupted Source Byte [Single byte tampering]</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;Cryptographic byte tamper in sources/e03acc33e8e1.md&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">authenticity_hash</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">SHA-256 Byte-Level Integrity</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  hash mismatch: computed SHA-256 e03acc33... does not match saved file hash c4a1b029...
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 4</td>
+                <td>
+                  <strong style="color: var(--ink);">Invented Promise Without Official Source</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;City will provide free municipal fiber internet to all residents by 2026.&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">accuracy_evidence</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Primary Evidence Authenticity</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  evidence none: no primary meeting record, legislation, or official sf.gov page found.
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 5</td>
+                <td>
+                  <strong style="color: var(--ink);">Invented Metric [1,500 inflated to 2,000]</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;Mayor promised 2,000 shelter beds within six months.&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">accuracy_quote</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Metric Number Verification</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  metric altered: source specifies 1,500 beds; claimed number 2,000 fails exact match.
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 6</td>
+                <td>
+                  <strong style="color: var(--ink);">Invented Completion Date Out of Range</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;Stabilization center completed December 2024 (before promise made).&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">accuracy_date</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Promised Date Window Check</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  date out of range: evidence date 2024-12-01 predates mayoral inauguration date 2025-01-07.
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 7</td>
+                <td>
+                  <strong style="color: var(--ink);">Unauthorized Domain Source</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;Evidence cited from unverified blog medium.com/@blogger/sf-review&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">authenticity_domain</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Domain Allowlist Enforcement</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  domain not in allowlist: medium.com is not an authorized civic domain (sf.gov, legistar, granicus).
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 8</td>
+                <td>
+                  <strong style="color: var(--ink);">News Report Claimed as Primary Proof</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;SF Chronicle speculative opinion piece used as sole proof for Kept.&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">verdict_rubric</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Source Hierarchy &amp; Rubric Cap</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  rubric violation: secondary news report cannot satisfy Kept without official primary record. Capped at undecided.
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 9</td>
+                <td>
+                  <strong style="color: var(--ink);">Campaign Flyer Claimed as Primary Proof</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;Campaign brochure text claimed as official city verification.&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">verdict_rubric</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Civic Record Allowlist Rubric</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  rubric violation: campaign flyer is not an enacted resolution or operational signal. Capped at undecided.
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 10</td>
+                <td>
+                  <strong style="color: var(--ink);">Hallucinated Quote in Advocate Bundle</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;Advocate drafted quote: '100% of street encampments cleared permanently.'&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">accuracy_quote</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Verbatim Quote Substring Check</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  hallucination detected: quote does not exist anywhere in referenced source bundle.
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 11</td>
+                <td>
+                  <strong style="color: var(--ink);">Cross-Citing Different Promise Evidence</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;Advocate cited Geary St stabilization center to prove 3.5M homes promise.&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">accuracy_evidence</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Promise ID Cross-Check</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  promise mismatch: evidence cites P02 stabilization center but submitted under P07 housing target.
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 12</td>
+                <td>
+                  <strong style="color: var(--ink);">Restated Procedural Vote (Low Relevance)</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">&ldquo;Supervisor moved to approve the minutes of the previous meeting.&rdquo;</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">relevance_low</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Relevance Gate Score &gt;= 5</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  relevance too low (score 2/8): procedural vote approval is not a substantive civic promise.
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  caught by check — test case, not a DB row
+                </td>
+              </tr>
+              <tr class="quarantine-row">
+                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test 13</td>
+                <td>
+                  <strong style="color: var(--ink);">[Bay Area - PayPal Park, San Jose, not SF proper] Bay FC will play their first home game at PayPal Park on Saturday, March 30, against the Houston Dash</strong>
+                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">relevance_low</div>
+                </td>
+                <td style="white-space: nowrap;">
+                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">relevance_gate</span>
+                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">Relevance Gate 2.5 (code-only)</div>
+                </td>
+                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
+                  relevance_low
+                </td>
+                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+                  quarantined table in promises.db
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -605,11 +2096,11 @@
                 Waiting for Arbitrator…<br>Nothing is published before this step.
               </p>
               <div style="display: flex; gap: 14px; margin-top: 14px; text-align: left;">
-                <div style="border-left: 3px solid #10B981; padding: 2px 10px;">
+                <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px; padding: 4px 10px;">
                   <div style="color: #A7F3D0; font-size: 0.78rem; font-weight: 700;">✓ PROMISES</div>
                   <div style="font-size: 0.78rem; color: #cbd5e1;">Public table</div>
                 </div>
-                <div style="border-left: 3px solid #F59E0B; padding: 2px 10px;">
+                <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px; padding: 4px 10px;">
                   <div style="color: #FDE68A; font-size: 0.78rem; font-weight: 700;">⚠ QUARANTINED</div>
                   <div style="font-size: 0.78rem; color: #cbd5e1;">Held for review</div>
                 </div>
@@ -703,12 +2194,11 @@
       <section class="built-section" id="built-section" aria-label="Credits & Heritage">
         <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(2rem, 3.8vw, 2.7rem); margin: 4px 0 8px; font-weight: 600;">Standing on open work</h2>
 
-        <div class="award-callout-box" style="margin: 16px 0 24px; padding: 18px 22px; background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 12px;">
-          <h3 style="margin: 0 0 6px; color: #fbbf24; font-size: 1.05rem; display: flex; align-items: center; gap: 8px;">
-            <span>🏆</span> Archil Hackathon Award: Best Use Of Keenable
-          </h3>
-          <p style="margin: 0; color: var(--ink-soft); font-size: 0.92rem; line-height: 1.55;">
-            Built overnight at the <strong>Archil "Agents need solid ground" Hackathon</strong> on November 10, 2026. Across <strong>33 projects, 46 builders, and 1 night</strong>, SF Promises was awarded <strong>1 of 5 hackathon honors: "Best Use Of Keenable"</strong> for high-fidelity temporal retrieval of primary municipal evidence and cryptographic source archiving.
+        <div class="award-callout-box">
+          <div class="award-kicker font-mono">Archil Hackathon Recognition · November 10, 2026</div>
+          <h3 class="award-title">Best Use of Keenable</h3>
+          <p class="award-summary">
+            Developed overnight at the Archil <em>Agents Need Solid Ground</em> Hackathon among 33 projects and 46 builders. SF Promises received 1 of 5 hackathon honors for verifiable temporal discovery of public records, granular temporal scoping, and cryptographic SHA-256 evidence archiving.
           </p>
         </div>
 
