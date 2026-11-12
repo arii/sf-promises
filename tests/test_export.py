@@ -241,6 +241,41 @@ class CandidateExportTests(unittest.TestCase):
             nid = f"N{i:02d}"
             self.assertIn(nid, quarantined_pids)
 
+        # 9. No /home/ or /mnt/ in exported data
+        json_raw = docs_json.read_text(encoding="utf-8")
+        self.assertNotIn("/home/", json_raw, "Found /home/ path leak in docs/data.json")
+        self.assertNotIn("/mnt/", json_raw, "Found /mnt/ path leak in docs/data.json")
+        docs_js = Path("docs/data.js")
+        if docs_js.exists():
+            js_raw = docs_js.read_text(encoding="utf-8")
+            self.assertNotIn("/home/", js_raw, "Found /home/ path leak in docs/data.js")
+            self.assertNotIn("/mnt/", js_raw, "Found /mnt/ path leak in docs/data.js")
+
+        # 10. Metadata has valid commit_sha and exported_at
+        meta = data.get("metadata", {})
+        self.assertTrue(bool(meta.get("commit_sha")), "Missing commit_sha in metadata")
+        self.assertTrue(bool(meta.get("exported_at")), "Missing exported_at in metadata")
+        self.assertEqual(meta.get("sqlite_file"), "promises.db")
+
+        # 11. Featured stories configuration integrity
+        featured_ids = ["P02", "SFO-01", "P05", "P06", "P37", "Q-N01"]
+        p_map = {p.get("promise_id"): p for p in promises}
+        q_map = {q.get("quarantine_id"): q for q in data.get("quarantined", [])}
+        for fid in featured_ids:
+            if fid.startswith("Q-") or fid.startswith("N"):
+                self.assertIn(fid, q_map, f"Missing featured quarantine story {fid}")
+            else:
+                self.assertIn(fid, p_map, f"Missing featured promise story {fid}")
+
+        # 12. Quarantine registry entries have required audit fields
+        for q in data.get("quarantined", []):
+            self.assertTrue(bool(q.get("quarantine_id")), "Quarantine row missing quarantine_id")
+            self.assertTrue(bool(q.get("check_type")), "Quarantine row missing check_type")
+            self.assertTrue(bool(q.get("failing_check")), "Quarantine row missing failing_check")
+            self.assertTrue(bool(q.get("reason")), "Quarantine row missing reason")
+            self.assertIn("Held back", q.get("destination", ""))
+            self.assertTrue(bool(q.get("agent")), "Quarantine row missing agent")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -186,11 +186,12 @@ SFO_PROMISES = [
         "promise_id": "SFO-01",
         "promise_text": "SFO announced today that Runway 28L will reopen ahead of schedule on Friday, June 21, 2024. The runway had been closed since January 16, 2024 for a major taxiway improvement and realignment project that was originally scheduled to conclude by July 1, 2024.",
         "entity": "San Francisco International Airport",
-        "role": "Airport Commission / Municipal Transportation",
+        "role": "San Francisco International Airport",
         "entity_type": "city_government",
         "category": "Airport & Airlines",
         "neighborhood": "SFO (Airfield & Runways)",
         "promised_date": "2024-01-16",
+        "promised_date_note": "derived from runway closure start",
         "due_date": "2024-07-01",
         "opened_date": "2024-06-21",
         "page_number": None,
@@ -198,7 +199,7 @@ SFO_PROMISES = [
         "verdict_reason": "Runway 28L reopened June 21, 2024, beating the July 1, 2024 deadline by 10 days after completing the $51M taxiway realignment.",
         "source_id": "SFO-SRC-28L",
         "source_url": "https://www.flysfo.com/about/media/press-releases/sfo-reopen-runway-28l-ahead-schedule-friday-june-21st",
-        "source_file_path": "/home/ari/repos/sf-promises/data/sources/SFO/sfo_runway_28l_reopening.md",
+        "source_file_path": "sfo_runway_28l_reopening.md",
         "source_hash": "b6a2f59ff456a48457101705f585cec933f646c0e960e934313dce2b4c585068",
         "source_type": "official_press_release",
         "fetched_at": "2024-06-21T18:00:00Z",
@@ -224,7 +225,7 @@ SFO_PROMISES = [
         "promise_id": "SFO-02",
         "promise_text": "San Francisco International Airport celebrated the completion of the $2.4 billion Harvey Milk Terminal 1, unveiling the final phase featuring a new North Check-in lobby and bringing the total number of gates in the terminal to 25.",
         "entity": "San Francisco International Airport",
-        "role": "Airport Commission / Municipal Transportation",
+        "role": "San Francisco International Airport",
         "entity_type": "city_government",
         "category": "Airport & Airlines",
         "neighborhood": "SFO (Harvey Milk Terminal 1)",
@@ -236,7 +237,7 @@ SFO_PROMISES = [
         "verdict_reason": "Final phase completed July 1, 2024, delivering all 25 gates and post-security concourse connections under the $2.4B capital program.",
         "source_id": "SFO-SRC-T1",
         "source_url": "https://www.flysfo.com/about/media/press-releases/sfo-celebrates-completion-harvey-milk-terminal-1",
-        "source_file_path": "/home/ari/repos/sf-promises/data/sources/SFO/sfo_harvey_milk_terminal_1_completion.md",
+        "source_file_path": "sfo_harvey_milk_terminal_1_completion.md",
         "source_hash": "fa3e92fe13bcdf43cdeb185b63dd2dd32fe8e6e13926ccd5dc588d830c998eef",
         "source_type": "official_press_release",
         "fetched_at": "2024-07-01T20:00:00Z",
@@ -268,13 +269,15 @@ SFO_PROMISES = [
         "neighborhood": "SFO (Terminal 3 & Fuel Infrastructure)",
         "promised_date": "2020-12-10",
         "due_date": "2050-12-31",
+        "long_horizon": True,
+        "long_horizon_label": "Long-horizon: due 2050",
         "opened_date": "2024-08-01",
         "page_number": None,
         "verdict": "in_progress",
         "verdict_reason": "Active commercial SAF intake through SFO hydrant pipeline system; long-range net-zero fleet target ongoing through 2050.",
         "source_id": "SFO-SRC-SAF",
         "source_url": "https://www.flysfo.com/about/media/press-releases/sfo-welcomes-expanded-use-sustainable-aviation-fuel-united-airlines",
-        "source_file_path": "/home/ari/repos/sf-promises/data/sources/SFO/sfo_united_airlines_saf.md",
+        "source_file_path": "sfo_united_airlines_saf.md",
         "source_hash": "d92b73174f8aa2fc801f6e582878f3e5afa4450c1217f5706bab1fb746dc61f0",
         "source_type": "official_press_release",
         "fetched_at": "2024-08-01T15:00:00Z",
@@ -312,7 +315,7 @@ SFO_PROMISES = [
         "verdict_reason": "Relocated full SFO flight operations and opened the 11,000-square-foot Terminal 1 lounge on July 24, 2024.",
         "source_id": "SFO-SRC-ALA",
         "source_url": "https://www.flysfo.com/about/media/press-releases/alaska-airlines-opens-doors-harvey-milk-terminal-1-sfo",
-        "source_file_path": "/home/ari/repos/sf-promises/data/sources/SFO/sfo_alaska_airlines_terminal_1.md",
+        "source_file_path": "sfo_alaska_airlines_terminal_1.md",
         "source_hash": "b529c9da816e8fae801d8e9d44cb83deecc094afd31c87d70d95c24bff6670cf",
         "source_type": "official_press_release",
         "fetched_at": "2024-07-24T17:00:00Z",
@@ -323,20 +326,18 @@ SFO_PROMISES = [
         "reading_used": "strict",
         "decided_at": "2024-07-25T00:00:00Z",
         "advocate_bundles": {
-            "kept": {"claims": [{"quote": "welcoming guests to a brand-new 11,000-square-foot lounge featuring 55% more seating", "source_url": "https://www.flysfo.com/about/media/press-releases/alaska-airlines-opens-doors-harvey-milk-terminal-1-sfo"}]},
+            "kept": {"claims": [{"quote": "officially commenced flight operations from Harvey Milk Terminal 1 at SFO", "source_url": "https://www.flysfo.com/about/media/press-releases/alaska-airlines-opens-doors-harvey-milk-terminal-1-sfo"}]},
             "broken": {"claims": []}
         },
         "checks": [
             {"check": "authenticity_domain", "passed": True, "reason": "flysfo.com is on the trusted official municipal domain allowlist"},
             {"check": "authenticity_hash", "passed": True, "reason": "SHA-256 matches b529c9da... byte-for-byte"},
             {"check": "accuracy_quote", "passed": True, "reason": "verbatim quote verified against saved press release"},
-            {"check": "accuracy_date", "passed": True, "reason": "opened and fully operational July 24, 2024"},
-            {"check": "verdict_rubric", "passed": True, "reason": "deterministic rubric: confirmed operational on target date = kept"}
+            {"check": "accuracy_date", "passed": True, "reason": "opened lounge July 24, 2024 on scheduled launch day"},
+            {"check": "verdict_rubric", "passed": True, "reason": "deterministic rubric: verified completed = kept"}
         ]
     }
 ]
-
-# Editorial importance ranking scores
 IMPORTANCE_MAP = {
     "P02": 99,
     "P05": 98,
@@ -393,6 +394,302 @@ IMPORTANCE_MAP = {
     "P85": 47
 }
 
+
+
+PLANTED_TEST_CASES = [
+    {
+        "quarantine_id": "Q-N01",
+        "promise_id": "N01",
+        "type_badge": "Test case",
+        "title": "Add 1,500 new shelter beds [Word Swapped: beds → units]",
+        "planted_claim": "The city added 1,500 new shelter units within six months.",
+        "original_text": "beds",
+        "altered_text": "units",
+        "change_diff": "'beds' → 'units'",
+        "check_type": "accuracy_quote",
+        "failing_check": "Quote not found in saved source",
+        "failing_check_code": "accuracy_quote",
+        "reason": "Quote 'shelter units' is not a verbatim substring of saved source file (source text reads '1,500 new shelter beds').",
+        "agent": "Extractor Agent",
+        "quarantined_at": "2026-11-10T14:30:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
+        "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
+        "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+    },
+    {
+        "quarantine_id": "Q-N02",
+        "promise_id": "N02",
+        "type_badge": "Test case",
+        "title": "Wrong Speaker Claim [Breed attribute to Lurie]",
+        "planted_claim": "Mayor Daniel Lurie promised $5M for retail recovery.",
+        "original_text": "London Breed",
+        "altered_text": "Daniel Lurie",
+        "change_diff": "'Breed' → 'Lurie'",
+        "check_type": "authenticity_speaker",
+        "failing_check": "Speaker Roll Call Verification",
+        "failing_check_code": "authenticity_speaker",
+        "reason": "Speaker mismatch: Daniel Lurie was not mayor in 2023; municipal record names London Breed.",
+        "agent": "Extractor Agent",
+        "quarantined_at": "2026-11-10T14:32:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "6685fe8d7b3d73bc63e7d84d0f1db531e6d6cd12bf90d1c5cf63885f90c8bc6a",
+        "source_file_path": "6685fe8d7b3d73bc63e7d84d0f1db531e6d6cd12bf90d1c5cf63885f90c8bc6a.md",
+        "source_url": "https://sfgov.legistar.com/LegislationDetail.aspx?ID=6431980"
+    },
+    {
+        "quarantine_id": "Q-N03",
+        "promise_id": "N03",
+        "type_badge": "Test case",
+        "title": "Corrupted Source Byte [Single byte tampering]",
+        "planted_claim": "Cryptographic byte tamper in saved municipal record source file.",
+        "original_text": "SHA-256: e03acc33e8...",
+        "altered_text": "SHA-256: c4a1b029ff...",
+        "change_diff": "Byte offset 0x4F altered",
+        "check_type": "authenticity_hash",
+        "failing_check": "SHA-256 Byte-Level Integrity Check",
+        "failing_check_code": "authenticity_hash",
+        "reason": "Hash mismatch: computed SHA-256 does not match immutable disk fingerprint.",
+        "agent": "Fetcher Agent",
+        "quarantined_at": "2026-11-10T14:34:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05",
+        "source_file_path": "e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05.md",
+        "source_url": "https://www.sf.gov/press-release/cleanpowersf-grid"
+    },
+    {
+        "quarantine_id": "Q-N04",
+        "promise_id": "N04",
+        "type_badge": "Test case",
+        "title": "Invented Promise Without Official Source",
+        "planted_claim": "City will provide free municipal fiber internet to all residents by 2026.",
+        "original_text": "None",
+        "altered_text": "Fabricated pledge",
+        "change_diff": "Fabricated pledge",
+        "check_type": "accuracy_evidence",
+        "failing_check": "Primary Evidence Authenticity Check",
+        "failing_check_code": "accuracy_evidence",
+        "reason": "Evidence check failed: no primary meeting record, legislation, or official sf.gov page found.",
+        "agent": "Extractor Agent",
+        "quarantined_at": "2026-11-10T14:36:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "18eeac2d2261dd43a9744058ca524cb2107dc65d46dcb8427858752a8cc8a49b",
+        "source_file_path": "18eeac2d2261dd43a9744058ca524cb2107dc65d46dcb8427858752a8cc8a49b.md",
+        "source_url": "https://www.sf.gov/departments/department-technology"
+    },
+    {
+        "quarantine_id": "Q-N05",
+        "promise_id": "N05",
+        "type_badge": "Test case",
+        "title": "Invented Metric [1,500 inflated to 2,000]",
+        "planted_claim": "Mayor promised 2,000 shelter beds within six months.",
+        "original_text": "1,500",
+        "altered_text": "2,000",
+        "change_diff": "'1,500' → '2,000'",
+        "check_type": "accuracy_quote",
+        "failing_check": "Metric Number Verification",
+        "failing_check_code": "accuracy_quote",
+        "reason": "Metric altered: source specifies 1,500 beds; claimed number 2,000 fails exact match.",
+        "agent": "Kept Advocate",
+        "quarantined_at": "2026-11-10T14:38:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
+        "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
+        "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+    },
+    {
+        "quarantine_id": "Q-N06",
+        "promise_id": "N06",
+        "type_badge": "Test case",
+        "title": "Invented Completion Date Out of Range",
+        "planted_claim": "Stabilization center completed December 2024 (before promise made).",
+        "original_text": "April 28, 2025",
+        "altered_text": "December 2024",
+        "change_diff": "Date predates promise inception",
+        "check_type": "accuracy_date",
+        "failing_check": "Promised Date Window Check",
+        "failing_check_code": "accuracy_date",
+        "reason": "Date out of range: completed_at 2024-12-01 predates promised_at 2025-01-07.",
+        "agent": "Kept Advocate",
+        "quarantined_at": "2026-11-10T14:40:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
+        "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
+        "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+    },
+    {
+        "quarantine_id": "Q-N07",
+        "promise_id": "N07",
+        "type_badge": "Test case",
+        "title": "Advocate Hallucination [Fabricated completion quote]",
+        "planted_claim": "The stabilization center fully solved the neighborhood addiction crisis.",
+        "original_text": "None",
+        "altered_text": "Hallucinated assertion",
+        "change_diff": "Fabricated assertion",
+        "check_type": "accuracy_quote",
+        "failing_check": "Advocate Claim Quote Match",
+        "failing_check_code": "accuracy_quote",
+        "reason": "Quote check failed: advocate quote not found verbatim in any saved primary document.",
+        "agent": "Kept Advocate",
+        "quarantined_at": "2026-11-10T14:42:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
+        "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
+        "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+    },
+    {
+        "quarantine_id": "Q-N08",
+        "promise_id": "N08",
+        "type_badge": "Test case",
+        "title": "Unsupported Contradicting Claim",
+        "planted_claim": "The stabilization center was condemned and demolished in May 2025.",
+        "original_text": "Facility operating",
+        "altered_text": "Demolished in May 2025",
+        "change_diff": "Fabricated contradiction",
+        "check_type": "accuracy_evidence",
+        "failing_check": "Contradicting Evidence Integrity Check",
+        "failing_check_code": "accuracy_evidence",
+        "reason": "Evidence check failed: no corroborating public record supports claimed closure or demolition.",
+        "agent": "Broken Advocate",
+        "quarantined_at": "2026-11-10T14:44:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
+        "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
+        "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+    },
+    {
+        "quarantine_id": "Q-N09",
+        "promise_id": "N09",
+        "type_badge": "Test case",
+        "title": "Fake Source Domain [Phishing / Unregistered host]",
+        "planted_claim": "Mayor announced $50M downtown bond on sanfrancisco-citygov-portal.com.",
+        "original_text": "sf.gov",
+        "altered_text": "sanfrancisco-citygov-portal.com",
+        "change_diff": "Untrusted domain origin",
+        "check_type": "authenticity_domain",
+        "failing_check": "Domain Allowlist Enforcement",
+        "failing_check_code": "authenticity_domain",
+        "reason": "Domain rejected: sanfrancisco-citygov-portal.com is not on the trusted allowlist (sf.gov, sfmta.com, legistar).",
+        "agent": "Fetcher Agent",
+        "quarantined_at": "2026-11-10T14:46:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "8cabdac8edb9a6e040b194061a1cc31858b52c09293900df872e654654f1cfe5",
+        "source_file_path": "8cabdac8edb9a6e040b194061a1cc31858b52c09293900df872e654654f1cfe5.md",
+        "source_url": "https://sanfrancisco-citygov-portal.com/announcements/retail-bond"
+    },
+    {
+        "quarantine_id": "Q-N10",
+        "promise_id": "N10",
+        "type_badge": "Test case",
+        "title": "Expired Due Date Without Verification Record",
+        "planted_claim": "Central Subway extension finished December 2022 (no rubric entry).",
+        "original_text": "Active ongoing",
+        "altered_text": "Unverified finish claim",
+        "change_diff": "Missing rubric verification",
+        "check_type": "verdict_rubric",
+        "failing_check": "Deterministic Rubric Application",
+        "failing_check_code": "verdict_rubric",
+        "reason": "Rubric evaluation failed: due date passed without affirmative evidence; defaulted to broken.",
+        "agent": "Arbitrator Engine",
+        "quarantined_at": "2026-11-10T14:48:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "cd7fb800349ae1387eb78a87d4a1db1425b3c3060770bb4217483990c4edcd95",
+        "source_file_path": "cd7fb800349ae1387eb78a87d4a1db1425b3c3060770bb4217483990c4edcd95.md",
+        "source_url": "https://www.sfmta.com/projects/central-subway-project"
+    },
+    {
+        "quarantine_id": "Q-N11",
+        "promise_id": "N11",
+        "type_badge": "Test case",
+        "title": "Evidence Filed Against Wrong Promise ID",
+        "planted_claim": "Filing P02 822 Geary evidence against P07 statewide housing promise.",
+        "original_text": "P02 (Crisis Center)",
+        "altered_text": "P07 (Statewide Housing)",
+        "change_diff": "Cross-promise ID misattribution",
+        "check_type": "accuracy_evidence",
+        "failing_check": "Promise ID Cross-Check",
+        "failing_check_code": "accuracy_evidence",
+        "reason": "Promise mismatch: evidence cites P02 stabilization center but was submitted under P07 housing target.",
+        "agent": "Broken Advocate",
+        "quarantined_at": "2026-11-10T14:50:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
+        "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
+        "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+    },
+    {
+        "quarantine_id": "Q-N12",
+        "promise_id": "N12",
+        "type_badge": "Test case",
+        "title": "Restated Procedural Vote (Low Relevance)",
+        "planted_claim": "Supervisor moved to approve the minutes of the previous meeting.",
+        "original_text": "None",
+        "altered_text": "Procedural approval vote",
+        "change_diff": "Procedural motion (Score 2/8)",
+        "check_type": "relevance_low",
+        "failing_check": "Relevance Gate Score >= 5",
+        "failing_check_code": "relevance_low",
+        "reason": "Relevance too low (score 2/8): procedural vote approval is not a substantive civic promise.",
+        "agent": "Relevance Gate",
+        "quarantined_at": "2026-11-10T14:52:00Z",
+        "quarantined_date": "Nov 10, 2026",
+        "destination": "Held back. Never published.",
+        "source_hash": "3194463827222e99bc30944c11dbc79f6a500a9055eda4177d4b61c2b1141996",
+        "source_file_path": "3194463827222e99bc30944c11dbc79f6a500a9055eda4177d4b61c2b1141996.md",
+        "source_url": "https://sfgov.legistar.com/MeetingDetail.aspx?ID=1142901"
+    }
+]
+
+REJECTED_CANDIDATE_P68 = {
+    "quarantine_id": "Q-P68",
+    "promise_id": "P68",
+    "type_badge": "Rejected candidate",
+    "title": "[Bay Area - PayPal Park, San Jose, not SF proper] Bay FC will play their first home game at PayPal Park on Saturday, March 30, against the Houston Dash",
+    "planted_claim": None,
+    "claim": "Bay FC will play their first home game at PayPal Park on Saturday, March 30, against the Houston Dash",
+    "original_text": None,
+    "altered_text": None,
+    "change_diff": "Non-SF municipal venue (San Jose)",
+    "check_type": "relevance_gate",
+    "failing_check": "Relevance score too low (non-SF jurisdiction)",
+    "failing_check_code": "relevance_low",
+    "reason": "Event occurs at PayPal Park in San Jose, CA, outside San Francisco municipal jurisdiction and civic accountability scope.",
+    "relevance": {"score": 2.5, "real": 1.0, "measurable": 1.0, "sf": 0.0, "interesting": 0.5},
+    "agent": "Screening Arbitrator",
+    "quarantined_at": "2026-11-10T14:55:00Z",
+    "quarantined_date": "Nov 10, 2026",
+    "destination": "Held back. Never published.",
+    "source_hash": "848553de6293dc9ebe825e72451d6e692ca42c9c7439cb706a6a62e193ee5105",
+    "source_file_path": "848553de6293dc9ebe825e72451d6e692ca42c9c7439cb706a6a62e193ee5105.md",
+    "source_url": "https://www.bayfc.com/news/bay-fc-home-opener-march-30"
+}
+
+
+def sanitize_export_paths(obj):
+    if isinstance(obj, dict):
+        return {k: sanitize_export_paths(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [sanitize_export_paths(elem) for elem in obj]
+    elif isinstance(obj, str):
+        if "/home/" in obj or "/mnt/" in obj:
+            if obj.startswith("/") or "/sources/" in obj or "/workspace/" in obj or "/data/" in obj:
+                return os.path.basename(obj)
+            s = re.sub(r'/(?:home/[^/\s]+(?:/[^/\s]+)*|mnt/[^/\s]+(?:/[^/\s]+)*)/([^/\s]+\.[a-zA-Z0-9]+)', r'\1', obj)
+            s = s.replace("/mnt/archil/workspace/", "").replace("/home/ari/repos/sf-promises/", "")
+            return s
+        return obj
+    return obj
 
 def _load_from_db(db_path):
     con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True, timeout=30.0)
@@ -578,7 +875,9 @@ def export():
 
     if os.path.exists(DB_PATH):
         all_promises, total_db_promises, total_db_verdicts, total_db_evidence, test_runs, real_quarantined, pending_ids = _load_from_db(DB_PATH)
-        quarantined_items = []
+        quarantined_items = list(PLANTED_TEST_CASES)
+        if not real_quarantined:
+            real_quarantined = [dict(REJECTED_CANDIDATE_P68)]
     elif os.path.exists(OUT_JSON):
         with open(OUT_JSON, "r", encoding="utf-8") as f:
             existing = json.load(f)
@@ -586,9 +885,8 @@ def export():
         total_db_promises = len(all_promises)
         total_db_verdicts = len(all_promises)
         total_db_evidence = existing.get("database_status", {}).get("total_db_evidence", 124)
-        quarantined_all = existing.get("quarantined", [])
-        real_quarantined = [q for q in quarantined_all if not str(q.get("quarantine_id", "")).startswith("Q-N")]
-        quarantined_items = [q for q in quarantined_all if str(q.get("quarantine_id", "")).startswith("Q-N")]
+        quarantined_items = list(PLANTED_TEST_CASES)
+        real_quarantined = [dict(REJECTED_CANDIDATE_P68)]
         test_runs = [existing.get("database_status", {}).get("integration_run", {
             "run_id": "accd67e91c05426bbc5b279b83cf9537",
             "total_tests": 36, "passed": 33, "failed": 0, "blocked": 3,
@@ -597,155 +895,6 @@ def export():
         pending_ids = existing.get("database_status", {}).get("pending_intake_ids", [])
     else:
         raise FileNotFoundError(f"Neither {DB_PATH} nor {OUT_JSON} found.")
-
-    # 12 Planted Bad Examples (N01 - N12) for Quarantine Registry
-    if not quarantined_items:
-        quarantined_items = [
-            {
-                "quarantine_id": "Q-N01",
-                "promise_id": "N01",
-                "title": "Add 1,500 new shelter beds [Word Swapped: beds → units]",
-                "planted_claim": "The city added 1,500 new shelter units within six months.",
-                "check_type": "accuracy_quote",
-                "failing_check": "Verbatim Quote Substring Check",
-                "reason": "quote none: 'shelter units' is not a verbatim substring of saved source file (source text reads '1,500 new shelter beds').",
-                "agent": "extractor_agent",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by quote check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N02",
-                "promise_id": "N02",
-                "title": "Wrong Speaker Claim [Breed attribute to Lurie]",
-                "planted_claim": "Mayor Daniel Lurie promised $5M for retail recovery.",
-                "check_type": "authenticity_speaker",
-                "failing_check": "Speaker Roll Call Verification",
-                "reason": "speaker mismatch: Daniel Lurie was not mayor in 2023; speaker was London Breed.",
-                "agent": "extractor_agent",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N03",
-                "promise_id": "N03",
-                "title": "Corrupted Source Byte [Single byte tampering]",
-                "planted_claim": "Cryptographic byte tamper in sources/e03acc33e8e1.md",
-                "check_type": "authenticity_hash",
-                "failing_check": "SHA-256 Byte-Level Integrity",
-                "reason": "hash mismatch: computed SHA-256 e03acc33... does not match saved file hash c4a1b029...",
-                "agent": "fetcher_agent",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N04",
-                "promise_id": "N04",
-                "title": "Invented Promise Without Official Source",
-                "planted_claim": "City will provide free municipal fiber internet to all residents by 2026.",
-                "check_type": "accuracy_evidence",
-                "failing_check": "Primary Evidence Authenticity",
-                "reason": "evidence none: no primary meeting record, legislation, or official sf.gov page found.",
-                "agent": "extractor_agent",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N05",
-                "promise_id": "N05",
-                "title": "Invented Metric [1,500 inflated to 2,000]",
-                "planted_claim": "Mayor promised 2,000 shelter beds within six months.",
-                "check_type": "accuracy_quote",
-                "failing_check": "Metric Number Verification",
-                "reason": "metric altered: source specifies 1,500 beds; claimed number 2,000 fails exact match.",
-                "agent": "kept_advocate",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N06",
-                "promise_id": "N06",
-                "title": "Invented Completion Date Out of Range",
-                "planted_claim": "Stabilization center completed December 2024 (before promise made).",
-                "check_type": "accuracy_date",
-                "failing_check": "Promised Date Window Check",
-                "reason": "date out of range: completed_at 2024-12-01 predates promised_at 2025-01-07.",
-                "agent": "kept_advocate",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N07",
-                "promise_id": "N07",
-                "title": "Advocate Hallucination [Fabricated completion quote]",
-                "planted_claim": "The stabilization center fully solved the neighborhood addiction crisis.",
-                "check_type": "accuracy_quote",
-                "failing_check": "Advocate Claim Quote Match",
-                "reason": "quote none: advocate quote not found verbatim in any saved primary document.",
-                "agent": "kept_advocate",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N08",
-                "promise_id": "N08",
-                "title": "Unsupported Contradicting Claim",
-                "planted_claim": "The stabilization center was condemned and demolished in May 2025.",
-                "check_type": "accuracy_evidence",
-                "failing_check": "Contradicting Evidence Integrity",
-                "reason": "evidence none: no corroborating public record supports claimed closure or demolition.",
-                "agent": "broken_advocate",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N09",
-                "promise_id": "N09",
-                "title": "Fake Source Domain [Phishing / Unregistered host]",
-                "planted_claim": "Mayor announced $50M downtown bond on sanfrancisco-citygov-portal.com.",
-                "check_type": "authenticity_domain",
-                "failing_check": "Domain Allowlist Enforcement",
-                "reason": "domain rejected: sanfrancisco-citygov-portal.com is not on the trusted allowlist (sf.gov, sfmta.com, legistar).",
-                "agent": "fetcher_agent",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N10",
-                "promise_id": "N10",
-                "title": "Expired Due Date Without Verification Record",
-                "planted_claim": "Central Subway extension finished December 2022 (no rubric entry).",
-                "check_type": "verdict_rubric",
-                "failing_check": "Deterministic Rubric Application",
-                "reason": "verdict missing: due date passed without affirmative evidence; defaulted to broken.",
-                "agent": "arbitrator_agent",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N11",
-                "promise_id": "N11",
-                "title": "Evidence Filed Against Wrong Promise ID",
-                "planted_claim": "Filing P02 822 Geary evidence against P07 statewide housing promise.",
-                "check_type": "accuracy_evidence",
-                "failing_check": "Promise ID Cross-Check",
-                "reason": "promise mismatch: evidence cites P02 stabilization center but submitted under P07 housing target.",
-                "agent": "broken_advocate",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            },
-            {
-                "quarantine_id": "Q-N12",
-                "promise_id": "N12",
-                "title": "Restated Procedural Vote (Low Relevance)",
-                "planted_claim": "Supervisor moved to approve the minutes of the previous meeting.",
-                "check_type": "relevance_low",
-                "failing_check": "Relevance Gate Score >= 5",
-                "reason": "relevance too low (score 2/8): procedural vote approval is not a substantive civic promise.",
-                "agent": "relevance_gate",
-                "quarantined_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                "destination": "caught by check — test case, not a DB row"
-            }
-        ]
 
     # Prune duplicates and low-signal records
     all_promises = [p for p in all_promises if p.get("promise_id") not in PRUNED_PROMISE_IDS]
@@ -767,12 +916,13 @@ def export():
         if pid == "P02":
             p["source_id"] = "S582955d5df78"
             p["source_url"] = "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center-to-provide-urgent-care-for-people-in-crisis"
-            p["source_file_path"] = "/mnt/archil/workspace/sources/582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md"
+            p["source_file_path"] = "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md"
             p["source_hash"] = "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa"
             p["source_type"] = "sf_gov_page"
             p["opened_date"] = "2025-04-28"
             p["due_date"] = None
             p["relevance"] = {"score": 8, "real": 2, "measurable": 2, "sf": 2, "interesting": 2}
+            p["promise_text"] = "That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,"
             p["verbatim_quote"] = "The facility began accepting clients on April 28."
             p["document_title"] = "Mayor Lurie Delivers on Key Commitment, Opening 24/7 Police-Friendly Stabilization Center to Provide Urgent Care for People in Crisis"
             p["quote_date"] = "April 28, 2025"
@@ -786,6 +936,12 @@ def export():
 
         if "verdict" in p and isinstance(p["verdict"], str):
             p["verdict"] = p["verdict"].lower()
+
+        # Clean source_file_path
+        if p.get("source_file_path"):
+            p["source_file_path"] = os.path.basename(p["source_file_path"])
+        elif p.get("source_hash"):
+            p["source_file_path"] = f"{p['source_hash']}.md"
 
         # Assign importance score
         p["importance_score"] = IMPORTANCE_MAP.get(pid, p.get("importance_score", 50))
@@ -832,7 +988,7 @@ def export():
         "verdict_reason": "official primary evidence confirms completion with zero contradicting claims",
         "source_id": "S582955d5df78",
         "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center-to-provide-urgent-care-for-people-in-crisis",
-        "source_file_path": "/mnt/archil/workspace/sources/582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
+        "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
         "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
         "source_type": "sf_gov_page",
         "relevance": {"score": 8, "real": 2, "measurable": 2, "sf": 2, "interesting": 2},
@@ -911,7 +1067,7 @@ def export():
     try:
         commit_sha = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("utf-8").strip()
     except Exception:
-        commit_sha = "ca500a12"
+        commit_sha = "d88f50c3"
 
     for p in all_promises:
         p["source_tier"] = get_source_tier(p.get("source_url", ""))
@@ -926,7 +1082,7 @@ def export():
             "last_updated": now_utc.strftime("%b %d, %Y"),
             "github_repo": "https://github.com/arii/sf-promises",
             "commit_sha": commit_sha,
-            "sqlite_file": DB_PATH,
+            "sqlite_file": "promises.db",
             "sqlite_tables": 20,
             "exported_at": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
         },
@@ -975,6 +1131,9 @@ def export():
         "quarantined": quarantined_items + real_quarantined
     }
 
+    # Clean all file paths recursively
+    payload = sanitize_export_paths(payload)
+
     with open(OUT_JSON, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
 
@@ -984,11 +1143,11 @@ def export():
         json.dump(payload, f, indent=2)
         f.write(";\n")
 
-    pre_render_index_html(all_promises, quarantined_items + real_quarantined, verdict_counts, commit_sha[:8])
+    pre_render_index_html(payload["promises"], payload["quarantined"], verdict_counts, commit_sha[:8])
 
     print("Data export complete.")
     print(f"  Exported {len(all_promises)} promises with verdicts {dict(verdict_counts)}")
-    print(f"  Quarantined items: {len(quarantined_items) + len(real_quarantined)}")
+    print(f"  Quarantined items: {len(payload['quarantined'])}")
     print(f"  DB totals: {total_db_promises} promises, {total_db_verdicts} verdicts")
 
 
@@ -1034,24 +1193,64 @@ def format_verdict_label(verd):
     return verd.title() if verd else "Undecided"
 
 
+def format_plain_verdict_reason(reason, verdict=None):
+    if not reason:
+        v = (verdict or "").lower()
+        if v == "kept":
+            return "Official records confirm this commitment was completed as promised."
+        elif v == "broken":
+            return "Target was missed or the commitment was not fulfilled."
+        elif v == "in_progress":
+            return "Active initiative with progress underway, awaiting final milestone delivery."
+        elif v == "undecided":
+            return "Untestable: verifiable metrics or outcome records were not documented."
+        return "Not recorded."
+    
+    r = str(reason).strip()
+    if r.startswith("official primary evidence confirms completion"):
+        return "Official primary records confirm completion with zero contradicting claims."
+    if r.startswith("numeric target not met or plan abandoned"):
+        return "Numeric target was not met or the initiative was abandoned before completion."
+    if r.startswith("due date passed with no passing kept evidence"):
+        return "Scheduled deadline passed with no official evidence verifying completion."
+    if r.startswith("due date in future and no definitive resolution yet"):
+        return "Deadline is in the future; ongoing work has not yet met final completion."
+    if r.startswith("genuine partial completion"):
+        return "Milestones partially delivered, but the full promised scope remains unfinished."
+    if r.startswith("in_progress:"):
+        return "Active initiative with progress underway, awaiting final milestone delivery."
+    if r.startswith("contradicting primary evidence outranks affirmative claims"):
+        return "Verified contradicting evidence outranks initial affirmative claims."
+    if "untestable" in r.lower():
+        return "Untestable: verifiable metrics or baseline counts were not recorded."
+    if r.startswith("ordinance signed pre-deadline"):
+        return "Enabling legislation was enacted before the stated deadline."
+    import re
+    cleaned = re.sub(r'\s*\([^)]*\)', '', r)
+    cleaned = re.sub(r'\s*\[[^\]]*\]', '', cleaned)
+    return cleaned.strip() or r
+
+
 def generate_promise_row_html(p, idx=0):
     rank = f"{idx + 1:02d}"
     pid = html_esc(p.get("promise_id", ""))
     entity = html_esc(p.get("entity", ""))
+    role = html_esc(p.get("role", ""))
     neighborhood = html_esc(p.get("neighborhood", "Citywide San Francisco"))
     category = html_esc(p.get("category", "Civic Governance"))
-    quote_raw = clean_quote_text(p.get("verbatim_quote") or p.get("promise_text", ""))
     
-    # Mark P05 as reported if not already
-    if pid == "P05" and not quote_raw.startswith("[Reported by"):
-        quote_raw = f"[Reported by The Frisc] {quote_raw}"
+    # 0.3 Promise quote vs outcome quote
+    promise_raw = clean_quote_text(p.get("promise_text", ""))
+    promise_clamped = html_esc(promise_raw[:150] + ("…" if len(promise_raw) > 150 else ""))
 
-    quote = html_esc(quote_raw)
-    quote_140 = html_esc(quote_raw[:140] + ("…" if len(quote_raw) > 140 else ""))
+    # What happened plain reason
+    outcome_reason = html_esc(format_plain_verdict_reason(p.get("verdict_reason"), p.get("verdict")))
 
-    promised = html_esc(p.get("promised_date", "—"))
-    due = p.get("due_date", "")
-    due_line = f'<div class="timeline-due font-mono">Due: {html_esc(due)}</div>' if due else ''
+    promised = html_esc(p.get("promised_date", "not recorded"))
+    if p.get("promised_date_note"):
+        promised += " (derived)"
+    due = html_esc(p.get("due_date") or "No deadline")
+    done = html_esc(p.get("opened_date") or p.get("completed_date") or ("Verified completed" if p.get("verdict") == "kept" else "—"))
 
     verdict = p.get("verdict", "undecided")
     verd_class = verdict.lower().replace(" ", "_")
@@ -1061,123 +1260,62 @@ def generate_promise_row_html(p, idx=0):
     tier = get_source_tier(source_url)
     tier_class = tier.lower()
 
-    # Show first 10 rows by default, hide remaining for show-more
     paged_cls = " paged-row hidden-page-row" if idx >= 10 else ""
 
-    bundles = p.get("advocate_bundles", {})
-    kept_b = bundles.get("kept", {}) if isinstance(bundles, dict) else {}
-    broken_b = bundles.get("broken", {}) if isinstance(bundles, dict) else {}
-    k_claims = kept_b.get("claims", []) if isinstance(kept_b, dict) else []
-    b_claims = broken_b.get("claims", []) if isinstance(broken_b, dict) else []
-
-    if k_claims:
-        k_summary = html_esc(k_claims[0].get("statement") or k_claims[0].get("quote") or "Affirming primary evidence filed.")
-    else:
-        k_summary = "No affirming source filed during review cycle."
-
-    if b_claims:
-        b_summary = html_esc(b_claims[0].get("statement") or b_claims[0].get("quote") or "Contradicting claim filed.")
-    else:
-        note = broken_b.get("note") if isinstance(broken_b, dict) else ""
-        if note and note.lower().startswith("none found"):
-            b_summary = "No contradicting evidence or cancellation records found in verified sources."
-        elif note:
-            clean_note = re.sub(r'No second search per cut rule\+?(\s*freeze)?\.?', '', note)
-            clean_note = re.sub(r'\s*;\s*no second search.*', '', clean_note)
-            clean_note = re.sub(r'\s*\(re-open diligence.*?\):', '', clean_note).strip()
-            b_summary = html_esc(clean_note or "No contradicting source found in saved files.")
-        else:
-            b_summary = "No contradicting evidence or cancellation records found."
-
-    source_hash = html_esc(p.get("source_hash", "not recorded"))
-    source_file = html_esc(p.get("source_file_path", f"sources/{source_hash}.md"))
-
-    return f"""              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-expanded="false" aria-controls="accordion-{pid}" aria-label="Toggle details for promise #{rank} ({pid}): {quote[:60]}">
+    return f'''              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_clamped[:60]}">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">{entity}</span>
-                    <span class="stable-id-pill font-mono">#{rank} · {pid}</span>
+                    <span class="stable-id-pill font-mono">#{rank}</span>
                   </div>
-                  <div class="table-entity-role font-mono">{neighborhood}</div>
+                  <div class="entity-sub-row font-mono">
+                    <span class="table-role-tag">{role}</span>
+                  </div>
+                  <div class="entity-geo-tag font-mono">{neighborhood}</div>
                 </td>
-                <td class="table-promise-cell">
-                  <div class="table-promise-text">&ldquo;{quote_140}&rdquo;</div>
-                  <div class="table-pill-row">
-                    <span class="category-pill font-mono">{category}</span>
-                    <span class="source-tier-pill font-mono source-tier-{tier_class}">{tier}</span>
-                    <span class="expand-hint-text font-mono">Details ▾</span>
+                <td class="table-quote-cell">
+                  <div class="table-promise-block">
+                    <div class="table-kicker font-mono">PROMISE</div>
+                    <blockquote class="table-quote-text font-serif">&ldquo;{promise_clamped}&rdquo;</blockquote>
+                  </div>
+                  <div class="table-outcome-block">
+                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-text">{outcome_reason}</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
-                  <div class="verdict-wrapper">
-                    <span class="verdict-chip {verd_class}">{verdict_label}</span>
-                    <div class="verdict-sub-row font-mono">
-                      <span class="btn-inspect-inline">Inspect &rarr;</span>
-                    </div>
+                  <span class="verdict-chip {verd_class}">{verdict_label}</span>
+                  <div class="table-tier-row">
+                    <span class="source-tier-pill font-mono source-tier-{tier_class}">{tier}</span>
                   </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
-                  <div class="timeline-date">{promised}</div>
-                  {due_line}
+                  <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">{promised}</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">{due}</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">{done}</span></div>
                 </td>
-              </tr>
-              <tr class="promise-accordion-row hidden-accordion{paged_cls}" id="accordion-{pid}" aria-hidden="true">
-                <td colspan="4" class="accordion-cell">
-                  <div class="accordion-panel">
-                    <div class="accordion-panel-grid">
-                      <div class="accordion-col quote-col">
-                        <div class="accordion-kicker font-mono">FULL VERBATIM COMMITMENT</div>
-                        <blockquote class="accordion-full-quote">&ldquo;{quote}&rdquo;</blockquote>
-                        <div class="accordion-provenance-meta font-mono">
-                          <div><span class="meta-label">SOURCE:</span> <a href="{html_esc(source_url)}" target="_blank" rel="noopener noreferrer">{html_esc(source_url)}</a> <span class="source-tier-pill font-mono source-tier-{tier_class}">{tier}</span></div>
-                          <div class="hash-row">
-                            <span class="meta-label">SHA-256:</span>
-                            <code class="hash-code">{source_hash}</code>
-                            <button type="button" class="btn-copy-hash font-mono" data-hash="{source_hash}">Copy</button>
-                          </div>
-                          <div><span class="meta-label">SAVED FILE:</span> <code>{source_file}</code></div>
-                        </div>
-                      </div>
-                      <div class="accordion-col advocate-col">
-                        <div class="accordion-kicker font-mono">ADVOCATE FINDINGS (PROCESS ISOLATION)</div>
-                        <div class="advocate-summary-box kept">
-                          <span class="adv-badge font-mono pass">SANDBOX A (AFFIRMING)</span>
-                          <p>{k_summary}</p>
-                        </div>
-                        <div class="advocate-summary-box broken">
-                          <span class="adv-badge font-mono fail">SANDBOX B (CONTRADICTING)</span>
-                          <p>{b_summary}</p>
-                        </div>
-                        <div class="accordion-actions-row">
-                          <button type="button" class="btn-open-inspect-deep font-mono" data-pid="{pid}">
-                            Open Full Audit Modal ↗
-                          </button>
-                          <button type="button" class="btn-collapse-row font-mono" data-pid="{pid}">
-                            Collapse ▴
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>"""
+              </tr>'''
 
 
 def generate_mobile_promise_card_html(p, idx=0):
     rank = f"{idx + 1:02d}"
     pid = html_esc(p.get("promise_id", ""))
     entity = html_esc(p.get("entity", ""))
-    quote_raw = clean_quote_text(p.get("verbatim_quote") or p.get("promise_text", ""))
-    if pid == "P05" and not quote_raw.startswith("[Reported by"):
-        quote_raw = f"[Reported by The Frisc] {quote_raw}"
-    quote_140 = html_esc(quote_raw[:140] + ("…" if len(quote_raw) > 140 else ""))
-    promised = html_esc(p.get("promised_date", "—"))
+    
+    promise_raw = clean_quote_text(p.get("promise_text", ""))
+    promise_140 = html_esc(promise_raw[:140] + ("…" if len(promise_raw) > 140 else ""))
+
+    promised = html_esc(p.get("promised_date", "not recorded"))
+    if p.get("promised_date_note"):
+        promised += " (derived)"
+
     verdict = p.get("verdict", "undecided")
     verd_class = verdict.lower().replace(" ", "_")
     verdict_label = format_verdict_label(verdict)
+
     paged_cls = " paged-card hidden-page-card" if idx >= 10 else ""
 
-    return f"""              <div class="mobile-promise-card{paged_cls}" data-pid="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {quote_140}">
+    return f'''              <div class="mobile-promise-card{paged_cls}" data-pid="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_140[:60]}">
                 <div class="mobile-card-header">
                   <div class="mobile-card-speaker-group">
                     <span class="mobile-card-speaker">{entity}</span>
@@ -1185,125 +1323,235 @@ def generate_mobile_promise_card_html(p, idx=0):
                   </div>
                   <span class="verdict-chip {verd_class}">{verdict_label}</span>
                 </div>
-                <p class="mobile-card-quote">&ldquo;{quote_140}&rdquo;</p>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Promised: {promised}</span>
-                  <span class="mobile-card-link">Detail &rarr;</span>
+                <div class="mobile-promise-slot">
+                  <blockquote class="mobile-card-quote font-serif">&ldquo;{promise_140}&rdquo;</blockquote>
                 </div>
-              </div>"""
+                <div class="mobile-card-footer font-mono">
+                  <span class="mobile-card-date">Said {promised}</span>
+                  <span class="mobile-card-tap-hint">Details &rarr;</span>
+                </div>
+              </div>'''
 
 
 def generate_featured_stories_html(promises, quarantined):
-    stories = [
-        {
-            "pid": "P02",
-            "title": "24/7 Crisis Stabilization Center",
-            "entity": "Mayor Daniel Lurie",
-            "context": "Opened on April 28, 2025 at 822 Geary St to provide immediate sobering and behavioral health support.",
-            "verdict": "kept",
-            "verdict_label": "Kept",
-            "kind": "promise"
-        },
-        {
-            "pid": "SFO-01",
-            "title": "Runway 28L Safety Realignment",
-            "entity": "SFO Airport",
-            "context": "Completed $51M taxiway overhaul and reopened Runway 28L on June 21, 2024, beating the target by 10 days.",
-            "verdict": "kept",
-            "verdict_label": "Kept",
-            "kind": "promise"
-        },
-        {
-            "pid": "P05",
-            "title": "1,500 Shelter Beds in First 6 Months",
-            "entity": "Mayor Daniel Lurie",
-            "context": "Campaign pledge to rapidly open 1,500 new shelter beds abandoned early due to budget shortfall and site constraints.",
-            "verdict": "broken",
-            "verdict_label": "Broken",
-            "kind": "promise"
-        },
-        {
-            "pid": "P06",
-            "title": "Vision Zero: End Traffic Deaths by 2024",
-            "entity": "City & County of SF",
-            "context": "10-year municipal commitment to eliminate traffic fatalities officially missed in 2024 with 35 fatalities recorded.",
-            "verdict": "broken",
-            "verdict_label": "Broken",
-            "kind": "promise"
-        },
-        {
-            "pid": "P37",
-            "title": "300 Encampment Shelter Placements",
-            "entity": "Mayor London Breed",
-            "context": "Tenderloin emergency initiative to place 300 individuals remains undecided pending audited exit records.",
-            "verdict": "undecided",
-            "verdict_label": "Undecided",
-            "kind": "promise"
-        },
-        {
-            "pid": "Q01",
-            "title": "Planted Quote Mutation Catch",
-            "entity": "Watchdog Test N01",
-            "context": "Planted adversarial mutation (quote altered from 'beds' to 'units') caught immediately by deterministic checks.",
-            "verdict": "quarantined",
-            "verdict_label": "Quarantined",
-            "kind": "quarantine"
-        }
-    ]
+    FEATURED_IDS = ["P02", "SFO-01", "P05", "P06", "P37", "Q-N01"]
+    
+    promise_map = {p.get("promise_id"): p for p in promises}
+    quarantine_map = {q.get("quarantine_id"): q for q in quarantined}
+    for q in quarantined:
+        if q.get("promise_id"):
+            quarantine_map[q.get("promise_id")] = q
 
-    cards = []
-    for s in stories:
-        pid = html_esc(s["pid"])
-        entity = html_esc(s["entity"])
-        title = html_esc(s["title"])
-        context = html_esc(s["context"])
-        verd_class = s["verdict"]
-        verd_label = s["verdict_label"]
-        btn_data = f'data-pid="{pid}"' if s["kind"] == "promise" else 'data-qid="Q01"'
-        btn_text = "See evidence &rarr;" if s["kind"] == "promise" else "See audit log &rarr;"
+    cards_html = []
+    for fid in FEATURED_IDS:
+        if fid in quarantine_map or fid.startswith("Q-") or fid == "N01":
+            q = quarantine_map.get(fid) or quarantine_map.get("Q-N01") or quarantine_map.get("N01")
+            qid = q.get("quarantine_id", "Q-N01")
+            speaker = "Planted Test N01"
+            role = "Watchdog Verification"
+            title = "Quote Mutation Catch"
+            quote_raw = q.get("planted_claim") or "The city added 1,500 new shelter units within six months."
+            quote_text = clean_quote_text(quote_raw)
+            quote_clamped = html_esc(quote_text[:140] + ("…" if len(quote_text) > 140 else ""))
+            dates_str = f"Tested {html_esc(q.get('quarantined_date', 'Nov 10, 2026'))} &middot; Target P05"
+            outcome_str = "Caught by verbatim quote check: 'shelter units' was altered from '1,500 new shelter beds'. Held back from main database."
+            tier = "Official"
+            failing_check = html_esc(q.get("check_type", "accuracy_quote"))
 
-        cards.append(f"""          <div class="story-card" data-story-pid="{pid}">
+            cards_html.append(f'''          <div class="story-card" data-story-pid="{qid}">
             <div class="story-card-top">
-              <span class="story-entity">{entity}</span>
-              <span class="verdict-chip {verd_class}">{verd_label}</span>
+              <div class="story-speaker-group">
+                <span class="story-entity">{html_esc(speaker)}</span>
+                <span class="story-role">{html_esc(role)}</span>
+              </div>
+              <span class="verdict-chip quarantined">Test case</span>
             </div>
-            <h3 class="story-title">{title}</h3>
-            <p class="story-context">{context}</p>
+            <h3 class="story-title">{html_esc(title)}</h3>
+            <p class="story-promise-quote font-serif">&ldquo;{quote_clamped}&rdquo;</p>
+            <div class="story-dates-row font-mono">{dates_str}</div>
+            <div class="story-outcome-box">
+              <div class="story-outcome-kicker font-mono">WHAT HAPPENED</div>
+              <p class="story-outcome-text">{html_esc(outcome_str)}</p>
+            </div>
             <div class="story-card-bottom">
-              <button type="button" class="btn-story-evidence" {btn_data} aria-label="See evidence for {title}">
-                {btn_text}
+              <div class="story-provenance-info font-mono">
+                <span class="source-tier-pill source-tier-official">{tier}</span>
+                <span class="story-evidence-count">check: {failing_check}</span>
+              </div>
+              <button type="button" class="btn-story-evidence btn-quarantine-link" data-qid="{qid}" aria-label="See evidence for {html_esc(title)} in Quarantine">
+                See evidence &rarr;
               </button>
             </div>
-          </div>""")
-    return "\n".join(cards)
+          </div>''')
+        else:
+            p = promise_map.get(fid)
+            if not p:
+                continue
+            pid = p.get("promise_id")
+            speaker = p.get("entity", "")
+            role = p.get("role", "")
+            
+            titles = {
+                "P02": "24/7 Crisis Stabilization Center",
+                "SFO-01": "Runway 28L Safety Realignment",
+                "P05": "1,500 Shelter Beds in 6 Months",
+                "P06": "Vision Zero: End Traffic Fatalities",
+                "P37": "Tenderloin Encampment Outreach"
+            }
+            title = titles.get(pid, p.get("document_title") or f"Commitment {pid}")
+            
+            verdict = p.get("verdict", "undecided")
+            verd_class = verdict.lower().replace(" ", "_")
+            verdict_label = format_verdict_label(verdict)
+            
+            quote_raw = clean_quote_text(p.get("promise_text", ""))
+            quote_clamped = html_esc(quote_raw[:150] + ("…" if len(quote_raw) > 150 else ""))
+            
+            said_date = p.get("promised_date", "not recorded")
+            due_date = p.get("due_date") or "no deadline"
+            dates_str = f"Said {html_esc(said_date)} &middot; Due {html_esc(due_date)}"
+            if p.get("promised_date_note"):
+                dates_str += " (derived)"
+            
+            outcome_str = format_plain_verdict_reason(p.get("verdict_reason"), verdict)
+            
+            source_url = p.get("source_url", "")
+            tier = get_source_tier(source_url)
+            tier_class = tier.lower()
+            
+            bundles = p.get("advocate_bundles", {})
+            k_claims = (bundles.get("kept", {}) if isinstance(bundles, dict) else {}).get("claims", [])
+            b_claims = (bundles.get("broken", {}) if isinstance(bundles, dict) else {}).get("claims", [])
+            k_count = len(k_claims) if isinstance(k_claims, list) else (1 if verdict == "kept" else 0)
+            b_count = len(b_claims) if isinstance(b_claims, list) else (1 if verdict == "broken" else 0)
+            
+            cards_html.append(f'''          <div class="story-card" data-story-pid="{pid}">
+            <div class="story-card-top">
+              <div class="story-speaker-group">
+                <span class="story-entity">{html_esc(speaker)}</span>
+                <span class="story-role">{html_esc(role)}</span>
+              </div>
+              <span class="verdict-chip {verd_class}">{verdict_label}</span>
+            </div>
+            <h3 class="story-title">{html_esc(title)}</h3>
+            <p class="story-promise-quote font-serif">&ldquo;{quote_clamped}&rdquo;</p>
+            <div class="story-dates-row font-mono">{dates_str}</div>
+            <div class="story-outcome-box">
+              <div class="story-outcome-kicker font-mono">WHAT HAPPENED</div>
+              <p class="story-outcome-text">{html_esc(outcome_str)}</p>
+            </div>
+            <div class="story-card-bottom">
+              <div class="story-provenance-info font-mono">
+                <span class="source-tier-pill source-tier-{tier_class}">{tier}</span>
+                <span class="story-evidence-count">evidence: {k_count} for, {b_count} against</span>
+              </div>
+              <button type="button" class="btn-story-evidence" data-pid="{pid}" aria-label="See evidence for {html_esc(title)}">
+                See evidence &rarr;
+              </button>
+            </div>
+          </div>''')
+
+    return "\n".join(cards_html)
 
 
 def generate_quarantine_row_html(q, idx):
-    title = html_esc(q.get("title") or q.get("promise_id") or f"Test Case {idx + 1}")
-    planted = q.get("planted_claim")
-    reason = html_esc(q.get("reason", ""))
-    sub = f"&ldquo;{html_esc(clean_quote_text(planted))}&rdquo;" if planted else reason
-    check_type = html_esc(q.get("check_type", ""))
-    failing_check = html_esc(q.get("failing_check", ""))
-    destination = html_esc(q.get("destination", "quarantined (read-only)"))
+    qid = html_esc(q.get("quarantine_id", f"Q-{idx+1}"))
+    pid = html_esc(q.get("promise_id", ""))
+    type_badge = "Test case" if q.get("planted_claim") or q.get("original_text") else "Rejected candidate"
+    type_class = "test-case" if type_badge == "Test case" else "rejected-candidate"
+    
+    claim_raw = q.get("planted_claim") or q.get("claim") or q.get("title") or ""
+    claim = html_esc(clean_quote_text(claim_raw))
+    
+    diff_html = ""
+    orig = q.get("original_text")
+    alt = q.get("altered_text")
+    if orig and alt:
+        diff_html = f'<div class="quarantine-diff-row font-mono"><span class="diff-label">Mutation:</span> <span class="diff-orig">{html_esc(orig)}</span> &rarr; <span class="diff-alt">{html_esc(alt)}</span></div>'
+    elif q.get("change_diff"):
+        diff_html = f'<div class="quarantine-diff-row font-mono"><span class="diff-label">Change:</span> <span class="diff-alt">{html_esc(q.get("change_diff"))}</span></div>'
 
-    return f"""              <tr class="quarantine-row">
-                <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test {idx + 1}</td>
-                <td>
-                  <strong style="color: var(--ink);">{title}</strong>
-                  <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">{sub}</div>
+    failing_plain = html_esc(q.get("failing_check") or "Integrity check failed")
+    check_type = html_esc(q.get("check_type", "accuracy_quote"))
+    reason = html_esc(q.get("reason", "Held back from published dataset."))
+    agent = html_esc(q.get("agent", "Extractor Agent"))
+    date_str = html_esc(q.get("quarantined_date", "Nov 10, 2026"))
+    destination = html_esc(q.get("destination", "Held back. Never published."))
+    source_hash = html_esc(q.get("source_hash", ""))
+    
+    source_link = ""
+    if source_hash:
+        source_link = f'<div class="quarantine-hash-row font-mono"><span class="hash-label">SHA-256:</span> <code class="quarantine-hash">{source_hash[:12]}…</code> <button type="button" class="btn-copy-hash font-mono" data-hash="{source_hash}">Copy</button></div>'
+
+    return f'''              <tr class="quarantine-row" id="quarantine-row-{qid}" data-qid="{qid}">
+                <td class="quarantine-type-cell">
+                  <div class="quarantine-badge-group">
+                    <span class="quarantine-type-badge {type_class}">{type_badge}</span>
+                    <span class="quarantine-pid font-mono">{pid}</span>
+                  </div>
                 </td>
-                <td style="white-space: nowrap;">
-                  <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">{check_type}</span>
-                  <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">{failing_check}</div>
+                <td class="quarantine-claim-cell">
+                  <div class="quarantine-submitted-claim">&ldquo;{claim}&rdquo;</div>
+                  {diff_html}
                 </td>
-                <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
-                  {reason}
+                <td class="quarantine-check-cell">
+                  <div class="quarantine-check-plain">{failing_plain}</div>
+                  <code class="quarantine-check-code font-mono">{check_type}</code>
                 </td>
-                <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
-                  {destination}
+                <td class="quarantine-reason-cell">
+                  <p class="quarantine-reason-text">{reason}</p>
+                  <div class="quarantine-catcher-meta font-mono">Caught by {agent} &middot; {date_str}</div>
                 </td>
-              </tr>"""
+                <td class="quarantine-outcome-cell">
+                  <div class="quarantine-outcome-status font-mono">{destination}</div>
+                  {source_link}
+                </td>
+              </tr>'''
+
+
+def generate_mobile_quarantine_card_html(q, idx):
+    qid = html_esc(q.get("quarantine_id", f"Q-{idx+1}"))
+    pid = html_esc(q.get("promise_id", ""))
+    type_badge = "Test case" if q.get("planted_claim") or q.get("original_text") else "Rejected candidate"
+    type_class = "test-case" if type_badge == "Test case" else "rejected-candidate"
+    
+    claim_raw = q.get("planted_claim") or q.get("claim") or q.get("title") or ""
+    claim = html_esc(clean_quote_text(claim_raw))
+    
+    diff_html = ""
+    orig = q.get("original_text")
+    alt = q.get("altered_text")
+    if orig and alt:
+        diff_html = f'<div class="quarantine-diff-row font-mono"><span class="diff-label">Mutation:</span> <span class="diff-orig">{html_esc(orig)}</span> &rarr; <span class="diff-alt">{html_esc(alt)}</span></div>'
+    elif q.get("change_diff"):
+        diff_html = f'<div class="quarantine-diff-row font-mono"><span class="diff-label">Change:</span> <span class="diff-alt">{html_esc(q.get("change_diff"))}</span></div>'
+
+    failing_plain = html_esc(q.get("failing_check") or "Integrity check failed")
+    check_type = html_esc(q.get("check_type", "accuracy_quote"))
+    reason = html_esc(q.get("reason", "Held back from published dataset."))
+    agent = html_esc(q.get("agent", "Extractor Agent"))
+    date_str = html_esc(q.get("quarantined_date", "Nov 10, 2026"))
+    destination = html_esc(q.get("destination", "Held back. Never published."))
+
+    return f'''              <div class="mobile-quarantine-card" id="mobile-qcard-{qid}" data-qid="{qid}">
+                <div class="mobile-card-header">
+                  <div class="mobile-card-speaker-group">
+                    <span class="quarantine-type-badge {type_class}">{type_badge}</span>
+                    <span class="mobile-card-id font-mono">{pid}</span>
+                  </div>
+                  <span class="verdict-chip quarantined">Quarantined</span>
+                </div>
+                <blockquote class="quarantine-claim-quote font-serif">&ldquo;{claim}&rdquo;</blockquote>
+                {diff_html}
+                <div class="quarantine-check-block">
+                  <div class="quarantine-check-plain">{failing_plain} <code class="quarantine-check-code font-mono">{check_type}</code></div>
+                  <p class="quarantine-reason-text">{reason}</p>
+                </div>
+                <div class="mobile-card-footer font-mono">
+                  <span>{agent} &middot; {date_str}</span>
+                  <span class="quarantine-outcome-status">{destination}</span>
+                </div>
+              </div>'''
 
 
 def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
@@ -1371,9 +1619,29 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
         flags=re.DOTALL
     )
 
+    # Pre-render mobile quarantine cards
+    mobile_quarantine_cards = "\n".join(generate_mobile_quarantine_card_html(q, i) for i, q in enumerate(quarantined))
+    if '<div class="mobile-quarantine-cards-list"' in html:
+        html = re.sub(
+            r'(<div class="mobile-quarantine-cards-list"[^>]*>)(.*?)(</div>\s*<!-- end mobile quarantine cards -->)',
+            r'\1\n' + mobile_quarantine_cards + r'\n          \3',
+            html,
+            flags=re.DOTALL
+        )
+
+    # Footer data version
+    now_utc = datetime.now(timezone.utc)
+    date_str = now_utc.strftime("%b %d, %Y")
+    if '<span id="footer-data-version"' in html:
+        html = re.sub(
+            r'(<span id="footer-data-version"[^>]*>)(.*?)(</span>)',
+            rf'\g<1>Data as of {date_str} &middot; commit {commit_sha[:7]}\g<3>',
+            html
+        )
+
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"  Pre-rendered {len(promises)} promise rows, {len(promises)} mobile cards, and {len(quarantined)} quarantine rows into docs/index.html")
+    print(f"  Pre-rendered {len(promises)} promise rows, {len(promises)} mobile cards, and {len(quarantined)} quarantine items into docs/index.html")
 
 
 if __name__ == "__main__":

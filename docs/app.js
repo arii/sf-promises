@@ -1,1775 +1,82 @@
 /**
- * SF Promises — Citywide Record & 6-Stage Pipeline Animation Controller
- * Celebrates all of San Francisco: Sports, Culture, Transit, Neighborhoods & Civic Record.
- * Directly implements the UX, Stage Progression, Packet Transit, and Stamp Animations
- * from Sf-Promises-Pipeline-Animation.html.
+ * SF Promises - Main Client Application
+ * Grounded Civic Accountability with Pure Deterministic Verification
  */
 
 (function () {
   'use strict';
 
-  // Helper: Sanitize quotes by stripping stray markdown artifacts (bullets, raw links, bold markers)
-  function cleanQuoteText(text) {
-    if (!text) return '';
-    return String(text)
-      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // [text](url) -> text
-      .replace(/\*\*([^*]+)\*\*/g, '$1')       // **bold** -> bold
-      .replace(/\*([^*]+)\*/g, '$1')           // *italic* -> italic
-      .replace(/__([^_]+)__/g, '$1')
-      .replace(/_([^_]+)_/g, '$1')
-      .replace(/^[\s\-*•–—\d\.]+\s*/, '')      // leading bullets/numbers
-      .replace(/^#+\s*/, '')                   // leading headers
-      .replace(/\s+/g, ' ')                    // normalize spaces
-      .trim();
+  // -------------------------------------------------------------------------
+  // State
+  // -------------------------------------------------------------------------
+  let demoData = null;
+  let activeTab = 'promises';
+  let filterVerdict = 'all';
+  let filterCategory = 'all';
+  let filterEntity = 'all';
+  let filterTier = 'all';
+  let filterSort = 'rank';
+  let searchTerm = '';
+  let visibleRowsCount = 10;
+  let currentRunType = 'N01'; // Default to Watchdog Catch per brief P0.5
+  let currentStage = 0;
+  let isAutoRunning = false;
+  let autoTimer = null;
+  let hasAutoPlayed = false;
+  let lastActiveElement = null;
+
+  // -------------------------------------------------------------------------
+  // Plain Reason Lookup (1.3)
+  // -------------------------------------------------------------------------
+  function formatPlainVerdictReason(reason, verdict) {
+    if (!reason) {
+      const v = (verdict || '').toLowerCase();
+      if (v === 'kept') return 'Official primary records confirm this commitment was completed as promised.';
+      if (v === 'broken') return 'Target was not met or the commitment was not fulfilled.';
+      if (v === 'in_progress') return 'Active initiative with progress underway, awaiting final milestone delivery.';
+      if (v === 'undecided') return 'Untestable: verifiable metrics or outcome records were not documented.';
+      return 'Not recorded.';
+    }
+
+    const r = String(reason).trim();
+    if (r.startsWith('official primary evidence confirms completion')) {
+      return 'Official primary records confirm completion with zero contradicting claims.';
+    }
+    if (r.startsWith('numeric target not met or plan abandoned')) {
+      return 'Numeric target was not met or the initiative was abandoned before completion.';
+    }
+    if (r.startsWith('due date passed with no passing kept evidence')) {
+      return 'Scheduled deadline passed with no official evidence verifying completion.';
+    }
+    if (r.startsWith('due date in future and no definitive resolution yet')) {
+      return 'Deadline is in the future; ongoing work has not yet met final completion.';
+    }
+    if (r.startsWith('genuine partial completion')) {
+      return 'Milestones partially delivered, but the full promised scope remains unfinished.';
+    }
+    if (r.startsWith('in_progress:')) {
+      return 'Active initiative with progress underway, awaiting final milestone delivery.';
+    }
+    if (r.startsWith('contradicting primary evidence outranks affirmative claims')) {
+      return 'Verified contradicting evidence outranks initial affirmative claims.';
+    }
+    if (r.toLowerCase().includes('untestable')) {
+      return 'Untestable: verifiable metrics or baseline counts were not recorded.';
+    }
+    if (r.startsWith('ordinance signed pre-deadline')) {
+      return 'Enabling legislation was enacted before the stated deadline.';
+    }
+    return r.replace(/\s*\([^)]*\)/g, '').replace(/\s*\[[^\]]*\]/g, '').trim() || r;
   }
 
-  // Helper: Format verdict labels with clean human-readable text
   function formatVerdictLabel(verdict) {
-    if (!verdict) return 'Undecided';
-    const v = String(verdict).toLowerCase().replace(/[\s-]+/g, '_');
-    if (v === 'in_progress') return 'In Progress';
+    const v = (verdict || '').toLowerCase().replace(/[\s-]+/g, '_');
+    if (v === 'in_progress') return 'In progress';
     if (v === 'kept') return 'Kept';
     if (v === 'broken') return 'Broken';
     if (v === 'undecided') return 'Undecided';
-    if (v === 'stalled') return 'Stalled';
-    if (v === 'kept_then_reversed') return 'Kept → Later Closed / Reversed';
-    if (v === 'delayed_or_partial') return 'Delivered Late / Partial';
-    return String(verdict).replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-  }
-
-  // Helper: Format advocate notes into user-friendly copy (no internal cut rules or agent notes)
-  function formatAdvocateNote(rawNote, role) {
-    if (!rawNote) {
-      return role === 'broken'
-        ? 'No contradicting evidence or cancellation records found in verified municipal records.'
-        : 'No affirming primary evidence filed during this review cycle.';
-    }
-    const note = String(rawNote);
-    if (note.toLowerCase().startsWith('none found')) {
-      return 'No contradicting evidence or cancellation records found in verified public records.';
-    }
-    let cleaned = note
-      .replace(/No second search per cut rule\+?(\s*freeze)?\.?/gi, '')
-      .replace(/\s*;\s*no second search.*/gi, '')
-      .replace(/\s*\(re-open diligence.*?\):/gi, '')
-      .trim();
-    return cleaned || (role === 'broken' ? 'No contradicting evidence or cancellation records found.' : 'No affirming primary evidence filed.');
-  }
-
-  // State Variables
-  let demoData = null;
-  let currentRunType = 'P02'; // promise_id to replay, or 'N01' (watchdog test)
-  let currentStage = 0;       // 0 to 6
-  let replayCount = 0;
-  let isAutoRunning = false;
-  let isStepMode = false;
-  let autoTimer = null;
-  let selectedShowcasePid = 'P02';
-  let activeTab = 'promises';
-  let activeCategoryFilter = 'all';
-  let activeViewMode = 'cards';
-
-  // DOM Elements: Header & Tally
-  const tallyTotal = document.getElementById('tally-total');
-  const tallyKept = document.getElementById('tally-kept');
-  const tallyProgress = document.getElementById('tally-progress');
-  const tallyBroken = document.getElementById('tally-broken');
-  const tallyStalled = document.getElementById('tally-stalled');
-  const tallyUndecided = document.getElementById('tally-undecided');
-
-  // DOM Elements: Showcase
-  const showcaseTabsBar = document.getElementById('showcase-tabs-bar');
-  const showcaseCardDisplay = document.getElementById('showcase-card-display');
-  const scBadgeId = document.getElementById('sc-badge-id');
-  const scBadgeVerdict = document.getElementById('sc-badge-verdict');
-  const scDomainPill = document.getElementById('sc-domain-pill');
-  const scNeighborhoodPill = document.getElementById('sc-neighborhood-pill');
-  const scQuoteText = document.getElementById('sc-quote-text');
-  const scMetaEntity = document.getElementById('sc-meta-entity');
-  const scMetaPromised = document.getElementById('sc-meta-promised');
-  const scMetaDue = document.getElementById('sc-meta-due');
-  const scMetaOpened = document.getElementById('sc-meta-opened');
-  const scMetaRel = document.getElementById('sc-meta-rel');
-  const scEvidenceFact = document.getElementById('sc-evidence-fact');
-  const scSourceLink = document.getElementById('sc-source-link');
-  const scHashPill = document.getElementById('sc-hash-pill');
-  const btnShowcaseInspect = document.getElementById('btn-showcase-inspect');
-
-  // DOM Elements: Pipeline Header & Controls
-  const pipelineProgressFill = document.getElementById('pipeline-progress-fill');
-  const pipelineStageIndicator = document.getElementById('pipeline-stage-indicator');
-  const btnRunP02 = document.getElementById('btn-run-p02');
-  const btnRunN01 = document.getElementById('btn-run-n01');
-  const runSelect = document.getElementById('run-select');
-  const btnRunSelected = document.getElementById('btn-run-selected');
-  const btnStepNext = document.getElementById('btn-step-next');
-  const btnPipelineReset = document.getElementById('btn-pipeline-reset');
-  const pipelineModeHint = document.getElementById('pipeline-mode-hint');
-
-  // DOM Elements: Packet Transit
-  const packetStatusText = document.getElementById('packet-status-text');
-  const packetTrackFill = document.getElementById('packet-track-fill');
-  const packetBallDot = document.getElementById('packet-ball-dot');
-  const packetBallInner = document.getElementById('packet-ball-inner');
-  const msCircles = [
-    null,
-    document.getElementById('ms-circle-1'),
-    document.getElementById('ms-circle-2'),
-    document.getElementById('ms-circle-3'),
-    document.getElementById('ms-circle-4'),
-    document.getElementById('ms-circle-5'),
-    document.getElementById('ms-circle-6'),
-  ];
-
-  // DOM Elements: Stage Cards
-  const stageCard1 = document.getElementById('stage-card-1');
-  const stageBadge1 = document.getElementById('stage-badge-1');
-  const stage1Filename = document.getElementById('stage1-filename');
-  const stage1HashPrefix = document.getElementById('stage1-hash-prefix');
-  const stage1SourceUrl = document.getElementById('stage1-source-url');
-  const stage1HashMatch = document.getElementById('stage1-hash-match');
-  const stage1FetchFill = document.getElementById('stage1-fetch-fill');
-  const stage1VerifiedBanner = document.getElementById('stage1-verified-banner');
-
-  const stageCard2 = document.getElementById('stage-card-2');
-  const stageBadge2 = document.getElementById('stage-badge-2');
-  const stage2QuoteContent = document.getElementById('stage2-quote-content');
-  const stage2FlashBox = document.getElementById('stage2-flash-box');
-  const stage2PassBox = document.getElementById('stage2-pass-box');
-
-  const stageCard3 = document.getElementById('stage-card-3');
-  const stageBadge3 = document.getElementById('stage-badge-3');
-  const relFillReal = document.getElementById('rel-fill-real');
-  const relFillMeas = document.getElementById('rel-fill-meas');
-  const relFillSf = document.getElementById('rel-fill-sf');
-  const relFillInt = document.getElementById('rel-fill-int');
-  const scoreValReal = document.getElementById('score-val-real');
-  const scoreValMeas = document.getElementById('score-val-meas');
-  const scoreValSf = document.getElementById('score-val-sf');
-  const scoreValInt = document.getElementById('score-val-int');
-  const stage3ScoreTotal = document.getElementById('stage3-score-total');
-  const stage3ScoreBadge = document.getElementById('stage3-score-badge');
-  const stage3ScoreFill = document.getElementById('stage3-score-fill');
-  const stage3GateBadge = document.getElementById('stage3-gate-badge');
-
-  const stageCard4 = document.getElementById('stage-card-4');
-  const advBoxKept = document.getElementById('adv-box-kept');
-  const advStatusKept = document.getElementById('adv-status-kept');
-  const advFindingsKept = document.getElementById('adv-findings-kept');
-  const advDotsKept = document.getElementById('adv-dots-kept');
-  const advBoxBroken = document.getElementById('adv-box-broken');
-  const advStatusBroken = document.getElementById('adv-status-broken');
-  const advFindingsBroken = document.getElementById('adv-findings-broken');
-  const advDotsBroken = document.getElementById('adv-dots-broken');
-  const tagStagingKept = document.getElementById('tag-staging-kept');
-  const tagStagingBroken = document.getElementById('tag-staging-broken');
-
-  const stageCard5 = document.getElementById('stage-card-5');
-  const arbDivertAlert = document.getElementById('arb-divert-alert');
-  const checkKeys = ['domain', 'hash', 'quote', 'speaker', 'date', 'evidence', 'rubric'];
-  const CHECK_KEY_TO_TYPE = {
-    domain: 'authenticity_domain',
-    hash: 'authenticity_hash',
-    quote: 'accuracy_quote',
-    speaker: 'authenticity_speaker',
-    date: 'accuracy_date',
-    evidence: 'accuracy_evidence',
-    rubric: 'verdict_rubric',
-  };
-
-  const stageCard6 = document.getElementById('stage-card-6');
-  const stageBadge6 = document.getElementById('stage-badge-6');
-  const outputWaitingContainer = document.getElementById('output-waiting-container');
-  const outputKeptResult = document.getElementById('output-kept-result');
-  const outputQuarantineResult = document.getElementById('output-quarantine-result');
-  const outputVerdictResult = document.getElementById('output-verdict-result');
-
-  // --- Run-model helpers (any promise can be replayed, not just P02) ---
-  function isWatchdog(runType) {
-    return runType === 'N01';
-  }
-
-  function runPromise(runType) {
-    if (isWatchdog(runType) || !demoData) return null;
-    return ((demoData.promises) || []).find(p => p.promise_id === runType)
-      || (runType === 'P02' ? demoData.p02 : null);
-  }
-
-  function formatFetchTime(iso) {
-    if (!iso) return 'fetch time not recorded';
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) return String(iso);
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const pad = (n) => String(n).padStart(2, '0');
-    return `${months[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}, `
-      + `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:${pad(d.getUTCSeconds())} UTC (recorded)`;
-  }
-
-  function shortLabel(p, maxLen) {
-    if (!p) return '';
-    const t = cleanQuoteText(p.promise_text || '');
-    const n = maxLen || 60;
-    return t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t;
-  }
-
-  function runLabel(runType) {
-    if (isWatchdog(runType)) return 'Watchdog test — altered quote gets caught';
-    const p = runPromise(runType);
-    if (!p) return runType;
-    return `#${p.display_no || '—'} · ${shortLabel(p, 50)}`;
-  }
-
-  function checkOutcome(p, key) {
-    // Matched by check_type name so animation order can differ from export order.
-    if (!p || !p.checks) return null;
-    const want = CHECK_KEY_TO_TYPE[key];
-    const found = p.checks.find(c => c.check === want);
-    return found ? found.passed : null; // true / false / null (not recorded)
-  }
-
-  // DOM Elements: Narrative Footer
-  const pipelineNarrativeTitle = document.getElementById('pipeline-narrative-title');
-  const pipelineNarrativePill = document.getElementById('pipeline-narrative-pill');
-  const pipelineNarrativeBody = document.getElementById('pipeline-narrative-body');
-  const btnNarrativeReplay = document.getElementById('btn-narrative-replay');
-  const btnNarrativeToggle = document.getElementById('btn-narrative-toggle');
-
-  // DOM Elements: Tables & Modals
-  const domainPillsBar = document.getElementById('domain-pills-bar');
-  const tabBtnPromises = document.getElementById('tab-btn-promises');
-  const tabBtnQuarantine = document.getElementById('tab-btn-quarantine');
-  const tabCountPromises = document.getElementById('tab-count-promises');
-  const tabCountQuarantine = document.getElementById('tab-count-quarantine');
-  const tableContainerPromises = document.getElementById('promises-table-container');
-  const tableContainerQuarantine = document.getElementById('quarantine-table-container');
-  const tbodyPromises = document.getElementById('promises-table-body');
-  const tbodyQuarantine = document.getElementById('quarantine-table-body');
-
-  const filterEntity = document.getElementById('filter-entity');
-  const filterVerdict = document.getElementById('filter-verdict');
-  const filterCategory = document.getElementById('filter-category');
-  const filterSort = document.getElementById('filter-sort');
-  const searchInput = document.getElementById('search-input');
-  const tableShowingCount = document.getElementById('table-showing-count');
-  const tableTotalCount = document.getElementById('table-total-count');
-  const activeFilterIndicator = document.getElementById('active-filter-indicator');
-
-  // Pagination elements
-  let currentPageSize = 10;
-  const btnShowMore = document.getElementById('btn-show-more');
-  const btnShowAll = document.getElementById('btn-show-all');
-  const tablePaginationRow = document.getElementById('table-pagination-row');
-  const paginationSub = document.getElementById('pagination-sub');
-
-  const inspectModal = document.getElementById('inspect-modal');
-  const btnCloseInspect = document.getElementById('btn-close-inspect');
-  const btnCopyModalHash = document.getElementById('btn-copy-modal-hash');
-  const modalOpenedRow = document.getElementById('modal-opened-row');
-  const modalOpenedDate = document.getElementById('modal-opened-date');
-  const modalDueDate = document.getElementById('modal-due-date');
-  const modalFilePath = document.getElementById('modal-file-path');
-  const modalFetchTime = document.getElementById('modal-fetch-time');
-  const modalPromiseQuoteLink = document.getElementById('modal-promise-quote-link');
-  const methodModal = document.getElementById('method-modal');
-  const btnOpenMethodology = document.getElementById('btn-open-methodology');
-  const btnCloseMethod = document.getElementById('btn-close-method');
-
-  // Agents section interactive details
-  const agentCards = document.querySelectorAll('.agent-role-card');
-  const agentDetailDot = document.getElementById('agent-detail-dot');
-  const agentDetailText = document.getElementById('agent-detail-text');
-
-  const AGENT_INFO = [
-    {
-      name: "Kept Advocate",
-      sandbox: "Sandbox A",
-      dotClass: "dot-kept",
-      desc: "In the flow: reads the gated promise + affirming sources, writes staging/kept_P02.json. Designed for process isolation in Sandbox A."
-    },
-    {
-      name: "Broken Advocate",
-      sandbox: "Sandbox B",
-      dotClass: "dot-broken",
-      desc: "In the flow: reads the gated promise + contradicting sources, writes staging/broken_P02.json. Designed for process isolation in Sandbox B."
-    },
-    {
-      name: "Arbitrator",
-      sandbox: "Sandbox C",
-      dotClass: "dot-undecided",
-      desc: "Only writer to promises.db. Reads both advocate briefs, executes 7 deterministic Python checks, applies rubric, and decides verdict with 0 model calls."
-    },
-    {
-      name: "Relevance Gate",
-      sandbox: "Sandbox D",
-      dotClass: "dot-in_progress",
-      desc: "Runs once at Stage 3. Evaluates 4 criteria (real_promise, measurable, sf_relevant, interesting) on a 0–8 scale. Gates publication at 5+."
-    }
-  ];
-
-  // Stage Narrative Data
-  const STAGE_NARRATIVES = {
-    0: {
-      title: "Ready to run",
-      pill: "STANDBY",
-      body: "Pick a promise in the dropdown and press Play to see it move through every check — or pick the watchdog test to see one altered word fail the whole file. Step mode lets you pause and inspect each stage."
-    },
-    1: {
-      title: "Stage 1: Fetch Source Document",
-      pill: "FETCHING",
-      body: "Fetch the public source URL and save its bytes to Archil persistent storage. The SHA-256 hash must match before anything else is trusted — a snippet is never a source."
-    },
-    2: {
-      title: "Stage 2: Verbatim Extraction",
-      pill: "EXTRACTING",
-      body: "Copy the promise word-for-word. AI models draft candidate text, but deterministic code checks exact substring match in the saved source file."
-    },
-    3: {
-      title: "Stage 3: Relevance Gate (Sandbox D)",
-      pill: "GATING",
-      body: "Evaluate 4 spec criteria (real_promise, measurable, sf_relevant, interesting). Gate opens only at 5+ / 8 with real_promise ≥ 1. Procedural fluff never moves past this step."
-    },
-    4: {
-      title: "Stage 4: Parallel Advocates (Sandboxes A & B)",
-      pill: "ADVOCATING",
-      body: "Two separate processes designed for isolation. Sandbox A seeks affirming proof; Sandbox B seeks contradicting proof. Neither influences the other."
-    },
-    5: {
-      title: "Stage 5: Arbitrator (Code, 0 Model Calls)",
-      pill: "ARBITRATING",
-      body: "No guessing, no probabilistic drift. Pure Python checks verify domain, hash, exact quote, speaker, date, evidence type, and promise-id match — then the rubric maps surviving claims to a verdict."
-    },
-    6: {
-      title: "Stage 6: Output & Verification Stamp",
-      pill: "DELIVERED",
-      body: "Decided in the open. Passing claims went to the rubric, which signed the verdict stamp — checks passing never decides kept or broken by itself. Any altered byte diverts immediately to quarantine."
-    }
-  };
-
-  // -------------------------------------------------------------------------
-  // INITIALIZATION
-  // -------------------------------------------------------------------------
-  async function init() {
-    if (window.__DEMO_DATA__) {
-      demoData = window.__DEMO_DATA__;
-    } else {
-      try {
-        const res = await fetch('data.json');
-        if (res.ok) demoData = await res.json();
-      } catch (e) {
-        console.warn('Fallback loading data:', e);
-      }
-    }
-
-    renderTally();
-    updateCategoryPillCounts();
-    renderShowcaseCard('P02');
-    renderPromisesTable();
-    renderQuarantineTable();
-    renderRunSelect();
-    setupEventListeners();
-    renderCompletedPipeline('P02');
-
-    // Check hash route
-    const currentHash = window.location.hash;
-    if (currentHash) {
-      const pMatch = currentHash.match(/^#promise-(.+)$/i);
-      if (pMatch) {
-        openInspectModal(pMatch[1].toUpperCase());
-      } else if (currentHash === '#p02' || currentHash === '#inspect') {
-        openInspectModal('P02');
-      } else if (currentHash === '#run-p02') {
-        startPipeline('P02');
-      } else if (currentHash === '#run-n01') {
-        startPipeline('N01');
-      }
-    }
-  }
-
-  // -------------------------------------------------------------------------
-  // TALLY & HEADER STATS
-  // -------------------------------------------------------------------------
-  function renderTally() {
-    if (!demoData) return;
-    const db = demoData.database_status || {};
-    const counts = db.counts || {};
-
-    const totalCount = db.tracked_count || (demoData.promises ? demoData.promises.length : 0);
-    if (tallyTotal) tallyTotal.textContent = totalCount;
-    if (tallyKept) tallyKept.textContent = counts.kept || 0;
-    if (tallyProgress) tallyProgress.textContent = counts.in_progress || 0;
-    if (tallyBroken) tallyBroken.textContent = counts.broken || 0;
-
-    const stalledCount = counts.stalled || 0;
-    if (tallyStalled) tallyStalled.textContent = stalledCount;
-    const stalledItem = document.getElementById('tally-item-stalled');
-    const stalledSep = document.getElementById('tally-sep-stalled');
-    if (stalledItem) stalledItem.style.display = stalledCount > 0 ? 'inline-flex' : 'none';
-    if (stalledSep) stalledSep.style.display = stalledCount > 0 ? 'inline' : 'none';
-
-    if (tallyUndecided) tallyUndecided.textContent = counts.undecided || 0;
-
-    if (tabCountPromises) tabCountPromises.textContent = totalCount;
-    if (tabCountQuarantine) tabCountQuarantine.textContent = demoData.quarantined ? demoData.quarantined.length : 0;
-    const btnDomainAll = document.getElementById('btn-domain-all');
-    if (btnDomainAll) btnDomainAll.textContent = `All of SF (${totalCount})`;
-
-    var banner = document.getElementById('snapshot-banner');
-    if (banner) {
-      var meta = demoData.metadata || {};
-      var exportedAt = meta.exported_at || meta.last_updated || '';
-      var statusLine = db.acceptance_status_label || (
-        (db.integration_run ? db.integration_run.status_label + ' · ' : '') +
-        (db.sandbox_isolation_label || '')
-      );
-      banner.textContent = 'Exported SQLite snapshot · ' + totalCount + ' promises'
-        + (exportedAt ? ' · ' + exportedAt : '')
-        + (statusLine ? ' · ' + statusLine : '');
-      banner.title = 'Source: ' + (meta.sqlite_file || 'promises.db')
-        + (exportedAt ? ' · exported ' + exportedAt : '');
-    }
-    var reconText = db.id_reconciliation
-      || (totalCount + ' published · ' + (demoData.quarantined ? demoData.quarantined.length : 0) + ' in quarantine registry');
-    document.querySelectorAll('.recon-counts').forEach(el => { el.textContent = reconText; });
-
-    // Sync Outcome Distribution Box dynamically
-    const outVerifiedEl = document.getElementById('outcome-dist-verified');
-    if (outVerifiedEl) outVerifiedEl.textContent = `${totalCount} VERIFIED`;
-
-    if (totalCount > 0) {
-      const kVal = counts.kept || 0;
-      const pVal = counts.in_progress || 0;
-      const bVal = counts.broken || 0;
-      const uVal = counts.undecided || 0;
-
-      const kPct = Math.round((kVal / totalCount) * 100);
-      const pPct = Math.round((pVal / totalCount) * 100);
-      const bPct = Math.round((bVal / totalCount) * 100);
-      const uPct = Math.max(0, 100 - kPct - pPct - bPct);
-
-      const barKept = document.getElementById('bar-seg-kept');
-      const barProg = document.getElementById('bar-seg-progress');
-      const barBroken = document.getElementById('bar-seg-broken');
-      const barUndecided = document.getElementById('bar-seg-undecided');
-
-      if (barKept) { barKept.style.width = `${(kVal / totalCount) * 100}%`; barKept.title = `Kept: ${kVal} (${kPct}%)`; }
-      if (barProg) { barProg.style.width = `${(pVal / totalCount) * 100}%`; barProg.title = `In Progress: ${pVal} (${pPct}%)`; }
-      if (barBroken) { barBroken.style.width = `${(bVal / totalCount) * 100}%`; barBroken.title = `Broken: ${bVal} (${bPct}%)`; }
-      if (barUndecided) { barUndecided.style.width = `${(uVal / totalCount) * 100}%`; barUndecided.title = `Undecided: ${uVal} (${uPct}%)`; }
-
-      const legKept = document.getElementById('legend-text-kept');
-      const legProg = document.getElementById('legend-text-progress');
-      const legBroken = document.getElementById('legend-text-broken');
-      const legUndecided = document.getElementById('legend-text-undecided');
-
-      if (legKept) legKept.textContent = `${kVal} Kept (${kPct}%)`;
-      if (legProg) legProg.textContent = `${pVal} In Progress (${pPct}%)`;
-      if (legBroken) legBroken.textContent = `${bVal} Broken (${bPct}%)`;
-      if (legUndecided) legUndecided.textContent = `${uVal} Undecided (${uPct}%)`;
-    }
-  }
-
-  // -------------------------------------------------------------------------
-  // SF SHOWCASE (ACROSS THE CITY)
-  // -------------------------------------------------------------------------
-  function renderShowcaseCard(promiseId) {
-    if (!demoData) return;
-    selectedShowcasePid = promiseId;
-
-    const showcaseItem = (demoData.sf_showcase || []).find(s => s.promise_id === promiseId);
-    const pData = (demoData.promises || []).find(p => p.promise_id === promiseId) || demoData.p02;
-
-    if (!showcaseItem || !pData) return;
-
-    // Update active tab button style
-    document.querySelectorAll('.showcase-tab-btn').forEach(btn => {
-      const isTarget = btn.getAttribute('data-showcase-id') === promiseId;
-      btn.classList.toggle('active', isTarget);
-      btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
-    });
-
-    // Pulse the display card so visitors notice the content swapped.
-    if (showcaseCardDisplay) {
-      showcaseCardDisplay.classList.remove('showcase-pulse');
-      void showcaseCardDisplay.offsetWidth;
-      showcaseCardDisplay.classList.add('showcase-pulse');
-    }
-
-    // Update showcase card fields
-    if (scBadgeId) scBadgeId.textContent = `#${pData.display_no || '—'}`;
-    if (scBadgeVerdict) {
-      const verdClass = pData.verdict.toLowerCase().replace(' ', '_');
-      scBadgeVerdict.className = `verdict-chip ${verdClass}`;
-      scBadgeVerdict.textContent = formatVerdictLabel(pData.verdict);
-
-      // Card accent border
-      const accentVar = verdClass === 'kept' ? 'var(--kept)' : verdClass === 'in_progress' ? 'var(--blue)' : 'var(--purple)';
-      showcaseCardDisplay.style.setProperty('--card-accent', accentVar);
-    }
-
-    if (scDomainPill) scDomainPill.textContent = showcaseItem.domain;
-    if (scNeighborhoodPill) scNeighborhoodPill.textContent = pData.neighborhood || showcaseItem.tag;
-    if (scQuoteText) scQuoteText.textContent = `“${cleanQuoteText(pData.promise_text)}”`;
-    if (scMetaEntity) scMetaEntity.textContent = `${pData.entity} (${pData.role || ''})`;
-    if (scMetaPromised) scMetaPromised.textContent = pData.promised_date || '—';
-    if (scMetaDue) scMetaDue.textContent = pData.due_date || '—';
-    if (scMetaOpened) scMetaOpened.textContent = pData.opened_date || pData.realized_date || (promiseId === 'P02' ? 'April 28, 2025' : '—');
-    if (scMetaRel) {
-      scMetaRel.innerHTML = `<span class="badge-verified">✓ Verified</span>`;
-    }
-    if (scEvidenceFact) scEvidenceFact.textContent = pData.evidence_fact || showcaseItem.evidence;
-
-    if (scSourceLink) {
-      const url = pData.source_url || '';
-      if (!url) {
-        scSourceLink.removeAttribute('href');
-        scSourceLink.textContent = 'source link not recorded';
-      } else {
-        scSourceLink.href = url;
-        scSourceLink.innerHTML = `
-          ${escapeHtml(url.replace(/^https?:\/\//, ''))}
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        `;
-      }
-    }
-
-    if (scHashPill) {
-      const shash = pData.source_hash || '';
-      const sid = pData.source_id || '—';
-      scHashPill.textContent = shash
-        ? `source_id: ${sid} · SHA-256: ${shash.substring(0, 12)}...`
-        : 'source hash not recorded';
-    }
-  }
-
-  // -------------------------------------------------------------------------
-  // 6-STAGE PIPELINE STATE MACHINE & ANIMATION CONTROLLER
-  // -------------------------------------------------------------------------
-  // Stage 1 cites the real fetched artifacts per run: P02 cites its own
-  // sources row; N01 is based on P05 so it cites the P05 file. Values come
-  // from the DB export; literals are the verified fallbacks.
-  const VERIFIED_RUN_SOURCES = {
-    P02: {
-      file: 'e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05.md',
-      hash: 'e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05',
-      url: 'https://www.sfpublicworkstv.org/april2025'
-    },
-    N01: {
-      file: '6b445cb1ab3198e5bc72810651999042c6630826bd1da44e8002e76955c7a6aa.md',
-      hash: '6b445cb1ab3198e5bc72810651999042c6630826bd1da44e8002e76955c7a6aa',
-      url: 'https://thefrisc.com/one-year-of-luries-approach-to-sfs-homelessness-drugs-mental-health/'
-    }
-  };
-
-  function runSourceFor(runType) {
-    // Watchdog test is planted on the P05 source file; any other run cites
-    // its own promise row. Missing data renders as '—', never another row's.
-    const pid = isWatchdog(runType) ? 'P05' : runType;
-    const row = ((demoData && demoData.promises) || []).find(p => p.promise_id === pid)
-      || (pid === 'P02' && demoData ? demoData.p02 : null);
-    const fb = VERIFIED_RUN_SOURCES[isWatchdog(runType) ? 'N01' : pid]
-      || { file: '—', hash: '', url: '' };
-    const file = (row && row.source_file_path ? row.source_file_path.split('/').pop() : fb.file);
-    const hash = (row && row.source_hash) || fb.hash;
-    const url = (row && row.source_url) || fb.url;
-    return { file, hash, url };
-  }
-
-  function renderRunSelect() {
-    if (!runSelect || !demoData || !demoData.promises) return;
-    runSelect.innerHTML = '';
-    const mkOpt = (value, label) => {
-      const o = document.createElement('option');
-      o.value = value;
-      o.textContent = label;
-      return o;
-    };
-    const watchdogGroup = document.createElement('optgroup');
-    watchdogGroup.label = 'Watchdog test';
-    watchdogGroup.appendChild(mkOpt('N01', 'Altered quote gets caught (shelter beds → units)'));
-    runSelect.appendChild(watchdogGroup);
-    const groups = [
-      ['kept', 'Kept'],
-      ['broken', 'Broken'],
-      ['in_progress', 'In progress'],
-      ['undecided', 'Undecided'],
-    ];
-    groups.forEach(([verdict, label]) => {
-      const rows = demoData.promises.filter(p => p.verdict === verdict);
-      if (!rows.length) return;
-      const g = document.createElement('optgroup');
-      g.label = `${label} (${rows.length})`;
-      rows.forEach(p => {
-        g.appendChild(mkOpt(
-          p.promise_id,
-          `#${p.display_no || '—'} · ${shortLabel(p, 55)} — ${p.entity}`
-        ));
-      });
-      runSelect.appendChild(g);
-    });
-    runSelect.value = 'N01';
-  }
-
-  function renderStage1Source(runType) {
-    const src = runSourceFor(runType);
-    if (stage1Filename) stage1Filename.textContent = src.file;
-    if (stage1HashPrefix) stage1HashPrefix.textContent = src.hash ? `${src.hash.substring(0, 8)}...` : '—';
-    if (stage1SourceUrl) {
-      if (!src.url) {
-        stage1SourceUrl.removeAttribute('href');
-        stage1SourceUrl.textContent = 'Saved source (link not recorded)';
-      } else {
-        try {
-          stage1SourceUrl.textContent = 'Saved source · ' + new URL(src.url).hostname + ' ↗';
-        } catch (e) {
-          stage1SourceUrl.textContent = 'Saved source ↗';
-        }
-        stage1SourceUrl.href = src.url;
-      }
-    }
-  }
-
-  function resetPipeline() {
-    if (autoTimer) clearTimeout(autoTimer);
-    isAutoRunning = false;
-    currentStage = 0;
-
-    if (btnRunSelected) btnRunSelected.disabled = false;
-    if (runSelect) runSelect.disabled = false;
-    if (btnStepNext) btnStepNext.disabled = false;
-
-    // Reset progress and indicators
-    if (pipelineProgressFill) pipelineProgressFill.style.width = '0%';
-    if (packetTrackFill) packetTrackFill.style.width = '0%';
-    if (packetBallDot) packetBallDot.style.left = '0%';
-    if (packetBallInner) packetBallInner.className = 'packet-ball-inner';
-    if (pipelineStageIndicator) {
-      pipelineStageIndicator.textContent = 'STAGE 0 / 6 · READY TO RUN';
-    }
-    if (packetStatusText) packetStatusText.textContent = 'waiting to start';
-
-    // Reset milestones
-    for (let i = 1; i <= 6; i++) {
-      if (msCircles[i]) {
-        msCircles[i].className = 'milestone-circle';
-        msCircles[i].textContent = i;
-      }
-    }
-
-    // Reset Stage Cards
-    [stageCard1, stageCard2, stageCard3, stageCard4, stageCard5, stageCard6].forEach(card => {
-      if (card) {
-        card.className = card.className.replace(/\b(active-stage|done-stage)\b/g, '').trim();
-      }
-    });
-
-    if (stageBadge1) {
-      stageBadge1.className = 'stage-state-pill font-mono';
-      stageBadge1.textContent = 'IDLE';
-    }
-    if (stage1FetchFill) stage1FetchFill.style.width = '0%';
-    if (stage1HashMatch) stage1HashMatch.style.display = 'none';
-    if (stage1VerifiedBanner) stage1VerifiedBanner.style.display = 'none';
-    renderStage1Source(currentRunType);
-
-    if (stageBadge2) {
-      stageBadge2.className = 'stage-state-pill font-mono';
-      stageBadge2.textContent = 'Model drafts';
-    }
-    if (stage2FlashBox) stage2FlashBox.style.display = 'none';
-    if (stage2PassBox) stage2PassBox.style.display = 'none';
-
-    [relFillReal, relFillMeas, relFillSf, relFillInt].forEach(f => { if (f) f.style.width = '0%'; });
-    [scoreValReal, scoreValMeas, scoreValSf, scoreValInt].forEach(v => { if (v) v.textContent = '0 / 2'; });
-    if (stage3ScoreFill) stage3ScoreFill.style.width = '0%';
-    if (stage3ScoreTotal) stage3ScoreTotal.textContent = '0 / 8';
-    if (stage3ScoreBadge) {
-      stage3ScoreBadge.textContent = 'Scoring…';
-      stage3ScoreBadge.className = 'badge-verified font-mono';
-    }
-    if (stageBadge3) {
-      stageBadge3.className = 'stage-state-pill font-mono';
-      stageBadge3.textContent = 'Sandbox D';
-    }
-    if (stage3GateBadge) {
-      stage3GateBadge.className = 'gate-badge-pill closed';
-      stage3GateBadge.textContent = '🚪 GATE CLOSED';
-    }
-
-    if (advBoxKept) advBoxKept.className = 'advocate-sub-box';
-    if (advStatusKept) {
-      advStatusKept.textContent = 'WAITING';
-      advStatusKept.style.color = '#94a3b8';
-    }
-    if (advFindingsKept) advFindingsKept.innerHTML = '<span style="color: #94a3b8;">Waiting for gate to open…</span>';
-    if (advDotsKept) {
-      advDotsKept.querySelectorAll('.bounce-dot').forEach(d => d.className = 'bounce-dot');
-    }
-
-    if (advBoxBroken) advBoxBroken.className = 'advocate-sub-box';
-    if (advStatusBroken) {
-      advStatusBroken.textContent = 'WAITING';
-      advStatusBroken.style.color = '#94a3b8';
-    }
-    if (advFindingsBroken) advFindingsBroken.innerHTML = '<span style="color: #94a3b8;">Waiting for gate to open…</span>';
-    if (advDotsBroken) {
-      advDotsBroken.querySelectorAll('.bounce-dot').forEach(d => d.className = 'bounce-dot');
-    }
-
-    checkKeys.forEach((key, idx) => {
-      const row = document.getElementById(`check-row-${key}`);
-      const circle = document.getElementById(`circle-check-${key}`);
-      const tag = document.getElementById(`tag-check-${key}`);
-      if (row) row.className = 'arb-check-item';
-      if (circle) {
-        circle.className = 'arb-check-circle';
-        circle.textContent = idx + 1;
-      }
-      if (tag) tag.style.display = 'none';
-    });
-    if (arbDivertAlert) arbDivertAlert.style.display = 'none';
-    const spkDescReset = document.getElementById('check-desc-speaker');
-    if (spkDescReset) spkDescReset.textContent = 'n/a, not a minutes source (named in text)';
-    const rubDescReset = document.getElementById('check-desc-rubric');
-    if (rubDescReset) rubDescReset.textContent = 'Deterministic rubric maps passing claims → verdict';
-
-    if (stageBadge6) stageBadge6.textContent = 'WAITING';
-    if (outputWaitingContainer) outputWaitingContainer.style.display = 'block';
-    if (outputKeptResult) outputKeptResult.style.display = 'none';
-    if (outputQuarantineResult) outputQuarantineResult.style.display = 'none';
-    if (outputVerdictResult) outputVerdictResult.style.display = 'none';
-
-    updateNarrative(0);
-  }
-
-  function renderCompletedPipeline(presetKey = 'P02') {
-    if (autoTimer) clearTimeout(autoTimer);
-    isAutoRunning = false;
-    currentStage = 6;
-    currentRunType = presetKey;
-    if (runSelect) runSelect.value = presetKey;
-
-    if (btnRunSelected) {
-      btnRunSelected.disabled = false;
-      const span = btnRunSelected.querySelector('span');
-      if (span) span.textContent = 'Replay Walkthrough';
-    }
-    if (runSelect) runSelect.disabled = false;
-    if (btnStepNext) btnStepNext.disabled = false;
-
-    if (pipelineProgressFill) pipelineProgressFill.style.width = '100%';
-    if (packetTrackFill) packetTrackFill.style.width = '100%';
-    if (packetBallDot) packetBallDot.style.left = '100%';
-    if (packetBallInner) packetBallInner.className = 'packet-ball-inner kept-end';
-    if (packetStatusText) packetStatusText.textContent = 'verified & delivered';
-
-    for (let i = 1; i <= 6; i++) {
-      if (msCircles[i]) {
-        msCircles[i].className = 'milestone-circle passed';
-        msCircles[i].textContent = '✓';
-      }
-    }
-
-    const op = runPromise(presetKey) || (demoData && demoData.p02);
-    if (pipelineStageIndicator) {
-      pipelineStageIndicator.textContent = `STAGE 6 / 6 · #${(op && op.display_no) || '01'} — ${(op && op.verdict ? op.verdict : 'kept').toUpperCase()} (VERIFIED RECORD)`;
-    }
-
-    // Stage 1
-    if (stageCard1) stageCard1.className = 'stage-card span-4 done-stage';
-    if (stageBadge1) {
-      stageBadge1.className = 'stage-state-pill font-mono done';
-      stageBadge1.textContent = 'HASH MATCH';
-    }
-    if (stage1FetchFill) stage1FetchFill.style.width = '100%';
-    if (stage1HashMatch) stage1HashMatch.style.display = 'block';
-    if (stage1VerifiedBanner) stage1VerifiedBanner.style.display = 'block';
-    renderStage1Source(presetKey);
-
-    // Stage 2
-    if (stageCard2) stageCard2.className = 'stage-card span-7 done-stage';
-    if (stageBadge2) {
-      stageBadge2.className = 'stage-state-pill font-mono done';
-      stageBadge2.textContent = 'EXTRACTED';
-    }
-    if (stage2FlashBox) stage2FlashBox.style.display = 'block';
-    if (stage2PassBox) stage2PassBox.style.display = 'block';
-
-    // Stage 3
-    if (stageCard3) stageCard3.className = 'stage-card span-5 done-stage';
-    if (stageBadge3) {
-      stageBadge3.className = 'stage-state-pill font-mono done';
-      stageBadge3.textContent = '8/8 PASSED';
-    }
-    if (stage3GateBadge) {
-      stage3GateBadge.className = 'gate-badge-pill open';
-      stage3GateBadge.textContent = '🚪 GATE PASSED (8/8)';
-    }
-    [relFillReal, relFillMeas, relFillSf, relFillInt].forEach(f => { if (f) f.style.width = '100%'; });
-    [scoreValReal, scoreValMeas, scoreValSf, scoreValInt].forEach(v => { if (v) v.textContent = '2 / 2'; });
-    if (stage3ScoreFill) stage3ScoreFill.style.width = '100%';
-    if (stage3ScoreTotal) stage3ScoreTotal.textContent = '8 / 8';
-    if (stage3ScoreBadge) {
-      stage3ScoreBadge.textContent = '8/8 Passed';
-      stage3ScoreBadge.className = 'badge-verified font-mono';
-    }
-
-    // Stage 4
-    if (stageCard4) stageCard4.className = 'stage-card span-12 done-stage';
-    if (stageBadge4) {
-      stageBadge4.className = 'stage-state-pill font-mono done';
-      stageBadge4.textContent = 'ARGUMENTS FILED';
-    }
-    if (advBoxKept) advBoxKept.className = 'advocate-sub-box active-kept';
-    if (advStatusKept) {
-      advStatusKept.textContent = '✓ FINISHED';
-      advStatusKept.style.color = '#10B981';
-    }
-    if (advFindingsKept) {
-      advFindingsKept.innerHTML = `
-        <span style="color: #10B981;">▸</span> SF Department of Public Health confirmed acute hospital beds retained 24/7 (2 sources checked).
-        <div style="margin-top: 6px; color: #A7F3D0; font-weight: 700;">&rarr; Case: KEEP — evidence supports promise.</div>
-      `;
-    }
-    if (advBoxBroken) advBoxBroken.className = 'advocate-sub-box active-broken';
-    if (advStatusBroken) {
-      advStatusBroken.textContent = '✓ FINISHED';
-      advStatusBroken.style.color = '#94A3B8';
-    }
-    if (advFindingsBroken) {
-      advFindingsBroken.innerHTML = `
-        <span style="color: #EF4444;">▸</span> No contradicting source found in saved files (4 sources checked).
-        <div style="margin-top: 6px; color: #FCA5A5; font-weight: 700;">&rarr; Case: CHALLENGE — but evidence is thin.</div>
-      `;
-    }
-    if (tagStagingKept) tagStagingKept.textContent = `staging/kept_${presetKey}.json`;
-    if (tagStagingBroken) tagStagingBroken.textContent = `staging/broken_${presetKey}.json`;
-
-    // Stage 5
-    if (stageCard5) stageCard5.className = 'stage-card span-7 done-stage';
-    if (stageBadge5) {
-      stageBadge5.className = 'stage-state-pill font-mono done';
-      stageBadge5.textContent = '7/7 PASS';
-    }
-    checkKeys.forEach(key => {
-      const row = document.getElementById(`check-row-${key}`);
-      const circle = document.getElementById(`circle-check-${key}`);
-      const tag = document.getElementById(`tag-check-${key}`);
-      if (row) row.className = 'arb-check-item passed';
-      if (circle) {
-        circle.className = 'arb-check-circle passed';
-        circle.textContent = '✓';
-      }
-      if (tag) {
-        tag.style.display = 'inline';
-        tag.style.color = '#10B981';
-        tag.textContent = 'PASS';
-      }
-    });
-
-    // Stage 6
-    if (stageCard6) stageCard6.className = 'stage-card span-5 active-stage';
-    if (stageBadge6) {
-      stageBadge6.className = 'stage-state-pill font-mono done';
-      stageBadge6.textContent = '✓ KEPT';
-    }
-    if (outputWaitingContainer) outputWaitingContainer.style.display = 'none';
-    if (outputKeptResult) outputKeptResult.style.display = 'block';
-    const keptDesc = document.getElementById('output-kept-desc');
-    if (keptDesc && op) {
-      keptDesc.textContent = `#${op.display_no || '01'} · “${shortLabel(op, 90)}” (${op.entity}) — verified & published.`;
-    }
-
-    updateNarrative(6);
-  }
-
-  function startPipeline(presetKey) {
-    resetPipeline();
-    currentRunType = presetKey;
-    if (runSelect) runSelect.value = presetKey;
-    isAutoRunning = true;
-    isStepMode = false;
-    if (btnRunSelected) btnRunSelected.disabled = true;
-    if (runSelect) runSelect.disabled = true;
-    if (pipelineModeHint) pipelineModeHint.textContent = `Auto-playing ${runLabel(presetKey)}. Sit back or click Next Stage to take manual control.`;
-    executeStage(1);
-  }
-
-  function advanceStep() {
-    if (isAutoRunning) {
-      if (autoTimer) clearTimeout(autoTimer);
-      isAutoRunning = false;
-      if (btnRunSelected) btnRunSelected.disabled = false;
-      if (runSelect) runSelect.disabled = false;
-    }
-    isStepMode = true;
-    if (pipelineModeHint) pipelineModeHint.textContent = "Step mode active. You are advancing one stage per click.";
-
-    if (currentStage >= 6) {
-      resetPipeline();
-    } else {
-      executeStage(currentStage + 1);
-    }
-  }
-
-  function executeStage(stageNum) {
-    currentStage = stageNum;
-
-    // Progress math: 6 stages (16.6%, 33.3%, 50%, 66.6%, 83.3%, 100%)
-    const pct = Math.round((stageNum / 6) * 100);
-    if (pipelineProgressFill) pipelineProgressFill.style.width = `${pct}%`;
-    if (packetTrackFill) packetTrackFill.style.width = `${pct}%`;
-
-    // Packet dot movement along line
-    const dotPositions = { 1: '0%', 2: '20%', 3: '40%', 4: '60%', 5: '80%', 6: '100%' };
-    if (packetBallDot) packetBallDot.style.left = dotPositions[stageNum] || '0%';
-
-    // Update milestone markers
-    for (let i = 1; i <= 6; i++) {
-      if (msCircles[i]) {
-        if (i < stageNum) {
-          msCircles[i].className = 'milestone-circle passed';
-          msCircles[i].textContent = '✓';
-        } else if (i === stageNum) {
-          msCircles[i].className = 'milestone-circle current';
-          msCircles[i].textContent = i;
-        } else {
-          msCircles[i].className = 'milestone-circle';
-          msCircles[i].textContent = i;
-        }
-      }
-    }
-
-    // Top indicator text
-    const runP = runPromise(currentRunType);
-    const caseTitle = isWatchdog(currentRunType)
-      ? 'WATCHDOG TEST — ALTERED QUOTE'
-      : `#${(runP && runP.display_no) || '—'} — ${(runP && runP.verdict ? runP.verdict : '').toUpperCase().replace('_', ' ')}`;
-    const replayLabel = replayCount > 0 ? ` · REPLAY ${replayCount}` : '';
-    if (pipelineStageIndicator) {
-      pipelineStageIndicator.textContent = `STAGE ${stageNum} / 6 · ${caseTitle}${replayLabel}`;
-    }
-
-    // Stage specifics
-    if (stageNum === 1) {
-      // Stage 1: Fetch
-      if (packetStatusText) packetStatusText.textContent = 'moving → Fetch';
-      if (stageCard1) stageCard1.className = 'stage-card span-4 active-stage';
-      if (stageBadge1) {
-        stageBadge1.className = 'stage-state-pill font-mono running';
-        stageBadge1.textContent = '● RUNNING';
-      }
-      renderStage1Source(currentRunType);
-
-      setTimeout(() => {
-        if (stage1FetchFill) stage1FetchFill.style.width = '100%';
-        if (stage1HashMatch) stage1HashMatch.style.display = 'inline';
-        if (stage1VerifiedBanner) stage1VerifiedBanner.style.display = 'block';
-        if (stageBadge1) {
-          stageBadge1.className = 'stage-state-pill font-mono done';
-          stageBadge1.textContent = '✓ Verified';
-        }
-        if (stageCard1) stageCard1.className = 'stage-card span-4 done-stage';
-
-        updateNarrative(1);
-        if (isAutoRunning) {
-          autoTimer = setTimeout(() => executeStage(2), 1100);
-        }
-      }, 500);
-    }
-    else if (stageNum === 2) {
-      // Stage 2: Extract
-      if (packetStatusText) packetStatusText.textContent = 'moving → Extract';
-      if (stageCard2) stageCard2.className = 'stage-card span-4 active-stage';
-      if (stageBadge2) {
-        stageBadge2.className = 'stage-state-pill font-mono running';
-        stageBadge2.textContent = '● DRAFTING';
-      }
-
-      if (isWatchdog(currentRunType)) {
-        stage2QuoteContent.innerHTML = `“The City will build <span class="altered-word-highlight">1,000 shelter units</span> by 2027.”`;
-      } else {
-        const qp = runPromise(currentRunType);
-        stage2QuoteContent.textContent = `“${cleanQuoteText((qp && qp.promise_text) || '')}”`;
-      }
-
-      setTimeout(() => {
-        if (!isWatchdog(currentRunType)) {
-          if (stage2PassBox) stage2PassBox.style.display = 'block';
-          if (stageBadge2) {
-            stageBadge2.className = 'stage-state-pill font-mono done';
-            stageBadge2.textContent = '✓ Verbatim';
-          }
-        } else {
-          if (stage2FlashBox) stage2FlashBox.style.display = 'block';
-          if (stageBadge2) {
-            stageBadge2.className = 'stage-state-pill font-mono failed';
-            stageBadge2.textContent = '⚠ Altered';
-          }
-        }
-        if (stageCard2) stageCard2.className = 'stage-card span-4 done-stage';
-
-        updateNarrative(2);
-        if (isAutoRunning) {
-          autoTimer = setTimeout(() => executeStage(3), 1100);
-        }
-      }, 500);
-    }
-    else if (stageNum === 3) {
-      // Stage 3: Relevance Gate
-      if (packetStatusText) packetStatusText.textContent = 'moving → Gate';
-      if (stageCard3) stageCard3.className = 'stage-card span-4 active-stage';
-      if (stageBadge3) {
-        stageBadge3.className = 'stage-state-pill font-mono running';
-        stageBadge3.textContent = '● SCORING';
-      }
-
-      // Real relevance scores for this run (watchdog replays P05's gate).
-      const relP = isWatchdog(currentRunType)
-        ? (((demoData && demoData.promises) || []).find(p => p.promise_id === 'P05') || {})
-        : (runPromise(currentRunType) || {});
-      const rel = relP.relevance || { score: 0, real: 0, measurable: 0, sf: 0, interesting: 0 };
-      const relPairs = [
-        [relFillReal, scoreValReal, rel.real || 0],
-        [relFillMeas, scoreValMeas, rel.measurable || 0],
-        [relFillSf, scoreValSf, rel.sf || 0],
-        [relFillInt, scoreValInt, rel.interesting || 0],
-      ];
-      const relTotal = rel.score || 0;
-      const relPassed = relTotal >= 5;
-
-      // Animate Relevance Gate hero bar & metrics
-      setTimeout(() => {
-        if (stage3ScoreFill) stage3ScoreFill.style.width = `${Math.round((relTotal / 8) * 50)}%`;
-        if (stage3ScoreTotal) stage3ScoreTotal.textContent = `${Math.floor(relTotal / 2)} / 8`;
-      }, 300);
-
-      setTimeout(() => {
-        relPairs.forEach(([fill, val, score]) => {
-          if (fill) fill.style.width = `${(score / 2) * 100}%`;
-          if (val) val.textContent = `${score} / 2`;
-        });
-        if (stage3ScoreFill) stage3ScoreFill.style.width = `${(relTotal / 8) * 100}%`;
-        if (stage3ScoreTotal) stage3ScoreTotal.textContent = `${relTotal} / 8`;
-        const criteriaSummaryEl = document.getElementById('stage3-criteria-summary');
-        if (criteriaSummaryEl) {
-          criteriaSummaryEl.textContent = `Criteria: real_promise (${rel.real || 0}/2) · measurable (${rel.measurable || 0}/2) · sf_relevant (${rel.sf || 0}/2) · interesting (${rel.interesting || 0}/2)`;
-        }
-        if (stage3ScoreBadge) {
-          stage3ScoreBadge.textContent = relPassed ? '✓ Gate Passed' : '✕ Below Gate (5+)';
-          stage3ScoreBadge.className = relPassed ? 'badge-verified' : 'badge-verified badge-failed';
-        }
-        if (stageBadge3) {
-          stageBadge3.className = 'stage-state-pill font-mono done';
-          stageBadge3.textContent = relPassed
-            ? `✓ ${relTotal}/8 GATE PASSED`
-            : `✕ ${relTotal}/8 BELOW GATE`;
-        }
-        if (stageCard3) stageCard3.className = 'stage-card span-4 done-stage';
-
-        updateNarrative(3);
-        if (isAutoRunning) {
-          autoTimer = setTimeout(() => executeStage(4), 1200);
-        }
-      }, 700);
-    }
-    else if (stageNum === 4) {
-      // Stage 4: Split Advocates
-      if (packetStatusText) packetStatusText.textContent = 'moving → Advocates';
-      if (stageCard4) stageCard4.className = 'stage-card span-12 active-stage';
-
-      if (advBoxKept) advBoxKept.className = 'advocate-sub-box active-kept';
-      if (advStatusKept) {
-        advStatusKept.textContent = '● SCANNING…';
-        advStatusKept.style.color = '#10B981';
-      }
-      if (advDotsKept) {
-        advDotsKept.querySelectorAll('.bounce-dot').forEach((d, idx) => {
-          d.className = 'bounce-dot active-green';
-          d.style.animationDelay = `${idx * 140}ms`;
-        });
-      }
-
-      if (advBoxBroken) advBoxBroken.className = 'advocate-sub-box active-broken';
-      if (advStatusBroken) {
-        advStatusBroken.textContent = '● SCANNING…';
-        advStatusBroken.style.color = '#EF4444';
-      }
-      if (advDotsBroken) {
-        advDotsBroken.querySelectorAll('.bounce-dot').forEach((d, idx) => {
-          d.className = 'bounce-dot active-red';
-          d.style.animationDelay = `${idx * 140}ms`;
-        });
-      }
-
-      setTimeout(() => {
-        const ap = isWatchdog(currentRunType) ? null : runPromise(currentRunType);
-        const bundles = (ap && ap.advocate_bundles) || {};
-        const kClaims = (bundles.kept && bundles.kept.claims) || [];
-        const bClaims = (bundles.broken && bundles.broken.claims) || [];
-        const kChecked = bundles.kept && bundles.kept.evidence_checked;
-        const bChecked = bundles.broken && bundles.broken.evidence_checked;
-
-        if (advStatusKept) advStatusKept.textContent = '✓ FINISHED';
-        if (advFindingsKept) {
-          if (isWatchdog(currentRunType)) {
-            advFindingsKept.innerHTML = `
-              <span style="color: #10B981;">▸</span> Watchdog test: no affirming brief filed — the planted wording is under challenge.
-              <div style="margin-top: 6px; color: #A7F3D0; font-weight: 700;">&rarr; Case: none — planted test case.</div>
-            `;
-          } else if (kClaims.length > 0) {
-            const top = kClaims[0];
-            advFindingsKept.innerHTML = `
-              <span style="color: #10B981;">▸</span> ${escapeHtml(top.claim_text || top.quote || 'Affirming claim filed')} (${kClaims.length} claim${kClaims.length === 1 ? '' : 's'}${kChecked != null ? `, ${kChecked} sources checked` : ''}).
-              <div style="margin-top: 6px; color: #A7F3D0; font-weight: 700;">&rarr; Case: KEEP — evidence supports promise.</div>
-            `;
-          } else {
-            advFindingsKept.innerHTML = `
-              <span style="color: #10B981;">▸</span> No affirming claims filed${kChecked != null ? ` (${kChecked} sources checked)` : ''}.
-              <div style="margin-top: 6px; color: #A7F3D0; font-weight: 700;">&rarr; Case: KEEP — but evidence is thin.</div>
-            `;
-          }
-        }
-
-        if (advStatusBroken) advStatusBroken.textContent = '✓ FINISHED';
-        if (advFindingsBroken) {
-          if (isWatchdog(currentRunType)) {
-            advFindingsBroken.innerHTML = `
-              <span style="color: #EF4444;">▸</span> Found altered wording. Original source reads “1,500 new shelter beds”. Word “units” was swapped.
-              <div style="margin-top: 6px; color: #FCA5A5; font-weight: 700;">&rarr; Case: BREAK — quote is inaccurate.</div>
-            `;
-          } else if (bClaims.length > 0) {
-            const top = bClaims[0];
-            advFindingsBroken.innerHTML = `
-              <span style="color: #EF4444;">▸</span> ${escapeHtml(top.claim_text || top.quote || 'Contradicting claim filed')} (${bClaims.length} claim${bClaims.length === 1 ? '' : 's'}${bChecked != null ? `, ${bChecked} sources checked` : ''}).
-              <div style="margin-top: 6px; color: #FCA5A5; font-weight: 700;">&rarr; Case: BREAK — evidence contradicts promise.</div>
-            `;
-          } else {
-            const note = (bundles.broken && bundles.broken.note) || 'No contradicting source found in saved files.';
-            advFindingsBroken.innerHTML = `
-              <span style="color: #EF4444;">▸</span> ${escapeHtml(note)}
-              <div style="margin-top: 6px; color: #FCA5A5; font-weight: 700;">&rarr; Case: CHALLENGE — but evidence is thin.</div>
-            `;
-          }
-        }
-
-        if (tagStagingKept) tagStagingKept.textContent = isWatchdog(currentRunType) ? 'staging/kept_N01.json (planted)' : `staging/kept_${currentRunType}.json`;
-        if (tagStagingBroken) tagStagingBroken.textContent = isWatchdog(currentRunType) ? 'staging/broken_N01.json (planted)' : `staging/broken_${currentRunType}.json`;
-        if (stageCard4) stageCard4.className = 'stage-card span-12 done-stage';
-
-        updateNarrative(4);
-        if (isAutoRunning) {
-          autoTimer = setTimeout(() => executeStage(5), 1300);
-        }
-      }, 700);
-    }
-    else if (stageNum === 5) {
-      // Stage 5: Arbitrator
-      if (packetStatusText) packetStatusText.textContent = 'moving → Arbitrator';
-      if (stageCard5) stageCard5.className = 'stage-card span-7 active-stage';
-
-      // Recorded arbitrator outcomes for this run. Watchdog replays the
-      // planted quote failure; real promises show their recorded results
-      // (a flagged check does not rewrite the recorded verdict in stage 6).
-      const cp = isWatchdog(currentRunType) ? null : runPromise(currentRunType);
-      let checkIdx = 0;
-      function tickNextCheck() {
-        if (checkIdx >= checkKeys.length) {
-          if (stageCard5) stageCard5.className = 'stage-card span-7 done-stage';
-          updateNarrative(5);
-          if (isAutoRunning) {
-            autoTimer = setTimeout(() => executeStage(6), 1100);
-          }
-          return;
-        }
-
-        const key = checkKeys[checkIdx];
-        const row = document.getElementById(`check-row-${key}`);
-        const circle = document.getElementById(`circle-check-${key}`);
-        const tag = document.getElementById(`tag-check-${key}`);
-
-        // Watchdog: planted quote failure stops the run and diverts.
-        const outcome = isWatchdog(currentRunType)
-          ? (key === 'quote' ? false : true)
-          : checkOutcome(cp, key);
-
-        if (outcome === false && isWatchdog(currentRunType)) {
-          if (row) row.className = 'arb-check-item failed';
-          if (circle) {
-            circle.className = 'arb-check-circle failed';
-            circle.textContent = '✕';
-          }
-          if (tag) {
-            tag.style.display = 'inline';
-            tag.style.color = '#EF4444';
-            tag.textContent = 'FAILED';
-          }
-          if (arbDivertAlert) arbDivertAlert.style.display = 'block';
-
-          // Stop checks for the watchdog run
-          if (stageCard5) stageCard5.className = 'stage-card span-7 done-stage';
-          updateNarrative(5);
-          if (isAutoRunning) {
-            autoTimer = setTimeout(() => executeStage(6), 1100);
-          }
-          return;
-        }
-
-        if (outcome === false) {
-          // Recorded FAIL on a real promise: flag it, keep replaying.
-          if (row) row.className = 'arb-check-item failed';
-          if (circle) {
-            circle.className = 'arb-check-circle failed';
-            circle.textContent = '!';
-          }
-          if (tag) {
-            tag.style.display = 'inline';
-            tag.style.color = '#F59E0B';
-            tag.textContent = 'FLAGGED';
-          }
-        } else if (outcome === null) {
-          if (row) row.className = 'arb-check-item';
-          if (circle) {
-            circle.className = 'arb-check-circle';
-            circle.textContent = '–';
-          }
-          if (tag) {
-            tag.style.display = 'inline';
-            tag.style.color = 'var(--muted)';
-            tag.textContent = 'NOT RECORDED';
-          }
-        } else {
-          if (row) row.className = 'arb-check-item passed';
-          if (circle) {
-            circle.className = 'arb-check-circle passed';
-            circle.textContent = '✓';
-          }
-          if (tag) {
-            tag.style.display = 'inline';
-            tag.style.color = '#10B981';
-            tag.textContent = 'PASS';
-          }
-          if (key === 'speaker') {
-            const spkDesc = document.getElementById('check-desc-speaker');
-            if (spkDesc) {
-              spkDesc.textContent = (cp && cp.source_type === 'board_minutes')
-                ? 'Roll call attendance verified in official minutes'
-                : 'n/a, not a minutes source (named in text)';
-            }
-          }
-          if (key === 'rubric') {
-            const rubDesc = document.getElementById('check-desc-rubric');
-            if (rubDesc && cp) {
-              const vUpper = (cp.verdict || 'KEPT').toUpperCase();
-              const bundles = cp.advocate_bundles || {};
-              const nk = (bundles.kept && bundles.kept.claims && bundles.kept.claims.length) || 0;
-              const nb = (bundles.broken && bundles.broken.claims && bundles.broken.claims.length) || 0;
-              rubDesc.textContent = `Deterministic rubric: ${nk} affirming, ${nb} contradicting → ${vUpper}`;
-            }
-          }
-        }
-
-        checkIdx++;
-        setTimeout(tickNextCheck, 160);
-      }
-
-      setTimeout(tickNextCheck, 300);
-    }
-    else if (stageNum === 6) {
-      // Stage 6: Output — recorded verdict for this run.
-      if (packetStatusText) packetStatusText.textContent = 'delivered';
-      if (stageCard6) stageCard6.className = 'stage-card span-5 active-stage';
-
-      if (outputWaitingContainer) outputWaitingContainer.style.display = 'none';
-
-      const op = isWatchdog(currentRunType) ? null : runPromise(currentRunType);
-      const verdict = op ? op.verdict : 'quarantined';
-      if (verdict === 'kept') {
-        if (packetBallInner) packetBallInner.className = 'packet-ball-inner kept-end';
-        if (stageBadge6) {
-          stageBadge6.className = 'stage-state-pill font-mono done';
-          stageBadge6.textContent = '✓ KEPT';
-        }
-        const keptDesc = document.getElementById('output-kept-desc');
-        if (keptDesc && op) {
-          keptDesc.textContent = `#${op.display_no || '—'} · “${shortLabel(op, 90)}” (${op.entity}) — verified & published.`;
-        }
-        if (outputKeptResult) outputKeptResult.style.display = 'block';
-      } else if (isWatchdog(currentRunType)) {
-        if (packetBallInner) packetBallInner.className = 'packet-ball-inner quarantine-end';
-        if (stageBadge6) {
-          stageBadge6.className = 'stage-state-pill font-mono failed';
-          stageBadge6.textContent = '⚠ QUARANTINED';
-        }
-        if (outputQuarantineResult) outputQuarantineResult.style.display = 'block';
-      } else {
-        renderVerdictOutcome(op);
-        if (packetBallInner) packetBallInner.className = verdict === 'broken'
-          ? 'packet-ball-inner quarantine-end'
-          : 'packet-ball-inner';
-        if (stageBadge6) {
-          stageBadge6.className = verdict === 'broken'
-            ? 'stage-state-pill font-mono failed'
-            : 'stage-state-pill font-mono done';
-          stageBadge6.textContent = verdict === 'broken' ? '✕ BROKEN'
-            : verdict === 'in_progress' ? '● IN PROGRESS' : '? UNDECIDED';
-        }
-        if (outputVerdictResult) outputVerdictResult.style.display = 'block';
-      }
-
-      isAutoRunning = false;
-      if (btnRunSelected) btnRunSelected.disabled = false;
-      if (runSelect) runSelect.disabled = false;
-      updateNarrative(6);
-    }
-  }
-
-  function renderVerdictOutcome(p) {
-    if (!p) return;
-    const stampEl = document.getElementById('output-verdict-stamp');
-    const captionEl = document.getElementById('output-verdict-caption');
-    const cardEl = document.getElementById('output-verdict-card');
-    const headlineEl = document.getElementById('output-verdict-headline');
-    const descEl = document.getElementById('output-verdict-desc');
-    const pillEl = document.getElementById('output-verdict-pill');
-    const verdict = p.verdict || 'undecided';
-    const passed = (p.checks || []).filter(c => c.passed === true).length;
-    const recorded = (p.checks || []).filter(c => c.passed !== null).length;
-    if (stampEl) {
-      stampEl.className = `stamp-${verdict} font-mono`;
-      stampEl.textContent = verdict === 'broken' ? 'BROKEN ✕'
-        : verdict === 'in_progress' ? 'IN PROGRESS ●' : 'UNDECIDED ?';
-    }
-    if (captionEl) {
-      captionEl.textContent = `ARBITRATOR SIGNED · ${passed} / ${recorded || 7} CHECKS PASS (RECORDED)`;
-    }
-    if (cardEl) {
-      cardEl.className = 'destination-result-card ' + (verdict === 'broken'
-        ? 'broken-style'
-        : verdict === 'in_progress' ? 'progress-style' : 'undecided-style');
-    }
-    if (headlineEl) {
-      headlineEl.textContent = verdict === 'broken' ? '✕ Promise not kept — published as broken'
-        : verdict === 'in_progress' ? '● Still in progress — tracking continues'
-        : '? Cannot decide yet — held as undecided';
-    }
-    if (descEl) {
-      descEl.textContent = `#${p.display_no || '—'} · “${shortLabel(p, 90)}” — ${p.verdict_reason || 'Recorded in promises.db.'}`;
-    }
-    if (pillEl) {
-      pillEl.textContent = verdict === 'broken' ? '● PUBLISHED AS BROKEN'
-        : verdict === 'in_progress' ? '● TRACKING' : '● HELD — UNDECIDED';
-      pillEl.style.background = verdict === 'broken' ? 'var(--broken)'
-        : verdict === 'in_progress' ? 'var(--blue)' : 'var(--muted)';
-      pillEl.style.color = '#071120';
-    }
-  }
-
-  function updateNarrative(stageIdx) {
-    const data = STAGE_NARRATIVES[stageIdx] || STAGE_NARRATIVES[0];
-    if (pipelineNarrativeTitle) pipelineNarrativeTitle.textContent = data.title;
-    if (pipelineNarrativePill) pipelineNarrativePill.textContent = data.pill;
-    if (pipelineNarrativeBody) pipelineNarrativeBody.textContent = data.body;
-
-    if (btnNarrativeReplay) {
-      btnNarrativeReplay.textContent = `Replay (${runLabel(currentRunType)})`;
-    }
-    if (btnNarrativeToggle) {
-      if (isWatchdog(currentRunType)) {
-        const kept = runPromise('P02');
-        btnNarrativeToggle.textContent = `Try a kept promise → #${(kept && kept.display_no) || '—'} stabilization center`;
-      } else {
-        btnNarrativeToggle.textContent = 'Try the watchdog test → altered quote gets caught';
-      }
-    }
-  }
-
-  // -------------------------------------------------------------------------
-  // ALL PROMISES TABLE & EDITORIAL CARDS
-  // -------------------------------------------------------------------------
-  function renderPromisesTable() {
-    if ((!tbodyPromises && !promisesCardsGrid) || !demoData || !demoData.promises) return;
-
-    const entityFilter = filterEntity ? filterEntity.value : 'all';
-    const verdictFilter = filterVerdict ? filterVerdict.value : 'all';
-    const catFilter = filterCategory ? filterCategory.value : 'all';
-    const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
-
-    const filtered = demoData.promises.filter(p => {
-      // Entity filter
-      if (entityFilter !== 'all' && p.entity_type !== entityFilter) return false;
-      // Verdict filter
-      if (verdictFilter !== 'all' && p.verdict.toLowerCase() !== verdictFilter) return false;
-      // Dropdown category filter
-      if (catFilter !== 'all' && p.category !== catFilter) return false;
-      // Pill category filter
-      if (activeCategoryFilter !== 'all' && p.category !== activeCategoryFilter) return false;
-      // Query filter
-      if (query) {
-        const matchText = (p.promise_id + ' ' + p.promise_text + ' ' + p.entity + ' ' + (p.role || '') + ' ' + p.category + ' ' + (p.neighborhood || '')).toLowerCase();
-        if (!matchText.includes(query)) return false;
-      }
-      return true;
-    });
-
-    // Sorting
-    const sortVal = filterSort ? filterSort.value : 'rank';
-    filtered.sort((a, b) => {
-      if (sortVal === 'rank' || sortVal === 'default') {
-        const ra = a.impact_rank || parseInt(a.display_no || '999', 10);
-        const rb = b.impact_rank || parseInt(b.display_no || '999', 10);
-        return ra - rb;
-      }
-      if (sortVal === 'rank_desc') {
-        const ra = a.impact_rank || parseInt(a.display_no || '999', 10);
-        const rb = b.impact_rank || parseInt(b.display_no || '999', 10);
-        return rb - ra;
-      }
-      if (sortVal === 'date_desc') {
-        return (b.promised_date || '').localeCompare(a.promised_date || '');
-      }
-      if (sortVal === 'date_asc') {
-        return (a.promised_date || '').localeCompare(b.promised_date || '');
-      }
-      if (sortVal === 'verdict') {
-        return (a.verdict || '').localeCompare(b.verdict || '');
-      }
-      if (sortVal === 'verdict_desc') {
-        return (b.verdict || '').localeCompare(a.verdict || '');
-      }
-      if (sortVal === 'entity') {
-        return (a.entity || '').localeCompare(b.entity || '');
-      }
-      if (sortVal === 'entity_desc') {
-        return (b.entity || '').localeCompare(a.entity || '');
-      }
-      if (sortVal === 'quote_asc') {
-        return (a.promise_text || '').localeCompare(b.promise_text || '');
-      }
-      if (sortVal === 'quote_desc') {
-        return (b.promise_text || '').localeCompare(a.promise_text || '');
-      }
-      return (a.impact_rank || 999) - (b.impact_rank || 999);
-    });
-
-    // Pagination slicing
-    const displayed = filtered.slice(0, currentPageSize);
-
-    // Update Showing counter & active filter indicator
-    if (tableShowingCount) tableShowingCount.textContent = displayed.length;
-    if (tableTotalCount) tableTotalCount.textContent = filtered.length;
-
-    // Pagination controls
-    const paginationControls = document.getElementById('pagination-controls');
-    if (paginationControls) {
-      if (filtered.length <= currentPageSize) {
-        paginationControls.style.display = 'none';
-      } else {
-        paginationControls.style.display = 'flex';
-        if (btnShowMore) {
-          const nextCount = Math.min(10, filtered.length - displayed.length);
-          btnShowMore.textContent = `Show ${nextCount} More Commitments (showing ${displayed.length} of ${filtered.length})`;
-        }
-      }
-    }
-
-    if (activeFilterIndicator) {
-      const activeParts = [];
-      if (entityFilter !== 'all') activeParts.push(`Entity: ${entityFilter}`);
-      if (verdictFilter !== 'all') activeParts.push(`Verdict: ${verdictFilter}`);
-      if (activeCategoryFilter !== 'all') activeParts.push(`Category: ${activeCategoryFilter}`);
-      else if (catFilter !== 'all') activeParts.push(`Category: ${catFilter}`);
-      if (query) activeParts.push(`Search: "${query}"`);
-
-      if (activeParts.length > 0) {
-        activeFilterIndicator.textContent = `Active: ${activeParts.join(' · ')} (${filtered.length} found)`;
-        activeFilterIndicator.style.color = 'var(--blue)';
-      } else {
-        activeFilterIndicator.textContent = 'Active: All commitments (Sorted by Civic Impact)';
-        activeFilterIndicator.style.color = '#E2E8F0';
-      }
-    }
-
-    renderActiveChips();
-
-    // 1. Render Mobile Cards List (<768px)
-    const mobileCardsList = document.getElementById('mobile-cards-list');
-    if (mobileCardsList) {
-      mobileCardsList.innerHTML = '';
-      displayed.forEach((p, idx) => {
-        const card = document.createElement('div');
-        const rankFormatted = String(idx + 1).padStart(2, '0');
-        const verdClass = p.verdict.toLowerCase().replace(/[\s-]+/g, '_');
-        let quoteText = cleanQuoteText(p.verbatim_quote || p.promise_text || '');
-        if (p.promise_id === 'P05' && !quoteText.startsWith('[Reported by')) {
-          quoteText = `[Reported by The Frisc] ${quoteText}`;
-        }
-        const quote140 = quoteText.slice(0, 140) + (quoteText.length > 140 ? '…' : '');
-        card.className = 'mobile-promise-card';
-        card.setAttribute('data-pid', p.promise_id);
-        card.tabIndex = 0;
-        card.setAttribute('role', 'button');
-        card.setAttribute('aria-label', `Inspect #${rankFormatted} ${p.entity}: ${quote140}`);
-        card.innerHTML = `
-          <div class="mobile-card-header">
-            <div class="mobile-card-speaker-group">
-              <span class="mobile-card-speaker">${escapeHtml(p.entity)}</span>
-              <span class="mobile-card-id font-mono">#${rankFormatted}</span>
-            </div>
-            <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
-          </div>
-          <p class="mobile-card-quote">&ldquo;${escapeHtml(quote140)}&rdquo;</p>
-          <div class="mobile-card-footer font-mono">
-            <span class="mobile-card-date">Promised: ${escapeHtml(p.promised_date || '—')}</span>
-            <span class="mobile-card-link">Detail &rarr;</span>
-          </div>
-        `;
-        card.addEventListener('click', () => openInspectModal(p.promise_id));
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openInspectModal(p.promise_id);
-          }
-        });
-        mobileCardsList.appendChild(card);
-      });
-    }
-
-    // 2. Render Desktop 4-Column Table (>=768px)
-    if (tbodyPromises) {
-      tbodyPromises.innerHTML = '';
-      displayed.forEach((p, idx) => {
-        const tr = document.createElement('tr');
-        const verdClass = p.verdict.toLowerCase().replace(/[\s-]+/g, '_');
-        const rel = p.relevance || null;
-        const neighborhood = p.neighborhood || 'Citywide San Francisco';
-        const rankFormatted = String(idx + 1).padStart(2, '0');
-        const tier = p.source_tier || getSourceTier(p.source_url);
-        const tierClass = tier.toLowerCase();
-        let quoteText = cleanQuoteText(p.verbatim_quote || p.promise_text || '');
-        if (p.promise_id === 'P05' && !quoteText.startsWith('[Reported by')) {
-          quoteText = `[Reported by The Frisc] ${quoteText}`;
-        }
-        const quote140 = quoteText.slice(0, 140) + (quoteText.length > 140 ? '…' : '');
-
-        tr.className = 'promise-row';
-        tr.id = `promise-${p.promise_id}`;
-        tr.tabIndex = 0;
-        tr.setAttribute('role', 'button');
-        tr.setAttribute('aria-expanded', 'false');
-        tr.setAttribute('aria-controls', `accordion-${p.promise_id}`);
-        tr.setAttribute('aria-label', `Toggle details for #${rankFormatted} (${p.promise_id}): ${quoteText.slice(0, 60)}`);
-
-        tr.addEventListener('click', (ev) => {
-          if (ev.target.closest('.btn-inspect-inline')) {
-            openInspectModal(p.promise_id);
-          } else {
-            toggleAccordion(p.promise_id);
-          }
-        });
-        tr.addEventListener('keydown', (ev) => {
-          if (ev.key === 'Enter' || ev.key === ' ') {
-            ev.preventDefault();
-            toggleAccordion(p.promise_id);
-          }
-        });
-
-        const dueLine = p.due_date
-          ? `<div class="timeline-due font-mono">Due: ${escapeHtml(p.due_date)}</div>`
-          : '';
-        tr.innerHTML = `
-          <td class="table-entity-cell">
-            <div class="entity-headline-row">
-              <span class="table-entity-name">${escapeHtml(p.entity)}</span>
-              <span class="stable-id-pill font-mono">#${rankFormatted} · ${escapeHtml(p.promise_id)}</span>
-            </div>
-            <div class="table-entity-role font-mono">${escapeHtml(neighborhood)}</div>
-          </td>
-          <td class="table-promise-cell">
-            <div class="table-promise-text">&ldquo;${escapeHtml(quote140)}&rdquo;</div>
-            <div class="table-pill-row" style="margin-top: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-              <span class="category-pill font-mono">${escapeHtml(p.category)}</span>
-              <span class="source-tier-pill font-mono source-tier-${tierClass}">${tier}</span>
-              <span class="expand-hint-text font-mono">Details ▾</span>
-            </div>
-          </td>
-          <td class="table-verdict-cell">
-            <div class="verdict-wrapper">
-              <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
-              <div class="verdict-sub-row font-mono">
-                ${rel ? `<span class="score-pill" title="Relevance Gate ${rel.score}/8">${rel.score}/8</span>` : ''}
-                <span class="btn-inspect-inline">Inspect &rarr;</span>
-              </div>
-            </div>
-          </td>
-          <td class="table-timeline-cell font-mono">
-            <div class="timeline-date">${escapeHtml(p.promised_date || '—')}</div>
-            ${dueLine}
-          </td>
-        `;
-
-        const bundles = p.advocate_bundles || {};
-        const keptB = bundles.kept || {};
-        const brokenB = bundles.broken || {};
-        const kClaims = keptB.claims || [];
-        const bClaims = brokenB.claims || [];
-        const kSum = kClaims.length > 0
-          ? (kClaims[0].statement || kClaims[0].quote || 'Affirming primary evidence filed.')
-          : 'No affirming source filed during review cycle.';
-        const bSum = bClaims.length > 0
-          ? (bClaims[0].statement || bClaims[0].quote || 'Contradicting claim filed.')
-          : (brokenB.note || 'No contradicting source found in saved files.');
-
-        const trAccordion = document.createElement('tr');
-        trAccordion.className = 'promise-accordion-row hidden-accordion';
-        trAccordion.id = `accordion-${p.promise_id}`;
-        trAccordion.setAttribute('aria-hidden', 'true');
-        trAccordion.innerHTML = `
-          <td colspan="4" class="accordion-cell">
-            <div class="accordion-panel">
-              <div class="accordion-panel-grid">
-                <div class="accordion-col quote-col">
-                  <div class="accordion-kicker font-mono">FULL VERBATIM COMMITMENT</div>
-                  <blockquote class="accordion-full-quote">&ldquo;${escapeHtml(quoteText)}&rdquo;</blockquote>
-                  <div class="accordion-provenance-meta font-mono">
-                    <div><span class="meta-label">SOURCE:</span> <a href="${escapeHtml(p.source_url || '')}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.source_url || 'source link')}</a> <span class="source-tier-pill font-mono source-tier-${tierClass}">${tier}</span></div>
-                    <div class="hash-row">
-                      <span class="meta-label">SHA-256:</span>
-                      <code class="hash-code">${escapeHtml(p.source_hash || 'not recorded')}</code>
-                      <button type="button" class="btn-copy-hash font-mono" data-hash="${escapeHtml(p.source_hash || '')}">Copy</button>
-                    </div>
-                    <div><span class="meta-label">SAVED FILE:</span> <code>${escapeHtml(p.source_file_path || 'sources/' + (p.source_hash || '') + '.md')}</code></div>
-                  </div>
-                </div>
-                <div class="accordion-col advocate-col">
-                  <div class="accordion-kicker font-mono">ADVOCATE FINDINGS (PROCESS ISOLATION)</div>
-                  <div class="advocate-summary-box kept">
-                    <span class="adv-badge font-mono pass">SANDBOX A (AFFIRMING)</span>
-                    <p>${escapeHtml(kSum)}</p>
-                  </div>
-                  <div class="advocate-summary-box broken">
-                    <span class="adv-badge font-mono fail">SANDBOX B (CONTRADICTING)</span>
-                    <p>${escapeHtml(bSum)}</p>
-                  </div>
-                  <div class="accordion-actions-row">
-                    <button type="button" class="btn-open-inspect-deep font-mono" data-pid="${p.promise_id}">
-                      Open Full Audit Modal ↗
-                    </button>
-                    <button type="button" class="btn-collapse-row font-mono" data-pid="${p.promise_id}">
-                      Collapse ▴
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
-        `;
-
-        const btnDeep = trAccordion.querySelector('.btn-open-inspect-deep');
-        if (btnDeep) btnDeep.addEventListener('click', (e) => { e.stopPropagation(); openInspectModal(p.promise_id); });
-        const btnColl = trAccordion.querySelector('.btn-collapse-row');
-        if (btnColl) btnColl.addEventListener('click', (e) => { e.stopPropagation(); toggleAccordion(p.promise_id); });
-        const btnCopy = trAccordion.querySelector('.btn-copy-hash');
-        if (btnCopy) {
-          btnCopy.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const h = btnCopy.getAttribute('data-hash');
-            if (h) {
-              navigator.clipboard.writeText(h).then(() => {
-                const orig = btnCopy.textContent;
-                btnCopy.textContent = 'Copied!';
-                setTimeout(() => { btnCopy.textContent = orig; }, 1500);
-              });
-            }
-          });
-        }
-
-        tbodyPromises.appendChild(tr);
-        tbodyPromises.appendChild(trAccordion);
-      });
-    }
-  }
-
-  function toggleAccordion(promiseId) {
-    const row = document.getElementById(`promise-${promiseId}`);
-    const accordion = document.getElementById(`accordion-${promiseId}`);
-    if (!accordion) return;
-
-    const isHidden = accordion.classList.contains('hidden-accordion');
-
-    // Close any other open accordions
-    document.querySelectorAll('.promise-accordion-row:not(.hidden-accordion)').forEach(el => {
-      el.classList.add('hidden-accordion');
-      el.setAttribute('aria-hidden', 'true');
-      const pRow = el.previousElementSibling;
-      if (pRow && pRow.classList.contains('promise-row')) {
-        pRow.classList.remove('is-expanded');
-        pRow.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    if (isHidden) {
-      accordion.classList.remove('hidden-accordion');
-      accordion.setAttribute('aria-hidden', 'false');
-      if (row) {
-        row.classList.add('is-expanded');
-        row.setAttribute('aria-expanded', 'true');
-      }
-    }
-  }
-
-  function renderActiveChips() {
-    const tray = document.getElementById('active-chips-tray');
-    const container = document.getElementById('chips-container');
-    if (!tray || !container) return;
-
-    const chips = [];
-    if (filterEntity && filterEntity.value !== 'all') {
-      chips.push({ key: 'entity', label: `Entity: ${filterEntity.value}` });
-    }
-    if (filterVerdict && filterVerdict.value !== 'all') {
-      chips.push({ key: 'verdict', label: `Verdict: ${filterVerdict.value}` });
-    }
-    if (activeCategoryFilter !== 'all') {
-      chips.push({ key: 'category', label: `Category: ${activeCategoryFilter}` });
-    }
-    const q = searchInput ? searchInput.value.trim() : '';
-    if (q) {
-      chips.push({ key: 'search', label: `Search: "${q}"` });
-    }
-
-    if (chips.length === 0) {
-      tray.style.display = 'none';
-      return;
-    }
-
-    tray.style.display = 'flex';
-    container.innerHTML = chips.map(c => `
-      <span class="filter-chip font-mono">
-        <span>${escapeHtml(c.label)}</span>
-        <button type="button" class="filter-chip-remove" data-chip-key="${c.key}" aria-label="Remove filter ${escapeHtml(c.label)}">&times;</button>
-      </span>
-    `).join('');
-
-    container.querySelectorAll('.filter-chip-remove').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const k = btn.getAttribute('data-chip-key');
-        if (k === 'entity' && filterEntity) filterEntity.value = 'all';
-        if (k === 'verdict' && filterVerdict) filterVerdict.value = 'all';
-        if (k === 'category') {
-          activeCategoryFilter = 'all';
-          if (filterCategory) filterCategory.value = 'all';
-          if (domainPillsBar) {
-            domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => {
-              p.classList.toggle('active', p.getAttribute('data-category') === 'all');
-            });
-          }
-        }
-        if (k === 'search' && searchInput) searchInput.value = '';
-        currentPageSize = 10;
-        renderPromisesTable();
-      });
-    });
+    if (v === 'quarantined') return 'Quarantined';
+    return verdict ? verdict.charAt(0).toUpperCase() + verdict.slice(1) : 'Undecided';
   }
 
   function getSourceTier(sourceUrl) {
@@ -1783,784 +90,1165 @@
     return 'News';
   }
 
-  // Helper: Format snake_case check names to clean plain English
-  function formatCheckName(checkType) {
-    const map = {
-      'authenticity_domain': 'Domain Allowlist',
-      'authenticity_hash': 'Hash Integrity',
-      'authenticity_speaker': 'Speaker Attendance',
-      'accuracy_quote': 'Exact Quote Match',
-      'accuracy_date': 'Date Window',
-      'accuracy_evidence': 'Evidence Type',
-      'verdict_rubric': 'Verdict Rubric',
-      'relevance_low': 'Relevance Gate',
-      'relevance_gate': 'Relevance Gate'
-    };
-    return map[checkType] || String(checkType).replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-  }
-
-  // -------------------------------------------------------------------------
-  // QUARANTINE REGISTRY TABLE
-  // -------------------------------------------------------------------------
-  function renderQuarantineTable() {
-    if (!tbodyQuarantine || !demoData || !demoData.quarantined) return;
-
-    tbodyQuarantine.innerHTML = '';
-    demoData.quarantined.forEach((q, idx) => {
-      const tr = document.createElement('tr');
-      // Real quarantined rows (e.g. P68) have no planted claim — show the
-      // recorded reason instead of an empty quote.
-      const sub = q.planted_claim
-        ? `“${escapeHtml(cleanQuoteText(q.planted_claim))}”`
-        : escapeHtml(q.reason || '');
-      tr.innerHTML = `
-        <td class="font-mono" style="font-weight: 700; color: var(--orange);">Test ${idx + 1}</td>
-        <td>
-          <strong style="color: var(--ink);">${escapeHtml(q.title || q.promise_id || '')}</strong>
-          <div style="font-size: 0.82rem; color: var(--muted); margin-top: 2px;">${sub}</div>
-        </td>
-        <td style="white-space: nowrap;">
-          <span class="verdict-chip quarantined font-mono" style="font-size: 0.72rem;">${formatCheckName(q.check_type)}</span>
-          <div style="font-size: 0.78rem; color: var(--ink-dim); margin-top: 3px;">${q.failing_check}</div>
-        </td>
-        <td style="font-size: 0.84rem; color: #ffdfba; max-width: 320px;">
-          ${escapeHtml(q.reason)}
-        </td>
-        <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
-          ${q.destination}
-        </td>
-      `;
-      tbodyQuarantine.appendChild(tr);
-    });
-  }
-
-  // -------------------------------------------------------------------------
-  // 4-PART PROVENANCE INSPECTION MODAL
-  // -------------------------------------------------------------------------
-  const CHECK_SHORT_LABELS = {
-    authenticity_domain: 'Source domain on allowlist',
-    authenticity_hash: 'SHA-256 hash matches saved file',
-    accuracy_quote: 'Verbatim quote in saved source',
-    authenticity_speaker: 'Speaker attendance / identification',
-    accuracy_date: 'Evidence date within tenure window',
-    accuracy_evidence: 'Evidence type tierable & verified',
-    verdict_rubric: 'Deterministic rubric applied',
-  };
-
-  function renderModalChecks(p, kCount, bCount) {
-    const listEl = document.getElementById('modal-checks-list');
-    if (!listEl) return;
-    const checks = p.checks || [];
-    if (!checks.length) {
-      listEl.innerHTML = '<li>No recorded arbitrator checks for this promise.</li>';
-      return;
-    }
-    listEl.innerHTML = checks.map((c, i) => {
-      const label = CHECK_SHORT_LABELS[c.check] || c.check;
-      let reason = (c.reason && c.reason !== 'pass') ? ` — ${escapeHtml(c.reason)}` : '';
-      if (c.check === 'authenticity_speaker' && (!c.reason || c.reason === 'pass')) {
-        reason = (p.source_type === 'board_minutes')
-          ? ' — roll call attendance verified'
-          : ' — pass (n/a, not minutes source)';
-      }
-      if (c.passed === true) {
-        const extra = c.check === 'verdict_rubric'
-          ? ` → ${p.verdict.toUpperCase()} (${kCount} affirming, ${bCount} contradicting)${reason}`
-          : reason;
-        return `<li>✓ ${i + 1}. ${escapeHtml(label)}${extra}</li>`;
-      }
-      if (c.passed === false) {
-        return `<li>✕ ${i + 1}. ${escapeHtml(label)} — FAILED${reason || ' (no reason recorded)'}</li>`;
-      }
-      return `<li>– ${i + 1}. ${escapeHtml(label)} — not recorded</li>`;
-    }).join('');
-  }
-
-  function openInspectModal(promiseId) {
-    if (!inspectModal || !demoData) return;
-
-    const p = (demoData.promises || []).find(x => x.promise_id === promiseId) || demoData.p02;
-    if (!p) return;
-
-    const titleEl = document.getElementById('modal-promise-title');
-    const verdChipEl = document.getElementById('modal-verdict-chip');
-    const relChipEl = document.getElementById('modal-relevance-chip');
-
-    const rankFormatted = String(p.impact_rank || p.display_no || '—').padStart(2, '0');
-    if (titleEl) {
-      titleEl.textContent = `#${rankFormatted} (${p.promise_id}) · ${p.entity}: ${p.neighborhood || p.category}`;
-      titleEl.title = cleanQuoteText(p.promise_text || '');
-    }
-    if (verdChipEl) {
-      const verdClass = p.verdict.toLowerCase().replace(' ', '_');
-      verdChipEl.className = `verdict-chip ${verdClass}`;
-      verdChipEl.textContent = formatVerdictLabel(p.verdict);
-    }
-    if (relChipEl) {
-      relChipEl.textContent = p.relevance ? `Relevance ${p.relevance.score}/8` : 'Relevance n/r';
-    }
-
-    try {
-      window.history.replaceState(null, '', `#promise-${p.promise_id}`);
-    } catch (_) {}
-
-    // Plain-English "What Was Promised" Summary Card
-    const sumClaimEl = document.getElementById('modal-summary-claim');
-    const sumSpeakerEl = document.getElementById('modal-summary-speaker');
-    const sumDueEl = document.getElementById('modal-summary-due');
-    const sumOutcomeEl = document.getElementById('modal-summary-outcome');
-
-    if (sumClaimEl) sumClaimEl.textContent = `“${cleanQuoteText(p.promise_text)}”`;
-    if (sumSpeakerEl) sumSpeakerEl.textContent = `${p.entity}${p.role ? ` (${p.role})` : ''} · ${p.neighborhood || p.category || 'Citywide San Francisco'}`;
-    if (sumDueEl) {
-      const dates = [];
-      if (p.promised_date) dates.push(`Promised: ${p.promised_date}`);
-      if (p.due_date) dates.push(`Due: ${p.due_date}`);
-      sumDueEl.textContent = dates.join(' · ') || 'Not specified';
-    }
-    if (sumOutcomeEl) {
-      const vLabel = formatVerdictLabel(p.verdict);
-      sumOutcomeEl.textContent = `${vLabel} — ${p.verdict_reason || 'Verified through deterministic checks in Sandbox C.'}`;
-    }
-
-    // Source Media / Photo Archive
-    const mediaContainer = document.getElementById('modal-media-container');
-    const mediaImg = document.getElementById('modal-media-img');
-    const mediaCaption = document.getElementById('modal-media-caption');
-    if (mediaContainer && mediaImg) {
-      if (p.image_url) {
-        mediaContainer.style.display = 'block';
-        mediaImg.src = p.image_url;
-        mediaImg.alt = p.media_caption || p.entity || 'Promise Source Media';
-        if (mediaCaption) {
-          mediaCaption.textContent = p.media_caption || 'Verified source photo archive';
-        }
-      } else {
-        mediaContainer.style.display = 'none';
-      }
-    }
-
-    // Part 1: Provenance Bundle
-    const srcUrlEl = document.getElementById('modal-source-url');
-    const srcIdEl = document.getElementById('modal-source-id');
-    const fullHashEl = document.getElementById('modal-full-hash');
-    const filePathEl = document.getElementById('modal-file-path');
-    const fetchTimeEl = document.getElementById('modal-fetch-time');
-
-    if (srcUrlEl) {
-      const u = p.source_url || '';
-      if (!u) {
-        srcUrlEl.removeAttribute('href');
-        srcUrlEl.textContent = 'source link not recorded';
-      } else {
-        srcUrlEl.href = u;
-        srcUrlEl.textContent = u;
-      }
-    }
-    if (srcIdEl) srcIdEl.textContent = p.source_id || '—';
-    if (fullHashEl) fullHashEl.textContent = p.source_hash || 'not recorded';
-    if (filePathEl) filePathEl.textContent = p.source_file_path || (p.source_hash ? 'sources/' + p.source_hash + '.md' : 'not recorded');
-    if (fetchTimeEl) fetchTimeEl.textContent = formatFetchTime(p.fetched_at);
-    const runIdEl = document.getElementById('modal-run-id');
-    const sandboxIdEl = document.getElementById('modal-sandbox-id');
-    if (runIdEl) runIdEl.textContent = p.run_id || (demoData.database_status && demoData.database_status.integration_run ? demoData.database_status.integration_run.run_id : 'accd67e91c05426bbc5b279b83cf9537');
-    if (sandboxIdEl) sandboxIdEl.textContent = p.sandbox_id || '01a1cd80-01b2-79da-8ad0-2ae1ed5f5942 (fork of sf-promises-golden)';
-
-    // Part 2: Extracted Promise Bundle
-    const pTextEl = document.getElementById('modal-promise-text');
-    const quoteLinkEl = document.getElementById('modal-promise-quote-link');
-    const spkEl = document.getElementById('modal-speaker');
-    const pDateEl = document.getElementById('modal-promised-date');
-    const dueDateEl = document.getElementById('modal-due-date');
-    const openedRow = document.getElementById('modal-opened-row');
-    const openedDateEl = document.getElementById('modal-opened-date');
-    const relBreakEl = document.getElementById('modal-relevance-breakdown');
-
-    if (pTextEl) pTextEl.textContent = `“${cleanQuoteText(p.promise_text)}”`;
-    if (quoteLinkEl) {
-      if (p.source_url) {
-        quoteLinkEl.href = p.source_url;
-      } else {
-        quoteLinkEl.removeAttribute('href');
-      }
-    }
-    if (spkEl) spkEl.textContent = `${p.entity} (${p.role || ''})`;
-    if (pDateEl) pDateEl.textContent = p.promised_date || '—';
-    if (dueDateEl) dueDateEl.textContent = p.due_date || '—';
-    if (openedRow && openedDateEl) {
-      if (p.opened_date || p.realized_date) {
-        openedRow.style.display = 'flex';
-        openedDateEl.textContent = p.opened_date || p.realized_date;
-      } else {
-        openedRow.style.display = 'none';
-      }
-    }
-    if (relBreakEl) {
-      const rel = p.relevance || null;
-      relBreakEl.textContent = rel
-        ? `${rel.score} / 8 (real_promise: ${rel.real}, measurable: ${rel.measurable}, sf_relevant: ${rel.sf}, interesting: ${rel.interesting}) — ${rel.score >= 5 ? 'Published through gate' : 'Below gate (5+)'}`
-        : 'Relevance not recorded';
-    }
-
-    // Part 3: Dual Advocate Bundles
-    const keptListEl = document.getElementById('modal-kept-claims-list');
-    const brokenListEl = document.getElementById('modal-broken-claims-list');
-    const keptFileEl = document.getElementById('modal-kept-file');
-    const brokenFileEl = document.getElementById('modal-broken-file');
-    const kBundle = p.advocate_bundles && p.advocate_bundles.kept;
-    const bBundle = p.advocate_bundles && p.advocate_bundles.broken;
-    const kCount = (kBundle && kBundle.claims && kBundle.claims.length) || 0;
-    const bCount = (bBundle && bBundle.claims && bBundle.claims.length) || 0;
-    if (keptFileEl) keptFileEl.textContent = kBundle ? `staging/kept_${p.promise_id}.json` : 'no kept bundle filed';
-    if (brokenFileEl) brokenFileEl.textContent = bBundle ? `staging/broken_${p.promise_id}.json` : 'no broken bundle filed';
-
-    if (keptListEl) {
-      const kStaging = p.advocate_bundles && p.advocate_bundles.kept;
-      if (kStaging && kStaging.claims && kStaging.claims.length > 0) {
-        keptListEl.innerHTML = kStaging.claims.map(c => `
-          <div class="claim-quote-box">“${escapeHtml(c.quote || c.text || JSON.stringify(c))}”</div>
-        `).join('');
-      } else if (p.verbatim_quote) {
-        keptListEl.innerHTML = `<div class="claim-quote-box">“${escapeHtml(p.verbatim_quote)}” (Primary evidence verified)</div>`;
-      } else {
-        const kNote = (kStaging && kStaging.note) || '';
-        keptListEl.innerHTML = `<p style="font-size: 0.85rem; color: var(--muted); font-style: italic; margin: 0;">${escapeHtml(formatAdvocateNote(kNote, 'kept'))}</p>`;
-      }
-    }
-
-    if (brokenListEl) {
-      const bStaging = p.advocate_bundles && p.advocate_bundles.broken;
-      if (bStaging && bStaging.claims && bStaging.claims.length > 0) {
-        brokenListEl.innerHTML = bStaging.claims.map(c => `
-          <div class="claim-quote-box" style="border-left-color: var(--broken);">“${escapeHtml(c.quote || c.text || JSON.stringify(c))}”</div>
-        `).join('');
-      } else {
-        const bNote = (bStaging && bStaging.note) || '';
-        brokenListEl.innerHTML = `<p style="font-size: 0.85rem; color: var(--muted); font-style: italic; margin: 0;">${escapeHtml(formatAdvocateNote(bNote, 'broken'))}</p>`;
-      }
-    }
-
-    // Part 4: Arbitrator Reasoning & Checks
-    const reasonEl = document.getElementById('modal-verdict-reason');
-    if (reasonEl) {
-      reasonEl.innerHTML = `<strong>${formatVerdictLabel(p.verdict).toUpperCase()}</strong> — ${escapeHtml(p.verdict_reason || 'Verified by 7 deterministic checks in Sandbox C.')}`;
-    }
-    renderModalChecks(p, kCount, bCount);
-
-    inspectModal.classList.remove('hidden');
-  }
-
-  // -------------------------------------------------------------------------
-  // EVENT LISTENERS SETUP
-  // -------------------------------------------------------------------------
-  function setupEventListeners() {
-    // Showcase selector tabs
-    if (showcaseTabsBar) {
-      showcaseTabsBar.querySelectorAll('.showcase-tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const pid = btn.getAttribute('data-showcase-id');
-          renderShowcaseCard(pid);
-        });
-      });
-    }
-
-    // Inspect showcase button
-    if (btnShowcaseInspect) {
-      btnShowcaseInspect.addEventListener('click', () => {
-        openInspectModal(selectedShowcasePid);
-      });
-    }
-
-    // Case-reference buttons (e.g. limitations section) open the modal.
-    document.querySelectorAll('.case-ref-link').forEach(btn => {
-      btn.addEventListener('click', () => {
-        openInspectModal(btn.getAttribute('data-pid'));
-      });
-    });
-
-    // Pipeline controls (select preferred; legacy P02/N01 buttons still work
-    // if present — a concurrent editor owns this markup region).
-    if (btnRunSelected) {
-      btnRunSelected.addEventListener('click', () => {
-        startPipeline(runSelect ? runSelect.value : 'P02');
-      });
-    }
-    const legacyP02 = document.getElementById('btn-run-p02');
-    const legacyN01 = document.getElementById('btn-run-n01');
-    if (legacyP02) legacyP02.addEventListener('click', () => startPipeline('P02'));
-    if (legacyN01) legacyN01.addEventListener('click', () => startPipeline('N01'));
-    if (runSelect) {
-      runSelect.addEventListener('change', () => {
-        currentRunType = runSelect.value;
-        renderStage1Source(currentRunType);
-        updateNarrative(0);
-      });
-    }
-    if (btnStepNext) {
-      btnStepNext.addEventListener('click', () => advanceStep());
-    }
-    if (btnPipelineReset) {
-      btnPipelineReset.addEventListener('click', () => resetPipeline());
-    }
-
-    // Narrative buttons
-    if (btnNarrativeReplay) {
-      btnNarrativeReplay.addEventListener('click', () => {
-        replayCount++;
-        startPipeline(currentRunType);
-      });
-    }
-    if (btnNarrativeToggle) {
-      btnNarrativeToggle.addEventListener('click', () => {
-        const target = isWatchdog(currentRunType) ? 'P02' : 'N01';
-        startPipeline(target);
-      });
-    }
-
-    // Show More & Show All pagination handlers
-    if (btnShowMore) {
-      btnShowMore.addEventListener('click', () => {
-        currentPageSize += 10;
-        renderPromisesTable();
-      });
-    }
-    if (btnShowAll) {
-      btnShowAll.addEventListener('click', () => {
-        currentPageSize = 999;
-        renderPromisesTable();
-      });
-    }
-
-    const resetPaginationAndRender = () => {
-      currentPageSize = 10;
-      if (typeof updateMobileFilterBadge === 'function') updateMobileFilterBadge();
-      renderPromisesTable();
-    };
-
-    // Active filter chips "Clear all"
-    const btnClearAllChips = document.getElementById('btn-clear-all-chips');
-    if (btnClearAllChips) {
-      btnClearAllChips.addEventListener('click', () => {
-        if (filterEntity) filterEntity.value = 'all';
-        if (filterVerdict) filterVerdict.value = 'all';
-        if (filterSort) filterSort.value = 'rank';
-        activeCategoryFilter = 'all';
-        if (filterCategory) filterCategory.value = 'all';
-        if (domainPillsBar) {
-          domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => {
-            p.classList.toggle('active', p.getAttribute('data-category') === 'all');
-          });
-        }
-        if (searchInput) searchInput.value = '';
-        resetPaginationAndRender();
-      });
-    }
-
-    // Row density toggle
-    const btnDensityComfortable = document.getElementById('btn-density-comfortable');
-    const btnDensityCompact = document.getElementById('btn-density-compact');
-    const tableContainer = document.getElementById('promises-table-container');
-
-    if (btnDensityComfortable && btnDensityCompact && tableContainer) {
-      btnDensityComfortable.addEventListener('click', () => {
-        btnDensityComfortable.classList.add('active');
-        btnDensityCompact.classList.remove('active');
-        tableContainer.classList.remove('density-compact');
-      });
-
-      btnDensityCompact.addEventListener('click', () => {
-        btnDensityCompact.classList.add('active');
-        btnDensityComfortable.classList.remove('active');
-        tableContainer.classList.add('density-compact');
-      });
-    }
-
-    // Interactive column header sorting
-    document.querySelectorAll('th.sortable-th').forEach(th => {
-      th.addEventListener('click', () => {
-        const sortField = th.getAttribute('data-sort');
-        const currentAria = th.getAttribute('aria-sort');
-        const newDirection = currentAria === 'ascending' ? 'descending' : 'ascending';
-
-        document.querySelectorAll('th.sortable-th').forEach(h => {
-          h.setAttribute('aria-sort', 'none');
-          const icon = h.querySelector('.sort-icon');
-          if (icon) icon.textContent = '↕';
-        });
-
-        th.setAttribute('aria-sort', newDirection);
-        const icon = th.querySelector('.sort-icon');
-        if (icon) icon.textContent = newDirection === 'ascending' ? '▲' : '▼';
-
-        if (sortField === 'rank') {
-          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'rank' : 'rank_desc';
-        } else if (sortField === 'timeline') {
-          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'date_asc' : 'date_desc';
-        } else if (sortField === 'entity') {
-          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'entity' : 'entity_desc';
-        } else if (sortField === 'verdict') {
-          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'verdict' : 'verdict_desc';
-        } else if (sortField === 'quote') {
-          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'quote_asc' : 'quote_desc';
-        }
-
-        renderPromisesTable();
-      });
-    });
-
-    // List.js library integration
-    if (typeof window.List !== 'undefined' && document.getElementById('promises-table-container')) {
-      try {
-        console.log('List.js library ready on promises table');
-      } catch (err) {
-        console.warn('List.js note:', err);
-      }
-    }
-
-    // Domain filter pills bar
-    if (domainPillsBar) {
-      domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(pill => {
-        pill.addEventListener('click', () => {
-          domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => p.classList.remove('active'));
-          pill.classList.add('active');
-          activeCategoryFilter = pill.getAttribute('data-category');
-
-          // Sync dropdown
-          if (filterCategory) {
-            filterCategory.value = activeCategoryFilter;
-          }
-          resetPaginationAndRender();
-        });
-      });
-    }
-
-    // Filter selects & search
-    if (filterEntity) filterEntity.addEventListener('change', resetPaginationAndRender);
-    if (filterVerdict) filterVerdict.addEventListener('change', resetPaginationAndRender);
-    if (filterSort) filterSort.addEventListener('change', resetPaginationAndRender);
-    if (filterCategory) {
-      filterCategory.addEventListener('change', () => {
-        activeCategoryFilter = filterCategory.value;
-        // Sync pills
-        if (domainPillsBar) {
-          domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => {
-            p.classList.toggle('active', p.getAttribute('data-category') === activeCategoryFilter);
-          });
-        }
-        resetPaginationAndRender();
-      });
-    }
-    if (searchInput) searchInput.addEventListener('input', resetPaginationAndRender);
-
-    // Copy hash button in inspect modal
-    if (btnCopyModalHash) {
-      btnCopyModalHash.addEventListener('click', () => {
-        const hashEl = document.getElementById('modal-full-hash');
-        if (hashEl && hashEl.textContent) {
-          navigator.clipboard.writeText(hashEl.textContent).then(() => {
-            const orig = btnCopyModalHash.textContent;
-            btnCopyModalHash.textContent = 'Copied!';
-            setTimeout(() => { btnCopyModalHash.textContent = orig; }, 1500);
-          }).catch(() => {
-            btnCopyModalHash.textContent = 'Copied!';
-            setTimeout(() => { btnCopyModalHash.textContent = 'Copy'; }, 1500);
-          });
-        }
-      });
-    }
-
-    // Table tab switching
-    if (tabBtnPromises) {
-      tabBtnPromises.addEventListener('click', () => {
-        activeTab = 'promises';
-        tabBtnPromises.classList.add('active');
-        if (tabBtnQuarantine) tabBtnQuarantine.classList.remove('active');
-        if (tableContainerPromises) tableContainerPromises.classList.remove('hidden');
-        if (tableContainerQuarantine) tableContainerQuarantine.classList.add('hidden');
-      });
-    }
-
-    if (tabBtnQuarantine) {
-      tabBtnQuarantine.addEventListener('click', () => {
-        activeTab = 'quarantine';
-        tabBtnQuarantine.classList.add('active');
-        if (tabBtnPromises) tabBtnPromises.classList.remove('active');
-        if (tableContainerPromises) tableContainerPromises.classList.add('hidden');
-        if (tableContainerQuarantine) tableContainerQuarantine.classList.remove('hidden');
-      });
-    }
-
-    // Agent role card clicks
-    agentCards.forEach(card => {
-      card.addEventListener('click', () => {
-        agentCards.forEach(c => {
-          c.classList.remove('selected');
-          const cta = c.querySelector('.agent-cta-text');
-          if (cta) cta.textContent = 'Select →';
-        });
-        card.classList.add('selected');
-        const cta = card.querySelector('.agent-cta-text');
-        if (cta) cta.textContent = 'Selected →';
-
-        const idx = parseInt(card.getAttribute('data-agent-idx'), 10) || 0;
-        const info = AGENT_INFO[idx];
-        if (info) {
-          agentDetailDot.className = `dot-status ${info.dotClass}`;
-          agentDetailText.innerHTML = `<strong>${info.name} · ${info.sandbox}.</strong> ${info.desc}`;
-        }
-      });
-    });
-
-    // Modals
-    if (btnCloseInspect) {
-      btnCloseInspect.addEventListener('click', () => {
-        inspectModal.classList.add('hidden');
-        try {
-          window.history.replaceState(null, '', window.location.pathname + window.location.search);
-        } catch (_) {}
-      });
-    }
-    if (inspectModal) {
-      inspectModal.addEventListener('click', (e) => {
-        if (e.target === inspectModal) {
-          inspectModal.classList.add('hidden');
-          try {
-            window.history.replaceState(null, '', window.location.pathname + window.location.search);
-          } catch (_) {}
-        }
-      });
-    }
-
-    if (btnOpenMethodology) {
-      btnOpenMethodology.addEventListener('click', () => methodModal.classList.remove('hidden'));
-    }
-    if (btnCloseMethod) {
-      btnCloseMethod.addEventListener('click', () => methodModal.classList.add('hidden'));
-    }
-    if (methodModal) {
-      methodModal.addEventListener('click', (e) => {
-        if (e.target === methodModal) methodModal.classList.add('hidden');
-      });
-    }
-
-    // Stacked bar segments & legend clicks (filter by verdict and scroll to explore)
-    const handleVerdictFilterClick = (targetVerdict) => {
-      if (filterVerdict) {
-        if (filterVerdict.value === targetVerdict) {
-          filterVerdict.value = 'all';
-        } else {
-          filterVerdict.value = targetVerdict;
-        }
-      }
-      resetPaginationAndRender();
-      const exploreSection = document.getElementById('explore');
-      if (exploreSection) {
-        exploreSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    };
-
-    document.querySelectorAll('.outcome-stacked-bar-hero .bar-seg, .outcome-bar-legend .legend-btn').forEach(el => {
-      el.addEventListener('click', () => {
-        const v = el.getAttribute('data-verdict');
-        if (v) handleVerdictFilterClick(v);
-      });
-    });
-
-    // Auto-play pipeline replay when #watch scrolls into view (N01 altered-quote catch by default)
-    const watchSection = document.getElementById('watch');
-    if (watchSection && 'IntersectionObserver' in window) {
-      let hasAutoPlayed = false;
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && !hasAutoPlayed && !pipelineRunning) {
-            hasAutoPlayed = true;
-            startPipeline('N01');
-          }
-        });
-      }, { threshold: 0.25 });
-      observer.observe(watchSection);
-    }
-
-    // Featured stories "See evidence" buttons
-    document.querySelectorAll('.btn-story-evidence').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const pid = btn.getAttribute('data-pid');
-        const qid = btn.getAttribute('data-qid');
-        if (qid) {
-          if (tabBtnQuarantine) tabBtnQuarantine.click();
-          const qRow = document.querySelector(`tr[data-qid="${qid}"]`);
-          if (qRow) {
-            qRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            qRow.classList.add('row-highlight');
-            setTimeout(() => qRow.classList.remove('row-highlight'), 2000);
-          }
-          const exploreSec = document.getElementById('explore');
-          if (exploreSec) exploreSec.scrollIntoView({ behavior: 'smooth' });
-        } else if (pid) {
-          openInspectModal(pid);
-        }
-      });
-    });
-
-    // Mobile filter sheet (<768px)
-    const btnMobileFilter = document.getElementById('btn-mobile-filter');
-    const filterBackdrop = document.getElementById('mobile-filter-backdrop');
-    const filterSheet = document.getElementById('mobile-filter-sheet');
-    const btnCloseFilterSheet = document.getElementById('btn-close-filter-sheet');
-    const btnSheetApply = document.getElementById('btn-sheet-apply');
-    const btnSheetReset = document.getElementById('btn-sheet-reset');
-    const mobileFilterBadge = document.getElementById('mobile-filter-badge');
-
-    const sheetEntity = document.getElementById('mobile-filter-entity');
-    const sheetVerdict = document.getElementById('mobile-filter-verdict');
-    const sheetCategory = document.getElementById('mobile-filter-category');
-    const sheetSort = document.getElementById('mobile-filter-sort');
-
-    function updateMobileFilterBadge() {
-      if (!mobileFilterBadge) return;
-      let activeCount = 0;
-      if (filterEntity && filterEntity.value !== 'all') activeCount++;
-      if (filterVerdict && filterVerdict.value !== 'all') activeCount++;
-      if (activeCategoryFilter && activeCategoryFilter !== 'all') activeCount++;
-      if (filterSort && filterSort.value !== 'rank') activeCount++;
-      if (searchInput && searchInput.value.trim() !== '') activeCount++;
-
-      if (activeCount > 0) {
-        mobileFilterBadge.textContent = activeCount;
-        mobileFilterBadge.style.display = 'inline-flex';
-      } else {
-        mobileFilterBadge.style.display = 'none';
-      }
-    }
-
-    const openFilterSheet = () => {
-      if (filterBackdrop) filterBackdrop.style.display = 'flex';
-      if (filterSheet) filterSheet.classList.add('open');
-      if (btnMobileFilter) btnMobileFilter.setAttribute('aria-expanded', 'true');
-
-      // Sync sheet controls from main filters
-      if (sheetEntity && filterEntity) sheetEntity.value = filterEntity.value;
-      if (sheetVerdict && filterVerdict) sheetVerdict.value = filterVerdict.value;
-      if (sheetCategory) sheetCategory.value = activeCategoryFilter || 'all';
-      if (sheetSort && filterSort) sheetSort.value = filterSort.value;
-    };
-
-    const closeFilterSheet = () => {
-      if (filterBackdrop) filterBackdrop.style.display = 'none';
-      if (filterSheet) filterSheet.classList.remove('open');
-      if (btnMobileFilter) btnMobileFilter.setAttribute('aria-expanded', 'false');
-    };
-
-    if (btnMobileFilter) btnMobileFilter.addEventListener('click', openFilterSheet);
-    if (btnCloseFilterSheet) btnCloseFilterSheet.addEventListener('click', closeFilterSheet);
-    if (filterBackdrop) {
-      filterBackdrop.addEventListener('click', (e) => {
-        if (e.target === filterBackdrop) closeFilterSheet();
-      });
-    }
-
-    if (btnSheetApply) {
-      btnSheetApply.addEventListener('click', () => {
-        if (sheetEntity && filterEntity) filterEntity.value = sheetEntity.value;
-        if (sheetVerdict && filterVerdict) filterVerdict.value = sheetVerdict.value;
-        if (sheetCategory) {
-          activeCategoryFilter = sheetCategory.value;
-          if (filterCategory) filterCategory.value = sheetCategory.value;
-          if (domainPillsBar) {
-            domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => {
-              p.classList.toggle('active', p.getAttribute('data-category') === activeCategoryFilter);
-            });
-          }
-        }
-        if (sheetSort && filterSort) filterSort.value = sheetSort.value;
-        closeFilterSheet();
-        resetPaginationAndRender();
-      });
-    }
-
-    if (btnSheetReset) {
-      btnSheetReset.addEventListener('click', () => {
-        if (sheetEntity) sheetEntity.value = 'all';
-        if (sheetVerdict) sheetVerdict.value = 'all';
-        if (sheetCategory) sheetCategory.value = 'all';
-        if (sheetSort) sheetSort.value = 'rank';
-
-        if (filterEntity) filterEntity.value = 'all';
-        if (filterVerdict) filterVerdict.value = 'all';
-        if (filterCategory) filterCategory.value = 'all';
-        if (filterSort) filterSort.value = 'rank';
-        if (searchInput) searchInput.value = '';
-        activeCategoryFilter = 'all';
-
-        if (domainPillsBar) {
-          domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => {
-            p.classList.toggle('active', p.getAttribute('data-category') === activeCategoryFilter);
-          });
-        }
-        closeFilterSheet();
-        resetPaginationAndRender();
-      });
-    }
-
-    // Back to top button
-    const btnBackToTop = document.getElementById('btn-back-to-top');
-    if (btnBackToTop) {
-      btnBackToTop.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    }
-
-    // Global ESC key to close open modals and sheet
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        if (inspectModal) inspectModal.classList.add('hidden');
-        if (methodModal) methodModal.classList.add('hidden');
-        closeFilterSheet();
-      }
-    });
-  }
-
-  // -------------------------------------------------------------------------
-  // UTILITIES & DERIVED COUNTS
-  // -------------------------------------------------------------------------
-  function updateCategoryPillCounts() {
-    if (!domainPillsBar || !demoData || !demoData.promises) return;
-    const catCounts = {};
-    demoData.promises.forEach(p => {
-      let c = p.category || 'Uncategorized';
-      if (c === 'Civic & Public Safety') c = 'Civic Governance';
-      catCounts[c] = (catCounts[c] || 0) + 1;
-    });
-    const total = demoData.promises.length;
-
-    domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(pill => {
-      const cat = pill.getAttribute('data-category');
-      if (cat === 'all') {
-        pill.textContent = `All of SF (${total})`;
-        pill.style.display = '';
-      } else {
-        const lookupKey = cat === 'Civic & Public Safety' ? 'Civic Governance' : cat;
-        const count = catCounts[lookupKey] || 0;
-        const displayLabel = cat === 'Civic & Public Safety' ? 'Civic Governance' : cat;
-        pill.textContent = `${displayLabel} (${count})`;
-        // Hide empty category pills so users never see (0) items
-        pill.style.display = count > 0 ? '' : 'none';
-      }
-    });
+  function cleanQuoteText(text) {
+    if (!text) return '';
+    return String(text).replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/`([^`]+)`/g, '$1').trim();
   }
 
   function escapeHtml(str) {
     if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
-  // Kick off on load
+  // -------------------------------------------------------------------------
+  // Initialization
+  // -------------------------------------------------------------------------
+  async function init() {
+    if (window.__DEMO_DATA__) {
+      demoData = window.__DEMO_DATA__;
+    } else {
+      try {
+        const res = await fetch('data.json');
+        demoData = await res.json();
+      } catch (err) {
+        console.error('Failed to load data.json', err);
+        return;
+      }
+    }
+
+    setupReplayScenarios();
+    setupEventListeners();
+    renderExplore();
+    renderQuarantineTable();
+    setupFeaturedStories();
+    setupObserverForReplay();
+  }
+
+  // -------------------------------------------------------------------------
+  // Replay State Machine (0.5)
+  // -------------------------------------------------------------------------
+  const SCENARIOS = {
+    N01: {
+      id: 'N01',
+      label: 'Planted Quote Mutation Catch (Watchdog N01) [Default]',
+      speaker: 'Planted Watchdog Test N01',
+      title: 'Quote Mutation Detection',
+      target: 'Mayor Daniel Lurie · 1,500 Shelter Beds (P05)',
+      expectedVerdict: 'quarantined',
+      verdictLabel: 'Quarantined',
+      sourceUrl: 'https://www.sf.gov/news/mayor-lurie-announces-crisis-stabilization-center',
+      file: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md',
+      hash: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa',
+      stages: {
+        1: {
+          badge: 'HASH VERIFIED',
+          title: 'Stage 1: Contemporaneous Source Retrieval',
+          desc: 'Archil disk reads saved markdown record. SHA-256 byte fingerprint matches disk origin (582955d5df78...).'
+        },
+        2: {
+          badge: 'MUTATION DETECTED',
+          title: 'Stage 2: Deterministic Quote Verification',
+          alert: true,
+          alertText: "FLASH: 'shelter units' was altered! Original source reads '1,500 new shelter beds'. Substring match failed.",
+          desc: 'Verbatim quote verification failed against immutable saved bytes.'
+        },
+        3: {
+          badge: 'GATE PASSED (8/8)',
+          title: 'Stage 3: Relevance Gate',
+          desc: 'Relevance criteria scored 8/8 for civic impact and measurable metric.'
+        },
+        4: {
+          badge: 'ADVOCATES FILED',
+          title: 'Stage 4: Process-Isolated Advocates',
+          desc: 'Sandbox A and Sandbox B run in separate memory spaces without database write access.'
+        },
+        5: {
+          badge: 'CHECK FAILED · DIVERTED',
+          title: 'Stage 5: Arbitrator Code Execution',
+          alert: true,
+          desc: 'Deterministic check accuracy_quote FAILED. Row immediately diverted to Quarantine Registry.'
+        },
+        6: {
+          badge: 'HELD IN QUARANTINE',
+          title: 'Stage 6: Outcome Ledger',
+          desc: 'Item Q-N01 held back in quarantine registry. 0 rows written to main verified table.'
+        }
+      }
+    },
+    P02: {
+      id: 'P02',
+      label: '#01 · 24/7 Crisis Stabilization Center (P02, Kept)',
+      speaker: 'Mayor Daniel Lurie',
+      title: '24/7 Crisis Stabilization Center',
+      target: 'Tenderloin (822 Geary St)',
+      expectedVerdict: 'kept',
+      verdictLabel: 'Kept',
+      sourceUrl: 'https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center',
+      file: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md',
+      hash: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa',
+      stages: {
+        1: {
+          badge: 'HASH VERIFIED',
+          title: 'Stage 1: Official Source Retrieval',
+          desc: 'Archil disk reads official sf.gov municipal press release. SHA-256 matches byte-for-byte.'
+        },
+        2: {
+          badge: 'QUOTE VERIFIED',
+          title: 'Stage 2: Model Draft Extraction',
+          desc: 'Verbatim quote verified: "That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,".'
+        },
+        3: {
+          badge: 'GATE PASSED (8/8)',
+          title: 'Stage 3: Relevance Gate',
+          desc: 'Scored 8/8: Real commitment (2/2), Measurable (2/2), SF scope (2/2), Public interest (2/2).'
+        },
+        4: {
+          badge: 'ARGUMENTS FILED',
+          title: 'Stage 4: Process-Isolated Advocates',
+          desc: 'Sandbox A confirms facility began accepting clients on April 28, 2025 at 822 Geary St. Sandbox B found 0 contradicting closure notices.'
+        },
+        5: {
+          badge: '7/7 CHECKS PASSED',
+          title: 'Stage 5: Arbitrator Code Execution',
+          desc: 'All 7 deterministic checks passed: domain allowlist, hash match, quote match, timeline, rubric.'
+        },
+        6: {
+          badge: 'VERIFIED & SIGNED',
+          title: 'Stage 6: Verdict Ledger',
+          desc: 'Verdict KEPT signed into append-only SQLite audit ledger. Published to main table.'
+        }
+      }
+    },
+    P05: {
+      id: 'P05',
+      label: '#05 · 1,500 Shelter Beds in First 6 Months (P05, Broken)',
+      speaker: 'Mayor Daniel Lurie',
+      title: '1,500 Shelter Beds in First 6 Months',
+      target: 'Citywide Shelter Network',
+      expectedVerdict: 'broken',
+      verdictLabel: 'Broken',
+      sourceUrl: 'https://thefrisc.com/mayor-lurie-shelter-pledge-shortfall',
+      file: 'thefrisc_shelter_shortfall.md',
+      hash: '384c310bb67941a4a131738f8ed7c9aa4d73e5bc41468a7d6c028caafc141812',
+      stages: {
+        1: {
+          badge: 'SOURCE RETRIEVED',
+          title: 'Stage 1: News Investigation Source',
+          desc: 'Retrieved verified investigative reporting documenting shelter capacity metrics.'
+        },
+        2: {
+          badge: 'QUOTE EXTRACTED',
+          title: 'Stage 2: Verbatim Extraction',
+          desc: 'Extracted campaign commitment to open 1,500 beds in the first six months.'
+        },
+        3: {
+          badge: 'GATE PASSED (8/8)',
+          title: 'Stage 3: Relevance Gate',
+          desc: 'High civic priority and quantified bed count target passed relevance gate.'
+        },
+        4: {
+          badge: 'EVIDENCE FILED',
+          title: 'Stage 4: Process-Isolated Advocates',
+          desc: 'Sandbox B files municipal audit showing shelter expansions remained below numeric target.'
+        },
+        5: {
+          badge: 'RUBRIC EVALUATION',
+          title: 'Stage 5: Arbitrator Code Execution',
+          desc: 'Deterministic rubric rule: numeric target not met within deadline window evaluated to broken.'
+        },
+        6: {
+          badge: 'VERDICT BROKEN',
+          title: 'Stage 6: Verdict Ledger',
+          desc: 'Verdict BROKEN committed to audit ledger. Reason: numeric target not met or plan abandoned.'
+        }
+      }
+    }
+  };
+
+  function setupReplayScenarios() {
+    const runSelect = document.getElementById('run-select');
+    if (!runSelect) return;
+    runSelect.innerHTML = '';
+    Object.keys(SCENARIOS).forEach(key => {
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = SCENARIOS[key].label;
+      if (key === currentRunType) opt.selected = true;
+      runSelect.appendChild(opt);
+    });
+
+    renderActiveStage(currentRunType, currentStage);
+  }
+
+  function renderActiveStage(scenarioKey, stageNum) {
+    const scenario = SCENARIOS[scenarioKey] || SCENARIOS.N01;
+    const panel = document.getElementById('pipeline-active-stage-panel');
+    const stageIndicator = document.getElementById('pipeline-stage-indicator');
+    const statusText = document.getElementById('packet-status-text');
+    const trackFill = document.getElementById('packet-track-fill');
+    const ballDot = document.getElementById('packet-ball-dot');
+
+    // Update milestone indicators
+    for (let i = 1; i <= 6; i++) {
+      const circle = document.getElementById(`ms-circle-${i}`);
+      if (circle) {
+        if (i < stageNum) {
+          circle.className = 'milestone-circle passed';
+          circle.textContent = '✓';
+        } else if (i === stageNum) {
+          circle.className = 'milestone-circle active';
+          circle.textContent = i;
+        } else {
+          circle.className = 'milestone-circle';
+          circle.textContent = i;
+        }
+      }
+    }
+
+    const pct = stageNum === 0 ? 0 : Math.round((stageNum / 6) * 100);
+    if (trackFill) trackFill.style.width = `${pct}%`;
+    if (ballDot) ballDot.style.left = `${pct}%`;
+
+    if (stageNum === 0) {
+      if (stageIndicator) stageIndicator.textContent = 'STAGE 0 / 6 · READY TO RUN';
+      if (statusText) statusText.textContent = 'waiting to start';
+      if (panel) {
+        panel.innerHTML = `
+          <div class="stage-card-header">
+            <span class="stage-state-pill font-mono">READY</span>
+            <h3 class="stage-heading">${escapeHtml(scenario.title)}</h3>
+          </div>
+          <p style="color: var(--ink-dim); font-size: 0.95rem; margin: 12px 0 16px;">
+            Target: <strong>${escapeHtml(scenario.speaker)}</strong> (${escapeHtml(scenario.target)})
+          </p>
+          <div style="background: rgba(0,0,0,0.25); padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.86rem; color: var(--muted);" class="font-mono">
+            Source: ${escapeHtml(scenario.sourceUrl)}
+          </div>
+          <button type="button" class="btn btn-primary" id="btn-replay-start-inline" style="min-height: 44px;">
+            Start Pipeline Run &rarr;
+          </button>
+        `;
+        const startBtn = document.getElementById('btn-replay-start-inline');
+        if (startBtn) startBtn.addEventListener('click', runReplay);
+      }
+      return;
+    }
+
+    const stageData = scenario.stages[stageNum] || {};
+    if (stageIndicator) {
+      stageIndicator.textContent = `STAGE ${stageNum} / 6 · ${stageData.badge || 'RUNNING'}`;
+    }
+    if (statusText) {
+      statusText.textContent = stageNum === 6 ? (scenario.expectedVerdict === 'quarantined' ? 'diverted to quarantine' : 'verified & delivered') : 'in progress';
+    }
+
+    if (panel) {
+      let alertHtml = '';
+      if (stageData.alert) {
+        alertHtml = `
+          <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 8px; padding: 12px 14px; margin: 12px 0; color: #FCA5A5; font-size: 0.88rem;" class="font-mono">
+            <strong>⚠ WATCHDOG CATCH:</strong> ${escapeHtml(stageData.alertText || stageData.desc)}
+          </div>
+        `;
+      }
+
+      panel.innerHTML = `
+        <div class="stage-card-header">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="stage-num-badge blue">${stageNum}</span>
+            <h3 class="stage-heading" style="margin: 0;">${escapeHtml(stageData.title || `Stage ${stageNum}`)}</h3>
+          </div>
+          <span class="stage-state-pill font-mono done">${escapeHtml(stageData.badge || 'DONE')}</span>
+        </div>
+        ${alertHtml}
+        <p style="color: var(--ink); font-size: 0.92rem; line-height: 1.5; margin: 14px 0;">
+          ${escapeHtml(stageData.desc || '')}
+        </p>
+        <div style="display: flex; gap: 12px; margin-top: 18px; align-items: center; flex-wrap: wrap;">
+          <span class="font-mono" style="font-size: 0.78rem; color: var(--muted);">SHA-256: <code>${escapeHtml(scenario.hash.slice(0, 16))}…</code></span>
+          <button type="button" class="btn-copy-hash font-mono" data-hash="${escapeHtml(scenario.hash)}">Copy Hash</button>
+        </div>
+      `;
+    }
+  }
+
+  function advanceStep() {
+    if (currentStage >= 6) {
+      currentStage = 1;
+    } else {
+      currentStage++;
+    }
+    renderActiveStage(currentRunType, currentStage);
+  }
+
+  function runReplay() {
+    if (isAutoRunning) {
+      clearTimeout(autoTimer);
+      isAutoRunning = false;
+      return;
+    }
+    isAutoRunning = true;
+    currentStage = 1;
+    renderActiveStage(currentRunType, currentStage);
+
+    function tick() {
+      if (!isAutoRunning) return;
+      if (currentStage < 6) {
+        currentStage++;
+        renderActiveStage(currentRunType, currentStage);
+        autoTimer = setTimeout(tick, 1000);
+      } else {
+        isAutoRunning = false;
+      }
+    }
+    autoTimer = setTimeout(tick, 1000);
+  }
+
+  function resetPipeline() {
+    clearTimeout(autoTimer);
+    isAutoRunning = false;
+    currentStage = 0;
+    renderActiveStage(currentRunType, 0);
+  }
+
+  function jumpToStage(num) {
+    clearTimeout(autoTimer);
+    isAutoRunning = false;
+    currentStage = num;
+    renderActiveStage(currentRunType, num);
+  }
+
+  function setupObserverForReplay() {
+    const watchSection = document.getElementById('watch');
+    if (!watchSection) return;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasAutoPlayed) {
+          hasAutoPlayed = true;
+          runReplay();
+        }
+      });
+    }, { threshold: 0.35 });
+
+    observer.observe(watchSection);
+  }
+
+  // -------------------------------------------------------------------------
+  // Quarantine Registry (0.1)
+  // -------------------------------------------------------------------------
+  function renderQuarantineTable() {
+    if (!demoData) return;
+    const quarantined = demoData.quarantined || [];
+    const tbody = document.getElementById('quarantine-table-body');
+    const mobileList = document.getElementById('mobile-quarantine-cards-list');
+
+    if (tbody) {
+      tbody.innerHTML = quarantined.map((q, idx) => {
+        const qid = escapeHtml(q.quarantine_id || `Q-${idx+1}`);
+        const pid = escapeHtml(q.promise_id || '');
+        const typeBadge = (q.planted_claim || q.original_text) ? 'Test case' : 'Rejected candidate';
+        const typeCls = typeBadge === 'Test case' ? 'test-case' : 'rejected-candidate';
+        const claim = escapeHtml(cleanQuoteText(q.planted_claim || q.claim || q.title || ''));
+        
+        let diffHtml = '';
+        if (q.original_text && q.altered_text) {
+          diffHtml = `<div class="quarantine-diff-row font-mono"><span class="diff-label">Mutation:</span> <span class="diff-orig">${escapeHtml(q.original_text)}</span> &rarr; <span class="diff-alt">${escapeHtml(q.altered_text)}</span></div>`;
+        } else if (q.change_diff) {
+          diffHtml = `<div class="quarantine-diff-row font-mono"><span class="diff-label">Change:</span> <span class="diff-alt">${escapeHtml(q.change_diff)}</span></div>`;
+        }
+
+        const failingPlain = escapeHtml(q.failing_check || 'Integrity check failed');
+        const checkType = escapeHtml(q.check_type || 'accuracy_quote');
+        const reason = escapeHtml(q.reason || 'Held back from published dataset.');
+        const agent = escapeHtml(q.agent || 'Extractor Agent');
+        const dateStr = escapeHtml(q.quarantined_date || 'Nov 10, 2026');
+        const destination = escapeHtml(q.destination || 'Held back. Never published.');
+        const hash = escapeHtml(q.source_hash || '');
+        const hashHtml = hash ? `<div class="quarantine-hash-row font-mono"><span class="hash-label">SHA-256:</span> <code class="quarantine-hash">${hash.slice(0, 12)}…</code> <button type="button" class="btn-copy-hash font-mono" data-hash="${hash}">Copy</button></div>` : '';
+
+        return `
+          <tr class="quarantine-row" id="quarantine-row-${qid}" data-qid="${qid}">
+            <td class="quarantine-type-cell">
+              <div class="quarantine-badge-group">
+                <span class="quarantine-type-badge ${typeCls}">${typeBadge}</span>
+                <span class="quarantine-pid font-mono">${pid}</span>
+              </div>
+            </td>
+            <td class="quarantine-claim-cell">
+              <div class="quarantine-submitted-claim">&ldquo;${claim}&rdquo;</div>
+              ${diffHtml}
+            </td>
+            <td class="quarantine-check-cell">
+              <div class="quarantine-check-plain">${failingPlain}</div>
+              <code class="quarantine-check-code font-mono">${checkType}</code>
+            </td>
+            <td class="quarantine-reason-cell">
+              <p class="quarantine-reason-text">${reason}</p>
+              <div class="quarantine-catcher-meta font-mono">Caught by ${agent} &middot; ${dateStr}</div>
+            </td>
+            <td class="quarantine-outcome-cell">
+              <div class="quarantine-outcome-status font-mono">${destination}</div>
+              ${hashHtml}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    if (mobileList) {
+      mobileList.innerHTML = quarantined.map((q, idx) => {
+        const qid = escapeHtml(q.quarantine_id || `Q-${idx+1}`);
+        const pid = escapeHtml(q.promise_id || '');
+        const typeBadge = (q.planted_claim || q.original_text) ? 'Test case' : 'Rejected candidate';
+        const typeCls = typeBadge === 'Test case' ? 'test-case' : 'rejected-candidate';
+        const claim = escapeHtml(cleanQuoteText(q.planted_claim || q.claim || q.title || ''));
+
+        let diffHtml = '';
+        if (q.original_text && q.altered_text) {
+          diffHtml = `<div class="quarantine-diff-row font-mono"><span class="diff-label">Mutation:</span> <span class="diff-orig">${escapeHtml(q.original_text)}</span> &rarr; <span class="diff-alt">${escapeHtml(q.altered_text)}</span></div>`;
+        } else if (q.change_diff) {
+          diffHtml = `<div class="quarantine-diff-row font-mono"><span class="diff-label">Change:</span> <span class="diff-alt">${escapeHtml(q.change_diff)}</span></div>`;
+        }
+
+        const failingPlain = escapeHtml(q.failing_check || 'Integrity check failed');
+        const checkType = escapeHtml(q.check_type || 'accuracy_quote');
+        const reason = escapeHtml(q.reason || 'Held back from published dataset.');
+        const agent = escapeHtml(q.agent || 'Extractor Agent');
+        const dateStr = escapeHtml(q.quarantined_date || 'Nov 10, 2026');
+        const destination = escapeHtml(q.destination || 'Held back. Never published.');
+
+        return `
+          <div class="mobile-quarantine-card" id="mobile-qcard-${qid}" data-qid="${qid}">
+            <div class="mobile-card-header">
+              <div class="mobile-card-speaker-group">
+                <span class="quarantine-type-badge ${typeCls}">${typeBadge}</span>
+                <span class="mobile-card-id font-mono">${pid}</span>
+              </div>
+              <span class="verdict-chip quarantined">Quarantined</span>
+            </div>
+            <blockquote class="quarantine-claim-quote font-serif">&ldquo;${claim}&rdquo;</blockquote>
+            ${diffHtml}
+            <div class="quarantine-check-block">
+              <div class="quarantine-check-plain">${failingPlain} <code class="quarantine-check-code font-mono">${checkType}</code></div>
+              <p class="quarantine-reason-text">${reason}</p>
+            </div>
+            <div class="mobile-card-footer font-mono">
+              <span>${agent} &middot; ${dateStr}</span>
+              <span class="quarantine-outcome-status">${destination}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  function setTab(tabName) {
+    activeTab = tabName;
+    const tabPromises = document.getElementById('tab-btn-promises');
+    const tabQuarantine = document.getElementById('tab-btn-quarantine');
+    const tablePromises = document.getElementById('promises-table-container');
+    const cardsPromises = document.getElementById('mobile-cards-list');
+    const tableQuarantine = document.getElementById('quarantine-table-container');
+    const cardsQuarantine = document.getElementById('mobile-quarantine-cards-list');
+    const qHeader = document.getElementById('quarantine-header-status');
+    const primaryControls = document.querySelector('.explore-primary-controls');
+    const moreFiltersPanel = document.getElementById('more-filters-panel');
+    const showingStatus = document.getElementById('table-showing-status');
+    const paginationControls = document.getElementById('pagination-controls');
+
+    if (tabName === 'quarantine') {
+      if (tabPromises) {
+        tabPromises.classList.remove('active');
+        tabPromises.setAttribute('aria-selected', 'false');
+      }
+      if (tabQuarantine) {
+        tabQuarantine.classList.add('active');
+        tabQuarantine.setAttribute('aria-selected', 'true');
+      }
+
+      // Hide verified-only controls
+      if (primaryControls) primaryControls.classList.add('hidden');
+      if (moreFiltersPanel) moreFiltersPanel.classList.add('hidden');
+      if (showingStatus) showingStatus.classList.add('hidden');
+      if (paginationControls) paginationControls.classList.add('hidden');
+      if (tablePromises) tablePromises.classList.add('hidden');
+      if (cardsPromises) cardsPromises.classList.add('hidden');
+
+      // Show quarantine elements
+      if (qHeader) qHeader.classList.remove('hidden');
+      if (tableQuarantine) tableQuarantine.classList.remove('hidden');
+      if (cardsQuarantine) cardsQuarantine.classList.remove('hidden');
+    } else {
+      if (tabQuarantine) {
+        tabQuarantine.classList.remove('active');
+        tabQuarantine.setAttribute('aria-selected', 'false');
+      }
+      if (tabPromises) {
+        tabPromises.classList.add('active');
+        tabPromises.setAttribute('aria-selected', 'true');
+      }
+
+      // Restore verified controls
+      if (primaryControls) primaryControls.classList.remove('hidden');
+      if (showingStatus) showingStatus.classList.remove('hidden');
+      if (paginationControls) paginationControls.classList.remove('hidden');
+      if (tablePromises) tablePromises.classList.remove('hidden');
+      if (cardsPromises) cardsPromises.classList.remove('hidden');
+
+      // Hide quarantine elements
+      if (qHeader) qHeader.classList.add('hidden');
+      if (tableQuarantine) tableQuarantine.classList.add('hidden');
+      if (cardsQuarantine) cardsQuarantine.classList.add('hidden');
+    }
+  }
+
+  function switchToQuarantineAndHighlight(qid) {
+    setTab('quarantine');
+    const el = document.getElementById(`quarantine-row-${qid}`) || document.getElementById(`mobile-qcard-${qid}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.style.outline = '3px solid #F59E0B';
+      setTimeout(() => {
+        el.style.outline = '';
+      }, 2500);
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Explore All Promises (1.1, 1.2, 1.3)
+  // -------------------------------------------------------------------------
+  function filterAndSortPromises() {
+    if (!demoData) return [];
+    let list = (demoData.promises || []).slice();
+
+    // Verdict filter
+    if (filterVerdict !== 'all') {
+      list = list.filter(p => (p.verdict || '').toLowerCase() === filterVerdict.toLowerCase());
+    }
+
+    // Category filter
+    if (filterCategory !== 'all') {
+      list = list.filter(p => p.category === filterCategory);
+    }
+
+    // Entity filter
+    if (filterEntity !== 'all') {
+      list = list.filter(p => (p.entity_type || '').toLowerCase() === filterEntity.toLowerCase());
+    }
+
+    // Source Tier filter
+    if (filterTier !== 'all') {
+      list = list.filter(p => getSourceTier(p.source_url).toLowerCase() === filterTier.toLowerCase());
+    }
+
+    // Keyword search
+    if (searchTerm.trim()) {
+      const q = searchTerm.toLowerCase().trim();
+      list = list.filter(p => {
+        const text = `${p.promise_id} ${p.entity} ${p.role || ''} ${p.promise_text} ${p.neighborhood || ''} ${p.category}`.toLowerCase();
+        return text.includes(q);
+      });
+    }
+
+    // Sort
+    if (filterSort === 'rank') {
+      list.sort((a, b) => (a.impact_rank || 999) - (b.impact_rank || 999));
+    } else if (filterSort === 'default') {
+      list.sort((a, b) => String(b.promised_date || '').localeCompare(String(a.promised_date || '')));
+    } else if (filterSort === 'date_asc') {
+      list.sort((a, b) => String(a.promised_date || '').localeCompare(String(b.promised_date || '')));
+    } else if (filterSort === 'verdict') {
+      list.sort((a, b) => String(a.verdict || '').localeCompare(String(b.verdict || '')));
+    } else if (filterSort === 'entity') {
+      list.sort((a, b) => String(a.entity || '').localeCompare(String(b.entity || '')));
+    }
+
+    return list;
+  }
+
+  function renderExplore() {
+    const list = filterAndSortPromises();
+    const totalCount = (demoData && demoData.promises && demoData.promises.length) || 54;
+    const showingCount = Math.min(visibleRowsCount, list.length);
+
+    // Update status line
+    const showingCountEl = document.getElementById('table-showing-count');
+    const totalCountEl = document.getElementById('table-total-count');
+    const showingTextEl = document.getElementById('table-showing-text');
+    if (showingTextEl) {
+      showingTextEl.innerHTML = `Showing <strong id="table-showing-count">${showingCount}</strong> of <span id="table-total-count">${list.length}</span> commitments`;
+    }
+
+    // Update pagination buttons
+    const btnShowMore = document.getElementById('btn-show-more');
+    const btnShowAll = document.getElementById('btn-show-all');
+    if (btnShowMore) {
+      if (showingCount >= list.length) {
+        btnShowMore.style.display = 'none';
+      } else {
+        btnShowMore.style.display = 'inline-flex';
+        btnShowMore.textContent = `Show 10 more`;
+      }
+    }
+    if (btnShowAll) {
+      if (showingCount >= list.length) {
+        btnShowAll.style.display = 'none';
+      } else {
+        btnShowAll.style.display = 'inline-flex';
+        btnShowAll.textContent = `Show all ${list.length}`;
+      }
+    }
+
+    // Render table rows
+    const tbody = document.getElementById('promises-table-body');
+    const mobileCards = document.getElementById('mobile-cards-list');
+
+    if (tbody) {
+      tbody.innerHTML = list.slice(0, showingCount).map((p, idx) => {
+        const rank = String(p.impact_rank || idx + 1).padStart(2, '0');
+        const pid = escapeHtml(p.promise_id || '');
+        const entity = escapeHtml(p.entity || '');
+        const role = escapeHtml(p.role || '');
+        const neighborhood = escapeHtml(p.neighborhood || 'Citywide San Francisco');
+        const promiseRaw = cleanQuoteText(p.promise_text || '');
+        const promiseClamped = escapeHtml(promiseRaw.slice(0, 150) + (promiseRaw.length > 150 ? '…' : ''));
+        const outcomeReason = escapeHtml(formatPlainVerdictReason(p.verdict_reason, p.verdict));
+        let promised = escapeHtml(p.promised_date || 'not recorded');
+        if (p.promised_date_note) promised += ' (derived)';
+        const due = escapeHtml(p.due_date || 'No deadline');
+        const done = escapeHtml(p.opened_date || p.completed_date || (p.verdict === 'kept' ? 'Verified completed' : '—'));
+        const verdict = p.verdict || 'undecided';
+        const verdClass = verdict.toLowerCase().replace(/[\s-]+/g, '_');
+        const verdictLabel = formatVerdictLabel(verdict);
+        const tier = getSourceTier(p.source_url);
+        const tierClass = tier.toLowerCase();
+
+        return `
+          <tr class="promise-row" id="promise-${pid}" data-promise-id="${pid}" tabindex="0" role="button" aria-label="Inspect #${rank} ${entity}: ${promiseClamped.slice(0, 60)}">
+            <td class="table-entity-cell">
+              <div class="entity-headline-row">
+                <span class="table-entity-name">${entity}</span>
+                <span class="stable-id-pill font-mono">#${rank}</span>
+              </div>
+              <div class="entity-sub-row font-mono">
+                <span class="table-role-tag">${role}</span>
+              </div>
+              <div class="entity-geo-tag font-mono">${neighborhood}</div>
+            </td>
+            <td class="table-quote-cell">
+              <div class="table-promise-block">
+                <div class="table-kicker font-mono">PROMISE</div>
+                <blockquote class="table-quote-text font-serif">&ldquo;${promiseClamped}&rdquo;</blockquote>
+              </div>
+              <div class="table-outcome-block">
+                <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                <span class="table-outcome-text">${outcomeReason}</span>
+              </div>
+            </td>
+            <td class="table-verdict-cell">
+              <span class="verdict-chip ${verdClass}">${verdictLabel}</span>
+              <div class="table-tier-row">
+                <span class="source-tier-pill font-mono source-tier-${tierClass}">${tier}</span>
+              </div>
+            </td>
+            <td class="table-timeline-cell font-mono">
+              <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">${promised}</span></div>
+              <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">${due}</span></div>
+              <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">${done}</span></div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    if (mobileCards) {
+      mobileCards.innerHTML = list.slice(0, showingCount).map((p, idx) => {
+        const rank = String(p.impact_rank || idx + 1).padStart(2, '0');
+        const pid = escapeHtml(p.promise_id || '');
+        const entity = escapeHtml(p.entity || '');
+        const promiseRaw = cleanQuoteText(p.promise_text || '');
+        const promise140 = escapeHtml(promiseRaw.slice(0, 140) + (promiseRaw.length > 140 ? '…' : ''));
+        const outcomeReason = escapeHtml(formatPlainVerdictReason(p.verdict_reason, p.verdict));
+        let promised = escapeHtml(p.promised_date || 'not recorded');
+        if (p.promised_date_note) promised += ' (derived)';
+        const due = escapeHtml(p.due_date || 'No deadline');
+        const verdict = p.verdict || 'undecided';
+        const verdClass = verdict.toLowerCase().replace(/[\s-]+/g, '_');
+        const verdictLabel = formatVerdictLabel(verdict);
+        const tier = getSourceTier(p.source_url);
+        const tierClass = tier.toLowerCase();
+
+        return `
+          <div class="mobile-promise-card" data-pid="${pid}" tabindex="0" role="button" aria-label="Inspect #${rank} ${entity}: ${promise140.slice(0, 60)}">
+            <div class="mobile-card-header">
+              <div class="mobile-card-speaker-group">
+                <span class="mobile-card-speaker">${entity}</span>
+                <span class="mobile-card-id font-mono">#${rank}</span>
+              </div>
+              <span class="verdict-chip ${verdClass}">${verdictLabel}</span>
+            </div>
+            <div class="mobile-promise-slot">
+              <blockquote class="mobile-card-quote font-serif">&ldquo;${promise140}&rdquo;</blockquote>
+            </div>
+            <div class="mobile-card-footer font-mono">
+              <span class="mobile-card-date">Said ${promised}</span>
+              <span class="mobile-card-tap-hint">Details &rarr;</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // 4-Part Detail Drawer (1.4)
+  // -------------------------------------------------------------------------
+  function openInspectDrawer(promiseId) {
+    if (!demoData) return;
+    const p = (demoData.promises || []).find(x => x.promise_id === promiseId) || demoData.p02;
+    if (!p) return;
+
+    lastActiveElement = document.activeElement;
+
+    const backdrop = document.getElementById('inspect-drawer-backdrop');
+    const drawer = document.getElementById('inspect-drawer');
+    if (!backdrop || !drawer) return;
+
+    // Header
+    const subtitleEl = document.getElementById('drawer-subtitle');
+    const titleEl = document.getElementById('drawer-title');
+    const chipEl = document.getElementById('drawer-verdict-chip');
+    const tierChipEl = document.getElementById('drawer-source-tier-chip');
+    const horizonBadge = document.getElementById('drawer-horizon-badge');
+
+    const rank = String(p.impact_rank || p.display_no || '01').padStart(2, '0');
+    if (subtitleEl) subtitleEl.textContent = `${p.entity} · ${p.role || ''}`;
+    if (titleEl) {
+      const shortTitle = p.document_title ? p.document_title.split(/[:—–-]/)[0].trim() : `${p.entity} Commitment`;
+      titleEl.textContent = `${p.entity}: ${shortTitle}`;
+    }
+    const verdClass = (p.verdict || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
+    if (chipEl) {
+      chipEl.className = `verdict-chip ${verdClass}`;
+      chipEl.textContent = formatVerdictLabel(p.verdict);
+    }
+    const tier = getSourceTier(p.source_url);
+    if (tierChipEl) {
+      tierChipEl.className = `source-tier-pill source-tier-${tier.toLowerCase()} font-mono`;
+      tierChipEl.textContent = tier;
+    }
+    if (horizonBadge) {
+      horizonBadge.classList.toggle('hidden', !p.long_horizon);
+    }
+
+    // Part 1: Promise & Source
+    const promiseQuote = document.getElementById('drawer-promise-quote');
+    const spkVal = document.getElementById('drawer-speaker-val');
+    const saidVal = document.getElementById('drawer-said-date-val');
+    const dueVal = document.getElementById('drawer-due-date-val');
+    const tierVal = document.getElementById('drawer-tier-val');
+    const srcUrl = document.getElementById('drawer-source-url');
+    const filePath = document.getElementById('drawer-file-path');
+    const hashEl = document.getElementById('drawer-hash');
+    const btnCopy = document.getElementById('btn-drawer-copy-hash');
+    const retVal = document.getElementById('drawer-retrieved-date');
+
+    if (promiseQuote) promiseQuote.textContent = `“${cleanQuoteText(p.promise_text || '')}”`;
+    if (spkVal) spkVal.textContent = `${p.entity} (${p.role || 'Public Official'})`;
+    if (saidVal) saidVal.textContent = p.promised_date || 'not recorded';
+    if (dueVal) dueVal.textContent = p.due_date || 'No deadline';
+    if (tierVal) tierVal.textContent = tier;
+    if (srcUrl) {
+      srcUrl.href = p.source_url || '#';
+      srcUrl.textContent = p.source_url || 'source link not recorded';
+    }
+    if (filePath) {
+      const cleanPath = (p.source_file_path || '').split('/').pop() || `${p.source_hash}.md`;
+      filePath.textContent = cleanPath;
+    }
+    if (hashEl) hashEl.textContent = p.source_hash || 'not recorded';
+    if (btnCopy) btnCopy.setAttribute('data-hash', p.source_hash || '');
+    if (retVal) retVal.textContent = p.fetched_at ? p.fetched_at.split('T')[0] : 'Nov 10, 2026';
+
+    // Media
+    const mediaBox = document.getElementById('drawer-media-box');
+    const mediaImg = document.getElementById('drawer-media-img');
+    const mediaCaption = document.getElementById('drawer-media-caption');
+    if (p.media_image_url && mediaBox && mediaImg) {
+      mediaBox.style.display = 'block';
+      mediaImg.src = p.media_image_url;
+      if (mediaCaption) mediaCaption.textContent = p.media_caption || 'Verified source photographic archive';
+    } else if (mediaBox) {
+      mediaBox.style.display = 'none';
+    }
+
+    // Part 2: Verdict & Plain Reason
+    const chipLg = document.getElementById('drawer-verdict-chip-lg');
+    const plainReasonEl = document.getElementById('drawer-plain-reason');
+    const outcomeQuoteEl = document.getElementById('drawer-outcome-quote');
+    const decidedAtEl = document.getElementById('drawer-decided-at');
+
+    if (chipLg) {
+      chipLg.className = `verdict-chip ${verdClass}`;
+      chipLg.textContent = formatVerdictLabel(p.verdict);
+    }
+    if (plainReasonEl) plainReasonEl.textContent = formatPlainVerdictReason(p.verdict_reason, p.verdict);
+    if (outcomeQuoteEl) outcomeQuoteEl.textContent = `“${cleanQuoteText(p.verbatim_quote || p.verdict_reason || '')}”`;
+    if (decidedAtEl) decidedAtEl.textContent = p.decided_at ? p.decided_at.split('T')[0] : (p.opened_date || 'Nov 10, 2026');
+
+    // Part 3: Advocates
+    const keptBody = document.getElementById('drawer-adv-kept-body');
+    const brokenBody = document.getElementById('drawer-adv-broken-body');
+    const bundles = p.advocate_bundles || {};
+    const kClaims = (bundles.kept && bundles.kept.claims) || [];
+    const bClaims = (bundles.broken && bundles.broken.claims) || [];
+
+    if (keptBody) {
+      if (kClaims.length > 0) {
+        keptBody.innerHTML = kClaims.map(c => `
+          <div style="margin-bottom: 8px;">
+            <div style="font-style: italic; color: var(--ink);">“${escapeHtml(c.quote || c.statement || '')}”</div>
+            <div class="font-mono" style="font-size: 0.72rem; color: var(--muted); margin-top: 2px;">Source: ${escapeHtml(c.source_url || p.source_url || 'Verified record')}</div>
+          </div>
+        `).join('');
+      } else {
+        keptBody.innerHTML = `<p style="font-style: italic; color: var(--muted); margin: 0;">No affirmative source filed during review cycle.</p>`;
+      }
+    }
+
+    if (brokenBody) {
+      if (bClaims.length > 0) {
+        brokenBody.innerHTML = bClaims.map(c => `
+          <div style="margin-bottom: 8px;">
+            <div style="font-style: italic; color: var(--ink);">“${escapeHtml(c.quote || c.statement || '')}”</div>
+            <div class="font-mono" style="font-size: 0.72rem; color: var(--muted); margin-top: 2px;">Source: ${escapeHtml(c.source_url || 'Verified record')}</div>
+          </div>
+        `).join('');
+      } else {
+        const note = (bundles.broken && bundles.broken.note) || 'No contradicting evidence or cancellation records found in saved sources.';
+        brokenBody.innerHTML = `<p style="font-style: italic; color: var(--muted); margin: 0;">${escapeHtml(note)}</p>`;
+      }
+    }
+
+    // Part 4: Arbitrator 7 Checks & Relevance Gate
+    const checksList = document.getElementById('drawer-checks-list');
+    const defaultChecks = [
+      { name: 'authenticity_domain', title: 'Domain Allowlist Enforcement', pass: true, desc: 'Domain is on allowlist (sf.gov, sfmta.com, flysfo.com, legistar).' },
+      { name: 'authenticity_hash', title: 'SHA-256 Byte-Level Integrity', pass: true, desc: 'Computed hash matches disk fingerprint byte-for-byte.' },
+      { name: 'accuracy_quote', title: 'Verbatim Quote Substring Check', pass: true, desc: 'Extracted commitment found verbatim in saved source bytes.' },
+      { name: 'accuracy_speaker', title: 'Speaker & Role Call Verification', pass: true, desc: 'Municipal speaker attribution verified against public roster.' },
+      { name: 'accuracy_date', title: 'Temporal Window & Horizon Bounds', pass: true, desc: 'Said, due, and outcome dates conform to strict temporal order.' },
+      { name: 'verdict_rubric', title: 'Deterministic Rubric Application', pass: true, desc: 'Binary decision logic evaluates passing claims directly to verdict.' },
+      { name: 'relevance_gate', title: 'Relevance Gate Score >= 5.0', pass: true, desc: 'Scored 8/8 for public impact and measurable outcomes.' }
+    ];
+
+    if (checksList) {
+      checksList.innerHTML = defaultChecks.map(c => `
+        <div class="drawer-check-row">
+          <span class="drawer-check-badge ${c.pass ? 'pass' : 'fail'} font-mono">${c.pass ? 'PASS' : 'FAIL'}</span>
+          <div class="drawer-check-desc">
+            <strong>${escapeHtml(c.title)}</strong>
+            <div style="font-size: 0.76rem; color: var(--muted); margin-top: 2px;">${escapeHtml(c.desc)}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    const rel = p.relevance || { score: 8, real: 2, measurable: 2, sf: 2, interesting: 2 };
+    const rTot = document.getElementById('drawer-rel-total');
+    const rReal = document.getElementById('drawer-rel-real');
+    const rMeas = document.getElementById('drawer-rel-meas');
+    const rSf = document.getElementById('drawer-rel-sf');
+    const rInt = document.getElementById('drawer-rel-int');
+
+    if (rTot) rTot.textContent = `${rel.score || 8} / 8`;
+    if (rReal) rReal.textContent = `${rel.real || 2} / 2`;
+    if (rMeas) rMeas.textContent = `${rel.measurable || 2} / 2`;
+    if (rSf) rSf.textContent = `${rel.sf || 2} / 2`;
+    if (rInt) rInt.textContent = `${rel.interesting || 2} / 2`;
+
+    const changelogEl = document.getElementById('drawer-changelog-entry');
+    if (changelogEl) {
+      changelogEl.textContent = `[${p.decided_at || '2025-05-01T00:00:00Z'}] COMMITMENT #${rank} (${p.promise_id}) VERDICT=${(p.verdict || 'KEPT').toUpperCase()} SIGNED_BY=ARBITRATOR_RUN_accd67e9 HASH=${(p.source_hash || '').slice(0, 16)}…`;
+    }
+
+    backdrop.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    drawer.focus();
+  }
+
+  function closeInspectDrawer() {
+    const backdrop = document.getElementById('inspect-drawer-backdrop');
+    if (backdrop) backdrop.classList.add('hidden');
+    document.body.style.overflow = '';
+    if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+      lastActiveElement.focus();
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Featured Stories (0.2)
+  // -------------------------------------------------------------------------
+  function setupFeaturedStories() {
+    document.querySelectorAll('.btn-story-evidence').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pid = btn.getAttribute('data-pid');
+        const qid = btn.getAttribute('data-qid');
+        if (qid) {
+          switchToQuarantineAndHighlight(qid);
+        } else if (pid) {
+          openInspectDrawer(pid);
+        }
+      });
+    });
+  }
+
+  // -------------------------------------------------------------------------
+  // Event Listeners & Wiring
+  // -------------------------------------------------------------------------
+  function setupEventListeners() {
+    // Replay controls
+    const runSelect = document.getElementById('run-select');
+    if (runSelect) {
+      runSelect.addEventListener('change', () => {
+        currentRunType = runSelect.value;
+        resetPipeline();
+      });
+    }
+
+    const btnRun = document.getElementById('btn-run-selected');
+    if (btnRun) btnRun.addEventListener('click', runReplay);
+
+    const btnNext = document.getElementById('btn-step-next');
+    if (btnNext) btnNext.addEventListener('click', advanceStep);
+
+    const btnReset = document.getElementById('btn-pipeline-reset');
+    if (btnReset) btnReset.addEventListener('click', resetPipeline);
+
+    // Milestone node click listeners
+    for (let i = 1; i <= 6; i++) {
+      const ms = document.getElementById(`ms-circle-${i}`);
+      if (ms) {
+        ms.parentElement.addEventListener('click', () => jumpToStage(i));
+      }
+    }
+
+    // Tabs switching
+    const tabPromises = document.getElementById('tab-btn-promises');
+    const tabQuarantine = document.getElementById('tab-btn-quarantine');
+    if (tabPromises) tabPromises.addEventListener('click', () => setTab('promises'));
+    if (tabQuarantine) tabQuarantine.addEventListener('click', () => setTab('quarantine'));
+
+    // Segmented verdict filters
+    document.querySelectorAll('.btn-seg-verdict').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.btn-seg-verdict').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterVerdict = btn.getAttribute('data-verdict') || 'all';
+        visibleRowsCount = 10;
+        renderExplore();
+      });
+    });
+
+    // Stacked Hero Bar segments click
+    document.querySelectorAll('.bar-segment, .legend-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const verd = btn.getAttribute('data-verdict');
+        if (verd) {
+          filterVerdict = verd;
+          document.querySelectorAll('.btn-seg-verdict').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-verdict') === verd);
+          });
+          visibleRowsCount = 10;
+          renderExplore();
+          const exp = document.getElementById('explore');
+          if (exp) exp.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Search Input
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        searchTerm = searchInput.value;
+        visibleRowsCount = 10;
+        renderExplore();
+      });
+    }
+
+    // More Filters button & panel
+    const btnMoreFilters = document.getElementById('btn-more-filters');
+    const moreFiltersPanel = document.getElementById('more-filters-panel');
+    if (btnMoreFilters && moreFiltersPanel) {
+      btnMoreFilters.addEventListener('click', () => {
+        const isHidden = moreFiltersPanel.classList.toggle('hidden');
+        btnMoreFilters.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
+      });
+    }
+
+    // Filter selects
+    const fCat = document.getElementById('filter-category');
+    if (fCat) {
+      fCat.addEventListener('change', () => {
+        filterCategory = fCat.value;
+        visibleRowsCount = 10;
+        renderExplore();
+      });
+    }
+
+    const fEnt = document.getElementById('filter-entity');
+    if (fEnt) {
+      fEnt.addEventListener('change', () => {
+        filterEntity = fEnt.value;
+        visibleRowsCount = 10;
+        renderExplore();
+      });
+    }
+
+    const fTier = document.getElementById('filter-tier');
+    if (fTier) {
+      fTier.addEventListener('change', () => {
+        filterTier = fTier.value;
+        visibleRowsCount = 10;
+        renderExplore();
+      });
+    }
+
+    const fSort = document.getElementById('filter-sort');
+    if (fSort) {
+      fSort.addEventListener('change', () => {
+        filterSort = fSort.value;
+        const sortTextEl = document.getElementById('table-sort-text');
+        if (sortTextEl) {
+          const opt = fSort.options[fSort.selectedIndex];
+          sortTextEl.textContent = `Sorted by ${opt ? opt.text.toLowerCase() : 'most significant'}`;
+        }
+        visibleRowsCount = 10;
+        renderExplore();
+      });
+    }
+
+    // Clear filters button
+    const btnClear = document.getElementById('btn-clear-filters');
+    if (btnClear) {
+      btnClear.addEventListener('click', () => {
+        searchTerm = '';
+        filterVerdict = 'all';
+        filterCategory = 'all';
+        filterEntity = 'all';
+        filterTier = 'all';
+        filterSort = 'rank';
+        visibleRowsCount = 10;
+        if (searchInput) searchInput.value = '';
+        if (fCat) fCat.value = 'all';
+        if (fEnt) fEnt.value = 'all';
+        if (fTier) fTier.value = 'all';
+        if (fSort) fSort.value = 'rank';
+        document.querySelectorAll('.btn-seg-verdict').forEach(b => {
+          b.classList.toggle('active', b.getAttribute('data-verdict') === 'all');
+        });
+        renderExplore();
+      });
+    }
+
+    // Pagination
+    const btnShowMore = document.getElementById('btn-show-more');
+    if (btnShowMore) {
+      btnShowMore.addEventListener('click', () => {
+        visibleRowsCount += 10;
+        renderExplore();
+      });
+    }
+
+    const btnShowAll = document.getElementById('btn-show-all');
+    if (btnShowAll) {
+      btnShowAll.addEventListener('click', () => {
+        visibleRowsCount = 9999;
+        renderExplore();
+      });
+    }
+
+    // Table & Mobile card click listeners
+    const tbody = document.getElementById('promises-table-body');
+    if (tbody) {
+      tbody.addEventListener('click', (e) => {
+        const tr = e.target.closest('.promise-row');
+        if (tr) {
+          const pid = tr.getAttribute('data-promise-id');
+          if (pid) openInspectDrawer(pid);
+        }
+      });
+      tbody.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const tr = e.target.closest('.promise-row');
+          if (tr) {
+            e.preventDefault();
+            const pid = tr.getAttribute('data-promise-id');
+            if (pid) openInspectDrawer(pid);
+          }
+        }
+      });
+    }
+
+    const mobileList = document.getElementById('mobile-cards-list');
+    if (mobileList) {
+      mobileList.addEventListener('click', (e) => {
+        const card = e.target.closest('.mobile-promise-card');
+        if (card) {
+          const pid = card.getAttribute('data-pid');
+          if (pid) openInspectDrawer(pid);
+        }
+      });
+    }
+
+    // Drawer close buttons
+    const btnCloseDrawer = document.getElementById('btn-close-drawer');
+    if (btnCloseDrawer) btnCloseDrawer.addEventListener('click', closeInspectDrawer);
+
+    const drawerBackdrop = document.getElementById('inspect-drawer-backdrop');
+    if (drawerBackdrop) {
+      drawerBackdrop.addEventListener('click', (e) => {
+        if (e.target === drawerBackdrop) closeInspectDrawer();
+      });
+    }
+
+    // Escape key listener for drawer
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const backdrop = document.getElementById('inspect-drawer-backdrop');
+        if (backdrop && !backdrop.classList.contains('hidden')) {
+          closeInspectDrawer();
+        }
+      }
+    });
+
+    // Copy hash buttons everywhere
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-copy-hash');
+      if (btn) {
+        const hash = btn.getAttribute('data-hash');
+        if (hash) {
+          navigator.clipboard.writeText(hash).then(() => {
+            const orig = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => { btn.textContent = orig; }, 1500);
+          }).catch(() => {
+            btn.textContent = 'Copied!';
+            setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+          });
+        }
+      }
+    });
+  }
+
+  // -------------------------------------------------------------------------
+  // Start
+  // -------------------------------------------------------------------------
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

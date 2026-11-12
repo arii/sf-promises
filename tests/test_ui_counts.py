@@ -94,6 +94,29 @@ class TestUICounts(unittest.TestCase):
         data_match = re.search(r'<script[^>]+src="data\.js\?v=[a-zA-Z0-9_-]+"', self.html)
         self.assertIsNotNone(data_match, "data.js missing ?v= query string")
 
+    def test_no_unsanitized_local_paths_in_html(self):
+        """Zero /home/ or /mnt/ local paths allowed in docs/index.html."""
+        home_matches = re.findall(r'/home/[^\s"\'<>]+', self.html)
+        mnt_matches = re.findall(r'/mnt/[^\s"\'<>]+', self.html)
+        self.assertEqual(home_matches, [], f"Found /home/ paths in docs/index.html: {home_matches}")
+        self.assertEqual(mnt_matches, [], f"Found /mnt/ paths in docs/index.html: {mnt_matches}")
+
+    def test_no_stale_contradictory_hardcoded_claims(self):
+        """Ensure no stale or contradicting hardcoded claim text in docs/index.html."""
+        stale_phrases = [
+            "place 300 individuals",
+            "35 fatalities",
+        ]
+        for phrase in stale_phrases:
+            self.assertNotIn(phrase, self.html, f"Found stale hardcoded phrase '{phrase}' in docs/index.html")
+
+    def test_featured_stories_contract(self):
+        """Featured stories must contain exactly 6 stories matching expected IDs."""
+        story_cards = re.findall(r'class="story-card"[^>]*data-story-pid="([^"]+)"', self.html)
+        expected_ids = ["P02", "SFO-01", "P05", "P06", "P37", "Q-N01"]
+        self.assertEqual(len(story_cards), 6, f"Expected 6 story cards, found {len(story_cards)}")
+        self.assertEqual(story_cards, expected_ids, f"Story cards IDs mismatch: {story_cards}")
+
 
 if __name__ == "__main__":
     unittest.main()
