@@ -660,7 +660,8 @@
                 <th>Verbatim Promise Quote</th>
                 <th>Dates</th>
                 <th>Verdict</th>
-                <th>Status</th>
+                <th>Relevance</th>
+                <th>Last Checked</th>
               </tr>
             </thead>
             <tbody id="promises-table-body">
@@ -720,7 +721,7 @@
       <!-- Limitations & next improvements (WRITEUP.md §4, audited Nov 11) -->
       <section class="built-section" id="limitations" aria-label="Limitations and next improvements">
         <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 4px 0 8px; font-weight: 600;">What we'd improve next</h2>
-        <p style="font-size: 0.9rem; color: var(--muted); margin: 0 0 12px; max-width: 70ch;">Independent re-runs match the stored verdicts everywhere the code governs — the gaps below are where humans still decide, and where the next rubric revision should go.</p>
+        <p style="font-size: 0.9rem; color: var(--muted); margin: 0 0 12px; max-width: 70ch;">Automated test suites and arbitrator code checks verify the stored verdicts where deterministic rules govern (recorded in <span class="font-mono text-xs">test_runs</span> and <span class="font-mono text-xs">verifications</span>) — the gaps below are where humans still decide, and where the next rubric revision should go.</p>
         <div class="two-col-plain">
           <div>
             <ul class="plain-credits-list">
@@ -794,6 +795,14 @@
             <div class="flat-data-row">
               <span class="flat-key-name">Fetched At:</span>
               <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: var(--muted);" id="modal-fetch-time">Loading…</span>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">Audit Run ID:</span>
+              <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: #93C5FD;" id="modal-run-id">accd67e91c05426bbc5b279b83cf9537</span>
+            </div>
+            <div class="flat-data-row">
+              <span class="flat-key-name">Sandbox Worker:</span>
+              <span class="flat-val-content font-mono" style="font-size: 0.8rem; color: #93C5FD;" id="modal-sandbox-id">01a1cd80-01b2-79da-8ad0-2ae1ed5f5942 (fork of sf-promises-golden)</span>
             </div>
           </div>
         </div>

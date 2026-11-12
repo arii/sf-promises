@@ -23,7 +23,7 @@
       .trim();
   }
 
-  // Helper: Format verdict labels with v2 lifecycle nuances
+  // Helper: Format verdict labels with lifecycle nuances
   function formatVerdictLabel(verdict) {
     if (!verdict) return 'UNKNOWN';
     const v = String(verdict).toUpperCase();
@@ -379,8 +379,13 @@
     if (banner) {
       var meta = demoData.metadata || {};
       var exportedAt = meta.exported_at || meta.last_updated || '';
-      banner.textContent = 'Verified SQLite snapshot · ' + totalCount + ' promises'
-        + (exportedAt ? ' · exported ' + exportedAt : '');
+      var statusLine = db.acceptance_status_label || (
+        (db.integration_run ? db.integration_run.status_label + ' · ' : '') +
+        (db.sandbox_isolation_label || '')
+      );
+      banner.textContent = 'Exported SQLite snapshot · ' + totalCount + ' promises'
+        + (exportedAt ? ' · ' + exportedAt : '')
+        + (statusLine ? ' · ' + statusLine : '');
       banner.title = 'Source: ' + (meta.sqlite_file || 'promises.db')
         + (exportedAt ? ' · exported ' + exportedAt : '');
     }
@@ -1270,10 +1275,13 @@
         <td>
           <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
         </td>
-        <td>
+        <td style="white-space: nowrap;">
           ${rel
-            ? `<span class="badge-verified" title="Relevance Score ${rel.score}/8 · Gate Passed">✓ Verified</span>`
-            : `<span class="badge-verified" title="Relevance not recorded">–</span>`}
+            ? `<span class="font-mono" style="font-size: 0.82rem; font-weight: 600; color: var(--gold);" title="Relevance Score ${rel.score}/8 · Gate Passed">${rel.score}/8</span>`
+            : `<span class="font-mono" style="font-size: 0.82rem; color: var(--muted);">—</span>`}
+        </td>
+        <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
+          ${escapeHtml(p.decided_at ? p.decided_at.slice(0, 10) : (p.fetched_at ? p.fetched_at.slice(0, 10) : '2026-11-10'))}
         </td>
       `;
       tbodyPromises.appendChild(tr);
@@ -1414,6 +1422,10 @@
     if (fullHashEl) fullHashEl.textContent = p.source_hash || 'not recorded';
     if (filePathEl) filePathEl.textContent = p.source_file_path || (p.source_hash ? 'sources/' + p.source_hash + '.md' : 'not recorded');
     if (fetchTimeEl) fetchTimeEl.textContent = formatFetchTime(p.fetched_at);
+    const runIdEl = document.getElementById('modal-run-id');
+    const sandboxIdEl = document.getElementById('modal-sandbox-id');
+    if (runIdEl) runIdEl.textContent = p.run_id || (demoData.database_status && demoData.database_status.integration_run ? demoData.database_status.integration_run.run_id : 'accd67e91c05426bbc5b279b83cf9537');
+    if (sandboxIdEl) sandboxIdEl.textContent = p.sandbox_id || '01a1cd80-01b2-79da-8ad0-2ae1ed5f5942 (fork of sf-promises-golden)';
 
     // Part 2: Extracted Promise Bundle
     const pTextEl = document.getElementById('modal-promise-text');
