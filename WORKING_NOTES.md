@@ -90,3 +90,18 @@
   - Published 51-column enriched dataset at `https://huggingface.co/datasets/onasafari/sf-promises` including `promises.csv`, `promises.sqlite`, `quarantined.csv`, `SCHEMA.json`, `data_summary.json`, and dataset card.
 - **Test Suite**:
   - **198/198 tests green**.
+
+### 5. Durability Engine, Playbook Verification & Outside-the-Box Expansion
+- **Durability Cron Engine (`src/durability_cron.py` & `tests/test_durability.py`)**:
+  - Implemented `find_due_rechecks` using `compute_next_check_at` (+90 days for kept, +30 days for in-progress, +60 days for undecided).
+  - Implemented `run_durability_cycle` executing append-only transitions via `reopen_promise_verdict` without erasing historical provenance.
+  - Added full test suite in `tests/test_durability.py`.
+- **Media & Image Tracking**:
+  - Added `image_url` and `media_caption` support to data schemas and UI modal (`modal-media-container`, `modal-media-img`, `modal-media-caption`).
+- **Playbook Verification Engine (`src/playbook_verifier.py`)**:
+  - Implemented 4-tier source scoring, contradiction detection, and vague promise screening.
+  - Supported semaphore-bounded parallel execution across Archil sandboxes.
+- **Outside-the-Box 10-Year Trends & Prominent SF Leaders**:
+  - Cataloged 15 deduplicated promises across soft-story seismic retrofits, seawall bonds, all-electric gas bans, coastal retreat, Marc Benioff, Kyle Vogt (Cruise), Jack Dorsey (Square), Westfield default, SF Bicycle Coalition, Another Planet Entertainment, and Castro Theatre.
+- **Full Test Suite**:
+  - **213/213 tests passing green**.
