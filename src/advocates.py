@@ -31,6 +31,21 @@ class AdvocateBundle(BaseModel):
     claims: list[AdvocateClaim] = Field(max_length=8)
 
 
+def check_staging_isolation(*, role: Literal["kept", "broken", "investigate"], target_path: str | Path) -> None:
+    """Enforce that an advocate or investigator in a specific role cannot read other roles' files."""
+    path_str = str(target_path)
+    filename = Path(target_path).name
+    if role == "kept" and (filename.startswith("broken_") or "/broken_" in path_str):
+        raise PermissionError(f"Isolation violation: kept advocate cannot read broken staging file: {filename}")
+    if role == "broken" and (filename.startswith("kept_") or "/kept_" in path_str):
+        raise PermissionError(f"Isolation violation: broken advocate cannot read kept staging file: {filename}")
+    if role == "investigate" and (
+        filename.startswith("kept_") or "/kept_" in path_str
+        or filename.startswith("broken_") or "/broken_" in path_str
+    ):
+        raise PermissionError(f"Isolation violation: investigator cannot read advocate staging file: {filename}")
+
+
 def stage_advocate(*, staging_root, source_root, promise_id, role, response):
     """Stage a bundle, not a verdict; all claim meanings still require review."""
     if (not isinstance(promise_id, str)

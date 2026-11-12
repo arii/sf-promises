@@ -46,8 +46,8 @@ not proof of current results.
 | "Work on Demo Page" | `agent/lanes/lane-e-demo.md` | Static page from DB export |
 | "Work on Tests" | `agent/lanes/lane-f-tests.md` | Harness, P01–P12, planted N01–N12 |
 
-Lane A (Setup) is DONE: `/mnt/archil/workspace/promises.db` has all 20 tables,
-FS + row round-trip verified.
+Database setup is complete: `/mnt/archil/workspace/promises.db` initialized with schema,
+filesystem + row round-trip verified.
 
 ## Shared rules (all lanes)
 

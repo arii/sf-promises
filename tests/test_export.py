@@ -214,6 +214,33 @@ class CandidateExportTests(unittest.TestCase):
             except ValueError:
                 pass
 
+        # 5. Sandbox isolation is verified
+        self.assertTrue(data.get("database_status", {}).get("sandbox_isolation_verified"))
+        self.assertIn("verified", data.get("database_status", {}).get("sandbox_isolation_label", "").lower())
+
+        # 6. P02 source is official sf.gov with verified hash
+        p02 = next((p for p in promises if p.get("promise_id") == "P02"), None)
+        self.assertIsNotNone(p02)
+        self.assertIn("sf.gov", p02.get("source_url", ""))
+        self.assertEqual(p02.get("source_hash"), "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa")
+
+        # 7. P61 uses full sentence, not table fragment
+        p61 = next((p for p in promises if p.get("promise_id") == "P61"), None)
+        self.assertIsNotNone(p61)
+        self.assertNotIn("2009 (Revised) July 28, 2009 $4,586M 12/04/15", p61.get("promise_text", ""))
+        self.assertIn("approved a revised WSIP schedule", p61.get("promise_text", ""))
+
+        # 8. All 12 planted test cases (N01-N12) are quarantined and none are in promises
+        promise_ids = {p.get("promise_id") for p in promises}
+        for i in range(1, 13):
+            nid = f"N{i:02d}"
+            self.assertNotIn(nid, promise_ids)
+
+        quarantined_pids = {q.get("promise_id") for q in data.get("quarantined", [])}
+        for i in range(1, 13):
+            nid = f"N{i:02d}"
+            self.assertIn(nid, quarantined_pids)
+
 
 if __name__ == "__main__":
     unittest.main()

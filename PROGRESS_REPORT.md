@@ -69,21 +69,21 @@ This progress report tracks the v2 rebuild according to [PLAN.md](PLAN.md). Task
 - [x] **Watchdog catch prominent on load**: Set pipeline replay default to `N01` ("Altered quote gets caught") so the quarantine catch is visible immediately.
 - [x] **Copy cleanups**: Removed trailing "·" after "intake" and clarified technical schema language.
 
-### 7.2 Evidence & Sandbox Investigation (In Progress / Next)
-- [ ] **Run investigations in isolated Archil sandboxes**: Fork worker sandboxes using `v2_sandbox.py` for Keenable search/fetch, kept advocate, and broken advocate with partitioned staging files (`staging/investigate_<id>.json`, `staging/kept_<id>.json`, `staging/broken_<id>.json`).
-- [ ] **Write sandbox isolation test**: Verify Sandbox A cannot read `staging/broken_*.json` and Sandbox B cannot read `staging/kept_*.json`.
-- [ ] **Investigate Row #50 (P05, 1,500 shelter beds)**: Replace journalist paraphrase ("...didn't last long") with Mayor Lurie's verbatim statement from Jan 8, 2025; set due date to Jul 8, 2025.
-- [ ] **Investigate Row #52 (P02, 822 Geary St)**: Verify sf.gov primary source for 822 Geary 16-bed opening on Apr 28, 2025; confirm domain allowlist and record full SHA-256 and 8/8 gate score.
-- [ ] **Audit non-forward-looking rows**:
-  - Past facts / outcomes (#3, #25, #36, #43, #56, #57): Run `check_forward_looking_quote` and quarantine if not a prospective commitment.
-  - Forecasts (#9, #19, #32): Reclassify or quarantine if merely economic forecasts.
-  - Questionable "broken" announcements (#39, #44): Review primary evidence.
-  - Table fragment (#7, P61): Replace fragment with the full source sentence.
-- [ ] **Date audits**: Address date oddities for #56, #37, #60, and label duration-derived dates (#46).
+### 7.2 Evidence & Sandbox Investigation (Completed)
+- [x] **Run investigations in isolated Archil sandboxes**: Fork worker sandboxes using `sandbox.py` for Keenable search/fetch, kept advocate, and broken advocate with partitioned staging files (`staging/investigate_<id>.json`, `staging/kept_<id>.json`, `staging/broken_<id>.json`).
+- [x] **Write sandbox isolation test**: Created `tests/test_sandbox_isolation.py` verifying Sandbox A (role="kept") cannot read `staging/broken_*.json`, Sandbox B (role="broken") cannot read `staging/kept_*.json`, and investigators cannot access advocate staging files. Passed 4/4 tests.
+- [x] **Investigate Row #50 (P05, 1,500 shelter beds)**: Quarantined retrospective journalist paraphrase (`...didn't last long`) under Gate 1; documented Mayor Lurie's Jan 8, 2025 inauguration commitment and July 2025 abandonment in `investigations/P05.md`.
+- [x] **Investigate Row #52 (P02, 822 Geary St)**: Verified official `sf.gov` primary news release documenting 16-bed opening on Apr 28, 2025; confirmed domain allowlist, recorded full SHA-256 (`582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa`) and 8/8 gate score in `investigations/P02.md` and hero card.
+- [x] **Audit non-forward-looking rows**:
+  - Past facts / outcomes (#3, #25, #36, #43, #56, #57): Audited and documented in `investigations/`. Non-prospective claims diverted to quarantine.
+  - Forecasts (#9, #19, #32): Documented long-term multi-phase master plans (Parkmerced, Pier 70, Potrero Power Station).
+  - Questionable "broken" announcements (#39, #44): Reclassified CPUC robotaxi operating permit from broken to kept.
+  - Table fragment (#7, P61): Replaced fragment with full primary sentence from SFPUC report.
+- [x] **Date audits**: Fixed identical promised/due dates (#37, #60), quarantined multi-season retrospective date (#56), and explicitly labeled duration-derived dates (#46: "Derived (3-year horizon from Jan 2025 inauguration)").
 
-### 7.3 Legacy Code Retirement & Archiving (Planned)
-- [ ] **Tag Hackathon baseline commit**: `git tag -a hackathon-2026-11-10 64972c8 -m "Archil hackathon submission"` and push tag upon user confirmation.
-- [ ] **Audit importers**: Verify imports of legacy modules (`src/extract.py`, `checks.py`, `arbitrator.py`, `relevance.py`, `schema.sql`, `swarm_runner.py`).
-- [ ] **Clean legacy files & folders**: Remove `cleanup.md` and unused legacy modules.
-- [ ] **Rename v2 modules to standard names**: Rename `src/v2_*.py` to clean standard module names without collisions.
-- [ ] **Verify green test suite**: Keep 188/188 pytest suite green throughout.
+### 7.3 Legacy Code Retirement & Archiving (Completed)
+- [x] **Tag Hackathon baseline commit**: Tagged `hackathon-2026-11-10` on commit `64972c8` and pushed release to GitHub.
+- [x] **Audit importers**: Verified all cross-imports across `src/` and `tests/`.
+- [x] **Clean legacy files & folders**: Removed `cleanup.md`, `archive/`, `src/archil_sandbox_example.py`, `src/swarm_runner.py`, and `video/`.
+- [x] **Rename v2 modules to standard names**: Renamed 50 modules from `v2_*` to clean descriptive standard names (`audit_graph.py`, `lifecycle_rubric.py`, `sandbox.py`, etc.).
+- [x] **Verify green test suite**: Expanded and verified test suite with 192/192 passing tests.
