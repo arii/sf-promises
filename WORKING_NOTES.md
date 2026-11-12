@@ -59,7 +59,16 @@
   - Added `#active-chips-tray` with individual removable chips (`×`) for entity, verdict, category, and search query, plus a `"Clear all ×"` button.
 - **Row Density Toggle**:
   - Added segmented switch (`Comfortable` vs `Compact`) toggling row padding and quote line-clamping (2 lines vs 1 line).
+- **Modal Plain-English Summary & Collapsible Technical Provenance**:
+  - Added "WHAT WAS PROMISED" plain-English summary card at the very top of the inspect modal showing verbatim quote, speaker/role, target dates, and plain-language outcome explanation.
+  - Collapsed technical audit logs (SHA-256 hashes, file paths, run ID, sandbox worker UUIDs) into an expandable `<details class="tech-audit-drawer">`.
+  - Prevented truncated modal headers by allowing wrapping and formatting clean titles (`#51 (P04) · Golden State Valkyries: Chase Center`).
+- **Data & Category Harmonization**:
+  - Unified counts across hero tally, Outcome Distribution box, table status, and pagination (`54 VERIFIED`).
+  - Formatted all verdict enums into human-readable strings (`In Progress`, `Kept`, `Broken`, `Undecided`, eliminating raw `IN_PROGRESS`).
+  - Harmonized category naming to `"Civic Governance"` across pill bar, dropdown, and data payloads; hid empty category pills with `(0)` items.
+  - Cleaned up advocate output notes, replacing raw agent search/cut-rule notes with user-facing copy.
 - **Responsive & Design Verification**:
   - Mobile card fallback (<768px) smoothly incorporates accordion drawers without horizontal scroll (`scrollWidth=390, innerWidth=390`).
-  - Impeccable tool detector exited with code 0.
-  - Automated screenshot tests captured at 1280px, 768px, and 390px, including active accordion state (`demo/screenshot_accordion_open.png`).
+  - Impeccable tool detector exited with code 0 (0 warnings/errors).
+  - Pytest: **198/198 passed green**.
