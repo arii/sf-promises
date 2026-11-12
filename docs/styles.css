@@ -129,19 +129,6 @@ a:hover {
   gap: 12px;
 }
 
-.hackathon-tag {
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.75rem;
-  letter-spacing: 0.02em;
-  color: var(--cyan);
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.22);
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-weight: 500;
-}
-
 .topbar-right {
   display: flex;
   align-items: center;
@@ -4291,11 +4278,6 @@ a:hover {
   .topbar-left {
     gap: 8px;
   }
-  .hackathon-tag {
-    font-size: 0.72rem;
-    padding: 2px 8px;
-    white-space: nowrap;
-  }
   .github-link {
     padding: 6px;
     border-radius: 50%;
@@ -4393,35 +4375,6 @@ a:hover {
   }
 }
 
-/* Editorial Hackathon Recognition Callout */
-.award-callout-box {
-  margin: 20px 0 28px;
-  padding: 20px 24px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-}
 
-.award-kicker {
-  font-size: 0.74rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--blue);
-  margin-bottom: 6px;
-}
-
-.award-title {
-  margin: 0 0 8px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.award-summary {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 0.92rem;
-  line-height: 1.6;
-}
 
 
