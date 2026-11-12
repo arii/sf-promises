@@ -43,6 +43,7 @@ not proof of current results.
 
 | Say | Agent reads | Does |
 | --- | --- | --- |
+| "Work on Discovery" | `agent/lanes/lane-a-discovery.md` | Discover public commitments across official, news, and advocacy sources |
 | "Work on Fetcher" | `agent/lanes/lane-b-fetcher.md` | Seed P01–P12 source files + hashes |
 | "Work on Extractor" | `agent/lanes/lane-c-extractor.md` | Saved files to `promises_pending` rows |
 | "Work on Verdict" | `agent/lanes/lane-d-verdict.md` | Checks, advocates, arbitrator, quarantine |

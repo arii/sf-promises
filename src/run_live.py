@@ -16,7 +16,6 @@ import httpx
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 
 from src.advocates import stage_advocate
-from src.candidate import audit_candidate
 from src.candidate_sandbox import WorkerAuditError, audit_in_sandbox
 from src.database import APPLICATION_ID, SCHEMA_VERSION, initialize_database
 from src.discovery import discover_and_archive, fetch_and_archive, pool_outcome_sources

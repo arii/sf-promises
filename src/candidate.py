@@ -2,7 +2,7 @@
 
 import json
 import re
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field

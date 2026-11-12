@@ -72,3 +72,21 @@
   - Mobile card fallback (<768px) smoothly incorporates accordion drawers without horizontal scroll (`scrollWidth=390, innerWidth=390`).
   - Impeccable tool detector exited with code 0 (0 warnings/errors).
   - Pytest: **198/198 passed green**.
+
+### 4. Phase 1 Discovery Integration, Archil Sandbox Verification & Hugging Face
+- **Discovery Lane Brief (`agent/lanes/lane-a-discovery.md`)**:
+  - Formalized discovery workflow for public commitments across SF entities.
+  - Sourced primary (Mayor, BOS, City departments, budget, candidate platforms/debates), secondary (Chronicle, Mission Local, KQED, Examiner, Curbed, SF Open Data), and tertiary (civic advocacy, social media canaries) sources.
+  - Linked `Lane A — Discovery` to root `README.md` dispatch table.
+- **Codebase Review & Discovery Fixes**:
+  - Fixed missing `import re` in `src/discovery.py` caught during static review.
+  - Expanded allowlists in `src/evidence.py` to include `curbed.com`, `sfhousing.org`, `sfmtariders.org`, `sfbike.org`, and `lwvba.org`.
+  - Cleaned unused variables and imports in `src/advocates.py`, `src/candidate.py`, and `src/run_live.py`.
+  - Static analysis: `pyflakes src/` cleanly returns 0 errors.
+- **Live Archil Sandbox Execution**:
+  - Tested live microVM sandbox forking via `src/sandbox.py:run_in_fork` with `archil.Archil` client against golden template `01a1cd7a-6b6d-7bbd-a49d-cfad0054435e` (`sf-promises-golden`).
+  - Successfully spawned disposable worker `01a1d1b2-8390-7c85-907d-8a0290f70c36`, executed isolated checks (`Linux 6.18.39`), cleanly stopped and deleted the worker microVM, and reconciled status in `WorkerLeases`.
+- **Hugging Face Hub Dataset**:
+  - Published 51-column enriched dataset at `https://huggingface.co/datasets/onasafari/sf-promises` including `promises.csv`, `promises.sqlite`, `quarantined.csv`, `SCHEMA.json`, `data_summary.json`, and dataset card.
+- **Test Suite**:
+  - **198/198 tests green**.

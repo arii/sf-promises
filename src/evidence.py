@@ -18,7 +18,7 @@ _PRIMARY_HOSTS = frozenset({
     "visa.com", "wholefoodsmarket.com", "nba.com", "wnba.com",
     "valkyries.com", "bayfc.com", "att.com", "comcast.com", "sfgiants.com",
     "mlb.com", "nfl.com", "prnewswire.com", "businesswire.com", "flysfo.com",
-    "trinitysf.com",
+    "trinitysf.com", "sfhousing.org", "sfmtariders.org", "sfbike.org", "lwvba.org",
 })
 _NEWS_HOSTS = frozenset({
     "sfchronicle.com", "sfgate.com", "sfstandard.com", "missionlocal.org",
@@ -28,7 +28,7 @@ _NEWS_HOSTS = frozenset({
     "cnbc.com", "nytimes.com", "latimes.com", "mercurynews.com",
     "eastbaytimes.com", "nbcbayarea.com", "abc7news.com", "ktvu.com",
     "cbsnews.com", "espn.com", "theathletic.com", "axios.com",
-    "politico.com", "calmatters.org",
+    "politico.com", "calmatters.org", "curbed.com",
 })
 _CANARY_HOSTS = frozenset({
     "reddit.com", "x.com", "twitter.com", "facebook.com", "instagram.com",

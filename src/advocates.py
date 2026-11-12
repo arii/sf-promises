@@ -68,7 +68,6 @@ def check_staging_isolation(
 
 def check_sandbox_network(role: str, target_url: str) -> None:
     """Negative network boundary check: advocate workers are not permitted raw egress."""
-    target_lower = target_url.lower()
     if role in ("kept", "broken"):
         # Advocate sandboxes must operate purely on pre-fetched local sources in source_root
         raise ConnectionRefusedError(f"Network egress blocked in advocate sandbox for role '{role}': {target_url}")
