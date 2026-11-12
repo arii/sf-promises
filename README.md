@@ -2,8 +2,10 @@
 
 ## https://arii.github.io/sf-promises/
 
-### Hackathon Version
-The original submission code created during the Archil AI Hackathon (Nov 10, 2026) is preserved in the [hackathon-2026-11-10 release](https://github.com/arii/sf-promises/releases/tag/hackathon-2026-11-10) at commit `64972c8`.
+### 🏆 Hackathon Award Winner: Best Use Of Keenable
+**SF Promises** was created during the **Archil "Agents need solid ground" Hackathon** on November 10, 2026. Across **1 night with 33 projects and 46 builders**, SF Promises was awarded **1 of 5 hackathon honors: "Best Use Of Keenable"** for its high-integrity temporal source retrieval and deterministic verification pipeline.
+
+The original submission code created during the hackathon is preserved in the [hackathon-2026-11-10 release](https://github.com/arii/sf-promises/releases/tag/hackathon-2026-11-10) at commit `64972c8`.
 
 SF Promises tracks public commitments across all of San Francisco, not just City Hall, but sports teams, concerts, robotaxis, tech companies, and neighborhood developments.
 
