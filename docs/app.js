@@ -1923,6 +1923,23 @@
       sumOutcomeEl.textContent = `${vLabel} — ${p.verdict_reason || 'Verified through deterministic checks in Sandbox C.'}`;
     }
 
+    // Source Media / Photo Archive
+    const mediaContainer = document.getElementById('modal-media-container');
+    const mediaImg = document.getElementById('modal-media-img');
+    const mediaCaption = document.getElementById('modal-media-caption');
+    if (mediaContainer && mediaImg) {
+      if (p.image_url) {
+        mediaContainer.style.display = 'block';
+        mediaImg.src = p.image_url;
+        mediaImg.alt = p.media_caption || p.entity || 'Promise Source Media';
+        if (mediaCaption) {
+          mediaCaption.textContent = p.media_caption || 'Verified source photo archive';
+        }
+      } else {
+        mediaContainer.style.display = 'none';
+      }
+    }
+
     // Part 1: Provenance Bundle
     const srcUrlEl = document.getElementById('modal-source-url');
     const srcIdEl = document.getElementById('modal-source-id');
