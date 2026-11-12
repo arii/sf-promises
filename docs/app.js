@@ -1345,7 +1345,6 @@
       });
     }
   }
-  }
 
   // Helper: Format snake_case check names to clean plain English
   function formatCheckName(checkType) {
