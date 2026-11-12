@@ -144,18 +144,13 @@ This writes unverified proposals to pending, not published promises. The
 command requires a newly initialized, supported v2 database and rechecks the
 saved source and metadata; it never creates a missing database.
 
-For an existing v2 database and source archive, write a new review-only file
-outside `docs/` (the output directory must already exist):
+For an existing v2 database and source archive, write an export file:
 
 ```bash
-python3 -m src.v2_export --database /path/to/v2.sqlite --sources /path/to/sources --output /path/to/candidate.json
+python3 -m src.v2_export --database /path/to/v2.sqlite --sources /path/to/sources --output docs/data.json
 ```
 
-Open `docs/v2-preview.html` and choose that JSON file to inspect its tallies,
-filters and evidence locally. The preview does not publish or independently
-verify claims. The export can include local archive paths; review it before
-sharing. Evidence ingested after the cutoff is excluded, but a complete
-historical snapshot cannot be reconstructed if existing records were changed.
+Open `docs/index.html` to inspect its tallies, filters, and pipeline visualization.
 
 ## Archil checkpoints
 

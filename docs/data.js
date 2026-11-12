@@ -98,7 +98,7 @@ window.__DEMO_DATA__ = {
       "QUESTIONS.md",
       "WORKING_NOTES.md"
     ],
-    "v2_verified_count": 1
+    "v2_verified_count": 0
   },
   "p02": {
     "promise_id": "P02",
