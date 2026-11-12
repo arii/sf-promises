@@ -1258,30 +1258,29 @@
         }
       });
       const dueLine = p.due_date
-        ? `<span style="color: var(--ink-dim);">&rarr; ${escapeHtml(p.due_date)}</span>`
+        ? `<div class="timeline-due font-mono">&rarr; Due: ${escapeHtml(p.due_date)}</div>`
         : '';
       tr.innerHTML = `
-        <td class="font-mono" style="font-weight: 700; color: var(--ink);">#${p.display_no || '—'}</td>
+        <td class="table-id-cell font-mono">#${p.display_no || '—'}</td>
         <td class="table-entity-cell">
           <div class="table-entity-name">${escapeHtml(p.entity)}</div>
-          <div class="table-entity-role font-mono" style="color: var(--blue); font-size: 0.78rem;">${escapeHtml(neighborhood)}</div>
+          <div class="table-entity-role font-mono">${escapeHtml(neighborhood)}</div>
         </td>
         <td class="table-promise-cell">
           <div class="table-promise-text">“${escapeHtml(cleanQuoteText(p.promise_text))}”</div>
         </td>
-        <td class="font-mono" style="font-size: 0.8rem; color: var(--muted); white-space: nowrap;">
-          ${escapeHtml(p.promised_date || '—')}${dueLine ? '<br>' + dueLine : ''}
+        <td class="table-timeline-cell font-mono">
+          <div class="timeline-date">${escapeHtml(p.promised_date || '—')}</div>
+          ${dueLine}
         </td>
-        <td>
-          <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
-        </td>
-        <td style="white-space: nowrap;">
-          ${rel
-            ? `<span class="font-mono" style="font-size: 0.82rem; font-weight: 600; color: var(--gold);" title="Relevance Score ${rel.score}/8 · Gate Passed">${rel.score}/8</span>`
-            : `<span class="font-mono" style="font-size: 0.82rem; color: var(--muted);">—</span>`}
-        </td>
-        <td class="font-mono" style="font-size: 0.78rem; color: var(--muted); white-space: nowrap;">
-          ${escapeHtml(p.decided_at ? p.decided_at.slice(0, 10) : (p.fetched_at ? p.fetched_at.slice(0, 10) : '2026-11-10'))}
+        <td class="table-verdict-cell">
+          <div class="verdict-wrapper">
+            <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
+            <div class="verdict-sub-row font-mono">
+              ${rel ? `<span class="score-pill" title="Relevance Gate ${rel.score}/8">${rel.score}/8</span>` : ''}
+              <span class="btn-inspect-inline">Inspect &rarr;</span>
+            </div>
+          </div>
         </td>
       `;
       tbodyPromises.appendChild(tr);

@@ -7,11 +7,11 @@
   --surface-alt: #1c3044;
   --surface-highlight: #223a52;
   --ink: #edf3f5;
-  --ink-dim: #cad7de;
-  --muted: #8fa5b4;
+  --ink-dim: #d8e4ea;
+  --muted: #b5cad8;
   --line: #324656;
   --line-soft: #213344;
-  --blue: #6ea8e8;
+  --blue: #7bb2ef;
   --blue-dark: #3a75b5;
   --blue-soft: #1a324d;
   --kept: #77d4a7;
@@ -233,7 +233,7 @@ a:hover {
 }
 
 ::placeholder {
-  color: #94a3b8 !important;
+  color: var(--muted) !important;
   opacity: 1;
 }
 
@@ -1176,18 +1176,93 @@ a:hover {
   font-size: 0.88rem;
 }
 
-/* Balanced 7-column widths */
-#promises-table-container .data-table th:nth-child(1) { width: 7%; }  /* ID */
-#promises-table-container .data-table th:nth-child(2) { width: 20%; } /* Entity & Neighborhood */
-#promises-table-container .data-table th:nth-child(3) { width: 41%; } /* Verbatim Promise Quote */
-#promises-table-container .data-table th:nth-child(4) { width: 12%; } /* Dates */
-#promises-table-container .data-table th:nth-child(5) { width: 11%; } /* Verdict */
-#promises-table-container .data-table th:nth-child(6) { width: 9%; }  /* Status */
+/* Balanced 5-column widths for Tracked Promises */
+#promises-table-container .data-table th:nth-child(1) { width: 6%; }  /* # */
+#promises-table-container .data-table th:nth-child(2) { width: 22%; } /* Entity & Neighborhood */
+#promises-table-container .data-table th:nth-child(3) { width: 44%; } /* Verbatim Promise Quote */
+#promises-table-container .data-table th:nth-child(4) { width: 14%; } /* Timeline */
+#promises-table-container .data-table th:nth-child(5) { width: 14%; } /* Verdict & Evidence */
 
-/* Keep verdict chips and status pills on single lines */
-#promises-table-container .data-table td:nth-child(5),
-#promises-table-container .data-table td:nth-child(6),
-#promises-table-container .data-table td:nth-child(7) {
+.table-id-cell {
+  font-weight: 700;
+  color: var(--blue);
+  font-size: 0.92rem;
+}
+
+.table-entity-cell .table-entity-name {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 0.94rem;
+}
+
+.table-entity-cell .table-entity-role {
+  color: var(--blue);
+  font-size: 0.78rem;
+  margin-top: 2px;
+}
+
+.table-promise-cell {
+  line-height: 1.5;
+}
+
+.table-promise-text {
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 0.98rem;
+  color: var(--ink);
+}
+
+.table-timeline-cell {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.timeline-due {
+  color: var(--ink-dim);
+  font-size: 0.78rem;
+  margin-top: 3px;
+}
+
+.table-verdict-cell {
+  text-align: left;
+}
+
+.verdict-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.verdict-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+}
+
+.score-pill {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.btn-inspect-inline {
+  color: var(--blue);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.data-table tbody tr.promise-row:hover .btn-inspect-inline {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+/* Keep verdict chips on single lines */
+#promises-table-container .data-table td:nth-child(5) {
   white-space: nowrap;
 }
 
@@ -2124,7 +2199,7 @@ a:hover {
 
 .mode-hint-text {
   font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--muted);
   margin-left: 6px;
 }
 
@@ -2148,11 +2223,11 @@ a:hover {
 }
 
 .packet-label {
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--muted);
 }
 
 .packet-status-text {
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--muted);
 }
 
 /* Transit Line & Milestones */
@@ -2260,7 +2335,7 @@ a:hover {
   justify-content: space-between;
   font-size: 0.75rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--muted);
   margin-top: 4px;
 }
 
@@ -2500,7 +2575,7 @@ a:hover {
 
 .gate-badge-pill.closed {
   background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--muted);
 }
 
 /* Stage 4 Content: Split Sandboxes */
@@ -2597,7 +2672,7 @@ a:hover {
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--muted);
 }
 
 .staging-file-tag {
@@ -2646,7 +2721,7 @@ a:hover {
   height: 20px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2672,7 +2747,7 @@ a:hover {
 
 .arb-check-desc {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2682,7 +2757,7 @@ a:hover {
 .output-waiting-state {
   text-align: center;
   padding: 24px 10px;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--muted);
 }
 
 .stamp-box-container {
@@ -2886,7 +2961,7 @@ a:hover {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--muted);
   margin-bottom: 12px;
 }
 
@@ -3161,71 +3236,72 @@ a:hover {
   }
 
   /* Card Header: Promise ID & Verdict Chip */
-  .data-table tbody tr.promise-row td:nth-child(1) {
+  .data-table tbody tr.promise-row td.table-id-cell {
     display: inline-block;
     font-size: 0.95rem;
     font-weight: 800;
     color: var(--blue);
   }
 
-  .data-table tbody tr.promise-row td:nth-child(5) {
+  .data-table tbody tr.promise-row td.table-verdict-cell {
     position: absolute;
     top: 14px;
     right: 14px;
     width: auto !important;
   }
 
+  .data-table tbody tr.promise-row .verdict-sub-row {
+    display: none;
+  }
+
   /* Entity & Neighborhood */
-  .data-table tbody tr.promise-row td:nth-child(2) {
-    margin-top: 2px;
-    padding-right: 110px; /* avoid overlap with verdict badge */
+  .data-table tbody tr.promise-row td.table-entity-cell {
+    margin-top: -4px;
+    padding-right: 95px; /* avoid overlap with verdict badge */
   }
 
   .data-table tbody tr.promise-row .table-entity-name {
-    font-size: 1.02rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: var(--ink);
   }
 
   .data-table tbody tr.promise-row .table-entity-role {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--blue);
     margin-top: 2px;
   }
 
   /* Verbatim Quote Box */
-  .data-table tbody tr.promise-row td:nth-child(3) {
+  .data-table tbody tr.promise-row td.table-promise-cell {
     background: var(--line-soft);
     padding: 12px 14px;
     border-radius: 10px;
     border: 1px solid var(--line);
-    margin: 4px 0;
+    margin: 2px 0;
   }
 
   .data-table tbody tr.promise-row .table-promise-text {
-    font-size: 0.92rem;
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 0.96rem;
     line-height: 1.48;
     color: var(--ink);
   }
 
-  /* Dates */
-  .data-table tbody tr.promise-row td:nth-child(4) {
+  /* Timeline & Mobile Footer Action */
+  .data-table tbody tr.promise-row td.table-timeline-cell {
     font-size: 0.8rem;
     color: var(--muted);
-  }
-
-  /* Verified Badge & Tap Footer */
-  .data-table tbody tr.promise-row td:nth-child(6) {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     padding-top: 8px;
     border-top: 1px solid var(--line-soft);
     margin-top: 2px;
   }
 
-  .data-table tbody tr.promise-row td:nth-child(6)::after {
-    content: "Inspect Details →";
+  .data-table tbody tr.promise-row td.table-timeline-cell::after {
+    content: "Inspect Evidence →";
     font-size: 0.82rem;
     font-weight: 700;
     color: var(--blue);

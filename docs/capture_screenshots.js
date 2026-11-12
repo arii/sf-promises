@@ -149,6 +149,23 @@ async function main() {
     await sleep(600);
     await client.captureScreenshot('demo/screenshot_quarantine.png');
 
+    // 7. Tracked Promises Table (Desktop)
+    console.log('Capturing Tracked Promises Table (Desktop)...');
+    await client.eval('document.getElementById("tab-btn-promises").click()');
+    await sleep(500);
+    await client.captureScreenshot('demo/screenshot_table_desktop.png');
+
+    // 8. Tracked Promises Table (Mobile)
+    console.log('Capturing Tracked Promises Table (Mobile)...');
+    await client.send('Emulation.setDeviceMetricsOverride', {
+      width: 390,
+      height: 844,
+      deviceScaleFactor: 2,
+      mobile: true
+    });
+    await sleep(500);
+    await client.captureScreenshot('demo/screenshot_table_mobile.png');
+
     client.close();
     console.log('All screenshots captured successfully.');
   } finally {
