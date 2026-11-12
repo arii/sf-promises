@@ -619,9 +619,9 @@
     if (advBoxKept) advBoxKept.className = 'advocate-sub-box';
     if (advStatusKept) {
       advStatusKept.textContent = 'WAITING';
-      advStatusKept.style.color = 'rgba(255, 255, 255, 0.4)';
+      advStatusKept.style.color = '#94a3b8';
     }
-    if (advFindingsKept) advFindingsKept.innerHTML = '<span style="color: rgba(255, 255, 255, 0.35);">Waiting for gate to open…</span>';
+    if (advFindingsKept) advFindingsKept.innerHTML = '<span style="color: #94a3b8;">Waiting for gate to open…</span>';
     if (advDotsKept) {
       advDotsKept.querySelectorAll('.bounce-dot').forEach(d => d.className = 'bounce-dot');
     }
@@ -629,9 +629,9 @@
     if (advBoxBroken) advBoxBroken.className = 'advocate-sub-box';
     if (advStatusBroken) {
       advStatusBroken.textContent = 'WAITING';
-      advStatusBroken.style.color = 'rgba(255, 255, 255, 0.4)';
+      advStatusBroken.style.color = '#94a3b8';
     }
-    if (advFindingsBroken) advFindingsBroken.innerHTML = '<span style="color: rgba(255, 255, 255, 0.35);">Waiting for gate to open…</span>';
+    if (advFindingsBroken) advFindingsBroken.innerHTML = '<span style="color: #94a3b8;">Waiting for gate to open…</span>';
     if (advDotsBroken) {
       advDotsBroken.querySelectorAll('.bounce-dot').forEach(d => d.className = 'bounce-dot');
     }

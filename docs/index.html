@@ -29,7 +29,6 @@
     <main class="wrap">
       <!-- Hero Section -->
       <section class="hero" id="top">
-        <p class="kicker">THE RECORD OF OUR CITY · SAN FRANCISCO</p>
         <h1>SF Promises</h1>
         <p class="promise-line">From mayoral pledges at City Hall to the Valkyries packing Chase Center, Dead &amp; Company in Golden Gate Park, Waymo on our streets, and affordable homes rising at Mission Rock — SF Promises tracks commitments across all of San Francisco.</p>
 
@@ -62,7 +61,6 @@
       <!-- SF SHOWCASE: ACROSS THE CITY (Interactive City Spectrum) -->
       <section class="sf-showcase-section" id="sf-showcase" aria-label="Across San Francisco">
         <div class="showcase-header">
-          <p class="kicker">ACROSS OUR CITY · SPORTS, CULTURE, TRANSIT, NEIGHBORHOODS</p>
           <h2>Civic accountability across all of San Francisco</h2>
           <p class="showcase-lead">
             Promises in San Francisco belong to the whole city. Select an iconic commitment below to inspect its record, evidence, and provenance:
@@ -166,13 +164,11 @@
         </div>
       </section>
 
-      <!-- 01: 6-STAGE INTERACTIVE VERIFICATION PIPELINE ANIMATION -->
-      <!-- Modeled directly from Sf-Promises-Pipeline-Animation.html -->
+      <!-- 6-STAGE INTERACTIVE VERIFICATION PIPELINE ANIMATION -->
       <section class="pipeline-interactive-section" id="pipeline-interactive" aria-label="Pipeline Live Demonstration">
         <div class="pipeline-header">
-          <p class="kicker">01 — HOW DATA MOVES &amp; AGENT ARCHITECTURE</p>
-          <h2>One promise, checked in the open.</h2>
-          <p class="pipeline-lead">Follow the record from a public document to a decision across four sandboxes (A, B, C, D) running as separated processes. Models draft in parallel; only Arbitrator code can write to the verified database.</p>
+          <h2>One promise, checked in the open</h2>
+          <p class="pipeline-lead">Follow the record from a public document to a decision across four sandboxes running as separated processes. Models draft in parallel; only Arbitrator code can write to the verified database.</p>
           <div class="saved-run-banner" role="note" aria-label="Saved run notice" style="margin-top: 12px; padding: 10px 16px; border-radius: 8px; background: rgba(245, 158, 11, 0.14); border: 2px solid #F59E0B; color: #FDE68A; font-weight: 800; font-size: 0.95rem; letter-spacing: 0.02em; text-align: center;">SAVED RUN — replay of verified pipeline run, not live execution</div>
         </div>
 
@@ -235,8 +231,8 @@
             <span>Fetch</span>
             <span>Extract</span>
             <span>Gate</span>
-            <span>Advocates</span>
-            <span>Arbitrator</span>
+            <span><span class="desktop-only">Advocates</span><span class="mobile-only">Adv</span></span>
+            <span><span class="desktop-only">Arbitrator</span><span class="mobile-only">Arb</span></span>
             <span>Output</span>
           </div>
         </div>
@@ -253,7 +249,7 @@
               <span class="stage-state-pill font-mono" id="stage-badge-1">IDLE</span>
             </div>
             <p class="stage-lead-text">Download original document. Cryptographically verified before processing.</p>
-            <div class="source-file-terminal" style="background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px;">
+            <div class="source-file-terminal">
               <div class="source-clean-row">
                 <a href="https://www.sfpublicworkstv.org/april2025" target="_blank" rel="noopener noreferrer" class="source-clean-link" id="stage1-source-url">Saved source: sfpublicworkstv.org/april2025 ↗</a>
                 <span class="badge-verified-subtle font-mono" id="stage1-hash-match" style="display: none;">SHA-256 Verified</span>
@@ -273,13 +269,13 @@
               </div>
               <span class="stage-state-pill font-mono" id="stage-badge-2">Model drafts</span>
             </div>
-            <p class="stage-lead-text">Copy the promise word-for-word. No paraphrase, no fixing.</p>
+            <p class="stage-lead-text">Copy the promise word-for-word. No paraphrase, no&nbsp;fixing.</p>
             <div class="extract-quote-box">
-              <div class="font-mono" style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.5); text-transform: uppercase;">Verbatim Quote</div>
+              <div class="font-mono" style="font-size: 0.78rem; color: #94a3b8; text-transform: uppercase;">Verbatim Quote</div>
               <div class="verbatim-quote-text" id="stage2-quote-content">
                 “That’s exactly what this 24/7 police-friendly stabilization center will be...”
               </div>
-              <div style="display: flex; gap: 8px; font-size: 0.72rem; margin-top: 8px;" class="font-mono">
+              <div style="display: flex; gap: 8px; font-size: 0.78rem; margin-top: 8px;" class="font-mono">
                 <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">Speaker: Mayor</span>
                 <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">Date: 2025-01-07</span>
               </div>
@@ -299,7 +295,7 @@
               <span class="stage-state-pill font-mono" id="stage-badge-3" style="background: rgba(16, 185, 129, 0.2); color: #A7F3D0;">Sandbox D</span>
             </div>
             <p class="stage-lead-text">Evaluates 4 spec criteria: real promise, measurable, SF relevant, interesting.</p>
-            <div class="relevance-collapsed-card" style="background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px;">
+            <div class="relevance-collapsed-card" style="padding: 10px 0;">
               <div class="relevance-score-hero">
                 <span class="relevance-hero-score font-mono" id="stage3-score-total">8 / 8</span>
                 <span class="badge-verified" id="stage3-score-badge">✓ Gate Passed</span>
@@ -307,7 +303,7 @@
               <div class="relevance-hero-track">
                 <div class="relevance-hero-fill" id="stage3-score-fill" style="width: 100%;"></div>
               </div>
-              <div style="font-size: 0.75rem; color: var(--muted); margin-top: 8px;" id="stage3-criteria-summary">
+              <div style="font-size: 0.78rem; color: var(--muted); margin-top: 8px;" id="stage3-criteria-summary">
                 Criteria: real_promise (2/2) · measurable (2/2) · sf_relevant (2/2) · interesting: concrete address/metric (2/2)
               </div>
             </div>
@@ -317,7 +313,7 @@
           <section class="stage-card span-12" id="stage-card-4">
             <div class="stage-card-header">
               <div class="stage-title-group">
-                <span class="stage-num-badge purple">4</span>
+                <span class="stage-num-badge amber">4</span>
                 <h3 class="stage-heading">Dual Advocates</h3>
               </div>
               <span class="stage-state-pill font-mono">Sandboxes A &amp; B</span>
@@ -328,12 +324,12 @@
               <div class="advocate-sub-box" id="adv-box-kept">
                 <div class="advocate-sub-header">
                   <span class="stage-state-pill font-mono" style="background: rgba(16, 185, 129, 0.2); color: #A7F3D0;">SANDBOX A</span>
-                  <span class="font-mono font-bold" id="adv-status-kept" style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.4);">WAITING</span>
+                  <span class="font-mono font-bold" id="adv-status-kept" style="font-size: 0.78rem; color: #cbd5e1;">WAITING</span>
                 </div>
                 <h4 style="color: #A7F3D0; margin: 6px 0 2px; font-size: 1.05rem;">Kept Advocate</h4>
-                <p style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.6); margin: 0 0 10px;">Affirming sources only — argue it should stay.</p>
+                <p style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.75); margin: 0 0 10px;">Affirming sources only — argue it should stay.</p>
                 <div class="extract-quote-box" id="adv-findings-kept" style="min-height: 60px; font-size: 0.82rem; line-height: 1.45;">
-                  <span style="color: rgba(255, 255, 255, 0.35);">Waiting for gate to open…</span>
+                  <span style="color: rgba(255, 255, 255, 0.55);">Waiting for gate to open…</span>
                 </div>
                 <div class="bouncing-dots-row" id="adv-dots-kept">
                   <span class="bounce-dot"></span>
@@ -344,7 +340,7 @@
                 </div>
               </div>
 
-              <!-- Glowing Center Barrier -->
+              <!-- Center Barrier -->
               <div class="isolation-divider-center">
                 <div class="divider-glow-line"></div>
                 <div class="isolation-lock-pill font-mono">
@@ -358,12 +354,12 @@
               <div class="advocate-sub-box" id="adv-box-broken">
                 <div class="advocate-sub-header">
                   <span class="stage-state-pill font-mono" style="background: rgba(239, 68, 68, 0.2); color: #FCA5A5;">SANDBOX B</span>
-                  <span class="font-mono font-bold" id="adv-status-broken" style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.4);">WAITING</span>
+                  <span class="font-mono font-bold" id="adv-status-broken" style="font-size: 0.78rem; color: #cbd5e1;">WAITING</span>
                 </div>
                 <h4 style="color: #FCA5A5; margin: 6px 0 2px; font-size: 1.05rem;">Broken Advocate</h4>
-                <p style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.6); margin: 0 0 10px;">Contradicting sources only — argue it should fall.</p>
+                <p style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.75); margin: 0 0 10px;">Contradicting sources only — argue it should fall.</p>
                 <div class="extract-quote-box" id="adv-findings-broken" style="min-height: 60px; font-size: 0.82rem; line-height: 1.45;">
-                  <span style="color: rgba(255, 255, 255, 0.35);">Waiting for gate to open…</span>
+                  <span style="color: rgba(255, 255, 255, 0.55);">Waiting for gate to open…</span>
                 </div>
                 <div class="bouncing-dots-row" id="adv-dots-broken">
                   <span class="bounce-dot"></span>
@@ -380,10 +376,10 @@
           <section class="stage-card span-7" id="stage-card-5">
             <div class="stage-card-header">
               <div class="stage-title-group">
-                <span class="stage-num-badge purple">5</span>
+                <span class="stage-num-badge slate">5</span>
                 <h3 class="stage-heading">Arbitrator</h3>
               </div>
-              <span class="stage-state-pill font-mono" style="background: #8B5CF6; color: #fff; font-weight: 900;">SANDBOX C · CODE, 0 MODEL CALLS</span>
+              <span class="stage-state-pill font-mono" style="background: var(--blue-soft); color: var(--blue); border: 1px solid var(--blue); font-weight: 700;"><span class="desktop-only">SANDBOX C · </span>CODE, 0 MODEL CALLS</span>
             </div>
             <p class="stage-lead-text">No guessing. Code re-checks everything the advocates claimed.</p>
 
@@ -462,14 +458,14 @@
               <p style="margin: 0; font-size: 0.88rem; color: rgba(255, 255, 255, 0.65);">
                 Waiting for Arbitrator…<br>Nothing is published before this step.
               </p>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; text-align: left; opacity: 0.6;">
-                <div style="border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 8px 10px;">
-                  <div style="color: #A7F3D0; font-size: 0.72rem; font-weight: 700;">✓ PROMISES</div>
-                  <div style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.5);">Public table</div>
+              <div style="display: flex; gap: 14px; margin-top: 14px; text-align: left;">
+                <div style="border-left: 3px solid #10B981; padding: 2px 10px;">
+                  <div style="color: #A7F3D0; font-size: 0.78rem; font-weight: 700;">✓ PROMISES</div>
+                  <div style="font-size: 0.78rem; color: #cbd5e1;">Public table</div>
                 </div>
-                <div style="border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 8px 10px;">
-                  <div style="color: #FDE68A; font-size: 0.72rem; font-weight: 700;">⚠ QUARANTINED</div>
-                  <div style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.5);">Held for review</div>
+                <div style="border-left: 3px solid #F59E0B; padding: 2px 10px;">
+                  <div style="color: #FDE68A; font-size: 0.78rem; font-weight: 700;">⚠ QUARANTINED</div>
+                  <div style="font-size: 0.78rem; color: #cbd5e1;">Held for review</div>
                 </div>
               </div>
             </div>
@@ -484,10 +480,10 @@
                 <div style="font-weight: 900; color: #A7F3D0; display: flex; align-items: center; gap: 6px; font-size: 0.95rem;">
                   <span>✓ Packet landed in promises table</span>
                 </div>
-                <p id="output-kept-desc" style="margin: 4px 0 8px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.75);"></p>
-                <div style="display: flex; gap: 6px; font-size: 0.72rem;" class="font-mono">
-                  <span style="background: #10B981; color: #071120; padding: 2px 8px; border-radius: 999px; font-weight: 900;">● IN TRACKER</span>
-                  <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">verified record</span>
+                <p id="output-kept-desc" style="margin: 4px 0 8px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.85);"></p>
+                <div style="display: flex; gap: 6px; font-size: 0.78rem;" class="font-mono">
+                  <span style="background: #10B981; color: #071120; padding: 3px 8px; border-radius: 999px; font-weight: 900;">● IN TRACKER</span>
+                  <span style="background: rgba(255, 255, 255, 0.15); color: #cbd5e1; padding: 3px 8px; border-radius: 999px;">verified record</span>
                 </div>
               </div>
             </div>
@@ -502,10 +498,10 @@
                 <div style="font-weight: 900; display: flex; align-items: center; gap: 6px; font-size: 0.95rem;">
                   <span id="output-verdict-headline"></span>
                 </div>
-                <p id="output-verdict-desc" style="margin: 4px 0 8px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.75);"></p>
-                <div style="display: flex; gap: 6px; font-size: 0.72rem;" class="font-mono">
-                  <span id="output-verdict-pill" style="padding: 2px 8px; border-radius: 999px; font-weight: 900;"></span>
-                  <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">recorded verdict</span>
+                <p id="output-verdict-desc" style="margin: 4px 0 8px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.85);"></p>
+                <div style="display: flex; gap: 6px; font-size: 0.78rem;" class="font-mono">
+                  <span id="output-verdict-pill" style="padding: 3px 8px; border-radius: 999px; font-weight: 900;"></span>
+                  <span style="background: rgba(255, 255, 255, 0.15); color: #cbd5e1; padding: 3px 8px; border-radius: 999px;">recorded verdict</span>
                 </div>
               </div>
             </div>
@@ -520,15 +516,15 @@
                 <div style="font-weight: 900; color: #FDE68A; display: flex; align-items: center; gap: 6px; font-size: 0.95rem;">
                   <span>⚠ Packet diverted down — not published</span>
                 </div>
-                <p style="margin: 4px 0 8px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.75);">
+                <p style="margin: 4px 0 8px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.85);">
                   <strong style="color: #fff;">Reason: Exact quote match failed.</strong> The extracted quote does not match the source file. Held for human review.
                 </p>
-                <div style="display: flex; gap: 6px; font-size: 0.72rem;" class="font-mono">
-                  <span style="background: #F59E0B; color: #1A1200; padding: 2px 8px; border-radius: 999px; font-weight: 900;">● HELD — NOT PUBLIC</span>
-                  <span style="background: rgba(255, 255, 255, 0.1); padding: 2px 8px; border-radius: 999px;">quarantine / watchdog test</span>
+                <div style="display: flex; gap: 6px; font-size: 0.78rem;" class="font-mono">
+                  <span style="background: #F59E0B; color: #1A1200; padding: 3px 8px; border-radius: 999px; font-weight: 900;">● HELD — NOT PUBLIC</span>
+                  <span style="background: rgba(255, 255, 255, 0.15); color: #cbd5e1; padding: 3px 8px; border-radius: 999px;">quarantine / watchdog test</span>
                 </div>
               </div>
-              <div style="margin-top: 8px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); display: flex; align-items: center; gap: 6px;">
+              <div style="margin-top: 8px; font-size: 0.78rem; color: #cbd5e1; display: flex; align-items: center; gap: 6px;">
                 <span>↳ Diverted path shown — it never reaches the promises table.</span>
               </div>
             </div>
@@ -549,7 +545,7 @@
                 <span><strong>Determinism prevents drift:</strong> Models only draft in sandboxes; 100% Python code verifies and decides.</span>
               </li>
               <li>
-                <span style="color: #C4B5FD;">•</span>
+                <span style="color: var(--blue);">•</span>
                 <span><strong>Quarantine prevents harm:</strong> Any unverified or altered quote is immediately held in quarantine, never published.</span>
               </li>
             </ul>
@@ -591,59 +587,61 @@
 
         <!-- Filters Bar & Controls -->
         <div class="filters-bar" id="filters-bar">
-          <div class="filter-group">
-            <label for="filter-entity">Entity</label>
-            <select id="filter-entity" class="filter-select">
-              <option value="all">All Entities</option>
-              <option value="politicians">Politicians</option>
-              <option value="city_government">City Government</option>
-              <option value="sports">Sports</option>
-              <option value="companies">Companies</option>
-              <option value="culture">Culture</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
-            <label for="filter-verdict">Verdict</label>
-            <select id="filter-verdict" class="filter-select">
-              <option value="all">All Verdicts</option>
-              <option value="kept">Kept</option>
-              <option value="in_progress">In Progress</option>
-              <option value="broken">Broken</option>
-              <option value="stalled">Stalled</option>
-              <option value="undecided">Undecided</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
-            <label for="filter-category">Category</label>
-            <select id="filter-category" class="filter-select">
-              <option value="all">All Categories</option>
-              <option value="Sports">🏀 Sports</option>
-              <option value="Culture &amp; Music">🎸 Culture &amp; Music</option>
-              <option value="Transit &amp; Streets">🛴 Transit &amp; Streets</option>
-              <option value="Housing &amp; Neighborhoods">🏘️ Housing &amp; Neighborhoods</option>
-              <option value="Civic &amp; Public Safety">🏛️ Civic &amp; Public Safety</option>
-              <option value="Environment &amp; Energy">⚡ Environment &amp; Energy</option>
-              <option value="Infrastructure &amp; Tech">🏗️ Infrastructure &amp; Tech</option>
-              <option value="Bay Area &amp; Regional">🌉 Bay Area &amp; Regional</option>
-              <option value="Uncategorized">❓ Uncategorized</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
-            <label for="filter-sort">Sort</label>
-            <select id="filter-sort" class="filter-select font-mono">
-              <option value="default">Default (Promised Date)</option>
-              <option value="id_asc">ID (#01 &rarr; #87)</option>
-              <option value="date_desc">Date (Newest first)</option>
-              <option value="date_asc">Date (Oldest first)</option>
-              <option value="verdict">Verdict</option>
-              <option value="entity">Entity (A &rarr; Z)</option>
-            </select>
-          </div>
-
           <input type="text" id="search-input" class="search-input" placeholder="Search by number, speaker, or keyword..." aria-label="Search promises">
+
+          <div class="filters-dropdowns-row">
+            <div class="filter-group">
+              <label for="filter-entity">Entity</label>
+              <select id="filter-entity" class="filter-select">
+                <option value="all">All Entities</option>
+                <option value="politicians">Politicians</option>
+                <option value="city_government">City Government</option>
+                <option value="sports">Sports</option>
+                <option value="companies">Companies</option>
+                <option value="culture">Culture</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-verdict">Verdict</label>
+              <select id="filter-verdict" class="filter-select">
+                <option value="all">All Verdicts</option>
+                <option value="kept">Kept</option>
+                <option value="in_progress">In Progress</option>
+                <option value="broken">Broken</option>
+                <option value="stalled">Stalled</option>
+                <option value="undecided">Undecided</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-category">Category</label>
+              <select id="filter-category" class="filter-select">
+                <option value="all">All Categories</option>
+                <option value="Sports">🏀 Sports</option>
+                <option value="Culture &amp; Music">🎸 Culture &amp; Music</option>
+                <option value="Transit &amp; Streets">🛴 Transit &amp; Streets</option>
+                <option value="Housing &amp; Neighborhoods">🏘️ Housing &amp; Neighborhoods</option>
+                <option value="Civic &amp; Public Safety">🏛️ Civic &amp; Public Safety</option>
+                <option value="Environment &amp; Energy">⚡ Environment &amp; Energy</option>
+                <option value="Infrastructure &amp; Tech">🏗️ Infrastructure &amp; Tech</option>
+                <option value="Bay Area &amp; Regional">🌉 Bay Area &amp; Regional</option>
+                <option value="Uncategorized">❓ Uncategorized</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-sort">Sort</label>
+              <select id="filter-sort" class="filter-select font-mono">
+                <option value="default">Default (Promised Date)</option>
+                <option value="id_asc">ID (#01 &rarr; #87)</option>
+                <option value="date_desc">Date (Newest first)</option>
+                <option value="date_asc">Date (Oldest first)</option>
+                <option value="verdict">Verdict</option>
+                <option value="entity">Entity (A &rarr; Z)</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div class="table-results-status-bar font-mono" style="margin: -6px 0 12px; font-size: 0.82rem; color: #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
@@ -652,7 +650,7 @@
         </div>
 
         <!-- Table 1: Tracked Promises -->
-        <p class="font-mono" style="margin: 0 0 8px; font-size: 0.78rem; color: var(--muted);">Click any row to inspect its provenance &amp; evidence.</p>
+        <p class="font-mono" style="margin: 0 0 8px; font-size: 0.78rem; color: var(--muted); text-wrap: pretty;">Click any row to inspect its provenance &amp;&nbsp;evidence.</p>
         <div class="data-table-container" id="promises-table-container">
           <table class="data-table">
             <thead>
@@ -690,10 +688,9 @@
         </div>
       </section>
 
-      <!-- 02: Built With & Inspired By Section -->
+      <!-- Built With & Inspired By Section -->
       <section class="built-section" id="built-section" aria-label="Credits & Heritage">
-        <p class="kicker">02 — BUILT WITH + INSPIRED BY</p>
-        <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(2rem, 3.8vw, 2.7rem); margin: 4px 0 8px; font-weight: 600;">Standing on open work.</h2>
+        <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(2rem, 3.8vw, 2.7rem); margin: 4px 0 8px; font-weight: 600;">Standing on open work</h2>
 
         <div class="two-col-plain">
           <div>
@@ -702,7 +699,7 @@
               <li><strong>Archil Cloud Disks</strong> — Persistent disk + <span class="font-mono">/mnt/archil</span> mount. Infrastructure only: Lane A created the 20-table schema and the pipeline populated it.</li>
               <li><strong>Keenable API</strong> — Web API called over HTTP for ranked search + page content. Never wrote a file or touched SQLite; "Fetched: keenable keyed" headers in 38 sources are provenance labels, not authorship.</li>
               <li><strong>SF Legistar API</strong> — Board of Supervisors agendas, resolutions, and official votes.</li>
-              <li><strong>DataSF</strong> — 311 service tickets and operational civic signals.</li>
+              <li><strong>DataSF</strong> — 311 service tickets and operational civic&nbsp;signals.</li>
               <li><strong>Granicus / Board Minutes</strong> — Primary official San Francisco meeting records and transcripts.</li>
               <li><strong>Meta / Nebius Token Factory</strong> — Drafting only in sandboxes; 0 model calls in Arbitrator.</li>
             </ul>
@@ -712,7 +709,7 @@
             <ul class="plain-credits-list">
               <li><a href="https://github.com/xternal/openpromises" target="_blank" rel="noopener"><strong>OpenPromises</strong></a> — Core verification principles and promise card validation.</li>
               <li><a href="https://github.com/cluster2600/kept.vote" target="_blank" rel="noopener"><strong>kept.vote</strong></a> — Civic commitment accountability.</li>
-              <li><a href="https://councilhound.net" target="_blank" rel="noopener"><strong>CouncilHound</strong></a> — City council tracking.</li>
+              <li><a href="https://councilhound.net" target="_blank" rel="noopener"><strong>CouncilHound</strong></a> — City council&nbsp;tracking.</li>
               <li><a href="https://ken.promisetracker-v2.dev.codeforafrica.org" target="_blank" rel="noopener"><strong>PromiseTracker (Code for Africa)</strong></a> — Public promise tracking.</li>
               <li><a href="https://councildataproject.org/" target="_blank" rel="noopener"><strong>Council Data Project</strong></a> — Open civic transcripts and voting records.</li>
             </ul>
@@ -720,10 +717,9 @@
         </div>
       </section>
 
-      <!-- 03: Limitations & next improvements (WRITEUP.md §4, audited Nov 11) -->
+      <!-- Limitations & next improvements (WRITEUP.md §4, audited Nov 11) -->
       <section class="built-section" id="limitations" aria-label="Limitations and next improvements">
-        <p class="kicker">03 — LIMITATIONS &amp; NEXT IMPROVEMENTS</p>
-        <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 4px 0 8px; font-weight: 600;">What we'd improve next.</h2>
+        <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 4px 0 8px; font-weight: 600;">What we'd improve next</h2>
         <p style="font-size: 0.9rem; color: var(--muted); margin: 0 0 12px; max-width: 70ch;">Independent re-runs match the stored verdicts everywhere the code governs — the gaps below are where humans still decide, and where the next rubric revision should go.</p>
         <div class="two-col-plain">
           <div>
@@ -841,16 +837,16 @@
         <div class="inspection-bundle-box">
           <span class="bundle-title">Part 3: Dual Advocate Bundles (Sandboxes A &amp; B)</span>
           <div class="advocates-modal-grid">
-            <div class="advocate-bundle-half" style="border-top: 3px solid var(--kept);">
-              <h4 style="color: var(--kept);">Kept Advocate (Sandbox A)</h4>
+            <div class="advocate-bundle-half" style="border: 1px solid rgba(16, 185, 129, 0.35);">
+              <h3 style="color: var(--kept); font-size: 1.05rem; margin: 0 0 6px;">Kept Advocate (Sandbox A)</h3>
               <p style="font-size: 0.82rem; color: var(--muted); margin: 0 0 6px;">File: <code id="modal-kept-file">…</code></p>
               <div id="modal-kept-claims-list">
                 <p style="font-size: 0.85rem; color: var(--muted); font-style: italic;">Loading…</p>
               </div>
             </div>
 
-            <div class="advocate-bundle-half" style="border-top: 3px solid var(--broken);">
-              <h4 style="color: var(--broken);">Broken Advocate (Sandbox B)</h4>
+            <div class="advocate-bundle-half" style="border: 1px solid rgba(239, 68, 68, 0.35);">
+              <h3 style="color: var(--broken); font-size: 1.05rem; margin: 0 0 6px;">Broken Advocate (Sandbox B)</h3>
               <p style="font-size: 0.82rem; color: var(--muted); margin: 0 0 6px;">File: <code id="modal-broken-file">…</code></p>
               <div id="modal-broken-claims-list">
                 <p style="font-size: 0.85rem; color: var(--muted); font-style: italic;">Loading…</p>

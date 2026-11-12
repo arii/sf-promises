@@ -10,4 +10,5 @@ data/
 video/node_modules/
 video/out/
 video/public/rec/
+.agents/skills/impeccable/scripts/bin/
 
