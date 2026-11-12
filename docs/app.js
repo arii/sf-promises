@@ -255,7 +255,7 @@
   const activeFilterIndicator = document.getElementById('active-filter-indicator');
 
   // Pagination elements
-  let currentPageSize = 15;
+  let currentPageSize = 10;
   const btnShowMore = document.getElementById('btn-show-more');
   const btnShowAll = document.getElementById('btn-show-all');
   const tablePaginationRow = document.getElementById('table-pagination-row');
@@ -1459,18 +1459,15 @@
     if (tableTotalCount) tableTotalCount.textContent = filtered.length;
 
     // Pagination controls
-    if (tablePaginationRow) {
+    const paginationControls = document.getElementById('pagination-controls');
+    if (paginationControls) {
       if (filtered.length <= currentPageSize) {
-        tablePaginationRow.style.display = 'none';
+        paginationControls.style.display = 'none';
       } else {
-        tablePaginationRow.style.display = 'flex';
-        if (paginationSub) {
-          paginationSub.textContent = `(showing ${displayed.length} of ${filtered.length})`;
-        }
+        paginationControls.style.display = 'flex';
         if (btnShowMore) {
-          const nextCount = Math.min(15, filtered.length - displayed.length);
-          const span = btnShowMore.querySelector('span:first-child');
-          if (span) span.textContent = `Show ${nextCount} More Commitments`;
+          const nextCount = Math.min(10, filtered.length - displayed.length);
+          btnShowMore.textContent = `Show ${nextCount} More Commitments (showing ${displayed.length} of ${filtered.length})`;
         }
       }
     }
@@ -1494,20 +1491,65 @@
 
     renderActiveChips();
 
-    if (tbodyPromises) {
-      tbodyPromises.innerHTML = '';
-      displayed.forEach(p => {
-        const tr = document.createElement('tr');
-        const verdClass = p.verdict.toLowerCase().replace(' ', '_');
-        const rel = p.relevance || null;
-        const neighborhood = p.neighborhood || 'Citywide San Francisco';
-        const rankFormatted = String(p.impact_rank || p.display_no || '—').padStart(2, '0');
-        const tier = p.source_tier || getSourceTier(p.source_url);
-        const tierClass = tier.toLowerCase();
-        let quoteText = cleanQuoteText(p.promise_text);
+    // 1. Render Mobile Cards List (<768px)
+    const mobileCardsList = document.getElementById('mobile-cards-list');
+    if (mobileCardsList) {
+      mobileCardsList.innerHTML = '';
+      displayed.forEach((p, idx) => {
+        const card = document.createElement('div');
+        const rankFormatted = String(idx + 1).padStart(2, '0');
+        const verdClass = p.verdict.toLowerCase().replace(/[\s-]+/g, '_');
+        let quoteText = cleanQuoteText(p.verbatim_quote || p.promise_text || '');
         if (p.promise_id === 'P05' && !quoteText.startsWith('[Reported by')) {
           quoteText = `[Reported by The Frisc] ${quoteText}`;
         }
+        const quote140 = quoteText.slice(0, 140) + (quoteText.length > 140 ? '…' : '');
+        card.className = 'mobile-promise-card';
+        card.setAttribute('data-pid', p.promise_id);
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `Inspect #${rankFormatted} ${p.entity}: ${quote140}`);
+        card.innerHTML = `
+          <div class="mobile-card-header">
+            <div class="mobile-card-speaker-group">
+              <span class="mobile-card-speaker">${escapeHtml(p.entity)}</span>
+              <span class="mobile-card-id font-mono">#${rankFormatted}</span>
+            </div>
+            <span class="verdict-chip ${verdClass}">${formatVerdictLabel(p.verdict)}</span>
+          </div>
+          <p class="mobile-card-quote">&ldquo;${escapeHtml(quote140)}&rdquo;</p>
+          <div class="mobile-card-footer font-mono">
+            <span class="mobile-card-date">Promised: ${escapeHtml(p.promised_date || '—')}</span>
+            <span class="mobile-card-link">Detail &rarr;</span>
+          </div>
+        `;
+        card.addEventListener('click', () => openInspectModal(p.promise_id));
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openInspectModal(p.promise_id);
+          }
+        });
+        mobileCardsList.appendChild(card);
+      });
+    }
+
+    // 2. Render Desktop 4-Column Table (>=768px)
+    if (tbodyPromises) {
+      tbodyPromises.innerHTML = '';
+      displayed.forEach((p, idx) => {
+        const tr = document.createElement('tr');
+        const verdClass = p.verdict.toLowerCase().replace(/[\s-]+/g, '_');
+        const rel = p.relevance || null;
+        const neighborhood = p.neighborhood || 'Citywide San Francisco';
+        const rankFormatted = String(idx + 1).padStart(2, '0');
+        const tier = p.source_tier || getSourceTier(p.source_url);
+        const tierClass = tier.toLowerCase();
+        let quoteText = cleanQuoteText(p.verbatim_quote || p.promise_text || '');
+        if (p.promise_id === 'P05' && !quoteText.startsWith('[Reported by')) {
+          quoteText = `[Reported by The Frisc] ${quoteText}`;
+        }
+        const quote140 = quoteText.slice(0, 140) + (quoteText.length > 140 ? '…' : '');
 
         tr.className = 'promise-row';
         tr.id = `promise-${p.promise_id}`;
@@ -1535,28 +1577,20 @@
           ? `<div class="timeline-due font-mono">Due: ${escapeHtml(p.due_date)}</div>`
           : '';
         tr.innerHTML = `
-          <td class="table-id-cell font-mono">
-            <div class="id-cell-wrapper">
-              <span class="rank-num">#${rankFormatted}</span>
-              <span class="stable-id font-mono">${escapeHtml(p.promise_id)}</span>
-              <span class="expand-chevron font-mono" aria-hidden="true">▾</span>
-            </div>
-          </td>
           <td class="table-entity-cell">
-            <div class="table-entity-name">${escapeHtml(p.entity)}</div>
+            <div class="entity-headline-row">
+              <span class="table-entity-name">${escapeHtml(p.entity)}</span>
+              <span class="stable-id-pill font-mono">#${rankFormatted} · ${escapeHtml(p.promise_id)}</span>
+            </div>
             <div class="table-entity-role font-mono">${escapeHtml(neighborhood)}</div>
           </td>
           <td class="table-promise-cell">
-            <div class="table-promise-text">&ldquo;${escapeHtml(quoteText)}&rdquo;</div>
+            <div class="table-promise-text">&ldquo;${escapeHtml(quote140)}&rdquo;</div>
             <div class="table-pill-row" style="margin-top: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
               <span class="category-pill font-mono">${escapeHtml(p.category)}</span>
               <span class="source-tier-pill font-mono source-tier-${tierClass}">${tier}</span>
               <span class="expand-hint-text font-mono">Details ▾</span>
             </div>
-          </td>
-          <td class="table-timeline-cell font-mono">
-            <div class="timeline-date">${escapeHtml(p.promised_date || '—')}</div>
-            ${dueLine}
           </td>
           <td class="table-verdict-cell">
             <div class="verdict-wrapper">
@@ -1566,6 +1600,10 @@
                 <span class="btn-inspect-inline">Inspect &rarr;</span>
               </div>
             </div>
+          </td>
+          <td class="table-timeline-cell font-mono">
+            <div class="timeline-date">${escapeHtml(p.promised_date || '—')}</div>
+            ${dueLine}
           </td>
         `;
 
@@ -1586,7 +1624,7 @@
         trAccordion.id = `accordion-${p.promise_id}`;
         trAccordion.setAttribute('aria-hidden', 'true');
         trAccordion.innerHTML = `
-          <td colspan="5" class="accordion-cell">
+          <td colspan="4" class="accordion-cell">
             <div class="accordion-panel">
               <div class="accordion-panel-grid">
                 <div class="accordion-col quote-col">
@@ -1728,7 +1766,7 @@
           }
         }
         if (k === 'search' && searchInput) searchInput.value = '';
-        currentPageSize = 15;
+        currentPageSize = 10;
         renderPromisesTable();
       });
     });
@@ -2065,7 +2103,7 @@
     // Show More & Show All pagination handlers
     if (btnShowMore) {
       btnShowMore.addEventListener('click', () => {
-        currentPageSize += 15;
+        currentPageSize += 10;
         renderPromisesTable();
       });
     }
@@ -2077,7 +2115,8 @@
     }
 
     const resetPaginationAndRender = () => {
-      currentPageSize = 15;
+      currentPageSize = 10;
+      if (typeof updateMobileFilterBadge === 'function') updateMobileFilterBadge();
       renderPromisesTable();
     };
 
@@ -2287,11 +2326,180 @@
       });
     }
 
-    // Global ESC key to close open modals
+    // Stacked bar segments & legend clicks (filter by verdict and scroll to explore)
+    const handleVerdictFilterClick = (targetVerdict) => {
+      if (filterVerdict) {
+        if (filterVerdict.value === targetVerdict) {
+          filterVerdict.value = 'all';
+        } else {
+          filterVerdict.value = targetVerdict;
+        }
+      }
+      resetPaginationAndRender();
+      const exploreSection = document.getElementById('explore');
+      if (exploreSection) {
+        exploreSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    document.querySelectorAll('.outcome-stacked-bar-hero .bar-seg, .outcome-bar-legend .legend-btn').forEach(el => {
+      el.addEventListener('click', () => {
+        const v = el.getAttribute('data-verdict');
+        if (v) handleVerdictFilterClick(v);
+      });
+    });
+
+    // Auto-play pipeline replay when #watch scrolls into view (N01 altered-quote catch by default)
+    const watchSection = document.getElementById('watch');
+    if (watchSection && 'IntersectionObserver' in window) {
+      let hasAutoPlayed = false;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !hasAutoPlayed && !pipelineRunning) {
+            hasAutoPlayed = true;
+            startPipeline('N01');
+          }
+        });
+      }, { threshold: 0.25 });
+      observer.observe(watchSection);
+    }
+
+    // Featured stories "See evidence" buttons
+    document.querySelectorAll('.btn-story-evidence').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pid = btn.getAttribute('data-pid');
+        const qid = btn.getAttribute('data-qid');
+        if (qid) {
+          if (tabBtnQuarantine) tabBtnQuarantine.click();
+          const qRow = document.querySelector(`tr[data-qid="${qid}"]`);
+          if (qRow) {
+            qRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            qRow.classList.add('row-highlight');
+            setTimeout(() => qRow.classList.remove('row-highlight'), 2000);
+          }
+          const exploreSec = document.getElementById('explore');
+          if (exploreSec) exploreSec.scrollIntoView({ behavior: 'smooth' });
+        } else if (pid) {
+          openInspectModal(pid);
+        }
+      });
+    });
+
+    // Mobile filter sheet (<768px)
+    const btnMobileFilter = document.getElementById('btn-mobile-filter');
+    const filterBackdrop = document.getElementById('mobile-filter-backdrop');
+    const filterSheet = document.getElementById('mobile-filter-sheet');
+    const btnCloseFilterSheet = document.getElementById('btn-close-filter-sheet');
+    const btnSheetApply = document.getElementById('btn-sheet-apply');
+    const btnSheetReset = document.getElementById('btn-sheet-reset');
+    const mobileFilterBadge = document.getElementById('mobile-filter-badge');
+
+    const sheetEntity = document.getElementById('mobile-filter-entity');
+    const sheetVerdict = document.getElementById('mobile-filter-verdict');
+    const sheetCategory = document.getElementById('mobile-filter-category');
+    const sheetSort = document.getElementById('mobile-filter-sort');
+
+    function updateMobileFilterBadge() {
+      if (!mobileFilterBadge) return;
+      let activeCount = 0;
+      if (filterEntity && filterEntity.value !== 'all') activeCount++;
+      if (filterVerdict && filterVerdict.value !== 'all') activeCount++;
+      if (activeCategoryFilter && activeCategoryFilter !== 'all') activeCount++;
+      if (filterSort && filterSort.value !== 'rank') activeCount++;
+      if (searchInput && searchInput.value.trim() !== '') activeCount++;
+
+      if (activeCount > 0) {
+        mobileFilterBadge.textContent = activeCount;
+        mobileFilterBadge.style.display = 'inline-flex';
+      } else {
+        mobileFilterBadge.style.display = 'none';
+      }
+    }
+
+    const openFilterSheet = () => {
+      if (filterBackdrop) filterBackdrop.style.display = 'flex';
+      if (filterSheet) filterSheet.classList.add('open');
+      if (btnMobileFilter) btnMobileFilter.setAttribute('aria-expanded', 'true');
+
+      // Sync sheet controls from main filters
+      if (sheetEntity && filterEntity) sheetEntity.value = filterEntity.value;
+      if (sheetVerdict && filterVerdict) sheetVerdict.value = filterVerdict.value;
+      if (sheetCategory) sheetCategory.value = activeCategoryFilter || 'all';
+      if (sheetSort && filterSort) sheetSort.value = filterSort.value;
+    };
+
+    const closeFilterSheet = () => {
+      if (filterBackdrop) filterBackdrop.style.display = 'none';
+      if (filterSheet) filterSheet.classList.remove('open');
+      if (btnMobileFilter) btnMobileFilter.setAttribute('aria-expanded', 'false');
+    };
+
+    if (btnMobileFilter) btnMobileFilter.addEventListener('click', openFilterSheet);
+    if (btnCloseFilterSheet) btnCloseFilterSheet.addEventListener('click', closeFilterSheet);
+    if (filterBackdrop) {
+      filterBackdrop.addEventListener('click', (e) => {
+        if (e.target === filterBackdrop) closeFilterSheet();
+      });
+    }
+
+    if (btnSheetApply) {
+      btnSheetApply.addEventListener('click', () => {
+        if (sheetEntity && filterEntity) filterEntity.value = sheetEntity.value;
+        if (sheetVerdict && filterVerdict) filterVerdict.value = sheetVerdict.value;
+        if (sheetCategory) {
+          activeCategoryFilter = sheetCategory.value;
+          if (filterCategory) filterCategory.value = sheetCategory.value;
+          if (domainPillsBar) {
+            domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => {
+              p.classList.toggle('active', p.getAttribute('data-category') === activeCategoryFilter);
+            });
+          }
+        }
+        if (sheetSort && filterSort) filterSort.value = sheetSort.value;
+        closeFilterSheet();
+        resetPaginationAndRender();
+      });
+    }
+
+    if (btnSheetReset) {
+      btnSheetReset.addEventListener('click', () => {
+        if (sheetEntity) sheetEntity.value = 'all';
+        if (sheetVerdict) sheetVerdict.value = 'all';
+        if (sheetCategory) sheetCategory.value = 'all';
+        if (sheetSort) sheetSort.value = 'rank';
+
+        if (filterEntity) filterEntity.value = 'all';
+        if (filterVerdict) filterVerdict.value = 'all';
+        if (filterCategory) filterCategory.value = 'all';
+        if (filterSort) filterSort.value = 'rank';
+        if (searchInput) searchInput.value = '';
+        activeCategoryFilter = 'all';
+
+        if (domainPillsBar) {
+          domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => {
+            p.classList.toggle('active', p.getAttribute('data-category') === activeCategoryFilter);
+          });
+        }
+        closeFilterSheet();
+        resetPaginationAndRender();
+      });
+    }
+
+    // Back to top button
+    const btnBackToTop = document.getElementById('btn-back-to-top');
+    if (btnBackToTop) {
+      btnBackToTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // Global ESC key to close open modals and sheet
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         if (inspectModal) inspectModal.classList.add('hidden');
         if (methodModal) methodModal.classList.add('hidden');
+        closeFilterSheet();
       }
     });
   }

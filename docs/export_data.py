@@ -984,7 +984,7 @@ def export():
         json.dump(payload, f, indent=2)
         f.write(";\n")
 
-    pre_render_index_html(all_promises, quarantined_items + real_quarantined, verdict_counts)
+    pre_render_index_html(all_promises, quarantined_items + real_quarantined, verdict_counts, commit_sha[:8])
 
     print("Data export complete.")
     print(f"  Exported {len(all_promises)} promises with verdicts {dict(verdict_counts)}")
@@ -1035,17 +1035,19 @@ def format_verdict_label(verd):
 
 
 def generate_promise_row_html(p, idx=0):
-    rank_val = p.get("impact_rank") or p.get("display_no") or 0
-    rank = f"{rank_val:02d}"
+    rank = f"{idx + 1:02d}"
     pid = html_esc(p.get("promise_id", ""))
     entity = html_esc(p.get("entity", ""))
     neighborhood = html_esc(p.get("neighborhood", "Citywide San Francisco"))
     category = html_esc(p.get("category", "Civic Governance"))
-    quote = html_esc(clean_quote_text(p.get("verbatim_quote") or p.get("promise_text", "")))
+    quote_raw = clean_quote_text(p.get("verbatim_quote") or p.get("promise_text", ""))
     
     # Mark P05 as reported if not already
-    if pid == "P05" and not quote.startswith("[Reported by"):
-        quote = f"[Reported by The Frisc] {quote}"
+    if pid == "P05" and not quote_raw.startswith("[Reported by"):
+        quote_raw = f"[Reported by The Frisc] {quote_raw}"
+
+    quote = html_esc(quote_raw)
+    quote_140 = html_esc(quote_raw[:140] + ("…" if len(quote_raw) > 140 else ""))
 
     promised = html_esc(p.get("promised_date", "—"))
     due = p.get("due_date", "")
@@ -1059,13 +1061,8 @@ def generate_promise_row_html(p, idx=0):
     tier = get_source_tier(source_url)
     tier_class = tier.lower()
 
-    rel = p.get("relevance")
-    rel_html = ""
-    if rel and isinstance(rel, dict) and "score" in rel:
-        rel_html = f'<span class="score-pill" title="Relevance Gate {rel["score"]}/8">{rel["score"]}/8</span>'
-
-    # Show first 15 rows by default, hide remaining for show-more
-    paged_cls = " paged-row hidden-page-row" if idx >= 15 else ""
+    # Show first 10 rows by default, hide remaining for show-more
+    paged_cls = " paged-row hidden-page-row" if idx >= 10 else ""
 
     bundles = p.get("advocate_bundles", {})
     kept_b = bundles.get("kept", {}) if isinstance(bundles, dict) else {}
@@ -1096,41 +1093,36 @@ def generate_promise_row_html(p, idx=0):
     source_file = html_esc(p.get("source_file_path", f"sources/{source_hash}.md"))
 
     return f"""              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-expanded="false" aria-controls="accordion-{pid}" aria-label="Toggle details for promise #{rank} ({pid}): {quote[:60]}">
-                <td class="table-id-cell font-mono">
-                  <div class="id-cell-wrapper">
-                    <span class="rank-num">#{rank}</span>
-                    <span class="stable-id font-mono">{pid}</span>
-                    <span class="expand-chevron font-mono" aria-hidden="true">▾</span>
-                  </div>
-                </td>
                 <td class="table-entity-cell">
-                  <div class="table-entity-name">{entity}</div>
+                  <div class="entity-headline-row">
+                    <span class="table-entity-name">{entity}</span>
+                    <span class="stable-id-pill font-mono">#{rank} · {pid}</span>
+                  </div>
                   <div class="table-entity-role font-mono">{neighborhood}</div>
                 </td>
                 <td class="table-promise-cell">
-                  <div class="table-promise-text">&ldquo;{quote}&rdquo;</div>
-                  <div class="table-pill-row" style="margin-top: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                  <div class="table-promise-text">&ldquo;{quote_140}&rdquo;</div>
+                  <div class="table-pill-row">
                     <span class="category-pill font-mono">{category}</span>
                     <span class="source-tier-pill font-mono source-tier-{tier_class}">{tier}</span>
                     <span class="expand-hint-text font-mono">Details ▾</span>
+                  </div>
+                </td>
+                <td class="table-verdict-cell">
+                  <div class="verdict-wrapper">
+                    <span class="verdict-chip {verd_class}">{verdict_label}</span>
+                    <div class="verdict-sub-row font-mono">
+                      <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
                   </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-date">{promised}</div>
                   {due_line}
                 </td>
-                <td class="table-verdict-cell">
-                  <div class="verdict-wrapper">
-                    <span class="verdict-chip {verd_class}">{verdict_label}</span>
-                    <div class="verdict-sub-row font-mono">
-                      {rel_html}
-                      <span class="btn-inspect-inline">Inspect &rarr;</span>
-                    </div>
-                  </div>
-                </td>
               </tr>
               <tr class="promise-accordion-row hidden-accordion{paged_cls}" id="accordion-{pid}" aria-hidden="true">
-                <td colspan="5" class="accordion-cell">
+                <td colspan="4" class="accordion-cell">
                   <div class="accordion-panel">
                     <div class="accordion-panel-grid">
                       <div class="accordion-col quote-col">
@@ -1171,6 +1163,121 @@ def generate_promise_row_html(p, idx=0):
               </tr>"""
 
 
+def generate_mobile_promise_card_html(p, idx=0):
+    rank = f"{idx + 1:02d}"
+    pid = html_esc(p.get("promise_id", ""))
+    entity = html_esc(p.get("entity", ""))
+    quote_raw = clean_quote_text(p.get("verbatim_quote") or p.get("promise_text", ""))
+    if pid == "P05" and not quote_raw.startswith("[Reported by"):
+        quote_raw = f"[Reported by The Frisc] {quote_raw}"
+    quote_140 = html_esc(quote_raw[:140] + ("…" if len(quote_raw) > 140 else ""))
+    promised = html_esc(p.get("promised_date", "—"))
+    verdict = p.get("verdict", "undecided")
+    verd_class = verdict.lower().replace(" ", "_")
+    verdict_label = format_verdict_label(verdict)
+    paged_cls = " paged-card hidden-page-card" if idx >= 10 else ""
+
+    return f"""              <div class="mobile-promise-card{paged_cls}" data-pid="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {quote_140}">
+                <div class="mobile-card-header">
+                  <div class="mobile-card-speaker-group">
+                    <span class="mobile-card-speaker">{entity}</span>
+                    <span class="mobile-card-id font-mono">#{rank}</span>
+                  </div>
+                  <span class="verdict-chip {verd_class}">{verdict_label}</span>
+                </div>
+                <p class="mobile-card-quote">&ldquo;{quote_140}&rdquo;</p>
+                <div class="mobile-card-footer font-mono">
+                  <span class="mobile-card-date">Promised: {promised}</span>
+                  <span class="mobile-card-link">Detail &rarr;</span>
+                </div>
+              </div>"""
+
+
+def generate_featured_stories_html(promises, quarantined):
+    stories = [
+        {
+            "pid": "P02",
+            "title": "24/7 Crisis Stabilization Center",
+            "entity": "Mayor Daniel Lurie",
+            "context": "Opened on April 28, 2025 at 822 Geary St to provide immediate sobering and behavioral health support.",
+            "verdict": "kept",
+            "verdict_label": "Kept",
+            "kind": "promise"
+        },
+        {
+            "pid": "SFO-01",
+            "title": "Runway 28L Safety Realignment",
+            "entity": "SFO Airport",
+            "context": "Completed $51M taxiway overhaul and reopened Runway 28L on June 21, 2024, beating the target by 10 days.",
+            "verdict": "kept",
+            "verdict_label": "Kept",
+            "kind": "promise"
+        },
+        {
+            "pid": "P05",
+            "title": "1,500 Shelter Beds in First 6 Months",
+            "entity": "Mayor Daniel Lurie",
+            "context": "Campaign pledge to rapidly open 1,500 new shelter beds abandoned early due to budget shortfall and site constraints.",
+            "verdict": "broken",
+            "verdict_label": "Broken",
+            "kind": "promise"
+        },
+        {
+            "pid": "P06",
+            "title": "Vision Zero: End Traffic Deaths by 2024",
+            "entity": "City & County of SF",
+            "context": "10-year municipal commitment to eliminate traffic fatalities officially missed in 2024 with 35 fatalities recorded.",
+            "verdict": "broken",
+            "verdict_label": "Broken",
+            "kind": "promise"
+        },
+        {
+            "pid": "P37",
+            "title": "300 Encampment Shelter Placements",
+            "entity": "Mayor London Breed",
+            "context": "Tenderloin emergency initiative to place 300 individuals remains undecided pending audited exit records.",
+            "verdict": "undecided",
+            "verdict_label": "Undecided",
+            "kind": "promise"
+        },
+        {
+            "pid": "Q01",
+            "title": "Planted Quote Mutation Catch",
+            "entity": "Watchdog Test N01",
+            "context": "Planted adversarial mutation (quote altered from 'beds' to 'units') caught immediately by deterministic checks.",
+            "verdict": "quarantined",
+            "verdict_label": "Quarantined",
+            "kind": "quarantine"
+        }
+    ]
+
+    cards = []
+    for s in stories:
+        pid = html_esc(s["pid"])
+        entity = html_esc(s["entity"])
+        title = html_esc(s["title"])
+        context = html_esc(s["context"])
+        verd_class = s["verdict"]
+        verd_label = s["verdict_label"]
+        btn_data = f'data-pid="{pid}"' if s["kind"] == "promise" else 'data-qid="Q01"'
+        btn_text = "See evidence &rarr;" if s["kind"] == "promise" else "See audit log &rarr;"
+
+        cards.append(f"""          <div class="story-card" data-story-pid="{pid}">
+            <div class="story-card-top">
+              <span class="story-entity">{entity}</span>
+              <span class="verdict-chip {verd_class}">{verd_label}</span>
+            </div>
+            <h3 class="story-title">{title}</h3>
+            <p class="story-context">{context}</p>
+            <div class="story-card-bottom">
+              <button type="button" class="btn-story-evidence" {btn_data} aria-label="See evidence for {title}">
+                {btn_text}
+              </button>
+            </div>
+          </div>""")
+    return "\n".join(cards)
+
+
 def generate_quarantine_row_html(q, idx):
     title = html_esc(q.get("title") or q.get("promise_id") or f"Test Case {idx + 1}")
     planted = q.get("planted_claim")
@@ -1199,7 +1306,7 @@ def generate_quarantine_row_html(q, idx):
               </tr>"""
 
 
-def pre_render_index_html(promises, quarantined, verdict_counts):
+def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     index_path = "docs/index.html"
     if not os.path.exists(index_path):
         return
@@ -1208,7 +1315,13 @@ def pre_render_index_html(promises, quarantined, verdict_counts):
         html = f.read()
 
     import re
-    # Update tally numbers in hero
+    # Cache-busting query strings
+    html = re.sub(r'href="styles\.css(?:\?[^"]*)?"', f'href="styles.css?v={commit_sha}"', html)
+    html = re.sub(r'src="data\.js(?:\?[^"]*)?"', f'src="data.js?v={commit_sha}"', html)
+    html = re.sub(r'src="app\.js(?:\?[^"]*)?"', f'src="app.js?v={commit_sha}"', html)
+    html = re.sub(r'src="list\.min\.js(?:\?[^"]*)?"', f'src="list.min.js?v={commit_sha}"', html)
+
+    # Update tally numbers in hero & bar
     html = re.sub(r'(<strong id="tally-total">)[^<]*(</strong>)', rf'\g<1>{len(promises)}\g<2>', html)
     html = re.sub(r'(<strong id="tally-kept">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("kept", 0)}\g<2>', html)
     html = re.sub(r'(<strong id="tally-progress">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("in_progress", 0)}\g<2>', html)
@@ -1216,22 +1329,43 @@ def pre_render_index_html(promises, quarantined, verdict_counts):
     html = re.sub(r'(<strong id="tally-undecided">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("undecided", 0)}\g<2>', html)
     html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-promises">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
     html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-quarantine">)[^<]*(</span>)', rf'\g<1>{len(quarantined)}\g<2>', html)
-    html = re.sub(r'(<strong id="table-showing-count">)[^<]*(</strong>)', r'\g<1>15\g<2>', html)
+    html = re.sub(r'(<span id="outcome-dist-verified">)[^<]*(</span>)', rf'\g<1>{len(promises)} VERIFIED\g<2>', html)
+    html = re.sub(r'(<strong id="table-showing-count">)[^<]*(</strong>)', r'\g<1>10\g<2>', html)
     html = re.sub(r'(<span id="table-total-count">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
 
-    # Pre-render promises table rows (first 15 visible, remainder paged)
+    # Pre-render 4-column desktop promise rows (first 10 visible, remainder paged)
     promise_rows = "\n".join(generate_promise_row_html(p, i) for i, p in enumerate(promises))
     html = re.sub(
-        r'(<tbody id="promises-table-body">)(.*?)(</tbody>)',
+        r'(<tbody id="promises-table-body"[^>]*>)(.*?)(</tbody>)',
         r'\1\n' + promise_rows + r'\n            \3',
         html,
         flags=re.DOTALL
     )
 
+    # Pre-render mobile promise cards (first 10 visible, remainder paged)
+    mobile_cards = "\n".join(generate_mobile_promise_card_html(p, i) for i, p in enumerate(promises))
+    if '<div class="mobile-promise-cards-list"' in html:
+        html = re.sub(
+            r'(<div class="mobile-promise-cards-list"[^>]*>)(.*?)(</div>\s*<!-- end mobile cards -->)',
+            r'\1\n' + mobile_cards + r'\n          \3',
+            html,
+            flags=re.DOTALL
+        )
+
+    # Pre-render featured story cards
+    featured_stories = generate_featured_stories_html(promises, quarantined)
+    if '<div class="featured-stories-grid"' in html:
+        html = re.sub(
+            r'(<div class="featured-stories-grid"[^>]*>)(.*?)(</div>\s*<!-- end featured stories -->)',
+            r'\1\n' + featured_stories + r'\n        \3',
+            html,
+            flags=re.DOTALL
+        )
+
     # Pre-render quarantine table rows
     quarantine_rows = "\n".join(generate_quarantine_row_html(q, i) for i, q in enumerate(quarantined))
     html = re.sub(
-        r'(<tbody id="quarantine-table-body">)(.*?)(</tbody>)',
+        r'(<tbody id="quarantine-table-body"[^>]*>)(.*?)(</tbody>)',
         r'\1\n' + quarantine_rows + r'\n            \3',
         html,
         flags=re.DOTALL
@@ -1239,7 +1373,7 @@ def pre_render_index_html(promises, quarantined, verdict_counts):
 
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"  Pre-rendered {len(promises)} promise rows and {len(quarantined)} quarantine rows into docs/index.html")
+    print(f"  Pre-rendered {len(promises)} promise rows, {len(promises)} mobile cards, and {len(quarantined)} quarantine rows into docs/index.html")
 
 
 if __name__ == "__main__":
