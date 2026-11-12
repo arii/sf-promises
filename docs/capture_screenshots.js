@@ -5,6 +5,38 @@
 const { spawn } = require('child_process');
 const fs = require('fs');
 const http = require('http');
+const path = require('path');
+
+const MIME_TYPES = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'application/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.png': 'image/png',
+  '.ico': 'image/x-icon'
+};
+
+function createStaticServer(port, staticDir) {
+  const server = http.createServer((req, res) => {
+    let reqPath = req.url.split('?')[0];
+    if (reqPath === '/') reqPath = '/index.html';
+    const filePath = path.join(staticDir, reqPath);
+    if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('Not Found');
+      return;
+    }
+    const ext = path.extname(filePath).toLowerCase();
+    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    res.writeHead(200, { 'Content-Type': contentType });
+    fs.createReadStream(filePath).pipe(res);
+  });
+  return new Promise((resolve, reject) => {
+    server.listen(port, '127.0.0.1', () => resolve(server));
+    server.on('error', reject);
+  });
+}
 
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -70,6 +102,11 @@ class CDPClient {
 }
 
 async function main() {
+  const HTTP_PORT = 8090;
+  const staticDir = path.resolve(__dirname);
+  console.log(`Starting static HTTP server on http://127.0.0.1:${HTTP_PORT} (serving ${staticDir})...`);
+  const server = await createStaticServer(HTTP_PORT, staticDir);
+
   const PORT = 9225;
   console.log('Launching headless Chrome on port', PORT);
   const chrome = spawn('google-chrome', [
@@ -102,8 +139,8 @@ async function main() {
     });
 
     // 1. Main Page Screenshot (Hero + Showcase)
-    console.log('Navigating to http://127.0.0.1:8088/');
-    await client.send('Page.navigate', { url: 'http://127.0.0.1:8088/' });
+    console.log(`Navigating to http://127.0.0.1:${HTTP_PORT}/`);
+    await client.send('Page.navigate', { url: `http://127.0.0.1:${HTTP_PORT}/` });
     await sleep(1500);
     await client.eval('window.scrollTo(0, 0)');
     await client.captureScreenshot('demo/screenshot_main.png');
@@ -156,6 +193,14 @@ async function main() {
     await client.captureScreenshot('demo/screenshot_table_desktop.png');
     await client.captureScreenshot('demo/screenshot_1280_table.png');
 
+    // 7b. Test Inline Accordion Expansion
+    console.log('Testing and capturing Inline Accordion Expansion...');
+    await client.eval('document.getElementById("promise-P02").click()');
+    await sleep(400);
+    const accordionVisible = await client.eval('!document.getElementById("accordion-P02").classList.contains("hidden-accordion")');
+    console.log(`Inline accordion P02 expanded: ${accordionVisible}`);
+    await client.captureScreenshot('demo/screenshot_accordion_open.png');
+
     // 8. Tablet View (768px)
     console.log('Capturing Tablet View (768px)...');
     await client.send('Emulation.setDeviceMetricsOverride', {
@@ -202,6 +247,7 @@ async function main() {
     console.log('All screenshots captured successfully.');
   } finally {
     chrome.kill();
+    server.close();
   }
 }
 

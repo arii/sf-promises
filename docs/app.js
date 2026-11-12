@@ -1359,6 +1359,11 @@
         const rb = b.impact_rank || parseInt(b.display_no || '999', 10);
         return ra - rb;
       }
+      if (sortVal === 'rank_desc') {
+        const ra = a.impact_rank || parseInt(a.display_no || '999', 10);
+        const rb = b.impact_rank || parseInt(b.display_no || '999', 10);
+        return rb - ra;
+      }
       if (sortVal === 'date_desc') {
         return (b.promised_date || '').localeCompare(a.promised_date || '');
       }
@@ -1368,8 +1373,20 @@
       if (sortVal === 'verdict') {
         return (a.verdict || '').localeCompare(b.verdict || '');
       }
+      if (sortVal === 'verdict_desc') {
+        return (b.verdict || '').localeCompare(a.verdict || '');
+      }
       if (sortVal === 'entity') {
         return (a.entity || '').localeCompare(b.entity || '');
+      }
+      if (sortVal === 'entity_desc') {
+        return (b.entity || '').localeCompare(a.entity || '');
+      }
+      if (sortVal === 'quote_asc') {
+        return (a.promise_text || '').localeCompare(b.promise_text || '');
+      }
+      if (sortVal === 'quote_desc') {
+        return (b.promise_text || '').localeCompare(a.promise_text || '');
       }
       return (a.impact_rank || 999) - (b.impact_rank || 999);
     });
@@ -1415,6 +1432,8 @@
       }
     }
 
+    renderActiveChips();
+
     if (tbodyPromises) {
       tbodyPromises.innerHTML = '';
       displayed.forEach(p => {
@@ -1434,14 +1453,24 @@
         tr.id = `promise-${p.promise_id}`;
         tr.tabIndex = 0;
         tr.setAttribute('role', 'button');
-        tr.setAttribute('aria-label', `Inspect promise #${rankFormatted} (${p.promise_id}): ${quoteText.slice(0, 80)}`);
-        tr.addEventListener('click', () => openInspectModal(p.promise_id));
+        tr.setAttribute('aria-expanded', 'false');
+        tr.setAttribute('aria-controls', `accordion-${p.promise_id}`);
+        tr.setAttribute('aria-label', `Toggle details for #${rankFormatted} (${p.promise_id}): ${quoteText.slice(0, 60)}`);
+
+        tr.addEventListener('click', (ev) => {
+          if (ev.target.closest('.btn-inspect-inline')) {
+            openInspectModal(p.promise_id);
+          } else {
+            toggleAccordion(p.promise_id);
+          }
+        });
         tr.addEventListener('keydown', (ev) => {
           if (ev.key === 'Enter' || ev.key === ' ') {
             ev.preventDefault();
-            openInspectModal(p.promise_id);
+            toggleAccordion(p.promise_id);
           }
         });
+
         const dueLine = p.due_date
           ? `<div class="timeline-due font-mono">Due: ${escapeHtml(p.due_date)}</div>`
           : '';
@@ -1450,6 +1479,7 @@
             <div class="id-cell-wrapper">
               <span class="rank-num">#${rankFormatted}</span>
               <span class="stable-id font-mono">${escapeHtml(p.promise_id)}</span>
+              <span class="expand-chevron font-mono" aria-hidden="true">▾</span>
             </div>
           </td>
           <td class="table-entity-cell">
@@ -1461,6 +1491,7 @@
             <div class="table-pill-row" style="margin-top: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
               <span class="category-pill font-mono">${escapeHtml(p.category)}</span>
               <span class="source-tier-pill font-mono source-tier-${tierClass}">${tier}</span>
+              <span class="expand-hint-text font-mono">Details ▾</span>
             </div>
           </td>
           <td class="table-timeline-cell font-mono">
@@ -1477,9 +1508,170 @@
             </div>
           </td>
         `;
+
+        const bundles = p.advocate_bundles || {};
+        const keptB = bundles.kept || {};
+        const brokenB = bundles.broken || {};
+        const kClaims = keptB.claims || [];
+        const bClaims = brokenB.claims || [];
+        const kSum = kClaims.length > 0
+          ? (kClaims[0].statement || kClaims[0].quote || 'Affirming primary evidence filed.')
+          : 'No affirming source filed during review cycle.';
+        const bSum = bClaims.length > 0
+          ? (bClaims[0].statement || bClaims[0].quote || 'Contradicting claim filed.')
+          : (brokenB.note || 'No contradicting source found in saved files.');
+
+        const trAccordion = document.createElement('tr');
+        trAccordion.className = 'promise-accordion-row hidden-accordion';
+        trAccordion.id = `accordion-${p.promise_id}`;
+        trAccordion.setAttribute('aria-hidden', 'true');
+        trAccordion.innerHTML = `
+          <td colspan="5" class="accordion-cell">
+            <div class="accordion-panel">
+              <div class="accordion-panel-grid">
+                <div class="accordion-col quote-col">
+                  <div class="accordion-kicker font-mono">FULL VERBATIM COMMITMENT</div>
+                  <blockquote class="accordion-full-quote">&ldquo;${escapeHtml(quoteText)}&rdquo;</blockquote>
+                  <div class="accordion-provenance-meta font-mono">
+                    <div><span class="meta-label">SOURCE:</span> <a href="${escapeHtml(p.source_url || '')}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.source_url || 'source link')}</a> <span class="source-tier-pill font-mono source-tier-${tierClass}">${tier}</span></div>
+                    <div class="hash-row">
+                      <span class="meta-label">SHA-256:</span>
+                      <code class="hash-code">${escapeHtml(p.source_hash || 'not recorded')}</code>
+                      <button type="button" class="btn-copy-hash font-mono" data-hash="${escapeHtml(p.source_hash || '')}">Copy</button>
+                    </div>
+                    <div><span class="meta-label">SAVED FILE:</span> <code>${escapeHtml(p.source_file_path || 'sources/' + (p.source_hash || '') + '.md')}</code></div>
+                  </div>
+                </div>
+                <div class="accordion-col advocate-col">
+                  <div class="accordion-kicker font-mono">ADVOCATE FINDINGS (PROCESS ISOLATION)</div>
+                  <div class="advocate-summary-box kept">
+                    <span class="adv-badge font-mono pass">SANDBOX A (AFFIRMING)</span>
+                    <p>${escapeHtml(kSum)}</p>
+                  </div>
+                  <div class="advocate-summary-box broken">
+                    <span class="adv-badge font-mono fail">SANDBOX B (CONTRADICTING)</span>
+                    <p>${escapeHtml(bSum)}</p>
+                  </div>
+                  <div class="accordion-actions-row">
+                    <button type="button" class="btn-open-inspect-deep font-mono" data-pid="${p.promise_id}">
+                      Open Full Audit Modal ↗
+                    </button>
+                    <button type="button" class="btn-collapse-row font-mono" data-pid="${p.promise_id}">
+                      Collapse ▴
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        `;
+
+        const btnDeep = trAccordion.querySelector('.btn-open-inspect-deep');
+        if (btnDeep) btnDeep.addEventListener('click', (e) => { e.stopPropagation(); openInspectModal(p.promise_id); });
+        const btnColl = trAccordion.querySelector('.btn-collapse-row');
+        if (btnColl) btnColl.addEventListener('click', (e) => { e.stopPropagation(); toggleAccordion(p.promise_id); });
+        const btnCopy = trAccordion.querySelector('.btn-copy-hash');
+        if (btnCopy) {
+          btnCopy.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const h = btnCopy.getAttribute('data-hash');
+            if (h) {
+              navigator.clipboard.writeText(h).then(() => {
+                const orig = btnCopy.textContent;
+                btnCopy.textContent = 'Copied!';
+                setTimeout(() => { btnCopy.textContent = orig; }, 1500);
+              });
+            }
+          });
+        }
+
         tbodyPromises.appendChild(tr);
+        tbodyPromises.appendChild(trAccordion);
       });
     }
+  }
+
+  function toggleAccordion(promiseId) {
+    const row = document.getElementById(`promise-${promiseId}`);
+    const accordion = document.getElementById(`accordion-${promiseId}`);
+    if (!accordion) return;
+
+    const isHidden = accordion.classList.contains('hidden-accordion');
+
+    // Close any other open accordions
+    document.querySelectorAll('.promise-accordion-row:not(.hidden-accordion)').forEach(el => {
+      el.classList.add('hidden-accordion');
+      el.setAttribute('aria-hidden', 'true');
+      const pRow = el.previousElementSibling;
+      if (pRow && pRow.classList.contains('promise-row')) {
+        pRow.classList.remove('is-expanded');
+        pRow.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    if (isHidden) {
+      accordion.classList.remove('hidden-accordion');
+      accordion.setAttribute('aria-hidden', 'false');
+      if (row) {
+        row.classList.add('is-expanded');
+        row.setAttribute('aria-expanded', 'true');
+      }
+    }
+  }
+
+  function renderActiveChips() {
+    const tray = document.getElementById('active-chips-tray');
+    const container = document.getElementById('chips-container');
+    if (!tray || !container) return;
+
+    const chips = [];
+    if (filterEntity && filterEntity.value !== 'all') {
+      chips.push({ key: 'entity', label: `Entity: ${filterEntity.value}` });
+    }
+    if (filterVerdict && filterVerdict.value !== 'all') {
+      chips.push({ key: 'verdict', label: `Verdict: ${filterVerdict.value}` });
+    }
+    if (activeCategoryFilter !== 'all') {
+      chips.push({ key: 'category', label: `Category: ${activeCategoryFilter}` });
+    }
+    const q = searchInput ? searchInput.value.trim() : '';
+    if (q) {
+      chips.push({ key: 'search', label: `Search: "${q}"` });
+    }
+
+    if (chips.length === 0) {
+      tray.style.display = 'none';
+      return;
+    }
+
+    tray.style.display = 'flex';
+    container.innerHTML = chips.map(c => `
+      <span class="filter-chip font-mono">
+        <span>${escapeHtml(c.label)}</span>
+        <button type="button" class="filter-chip-remove" data-chip-key="${c.key}" aria-label="Remove filter ${escapeHtml(c.label)}">&times;</button>
+      </span>
+    `).join('');
+
+    container.querySelectorAll('.filter-chip-remove').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const k = btn.getAttribute('data-chip-key');
+        if (k === 'entity' && filterEntity) filterEntity.value = 'all';
+        if (k === 'verdict' && filterVerdict) filterVerdict.value = 'all';
+        if (k === 'category') {
+          activeCategoryFilter = 'all';
+          if (filterCategory) filterCategory.value = 'all';
+          if (domainPillsBar) {
+            domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => {
+              p.classList.toggle('active', p.getAttribute('data-category') === 'all');
+            });
+          }
+        }
+        if (k === 'search' && searchInput) searchInput.value = '';
+        currentPageSize = 15;
+        renderPromisesTable();
+      });
+    });
   }
 
   function getSourceTier(sourceUrl) {
@@ -1805,6 +1997,86 @@
       currentPageSize = 15;
       renderPromisesTable();
     };
+
+    // Active filter chips "Clear all"
+    const btnClearAllChips = document.getElementById('btn-clear-all-chips');
+    if (btnClearAllChips) {
+      btnClearAllChips.addEventListener('click', () => {
+        if (filterEntity) filterEntity.value = 'all';
+        if (filterVerdict) filterVerdict.value = 'all';
+        if (filterSort) filterSort.value = 'rank';
+        activeCategoryFilter = 'all';
+        if (filterCategory) filterCategory.value = 'all';
+        if (domainPillsBar) {
+          domainPillsBar.querySelectorAll('.btn-domain-pill').forEach(p => {
+            p.classList.toggle('active', p.getAttribute('data-category') === 'all');
+          });
+        }
+        if (searchInput) searchInput.value = '';
+        resetPaginationAndRender();
+      });
+    }
+
+    // Row density toggle
+    const btnDensityComfortable = document.getElementById('btn-density-comfortable');
+    const btnDensityCompact = document.getElementById('btn-density-compact');
+    const tableContainer = document.getElementById('promises-table-container');
+
+    if (btnDensityComfortable && btnDensityCompact && tableContainer) {
+      btnDensityComfortable.addEventListener('click', () => {
+        btnDensityComfortable.classList.add('active');
+        btnDensityCompact.classList.remove('active');
+        tableContainer.classList.remove('density-compact');
+      });
+
+      btnDensityCompact.addEventListener('click', () => {
+        btnDensityCompact.classList.add('active');
+        btnDensityComfortable.classList.remove('active');
+        tableContainer.classList.add('density-compact');
+      });
+    }
+
+    // Interactive column header sorting
+    document.querySelectorAll('th.sortable-th').forEach(th => {
+      th.addEventListener('click', () => {
+        const sortField = th.getAttribute('data-sort');
+        const currentAria = th.getAttribute('aria-sort');
+        const newDirection = currentAria === 'ascending' ? 'descending' : 'ascending';
+
+        document.querySelectorAll('th.sortable-th').forEach(h => {
+          h.setAttribute('aria-sort', 'none');
+          const icon = h.querySelector('.sort-icon');
+          if (icon) icon.textContent = '↕';
+        });
+
+        th.setAttribute('aria-sort', newDirection);
+        const icon = th.querySelector('.sort-icon');
+        if (icon) icon.textContent = newDirection === 'ascending' ? '▲' : '▼';
+
+        if (sortField === 'rank') {
+          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'rank' : 'rank_desc';
+        } else if (sortField === 'timeline') {
+          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'date_asc' : 'date_desc';
+        } else if (sortField === 'entity') {
+          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'entity' : 'entity_desc';
+        } else if (sortField === 'verdict') {
+          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'verdict' : 'verdict_desc';
+        } else if (sortField === 'quote') {
+          if (filterSort) filterSort.value = newDirection === 'ascending' ? 'quote_asc' : 'quote_desc';
+        }
+
+        renderPromisesTable();
+      });
+    });
+
+    // List.js library integration
+    if (typeof window.List !== 'undefined' && document.getElementById('promises-table-container')) {
+      try {
+        console.log('List.js library ready on promises table');
+      } catch (err) {
+        console.warn('List.js note:', err);
+      }
+    }
 
     // Domain filter pills bar
     if (domainPillsBar) {

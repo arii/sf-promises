@@ -179,9 +179,23 @@
           </div>
         </div>
 
-        <div class="table-results-status-bar font-mono" style="margin: -6px 0 14px; font-size: 0.82rem; color: #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
-          <div>Showing <strong id="table-showing-count">15</strong> of <span id="table-total-count">54</span> commitments</div>
-          <div id="active-filter-indicator" style="font-size: 0.78rem; color: var(--blue);">Active: All commitments (Sorted by Civic Impact)</div>
+        <!-- Active Filter Chips Tray -->
+        <div class="active-chips-tray font-mono" id="active-chips-tray" style="display: none;">
+          <span class="chips-label">ACTIVE FILTERS:</span>
+          <div class="chips-container" id="chips-container"></div>
+          <button type="button" class="btn-clear-all" id="btn-clear-all-chips">Clear all ×</button>
+        </div>
+
+        <div class="table-results-status-bar font-mono">
+          <div class="status-count-info">
+            <span>Showing <strong id="table-showing-count">15</strong> of <span id="table-total-count">54</span> commitments</span>
+            <span class="active-filter-indicator font-mono" id="active-filter-indicator">· Active: All commitments</span>
+          </div>
+          <div class="density-toggle-group" role="group" aria-label="Row density">
+            <span class="density-label">DENSITY:</span>
+            <button type="button" class="btn-density active" data-density="comfortable" id="btn-density-comfortable" title="Comfortable row height &amp; 2-line quote preview">Comfortable</button>
+            <button type="button" class="btn-density" data-density="compact" id="btn-density-compact" title="Compact tight rows for fast scanning">Compact</button>
+          </div>
         </div>
 
         <!-- Compact Directory Table (Primary View) -->
@@ -189,14 +203,39 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th style="width: 6%;">#</th>
-                <th style="width: 24%;">Entity &amp; Area</th>
-                <th style="width: 42%;">Verbatim Commitment Quote</th>
-                <th style="width: 14%;">Timeline</th>
-                <th style="width: 14%;">Verdict &amp; Evidence</th>
+                <th style="width: 8%;" class="sortable-th" data-sort="rank" role="columnheader" aria-sort="ascending" tabindex="0">
+                  <div class="th-content">
+                    <span>#</span>
+                    <span class="sort-icon font-mono">▲</span>
+                  </div>
+                </th>
+                <th style="width: 22%;" class="sortable-th" data-sort="entity" role="columnheader" aria-sort="none" tabindex="0">
+                  <div class="th-content">
+                    <span>Entity &amp; Area</span>
+                    <span class="sort-icon font-mono">↕</span>
+                  </div>
+                </th>
+                <th style="width: 40%;" class="sortable-th" data-sort="quote" role="columnheader" aria-sort="none" tabindex="0">
+                  <div class="th-content">
+                    <span>Verbatim Commitment</span>
+                    <span class="sort-icon font-mono">↕</span>
+                  </div>
+                </th>
+                <th style="width: 15%;" class="sortable-th" data-sort="timeline" role="columnheader" aria-sort="none" tabindex="0">
+                  <div class="th-content">
+                    <span>Timeline</span>
+                    <span class="sort-icon font-mono">↕</span>
+                  </div>
+                </th>
+                <th style="width: 15%;" class="sortable-th" data-sort="verdict" role="columnheader" aria-sort="none" tabindex="0">
+                  <div class="th-content">
+                    <span>Verdict &amp; Evidence</span>
+                    <span class="sort-icon font-mono">↕</span>
+                  </div>
+                </th>
               </tr>
             </thead>
-            <tbody id="promises-table-body">
+            <tbody id="promises-table-body" class="list">
               <tr class="promise-row" id="promise-P02" data-promise-id="P02" tabindex="0" role="button" aria-label="Inspect promise #01 (P02): The facility began accepting clients on April 28.">
                 <td class="table-id-cell font-mono">
                   <div class="id-cell-wrapper">
@@ -2775,8 +2814,9 @@
     </div>
   </div>
 
-  <!-- Data Script and App Logic -->
+  <!-- Data Script, Library and App Logic -->
   <script src="data.js"></script>
+  <script src="list.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

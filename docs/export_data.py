@@ -1057,11 +1057,32 @@ def generate_promise_row_html(p, idx=0):
     # Show first 15 rows by default, hide remaining for show-more
     paged_cls = " paged-row hidden-page-row" if idx >= 15 else ""
 
-    return f"""              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect promise #{rank} ({pid}): {quote[:60]}">
+    bundles = p.get("advocate_bundles", {})
+    kept_b = bundles.get("kept", {}) if isinstance(bundles, dict) else {}
+    broken_b = bundles.get("broken", {}) if isinstance(bundles, dict) else {}
+    k_claims = kept_b.get("claims", []) if isinstance(kept_b, dict) else []
+    b_claims = broken_b.get("claims", []) if isinstance(broken_b, dict) else []
+
+    if k_claims:
+        k_summary = html_esc(k_claims[0].get("statement") or k_claims[0].get("quote") or "Affirming primary evidence filed.")
+    else:
+        k_summary = "No affirming source filed during review cycle."
+
+    if b_claims:
+        b_summary = html_esc(b_claims[0].get("statement") or b_claims[0].get("quote") or "Contradicting claim filed.")
+    else:
+        note = broken_b.get("note") if isinstance(broken_b, dict) else ""
+        b_summary = html_esc(note or "No contradicting source found in saved files.")
+
+    source_hash = html_esc(p.get("source_hash", "not recorded"))
+    source_file = html_esc(p.get("source_file_path", f"sources/{source_hash}.md"))
+
+    return f"""              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-expanded="false" aria-controls="accordion-{pid}" aria-label="Toggle details for promise #{rank} ({pid}): {quote[:60]}">
                 <td class="table-id-cell font-mono">
                   <div class="id-cell-wrapper">
                     <span class="rank-num">#{rank}</span>
                     <span class="stable-id font-mono">{pid}</span>
+                    <span class="expand-chevron font-mono" aria-hidden="true">▾</span>
                   </div>
                 </td>
                 <td class="table-entity-cell">
@@ -1073,6 +1094,7 @@ def generate_promise_row_html(p, idx=0):
                   <div class="table-pill-row" style="margin-top: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
                     <span class="category-pill font-mono">{category}</span>
                     <span class="source-tier-pill font-mono source-tier-{tier_class}">{tier}</span>
+                    <span class="expand-hint-text font-mono">Details ▾</span>
                   </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
@@ -1085,6 +1107,46 @@ def generate_promise_row_html(p, idx=0):
                     <div class="verdict-sub-row font-mono">
                       {rel_html}
                       <span class="btn-inspect-inline">Inspect &rarr;</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="promise-accordion-row hidden-accordion{paged_cls}" id="accordion-{pid}" aria-hidden="true">
+                <td colspan="5" class="accordion-cell">
+                  <div class="accordion-panel">
+                    <div class="accordion-panel-grid">
+                      <div class="accordion-col quote-col">
+                        <div class="accordion-kicker font-mono">FULL VERBATIM COMMITMENT</div>
+                        <blockquote class="accordion-full-quote">&ldquo;{quote}&rdquo;</blockquote>
+                        <div class="accordion-provenance-meta font-mono">
+                          <div><span class="meta-label">SOURCE:</span> <a href="{html_esc(source_url)}" target="_blank" rel="noopener noreferrer">{html_esc(source_url)}</a> <span class="source-tier-pill font-mono source-tier-{tier_class}">{tier}</span></div>
+                          <div class="hash-row">
+                            <span class="meta-label">SHA-256:</span>
+                            <code class="hash-code">{source_hash}</code>
+                            <button type="button" class="btn-copy-hash font-mono" data-hash="{source_hash}">Copy</button>
+                          </div>
+                          <div><span class="meta-label">SAVED FILE:</span> <code>{source_file}</code></div>
+                        </div>
+                      </div>
+                      <div class="accordion-col advocate-col">
+                        <div class="accordion-kicker font-mono">ADVOCATE FINDINGS (PROCESS ISOLATION)</div>
+                        <div class="advocate-summary-box kept">
+                          <span class="adv-badge font-mono pass">SANDBOX A (AFFIRMING)</span>
+                          <p>{k_summary}</p>
+                        </div>
+                        <div class="advocate-summary-box broken">
+                          <span class="adv-badge font-mono fail">SANDBOX B (CONTRADICTING)</span>
+                          <p>{b_summary}</p>
+                        </div>
+                        <div class="accordion-actions-row">
+                          <button type="button" class="btn-open-inspect-deep font-mono" data-pid="{pid}">
+                            Open Full Audit Modal ↗
+                          </button>
+                          <button type="button" class="btn-collapse-row font-mono" data-pid="{pid}">
+                            Collapse ▴
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </td>
