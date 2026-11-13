@@ -128,6 +128,73 @@
   }
 
   // -------------------------------------------------------------------------
+  // Visualization derivations (pure) — the marked block is executed standalone
+  // by tests/test_demo_visualizations.py to reconcile chart counts against the
+  // exported snapshot.
+  // -------------------------------------------------------------------------
+  /* SFPVIZ_PURE_START */
+  const VERDICT_ORDER = ['kept', 'in_progress', 'broken', 'stalled', 'undecided'];
+
+  function normalizeVerdict(value) {
+    return String(value || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
+  }
+
+  function countByVerdict(promises) {
+    // The export already collapses each promise's verdict history to the
+    // latest applicable verdict, so each record counts exactly once.
+    const counts = {};
+    (promises || []).forEach(p => {
+      const v = normalizeVerdict(p && p.verdict);
+      counts[v] = (counts[v] || 0) + 1;
+    });
+    return counts;
+  }
+
+  function countByField(promises, field, fallback) {
+    const counts = {};
+    (promises || []).forEach(p => {
+      const key = String((p && p[field]) || '').trim() || fallback;
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    return counts;
+  }
+
+  function countByCategory(promises) {
+    return countByField(promises, 'category', 'Other');
+  }
+
+  function countBySourceType(promises) {
+    return countByField(promises, 'source_type', 'unknown');
+  }
+
+  function countByYearAndVerdict(promises) {
+    // Stacked buckets per year of promised_date, zero-filling every year
+    // between the earliest and latest so coverage gaps stay visible.
+    const buckets = {};
+    let minYear = null;
+    let maxYear = null;
+    (promises || []).forEach(p => {
+      const year = String((p && p.promised_date) || '').slice(0, 4);
+      if (!/^\d{4}$/.test(year)) return;
+      const v = normalizeVerdict(p.verdict);
+      const bucket = buckets[year] || (buckets[year] = {});
+      bucket[v] = (bucket[v] || 0) + 1;
+      if (minYear === null || year < minYear) minYear = year;
+      if (maxYear === null || year > maxYear) maxYear = year;
+    });
+    if (minYear === null) return [];
+    const out = [];
+    for (let y = Number(minYear); y <= Number(maxYear); y++) {
+      const key = String(y);
+      out.push({ year: key, verdicts: buckets[key] || {} });
+    }
+    return out;
+  }
+
+  const SFPViz = { VERDICT_ORDER, countByVerdict, countByCategory, countBySourceType, countByYearAndVerdict };
+  /* SFPVIZ_PURE_END */
+
+  // -------------------------------------------------------------------------
   // Initialization
   // -------------------------------------------------------------------------
   async function init() {
@@ -148,6 +215,7 @@
     renderExplore();
     renderQuarantineTable();
     setupFeaturedStories();
+    renderVisualizations();
   }
 
   // -------------------------------------------------------------------------
@@ -594,6 +662,130 @@
   window.resetPipeline = resetPipeline;
   window.togglePlayPause = togglePlayPause;
   window.getCurrentStage = () => currentStage;
+
+  // -------------------------------------------------------------------------
+  // Visualizations — every chart derives from the exported snapshot
+  // -------------------------------------------------------------------------
+  const VERDICT_COLORS = {
+    kept: '#10B981',
+    in_progress: '#F59E0B',
+    broken: '#EF4444',
+    stalled: '#C084FC',
+    undecided: '#94A3B8'
+  };
+
+  function renderBarRows(container, entries, total) {
+    if (!container) return;
+    if (!entries.length) {
+      container.innerHTML = '<p class="viz-empty">No records in the exported dataset.</p>';
+      return;
+    }
+    const max = Math.max(...entries.map(e => e.count), 1);
+    container.innerHTML = entries.map(e => {
+      const pct = total ? ` <span class="viz-bar-pct">(${Math.round((e.count / total) * 100)}%)</span>` : '';
+      return `
+        <div class="viz-bar-row">
+          <span class="viz-bar-label" title="${escapeHtml(e.label)}">${escapeHtml(e.label)}</span>
+          <span class="viz-bar-track">
+            <span class="viz-bar-fill" style="width:${((e.count / max) * 100).toFixed(2)}%; background:${e.color}"></span>
+          </span>
+          <span class="viz-bar-count font-mono">${e.count}${pct}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderTimelineChart(promises) {
+    const wrap = document.getElementById('viz-timeline');
+    if (!wrap) return;
+    const buckets = SFPViz.countByYearAndVerdict(promises);
+    if (!buckets.length) {
+      wrap.innerHTML = '<p class="viz-empty">No dated records in the exported dataset.</p>';
+      return;
+    }
+
+    const W = 760;
+    const H = 250;
+    const pad = { top: 14, right: 12, bottom: 26, left: 34 };
+    const innerW = W - pad.left - pad.right;
+    const innerH = H - pad.top - pad.bottom;
+    const perYear = buckets.map(b => Object.values(b.verdicts).reduce((a, c) => a + c, 0));
+    const yMax = Math.max(...perYear, 1);
+    const colW = innerW / buckets.length;
+    const barW = Math.min(30, colW * 0.62);
+
+    let barsSvg = '';
+    buckets.forEach((b, i) => {
+      const x = pad.left + i * colW + (colW - barW) / 2;
+      let y = pad.top + innerH;
+      const segs = SFPViz.VERDICT_ORDER.map(v => {
+        const c = b.verdicts[v] || 0;
+        if (!c) return '';
+        const h = Math.max(1.5, (c / yMax) * innerH);
+        y -= h;
+        return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" fill="${VERDICT_COLORS[v]}" rx="1.5"><title>${b.year}: ${c} ${formatVerdictLabel(v)}</title></rect>`;
+      }).join('');
+      barsSvg += segs;
+    });
+
+    const tickStep = yMax > 8 ? Math.ceil(yMax / 4) : (yMax > 4 ? 2 : 1);
+    let gridSvg = '';
+    for (let t = 0; t <= yMax; t += tickStep) {
+      const y = (pad.top + innerH - (t / yMax) * innerH).toFixed(1);
+      gridSvg += `<line x1="${pad.left}" y1="${y}" x2="${W - pad.right}" y2="${y}" stroke="var(--line-soft)" stroke-width="1" />`;
+      gridSvg += `<text x="${pad.left - 6}" y="${Number(y) + 3}" text-anchor="end" font-size="9" fill="var(--muted)" font-family="monospace">${t}</text>`;
+    }
+
+    let axisSvg = '';
+    buckets.forEach((b, i) => {
+      const showLabel = i === 0 || i === buckets.length - 1 || Number(b.year) % 5 === 0;
+      if (!showLabel) return;
+      const x = pad.left + i * colW + colW / 2;
+      axisSvg += `<text x="${x.toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="9" fill="var(--muted)" font-family="monospace">${b.year}</text>`;
+    });
+
+    wrap.innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Stacked bar chart of promises per year, colored by verdict">
+        ${gridSvg}
+        ${barsSvg}
+        ${axisSvg}
+      </svg>
+    `;
+  }
+
+  function renderVisualizations() {
+    if (!demoData || !Array.isArray(demoData.promises)) return;
+    const promises = demoData.promises;
+    const total = promises.length;
+
+    const verdictCounts = SFPViz.countByVerdict(promises);
+    const verdictEntries = SFPViz.VERDICT_ORDER
+      .filter(v => verdictCounts[v])
+      .map(v => ({ label: formatVerdictLabel(v), count: verdictCounts[v], color: VERDICT_COLORS[v] }));
+    renderBarRows(document.getElementById('viz-verdict-bars'), verdictEntries, total);
+
+    const catEntries = Object.entries(SFPViz.countByCategory(promises))
+      .sort((a, b) => b[1] - a[1])
+      .map(([label, count]) => ({ label, count, color: 'var(--blue)' }));
+    renderBarRows(document.getElementById('viz-domain-bars'), catEntries, total);
+
+    const stEntries = Object.entries(SFPViz.countBySourceType(promises))
+      .sort((a, b) => b[1] - a[1])
+      .map(([label, count]) => ({ label, count, color: 'var(--purple)' }));
+    renderBarRows(document.getElementById('viz-source-bars'), stEntries, total);
+
+    renderTimelineChart(promises);
+
+    const totalEl = document.getElementById('viz-total');
+    if (totalEl) totalEl.textContent = String(total);
+
+    const legendEl = document.getElementById('viz-timeline-legend');
+    if (legendEl) {
+      legendEl.innerHTML = SFPViz.VERDICT_ORDER.map(v => `
+        <span class="viz-legend-item"><span class="viz-legend-swatch" style="background:${VERDICT_COLORS[v]}"></span>${formatVerdictLabel(v)}</span>
+      `).join('');
+    }
+  }
 
   // -------------------------------------------------------------------------
   // Quarantine Registry (0.1) - Unified responsive card registry
