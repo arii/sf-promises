@@ -1,7 +1,8 @@
 {
   "summary": {
-    "generated_at": "2026-11-13T20:13:28Z",
-    "planner_query_count": 18,
+    "generated_at": "2026-11-13T21:04:33Z",
+    "planner_query_count": 98,
+    "planner_variant_query_count": 80,
     "planner_pillars_covered": [
       "Arts, Music & Nightlife",
       "Civic Life",
@@ -87,7 +88,8 @@
       "target_domains": [
         "sfartscommission.org",
         "sfmoma.org",
-        "sfchronicle.com"
+        "sfchronicle.com",
+        "eltecolote.org"
       ]
     },
     {
@@ -99,7 +101,8 @@
       "target_domains": [
         "sfartscommission.org",
         "sfmoma.org",
-        "sfchronicle.com"
+        "sfchronicle.com",
+        "eltecolote.org"
       ]
     },
     {
@@ -111,7 +114,8 @@
       "target_domains": [
         "valkyries.wnba.com",
         "bayfc.com",
-        "sfrecpark.org"
+        "sfrecpark.org",
+        "singtaousa.com"
       ]
     },
     {
@@ -123,7 +127,8 @@
       "target_domains": [
         "valkyries.wnba.com",
         "bayfc.com",
-        "sfrecpark.org"
+        "sfrecpark.org",
+        "singtaousa.com"
       ]
     },
     {
@@ -135,7 +140,8 @@
       "target_domains": [
         "sf.eater.com",
         "sfstandard.com",
-        "sf.gov"
+        "sf.gov",
+        "elreporterosf.com"
       ]
     },
     {
@@ -147,7 +153,8 @@
       "target_domains": [
         "sf.eater.com",
         "sfstandard.com",
-        "sf.gov"
+        "sf.gov",
+        "elreporterosf.com"
       ]
     },
     {
@@ -160,7 +167,8 @@
         "sfenvironment.org",
         "cleanpowersf.org",
         "sfpuc.org",
-        "sfport.com"
+        "sfport.com",
+        "sfbayview.com"
       ]
     },
     {
@@ -173,7 +181,8 @@
         "sfenvironment.org",
         "cleanpowersf.org",
         "sfpuc.org",
-        "sfport.com"
+        "sfport.com",
+        "sfbayview.com"
       ]
     },
     {
@@ -185,7 +194,8 @@
       "target_domains": [
         "sfmta.com",
         "flysfo.com",
-        "sfcta.org"
+        "sfcta.org",
+        "inglesidelight.com"
       ]
     },
     {
@@ -197,7 +207,8 @@
       "target_domains": [
         "sfmta.com",
         "flysfo.com",
-        "sfcta.org"
+        "sfcta.org",
+        "inglesidelight.com"
       ]
     },
     {
@@ -209,7 +220,8 @@
       "target_domains": [
         "sfplanning.org",
         "sf.gov",
-        "missionlocal.org"
+        "missionlocal.org",
+        "eltecolote.org"
       ]
     },
     {
@@ -221,7 +233,8 @@
       "target_domains": [
         "sf.gov",
         "dcyf.org",
-        "sfpublicpress.org"
+        "sfpublicpress.org",
+        "singtaousa.com"
       ]
     },
     {
@@ -233,7 +246,8 @@
       "target_domains": [
         "sf.gov",
         "dcyf.org",
-        "sfpublicpress.org"
+        "sfpublicpress.org",
+        "singtaousa.com"
       ]
     },
     {
@@ -245,7 +259,8 @@
       "target_domains": [
         "oewd.org",
         "sf.gov",
-        "sfchronicle.com"
+        "sfchronicle.com",
+        "elreporterosf.com"
       ]
     },
     {
@@ -257,7 +272,8 @@
       "target_domains": [
         "oewd.org",
         "sf.gov",
-        "sfchronicle.com"
+        "sfchronicle.com",
+        "elreporterosf.com"
       ]
     },
     {
@@ -269,7 +285,8 @@
       "target_domains": [
         "missionlocal.org",
         "thefrisc.com",
-        "kqed.org"
+        "kqed.org",
+        "noevalleyvoice.com"
       ]
     },
     {
@@ -281,7 +298,8 @@
       "target_domains": [
         "missionlocal.org",
         "thefrisc.com",
-        "kqed.org"
+        "kqed.org",
+        "noevalleyvoice.com"
       ]
     },
     {
@@ -293,7 +311,1056 @@
       "target_domains": [
         "sfbos.org",
         "sfgov.legistar.com",
-        "sf.gov"
+        "sf.gov",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-01-D02-es",
+      "pillar": "Arts, Music & Nightlife",
+      "supervisor_district": 2,
+      "neighborhood": "Marina",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Marina\" (\"promete\" OR \"anunci\u00f3\") \"exhibition\"",
+      "target_domains": [
+        "sfartscommission.org",
+        "sfmoma.org",
+        "sfchronicle.com",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-01-D02-zh",
+      "pillar": "Arts, Music & Nightlife",
+      "supervisor_district": 2,
+      "neighborhood": "Marina",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Marina\" (\"\u8a08\u5283\" OR \"\u5ba3\u4f48\") \"concert\"",
+      "target_domains": [
+        "sfartscommission.org",
+        "sfmoma.org",
+        "sfchronicle.com",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-01-D04-es",
+      "pillar": "Arts, Music & Nightlife",
+      "supervisor_district": 4,
+      "neighborhood": "Outer Sunset",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Outer Sunset\" \"el Sunset\" (\"anunciar\u00e1\" OR \"anunci\u00f3\") \"concert\"",
+      "target_domains": [
+        "sfartscommission.org",
+        "sfmoma.org",
+        "sfchronicle.com",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-01-D04-zh",
+      "pillar": "Arts, Music & Nightlife",
+      "supervisor_district": 4,
+      "neighborhood": "Outer Sunset",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Outer Sunset\" \"\u65e5\u843d\u5340\" (\"\u627f\u8afe\" OR \"\u5ba3\u4f48\") \"mural\"",
+      "target_domains": [
+        "sfartscommission.org",
+        "sfmoma.org",
+        "sfchronicle.com",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-01-D08-es",
+      "pillar": "Arts, Music & Nightlife",
+      "supervisor_district": 8,
+      "neighborhood": "Castro",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Castro\" \"el Castro\" (\"planea\" OR \"anunci\u00f3\") \"mural\"",
+      "target_domains": [
+        "sfartscommission.org",
+        "sfmoma.org",
+        "sfchronicle.com",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-01-D08-zh",
+      "pillar": "Arts, Music & Nightlife",
+      "supervisor_district": 8,
+      "neighborhood": "Castro",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Castro\" \"\u5361\u65af\u695a\u5340\" (\"\u5b9a\u65bc\" OR \"\u5ba3\u4f48\") \"festival\"",
+      "target_domains": [
+        "sfartscommission.org",
+        "sfmoma.org",
+        "sfchronicle.com",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-01-D11-es",
+      "pillar": "Arts, Music & Nightlife",
+      "supervisor_district": 11,
+      "neighborhood": "Excelsior",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Excelsior\" (\"comprometido a\" OR \"anunci\u00f3\") \"festival\"",
+      "target_domains": [
+        "sfartscommission.org",
+        "sfmoma.org",
+        "sfchronicle.com",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-01-D11-zh",
+      "pillar": "Arts, Music & Nightlife",
+      "supervisor_district": 11,
+      "neighborhood": "Excelsior",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Excelsior\" (\"\u5c07\u65bc\" OR \"\u5ba3\u4f48\") \"venue\"",
+      "target_domains": [
+        "sfartscommission.org",
+        "sfmoma.org",
+        "sfchronicle.com",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-02-D02-es",
+      "pillar": "Sports & Recreation",
+      "supervisor_district": 2,
+      "neighborhood": "Pacific Heights",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Pacific Heights\" (\"anunciar\u00e1\" OR \"anunci\u00f3\") \"park renovation\"",
+      "target_domains": [
+        "valkyries.wnba.com",
+        "bayfc.com",
+        "sfrecpark.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-02-D02-zh",
+      "pillar": "Sports & Recreation",
+      "supervisor_district": 2,
+      "neighborhood": "Pacific Heights",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Pacific Heights\" \"\u592a\u5e73\u6d0b\u9ad8\u5730\" (\"\u627f\u8afe\" OR \"\u5ba3\u4f48\") \"stadium\"",
+      "target_domains": [
+        "valkyries.wnba.com",
+        "bayfc.com",
+        "sfrecpark.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-02-D04-es",
+      "pillar": "Sports & Recreation",
+      "supervisor_district": 4,
+      "neighborhood": "Parkside",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Parkside\" (\"planea\" OR \"anunci\u00f3\") \"stadium\"",
+      "target_domains": [
+        "valkyries.wnba.com",
+        "bayfc.com",
+        "sfrecpark.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-02-D04-zh",
+      "pillar": "Sports & Recreation",
+      "supervisor_district": 4,
+      "neighborhood": "Parkside",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Parkside\" (\"\u5b9a\u65bc\" OR \"\u5ba3\u4f48\") \"championship\"",
+      "target_domains": [
+        "valkyries.wnba.com",
+        "bayfc.com",
+        "sfrecpark.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-02-D08-es",
+      "pillar": "Sports & Recreation",
+      "supervisor_district": 8,
+      "neighborhood": "Noe Valley",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Noe Valley\" (\"comprometido a\" OR \"anunci\u00f3\") \"championship\"",
+      "target_domains": [
+        "valkyries.wnba.com",
+        "bayfc.com",
+        "sfrecpark.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-02-D08-zh",
+      "pillar": "Sports & Recreation",
+      "supervisor_district": 8,
+      "neighborhood": "Noe Valley",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Noe Valley\" \"\u8afe\u4f0a\u8c37\" (\"\u5c07\u65bc\" OR \"\u5ba3\u4f48\") \"race\"",
+      "target_domains": [
+        "valkyries.wnba.com",
+        "bayfc.com",
+        "sfrecpark.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-02-D11-es",
+      "pillar": "Sports & Recreation",
+      "supervisor_district": 11,
+      "neighborhood": "Ingleside",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Ingleside\" (\"previsto para\" OR \"anunci\u00f3\") \"race\"",
+      "target_domains": [
+        "valkyries.wnba.com",
+        "bayfc.com",
+        "sfrecpark.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-02-D11-zh",
+      "pillar": "Sports & Recreation",
+      "supervisor_district": 11,
+      "neighborhood": "Ingleside",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Ingleside\" (\"\u958b\u5e55\" OR \"\u5ba3\u4f48\") \"season\"",
+      "target_domains": [
+        "valkyries.wnba.com",
+        "bayfc.com",
+        "sfrecpark.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-03-D02-es",
+      "pillar": "Food & Local Business",
+      "supervisor_district": 2,
+      "neighborhood": "Presidio",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Presidio\" (\"planea\" OR \"anunci\u00f3\") \"legacy business\"",
+      "target_domains": [
+        "sf.eater.com",
+        "sfstandard.com",
+        "sf.gov",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-03-D02-zh",
+      "pillar": "Food & Local Business",
+      "supervisor_district": 2,
+      "neighborhood": "Presidio",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Presidio\" (\"\u5b9a\u65bc\" OR \"\u5ba3\u4f48\") \"corridor\"",
+      "target_domains": [
+        "sf.eater.com",
+        "sfstandard.com",
+        "sf.gov",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-03-D04-es",
+      "pillar": "Food & Local Business",
+      "supervisor_district": 4,
+      "neighborhood": "Ocean Beach",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Ocean Beach\" (\"comprometido a\" OR \"anunci\u00f3\") \"corridor\"",
+      "target_domains": [
+        "sf.eater.com",
+        "sfstandard.com",
+        "sf.gov",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-03-D04-zh",
+      "pillar": "Food & Local Business",
+      "supervisor_district": 4,
+      "neighborhood": "Ocean Beach",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Ocean Beach\" (\"\u5c07\u65bc\" OR \"\u5ba3\u4f48\") \"restaurant opening\"",
+      "target_domains": [
+        "sf.eater.com",
+        "sfstandard.com",
+        "sf.gov",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-03-D08-es",
+      "pillar": "Food & Local Business",
+      "supervisor_district": 8,
+      "neighborhood": "Glen Park",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Glen Park\" (\"previsto para\" OR \"anunci\u00f3\") \"restaurant opening\"",
+      "target_domains": [
+        "sf.eater.com",
+        "sfstandard.com",
+        "sf.gov",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-03-D08-zh",
+      "pillar": "Food & Local Business",
+      "supervisor_district": 8,
+      "neighborhood": "Glen Park",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Glen Park\" (\"\u958b\u5e55\" OR \"\u5ba3\u4f48\") \"farmers market\"",
+      "target_domains": [
+        "sf.eater.com",
+        "sfstandard.com",
+        "sf.gov",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-03-D11-es",
+      "pillar": "Food & Local Business",
+      "supervisor_district": 11,
+      "neighborhood": "Outer Mission",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Outer Mission\" (\"abrir\u00e1 en\" OR \"anunci\u00f3\") \"farmers market\"",
+      "target_domains": [
+        "sf.eater.com",
+        "sfstandard.com",
+        "sf.gov",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-03-D11-zh",
+      "pillar": "Food & Local Business",
+      "supervisor_district": 11,
+      "neighborhood": "Outer Mission",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Outer Mission\" \"\u7c73\u614e\u5340\" (\"\u63a8\u51fa\" OR \"\u5ba3\u4f48\") \"legacy business\"",
+      "target_domains": [
+        "sf.eater.com",
+        "sfstandard.com",
+        "sf.gov",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-04-D02-es",
+      "pillar": "Weather & Environment",
+      "supervisor_district": 2,
+      "neighborhood": "Marina",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Marina\" (\"comprometido a\" OR \"anunci\u00f3\") \"urban greening\"",
+      "target_domains": [
+        "sfenvironment.org",
+        "cleanpowersf.org",
+        "sfpuc.org",
+        "sfport.com",
+        "sfbayview.com"
+      ]
+    },
+    {
+      "query_id": "Q-04-D02-zh",
+      "pillar": "Weather & Environment",
+      "supervisor_district": 2,
+      "neighborhood": "Marina",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Marina\" (\"\u5c07\u65bc\" OR \"\u5ba3\u4f48\") \"heat\"",
+      "target_domains": [
+        "sfenvironment.org",
+        "cleanpowersf.org",
+        "sfpuc.org",
+        "sfport.com",
+        "sfbayview.com"
+      ]
+    },
+    {
+      "query_id": "Q-04-D04-es",
+      "pillar": "Weather & Environment",
+      "supervisor_district": 4,
+      "neighborhood": "Outer Sunset",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Outer Sunset\" \"el Sunset\" (\"previsto para\" OR \"anunci\u00f3\") \"heat\"",
+      "target_domains": [
+        "sfenvironment.org",
+        "cleanpowersf.org",
+        "sfpuc.org",
+        "sfport.com",
+        "sfbayview.com"
+      ]
+    },
+    {
+      "query_id": "Q-04-D04-zh",
+      "pillar": "Weather & Environment",
+      "supervisor_district": 4,
+      "neighborhood": "Outer Sunset",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Outer Sunset\" \"\u65e5\u843d\u5340\" (\"\u958b\u5e55\" OR \"\u5ba3\u4f48\") \"climate target\"",
+      "target_domains": [
+        "sfenvironment.org",
+        "cleanpowersf.org",
+        "sfpuc.org",
+        "sfport.com",
+        "sfbayview.com"
+      ]
+    },
+    {
+      "query_id": "Q-04-D08-es",
+      "pillar": "Weather & Environment",
+      "supervisor_district": 8,
+      "neighborhood": "Castro",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Castro\" \"el Castro\" (\"abrir\u00e1 en\" OR \"anunci\u00f3\") \"climate target\"",
+      "target_domains": [
+        "sfenvironment.org",
+        "cleanpowersf.org",
+        "sfpuc.org",
+        "sfport.com",
+        "sfbayview.com"
+      ]
+    },
+    {
+      "query_id": "Q-04-D08-zh",
+      "pillar": "Weather & Environment",
+      "supervisor_district": 8,
+      "neighborhood": "Castro",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Castro\" \"\u5361\u65af\u695a\u5340\" (\"\u63a8\u51fa\" OR \"\u5ba3\u4f48\") \"seawall\"",
+      "target_domains": [
+        "sfenvironment.org",
+        "cleanpowersf.org",
+        "sfpuc.org",
+        "sfport.com",
+        "sfbayview.com"
+      ]
+    },
+    {
+      "query_id": "Q-04-D11-es",
+      "pillar": "Weather & Environment",
+      "supervisor_district": 11,
+      "neighborhood": "Excelsior",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Excelsior\" (\"lanzar\u00e1 en\" OR \"anunci\u00f3\") \"seawall\"",
+      "target_domains": [
+        "sfenvironment.org",
+        "cleanpowersf.org",
+        "sfpuc.org",
+        "sfport.com",
+        "sfbayview.com"
+      ]
+    },
+    {
+      "query_id": "Q-04-D11-zh",
+      "pillar": "Weather & Environment",
+      "supervisor_district": 11,
+      "neighborhood": "Excelsior",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Excelsior\" (\"\u9810\u8a08\" OR \"\u5ba3\u4f48\") \"clean power\"",
+      "target_domains": [
+        "sfenvironment.org",
+        "cleanpowersf.org",
+        "sfpuc.org",
+        "sfport.com",
+        "sfbayview.com"
+      ]
+    },
+    {
+      "query_id": "Q-05-D02-es",
+      "pillar": "Transit & Movement",
+      "supervisor_district": 2,
+      "neighborhood": "Pacific Heights",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Pacific Heights\" (\"previsto para\" OR \"anunci\u00f3\") \"robotaxi\"",
+      "target_domains": [
+        "sfmta.com",
+        "flysfo.com",
+        "sfcta.org",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-05-D02-zh",
+      "pillar": "Transit & Movement",
+      "supervisor_district": 2,
+      "neighborhood": "Pacific Heights",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Pacific Heights\" \"\u592a\u5e73\u6d0b\u9ad8\u5730\" (\"\u958b\u5e55\" OR \"\u5ba3\u4f48\") \"Muni route\"",
+      "target_domains": [
+        "sfmta.com",
+        "flysfo.com",
+        "sfcta.org",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-05-D04-es",
+      "pillar": "Transit & Movement",
+      "supervisor_district": 4,
+      "neighborhood": "Parkside",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Parkside\" (\"abrir\u00e1 en\" OR \"anunci\u00f3\") \"Muni route\"",
+      "target_domains": [
+        "sfmta.com",
+        "flysfo.com",
+        "sfcta.org",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-05-D04-zh",
+      "pillar": "Transit & Movement",
+      "supervisor_district": 4,
+      "neighborhood": "Parkside",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Parkside\" (\"\u63a8\u51fa\" OR \"\u5ba3\u4f48\") \"bike lane\"",
+      "target_domains": [
+        "sfmta.com",
+        "flysfo.com",
+        "sfcta.org",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-05-D08-es",
+      "pillar": "Transit & Movement",
+      "supervisor_district": 8,
+      "neighborhood": "Noe Valley",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Noe Valley\" (\"lanzar\u00e1 en\" OR \"anunci\u00f3\") \"bike lane\"",
+      "target_domains": [
+        "sfmta.com",
+        "flysfo.com",
+        "sfcta.org",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-05-D08-zh",
+      "pillar": "Transit & Movement",
+      "supervisor_district": 8,
+      "neighborhood": "Noe Valley",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Noe Valley\" \"\u8afe\u4f0a\u8c37\" (\"\u9810\u8a08\" OR \"\u5ba3\u4f48\") \"ferry\"",
+      "target_domains": [
+        "sfmta.com",
+        "flysfo.com",
+        "sfcta.org",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-05-D11-es",
+      "pillar": "Transit & Movement",
+      "supervisor_district": 11,
+      "neighborhood": "Ingleside",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Ingleside\" (\"espera\" OR \"anunci\u00f3\") \"ferry\"",
+      "target_domains": [
+        "sfmta.com",
+        "flysfo.com",
+        "sfcta.org",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-05-D11-zh",
+      "pillar": "Transit & Movement",
+      "supervisor_district": 11,
+      "neighborhood": "Ingleside",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Ingleside\" (\"\u5c07\" OR \"\u5ba3\u4f48\") \"runway\"",
+      "target_domains": [
+        "sfmta.com",
+        "flysfo.com",
+        "sfcta.org",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-06-D02-es",
+      "pillar": "Housing & Neighborhoods",
+      "supervisor_district": 2,
+      "neighborhood": "Presidio",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Presidio\" (\"abrir\u00e1 en\" OR \"anunci\u00f3\") \"construction start\"",
+      "target_domains": [
+        "sfplanning.org",
+        "sf.gov",
+        "missionlocal.org",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-06-D02-zh",
+      "pillar": "Housing & Neighborhoods",
+      "supervisor_district": 2,
+      "neighborhood": "Presidio",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Presidio\" (\"\u63a8\u51fa\" OR \"\u5ba3\u4f48\") \"zoning\"",
+      "target_domains": [
+        "sfplanning.org",
+        "sf.gov",
+        "missionlocal.org",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-06-D04-es",
+      "pillar": "Housing & Neighborhoods",
+      "supervisor_district": 4,
+      "neighborhood": "Ocean Beach",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Ocean Beach\" (\"lanzar\u00e1 en\" OR \"anunci\u00f3\") \"zoning\"",
+      "target_domains": [
+        "sfplanning.org",
+        "sf.gov",
+        "missionlocal.org",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-06-D04-zh",
+      "pillar": "Housing & Neighborhoods",
+      "supervisor_district": 4,
+      "neighborhood": "Ocean Beach",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Ocean Beach\" (\"\u9810\u8a08\" OR \"\u5ba3\u4f48\") \"navigation center\"",
+      "target_domains": [
+        "sfplanning.org",
+        "sf.gov",
+        "missionlocal.org",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-06-D08-es",
+      "pillar": "Housing & Neighborhoods",
+      "supervisor_district": 8,
+      "neighborhood": "Glen Park",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Glen Park\" (\"espera\" OR \"anunci\u00f3\") \"navigation center\"",
+      "target_domains": [
+        "sfplanning.org",
+        "sf.gov",
+        "missionlocal.org",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-06-D08-zh",
+      "pillar": "Housing & Neighborhoods",
+      "supervisor_district": 8,
+      "neighborhood": "Glen Park",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Glen Park\" (\"\u5c07\" OR \"\u5ba3\u4f48\") \"housing units\"",
+      "target_domains": [
+        "sfplanning.org",
+        "sf.gov",
+        "missionlocal.org",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-06-D11-es",
+      "pillar": "Housing & Neighborhoods",
+      "supervisor_district": 11,
+      "neighborhood": "Outer Mission",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Outer Mission\" (\"promete\" OR \"anunci\u00f3\") \"housing units\"",
+      "target_domains": [
+        "sfplanning.org",
+        "sf.gov",
+        "missionlocal.org",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-06-D11-zh",
+      "pillar": "Housing & Neighborhoods",
+      "supervisor_district": 11,
+      "neighborhood": "Outer Mission",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Outer Mission\" \"\u7c73\u614e\u5340\" (\"\u8a08\u5283\" OR \"\u5ba3\u4f48\") \"construction start\"",
+      "target_domains": [
+        "sfplanning.org",
+        "sf.gov",
+        "missionlocal.org",
+        "eltecolote.org"
+      ]
+    },
+    {
+      "query_id": "Q-07-D02-es",
+      "pillar": "People & Demographics",
+      "supervisor_district": 2,
+      "neighborhood": "Marina",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Marina\" (\"lanzar\u00e1 en\" OR \"anunci\u00f3\") \"senior center\"",
+      "target_domains": [
+        "sf.gov",
+        "dcyf.org",
+        "sfpublicpress.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-07-D02-zh",
+      "pillar": "People & Demographics",
+      "supervisor_district": 2,
+      "neighborhood": "Marina",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Marina\" (\"\u9810\u8a08\" OR \"\u5ba3\u4f48\") \"healthcare enrollment\"",
+      "target_domains": [
+        "sf.gov",
+        "dcyf.org",
+        "sfpublicpress.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-07-D04-es",
+      "pillar": "People & Demographics",
+      "supervisor_district": 4,
+      "neighborhood": "Outer Sunset",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Outer Sunset\" \"el Sunset\" (\"espera\" OR \"anunci\u00f3\") \"healthcare enrollment\"",
+      "target_domains": [
+        "sf.gov",
+        "dcyf.org",
+        "sfpublicpress.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-07-D04-zh",
+      "pillar": "People & Demographics",
+      "supervisor_district": 4,
+      "neighborhood": "Outer Sunset",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Outer Sunset\" \"\u65e5\u843d\u5340\" (\"\u5c07\" OR \"\u5ba3\u4f48\") \"language access\"",
+      "target_domains": [
+        "sf.gov",
+        "dcyf.org",
+        "sfpublicpress.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-07-D08-es",
+      "pillar": "People & Demographics",
+      "supervisor_district": 8,
+      "neighborhood": "Castro",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Castro\" \"el Castro\" (\"promete\" OR \"anunci\u00f3\") \"language access\"",
+      "target_domains": [
+        "sf.gov",
+        "dcyf.org",
+        "sfpublicpress.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-07-D08-zh",
+      "pillar": "People & Demographics",
+      "supervisor_district": 8,
+      "neighborhood": "Castro",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Castro\" \"\u5361\u65af\u695a\u5340\" (\"\u8a08\u5283\" OR \"\u5ba3\u4f48\") \"youth program\"",
+      "target_domains": [
+        "sf.gov",
+        "dcyf.org",
+        "sfpublicpress.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-07-D11-es",
+      "pillar": "People & Demographics",
+      "supervisor_district": 11,
+      "neighborhood": "Excelsior",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Excelsior\" (\"anunciar\u00e1\" OR \"anunci\u00f3\") \"youth program\"",
+      "target_domains": [
+        "sf.gov",
+        "dcyf.org",
+        "sfpublicpress.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-07-D11-zh",
+      "pillar": "People & Demographics",
+      "supervisor_district": 11,
+      "neighborhood": "Excelsior",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Excelsior\" (\"\u627f\u8afe\" OR \"\u5ba3\u4f48\") \"senior center\"",
+      "target_domains": [
+        "sf.gov",
+        "dcyf.org",
+        "sfpublicpress.org",
+        "singtaousa.com"
+      ]
+    },
+    {
+      "query_id": "Q-08-D02-es",
+      "pillar": "Work & Opportunity",
+      "supervisor_district": 2,
+      "neighborhood": "Pacific Heights",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Pacific Heights\" (\"espera\" OR \"anunci\u00f3\") \"office lease\"",
+      "target_domains": [
+        "oewd.org",
+        "sf.gov",
+        "sfchronicle.com",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-08-D02-zh",
+      "pillar": "Work & Opportunity",
+      "supervisor_district": 2,
+      "neighborhood": "Pacific Heights",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Pacific Heights\" \"\u592a\u5e73\u6d0b\u9ad8\u5730\" (\"\u5c07\" OR \"\u5ba3\u4f48\") \"workforce training\"",
+      "target_domains": [
+        "oewd.org",
+        "sf.gov",
+        "sfchronicle.com",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-08-D04-es",
+      "pillar": "Work & Opportunity",
+      "supervisor_district": 4,
+      "neighborhood": "Parkside",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Parkside\" (\"promete\" OR \"anunci\u00f3\") \"workforce training\"",
+      "target_domains": [
+        "oewd.org",
+        "sf.gov",
+        "sfchronicle.com",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-08-D04-zh",
+      "pillar": "Work & Opportunity",
+      "supervisor_district": 4,
+      "neighborhood": "Parkside",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Parkside\" (\"\u8a08\u5283\" OR \"\u5ba3\u4f48\") \"apprenticeship\"",
+      "target_domains": [
+        "oewd.org",
+        "sf.gov",
+        "sfchronicle.com",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-08-D08-es",
+      "pillar": "Work & Opportunity",
+      "supervisor_district": 8,
+      "neighborhood": "Noe Valley",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Noe Valley\" (\"anunciar\u00e1\" OR \"anunci\u00f3\") \"apprenticeship\"",
+      "target_domains": [
+        "oewd.org",
+        "sf.gov",
+        "sfchronicle.com",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-08-D08-zh",
+      "pillar": "Work & Opportunity",
+      "supervisor_district": 8,
+      "neighborhood": "Noe Valley",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Noe Valley\" \"\u8afe\u4f0a\u8c37\" (\"\u627f\u8afe\" OR \"\u5ba3\u4f48\") \"small business grant\"",
+      "target_domains": [
+        "oewd.org",
+        "sf.gov",
+        "sfchronicle.com",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-08-D11-es",
+      "pillar": "Work & Opportunity",
+      "supervisor_district": 11,
+      "neighborhood": "Ingleside",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Ingleside\" (\"planea\" OR \"anunci\u00f3\") \"small business grant\"",
+      "target_domains": [
+        "oewd.org",
+        "sf.gov",
+        "sfchronicle.com",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-08-D11-zh",
+      "pillar": "Work & Opportunity",
+      "supervisor_district": 11,
+      "neighborhood": "Ingleside",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Ingleside\" (\"\u5b9a\u65bc\" OR \"\u5ba3\u4f48\") \"office lease\"",
+      "target_domains": [
+        "oewd.org",
+        "sf.gov",
+        "sfchronicle.com",
+        "elreporterosf.com"
+      ]
+    },
+    {
+      "query_id": "Q-09-D02-es",
+      "pillar": "Culture & Social Life",
+      "supervisor_district": 2,
+      "neighborhood": "Presidio",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Presidio\" (\"promete\" OR \"anunci\u00f3\") \"parade\"",
+      "target_domains": [
+        "missionlocal.org",
+        "thefrisc.com",
+        "kqed.org",
+        "noevalleyvoice.com"
+      ]
+    },
+    {
+      "query_id": "Q-09-D02-zh",
+      "pillar": "Culture & Social Life",
+      "supervisor_district": 2,
+      "neighborhood": "Presidio",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Presidio\" (\"\u8a08\u5283\" OR \"\u5ba3\u4f48\") \"heritage event\"",
+      "target_domains": [
+        "missionlocal.org",
+        "thefrisc.com",
+        "kqed.org",
+        "noevalleyvoice.com"
+      ]
+    },
+    {
+      "query_id": "Q-09-D04-es",
+      "pillar": "Culture & Social Life",
+      "supervisor_district": 4,
+      "neighborhood": "Ocean Beach",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Ocean Beach\" (\"anunciar\u00e1\" OR \"anunci\u00f3\") \"heritage event\"",
+      "target_domains": [
+        "missionlocal.org",
+        "thefrisc.com",
+        "kqed.org",
+        "noevalleyvoice.com"
+      ]
+    },
+    {
+      "query_id": "Q-09-D04-zh",
+      "pillar": "Culture & Social Life",
+      "supervisor_district": 4,
+      "neighborhood": "Ocean Beach",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Ocean Beach\" (\"\u627f\u8afe\" OR \"\u5ba3\u4f48\") \"pedestrian plaza\"",
+      "target_domains": [
+        "missionlocal.org",
+        "thefrisc.com",
+        "kqed.org",
+        "noevalleyvoice.com"
+      ]
+    },
+    {
+      "query_id": "Q-09-D08-es",
+      "pillar": "Culture & Social Life",
+      "supervisor_district": 8,
+      "neighborhood": "Glen Park",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Glen Park\" (\"planea\" OR \"anunci\u00f3\") \"pedestrian plaza\"",
+      "target_domains": [
+        "missionlocal.org",
+        "thefrisc.com",
+        "kqed.org",
+        "noevalleyvoice.com"
+      ]
+    },
+    {
+      "query_id": "Q-09-D08-zh",
+      "pillar": "Culture & Social Life",
+      "supervisor_district": 8,
+      "neighborhood": "Glen Park",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Glen Park\" (\"\u5b9a\u65bc\" OR \"\u5ba3\u4f48\") \"community tradition\"",
+      "target_domains": [
+        "missionlocal.org",
+        "thefrisc.com",
+        "kqed.org",
+        "noevalleyvoice.com"
+      ]
+    },
+    {
+      "query_id": "Q-09-D11-es",
+      "pillar": "Culture & Social Life",
+      "supervisor_district": 11,
+      "neighborhood": "Outer Mission",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Outer Mission\" (\"comprometido a\" OR \"anunci\u00f3\") \"community tradition\"",
+      "target_domains": [
+        "missionlocal.org",
+        "thefrisc.com",
+        "kqed.org",
+        "noevalleyvoice.com"
+      ]
+    },
+    {
+      "query_id": "Q-09-D11-zh",
+      "pillar": "Culture & Social Life",
+      "supervisor_district": 11,
+      "neighborhood": "Outer Mission",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Outer Mission\" \"\u7c73\u614e\u5340\" (\"\u5c07\u65bc\" OR \"\u5ba3\u4f48\") \"parade\"",
+      "target_domains": [
+        "missionlocal.org",
+        "thefrisc.com",
+        "kqed.org",
+        "noevalleyvoice.com"
+      ]
+    },
+    {
+      "query_id": "Q-10-D02-es",
+      "pillar": "Civic Life",
+      "supervisor_district": 2,
+      "neighborhood": "Marina",
+      "query_text": "\"San Francisco\" \"Distrito 2\" \"Marina\" (\"anunciar\u00e1\" OR \"anunci\u00f3\") \"ordinance\"",
+      "target_domains": [
+        "sfbos.org",
+        "sfgov.legistar.com",
+        "sf.gov",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-10-D02-zh",
+      "pillar": "Civic Life",
+      "supervisor_district": 2,
+      "neighborhood": "Marina",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c2\u9078\u5340\" \"Marina\" (\"\u627f\u8afe\" OR \"\u5ba3\u4f48\") \"public safety\"",
+      "target_domains": [
+        "sfbos.org",
+        "sfgov.legistar.com",
+        "sf.gov",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-10-D04-es",
+      "pillar": "Civic Life",
+      "supervisor_district": 4,
+      "neighborhood": "Outer Sunset",
+      "query_text": "\"San Francisco\" \"Distrito 4\" \"Outer Sunset\" \"el Sunset\" (\"planea\" OR \"anunci\u00f3\") \"public safety\"",
+      "target_domains": [
+        "sfbos.org",
+        "sfgov.legistar.com",
+        "sf.gov",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-10-D04-zh",
+      "pillar": "Civic Life",
+      "supervisor_district": 4,
+      "neighborhood": "Outer Sunset",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c4\u9078\u5340\" \"Outer Sunset\" \"\u65e5\u843d\u5340\" (\"\u5b9a\u65bc\" OR \"\u5ba3\u4f48\") \"departmental service\"",
+      "target_domains": [
+        "sfbos.org",
+        "sfgov.legistar.com",
+        "sf.gov",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-10-D08-es",
+      "pillar": "Civic Life",
+      "supervisor_district": 8,
+      "neighborhood": "Castro",
+      "query_text": "\"San Francisco\" \"Distrito 8\" \"Castro\" \"el Castro\" (\"comprometido a\" OR \"anunci\u00f3\") \"departmental service\"",
+      "target_domains": [
+        "sfbos.org",
+        "sfgov.legistar.com",
+        "sf.gov",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-10-D08-zh",
+      "pillar": "Civic Life",
+      "supervisor_district": 8,
+      "neighborhood": "Castro",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c8\u9078\u5340\" \"Castro\" \"\u5361\u65af\u695a\u5340\" (\"\u5c07\u65bc\" OR \"\u5ba3\u4f48\") \"city budget\"",
+      "target_domains": [
+        "sfbos.org",
+        "sfgov.legistar.com",
+        "sf.gov",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-10-D11-es",
+      "pillar": "Civic Life",
+      "supervisor_district": 11,
+      "neighborhood": "Excelsior",
+      "query_text": "\"San Francisco\" \"Distrito 11\" \"Excelsior\" (\"previsto para\" OR \"anunci\u00f3\") \"city budget\"",
+      "target_domains": [
+        "sfbos.org",
+        "sfgov.legistar.com",
+        "sf.gov",
+        "inglesidelight.com"
+      ]
+    },
+    {
+      "query_id": "Q-10-D11-zh",
+      "pillar": "Civic Life",
+      "supervisor_district": 11,
+      "neighborhood": "Excelsior",
+      "query_text": "\"\u820a\u91d1\u5c71\" \"\u7b2c11\u9078\u5340\" \"Excelsior\" (\"\u958b\u5e55\" OR \"\u5ba3\u4f48\") \"ordinance\"",
+      "target_domains": [
+        "sfbos.org",
+        "sfgov.legistar.com",
+        "sf.gov",
+        "inglesidelight.com"
       ]
     }
   ],

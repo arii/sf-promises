@@ -6,13 +6,13 @@ window.__DEMO_DATA__ = {
     "last_checked": "Nov 13, 2026",
     "last_updated": "Nov 13, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
-    "commit_sha": "7e9e0902b17b09e7e76a99c768902dcaf8777237",
+    "commit_sha": "25e509d6fe8ac3b1ee23dfdb8c6ab745db6b3783",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-13T20:13:35Z"
+    "exported_at": "2026-11-13T21:19:09Z"
   },
   "database_status": {
-    "commit_sha": "7e9e0902b17b09e7e76a99c768902dcaf8777237",
+    "commit_sha": "25e509d6fe8ac3b1ee23dfdb8c6ab745db6b3783",
     "tracked_count": 54,
     "seed_promises_count": 12,
     "total_db_promises": 54,
@@ -488,8 +488,9 @@ window.__DEMO_DATA__ = {
       "total_verification_exception_checks": 22
     },
     "sourcing_audit": {
-      "generated_at": "2026-11-13T20:13:28Z",
-      "planner_query_count": 18,
+      "generated_at": "2026-11-13T21:04:33Z",
+      "planner_query_count": 98,
+      "planner_variant_query_count": 80,
       "planner_pillars_covered": [
         "Arts, Music & Nightlife",
         "Civic Life",
@@ -610,7 +611,7 @@ window.__DEMO_DATA__ = {
     "id_reconciliation": "54 published \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
-    "acceptance_status_label": "Acceptance verified on commit 7e9e090 (separated processes, not Firecracker)",
+    "acceptance_status_label": "Acceptance verified on commit 25e509d (separated processes, not Firecracker)",
     "counts": {
       "kept": 25,
       "broken": 17,
@@ -619,7 +620,7 @@ window.__DEMO_DATA__ = {
     },
     "integration_run": {
       "run_id": "F-20261111-045601",
-      "commit_sha": "7e9e0902b17b09e7e76a99c768902dcaf8777237",
+      "commit_sha": "25e509d6fe8ac3b1ee23dfdb8c6ab745db6b3783",
       "total_tests": 36,
       "passed": 33,
       "failed": 0,
@@ -636,11 +637,11 @@ window.__DEMO_DATA__ = {
       "status_label": "33 passed, 0 failed, 3 blocked"
     },
     "sandbox_isolation_verified": true,
-    "sandbox_isolation_label": "Sandbox isolation verified on commit 7e9e090 (separated processes, not Firecracker)",
+    "sandbox_isolation_label": "Sandbox isolation verified on commit 25e509d (separated processes, not Firecracker)",
     "discrepancies": [
       "DB holds 54 promises (12 seeds + 42 Tier-2 banked, scale paused by user decision) with 54 verdicts and 124 evidence rows; every file hash re-verified.",
-      "Latest harness run F-20261111-045601 on 7e9e090: 33 pass / 0 fail / 3 blocked-extended.",
-      "Acceptance verified on commit 7e9e090: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
+      "Latest harness run F-20261111-045601 on 25e509d: 33 pass / 0 fail / 3 blocked-extended.",
+      "Acceptance verified on commit 25e509d: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
     ],
@@ -709,9 +710,226 @@ window.__DEMO_DATA__ = {
       }
     },
     "denials": {
-      "total_denials": 0,
-      "distinct_domains": 0,
-      "by_domain": {}
+      "total_denials": 33,
+      "distinct_domains": 24,
+      "by_domain": {
+        "cna.com.tw": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "commissions.sfplanning.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "official_government": 1
+          }
+        },
+        "contracostavote.gov": {
+          "count": 1,
+          "reasons": {
+            "ValueError: Source is empty or completeness is unknown": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "cuesa.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "en.wikipedia.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "reference": 1
+          }
+        },
+        "eyebeam.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "gredos.usal.es": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "houseberry.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "huggingface.co": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "issuu.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "k.sina.com.cn": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "kron4.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "media.api.sf.gov": {
+          "count": 1,
+          "reasons": {
+            "ValueError: Source is empty or completeness is unknown": 1
+          },
+          "source_types": {
+            "reference": 1
+          }
+        },
+        "portales.sre.gob.mx": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "salt-artandculture.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfcamerawork.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfcta.org": {
+          "count": 9,
+          "reasons": {
+            "domain_not_allowlisted": 9
+          },
+          "source_types": {
+            "unlisted": 9
+          }
+        },
+        "sfheritage.org": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "taiwannews.com.tw": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "ufdcimages.uflib.ufl.edu": {
+          "count": 1,
+          "reasons": {
+            "ValueError: Source is empty or completeness is unknown": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.flix.com.mx": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.kanji.zinbun.kyoto-u.ac.jp": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.nomadotravel.app": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "zh.wikipedia.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "canary_social": 1
+          }
+        }
+      }
     }
   },
   "p02": {
