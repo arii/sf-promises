@@ -8,7 +8,7 @@ import sqlite3
 import tempfile
 
 APPLICATION_ID = 0x53465032
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 
 
 def initialize_database(path):

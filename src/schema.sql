@@ -55,7 +55,10 @@ CREATE TABLE IF NOT EXISTS verifications (
     check_type TEXT NOT NULL,
     passed INTEGER NOT NULL CHECK (passed IN (0, 1)),
     reason TEXT NOT NULL,
-    checked_at TEXT NOT NULL
+    checked_at TEXT NOT NULL,
+    -- Model identity of the call that produced this row (e.g. obvious-agent);
+    -- NULL for deterministic checks and rows written before provenance.
+    model_id TEXT
 );
 
 CREATE TABLE IF NOT EXISTS relevance_assessments (
