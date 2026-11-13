@@ -5,13 +5,13 @@
     "last_checked": "Nov 13, 2026",
     "last_updated": "Nov 13, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
-    "commit_sha": "b59013bab1dcf85d9066b19a6bcb8cf093e0ba6c",
+    "commit_sha": "7e9e0902b17b09e7e76a99c768902dcaf8777237",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-13T02:51:00Z"
+    "exported_at": "2026-11-13T20:13:35Z"
   },
   "database_status": {
-    "commit_sha": "b59013bab1dcf85d9066b19a6bcb8cf093e0ba6c",
+    "commit_sha": "7e9e0902b17b09e7e76a99c768902dcaf8777237",
     "tracked_count": 54,
     "seed_promises_count": 12,
     "total_db_promises": 54,
@@ -486,91 +486,8 @@
       ],
       "total_verification_exception_checks": 22
     },
-    "quarantine_registry_count": 13,
-    "pending_intake_count": 38,
-    "pending_intake_ids": [
-      "P32",
-      "P33",
-      "P34",
-      "P45",
-      "P46",
-      "P47",
-      "P48",
-      "P49",
-      "P50",
-      "P51",
-      "P52",
-      "P53",
-      "P54",
-      "P55",
-      "P56",
-      "P69",
-      "P70",
-      "P71",
-      "P72",
-      "P73",
-      "P74",
-      "P75",
-      "P76",
-      "P77",
-      "P78",
-      "P79",
-      "P97",
-      "S10",
-      "S11",
-      "S12",
-      "S13",
-      "S14",
-      "S4",
-      "S5",
-      "S6",
-      "S7",
-      "S8",
-      "S9"
-    ],
-    "id_reconciliation": "54 published \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
-    "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
-    "acceptance_verified": true,
-    "acceptance_status_label": "Acceptance verified on commit b59013b (separated processes, not Firecracker)",
-    "counts": {
-      "kept": 25,
-      "broken": 17,
-      "in_progress": 10,
-      "undecided": 2
-    },
-    "integration_run": {
-      "run_id": "F-20261111-045601",
-      "commit_sha": "b59013bab1dcf85d9066b19a6bcb8cf093e0ba6c",
-      "total_tests": 36,
-      "passed": 33,
-      "failed": 0,
-      "blocked": 3,
-      "status_label": "33 passed, 0 failed, 3 blocked"
-    },
-    "latest_run": {
-      "run_id": "F-20261111-045601",
-      "commit_sha": "2f398f5352e785be3847e3e40dc4352022570c9a",
-      "total_tests": 36,
-      "passed": 33,
-      "failed": 0,
-      "blocked": 3,
-      "status_label": "33 passed, 0 failed, 3 blocked"
-    },
-    "sandbox_isolation_verified": true,
-    "sandbox_isolation_label": "Sandbox isolation verified on commit b59013b (separated processes, not Firecracker)",
-    "discrepancies": [
-      "DB holds 54 promises (12 seeds + 42 Tier-2 banked, scale paused by user decision) with 54 verdicts and 124 evidence rows; every file hash re-verified.",
-      "Latest harness run F-20261111-045601 on b59013b: 33 pass / 0 fail / 3 blocked-extended.",
-      "Acceptance verified on commit b59013b: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
-      "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
-      "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
-    ],
-    "discrepancy_files": [
-      "QUESTIONS.md",
-      "WORKING_NOTES.md"
-    ],
     "sourcing_audit": {
-      "generated_at": "2026-11-13T02:53:40Z",
+      "generated_at": "2026-11-13T20:13:28Z",
       "planner_query_count": 18,
       "planner_pillars_covered": [
         "Arts, Music & Nightlife",
@@ -621,7 +538,179 @@
       },
       "dual_review_sampled_count": 3,
       "dual_review_agreement_rate": 1.0,
+      "funnel": {
+        "stages": [
+          {
+            "stage": "leads_encountered",
+            "count": 63,
+            "universe": "intake_register"
+          },
+          {
+            "stage": "qualified",
+            "count": 24,
+            "universe": "intake_register",
+            "conversion_from_previous": 0.381
+          }
+        ],
+        "stage_counts": {
+          "leads_encountered": 63,
+          "qualified": 24
+        }
+      },
+      "denials": {
+        "total_denials": 0,
+        "distinct_domains": 0,
+        "by_domain": {}
+      },
       "outcome_blind_enforced": true
+    },
+    "quarantine_registry_count": 13,
+    "pending_intake_count": 38,
+    "pending_intake_ids": [
+      "P32",
+      "P33",
+      "P34",
+      "P45",
+      "P46",
+      "P47",
+      "P48",
+      "P49",
+      "P50",
+      "P51",
+      "P52",
+      "P53",
+      "P54",
+      "P55",
+      "P56",
+      "P69",
+      "P70",
+      "P71",
+      "P72",
+      "P73",
+      "P74",
+      "P75",
+      "P76",
+      "P77",
+      "P78",
+      "P79",
+      "P97",
+      "S10",
+      "S11",
+      "S12",
+      "S13",
+      "S14",
+      "S4",
+      "S5",
+      "S6",
+      "S7",
+      "S8",
+      "S9"
+    ],
+    "id_reconciliation": "54 published \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
+    "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
+    "acceptance_verified": true,
+    "acceptance_status_label": "Acceptance verified on commit 7e9e090 (separated processes, not Firecracker)",
+    "counts": {
+      "kept": 25,
+      "broken": 17,
+      "in_progress": 10,
+      "undecided": 2
+    },
+    "integration_run": {
+      "run_id": "F-20261111-045601",
+      "commit_sha": "7e9e0902b17b09e7e76a99c768902dcaf8777237",
+      "total_tests": 36,
+      "passed": 33,
+      "failed": 0,
+      "blocked": 3,
+      "status_label": "33 passed, 0 failed, 3 blocked"
+    },
+    "latest_run": {
+      "run_id": "F-20261111-045601",
+      "commit_sha": "7e9e0902b17b09e7e76a99c768902dcaf8777237",
+      "total_tests": 36,
+      "passed": 33,
+      "failed": 0,
+      "blocked": 3,
+      "status_label": "33 passed, 0 failed, 3 blocked"
+    },
+    "sandbox_isolation_verified": true,
+    "sandbox_isolation_label": "Sandbox isolation verified on commit 7e9e090 (separated processes, not Firecracker)",
+    "discrepancies": [
+      "DB holds 54 promises (12 seeds + 42 Tier-2 banked, scale paused by user decision) with 54 verdicts and 124 evidence rows; every file hash re-verified.",
+      "Latest harness run F-20261111-045601 on 7e9e090: 33 pass / 0 fail / 3 blocked-extended.",
+      "Acceptance verified on commit 7e9e090: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
+      "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
+      "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
+    ],
+    "discrepancy_files": [
+      "QUESTIONS.md",
+      "WORKING_NOTES.md"
+    ],
+    "funnel": {
+      "stages": [
+        {
+          "stage": "leads_encountered",
+          "count": 63,
+          "universe": "intake_register"
+        },
+        {
+          "stage": "sources_archived",
+          "count": 55,
+          "universe": "database"
+        },
+        {
+          "stage": "qualified",
+          "count": 24,
+          "universe": "intake_register",
+          "conversion_from_previous": 0.381
+        },
+        {
+          "stage": "screened",
+          "count": 55,
+          "universe": "database",
+          "conversion_from_previous": 1.0
+        },
+        {
+          "stage": "published",
+          "count": 54,
+          "universe": "database",
+          "conversion_from_previous": 0.982
+        },
+        {
+          "stage": "quarantined",
+          "count": 1,
+          "universe": "database",
+          "conversion_from_previous": 0.018
+        }
+      ],
+      "stage_counts": {
+        "leads_encountered": 63,
+        "sources_archived": 55,
+        "qualified": 24,
+        "screened": 55,
+        "published": 54,
+        "quarantined": 1
+      }
+    },
+    "quarantine_reasons": {
+      "total_quarantined": 13,
+      "total_reason_codes": 13,
+      "by_reason": {
+        "accuracy_date": 1,
+        "accuracy_evidence": 3,
+        "accuracy_quote": 3,
+        "authenticity_domain": 1,
+        "authenticity_hash": 1,
+        "authenticity_speaker": 1,
+        "relevance_low": 2,
+        "verdict_rubric": 1
+      }
+    },
+    "denials": {
+      "total_denials": 0,
+      "distinct_domains": 0,
+      "by_domain": {}
     }
   },
   "p02": {
@@ -1190,7 +1279,7 @@
       "image_url": "https://assets.sfstandard.com/image/994911177489/image_s94fpd5el5549a2690grvt1g5u/-S3840x2561-FPNG",
       "media_caption": "San Francisco urban shelter expansion network sites under 6-month evaluation",
       "promise_date_precision": "day",
-      "due_date_precision": "not_applicable",
+      "due_date_precision": "not_captured",
       "geographic_scope": "citywide",
       "factual_outcome": "Numeric 1,500-bed shelter target was not achieved; opened ~500 temporary beds before strategy was abandoned in July 2025.",
       "record_type": "promise",
@@ -2433,7 +2522,7 @@
       "document_title": "Grateful Dead Tour Retirement & Archival Shows",
       "title": "Grateful Dead Tour Retirement & Archival Shows",
       "promise_date_precision": "day",
-      "due_date_precision": "not_applicable",
+      "due_date_precision": "not_captured",
       "geographic_scope": "neighborhood",
       "factual_outcome": "Promised final tour retirement; Dead & Company subsequently staged multi-month Sphere residency and 3-day Golden Gate Park concerts.",
       "record_type": "promise",
@@ -4244,7 +4333,7 @@
       "document_title": "1,000 SRO Housing Units Improvement",
       "title": "1,000 SRO Housing Units Improvement",
       "promise_date_precision": "day",
-      "due_date_precision": "not_applicable",
+      "due_date_precision": "not_captured",
       "geographic_scope": "neighborhood",
       "factual_outcome": "City pledged to acquire or renovate 1,000 SRO units; acquired fewer than 300 units before capital funds were exhausted.",
       "record_type": "promise",
@@ -5147,7 +5236,7 @@
       "document_title": "Empty Homes Tax: 4,500 Units in Year One",
       "title": "Empty Homes Tax: 4,500 Units in Year One",
       "promise_date_precision": "year",
-      "due_date_precision": "not_applicable",
+      "due_date_precision": "not_captured",
       "geographic_scope": "citywide",
       "factual_outcome": "Prop M Empty Homes Tax passed in 2022 to activate 4,500 vacant units; invalidated by San Francisco Superior Court in 2024.",
       "record_type": "promise",
@@ -10653,7 +10742,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
       "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
-      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center",
+      "reason_codes": [
+        "accuracy_quote"
+      ]
     },
     {
       "quarantine_id": "Q-N02",
@@ -10674,7 +10766,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "6685fe8d7b3d73bc63e7d84d0f1db531e6d6cd12bf90d1c5cf63885f90c8bc6a",
       "source_file_path": "6685fe8d7b3d73bc63e7d84d0f1db531e6d6cd12bf90d1c5cf63885f90c8bc6a.md",
-      "source_url": "https://sfgov.legistar.com/LegislationDetail.aspx?ID=6431980"
+      "source_url": "https://sfgov.legistar.com/LegislationDetail.aspx?ID=6431980",
+      "reason_codes": [
+        "authenticity_speaker"
+      ]
     },
     {
       "quarantine_id": "Q-N03",
@@ -10695,7 +10790,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05",
       "source_file_path": "e03acc33e8e1f74bb11c1228d69592838e3c60736dbed1768c78df3f981a4c05.md",
-      "source_url": "https://www.sf.gov/press-release/cleanpowersf-grid"
+      "source_url": "https://www.sf.gov/press-release/cleanpowersf-grid",
+      "reason_codes": [
+        "authenticity_hash"
+      ]
     },
     {
       "quarantine_id": "Q-N04",
@@ -10716,7 +10814,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "18eeac2d2261dd43a9744058ca524cb2107dc65d46dcb8427858752a8cc8a49b",
       "source_file_path": "18eeac2d2261dd43a9744058ca524cb2107dc65d46dcb8427858752a8cc8a49b.md",
-      "source_url": "https://www.sf.gov/departments/department-technology"
+      "source_url": "https://www.sf.gov/departments/department-technology",
+      "reason_codes": [
+        "accuracy_evidence"
+      ]
     },
     {
       "quarantine_id": "Q-N05",
@@ -10737,7 +10838,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
       "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
-      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center",
+      "reason_codes": [
+        "accuracy_quote"
+      ]
     },
     {
       "quarantine_id": "Q-N06",
@@ -10758,7 +10862,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
       "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
-      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center",
+      "reason_codes": [
+        "accuracy_date"
+      ]
     },
     {
       "quarantine_id": "Q-N07",
@@ -10779,7 +10886,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
       "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
-      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center",
+      "reason_codes": [
+        "accuracy_quote"
+      ]
     },
     {
       "quarantine_id": "Q-N08",
@@ -10800,7 +10910,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
       "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
-      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center",
+      "reason_codes": [
+        "accuracy_evidence"
+      ]
     },
     {
       "quarantine_id": "Q-N09",
@@ -10821,7 +10934,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "8cabdac8edb9a6e040b194061a1cc31858b52c09293900df872e654654f1cfe5",
       "source_file_path": "8cabdac8edb9a6e040b194061a1cc31858b52c09293900df872e654654f1cfe5.md",
-      "source_url": "https://sanfrancisco-citygov-portal.com/announcements/retail-bond"
+      "source_url": "https://sanfrancisco-citygov-portal.com/announcements/retail-bond",
+      "reason_codes": [
+        "authenticity_domain"
+      ]
     },
     {
       "quarantine_id": "Q-N10",
@@ -10842,7 +10958,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "cd7fb800349ae1387eb78a87d4a1db1425b3c3060770bb4217483990c4edcd95",
       "source_file_path": "cd7fb800349ae1387eb78a87d4a1db1425b3c3060770bb4217483990c4edcd95.md",
-      "source_url": "https://www.sfmta.com/projects/central-subway-project"
+      "source_url": "https://www.sfmta.com/projects/central-subway-project",
+      "reason_codes": [
+        "verdict_rubric"
+      ]
     },
     {
       "quarantine_id": "Q-N11",
@@ -10863,7 +10982,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa",
       "source_file_path": "582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md",
-      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center"
+      "source_url": "https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center",
+      "reason_codes": [
+        "accuracy_evidence"
+      ]
     },
     {
       "quarantine_id": "Q-N12",
@@ -10884,7 +11006,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "3194463827222e99bc30944c11dbc79f6a500a9055eda4177d4b61c2b1141996",
       "source_file_path": "3194463827222e99bc30944c11dbc79f6a500a9055eda4177d4b61c2b1141996.md",
-      "source_url": "https://sfgov.legistar.com/MeetingDetail.aspx?ID=1142901"
+      "source_url": "https://sfgov.legistar.com/MeetingDetail.aspx?ID=1142901",
+      "reason_codes": [
+        "relevance_low"
+      ]
     },
     {
       "quarantine_id": "Q-P68",
@@ -10913,7 +11038,10 @@
       "destination": "Held back. Never published.",
       "source_hash": "848553de6293dc9ebe825e72451d6e692ca42c9c7439cb706a6a62e193ee5105",
       "source_file_path": "848553de6293dc9ebe825e72451d6e692ca42c9c7439cb706a6a62e193ee5105.md",
-      "source_url": "https://www.bayfc.com/news/bay-fc-home-opener-march-30"
+      "source_url": "https://www.bayfc.com/news/bay-fc-home-opener-march-30",
+      "reason_codes": [
+        "relevance_low"
+      ]
     }
   ]
 }

@@ -31,6 +31,7 @@ if (start < 0 || end < 0) {{
 const window = {{}};
 new Function('window', src.slice(start, end + '{pure_end}'.length) + '\\nwindow.SFPViz = SFPViz;')(window);
 const promises = JSON.parse(fs.readFileSync('docs/data.json', 'utf8')).promises;
+const databaseStatus = JSON.parse(fs.readFileSync('docs/data.json', 'utf8')).database_status || {{}};
 const result = window.SFPViz.{fn}({args});
 console.log(JSON.stringify(result));
 """
@@ -53,7 +54,10 @@ def read_script_srcs(html):
 class TestDemoVisualizations(unittest.TestCase):
     def setUp(self):
         self.assertTrue(DATA_JSON.exists(), "docs/data.json must exist")
-        self.promises = json.loads(DATA_JSON.read_text(encoding="utf-8"))["promises"]
+        full = json.loads(DATA_JSON.read_text(encoding="utf-8"))
+        self.promises = full["promises"]
+        self.database_status = full.get("database_status", {})
+        self.quarantined = full.get("quarantined", [])
         self.app_js = APP_JS.read_text(encoding="utf-8")
         self.index_html = INDEX_HTML.read_text(encoding="utf-8")
 
@@ -115,6 +119,56 @@ class TestDemoVisualizations(unittest.TestCase):
         # zero-filled years between min and max so gaps stay visible
         years = [int(b["year"]) for b in buckets]
         self.assertEqual(years, list(range(years[0], years[-1] + 1)))
+
+    # ---- audit-view panels (D3) derive from the export ----
+
+    def py_funnel_stage_counts(self):
+        stages = (self.database_status.get("funnel") or {}).get("stages") or []
+        return {
+            s["stage"]: s["count"] for s in stages
+            if isinstance(s.get("count"), (int, float))
+        }
+
+    def py_quarantine_reason_tally(self):
+        # Independent tally over the exported registry's reason_codes fields.
+        tally = Counter()
+        for item in self.quarantined:
+            codes = item.get("reason_codes") or [item.get("failing_check_code")
+                                                 or item.get("check_type") or "unknown"]
+            for code in codes:
+                tally[str(code)] += 1
+        return tally
+
+    def test_funnel_panel_matches_export(self):
+        js = {s["stage"]: s["count"] for s in run_pure_fn("funnelStages", "databaseStatus")}
+        self.assertEqual(js, self.py_funnel_stage_counts())
+        # the funnel's published stage is exactly the exported promise count
+        published = (self.database_status.get("funnel") or {}).get("stage_counts", {}).get("published")
+        if published is not None:
+            self.assertEqual(published, len(self.promises))
+
+    def test_reason_code_panel_sums_to_quarantine_registry(self):
+        js = run_pure_fn("quarantineReasons", "databaseStatus")
+        expected = self.py_quarantine_reason_tally()
+        self.assertEqual(js["byReason"], dict(expected))
+        self.assertEqual(sum(js["byReason"].values()), len(self.quarantined))
+        self.assertEqual(js["totalQuarantined"], len(self.quarantined))
+
+    def test_denial_histogram_matches_export(self):
+        js = run_pure_fn("denialDomains", "databaseStatus")
+        by_domain = (self.database_status.get("denials") or {}).get("by_domain") or {}
+        self.assertEqual(
+            {d["domain"]: d["count"] for d in js},
+            {domain: entry.get("count", 0) for domain, entry in by_domain.items()},
+        )
+        total = (self.database_status.get("denials") or {}).get("total_denials")
+        if total is not None:
+            self.assertEqual(sum(d["count"] for d in js), total)
+
+    def test_audit_panel_hooks_present(self):
+        for hook in ("audit-funnel-bars", "audit-reason-bars", "audit-denial-bars"):
+            self.assertIn(hook, self.index_html)
+            self.assertIn(hook, self.app_js)
 
     # ---- section wiring ----
 

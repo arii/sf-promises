@@ -191,7 +191,59 @@
     return out;
   }
 
-  const SFPViz = { VERDICT_ORDER, countByVerdict, countByCategory, countBySourceType, countByYearAndVerdict };
+  function funnelStages(databaseStatus) {
+    // Stage rows from the exported funnel summary; rows without a finite
+    // count are dropped rather than charted as zero.
+    const funnel = (databaseStatus && databaseStatus.funnel) || {};
+    const stages = Array.isArray(funnel.stages) ? funnel.stages : [];
+    return stages.filter(s => s && s.stage && Number.isFinite(Number(s.count)))
+      .map(s => ({
+        stage: String(s.stage),
+        count: Number(s.count),
+        universe: String(s.universe || 'database'),
+        conversion: Number.isFinite(Number(s.conversion_from_previous))
+          ? Number(s.conversion_from_previous)
+          : null
+      }));
+  }
+
+  function quarantineReasons(databaseStatus) {
+    // Reason-code distribution over the exported quarantine registry.
+    const qr = (databaseStatus && databaseStatus.quarantine_reasons) || {};
+    const src = (qr.by_reason && typeof qr.by_reason === 'object') ? qr.by_reason : {};
+    const byReason = {};
+    Object.keys(src).forEach(code => {
+      const n = Number(src[code]);
+      if (Number.isFinite(n) && n > 0) byReason[String(code)] = n;
+    });
+    return {
+      totalQuarantined: Number.isFinite(Number(qr.total_quarantined)) ? Number(qr.total_quarantined) : null,
+      totalReasonCodes: Number.isFinite(Number(qr.total_reason_codes)) ? Number(qr.total_reason_codes) : null,
+      byReason
+    };
+  }
+
+  function denialDomains(databaseStatus) {
+    // Per-domain denial histogram, tallest first; ties break alphabetically.
+    const denials = (databaseStatus && databaseStatus.denials) || {};
+    const byDomain = (denials.by_domain && typeof denials.by_domain === 'object') ? denials.by_domain : {};
+    return Object.keys(byDomain).map(domain => ({
+      domain: String(domain),
+      count: Number(byDomain[domain] && byDomain[domain].count) || 0,
+      sourceTypes: (byDomain[domain] && byDomain[domain].source_types) || {}
+    })).sort((a, b) => (b.count - a.count) || a.domain.localeCompare(b.domain));
+  }
+
+  const SFPViz = {
+    VERDICT_ORDER,
+    countByVerdict,
+    countByCategory,
+    countBySourceType,
+    countByYearAndVerdict,
+    funnelStages,
+    quarantineReasons,
+    denialDomains
+  };
   /* SFPVIZ_PURE_END */
 
   // -------------------------------------------------------------------------
@@ -1353,6 +1405,10 @@
     const sourcing = db.sourcing_audit || {};
     const promises = demoData.promises || [];
 
+    renderAuditFunnelPanel(db);
+    renderAuditReasonPanel(db);
+    renderAuditDenialPanel(db);
+
     const passCount = promises.filter(p => p.all_checks_passed !== false).length;
     const failPromCount = promises.length - passCount;
     const contradictionCount = promises.filter(p => p.has_contradictory_evidence).length;
@@ -1449,6 +1505,80 @@
     queueEl.querySelectorAll('.audit-queue-item').forEach(btn => {
       btn.addEventListener('click', () => openInspectDrawer(btn.getAttribute('data-promise-id')));
     });
+  }
+
+  const FUNNEL_STAGE_LABELS = {
+    leads_encountered: 'Leads encountered',
+    sources_archived: 'Sources archived',
+    qualified: 'Qualified intake',
+    screened: 'Screened',
+    published: 'Published',
+    quarantined: 'Quarantined'
+  };
+
+  function renderAuditFunnelPanel(db) {
+    const el = document.getElementById('audit-funnel-bars');
+    if (!el) return;
+    const stages = SFPViz.funnelStages(db);
+    if (!stages.length) {
+      el.innerHTML = '<p class="viz-empty">No funnel stages in the exported snapshot.</p>';
+      return;
+    }
+    const max = Math.max(...stages.map(s => s.count), 1);
+    el.innerHTML = stages.map(s => {
+      const label = FUNNEL_STAGE_LABELS[s.stage] || s.stage;
+      const conv = s.conversion !== null
+        ? ` <span class="viz-bar-pct">(${(s.conversion * 100).toFixed(1)}%)</span>`
+        : '';
+      const universe = s.universe === 'intake_register' ? 'intake' : 'db';
+      return `
+        <div class="viz-bar-row">
+          <span class="viz-bar-label" title="${escapeHtml(label)}">${escapeHtml(label)}</span>
+          <span class="viz-bar-track">
+            <span class="viz-bar-fill" style="width:${((s.count / max) * 100).toFixed(2)}%; background:var(--cyan)"></span>
+          </span>
+          <span class="viz-bar-count font-mono">${s.count}${conv} · ${universe}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderAuditReasonPanel(db) {
+    const el = document.getElementById('audit-reason-bars');
+    if (!el) return;
+    const reasons = SFPViz.quarantineReasons(db);
+    const codes = Object.entries(reasons.byReason)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([code, count]) => ({ label: code.replace(/_/g, ' '), count, color: 'var(--purple)' }));
+    const footer = (reasons.totalQuarantined !== null)
+      ? `<p class="audit-panel-sub font-mono">${reasons.totalReasonCodes} codes across ${reasons.totalQuarantined} quarantined registry items</p>`
+      : '';
+    renderBarRows(el, codes, reasons.totalQuarantined || 0);
+    el.innerHTML += footer;
+  }
+
+  function renderAuditDenialPanel(db) {
+    const el = document.getElementById('audit-denial-bars');
+    if (!el) return;
+    const domains = SFPViz.denialDomains(db);
+    if (!domains.length) {
+      el.innerHTML = '<p class="viz-empty">No denied leads recorded in the current export; live discovery rounds append deny rows and this histogram fills from the export.</p>';
+      return;
+    }
+    const max = Math.max(...domains.map(x => x.count), 1);
+    el.innerHTML = domains.map(d => {
+      const stypes = Object.keys(d.sourceTypes).sort().join(', ');
+      const title = stypes ? ` title="${escapeHtml('Source types: ' + stypes)}"` : '';
+      return `
+        <div class="viz-bar-row"${title}>
+          <span class="viz-bar-label">${escapeHtml(d.domain)}</span>
+          <span class="viz-bar-track">
+            <span class="viz-bar-fill" style="width:${((d.count / max) * 100).toFixed(2)}%; background:var(--red)"></span>
+          </span>
+          <span class="viz-bar-count font-mono">${d.count}${stypes ? ' · ' + escapeHtml(stypes) : ''}</span>
+        </div>
+      `;
+    }).join('');
   }
 
   // -------------------------------------------------------------------------

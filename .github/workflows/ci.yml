@@ -4,7 +4,9 @@ on:
   push:
     branches: [ main, cleanup-v2-architecture ]
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+      - "release/**"
 
 jobs:
   test:

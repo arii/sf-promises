@@ -1,0 +1,1166 @@
+[
+  {
+    "domain": "abc7news.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "ajud.assembly.ca.gov",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: official CA Assembly committee (P24)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "apnews.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "arstechnica.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "att.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "axios.com",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "bayfc.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "bisnow.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "bizjournals.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "bloomberg.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "businesswire.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "calmatters.org",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "caltrain.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "cbsnews.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "cleanpowersf.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government"
+    ],
+    "added_reason": "CleanPowerSF program linked by the SF Environment source",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "cnbc.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "codelibrary.amlegal.com",
+    "source_type": "reference",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: legal publisher hosting official SF code (P16)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "comcast.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "cpuc.ca.gov",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "curbed.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "daniellurie.com",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "dhcs.ca.gov",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: official CA government (P22 opening)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "eastbaytimes.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "edition.pagesuite.com",
+    "source_type": "reference",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: exact host for P01/P07/P09/P11 validation seeds (exact hosts only, not parent domains)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "elreporterosf.com",
+    "source_type": "community_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Spanish-language El Reportero of SF targeted for Food & Local Business and Work & Opportunity pillars",
+    "added_by": "d2-query-diversification",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "eltecolote.org",
+    "source_type": "community_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Mission-district bilingual Latinx press (El Tecolote) targeted for Arts and Housing pillars",
+    "added_by": "d2-query-diversification",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "en.wikipedia.org",
+    "source_type": "reference",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: exact host for P-series tour validation seed (parent wikipedia.org stays canaried)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "espn.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "facebook.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "filtermag.org",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "flysfo.com",
+    "source_type": "primary_source",
+    "groups": [
+      "checks_allowlist",
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "granicus.com",
+    "source_type": "reference",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "inglesidelight.com",
+    "source_type": "neighborhood_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Ingleside Light neighborhood paper for District 11 targeted for Transit and Civic Life pillars",
+    "added_by": "d2-query-diversification",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "instagram.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "investor.pgecorp.com",
+    "source_type": "primary_source",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: exact host for P-series press-release validation seed",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "khsu.org",
+    "source_type": "reference",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: NPR affiliate public radio (P13/P14 claims)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "kqed.org",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "ktvu.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "latimes.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "lwvba.org",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "medium.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "mercurynews.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "missionlocal.org",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "mlb.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "nba.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "nbcbayarea.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "newspack-missionlocal.s3.amazonaws.com",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "nextdoor.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "nfl.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "noevalleyvoice.com",
+    "source_type": "neighborhood_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Noe Valley Voice neighborhood paper for District 8 targeted for the Culture & Social Life pillar",
+    "added_by": "d2-query-diversification",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "nytimes.com",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "pge.com",
+    "source_type": "primary_source",
+    "groups": [
+      "checks_allowlist",
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "politico.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "prnewswire.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "reddit.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "reuters.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sf.gov",
+    "source_type": "reference",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sf.streetsblog.org",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: legit SF news source (P21 vote)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfbayview.com",
+    "source_type": "community_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: SF Bay View community paper (Bayview-Hunters Point) targeted for Weather & Environment pillar",
+    "added_by": "d2-query-diversification",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfbike.org",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfbos.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfchronicle.com",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfenvironment.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government"
+    ],
+    "added_reason": "Parent decision: official city site (P36)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfexaminer.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfgate.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfgiants.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfgov.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfhousing.org",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfmta.com",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government",
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfmtariders.org",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfplanning.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government"
+    ],
+    "added_reason": "Parent decision: official SF Planning site (P31 ordinance)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfpublicworkstv.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfpuc.gov",
+    "source_type": "reference",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: official SFPUC domain (sfpuc.org redirects here; P61)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfpuc.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government"
+    ],
+    "added_reason": "Parent decision: official city utility, covers www (P36)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfstandard.com",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "singtaousa.com",
+    "source_type": "community_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Sing Tao Daily SF (Chinese-language press) targeted for Sports and People & Demographics pillars",
+    "added_by": "d2-query-diversification",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "socketsite.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "src.senate.ca.gov",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Parent decision: exact host for a P-series validation seed (exact hosts only)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "substack.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "techcrunch.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "theathletic.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "thefrisc.com",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "therealdeal.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "theverge.com",
+    "source_type": "news",
+    "groups": [
+      "news"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "tiktok.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "trinitysf.com",
+    "source_type": "primary_source",
+    "groups": [
+      "checks_allowlist",
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "twitter.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "valkyries.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "visa.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "visionzerosf.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "waymo.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "wholefoodsmarket.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "wikipedia.org",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "wnba.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "x.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "yelp.com",
+    "source_type": "canary_social",
+    "groups": [],
+    "added_reason": "Hard-blocked social/reference canary host (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": true
+  },
+  {
+    "domain": "zoox.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  }
+]

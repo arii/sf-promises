@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=8e94dbec">
+  <link rel="stylesheet" href="styles.css?v=7e9e0902">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -2305,6 +2305,23 @@
               <div id="audit-review-queue-list"></div>
             </div>
           </div>
+          <div class="audit-two-col">
+            <div class="audit-panel-card">
+              <h3>Discovery Funnel: Intake to Verification</h3>
+              <p class="audit-panel-sub">Stage counts from the exported funnel summary. Intake-register and database stages measure different cohorts, so conversion rates never mix them.</p>
+              <div id="audit-funnel-bars"></div>
+            </div>
+            <div class="audit-panel-card">
+              <h3>Quarantine Reason Codes</h3>
+              <p class="audit-panel-sub">Reason-code distribution across the quarantine registry; codes sum exactly to the registry count.</p>
+              <div id="audit-reason-bars"></div>
+            </div>
+          </div>
+          <div class="audit-panel-card">
+            <h3>Blocked-Domain Denials</h3>
+            <p class="audit-panel-sub">Per-domain histogram of leads the allowlist denied during discovery, tagged with each domain's reviewed source type.</p>
+            <div id="audit-denial-bars"></div>
+          </div>
         </div>
 
         <!-- Pagination Controls -->
@@ -2720,8 +2737,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=8e94dbec"></script>
-  <script src="list.min.js?v=8e94dbec"></script>
-  <script src="app.js?v=8e94dbec"></script>
+  <script src="data.js?v=7e9e0902"></script>
+  <script src="list.min.js?v=7e9e0902"></script>
+  <script src="app.js?v=7e9e0902"></script>
 </body>
 </html>

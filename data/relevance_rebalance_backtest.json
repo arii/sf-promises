@@ -1,0 +1,48 @@
+{
+  "description": "Strictness backtest for the D4 relevance-gate rebalance (spec art_JBPvBRhF, deliverable D4).",
+  "generated_by": "scripts/backtest_relevance.py",
+  "baseline_commit": "fbf997f",
+  "threshold": {
+    "total": 5,
+    "real_promise": 1,
+    "note": "unchanged by the rebalance"
+  },
+  "corpora": {
+    "docs/data.json promises": "published records; before-gate state = recorded per-criterion scores; gold_set.json ids tagged gold_set_published",
+    "docs/data.json quarantined": "13 frozen rows incl. N12 (restated vote, real_promise 0) and P68 (non-SF, sf 0)",
+    "data/intake_candidate_register.json": "24 qualified candidates; gate booleans derived from frozen fields (statement_preview regexes, entity, promised_date, supervisor_district/geographic_scope)"
+  },
+  "style_classifier": "capital_project = record_type project_or_opening or a street-address match in the text or address fields; else service_program",
+  "rebalance": {
+    "same_artifact_cap": "interesting contributes at most 1 when measurable is already 2 driven by the physical artifact (street address or filing/opening/count ID) and the text carries no distinct artifact of another class (dollar amount, filing ID, street address). Capping the number+date overlap was prototyped and rejected by this backtest: it cut quantified service programs while capital records escaped through their addresses, dollars, and IDs",
+    "attribution_credit": "interesting contributes 1 when raw interesting is 0, real_promise is 2 (verbatim quote + named speaker + date), and a named entity is present; because real_promise 2 forces measurable >= 1, this flips pass rates on sf_relevant-1 records and adds margin on sf_relevant-2 records"
+  },
+  "per_style": {
+    "capital_project": {
+      "n": 39,
+      "pass_before": 36,
+      "pass_after": 36,
+      "pass_rate_before": 0.9231,
+      "pass_rate_after": 0.9231,
+      "mean_total_before": 7.128,
+      "mean_total_after": 7.051
+    },
+    "service_program": {
+      "n": 52,
+      "pass_before": 37,
+      "pass_after": 37,
+      "pass_rate_before": 0.7115,
+      "pass_rate_after": 0.7115,
+      "mean_total_before": 6.327,
+      "mean_total_after": 6.481
+    }
+  },
+  "flips_up": [],
+  "flips_down": [],
+  "strictness": {
+    "newly_published": [],
+    "newly_published_without_full_attribution": [],
+    "unpublished_by_rebalance": [],
+    "restated_votes_published": []
+  }
+}

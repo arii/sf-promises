@@ -33,7 +33,8 @@ class ModelResponseError(ValueError):
     """A provider responded, but did not produce usable structured output."""
 
 
-def _has_structured_response(response, tool_choice):
+def has_structured_response(response, tool_choice):
+    """True when a provider or lane response yields a JSON-object payload."""
     try:
         message = response["choices"][0]["message"]
         calls = message.get("tool_calls")
@@ -49,6 +50,21 @@ def _has_structured_response(response, tool_choice):
         return isinstance(content, str) and isinstance(json.loads(content), dict)
     except (AttributeError, IndexError, KeyError, TypeError, ValueError):
         return False
+
+
+def response_model_id(response):
+    """Model identity carried by a provider or lane response, else None.
+
+    Lane responses carry ``model_id``; OpenAI-style provider responses carry
+    ``model``. Verification rows persist this so provenance survives the run.
+    """
+    if not isinstance(response, dict):
+        return None
+    for key in ("model_id", "model"):
+        value = response.get(key)
+        if isinstance(value, str) and value:
+            return value
+    return None
 
 
 def _zero_priced(entry):
@@ -104,7 +120,7 @@ async def free_completion(
                 except ValueError:
                     invalid_models.add(model)
                     continue
-                if tools and not _has_structured_response(result, tool_choice):
+                if tools and not has_structured_response(result, tool_choice):
                     invalid_models.add(model)
                     continue
                 return result

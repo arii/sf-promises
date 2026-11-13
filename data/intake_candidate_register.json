@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generated_at": "2026-11-13T02:53:40Z",
+    "generated_at": "2026-11-13T20:13:28Z",
     "planner_query_count": 18,
     "planner_pillars_covered": [
       "Arts, Music & Nightlife",
@@ -51,6 +51,30 @@
     },
     "dual_review_sampled_count": 3,
     "dual_review_agreement_rate": 1.0,
+    "funnel": {
+      "stages": [
+        {
+          "stage": "leads_encountered",
+          "count": 63,
+          "universe": "intake_register"
+        },
+        {
+          "stage": "qualified",
+          "count": 24,
+          "universe": "intake_register",
+          "conversion_from_previous": 0.381
+        }
+      ],
+      "stage_counts": {
+        "leads_encountered": 63,
+        "qualified": 24
+      }
+    },
+    "denials": {
+      "total_denials": 0,
+      "distinct_domains": 0,
+      "by_domain": {}
+    },
     "outcome_blind_enforced": true
   },
   "planned_queries": [
