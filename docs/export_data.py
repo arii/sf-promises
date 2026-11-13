@@ -1090,9 +1090,46 @@ def _load_from_db(db_path):
     con.close()
 
     _qdb = sqlite3.connect("file:%s?mode=ro" % db_path, uri=True)
-    _qrows = _qdb.execute(
-        "SELECT quarantine_id, promise_id, reason, quarantined_at, source_file_path, source_hash FROM quarantined"
-    ).fetchall()
+    _qdb.row_factory = sqlite3.Row
+    # Current schema: reason codes are a JSON list per row with a stage and
+    # created_at. Fall back to the legacy single-reason columns when present.
+    real_quarantined = []
+    try:
+        for _r in _qdb.execute(
+            "SELECT quarantine_id, promise_id, stage, reason_codes_json, created_at "
+            "FROM quarantined ORDER BY quarantine_id"
+        ).fetchall():
+            try:
+                _codes = json.loads(_r["reason_codes_json"])
+            except (TypeError, ValueError):
+                _codes = None
+            real_quarantined.append({
+                "quarantine_id": _r["quarantine_id"],
+                "promise_id": _r["promise_id"],
+                "stage": _r["stage"],
+                "reason": _r["reason_codes_json"],
+                "reason_codes": _codes if isinstance(_codes, list) else None,
+                "quarantined_at": _r["created_at"],
+                "source_file_path": None,
+                "source_hash": None,
+            })
+    except sqlite3.OperationalError:
+        for _r in _qdb.execute(
+            "SELECT quarantine_id, promise_id, reason, quarantined_at, "
+            "source_file_path, source_hash FROM quarantined ORDER BY quarantine_id"
+        ).fetchall():
+            real_quarantined.append({
+                "quarantine_id": _r["quarantine_id"],
+                "promise_id": _r["promise_id"],
+                "stage": None,
+                "reason": _r["reason"],
+                "reason_codes": None,
+                "quarantined_at": _r["quarantined_at"],
+                "source_file_path": _r["source_file_path"],
+                "source_hash": _r["source_hash"],
+            })
+    _qdb.close()
+    _qrows = real_quarantined
     _csv_text = {}
     for cp in ("data/promises-P13-P112.csv", "/home/ari/sf-promises/Archil Hackathon Nov 10 - SF Promises Export/data/promises-P13-P112.csv"):
         if os.path.exists(cp):
@@ -1101,26 +1138,20 @@ def _load_from_db(db_path):
                     _csv_text[_r["promise_id"]] = _r["promise_text"]
             break
 
-    real_quarantined = []
-    for _qid, _qpid, _qreason, _qat, _qfp, _qh in _qrows:
-        real_quarantined.append({
-            "quarantine_id": _qid,
-            "promise_id": _qpid,
+    for _qr in _qrows:
+        _qpid = _qr["promise_id"]
+        _qr.update({
             "title": _csv_text.get(_qpid, _qpid),
             "planted_claim": None,
-            "check_type": "relevance_gate",
+            "check_type": _qr.get("stage") or "relevance_gate",
             "failing_check": "Relevance Gate 2.5 (code-only)",
-            "reason": _qreason,
             "relevance": {},
             "agent": "relevance_gate",
-            "quarantined_at": _qat,
             "destination": "quarantined table in promises.db",
-            "source_file_path": _qfp,
-            "source_hash": _qh,
         })
-    _qdb.close()
+        real_quarantined.append(_qr)
     _db_ids = {p["promise_id"] for p in all_promises}
-    _q_ids = {_r[1] for _r in _qrows}
+    _q_ids = {_qr["promise_id"] for _qr in _qrows}
     pending_ids = sorted(set(_csv_text) - _db_ids - _q_ids)
 
     return all_promises, total_db_promises, total_db_verdicts, total_db_evidence, test_runs, real_quarantined, pending_ids
@@ -1232,6 +1263,15 @@ def export():
     from scripts.enrich_dataset import enrich_dataset_records, enrich_promise as _enrich_single, build_evidence_review_queue
     all_promises = enrich_dataset_records(all_promises)
     review_queue = build_evidence_review_queue(all_promises)
+
+    # D3 summaries (local imports: module may run as a script from docs/)
+    from src.denials import summarize_denials
+    from src.funnel import (
+        build_funnel_summary,
+        funnel_counts_from_db,
+        reason_codes_for_item,
+        summarize_quarantine_reasons,
+    )
 
     # Invariants checks
     cat_counts = Counter(p["category"] for p in all_promises)
@@ -1431,6 +1471,66 @@ def export():
     }
 
     # Clean all file paths recursively
+    # D3 measurement: attach explicit reason codes to every quarantined
+    # registry item and surface the funnel, reason distribution, and the D1
+    # denial histogram in database_status. Live rounds append {"url",
+    # "reason"} deny rows to data/denied_leads.json; absence is an honest
+    # empty histogram.
+    for _q in payload["quarantined"]:
+        _q["reason_codes"] = reason_codes_for_item(_q)
+    quarantine_reasons = summarize_quarantine_reasons(payload["quarantined"])
+
+    if os.path.exists(DB_PATH):
+        try:
+            with sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True, timeout=30.0) as _fconn:
+                db_funnel_counts = funnel_counts_from_db(_fconn)
+        except sqlite3.Error:
+            db_funnel_counts = {}
+    else:
+        db_funnel_counts = {}
+    if db_funnel_counts:
+        sources_archived = db_funnel_counts["sources_archived"]
+        screened = db_funnel_counts["screened"]
+        quarantined_table_rows = db_funnel_counts["quarantined"]
+    else:
+        # No database mounted: count what the exported registry itself
+        # references — distinct archived source hashes, and records that
+        # completed the verification lane (every exported promise carries
+        # check results; table-backed quarantined rows were screened too).
+        _archived_hashes = {
+            p.get("source_hash") for p in all_promises if p.get("source_hash")
+        } | {
+            q.get("source_hash") for q in real_quarantined if q.get("source_hash")
+        }
+        sources_archived = len(_archived_hashes)
+        screened = len(all_promises) + len(real_quarantined)
+        quarantined_table_rows = len(real_quarantined)
+
+    register_summary = sourcing_audit if isinstance(sourcing_audit, dict) else {}
+    funnel_summary = build_funnel_summary(
+        leads_encountered=register_summary.get("encountered_count"),
+        sources_archived=sources_archived,
+        qualified=register_summary.get("qualified_count"),
+        screened=screened,
+        published=len(all_promises),
+        quarantined=quarantined_table_rows,
+    )
+
+    denied_leads_path = Path("data/denied_leads.json")
+    deny_events = []
+    if denied_leads_path.exists():
+        try:
+            _loaded_denials = json.loads(denied_leads_path.read_text(encoding="utf-8"))
+            if isinstance(_loaded_denials, list):
+                deny_events = _loaded_denials
+        except ValueError:
+            deny_events = []
+    denial_histogram = summarize_denials(deny_events)
+
+    payload["database_status"]["funnel"] = funnel_summary
+    payload["database_status"]["quarantine_reasons"] = quarantine_reasons
+    payload["database_status"]["denials"] = denial_histogram
+
     payload = sanitize_export_paths(payload)
 
     os.makedirs("data", exist_ok=True)

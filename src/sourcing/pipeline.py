@@ -10,6 +10,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List
 
+from src.denials import summarize_denials
+from src.funnel import build_funnel_summary
 from src.sourcing.planner import SearchPlanner
 from src.sourcing.qualification import AuditableCandidate, QualificationIntakeAgent
 
@@ -111,6 +113,27 @@ def run_sourcing_cycle(
     dual_agreed = sum(1 for c in dual_items if c.dual_review_agreed is True)
     dual_rate = round(dual_agreed / len(dual_items), 3) if dual_items else 1.0
 
+    # D3 measurement: funnel stages the register itself can count (the
+    # database-universe stages are supplied by the export, which owns DB
+    # reconciliation), plus the per-domain denial histogram over recorded
+    # deny rows. Live rounds append {"url", "reason"} rows to
+    # data/denied_leads.json; its absence is an honest empty histogram.
+    denied_leads_path = repo_root / "data" / "denied_leads.json"
+    deny_events: List[Dict[str, Any]] = []
+    if denied_leads_path.exists():
+        try:
+            loaded = json.loads(denied_leads_path.read_text(encoding="utf-8"))
+            if isinstance(loaded, list):
+                deny_events = loaded
+        except ValueError:
+            deny_events = []
+
+    funnel = build_funnel_summary(
+        leads_encountered=len(register),
+        qualified=status_counts.get("qualified", 0),
+    )
+    denial_histogram = summarize_denials(deny_events)
+
     summary = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "planner_query_count": len(queries),
@@ -124,6 +147,8 @@ def run_sourcing_cycle(
         "qualified_district_distribution": dict(district_counts),
         "dual_review_sampled_count": len(dual_items),
         "dual_review_agreement_rate": dual_rate,
+        "funnel": funnel,
+        "denials": denial_histogram,
         "outcome_blind_enforced": True,
     }
 
