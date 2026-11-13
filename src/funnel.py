@@ -106,10 +106,16 @@ def funnel_counts_from_db(conn: sqlite3.Connection) -> dict[str, int]:
 
     ``leads_encountered`` and ``qualified`` live in the intake register, not the
     database, and stay the caller's supply; this returns the database-universe
-    stages only.
+    stages only. Archived sources are ``evidence_ledger`` rows in the
+    pipeline schema; the Archil export database calls the same concept
+    ``sources``.
     """
+    has_ledger = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='evidence_ledger'"
+    ).fetchone()
+    sources_query = "SELECT COUNT(*) FROM evidence_ledger" if has_ledger else "SELECT COUNT(*) FROM sources"
     return {
-        "sources_archived": conn.execute("SELECT COUNT(*) FROM sources").fetchone()[0],
+        "sources_archived": conn.execute(sources_query).fetchone()[0],
         "screened": conn.execute(
             "SELECT COUNT(DISTINCT promise_id) FROM verifications"
         ).fetchone()[0],

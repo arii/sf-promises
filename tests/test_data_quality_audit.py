@@ -25,7 +25,11 @@ def test_fix1_explicit_date_precision():
     data = _load_data()
     promises = data["promises"]
     valid_prec = {"day", "month", "year"}
-    valid_optional_prec = valid_prec | {"not_applicable", "not_recorded", None}
+    # not_captured: the enricher's marker for a due date a broken/undecided
+    # promise should have had but whose precision was never captured
+    # (scripts/enrich_dataset.py). The stale pre-3a3017c snapshot never
+    # surfaced it; regenerated exports do.
+    valid_optional_prec = valid_prec | {"not_applicable", "not_recorded", "not_captured", None}
     by_id = {p["promise_id"]: p for p in promises}
 
     for p in promises:
