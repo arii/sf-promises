@@ -1475,24 +1475,20 @@ def generate_featured_stories_html(promises, quarantined):
         if fid in quarantine_map or fid.startswith("Q-") or fid == "N01":
             q = quarantine_map.get(fid) or quarantine_map.get("Q-N01") or quarantine_map.get("N01")
             qid = q.get("quarantine_id", "Q-N01")
-            speaker = "Planted Test N01"
-            role = "Watchdog Verification"
-            title = "Quote Mutation Catch"
+            speaker_display = "WATCHDOG VERIFICATION"
+            title = "Quote Mutation Detection"
             quote_raw = q.get("planted_claim") or "The city added 1,500 new shelter units within six months."
             quote_text = clean_quote_text(quote_raw)
             quote_clamped = html_esc(quote_text[:140] + ("…" if len(quote_text) > 140 else ""))
-            dates_str = f"Tested {html_esc(q.get('quarantined_date', 'Nov 10, 2026'))} &middot; Planted Watchdog Test"
-            outcome_str = "Caught by verbatim quote check: 'shelter units' was altered from '1,500 new shelter beds'. Held back from main database."
+            dates_str = f"Tested {html_esc(q.get('quarantined_date', 'Nov 10, 2026'))}"
+            outcome_str = "Altered quote 'shelter units' detected against saved source. Row immediately diverted to Quarantine."
             tier = "Official"
-            failing_plain = "Caught altered quote"
+            failing_plain = "Quote mutation diverted"
 
             cards_html.append(f'''          <div class="story-card" data-story-pid="{qid}">
             <div class="story-card-top">
-              <div class="story-speaker-group">
-                <span class="story-entity">{html_esc(speaker)}</span>
-                <span class="story-role">{html_esc(role)}</span>
-              </div>
-              <span class="verdict-chip quarantined">Test case</span>
+              <span class="story-entity font-mono">{html_esc(speaker_display)}</span>
+              <span class="verdict-chip quarantined">QUARANTINED</span>
             </div>
             <h3 class="story-title">{html_esc(title)}</h3>
             <p class="story-promise-quote font-serif">&ldquo;{quote_clamped}&rdquo;</p>
@@ -1507,7 +1503,7 @@ def generate_featured_stories_html(promises, quarantined):
                 <span class="story-evidence-count">{failing_plain}</span>
               </div>
               <button type="button" class="btn-story-evidence btn-quarantine-link" data-qid="{qid}" aria-label="See evidence for {html_esc(title)} in Quarantine">
-                See evidence &rarr;
+                Inspect verification &rarr;
               </button>
             </div>
           </div>''')
@@ -1518,6 +1514,18 @@ def generate_featured_stories_html(promises, quarantined):
             pid = p.get("promise_id")
             speaker = p.get("entity", "")
             role = p.get("role", "")
+            
+            # Normalize speaker eyebrow to single line concise title
+            if "daniel lurie" in speaker.lower():
+                speaker_display = "MAYOR DANIEL LURIE"
+            elif "airport" in speaker.lower() or "sfo" in speaker.lower():
+                speaker_display = "SFO AIRPORT"
+            elif "transit" in speaker.lower() or "sfmta" in speaker.lower():
+                speaker_display = "SFMTA / TRANSIT"
+            elif "police" in speaker.lower() or "sfpd" in speaker.lower():
+                speaker_display = "SFPD / PUBLIC SAFETY"
+            else:
+                speaker_display = speaker.upper()
             
             title = PROMISE_TITLES.get(pid, p.get("document_title") or f"Commitment {pid}")
             
@@ -1551,11 +1559,8 @@ def generate_featured_stories_html(promises, quarantined):
             
             cards_html.append(f'''          <div class="story-card" data-story-pid="{pid}">
             <div class="story-card-top">
-              <div class="story-speaker-group">
-                <span class="story-entity">{html_esc(speaker)}</span>
-                <span class="story-role">{html_esc(role)}</span>
-              </div>
-              <span class="verdict-chip {verd_class}">{verdict_label}</span>
+              <span class="story-entity font-mono">{html_esc(speaker_display)}</span>
+              <span class="verdict-chip {verd_class}">{verdict_label.upper()}</span>
             </div>
             <h3 class="story-title">{html_esc(title)}</h3>
             <p class="story-promise-quote font-serif">&ldquo;{quote_clamped}&rdquo;</p>
@@ -1569,8 +1574,8 @@ def generate_featured_stories_html(promises, quarantined):
                 <span class="source-tier-pill source-tier-{tier_class}">{tier}</span>
                 <span class="story-evidence-count">evidence: {k_count} for, {b_count} against</span>
               </div>
-              <button type="button" class="btn-story-evidence" data-pid="{pid}" aria-label="See evidence for {html_esc(title)}">
-                See evidence &rarr;
+              <button type="button" class="btn-story-evidence" data-pid="{pid}" aria-label="Inspect verification for {html_esc(title)}">
+                Inspect verification &rarr;
               </button>
             </div>
           </div>''')
@@ -1578,7 +1583,7 @@ def generate_featured_stories_html(promises, quarantined):
     return "\n".join(cards_html)
 
 
-def generate_quarantine_row_html(q, idx):
+def generate_quarantine_card_html(q, idx):
     qid = html_esc(q.get("quarantine_id", f"Q-{idx+1}"))
     pid = html_esc(q.get("promise_id", ""))
     type_badge = "Test case" if q.get("planted_claim") or q.get("original_text") else "Rejected candidate"
@@ -1600,68 +1605,17 @@ def generate_quarantine_row_html(q, idx):
     reason = html_esc(q.get("reason", "Held back from published dataset."))
     agent = html_esc(q.get("agent", "Extractor Agent"))
     date_str = html_esc(q.get("quarantined_date", "Nov 10, 2026"))
-    destination = html_esc(q.get("destination", "Held back. Never published."))
     source_hash = html_esc(q.get("source_hash", ""))
     
-    source_link = ""
+    hash_group_html = ""
     if source_hash:
-        source_link = f'<div class="quarantine-hash-row font-mono"><span class="hash-label">SHA-256:</span> <code class="quarantine-hash">{source_hash[:12]}…</code> <button type="button" class="btn-copy-hash font-mono" data-hash="{source_hash}">Copy</button></div>'
+        hash_group_html = f'<div class="quarantine-hash-group"><span class="hash-label">SHA-256:</span> <code class="quarantine-hash">{source_hash[:8]}…</code> <button type="button" class="btn-copy-hash font-mono" data-hash="{source_hash}">Copy</button></div>'
 
-    return f'''              <tr class="quarantine-row" id="quarantine-row-{qid}" data-qid="{qid}">
-                <td class="quarantine-type-cell">
+    return f'''              <div class="quarantine-card" id="quarantine-card-{qid}" data-qid="{qid}">
+                <div class="quarantine-card-header">
                   <div class="quarantine-badge-group">
                     <span class="quarantine-type-badge {type_class}">{type_badge}</span>
                     <span class="quarantine-pid font-mono">{pid}</span>
-                  </div>
-                </td>
-                <td class="quarantine-claim-cell">
-                  <div class="quarantine-submitted-claim">&ldquo;{claim}&rdquo;</div>
-                  {diff_html}
-                </td>
-                <td class="quarantine-check-cell">
-                  <div class="quarantine-check-plain">{failing_plain}</div>
-                  <code class="quarantine-check-code font-mono">{check_type}</code>
-                </td>
-                <td class="quarantine-reason-cell">
-                  <p class="quarantine-reason-text">{reason}</p>
-                  <div class="quarantine-catcher-meta font-mono">Caught by {agent} &middot; {date_str}</div>
-                </td>
-                <td class="quarantine-outcome-cell">
-                  <div class="quarantine-outcome-status font-mono">{destination}</div>
-                  {source_link}
-                </td>
-              </tr>'''
-
-
-def generate_mobile_quarantine_card_html(q, idx):
-    qid = html_esc(q.get("quarantine_id", f"Q-{idx+1}"))
-    pid = html_esc(q.get("promise_id", ""))
-    type_badge = "Test case" if q.get("planted_claim") or q.get("original_text") else "Rejected candidate"
-    type_class = "test-case" if type_badge == "Test case" else "rejected-candidate"
-    
-    claim_raw = q.get("planted_claim") or q.get("claim") or q.get("title") or ""
-    claim = html_esc(clean_quote_text(claim_raw))
-    
-    diff_html = ""
-    orig = q.get("original_text")
-    alt = q.get("altered_text")
-    if orig and alt:
-        diff_html = f'<div class="quarantine-diff-row font-mono"><span class="diff-label">Mutation:</span> <span class="diff-orig">{html_esc(orig)}</span> &rarr; <span class="diff-alt">{html_esc(alt)}</span></div>'
-    elif q.get("change_diff"):
-        diff_html = f'<div class="quarantine-diff-row font-mono"><span class="diff-label">Change:</span> <span class="diff-alt">{html_esc(q.get("change_diff"))}</span></div>'
-
-    failing_plain = html_esc(q.get("failing_check") or "Integrity check failed")
-    check_type = html_esc(q.get("check_type", "accuracy_quote"))
-    reason = html_esc(q.get("reason", "Held back from published dataset."))
-    agent = html_esc(q.get("agent", "Extractor Agent"))
-    date_str = html_esc(q.get("quarantined_date", "Nov 10, 2026"))
-    destination = html_esc(q.get("destination", "Held back. Never published."))
-
-    return f'''              <div class="mobile-quarantine-card" id="mobile-qcard-{qid}" data-qid="{qid}">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="quarantine-type-badge {type_class}">{type_badge}</span>
-                    <span class="mobile-card-id font-mono">{pid}</span>
                   </div>
                   <span class="verdict-chip quarantined">Quarantined</span>
                 </div>
@@ -1671,9 +1625,9 @@ def generate_mobile_quarantine_card_html(q, idx):
                   <div class="quarantine-check-plain">{failing_plain} <code class="quarantine-check-code font-mono">{check_type}</code></div>
                   <p class="quarantine-reason-text">{reason}</p>
                 </div>
-                <div class="mobile-card-footer font-mono">
-                  <span>{agent} &middot; {date_str}</span>
-                  <span class="quarantine-outcome-status">{destination}</span>
+                <div class="quarantine-card-footer font-mono">
+                  <span class="quarantine-catcher-meta">Caught by {agent} &middot; {date_str}</span>
+                  {hash_group_html}
                 </div>
               </div>'''
 
@@ -1734,21 +1688,12 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
             flags=re.DOTALL
         )
 
-    # Pre-render quarantine table rows
-    quarantine_rows = "\n".join(generate_quarantine_row_html(q, i) for i, q in enumerate(quarantined))
-    html = re.sub(
-        r'(<tbody id="quarantine-table-body"[^>]*>)(.*?)(</tbody>)',
-        r'\1\n' + quarantine_rows + r'\n            \3',
-        html,
-        flags=re.DOTALL
-    )
-
-    # Pre-render mobile quarantine cards
-    mobile_quarantine_cards = "\n".join(generate_mobile_quarantine_card_html(q, i) for i, q in enumerate(quarantined))
-    if '<div class="mobile-quarantine-cards-list"' in html:
+    # Pre-render unified quarantine cards (exactly 13 items)
+    quarantine_cards = "\n".join(generate_quarantine_card_html(q, i) for i, q in enumerate(quarantined))
+    if '<div class="quarantine-cards-list"' in html:
         html = re.sub(
-            r'(<div class="mobile-quarantine-cards-list"[^>]*>)(.*?)(</div>\s*<!-- end mobile quarantine cards -->)',
-            r'\1\n' + mobile_quarantine_cards + r'\n          \3',
+            r'(<div class="quarantine-cards-list"[^>]*>)(.*?)(</div>\s*<!-- end quarantine cards -->)',
+            r'\1\n' + quarantine_cards + r'\n          \3',
             html,
             flags=re.DOTALL
         )

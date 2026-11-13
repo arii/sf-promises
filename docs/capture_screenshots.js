@@ -230,13 +230,14 @@ async function main() {
     await client.eval('document.getElementById("tab-btn-quarantine").click()');
     await sleep(400);
 
-    const qRows1280 = await client.eval('document.querySelectorAll("#quarantine-table-body tr.quarantine-row").length');
+    const qCards1280 = await client.eval('document.querySelectorAll("#quarantine-cards-list .quarantine-card").length');
+    const totalQDom = await client.eval('document.querySelectorAll(".quarantine-card, .quarantine-row").length');
     const qVisible1280 = await client.eval('!document.getElementById("quarantine-table-container").classList.contains("hidden")');
     const verifiedHidden1280 = await client.eval('document.getElementById("promises-table-container").classList.contains("hidden")');
     const controlsHidden1280 = await client.eval('document.querySelector(".explore-primary-controls").classList.contains("hidden")');
-    console.log(`1280px Quarantine: rows=${qRows1280}, visible=${qVisible1280}, verifiedHidden=${verifiedHidden1280}, controlsHidden=${controlsHidden1280}`);
-    if (qRows1280 !== 13 || !qVisible1280 || !verifiedHidden1280 || !controlsHidden1280) {
-      throw new Error(`Quarantine tab failed at 1280px: rows=${qRows1280}, visible=${qVisible1280}`);
+    console.log(`1280px Quarantine: cards=${qCards1280}, totalQDom=${totalQDom}, visible=${qVisible1280}, verifiedHidden=${verifiedHidden1280}, controlsHidden=${controlsHidden1280}`);
+    if (qCards1280 !== 13 || totalQDom !== 13 || !qVisible1280 || !verifiedHidden1280 || !controlsHidden1280) {
+      throw new Error(`Quarantine tab failed at 1280px: cards=${qCards1280}, totalQDom=${totalQDom}, visible=${qVisible1280}`);
     }
     await client.captureScreenshot('demo/screenshot_1280_quarantine.png');
 
@@ -265,6 +266,20 @@ async function main() {
     const drawerClosed = await client.eval('document.getElementById("inspect-drawer-backdrop").classList.contains("hidden")');
     console.log(`Drawer closed cleanly: ${drawerClosed}`);
 
+    // Test Detail Drawer for Visa P62 (corporate speaker, 7/8 relevance score check)
+    console.log('Testing Detail Drawer for Visa (P62)...');
+    await client.eval('openInspectDrawer("P62")');
+    await sleep(400);
+    const visaSub = await client.eval('document.getElementById("drawer-subtitle").textContent');
+    const visaCheck7 = await client.eval('document.querySelectorAll("#drawer-checks-list .drawer-check-row")[6].textContent');
+    const visaReceipt = await client.eval('document.getElementById("drawer-changelog-entry").textContent');
+    console.log(`Visa drawer: sub="${visaSub}", check7="${visaCheck7.trim()}", receipt="${visaReceipt}"`);
+    if (!visaSub.includes('Corporate') || !visaCheck7.includes('7/8')) {
+      throw new Error(`Visa detail drawer audit failed! sub="${visaSub}", check7="${visaCheck7}"`);
+    }
+    await client.eval('document.getElementById("btn-close-drawer").click()');
+    await sleep(300);
+
     // =========================================================================
     // 2. Tablet 820px / 768px Verification
     // =========================================================================
@@ -280,9 +295,9 @@ async function main() {
     // Quarantine at 820px
     await client.eval('document.getElementById("tab-btn-quarantine").click()');
     await sleep(400);
-    const qRows820 = await client.eval('document.querySelectorAll("#quarantine-table-body tr.quarantine-row").length');
-    console.log(`820px Quarantine: rows=${qRows820}`);
-    if (qRows820 !== 13) throw new Error(`Quarantine failed at 820px`);
+    const qCards820 = await client.eval('document.querySelectorAll("#quarantine-cards-list .quarantine-card").length');
+    console.log(`820px Quarantine: cards=${qCards820}`);
+    if (qCards820 !== 13) throw new Error(`Quarantine failed at 820px`);
 
     await client.eval('document.getElementById("tab-btn-promises").click()');
     await sleep(300);
@@ -386,8 +401,8 @@ async function main() {
     await client.eval('document.getElementById("tab-btn-quarantine").click()');
     await sleep(400);
 
-    const qCards390 = await client.eval('document.querySelectorAll("#mobile-quarantine-cards-list .mobile-quarantine-card").length');
-    const qCardsVisible390 = await client.eval('!document.getElementById("mobile-quarantine-cards-list").classList.contains("hidden")');
+    const qCards390 = await client.eval('document.querySelectorAll("#quarantine-cards-list .quarantine-card").length');
+    const qCardsVisible390 = await client.eval('!document.getElementById("quarantine-table-container").classList.contains("hidden")');
     console.log(`390px Quarantine: cards=${qCards390}, visible=${qCardsVisible390}`);
     if (qCards390 !== 13 || !qCardsVisible390) {
       throw new Error(`Quarantine mobile cards failed at 390px: cards=${qCards390}`);

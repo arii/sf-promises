@@ -5049,8 +5049,13 @@ a:hover {
 .story-card-top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 12px;
   margin-bottom: 8px;
+}
+
+.story-card-top .verdict-chip {
+  flex-shrink: 0;
 }
 
 .story-entity {
@@ -6076,7 +6081,12 @@ a:hover {
   color: var(--muted);
 }
 
-/* Mobile Quarantine Card (<768px) */
+/* Unified Quarantine Cards List */
+.quarantine-cards-container {
+  margin-top: 14px;
+}
+
+.quarantine-cards-list,
 .mobile-quarantine-cards-list {
   display: flex;
   flex-direction: column;
@@ -6084,6 +6094,7 @@ a:hover {
   margin-top: 14px;
 }
 
+.quarantine-card,
 .mobile-quarantine-card {
   background: var(--surface);
   border: 1px solid rgba(245, 158, 11, 0.3);
@@ -6095,8 +6106,30 @@ a:hover {
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
 
+.quarantine-card:focus-visible,
 .mobile-quarantine-card:focus-visible {
   outline: 2px solid var(--orange);
+}
+
+.quarantine-card-header,
+.mobile-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.quarantine-card-footer,
+.mobile-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  color: var(--muted);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 8px;
 }
 
 .quarantine-claim-quote {
@@ -6512,6 +6545,90 @@ a:hover {
   color: var(--ink-dim);
 }
 
+/* Evidence items in Drawer Section 3 */
+.drawer-evidence-item {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.drawer-evidence-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.drawer-evidence-quote {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0 0 6px 0;
+  font-style: italic;
+}
+
+.drawer-evidence-source {
+  font-size: 0.72rem;
+}
+
+.drawer-evidence-domain-link {
+  color: var(--blue, #38BDF8);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.drawer-evidence-domain-link:hover {
+  text-decoration: underline;
+}
+
+/* Drawer Accordion for Checks */
+.drawer-checks-accordion {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.drawer-checks-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.15);
+  user-select: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  transition: background 0.15s ease;
+}
+
+.drawer-checks-summary:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.checks-summary-icon {
+  color: #10B981;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.checks-summary-label {
+  flex: 1;
+}
+
+.checks-summary-toggle {
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.drawer-checks-accordion .drawer-checks-list {
+  padding: 12px;
+  border-top: 1px solid var(--line);
+}
+
 /* Arbitrator checks list in drawer */
 .drawer-checks-list {
   display: flex;
@@ -6585,6 +6702,7 @@ a:hover {
   font-size: 0.8rem;
   color: #38BDF8;
   font-weight: 700;
+  white-space: nowrap !important;
 }
 
 .drawer-changelog-card {
@@ -6592,6 +6710,15 @@ a:hover {
   border: 1px dashed var(--line);
   border-radius: 8px;
   padding: 12px;
+}
+
+.drawer-receipt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+  flex-wrap: wrap;
 }
 
 .drawer-changelog-entry {
