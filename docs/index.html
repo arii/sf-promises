@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=b59013ba">
+  <link rel="stylesheet" href="styles.css?v=8e94dbec">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
         <nav class="topbar-nav desktop-nav" aria-label="Primary Navigation">
           <a href="#stories" class="nav-link">Stories</a>
           <a href="#explore" class="nav-link">Explore</a>
+          <a href="#visualizations" class="nav-link">Charts</a>
           <a href="#watch" class="nav-link">How it works</a>
         </nav>
         <div class="topbar-right">
@@ -46,6 +47,7 @@
       <nav class="mobile-nav-drawer hidden" id="mobile-nav-drawer" aria-label="Mobile Navigation">
         <a href="#stories" class="mobile-nav-link">Stories</a>
         <a href="#explore" class="mobile-nav-link">Explore</a>
+        <a href="#visualizations" class="mobile-nav-link">Charts</a>
         <a href="#watch" class="mobile-nav-link">How it works</a>
         <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" class="mobile-nav-link mobile-nav-github">
           <span>GitHub</span>
@@ -2324,6 +2326,37 @@
       </section>
 
       <!-- SECTION 4: WATCH ONE PROMISE GET CHECKED (Centerpiece Pipeline Replay) -->
+      <!-- VISUALIZATIONS: charts computed live from the exported snapshot -->
+      <section class="viz-section" id="visualizations" aria-label="Coverage visualizations">
+        <div class="section-heading-group">
+          <h2>Coverage at a glance</h2>
+          <p class="section-lead">Every chart is computed from the exported dataset — <span id="viz-total" class="font-mono">54</span> tracked commitments — so the tallies reconcile with the explore table above. Source-type coverage shows where discovery is concentrated, and timeline gaps show where it thins.</p>
+        </div>
+        <div class="viz-grid">
+          <article class="viz-card">
+            <h3 class="viz-card-title">Verdict distribution</h3>
+            <p class="viz-card-sub">Latest applicable verdict per promise.</p>
+            <div class="viz-bars" id="viz-verdict-bars"></div>
+          </article>
+          <article class="viz-card">
+            <h3 class="viz-card-title">Promises by domain</h3>
+            <p class="viz-card-sub">City Hall, SFO Airport, transit, sports, tech, and neighborhoods as present in the data.</p>
+            <div class="viz-bars" id="viz-domain-bars"></div>
+          </article>
+          <article class="viz-card viz-card-wide">
+            <h3 class="viz-card-title">Promises over time</h3>
+            <p class="viz-card-sub">By date made, colored by verdict.</p>
+            <div id="viz-timeline"></div>
+            <div class="viz-legend" id="viz-timeline-legend"></div>
+          </article>
+          <article class="viz-card">
+            <h3 class="viz-card-title">Source-type coverage</h3>
+            <p class="viz-card-sub">Where each promise's archived source came from — the bias lens.</p>
+            <div class="viz-bars" id="viz-source-bars"></div>
+          </article>
+        </div>
+      </section>
+
       <section class="watch-section pipeline-interactive-section" id="watch" aria-label="Watch one promise get checked">
         <div class="section-heading-group">
           <h2>Watch one promise get checked</h2>
@@ -2687,8 +2720,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=b59013ba"></script>
-  <script src="list.min.js?v=b59013ba"></script>
-  <script src="app.js?v=b59013ba"></script>
+  <script src="data.js?v=8e94dbec"></script>
+  <script src="list.min.js?v=8e94dbec"></script>
+  <script src="app.js?v=8e94dbec"></script>
 </body>
 </html>
