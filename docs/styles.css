@@ -4492,6 +4492,15 @@ a:hover {
     gap: 3px;
   }
 
+  .data-table tbody tr.promise-row td.table-timeline-cell .table-card-action {
+    display: inline-flex !important;
+    align-items: center;
+    color: var(--blue, #3B82F6);
+    font-weight: 600;
+    font-size: 0.74rem;
+    margin-left: auto;
+  }
+
   /* Quarantine Registry Mobile Cards */
   #quarantine-table-container .data-table tbody tr {
     background: var(--surface);
@@ -5134,14 +5143,18 @@ a:hover {
   display: none;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   margin-top: 14px;
   padding: 4px 0;
+  white-space: nowrap;
+  flex-wrap: nowrap;
 }
 
 @media (max-width: 768px) {
   .carousel-controls-bar {
     display: flex;
+    white-space: nowrap;
+    flex-wrap: nowrap;
   }
 }
 
@@ -6670,11 +6683,61 @@ a:hover {
   border-top: 1px solid var(--line);
 }
 
+.table-card-action {
+  display: none;
+}
+
 /* Arbitrator checks list in drawer */
 .drawer-checks-list {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.checks-summary-banner {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.checks-summary-banner.pass {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.checks-summary-banner.fail {
+  background: rgba(239, 68, 68, 0.12);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.contradiction-adjudication-box {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+}
+
+.contradiction-adjudication-box h4 {
+  margin: 0 0 4px 0;
+  font-size: 0.82rem;
+  color: #F59E0B;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.contradiction-adjudication-box p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink);
+  line-height: 1.45;
 }
 
 .drawer-check-row {
@@ -6809,6 +6872,30 @@ a:hover {
   display: grid !important;
   grid-template-columns: 1fr !important;
   grid-template-rows: 1fr !important;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.pipeline-progress-bar-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.pipeline-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--blue, #3B82F6);
+  transition: width 1800ms linear;
 }
 
 .active-stage-panel-wrapper .stage-card {
@@ -6821,12 +6908,13 @@ a:hover {
   flex-direction: column;
   justify-content: flex-start;
   box-sizing: border-box;
-  transition: opacity 0.25s ease, visibility 0.25s ease;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
 }
 
 .active-stage-panel-wrapper .stage-card.inactive-stage {
   opacity: 0 !important;
   visibility: hidden !important;
+  transform: translateY(4px);
   pointer-events: none !important;
   z-index: 1;
 }
@@ -6834,6 +6922,7 @@ a:hover {
 .active-stage-panel-wrapper .stage-card.active-stage {
   opacity: 1 !important;
   visibility: visible !important;
+  transform: translateY(0);
   pointer-events: auto !important;
   z-index: 2;
 }
