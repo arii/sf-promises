@@ -23,7 +23,19 @@ quarantined = data.get("quarantined", [])
 meta = data.get("metadata", {})
 db_status = data.get("database_status", {})
 
-# 1. Export promises.csv and data.csv (flattened for spreadsheet & ML tools)
+# 1. Clean and initialize staging directory
+shutil.rmtree(STAGING_DIR, ignore_errors=True)
+os.makedirs(STAGING_DIR, exist_ok=True)
+
+with open("docs/data.json", "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+promises = data.get("promises", [])
+quarantined = data.get("quarantined", [])
+meta = data.get("metadata", {})
+db_status = data.get("database_status", {})
+
+# 2. Export canonical promises.csv (51 columns)
 csv_fields = [
     "promise_id",
     "impact_rank",
@@ -90,15 +102,14 @@ def serialize_row(p):
             row[k] = str(val)
     return row
 
-for filename in ("promises.csv", "data.csv"):
-    csv_path = os.path.join(STAGING_DIR, filename)
-    with open(csv_path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=csv_fields)
-        writer.writeheader()
-        for p in promises:
-            writer.writerow(serialize_row(p))
+csv_path = os.path.join(STAGING_DIR, "promises.csv")
+with open(csv_path, "w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=csv_fields)
+    writer.writeheader()
+    for p in promises:
+        writer.writerow(serialize_row(p))
 
-# 2. Export quarantined.csv
+# 3. Export quarantined.csv (10 columns)
 q_fields = [
     "quarantine_id",
     "promise_id",
@@ -119,15 +130,12 @@ with open(q_csv_path, "w", newline="", encoding="utf-8") as f:
     for q in quarantined:
         writer.writerow({k: q.get(k, "") for k in q_fields})
 
-# 3. Export JSON and Master CSV files
+# 4. Export Standardized 16-Column Master Dataset & Canonical JSON
 if os.path.exists("data/sf_promises_master.csv"):
     shutil.copy("data/sf_promises_master.csv", os.path.join(STAGING_DIR, "sf_promises_master.csv"))
 
 with open(os.path.join(STAGING_DIR, "promises.json"), "w", encoding="utf-8") as f:
     json.dump(promises, f, indent=2)
-
-with open(os.path.join(STAGING_DIR, "data.json"), "w", encoding="utf-8") as f:
-    json.dump(data, f, indent=2)
 
 # 4. Generate data_summary.json
 verdict_counts = Counter(p.get("verdict") for p in promises)
@@ -444,11 +452,10 @@ con.close()
 # 7. Create README.md (Comprehensive Dataset Card & Data Dictionary)
 readme_path = os.path.join(STAGING_DIR, "README.md")
 with open(readme_path, "w", encoding="utf-8") as f:
-    f.write("""---
+    f.write(r"""---
 license: mit
 task_categories:
 - tabular-classification
-- table-question-answering
 - text-classification
 language:
 - en
@@ -464,12 +471,21 @@ tags:
 - spatial-analysis
 size_categories:
 - n<1K
-pretty_name: SF Promises Public Ledger & Verification Database
+pretty_name: "SF Promises: Civic Accountability Ledger"
 configs:
-- config_name: default
+- config_name: commitments
   data_files:
   - split: train
     path: promises.csv
+- config_name: standardized_16col
+  data_files:
+  - split: train
+    path: sf_promises_master.csv
+- config_name: quarantined
+  data_files:
+  - split: train
+    path: quarantined.csv
+default_config_name: commitments
 ---
 
 # SF Promises Dataset
@@ -479,16 +495,80 @@ Civic accountability tracker for public promises made across San Francisco — f
 
 Winner of the **Best Use of Keenable** award at the Archil *"Agents Need Solid Ground"* Hackathon (Nov 10, 2026).
 
-## Available Files
+## Available Configurations & Files
 
-| File | Description |
-|---|---|
-| `promises.csv` / `data.csv` | Flattened tabular export with all 54 enriched promises and 51 columns |
-| `quarantined.csv` | Registry of 13 quarantined items that failed verification checks |
-| `promises.sqlite` | Relational SQLite database with `promises`, `quarantined`, and `metadata` tables |
-| `data_summary.json` | Aggregated metrics, verdict distributions, district counts, and impact statistics |
-| `SCHEMA.json` | Formal JSON Schema (draft-07) for schema validation |
-| `promises.json` / `data.json` | Full structured JSON records including advocate findings and relevance scores |
+This repository provides multiple dataset configurations to prevent schema mixing in Hugging Face's Dataset Viewer:
+
+| Configuration / File | Rows | Columns | Description |
+|---|---|---|---|
+| `commitments` (`promises.csv`) | 54 | 51 | Primary enriched tabular ledger with full spatial, temporal, source credibility, and verdict features |
+| `standardized_16col` (`sf_promises_master.csv`) | 54 | 16 | Standardized master schema for cross-city civic accountability comparisons |
+| `quarantined` (`quarantined.csv`) | 13 | 10 | Registry of test cases and rejected claims that failed automated gate checks |
+| `promises.sqlite` | 54 + 13 | — | Complete relational SQLite database with `promises`, `quarantined`, and `metadata` tables |
+| `SCHEMA.json` | — | — | Formal JSON Schema (draft-07) for schema validation |
+| `data_summary.json` | — | — | Precomputed statistical distributions, category counts, and impact percentiles |
+| `promises.json` | 54 | — | Canonical JSON records including advocate findings and relevance metrics |
+
+---
+
+## Methodology & Provenance
+
+### 1. Source Discovery & Temporal Grounding
+Commitments and outcomes are discovered by querying contemporaneous municipal archives, allowlisted local newsrooms (*SF Chronicle*, *Mission Local*, *San Francisco Standard*, *The Frisc*), agency performance dashboards (*SFMTA*, *SFPD*, *SFO*), and Board of Supervisors legislative records (*Legistar*). All queries are bounded by discovery time horizons to prevent retroactive hindsight bias.
+
+### 2. Verbatim Quoting & Cryptographic Integrity
+Every promise statement is linked to an exact verbatim quote and its parent document. The raw document bytes are hashed (SHA-256) upon retrieval. If an investigator agent alters a single word (e.g. mutating "1,500 shelter beds" to "1,500 shelter units"), the verification engine detects the hash discrepancy and diverts the submission to the Quarantine Registry.
+
+### 3. Deterministic Arbitration Engine
+A deterministic Python engine (zero model calls at verdict time) evaluates claims across 7 independent checks:
+1. `accuracy_quote`: Verbatim quote substring match in hashed source document.
+2. `temporal_order`: Promise date must precede the deadline and verification date.
+3. `existence_check`: Required entity and source URLs must exist and resolve.
+4. `numeric_target`: Quantitative metrics (e.g. bed counts, housing units, officer staffing) must match official records.
+5. `source_authority`: Source domain must meet Tier 1 (Official Govt) or Tier 2 (Investigative Press) criteria.
+6. `contradiction_balance`: Evaluating affirming versus contradicting evidence bundles.
+7. `status_consistency`: Verdict state transitions must follow valid DAG edges.
+
+### 4. Confidence & Impact Metrics
+- **Verdict Confidence ($C \in [0.0, 1.0]$)**:
+  $$C = W_{\\text{tier}} \\times \\left(1 - \\frac{N_{\\text{contradicting}}}{N_{\\text{total}} + 1}\\right)$$
+  where Tier 1 (Official Government) has weight $1.0$, Tier 2 (Press) has $0.85$, and Tier 3 has $0.70$.
+- **Impact Score ($I \in [1, 10]$)**:
+  Standardized civic priority scale combining scope (citywide vs site-specific), budgetary magnitude ($>\\$10\\text{M}$ capital investments score $\\ge 7$), and population scale directly impacted.
+
+---
+
+## Known Biases & Research Limitations
+
+- **Sample Size ($n=54$)**: This dataset is curated as a high-fidelity civic benchmark and evaluation set (zero-shot and few-shot testing), rather than for training large supervised models from scratch.
+- **Jurisdictional Focus**: Exclusively covers San Francisco municipal governance, regional transit (SFO Airport, BART, Muni), and select high-profile civic institutions.
+- **Reporting Bias**: High-salience issues (homelessness, public safety, transit infrastructure, downtown revitalization) receive greater media coverage and are more readily documented than routine administrative actions.
+
+---
+
+## Citation & BibTeX
+
+If you use this dataset in civic-tech research, public policy analysis, or AI governance evaluation, please cite:
+
+```bibtex
+@dataset{sf_promises_2026,
+  author = {Anders, Ariel and Contributors},
+  title = {SF Promises: A Sourced, Cryptographically Verified Ledger of San Francisco Civic Commitments},
+  year = {2026},
+  month = {November},
+  publisher = {Hugging Face},
+  howpublished = {\\url{https://huggingface.co/datasets/onasafari/sf-promises}},
+  note = {Version 2.1.0. Winner of Best Use of Keenable, Archil Hackathon}
+}
+```
+
+---
+
+## Update Cadence & Versioning
+
+- **Ingest Cadence**: Ingest runs periodically with automated source checks.
+- **Durability Audits**: Automated checks re-validate source availability, archive URLs, and hash consistency.
+- **Version**: `2.1.0` (November 2026).
 
 ---
 
@@ -559,9 +639,14 @@ Winner of the **Best Use of Keenable** award at the Archil *"Agents Need Solid G
 ```python
 import pandas as pd
 
+# Load primary commitments (51 columns)
 df = pd.read_csv("https://huggingface.co/datasets/onasafari/sf-promises/raw/main/promises.csv")
 print(f"Loaded {len(df)} commitments")
 print(df.groupby('category_l1')['verdict'].value_counts())
+
+# Load standardized master table (16 columns)
+df_master = pd.read_csv("https://huggingface.co/datasets/onasafari/sf-promises/raw/main/sf_promises_master.csv")
+print(df_master[['promise_id', 'entity', 'verdict', 'confidence']].head())
 ```
 
 ### Python (sqlite3)
@@ -591,8 +676,13 @@ print(df)
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("onasafari/sf-promises")
+# Load commitments configuration
+dataset = load_dataset("onasafari/sf-promises", "commitments")
 print(dataset['train'][0])
+
+# Load quarantined audit test cases
+quarantined = load_dataset("onasafari/sf-promises", "quarantined")
+print(f"Quarantined count: {len(quarantined['train'])}")
 ```
 
 ## Project Links
@@ -609,10 +699,19 @@ for f in os.listdir(STAGING_DIR):
 # 8. Upload to Hugging Face
 print(f"\nUploading enriched dataset to Hugging Face repository {REPO_ID}...")
 api = HfApi()
+
+# Delete deprecated redundant duplicate files if they exist in the remote repo
+for redundant_file in ("data.csv", "data.json"):
+    try:
+        api.delete_file(path_in_repo=redundant_file, repo_id=REPO_ID, repo_type="dataset")
+        print(f"Removed redundant file from remote repo: {redundant_file}")
+    except Exception as e:
+        pass
+
 api.upload_folder(
     folder_path=STAGING_DIR,
     repo_id=REPO_ID,
     repo_type="dataset",
-    commit_message="feat: publish comprehensive enriched dataset with spatial, temporal, entity, and verdict metadata"
+    commit_message="feat: configure multi-config dataset viewer, add provenance, methodology, and BibTeX citation"
 )
 print("Upload complete! Dataset is now live at: https://huggingface.co/datasets/" + REPO_ID)

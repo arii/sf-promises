@@ -250,15 +250,51 @@ async function main() {
         topbar: rect(document.querySelector('.topbar')),
         brand: rect(document.querySelector('.brand')),
         brandText: rect(document.querySelector('.brand-text')),
-        nav: rect(document.querySelector('.topbar-nav')),
-        github: rect(document.querySelector('.topbar-right')),
-        navLinks: Array.from(document.querySelectorAll('.topbar-nav .nav-link')).map(a => ({
-          text: a.textContent.trim(),
-          rect: rect(a)
-        }))
+        menuToggle: rect(document.querySelector('#mobile-menu-toggle')),
+        desktopNav: rect(document.querySelector('.desktop-nav'))
       };
     })()`);
     console.log('Mobile Header Info at 390px:', JSON.stringify(headerInfo, null, 2));
+
+    // Verify brand title "SF Promises" is visible on mobile
+    if (!headerInfo.brandText || headerInfo.brandText.w === 0) {
+      throw new Error('Brand text "SF Promises" is hidden on mobile!');
+    }
+    console.log('PASS: Brand title "SF Promises" is visible on mobile (width: ' + headerInfo.brandText.w + 'px)');
+
+    // Verify mobile hamburger menu opens and closes cleanly
+    console.log('Testing Mobile Navigation Menu Drawer...');
+    await client.eval('document.getElementById("mobile-menu-toggle").click()');
+    await sleep(200);
+    const navDrawerOpen = await client.eval('!document.getElementById("mobile-nav-drawer").classList.contains("hidden")');
+    if (!navDrawerOpen) {
+      throw new Error('Mobile navigation drawer did not open on toggle click!');
+    }
+    console.log('PASS: Mobile navigation drawer opened cleanly.');
+    await client.eval('document.getElementById("mobile-menu-toggle").click()');
+    await sleep(200);
+    const navDrawerClosed = await client.eval('document.getElementById("mobile-nav-drawer").classList.contains("hidden")');
+    if (!navDrawerClosed) {
+      throw new Error('Mobile navigation drawer did not close on toggle click!');
+    }
+    console.log('PASS: Mobile navigation drawer closed cleanly.');
+
+    // Test carousel pagination dots
+    console.log('Testing Featured Stories Carousel Controls...');
+    const carouselDotsCount = await client.eval('document.querySelectorAll(".carousel-dot").length');
+    console.log(`Found ${carouselDotsCount} carousel dots.`);
+    if (carouselDotsCount !== 6) {
+      throw new Error(`Expected 6 carousel dots, found ${carouselDotsCount}`);
+    }
+    await client.eval('document.querySelectorAll(".carousel-dot")[1].click()');
+    await sleep(300);
+    const dot1Active = await client.eval('document.querySelectorAll(".carousel-dot")[1].classList.contains("active")');
+    const counterText = await client.eval('document.getElementById("carousel-counter").textContent');
+    console.log(`Dot 1 active: ${dot1Active}, Counter: "${counterText}"`);
+    if (!dot1Active) {
+      throw new Error('Carousel dot 1 did not become active when clicked!');
+    }
+    console.log('PASS: Carousel pagination controls working.');
 
     // Check page height target (< 6,500px)
     const sectionHeights = await client.eval(`

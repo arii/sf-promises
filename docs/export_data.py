@@ -1283,10 +1283,19 @@ def clean_quote_text(text):
     if not text:
         return ""
     import re
-    t = re.sub(r"\*\*([^*]+)\*\*", r"\1", str(text))
+    t = str(text)
+    # Strip markdown links [link text](http...) -> link text
+    t = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', t)
+    # Strip editorial notes like [Reported by The Frisc] or [Reported by ...]
+    t = re.sub(r'\[(?:Reported by|Source:|Note:)[^\]]+\]\s*', '', t, flags=re.IGNORECASE)
+    # Strip bracketed words if any leftover
+    t = re.sub(r'\[([^\]]+)\]', r'\1', t)
+    # Strip formatting
+    t = re.sub(r"\*\*([^*]+)\*\*", r"\1", t)
     t = re.sub(r"\*([^*]+)\*", r"\1", t)
     t = re.sub(r"`([^`]+)`", r"\1", t)
-    return t.strip()
+    t = re.sub(r'\s+', ' ', t).strip()
+    return t
 
 
 def html_esc(text):
@@ -1472,10 +1481,10 @@ def generate_featured_stories_html(promises, quarantined):
             quote_raw = q.get("planted_claim") or "The city added 1,500 new shelter units within six months."
             quote_text = clean_quote_text(quote_raw)
             quote_clamped = html_esc(quote_text[:140] + ("…" if len(quote_text) > 140 else ""))
-            dates_str = f"Tested {html_esc(q.get('quarantined_date', 'Nov 10, 2026'))} &middot; Target P05"
+            dates_str = f"Tested {html_esc(q.get('quarantined_date', 'Nov 10, 2026'))} &middot; Planted Watchdog Test"
             outcome_str = "Caught by verbatim quote check: 'shelter units' was altered from '1,500 new shelter beds'. Held back from main database."
             tier = "Official"
-            failing_check = html_esc(q.get("check_type", "accuracy_quote"))
+            failing_plain = "Caught altered quote"
 
             cards_html.append(f'''          <div class="story-card" data-story-pid="{qid}">
             <div class="story-card-top">
@@ -1495,7 +1504,7 @@ def generate_featured_stories_html(promises, quarantined):
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
                 <span class="source-tier-pill source-tier-official">{tier}</span>
-                <span class="story-evidence-count">check: {failing_check}</span>
+                <span class="story-evidence-count">{failing_plain}</span>
               </div>
               <button type="button" class="btn-story-evidence btn-quarantine-link" data-qid="{qid}" aria-label="See evidence for {html_esc(title)} in Quarantine">
                 See evidence &rarr;
@@ -1520,8 +1529,11 @@ def generate_featured_stories_html(promises, quarantined):
             quote_clamped = html_esc(quote_raw[:150] + ("…" if len(quote_raw) > 150 else ""))
             
             said_date = p.get("promised_date", "not recorded")
-            due_date = p.get("due_date") or "no deadline"
-            dates_str = f"Said {html_esc(said_date)} &middot; Due {html_esc(due_date)}"
+            due_date = p.get("due_date")
+            if due_date and str(due_date).lower().strip() not in ("no deadline", "none", "not recorded", "null", ""):
+                dates_str = f"Said {html_esc(said_date)} &middot; Due {html_esc(due_date)}"
+            else:
+                dates_str = f"Said {html_esc(said_date)}"
             if p.get("promised_date_note"):
                 dates_str += " (derived)"
             

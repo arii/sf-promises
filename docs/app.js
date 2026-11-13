@@ -288,7 +288,8 @@
     const trackFill = document.getElementById('packet-track-fill');
     const ballDot = document.getElementById('packet-ball-dot');
 
-    // Update milestone indicators
+    // Update milestone indicators and calculate dead-center active dot
+    let activeCenterLeft = 0;
     for (let i = 1; i <= 6; i++) {
       const circle = document.getElementById(`ms-circle-${i}`);
       if (circle) {
@@ -298,6 +299,14 @@
         } else if (i === stageNum) {
           circle.className = 'milestone-circle active';
           circle.textContent = i;
+          const trackContainer = circle.closest('.packet-track-container');
+          if (trackContainer) {
+            const parentRect = trackContainer.getBoundingClientRect();
+            const circleRect = circle.getBoundingClientRect();
+            if (parentRect.width > 0) {
+              activeCenterLeft = (circleRect.left - parentRect.left) + (circleRect.width / 2);
+            }
+          }
         } else {
           circle.className = 'milestone-circle';
           circle.textContent = i;
@@ -305,9 +314,25 @@
       }
     }
 
-    const pct = stageNum === 0 ? 0 : Math.round((stageNum / 6) * 100);
-    if (trackFill) trackFill.style.width = `${pct}%`;
-    if (ballDot) ballDot.style.left = `${pct}%`;
+    if (stageNum >= 1 && stageNum <= 6) {
+      if (activeCenterLeft > 0) {
+        if (trackFill) trackFill.style.width = `${Math.round(activeCenterLeft)}px`;
+        if (ballDot) {
+          ballDot.style.left = `${Math.round(activeCenterLeft)}px`;
+          ballDot.style.display = 'block';
+        }
+      } else {
+        const fallbackPct = Math.round(((stageNum - 1) / 5) * 100);
+        if (trackFill) trackFill.style.width = `${fallbackPct}%`;
+        if (ballDot) {
+          ballDot.style.left = `${fallbackPct}%`;
+          ballDot.style.display = 'block';
+        }
+      }
+    } else {
+      if (trackFill) trackFill.style.width = '0%';
+      if (ballDot) ballDot.style.display = 'none';
+    }
 
     if (stageNum === 0) {
       if (stageIndicator) stageIndicator.textContent = 'STAGE 0 / 6 · READY TO RUN';
@@ -354,20 +379,13 @@
 
       panel.innerHTML = `
         <div class="stage-card-header">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <span class="stage-num-badge blue">${stageNum}</span>
-            <h3 class="stage-heading" style="margin: 0;">${escapeHtml(stageData.title || `Stage ${stageNum}`)}</h3>
-          </div>
+          <h3 class="stage-heading" style="margin: 0;">${escapeHtml(stageData.title || `Stage ${stageNum}`)}</h3>
           <span class="stage-state-pill font-mono done">${escapeHtml(stageData.badge || 'DONE')}</span>
         </div>
         ${alertHtml}
-        <p style="color: var(--ink); font-size: 0.92rem; line-height: 1.5; margin: 14px 0;">
+        <p style="color: var(--ink); font-size: 0.95rem; line-height: 1.5; margin: 14px 0;">
           ${escapeHtml(stageData.desc || '')}
         </p>
-        <div style="display: flex; gap: 12px; margin-top: 18px; align-items: center; flex-wrap: wrap;">
-          <span class="font-mono" style="font-size: 0.78rem; color: var(--muted);">SHA-256: <code>${escapeHtml(scenario.hash.slice(0, 16))}…</code></span>
-          <button type="button" class="btn-copy-hash font-mono" data-hash="${escapeHtml(scenario.hash)}">Copy Hash</button>
-        </div>
       `;
     }
   }
@@ -1308,6 +1326,131 @@
           });
         }
       }
+    });
+
+    // Mobile Navigation Menu Drawer
+    const menuToggle = document.getElementById('mobile-menu-toggle');
+    const navDrawer = document.getElementById('mobile-nav-drawer');
+    if (menuToggle && navDrawer) {
+      const iconHam = menuToggle.querySelector('.icon-hamburger');
+      const iconClose = menuToggle.querySelector('.icon-close');
+
+      const setDrawerState = (open) => {
+        if (open) {
+          navDrawer.classList.remove('hidden');
+          menuToggle.setAttribute('aria-expanded', 'true');
+          if (iconHam) iconHam.classList.add('hidden');
+          if (iconClose) iconClose.classList.remove('hidden');
+        } else {
+          navDrawer.classList.add('hidden');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          if (iconHam) iconHam.classList.remove('hidden');
+          if (iconClose) iconClose.classList.add('hidden');
+        }
+      };
+
+      menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const willOpen = navDrawer.classList.contains('hidden');
+        setDrawerState(willOpen);
+      });
+
+      // Close on link click
+      navDrawer.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setDrawerState(false));
+      });
+
+      // Close on outside click
+      document.addEventListener('click', (e) => {
+        if (!menuToggle.contains(e.target) && !navDrawer.contains(e.target) && !navDrawer.classList.contains('hidden')) {
+          setDrawerState(false);
+        }
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !navDrawer.classList.contains('hidden')) {
+          setDrawerState(false);
+        }
+      });
+    }
+
+    // Featured Stories Carousel Indicator Controls
+    const storiesContainer = document.getElementById('featured-stories-container');
+    const carouselCounter = document.getElementById('carousel-counter');
+    const btnCarouselPrev = document.getElementById('btn-carousel-prev');
+    const btnCarouselNext = document.getElementById('btn-carousel-next');
+    const dots = document.querySelectorAll('.carousel-dot');
+
+    if (storiesContainer && dots.length > 0) {
+      const storyCards = storiesContainer.querySelectorAll('.story-card');
+      const totalStories = storyCards.length;
+
+      const updateActiveDot = (idx) => {
+        dots.forEach((d, i) => {
+          if (i === idx) {
+            d.classList.add('active');
+            d.setAttribute('aria-selected', 'true');
+          } else {
+            d.classList.remove('active');
+            d.setAttribute('aria-selected', 'false');
+          }
+        });
+        if (carouselCounter) {
+          carouselCounter.textContent = `${idx + 1} / ${totalStories} · Swipe →`;
+        }
+      };
+
+      const scrollToIndex = (idx) => {
+        if (idx >= 0 && idx < totalStories && storyCards[idx]) {
+          storyCards[idx].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+          updateActiveDot(idx);
+        }
+      };
+
+      dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => scrollToIndex(idx));
+      });
+
+      if (btnCarouselPrev) {
+        btnCarouselPrev.addEventListener('click', () => {
+          let cur = 0;
+          dots.forEach((d, i) => { if (d.classList.contains('active')) cur = i; });
+          scrollToIndex(Math.max(0, cur - 1));
+        });
+      }
+
+      if (btnCarouselNext) {
+        btnCarouselNext.addEventListener('click', () => {
+          let cur = 0;
+          dots.forEach((d, i) => { if (d.classList.contains('active')) cur = i; });
+          scrollToIndex(Math.min(totalStories - 1, cur + 1));
+        });
+      }
+
+      // Track scroll position to update active dot
+      let scrollTimer = null;
+      storiesContainer.addEventListener('scroll', () => {
+        if (scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          const scrollLeft = storiesContainer.scrollLeft;
+          let closestIdx = 0;
+          let minDiff = Infinity;
+          storyCards.forEach((c, idx) => {
+            const diff = Math.abs(c.offsetLeft - storiesContainer.offsetLeft - scrollLeft);
+            if (diff < minDiff) {
+              minDiff = diff;
+              closestIdx = idx;
+            }
+          });
+          updateActiveDot(closestIdx);
+        }, 60);
+      });
+    }
+
+    // Keep active stepper indicator centered on resize
+    window.addEventListener('resize', () => {
+      renderActiveStage(currentScenario, currentStage);
     });
   }
 

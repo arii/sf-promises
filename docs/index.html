@@ -5,32 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=8854701f">
+  <link rel="stylesheet" href="styles.css?v=aca0bc92">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="shell">
-    <!-- Sticky Topbar with Brand and 4 Navigation Links -->
+    <!-- Sticky Topbar with Brand, Desktop Nav Links & Mobile Menu Toggle -->
     <header class="topbar sticky-nav" id="top">
-      <div class="topbar-left">
-        <a href="#top" class="brand" aria-label="SF Promises · top">
-          <span class="brand-mark">SF</span>
-          <span class="brand-text">SF Promises</span>
-        </a>
-        <nav class="topbar-nav" aria-label="Primary Navigation">
+      <div class="topbar-bar-row">
+        <div class="topbar-left">
+          <a href="#top" class="brand" aria-label="SF Promises · top">
+            <span class="brand-mark">SF</span>
+            <span class="brand-text">SF Promises</span>
+          </a>
+        </div>
+        <nav class="topbar-nav desktop-nav" aria-label="Primary Navigation">
           <a href="#watch" class="nav-link">Watch</a>
           <a href="#stories" class="nav-link">Stories</a>
           <a href="#explore" class="nav-link">Explore</a>
-          <a href="#how-it-works" class="nav-link"><span class="nav-text-desktop">How it's built</span><span class="nav-text-mobile">Built</span></a>
+          <a href="#how-it-works" class="nav-link">How it's built</a>
         </nav>
+        <div class="topbar-right">
+          <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" class="github-icon-btn desktop-only" aria-label="GitHub Repository">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <button type="button" class="mobile-menu-toggle mobile-only" id="mobile-menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
+            <svg class="icon-hamburger" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <svg class="icon-close hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
       </div>
-      <div class="topbar-right">
-        <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" class="github-icon-btn" aria-label="GitHub Repository">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      <!-- Mobile Slide-down Navigation Menu -->
+      <nav class="mobile-nav-drawer hidden" id="mobile-nav-drawer" aria-label="Mobile Navigation">
+        <a href="#watch" class="mobile-nav-link">Watch one get checked</a>
+        <a href="#stories" class="mobile-nav-link">Featured Stories</a>
+        <a href="#explore" class="mobile-nav-link">Explore Promises</a>
+        <a href="#how-it-works" class="mobile-nav-link">How it's built &amp; Origin</a>
+        <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" class="mobile-nav-link mobile-nav-github">
+          <span>GitHub Repository</span>
+          <span class="ext-arrow">&nearr;</span>
         </a>
-      </div>
+        <a href="https://huggingface.co/datasets/onasafari/sf-promises" target="_blank" rel="noopener noreferrer" class="mobile-nav-link mobile-nav-hf">
+          <span>Hugging Face Dataset</span>
+          <span class="ext-arrow">&nearr;</span>
+        </a>
+      </nav>
     </header>
 
     <main class="wrap">
@@ -75,7 +103,7 @@
       <section class="watch-section pipeline-interactive-section" id="watch" aria-label="Watch one promise get checked">
         <div class="section-heading-group">
           <h2>Watch one promise get checked</h2>
-          <p class="section-lead">Follow the record from a public document to a decision across four sandboxes running as separated processes. Models draft in parallel; only Arbitrator code can write to the verified database.</p>
+          <p class="section-lead">Follow a public commitment from its original source through automated checks to a tamper-evident verdict.</p>
           <div class="saved-run-banner" role="note">SAVED RUN: Replay of verified pipeline run, not live execution</div>
         </div>
 
@@ -160,7 +188,7 @@
             </div>
             <h3 class="story-title">24/7 Crisis Stabilization Center</h3>
             <p class="story-promise-quote font-serif">&ldquo;That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,&rdquo;</p>
-            <div class="story-dates-row font-mono">Said 2025-01-07 &middot; Due no deadline</div>
+            <div class="story-dates-row font-mono">Said 2025-01-07</div>
             <div class="story-outcome-box">
               <div class="story-outcome-kicker font-mono">WHAT HAPPENED</div>
               <p class="story-outcome-text">Official primary records confirm completion with zero contradicting claims.</p>
@@ -209,8 +237,8 @@
               <span class="verdict-chip broken">Broken</span>
             </div>
             <h3 class="story-title">1,500 Shelter Beds in First 6 Months</h3>
-            <p class="story-promise-quote font-serif">&ldquo;[Reported by The Frisc] His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homelessness-sh…&rdquo;</p>
-            <div class="story-dates-row font-mono">Said 2024-11-05 &middot; Due no deadline</div>
+            <p class="story-promise-quote font-serif">&ldquo;His campaign promise to end street homelessness, in part by opening 1,500 new shelter beds in his first six months of office, didn’t last long.&rdquo;</p>
+            <div class="story-dates-row font-mono">Said 2024-11-05</div>
             <div class="story-outcome-box">
               <div class="story-outcome-kicker font-mono">WHAT HAPPENED</div>
               <p class="story-outcome-text">Numeric target was not met or the initiative was abandoned before completion.</p>
@@ -235,7 +263,7 @@
             </div>
             <h3 class="story-title">Vision Zero: End Traffic Fatalities by 2024</h3>
             <p class="story-promise-quote font-serif">&ldquo;In 2014, San Francisco became the third city in the country to adopt Vision Zero with the goal of zero traffic deaths.&rdquo;</p>
-            <div class="story-dates-row font-mono">Said 2014-01-01 &middot; Due no deadline</div>
+            <div class="story-dates-row font-mono">Said 2014-01-01</div>
             <div class="story-outcome-box">
               <div class="story-outcome-kicker font-mono">WHAT HAPPENED</div>
               <p class="story-outcome-text">Verified contradicting evidence outranks initial affirmative claims.</p>
@@ -285,7 +313,7 @@
             </div>
             <h3 class="story-title">Quote Mutation Catch</h3>
             <p class="story-promise-quote font-serif">&ldquo;The city added 1,500 new shelter units within six months.&rdquo;</p>
-            <div class="story-dates-row font-mono">Tested Nov 10, 2026 &middot; Target P05</div>
+            <div class="story-dates-row font-mono">Tested Nov 10, 2026 &middot; Planted Watchdog Test</div>
             <div class="story-outcome-box">
               <div class="story-outcome-kicker font-mono">WHAT HAPPENED</div>
               <p class="story-outcome-text">Caught by verbatim quote check: 'shelter units' was altered from '1,500 new shelter beds'. Held back from main database.</p>
@@ -293,7 +321,7 @@
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
                 <span class="source-tier-pill source-tier-official">Official</span>
-                <span class="story-evidence-count">check: accuracy_quote</span>
+                <span class="story-evidence-count">Caught altered quote</span>
               </div>
               <button type="button" class="btn-story-evidence btn-quarantine-link" data-qid="Q-N01" aria-label="See evidence for Quote Mutation Catch in Quarantine">
                 See evidence &rarr;
@@ -301,6 +329,21 @@
             </div>
           </div>
         </div><!-- end featured stories -->
+
+        <!-- Carousel Pagination & Navigation Controls -->
+        <div class="carousel-controls-bar" id="stories-carousel-controls" aria-label="Featured Stories Carousel Controls">
+          <button type="button" class="carousel-arrow btn-carousel-prev" id="btn-carousel-prev" aria-label="Previous featured story">&#8249;</button>
+          <div class="carousel-dots-row" id="carousel-dots" role="tablist" aria-label="Story navigation dots">
+            <button type="button" class="carousel-dot active" data-index="0" aria-label="Go to story 1 of 6" role="tab" aria-selected="true"></button>
+            <button type="button" class="carousel-dot" data-index="1" aria-label="Go to story 2 of 6" role="tab" aria-selected="false"></button>
+            <button type="button" class="carousel-dot" data-index="2" aria-label="Go to story 3 of 6" role="tab" aria-selected="false"></button>
+            <button type="button" class="carousel-dot" data-index="3" aria-label="Go to story 4 of 6" role="tab" aria-selected="false"></button>
+            <button type="button" class="carousel-dot" data-index="4" aria-label="Go to story 5 of 6" role="tab" aria-selected="false"></button>
+            <button type="button" class="carousel-dot" data-index="5" aria-label="Go to story 6 of 6" role="tab" aria-selected="false"></button>
+          </div>
+          <span class="carousel-counter font-mono" id="carousel-counter">1 / 6 &middot; Swipe &rarr;</span>
+          <button type="button" class="carousel-arrow btn-carousel-next" id="btn-carousel-next" aria-label="Next featured story">&#8250;</button>
+        </div>
       </section>
 
       <!-- SECTION 5: EXPLORE ALL PROMISES -->
@@ -436,7 +479,7 @@
                   <span class="mobile-card-tap-hint">Details &rarr;</span>
                 </div>
               </div>
-              <div class="mobile-promise-card" data-pid="P05" tabindex="0" role="button" aria-label="Inspect #02 Daniel Lurie: [Reported by The Frisc] His campaign promise to [end street ">
+              <div class="mobile-promise-card" data-pid="P05" tabindex="0" role="button" aria-label="Inspect #02 Daniel Lurie: His campaign promise to end street homelessness, in part by ">
                 <div class="mobile-card-header">
                   <div class="mobile-card-speaker-group">
                     <span class="mobile-card-speaker">Daniel Lurie</span>
@@ -445,7 +488,7 @@
                   <span class="verdict-chip broken">Broken</span>
                 </div>
                 <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;[Reported by The Frisc] His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homel…&rdquo;</blockquote>
+                  <blockquote class="mobile-card-quote font-serif">&ldquo;His campaign promise to end street homelessness, in part by opening 1,500 new shelter beds in his first six months of office, didn’t last lo…&rdquo;</blockquote>
                 </div>
                 <div class="mobile-card-footer font-mono">
                   <span class="mobile-card-date">Said 2024-11-05</span>
@@ -628,7 +671,7 @@
                   <span class="mobile-card-tap-hint">Details &rarr;</span>
                 </div>
               </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P43" tabindex="0" role="button" aria-label="Inspect #14 Waymo: Since [sharing](https://blog.waymo.com/2022/03/to-our-fellow">
+              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P43" tabindex="0" role="button" aria-label="Inspect #14 Waymo: Since sharing that we were ready to take the next step and b">
                 <div class="mobile-card-header">
                   <div class="mobile-card-speaker-group">
                     <span class="mobile-card-speaker">Waymo</span>
@@ -637,7 +680,7 @@
                   <span class="verdict-chip kept">Kept</span>
                 </div>
                 <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Since [sharing](https://blog.waymo.com/2022/03/to-our-fellow-san-franciscans) that we were ready to take the next step and begin testing ful…&rdquo;</blockquote>
+                  <blockquote class="mobile-card-quote font-serif">&ldquo;Since sharing that we were ready to take the next step and begin testing fully autonomous operations in the city, we’ve begun fully autonomo…&rdquo;</blockquote>
                 </div>
                 <div class="mobile-card-footer font-mono">
                   <span class="mobile-card-date">Said 2022-03-30</span>
@@ -1268,7 +1311,7 @@
                   <span class="mobile-card-tap-hint">Details &rarr;</span>
                 </div>
               </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P85" tabindex="0" role="button" aria-label="Inspect #54 Transportation Authority Board: At the [June 9 Transportation Authority Board meeting](/even">
+              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P85" tabindex="0" role="button" aria-label="Inspect #54 Transportation Authority Board: At the June 9 Transportation Authority Board meeting, our bo">
                 <div class="mobile-card-header">
                   <div class="mobile-card-speaker-group">
                     <span class="mobile-card-speaker">Transportation Authority Board</span>
@@ -1277,7 +1320,7 @@
                   <span class="verdict-chip in_progress">In Progress</span>
                 </div>
                 <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;At the [June 9 Transportation Authority Board meeting](/events/transportation-authority-board-131), our board approved $230,700 in Prop L tr…&rdquo;</blockquote>
+                  <blockquote class="mobile-card-quote font-serif">&ldquo;At the June 9 Transportation Authority Board meeting, our board approved $230,700 in Prop L transportation sales tax funds for the Central S…&rdquo;</blockquote>
                 </div>
                 <div class="mobile-card-footer font-mono">
                   <span class="mobile-card-date">Said 2026-06-09</span>
@@ -1351,7 +1394,7 @@
                   <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">2025-04-28</span></div>
                 </td>
               </tr>
-              <tr class="promise-row" id="promise-P05" data-promise-id="P05" tabindex="0" role="button" aria-label="Inspect #02 Daniel Lurie: [Reported by The Frisc] His campaign promise to [end street ">
+              <tr class="promise-row" id="promise-P05" data-promise-id="P05" tabindex="0" role="button" aria-label="Inspect #02 Daniel Lurie: His campaign promise to end street homelessness, in part by ">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Daniel Lurie</span>
@@ -1365,7 +1408,7 @@
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
                     <div class="table-kicker font-mono">PROMISE</div>
-                    <blockquote class="table-quote-text font-serif">&ldquo;[Reported by The Frisc] His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homelessness-sh…&rdquo;</blockquote>
+                    <blockquote class="table-quote-text font-serif">&ldquo;His campaign promise to end street homelessness, in part by opening 1,500 new shelter beds in his first six months of office, didn’t last long.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
                     <span class="table-kicker font-mono">WHAT HAPPENED:</span>
@@ -1747,7 +1790,7 @@
                   <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">Verified completed</span></div>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-P43" data-promise-id="P43" tabindex="0" role="button" aria-label="Inspect #14 Waymo: Since [sharing](https://blog.waymo.com/2022/03/to-our-fellow">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-P43" data-promise-id="P43" tabindex="0" role="button" aria-label="Inspect #14 Waymo: Since sharing that we were ready to take the next step and b">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Waymo</span>
@@ -1761,7 +1804,7 @@
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
                     <div class="table-kicker font-mono">PROMISE</div>
-                    <blockquote class="table-quote-text font-serif">&ldquo;Since [sharing](https://blog.waymo.com/2022/03/to-our-fellow-san-franciscans) that we were ready to take the next step and begin testing fully autonom…&rdquo;</blockquote>
+                    <blockquote class="table-quote-text font-serif">&ldquo;Since sharing that we were ready to take the next step and begin testing fully autonomous operations in the city, we’ve begun fully autonomous rides w…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
                     <span class="table-kicker font-mono">WHAT HAPPENED:</span>
@@ -3067,7 +3110,7 @@
                   <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">—</span></div>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-P85" data-promise-id="P85" tabindex="0" role="button" aria-label="Inspect #54 Transportation Authority Board: At the [June 9 Transportation Authority Board meeting](/even">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-P85" data-promise-id="P85" tabindex="0" role="button" aria-label="Inspect #54 Transportation Authority Board: At the June 9 Transportation Authority Board meeting, our bo">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Transportation Authority Board</span>
@@ -3081,7 +3124,7 @@
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
                     <div class="table-kicker font-mono">PROMISE</div>
-                    <blockquote class="table-quote-text font-serif">&ldquo;At the [June 9 Transportation Authority Board meeting](/events/transportation-authority-board-131), our board approved $230,700 in Prop L transportati…&rdquo;</blockquote>
+                    <blockquote class="table-quote-text font-serif">&ldquo;At the June 9 Transportation Authority Board meeting, our board approved $230,700 in Prop L transportation sales tax funds for the Central Subway Nort…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
                     <span class="table-kicker font-mono">WHAT HAPPENED:</span>
@@ -3487,32 +3530,41 @@
           </div>
         </div>
 
-        <!-- Built With Heritage & Transparency -->
+                <!-- Dedicated Origin & Purpose Card -->
+        <div class="origin-card" id="origin-story">
+          <div class="origin-badge font-mono">PROJECT ORIGIN &amp; PURPOSE</div>
+          <h3 class="origin-title">Tamper-evident civic accountability for San Francisco</h3>
+          <p class="origin-text">
+            SF Promises was created to bring verifiable, cryptographically grounded transparency to San Francisco public commitments.
+            Originating at the <strong>Archil Hackathon</strong> (November 2026) and awarded <strong>Best Use of Keenable</strong>,
+            the pipeline replaces subjective commentary with deterministic code checks against saved, hashed municipal documents.
+          </p>
+        </div>
+
+        <!-- Technical & Audit Specifications (Accordion) -->
         <details class="credits-accordion" id="credits-accordion">
           <summary class="credits-summary font-mono">
-            <span>Built With &amp; Inspirations &darr;</span>
+            <span>Technical &amp; Audit Specifications &nbsp;&#9656;</span>
           </summary>
           <div class="credits-body">
             <div class="built-heritage-grid">
               <div>
-                <h4>Built With</h4>
+                <h4>Verification Architecture</h4>
                 <ul class="plain-credits-list">
-                  <li><strong>Archil Cloud Disks:</strong> Separated processes and persistent verification filesystem.</li>
-                  <li><strong>Keenable API:</strong> Strict temporal retrieval across allowlisted contemporaneous SF domains.</li>
-                  <li><strong>SF Legistar &amp; DataSF:</strong> Official Board of Supervisors agendas, resolutions, and 311 operational signals.</li>
-                  <li><strong>Granicus Transcripts:</strong> Verbatim City Hall hearing records.</li>
-                  <li><a href="https://huggingface.co/datasets/onasafari/sf-promises" target="_blank" rel="noopener"><strong>Hugging Face Dataset:</strong></a> Open public SQLite database and 51-column dataset release.</li>
-                  <li><strong>Append-only log:</strong> SHA-256 fingerprints show a saved file hasn't changed. They don't show a claim is true.</li>
-                  <li><strong>Durability Engine:</strong> Nightly automated checks re-verify hashes and check for status drift.</li>
+                  <li><strong>Archil Cloud Disks:</strong> Separated sandboxes isolate affirming and contradicting investigators with zero cross-talk.</li>
+                  <li><strong>Keenable Temporal API:</strong> Strict contemporaneous web discovery across allowlisted SF municipal and news domains.</li>
+                  <li><strong>Cryptographic Digests:</strong> SHA-256 fingerprints lock primary document bytes upon ingest to prevent retrofitting.</li>
+                  <li><strong>Deterministic Arbitrator:</strong> Seven rule-based checks decide outcomes with zero model calls at arbitration time.</li>
+                  <li><strong>Durability Engine:</strong> Automated re-verification monitors source URLs for status or text drift.</li>
                 </ul>
               </div>
               <div>
-                <h4>Inspired By</h4>
+                <h4>Open Data &amp; Heritage</h4>
                 <ul class="plain-credits-list">
+                  <li><a href="https://huggingface.co/datasets/onasafari/sf-promises" target="_blank" rel="noopener"><strong>Hugging Face Dataset:</strong></a> Open relational SQLite DB, 51-column dataset, and standardized 16-column master table.</li>
                   <li><a href="https://github.com/xternal/openpromises" target="_blank" rel="noopener"><strong>OpenPromises:</strong></a> Open commitment verification principles.</li>
                   <li><a href="https://github.com/cluster2600/kept.vote" target="_blank" rel="noopener"><strong>kept.vote:</strong></a> Civic promise accountability.</li>
                   <li><a href="https://councilhound.net" target="_blank" rel="noopener"><strong>CouncilHound:</strong></a> Municipal council tracking.</li>
-                  <li><a href="https://ken.promisetracker-v2.dev.codeforafrica.org" target="_blank" rel="noopener"><strong>PromiseTracker:</strong></a> Citizen accountability.</li>
                 </ul>
               </div>
             </div>
@@ -3539,17 +3591,22 @@
       </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer: Clean 3-Line Attribution & Links -->
     <footer class="app-footer">
-      <div class="footer-left">
-        <span class="footer-brand-title">SF Promises &middot; arii/sf-promises</span>
-        <span>Built by Ariel Anders &middot; Archil Hackathon (Nov 10, 2026 &middot; Best Use of Keenable)</span>
-        <span id="footer-data-version" class="footer-data-version font-mono">Data as of Nov 13, 2026 &middot; commit 8854701</span>
-      </div>
-      <div class="footer-links-group">
-        <a href="#top" class="btn-footer-link">Back to top &uarr;</a>
-        <a href="https://huggingface.co/datasets/onasafari/sf-promises" target="_blank" rel="noopener noreferrer" style="color: #FCD34D;">Hugging Face Dataset</a>
-        <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" style="color: var(--blue);">GitHub &nearr;</a>
+      <div class="footer-scannable-content">
+        <div class="footer-line footer-line-brand">
+          <strong>SF Promises</strong> &mdash; Built by Ariel Anders (Nov 2026 &middot; Archil Hackathon)
+        </div>
+        <div class="footer-line footer-line-date font-mono">
+          Data updated Nov 13, 2026
+        </div>
+        <div class="footer-line footer-line-links">
+          <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
+          <span class="footer-dot">&middot;</span>
+          <a href="https://huggingface.co/datasets/onasafari/sf-promises" target="_blank" rel="noopener noreferrer">Hugging Face Dataset</a>
+          <span class="footer-dot">&middot;</span>
+          <a href="#top">Back to top &uarr;</a>
+        </div>
       </div>
     </footer>
   </div>
@@ -3703,8 +3760,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=8854701f"></script>
-  <script src="list.min.js?v=8854701f"></script>
-  <script src="app.js?v=8854701f"></script>
+  <script src="data.js?v=aca0bc92"></script>
+  <script src="list.min.js?v=aca0bc92"></script>
+  <script src="app.js?v=aca0bc92"></script>
 </body>
 </html>
