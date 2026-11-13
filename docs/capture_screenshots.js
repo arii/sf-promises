@@ -156,12 +156,72 @@ async function main() {
     });
     await sleep(400);
 
-    // Assert default replay is N01 watchdog
+    // Assert default replay is P02
     const defaultReplayVal = await client.eval('document.getElementById("run-select").value');
     console.log(`Default Replay Scenario: ${defaultReplayVal}`);
-    if (defaultReplayVal !== 'N01') {
-      throw new Error(`Expected default replay N01, got ${defaultReplayVal}`);
+    if (defaultReplayVal !== 'P02') {
+      throw new Error(`Expected default replay P02, got ${defaultReplayVal}`);
     }
+
+    // Verify consolidated button bar and fixed geometry
+    console.log('Testing Walkthrough consolidated controls and fixed geometry...');
+    const initialResetDisabled = await client.eval('document.getElementById("btn-pipeline-reset").disabled');
+    const stage0Text = await client.eval('document.getElementById("pipeline-primary-text").textContent');
+    console.log(`Stage 0: primary text="${stage0Text}", reset disabled=${initialResetDisabled}`);
+    if (!initialResetDisabled || !stage0Text.includes('Start Walkthrough')) {
+      throw new Error(`Stage 0 controls mismatch: resetDisabled=${initialResetDisabled}, text="${stage0Text}"`);
+    }
+
+    // Measure height at stage 0
+    const h0 = await client.eval('document.getElementById("pipeline-active-stage-panel").getBoundingClientRect().height');
+
+    // Click next to advance to Stage 1
+    await client.eval('document.getElementById("btn-step-next").click()');
+    await sleep(200);
+    const stage1Text = await client.eval('document.getElementById("pipeline-primary-text").textContent');
+    const stage1ResetDisabled = await client.eval('document.getElementById("btn-pipeline-reset").disabled');
+    const h1 = await client.eval('document.getElementById("pipeline-active-stage-panel").getBoundingClientRect().height');
+    console.log(`Stage 1: primary text="${stage1Text}", reset disabled=${stage1ResetDisabled}, h0=${h0}, h1=${h1}`);
+    if (stage1ResetDisabled || !stage1Text.includes('Next Stage')) {
+      throw new Error(`Stage 1 controls mismatch: resetDisabled=${stage1ResetDisabled}, text="${stage1Text}"`);
+    }
+
+    // Jump to Stage 6 and verify verdict chip & semantic colors
+    await client.eval('document.getElementById("ms-circle-6").parentElement.click()');
+    await sleep(200);
+    const stage6VerdictClass = await client.eval('document.querySelector("#pipeline-active-stage-panel .verdict-chip").className');
+    const stage6CircleClass = await client.eval('document.getElementById("ms-circle-6").className');
+    const h6 = await client.eval('document.getElementById("pipeline-active-stage-panel").getBoundingClientRect().height');
+    console.log(`Stage 6: verdictClass="${stage6VerdictClass}", circleClass="${stage6CircleClass}", h6=${h6}`);
+    if (!stage6VerdictClass.includes('kept') || !stage6CircleClass.includes('kept')) {
+      throw new Error(`Semantic color mismatch on Stage 6 kept: verdictClass=${stage6VerdictClass}, circleClass=${stage6CircleClass}`);
+    }
+
+    // Test P05 (Broken) semantic red styling
+    console.log('Testing P05 Broken scenario semantic colors...');
+    await client.eval(`
+      const sel = document.getElementById("run-select");
+      sel.value = "P05";
+      sel.dispatchEvent(new Event("change"));
+    `);
+    await sleep(200);
+    await client.eval('document.getElementById("ms-circle-6").parentElement.click()');
+    await sleep(200);
+    const p05CircleClass = await client.eval('document.getElementById("ms-circle-6").className');
+    const p05BallClass = await client.eval('document.getElementById("packet-ball-inner").className');
+    console.log(`P05 Stage 6: circleClass="${p05CircleClass}", ballClass="${p05BallClass}"`);
+    if (!p05CircleClass.includes('broken') || !p05BallClass.includes('broken')) {
+      throw new Error(`Semantic color mismatch on P05 broken: circleClass=${p05CircleClass}, ballClass=${p05BallClass}`);
+    }
+
+    // Reset back to P02 Stage 0
+    await client.eval(`
+      const sel = document.getElementById("run-select");
+      sel.value = "P02";
+      sel.dispatchEvent(new Event("change"));
+      document.getElementById("btn-pipeline-reset").click();
+    `);
+    await sleep(200);
 
     await client.captureScreenshot('demo/screenshot_1280_main.png');
 

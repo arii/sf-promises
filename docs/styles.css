@@ -2859,8 +2859,19 @@ a:hover {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 16px;
+}
+
+.pipeline-actions-row .run-select {
+  flex: 1 1 280px;
+  max-width: 440px;
+}
+
+.pipeline-btn-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-play-action {
@@ -2874,6 +2885,37 @@ a:hover {
   gap: 7px;
   transition: all 0.15s ease;
   border: 1px solid transparent;
+}
+
+.btn-primary-contextual {
+  background: #10B981;
+  color: #071120;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+}
+
+.btn-primary-contextual:hover:not(:disabled) {
+  background: #34D399;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.btn-pipeline-reset-compact {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 14px;
+}
+
+.btn-pipeline-reset-compact:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.btn-pipeline-reset-compact:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .btn-play-p02 {
@@ -2959,18 +3001,22 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
   margin-bottom: 12px;
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
 }
 
 .packet-label {
   color: var(--muted);
+  white-space: nowrap;
 }
 
 .packet-status-text {
   color: var(--muted);
+  white-space: nowrap;
+  font-weight: 700;
 }
 
 /* Transit Line & Milestones */
@@ -2998,7 +3044,7 @@ a:hover {
   height: 3px;
   background: #10B981;
   border-radius: 999px;
-  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
   width: 0%;
 }
 
@@ -3041,6 +3087,12 @@ a:hover {
   color: #071120;
 }
 
+.milestone-circle.passed.failed {
+  background: #EF4444;
+  border-color: #EF4444;
+  color: #ffffff;
+}
+
 .milestone-circle.active,
 .milestone-circle.current {
   background: #0A1628;
@@ -3048,6 +3100,38 @@ a:hover {
   color: #FACC15;
   transform: scale(1.15);
   box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.25), 0 0 12px rgba(250, 204, 21, 0.4);
+}
+
+.milestone-circle.active.kept {
+  background: #061F17;
+  border-color: #10B981;
+  color: #34D399;
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25), 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+.milestone-circle.active.broken {
+  background: #1F1215;
+  border-color: #EF4444;
+  color: #F87171;
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25), 0 0 12px rgba(239, 68, 68, 0.4);
+}
+
+.milestone-circle.active.failed {
+  background: #1F1215;
+  border-color: #EF4444;
+  color: #F87171;
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25), 0 0 12px rgba(239, 68, 68, 0.4);
+}
+
+.milestone-circle.active.quarantined {
+  background: #241A06;
+  border-color: #F59E0B;
+  color: #FBBF24;
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25), 0 0 12px rgba(245, 158, 11, 0.4);
 }
 
 .packet-ball-dot {
@@ -3070,14 +3154,24 @@ a:hover {
   background: #FACC15;
   border: 2px solid #ffffff;
   box-shadow: 0 0 8px rgba(250, 204, 21, 0.8);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
+.packet-ball-inner.kept,
 .packet-ball-inner.kept-end {
   background: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
 }
 
+.packet-ball-inner.broken {
+  background: #EF4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+}
+
+.packet-ball-inner.quarantined,
 .packet-ball-inner.quarantine-end {
   background: #F59E0B;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
 }
 
 .milestone-labels-row {
@@ -4173,11 +4267,29 @@ a:hover {
     white-space: nowrap !important;
     box-sizing: border-box !important;
   }
+  .pipeline-btn-group {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+  .btn-primary-contextual {
+    flex: 3 !important; /* ~75-80% width */
+    min-height: 44px !important;
+    justify-content: center !important;
+    font-size: 0.92rem !important;
+  }
+  .btn-pipeline-reset-compact {
+    flex: 1 !important; /* ~20-25% width */
+    min-height: 44px !important;
+    justify-content: center !important;
+    font-size: 0.88rem !important;
+    padding: 8px 10px !important;
+  }
   .pipeline-actions-row .btn-play-action {
     min-height: 44px;
     justify-content: center;
-    flex: 1;
-    font-size: 0.92rem;
   }
   .packet-transit-card {
     padding: 14px 16px;
@@ -6534,6 +6646,18 @@ a:hover {
   border-radius: 12px;
   padding: 24px;
   animation: fadeIn 0.2s ease-out;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .active-stage-panel-wrapper .stage-card {
+    min-height: 230px;
+    padding: 18px;
+  }
 }
 
 .milestone-node {

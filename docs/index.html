@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=aca0bc92">
+  <link rel="stylesheet" href="styles.css?v=0d57c97d">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -104,34 +104,32 @@
         <div class="section-heading-group">
           <h2>Watch one promise get checked</h2>
           <p class="section-lead">Follow a public commitment from its original source through automated checks to a tamper-evident verdict.</p>
-          <div class="saved-run-banner" role="note">SAVED RUN: Replay of verified pipeline run, not live execution</div>
         </div>
 
         <!-- Pipeline Controls Bar -->
         <div class="pipeline-actions-row">
-          <label class="run-select-label font-mono" for="run-select">REPLAY</label>
-          <select id="run-select" class="run-select" aria-label="Choose a promise to replay through the pipeline">
-            <option value="N01" selected>Watchdog N01 &middot; Quote Mutation Catch (Planted Test)</option>
-            <option value="P02">#01 &middot; 24/7 Crisis Center (Lurie &middot; Kept)</option>
-            <option value="P05">#05 &middot; 1,500 Shelter Beds (Lurie &middot; Broken)</option>
+          <label class="run-select-label font-mono" for="run-select">COMMITMENT</label>
+          <select id="run-select" class="run-select" aria-label="Choose a commitment to inspect through the verification pipeline">
+            <option value="P02" selected>24/7 Crisis Center &mdash; Mayor Lurie</option>
+            <option value="P05">1,500 Shelter Beds &mdash; Mayor Lurie</option>
+            <option value="N01">Quote Verification Watchdog Demo</option>
           </select>
-          <button type="button" class="btn-play-action btn-primary-filled" id="btn-run-selected" title="Replay the selected run through all 6 stages">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            <span>Replay Walkthrough</span>
-          </button>
-          <button type="button" class="btn-play-action btn-step-advance" id="btn-step-next">
-            <span>Next Stage &rarr;</span>
-          </button>
-          <button type="button" class="btn-play-action btn-pipeline-reset-pill" id="btn-pipeline-reset">
-            <span>Reset ↺</span>
-          </button>
+          <div class="pipeline-btn-group">
+            <button type="button" class="btn-play-action btn-primary-contextual" id="btn-step-next" aria-label="Advance pipeline walkthrough">
+              <span id="pipeline-primary-icon">▶</span>
+              <span id="pipeline-primary-text">Start Walkthrough &rarr;</span>
+            </button>
+            <button type="button" class="btn-play-action btn-pipeline-reset-compact" id="btn-pipeline-reset" title="Reset walkthrough" aria-label="Reset walkthrough" disabled>
+              <span>Reset ↺</span>
+            </button>
+          </div>
         </div>
 
         <!-- Packet Transit Card with 6 Short Milestones -->
         <div class="packet-transit-card">
           <div class="packet-transit-header font-mono">
-            <span class="packet-label" id="pipeline-stage-indicator">STAGE 0 / 6 &nbsp;·&nbsp; READY TO RUN</span>
-            <span class="packet-status-text" id="packet-status-text">waiting to start</span>
+            <span class="packet-label" id="pipeline-stage-indicator">Stage 0 of 6</span>
+            <span class="packet-status-text" id="packet-status-text">Ready to run</span>
           </div>
 
           <div class="packet-track-container">
@@ -3760,8 +3758,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=aca0bc92"></script>
-  <script src="list.min.js?v=aca0bc92"></script>
-  <script src="app.js?v=aca0bc92"></script>
+  <script src="data.js?v=0d57c97d"></script>
+  <script src="list.min.js?v=0d57c97d"></script>
+  <script src="app.js?v=0d57c97d"></script>
 </body>
 </html>

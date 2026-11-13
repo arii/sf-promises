@@ -18,7 +18,7 @@
   let filterSort = 'rank';
   let searchTerm = '';
   let visibleRowsCount = 10;
-  let currentRunType = 'N01'; // Default to Watchdog Catch per brief P0.5
+  let currentRunType = 'P02'; // Default to 24/7 Crisis Center
   let currentStage = 0;
   let isAutoRunning = false;
   let autoTimer = null;
@@ -121,66 +121,18 @@
     renderExplore();
     renderQuarantineTable();
     setupFeaturedStories();
-    setupObserverForReplay();
   }
 
   // -------------------------------------------------------------------------
   // Replay State Machine (0.5)
   // -------------------------------------------------------------------------
   const SCENARIOS = {
-    N01: {
-      id: 'N01',
-      label: 'Watchdog N01 · Quote Mutation Catch (Planted Test)',
-      speaker: 'Planted Watchdog Test N01',
-      title: 'Quote Mutation Detection',
-      target: 'Mayor Daniel Lurie · 1,500 Shelter Beds (P05)',
-      expectedVerdict: 'quarantined',
-      verdictLabel: 'Quarantined',
-      sourceUrl: 'https://www.sf.gov/news/mayor-lurie-announces-crisis-stabilization-center',
-      file: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md',
-      hash: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa',
-      stages: {
-        1: {
-          badge: 'HASH VERIFIED',
-          title: 'Stage 1: Contemporaneous Source Retrieval',
-          desc: 'Archil disk reads saved markdown record. SHA-256 byte fingerprint matches disk origin (582955d5df78...).'
-        },
-        2: {
-          badge: 'MUTATION DETECTED',
-          title: 'Stage 2: Deterministic Quote Verification',
-          alert: true,
-          alertText: "FLASH: 'shelter units' was altered! Original source reads '1,500 new shelter beds'. Substring match failed.",
-          desc: 'Verbatim quote verification failed against immutable saved bytes.'
-        },
-        3: {
-          badge: 'GATE PASSED (8/8)',
-          title: 'Stage 3: Relevance Gate',
-          desc: 'Relevance criteria scored 8/8 for civic impact and measurable metric.'
-        },
-        4: {
-          badge: 'ADVOCATES FILED',
-          title: 'Stage 4: Process-Isolated Advocates',
-          desc: 'Sandbox A and Sandbox B run in separate memory spaces without database write access.'
-        },
-        5: {
-          badge: 'CHECK FAILED · DIVERTED',
-          title: 'Stage 5: Arbitrator Code Execution',
-          alert: true,
-          desc: 'Deterministic check accuracy_quote FAILED. Row immediately diverted to Quarantine Registry.'
-        },
-        6: {
-          badge: 'HELD IN QUARANTINE',
-          title: 'Stage 6: Outcome Ledger',
-          desc: 'Item Q-N01 held back in quarantine registry. 0 rows written to main verified table.'
-        }
-      }
-    },
     P02: {
       id: 'P02',
-      label: '#01 · 24/7 Crisis Center (Lurie · Kept)',
+      label: '24/7 Crisis Center — Mayor Lurie',
       speaker: 'Mayor Daniel Lurie',
       title: '24/7 Crisis Stabilization Center',
-      target: 'Tenderloin (822 Geary St)',
+      target: 'Tenderloin · 822 Geary St',
       expectedVerdict: 'kept',
       verdictLabel: 'Kept',
       sourceUrl: 'https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center',
@@ -188,40 +140,34 @@
       hash: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa',
       stages: {
         1: {
-          badge: 'HASH VERIFIED',
-          title: 'Stage 1: Official Source Retrieval',
-          desc: 'Archil disk reads official sf.gov municipal press release. SHA-256 matches byte-for-byte.'
+          title: 'Official Source Retrieval',
+          desc: 'Archil disk reads official sf.gov municipal press release. SHA-256 byte fingerprint matches disk origin (582955d5df78…).'
         },
         2: {
-          badge: 'QUOTE VERIFIED',
-          title: 'Stage 2: Model Draft Extraction',
-          desc: 'Verbatim quote verified: "That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,".'
+          title: 'Verbatim Quote Extraction',
+          desc: 'Verbatim quote verified against immutable source: "That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,".'
         },
         3: {
-          badge: 'GATE PASSED (8/8)',
-          title: 'Stage 3: Relevance Gate',
-          desc: 'Scored 8/8: Real commitment (2/2), Measurable (2/2), SF scope (2/2), Public interest (2/2).'
+          title: 'Civic Relevance Gate',
+          desc: 'Passed relevance criteria: verified public commitment, measurable outcome, San Francisco jurisdiction, and high civic impact.'
         },
         4: {
-          badge: 'ARGUMENTS FILED',
-          title: 'Stage 4: Process-Isolated Advocates',
+          title: 'Process-Isolated Advocates',
           desc: 'Sandbox A confirms facility began accepting clients on April 28, 2025 at 822 Geary St. Sandbox B found 0 contradicting closure notices.'
         },
         5: {
-          badge: '7/7 CHECKS PASSED',
-          title: 'Stage 5: Arbitrator Code Execution',
-          desc: 'All 7 deterministic checks passed: domain allowlist, hash match, quote match, timeline, rubric.'
+          title: 'Deterministic Code Arbitration',
+          desc: 'All 7 deterministic code checks passed: domain allowlist, SHA-256 match, quote match, timeline logic, and rubric rules.'
         },
         6: {
-          badge: 'VERIFIED & SIGNED',
-          title: 'Stage 6: Verdict Ledger',
-          desc: 'Verdict KEPT signed into append-only SQLite audit ledger. Published to main table.'
+          title: 'Verdict Ledger & Publication',
+          desc: 'Official primary records confirm completion with zero contradicting claims.'
         }
       }
     },
     P05: {
       id: 'P05',
-      label: '#05 · 1,500 Shelter Beds (Lurie · Broken)',
+      label: '1,500 Shelter Beds — Mayor Lurie',
       speaker: 'Mayor Daniel Lurie',
       title: '1,500 Shelter Beds in First 6 Months',
       target: 'Citywide Shelter Network',
@@ -232,34 +178,70 @@
       hash: '384c310bb67941a4a131738f8ed7c9aa4d73e5bc41468a7d6c028caafc141812',
       stages: {
         1: {
-          badge: 'SOURCE RETRIEVED',
-          title: 'Stage 1: News Investigation Source',
+          title: 'News Investigation Source',
           desc: 'Retrieved verified investigative reporting documenting shelter capacity metrics.'
         },
         2: {
-          badge: 'QUOTE EXTRACTED',
-          title: 'Stage 2: Verbatim Extraction',
+          title: 'Verbatim Quote Extraction',
           desc: 'Extracted campaign commitment to open 1,500 beds in the first six months.'
         },
         3: {
-          badge: 'GATE PASSED (8/8)',
-          title: 'Stage 3: Relevance Gate',
+          title: 'Civic Relevance Gate',
           desc: 'High civic priority and quantified bed count target passed relevance gate.'
         },
         4: {
-          badge: 'EVIDENCE FILED',
-          title: 'Stage 4: Process-Isolated Advocates',
+          title: 'Process-Isolated Advocates',
           desc: 'Sandbox B files municipal audit showing shelter expansions remained below numeric target.'
         },
         5: {
-          badge: 'RUBRIC EVALUATION',
-          title: 'Stage 5: Arbitrator Code Execution',
+          title: 'Deterministic Code Arbitration',
           desc: 'Deterministic rubric rule: numeric target not met within deadline window evaluated to broken.'
         },
         6: {
-          badge: 'VERDICT BROKEN',
-          title: 'Stage 6: Verdict Ledger',
-          desc: 'Verdict BROKEN committed to audit ledger. Reason: numeric target not met or plan abandoned.'
+          title: 'Verdict Ledger & Publication',
+          desc: 'Numeric target not met within promised deadline.'
+        }
+      }
+    },
+    N01: {
+      id: 'N01',
+      label: 'Quote Verification Watchdog Demo',
+      speaker: 'Watchdog Verification Demo',
+      title: 'Quote Mutation Detection',
+      target: 'Mayor Daniel Lurie · 1,500 Shelter Beds (P05)',
+      expectedVerdict: 'quarantined',
+      verdictLabel: 'Quarantined',
+      sourceUrl: 'https://www.sf.gov/news/mayor-lurie-announces-crisis-stabilization-center',
+      file: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md',
+      hash: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa',
+      stages: {
+        1: {
+          title: 'Contemporaneous Source Retrieval',
+          desc: 'Archil disk reads saved markdown record. SHA-256 byte fingerprint matches disk origin (582955d5df78…).'
+        },
+        2: {
+          title: 'Deterministic Quote Verification',
+          alert: true,
+          alertText: "Mutation detected: 'shelter units' was altered from original source '1,500 new shelter beds'. Substring match failed.",
+          desc: 'Verbatim quote verification failed against immutable saved bytes.'
+        },
+        3: {
+          title: 'Civic Relevance Gate',
+          desc: 'Relevance criteria scored for civic impact and measurable metric.'
+        },
+        4: {
+          title: 'Process-Isolated Advocates',
+          desc: 'Sandbox A and Sandbox B run in separate memory spaces without database write access.'
+        },
+        5: {
+          title: 'Arbitrator Code Execution',
+          alert: true,
+          alertText: 'Deterministic check failed. Row immediately diverted to Quarantine Registry.',
+          desc: ''
+        },
+        6: {
+          title: 'Outcome Ledger',
+          desc: 'Item held back in quarantine registry. 0 rows written to main verified table.'
         }
       }
     }
@@ -281,12 +263,33 @@
   }
 
   function renderActiveStage(scenarioKey, stageNum) {
-    const scenario = SCENARIOS[scenarioKey] || SCENARIOS.N01;
+    const scenario = SCENARIOS[scenarioKey] || SCENARIOS.P02;
     const panel = document.getElementById('pipeline-active-stage-panel');
     const stageIndicator = document.getElementById('pipeline-stage-indicator');
     const statusText = document.getElementById('packet-status-text');
     const trackFill = document.getElementById('packet-track-fill');
     const ballDot = document.getElementById('packet-ball-dot');
+    const ballInner = document.getElementById('packet-ball-inner');
+    const primaryIcon = document.getElementById('pipeline-primary-icon');
+    const primaryText = document.getElementById('pipeline-primary-text');
+    const btnReset = document.getElementById('btn-pipeline-reset');
+
+    // Update contextual action buttons
+    if (btnReset) {
+      btnReset.disabled = (stageNum === 0);
+    }
+    if (primaryText) {
+      if (stageNum === 0) {
+        primaryText.textContent = 'Start Walkthrough →';
+        if (primaryIcon) primaryIcon.textContent = '▶';
+      } else if (stageNum >= 1 && stageNum < 6) {
+        primaryText.textContent = `Next Stage (${stageNum + 1}/6) →`;
+        if (primaryIcon) primaryIcon.textContent = '→';
+      } else {
+        primaryText.textContent = 'Replay from Start ↺';
+        if (primaryIcon) primaryIcon.textContent = '↺';
+      }
+    }
 
     // Update milestone indicators and calculate dead-center active dot
     let activeCenterLeft = 0;
@@ -294,11 +297,33 @@
       const circle = document.getElementById(`ms-circle-${i}`);
       if (circle) {
         if (i < stageNum) {
-          circle.className = 'milestone-circle passed';
-          circle.textContent = '✓';
+          if (scenarioKey === 'N01' && i === 5) {
+            circle.className = 'milestone-circle passed failed';
+            circle.textContent = '✕';
+          } else {
+            circle.className = 'milestone-circle passed';
+            circle.textContent = '✓';
+          }
         } else if (i === stageNum) {
-          circle.className = 'milestone-circle active';
-          circle.textContent = i;
+          if (stageNum === 6) {
+            if (scenario.expectedVerdict === 'broken') {
+              circle.className = 'milestone-circle active broken';
+              circle.textContent = '✕';
+            } else if (scenario.expectedVerdict === 'quarantined') {
+              circle.className = 'milestone-circle active quarantined';
+              circle.textContent = '!';
+            } else {
+              circle.className = 'milestone-circle active kept';
+              circle.textContent = '✓';
+            }
+          } else if (stageNum === 5 && scenarioKey === 'N01') {
+            circle.className = 'milestone-circle active failed';
+            circle.textContent = '✕';
+          } else {
+            circle.className = 'milestone-circle active';
+            circle.textContent = i;
+          }
+
           const trackContainer = circle.closest('.packet-track-container');
           if (trackContainer) {
             const parentRect = trackContainer.getBoundingClientRect();
@@ -311,6 +336,33 @@
           circle.className = 'milestone-circle';
           circle.textContent = i;
         }
+      }
+    }
+
+    if (ballInner) {
+      ballInner.className = 'packet-ball-inner';
+      if (stageNum === 6) {
+        if (scenario.expectedVerdict === 'broken') {
+          ballInner.classList.add('broken');
+        } else if (scenario.expectedVerdict === 'quarantined') {
+          ballInner.classList.add('quarantined');
+        } else {
+          ballInner.classList.add('kept');
+        }
+      } else if (stageNum === 5 && scenarioKey === 'N01') {
+        ballInner.classList.add('broken');
+      }
+    }
+
+    if (trackFill) {
+      if (stageNum === 6 && scenario.expectedVerdict === 'broken') {
+        trackFill.style.background = '#EF4444';
+      } else if (stageNum === 6 && scenario.expectedVerdict === 'quarantined') {
+        trackFill.style.background = '#F59E0B';
+      } else if (stageNum === 5 && scenarioKey === 'N01') {
+        trackFill.style.background = '#EF4444';
+      } else {
+        trackFill.style.background = '#10B981';
       }
     }
 
@@ -335,36 +387,50 @@
     }
 
     if (stageNum === 0) {
-      if (stageIndicator) stageIndicator.textContent = 'STAGE 0 / 6 · READY TO RUN';
-      if (statusText) statusText.textContent = 'waiting to start';
+      if (stageIndicator) stageIndicator.textContent = 'Stage 0 of 6';
+      if (statusText) {
+        statusText.textContent = 'Ready to run';
+        statusText.style.color = 'var(--muted)';
+      }
       if (panel) {
         panel.innerHTML = `
           <div class="stage-card-header">
-            <span class="stage-state-pill font-mono">READY</span>
             <h3 class="stage-heading">${escapeHtml(scenario.title)}</h3>
           </div>
-          <p style="color: var(--ink-dim); font-size: 0.95rem; margin: 12px 0 16px;">
-            Target: <strong>${escapeHtml(scenario.speaker)}</strong> (${escapeHtml(scenario.target)})
+          <p style="color: var(--ink-dim); font-size: 0.95rem; margin: 10px 0 14px;">
+            Target: <strong>${escapeHtml(scenario.speaker)}</strong> &middot; ${escapeHtml(scenario.target)}
           </p>
-          <div style="background: rgba(0,0,0,0.25); padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.86rem; color: var(--muted);" class="font-mono">
+          <div style="background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 0.85rem; color: var(--muted); word-break: break-all;" class="font-mono">
             Source: ${escapeHtml(scenario.sourceUrl)}
           </div>
-          <button type="button" class="btn btn-primary" id="btn-replay-start-inline" style="min-height: 44px;">
-            Start Pipeline Run &rarr;
-          </button>
+          <p style="color: var(--muted); font-size: 0.88rem; margin: 0; line-height: 1.5;">
+            Use the control above to step through all 6 verification stages: Source Fetch, Quote Extraction, Relevance Gate, Process Isolation, Deterministic Arbitration, and Public Ledger.
+          </p>
         `;
-        const startBtn = document.getElementById('btn-replay-start-inline');
-        if (startBtn) startBtn.addEventListener('click', runReplay);
       }
       return;
     }
 
     const stageData = scenario.stages[stageNum] || {};
     if (stageIndicator) {
-      stageIndicator.textContent = `STAGE ${stageNum} / 6 · ${stageData.badge || 'RUNNING'}`;
+      stageIndicator.textContent = `Stage ${stageNum} of 6`;
     }
     if (statusText) {
-      statusText.textContent = stageNum === 6 ? (scenario.expectedVerdict === 'quarantined' ? 'diverted to quarantine' : 'verified & delivered') : 'in progress';
+      if (stageNum === 6) {
+        if (scenario.expectedVerdict === 'broken') {
+          statusText.textContent = 'Verified Broken';
+          statusText.style.color = '#F87171';
+        } else if (scenario.expectedVerdict === 'quarantined') {
+          statusText.textContent = 'Diverted to Quarantine';
+          statusText.style.color = '#FBBF24';
+        } else {
+          statusText.textContent = 'Verified Kept';
+          statusText.style.color = '#34D399';
+        }
+      } else {
+        statusText.textContent = 'In progress';
+        statusText.style.color = 'var(--muted)';
+      }
     }
 
     if (panel) {
@@ -377,20 +443,31 @@
         `;
       }
 
-      panel.innerHTML = `
-        <div class="stage-card-header">
-          <h3 class="stage-heading" style="margin: 0;">${escapeHtml(stageData.title || `Stage ${stageNum}`)}</h3>
-          <span class="stage-state-pill font-mono done">${escapeHtml(stageData.badge || 'DONE')}</span>
-        </div>
-        ${alertHtml}
-        <p style="color: var(--ink); font-size: 0.95rem; line-height: 1.5; margin: 14px 0;">
-          ${escapeHtml(stageData.desc || '')}
-        </p>
-      `;
+      if (stageNum === 6) {
+        const vCls = scenario.expectedVerdict === 'broken' ? 'broken' : (scenario.expectedVerdict === 'quarantined' ? 'in-progress' : 'kept');
+        panel.innerHTML = `
+          <div class="stage-card-header" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <h3 class="stage-heading" style="margin: 0;">${escapeHtml(stageData.title || 'Verdict Ledger & Publication')}</h3>
+            <span class="verdict-chip ${vCls}">${escapeHtml(scenario.verdictLabel)}</span>
+          </div>
+          ${alertHtml}
+          ${stageData.desc ? `<p style="color: var(--ink); font-size: 0.95rem; line-height: 1.5; margin: 14px 0 0;">${escapeHtml(stageData.desc)}</p>` : ''}
+        `;
+      } else {
+        panel.innerHTML = `
+          <div class="stage-card-header">
+            <h3 class="stage-heading" style="margin: 0;">${escapeHtml(stageData.title || `Stage ${stageNum}`)}</h3>
+          </div>
+          ${alertHtml}
+          ${stageData.desc ? `<p style="color: var(--ink); font-size: 0.95rem; line-height: 1.5; margin: 14px 0 0;">${escapeHtml(stageData.desc)}</p>` : ''}
+        `;
+      }
     }
   }
 
   function advanceStep() {
+    clearTimeout(autoTimer);
+    isAutoRunning = false;
     if (currentStage >= 6) {
       currentStage = 1;
     } else {
