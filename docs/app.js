@@ -11,10 +11,13 @@
   // -------------------------------------------------------------------------
   let demoData = null;
   let activeTab = 'promises';
+  let activeViewMode = 'table';
   let filterVerdict = 'all';
   let filterCategory = 'all';
   let filterEntity = 'all';
   let filterTier = 'all';
+  let filterPillar = 'all';
+  let filterAuditFlag = 'all';
   let filterSort = 'rank';
   let searchTerm = '';
   let visibleRowsCount = 10;
@@ -647,6 +650,34 @@
     }).join('');
   }
 
+  function setViewMode(mode, shouldRender = true) {
+    activeViewMode = mode || 'table';
+    document.querySelectorAll('.btn-view-mode').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-view') === activeViewMode);
+    });
+    const tableEl = document.getElementById('promises-table-container');
+    const mapEl = document.getElementById('explore-map-view');
+    const entEl = document.getElementById('explore-entities-view');
+    const auditEl = document.getElementById('explore-audit-view');
+    const paginationEl = document.getElementById('pagination-controls');
+
+    if (activeTab !== 'promises') {
+      if (tableEl) tableEl.classList.add('hidden');
+      if (mapEl) mapEl.classList.add('hidden');
+      if (entEl) entEl.classList.add('hidden');
+      if (auditEl) auditEl.classList.add('hidden');
+      if (paginationEl) paginationEl.classList.add('hidden');
+      return;
+    }
+
+    if (tableEl) tableEl.classList.toggle('hidden', activeViewMode !== 'table');
+    if (mapEl) mapEl.classList.toggle('hidden', activeViewMode !== 'map');
+    if (entEl) entEl.classList.toggle('hidden', activeViewMode !== 'entities');
+    if (auditEl) auditEl.classList.toggle('hidden', activeViewMode !== 'audit');
+    if (paginationEl) paginationEl.classList.toggle('hidden', activeViewMode !== 'table');
+    if (shouldRender) renderExplore();
+  }
+
   function setTab(tabName) {
     activeTab = tabName;
     const tabPromises = document.getElementById('tab-btn-promises');
@@ -658,6 +689,7 @@
     const moreFiltersPanel = document.getElementById('more-filters-panel');
     const showingStatus = document.getElementById('table-showing-status');
     const paginationControls = document.getElementById('pagination-controls');
+    const viewSwitcher = document.getElementById('view-mode-switcher');
 
     if (tabName === 'quarantine') {
       if (tabPromises) {
@@ -669,12 +701,14 @@
         tabQuarantine.setAttribute('aria-selected', 'true');
       }
 
-      // Hide verified-only controls
+      // Hide verified-only controls and alternate views
+      if (viewSwitcher) viewSwitcher.classList.add('hidden');
       if (primaryControls) primaryControls.classList.add('hidden');
       if (moreFiltersPanel) moreFiltersPanel.classList.add('hidden');
       if (showingStatus) showingStatus.classList.add('hidden');
       if (paginationControls) paginationControls.classList.add('hidden');
       if (tablePromises) tablePromises.classList.add('hidden');
+      setViewMode(activeViewMode, false);
 
       // Show quarantine elements
       if (qHeader) qHeader.classList.remove('hidden');
@@ -690,14 +724,15 @@
       }
 
       // Restore verified controls
+      if (viewSwitcher) viewSwitcher.classList.remove('hidden');
       if (primaryControls) primaryControls.classList.remove('hidden');
       if (showingStatus) showingStatus.classList.remove('hidden');
-      if (paginationControls) paginationControls.classList.remove('hidden');
-      if (tablePromises) tablePromises.classList.remove('hidden');
 
       // Hide quarantine elements
       if (qHeader) qHeader.classList.add('hidden');
       if (containerQuarantine) containerQuarantine.classList.add('hidden');
+
+      setViewMode(activeViewMode, true);
     }
   }
 
@@ -740,11 +775,25 @@
       list = list.filter(p => getSourceTier(p.source_url).toLowerCase() === filterTier.toLowerCase());
     }
 
+    // Pillar filter
+    if (filterPillar !== 'all') {
+      list = list.filter(p => (p.pillar || '') === filterPillar);
+    }
+
+    // Audit & Evidence Flag filter
+    if (filterAuditFlag === 'exceptions') {
+      list = list.filter(p => p.all_checks_passed === false || (p.failed_check_count || 0) > 0);
+    } else if (filterAuditFlag === 'contradictions') {
+      list = list.filter(p => Boolean(p.has_contradictory_evidence));
+    } else if (filterAuditFlag === 'exact_pin') {
+      list = list.filter(p => p.is_centroid === false);
+    }
+
     // Keyword search
     if (searchTerm.trim()) {
       const q = searchTerm.toLowerCase().trim();
       list = list.filter(p => {
-        const text = `${p.promise_id} ${p.entity} ${p.role || ''} ${p.promise_text} ${p.neighborhood || ''} ${p.category}`.toLowerCase();
+        const text = `${p.promise_id} ${p.entity} ${p.entity_canonical_name || ''} ${p.role || ''} ${p.promise_text} ${p.factual_outcome || ''} ${p.neighborhood || ''} ${p.category} ${p.pillar || ''}`.toLowerCase();
         return text.includes(q);
       });
     }
@@ -811,9 +860,9 @@
         const promiseRaw = cleanQuoteText(p.promise_text || '');
         const promiseClamped = escapeHtml(promiseRaw.slice(0, 150) + (promiseRaw.length > 150 ? '…' : ''));
         const outcomeReason = escapeHtml(formatPlainVerdictReason(p.verdict_reason, p.verdict));
-        let promised = escapeHtml(p.promised_date || 'not recorded');
+        let promised = escapeHtml(p.promised_date_display || formatPrecisionDate(p.promised_date, p.promise_date_precision) || 'not recorded');
         if (p.promised_date_note) promised += ' (derived)';
-        const due = escapeHtml(p.due_date || 'No deadline');
+        const due = escapeHtml(p.due_date_display || (p.due_date ? formatPrecisionDate(p.due_date, p.due_date_precision) : 'No deadline'));
         const done = escapeHtml(p.opened_date || p.completed_date || (p.verdict === 'kept' ? 'Verified completed' : '—'));
         const verdict = p.verdict || 'undecided';
         const verdClass = verdict.toLowerCase().replace(/[\s-]+/g, '_');
@@ -851,6 +900,363 @@
         `;
       }).join('');
     }
+
+    if (activeViewMode === 'map') {
+      renderMapAndDistrictsView(list);
+    } else if (activeViewMode === 'entities') {
+      renderEntityProfilesView(list);
+    } else if (activeViewMode === 'audit') {
+      renderQualityAuditView();
+    }
+  }
+
+  function renderMapAndDistrictsView(list) {
+    const mapWrap = document.getElementById('sf-svg-map-wrap');
+    const selectedCard = document.getElementById('map-selected-card');
+    const districtBars = document.getElementById('district-bars-list');
+    if (!mapWrap || !districtBars) return;
+
+    const minLat = 37.704;
+    const maxLat = 37.836;
+    const minLon = -122.516;
+    const maxLon = -122.354;
+    const W = 560;
+    const H = 430;
+
+    function projectSF(lat, lon) {
+      const x = ((lon - minLon) / (maxLon - minLon)) * (W - 60) + 30;
+      const y = ((maxLat - lat) / (maxLat - minLat)) * (H - 70) + 28;
+      return { x: Math.max(24, Math.min(W - 24, x)), y: Math.max(24, Math.min(H - 36, y)) };
+    }
+
+    function projectSFO(lat, lon) {
+      const x = ((lon - (-122.405)) / (-122.365 - (-122.405))) * 116 + 426;
+      const y = ((37.638 - lat) / (37.638 - 37.605)) * 78 + 332;
+      return { x: Math.max(428, Math.min(540, x)), y: Math.max(336, Math.min(408, y)) };
+    }
+
+    const verdictColor = {
+      kept: '#10B981',
+      broken: '#EF4444',
+      in_progress: '#F59E0B',
+      undecided: '#94A3B8'
+    };
+
+    const sfOutlinePath = 'M 55,298 L 62,210 L 66,142 L 88,92 L 154,68 L 238,68 L 315,76 L 372,110 L 398,176 L 408,248 L 392,302 L 320,312 L 222,312 L 125,308 Z';
+    const tiPath = 'M 412,56 L 434,54 L 438,84 L 414,88 Z';
+    const ggpPath = 'M 68,178 L 166,174 L 166,192 L 68,196 Z';
+
+    const pins = [];
+    const regionalItems = [];
+    (list || []).forEach(p => {
+      const lat = Number(p.latitude);
+      const lon = Number(p.longitude);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+      const inSFO = lat >= 37.59 && lat <= 37.65 && lon >= -122.42 && lon <= -122.35;
+      const inSF = lat >= minLat && lat <= maxLat && lon >= minLon && lon <= maxLon;
+      if (!inSF && !inSFO) {
+        regionalItems.push(p);
+        return;
+      }
+      const pt = inSFO ? projectSFO(lat, lon) : projectSF(lat, lon);
+      pins.push({ p, x: pt.x, y: pt.y, inSFO });
+    });
+
+    const markersSvg = pins.map(({ p, x, y }) => {
+      const v = (p.verdict || 'undecided').toLowerCase();
+      const color = verdictColor[v] || '#94A3B8';
+      const isCentroid = p.is_centroid !== false;
+      const pid = escapeHtml(p.promise_id || '');
+      const title = escapeHtml(`${p.entity}: ${p.neighborhood || 'San Francisco'}`);
+      return `
+        <g class="map-pin-node" data-promise-id="${pid}" tabindex="0" role="button" aria-label="${title}" style="cursor:pointer;">
+          ${isCentroid ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9.5" fill="none" stroke="${color}" stroke-width="1.4" stroke-dasharray="2.5 2" opacity="0.78"/>` : ''}
+          <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${isCentroid ? '4.8' : '6.5'}" fill="${color}" fill-opacity="${isCentroid ? '0.68' : '0.96'}" stroke="#0B1120" stroke-width="1.5">
+            <title>${title} (${isCentroid ? 'Display Centroid' : 'Exact Address'})</title>
+          </circle>
+        </g>
+      `;
+    }).join('');
+
+    const regionalHtml = regionalItems.length > 0 ? `
+      <div class="map-regional-strip font-mono">
+        <span class="regional-strip-label">REGIONAL / STATEWIDE DISPLAY CENTROIDS (${regionalItems.length}):</span>
+        ${regionalItems.map(p => `<button type="button" class="btn-regional-pin" data-promise-id="${escapeHtml(p.promise_id)}">${escapeHtml(p.promise_id)} · ${escapeHtml(p.entity)}</button>`).join('')}
+      </div>
+    ` : '';
+
+    mapWrap.innerHTML = `
+      <svg class="sf-svg-map" viewBox="0 0 ${W} ${H}" role="img" aria-label="San Francisco commitment coordinates map">
+        <rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="#0B1324" />
+        <path d="${sfOutlinePath}" fill="#131E36" stroke="#2D3E5E" stroke-width="1.5" />
+        <path d="${tiPath}" fill="#172542" stroke="#364B73" stroke-width="1.2" />
+        <path d="${ggpPath}" fill="#12302B" stroke="#1E4D42" stroke-width="1" />
+        <text x="115" y="189" fill="#64748B" font-size="9" font-family="monospace">GOLDEN GATE PARK</text>
+        <text x="275" y="138" fill="#64748B" font-size="9" font-family="monospace">TENDERLOIN / SOMA</text>
+        <text x="225" y="232" fill="#64748B" font-size="9" font-family="monospace">MISSION</text>
+        <text x="415" y="47" fill="#64748B" font-size="8.5" font-family="monospace">TREASURE ISL.</text>
+        <rect x="422" y="322" width="124" height="94" rx="6" fill="#0F192E" stroke="#334155" stroke-width="1" />
+        <text x="430" y="335" fill="#94A3B8" font-size="8.5" font-family="monospace">SFO INSET (AIRPORT)</text>
+        ${markersSvg}
+      </svg>
+      ${regionalHtml}
+    `;
+
+    mapWrap.querySelectorAll('[data-promise-id]').forEach(node => {
+      const handler = () => {
+        const pid = node.getAttribute('data-promise-id');
+        const p = (demoData && demoData.promises || []).find(item => item.promise_id === pid);
+        if (!p || !selectedCard) return;
+        selectedCard.classList.remove('hidden');
+        selectedCard.innerHTML = `
+          <div class="map-selected-top">
+            <span class="verdict-chip ${(p.verdict || '').toLowerCase()}">${formatVerdictLabel(p.verdict)}</span>
+            <span class="font-mono" style="font-size:0.76rem;color:var(--muted);">${escapeHtml(p.promise_id)} · ${p.is_centroid === false ? 'Exact Street Location' : 'Display Centroid'} (${escapeHtml((p.geographic_scope || 'citywide').replace('_', ' '))})</span>
+          </div>
+          <div class="map-selected-title">${escapeHtml(p.entity)} — ${escapeHtml(p.neighborhood || 'San Francisco')}</div>
+          <p class="map-selected-outcome">${escapeHtml(p.factual_outcome || p.promise_text || '')}</p>
+          <button type="button" class="btn-map-inspect" data-inspect-id="${escapeHtml(p.promise_id)}">Inspect full commitment &rarr;</button>
+        `;
+        const inspBtn = selectedCard.querySelector('.btn-map-inspect');
+        if (inspBtn) {
+          inspBtn.addEventListener('click', () => openInspectDrawer(p.promise_id));
+        }
+      };
+      node.addEventListener('click', handler);
+      node.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handler();
+        }
+      });
+    });
+
+    const districtCounts = {};
+    for (let i = 1; i <= 11; i++) districtCounts[`D${i}`] = 0;
+    let citywideCount = 0;
+    (list || []).forEach(p => {
+      const rawDist = p.supervisor_district;
+      const d = (rawDist !== null && rawDist !== undefined && rawDist !== '')
+        ? `D${String(rawDist).trim().replace(/^D/i, '')}`
+        : '';
+      if (/^D\d+$/.test(d) && Object.prototype.hasOwnProperty.call(districtCounts, d)) {
+        districtCounts[d] += 1;
+      } else {
+        citywideCount += 1;
+      }
+    });
+
+    const intakeDist = (demoData && demoData.database_status && demoData.database_status.sourcing_audit && demoData.database_status.sourcing_audit.qualified_district_distribution) || {};
+    const maxCount = Math.max(8, ...Object.values(districtCounts));
+
+    districtBars.innerHTML = Object.keys(districtCounts).map(dist => {
+      const pub = districtCounts[dist];
+      const intake = intakeDist[dist] || 0;
+      const pct = Math.round((pub / maxCount) * 100);
+      return `
+        <div class="district-bar-row">
+          <span class="district-code font-mono">${dist}</span>
+          <div class="district-bar-track">
+            <div class="district-bar-fill ${pub === 0 ? 'gap' : ''}" style="width:${Math.max(pub > 0 ? 8 : 0, pct)}%;"></div>
+          </div>
+          <span class="district-bar-counts font-mono">${pub} pub${intake > 0 ? ` · +${intake} intake` : ''}</span>
+        </div>
+      `;
+    }).join('') + `
+      <div class="district-citywide-note font-mono">
+        Citywide / Regional (non-district-pinned): <strong>${citywideCount}</strong> commitments
+      </div>
+    `;
+  }
+
+  function renderEntityProfilesView(list) {
+    const grid = document.getElementById('entities-profiles-grid');
+    if (!grid) return;
+
+    const groups = new Map();
+    (list || []).forEach(p => {
+      const name = p.entity_canonical_name || p.entity || 'Unknown';
+      if (!groups.has(name)) {
+        groups.set(name, {
+          name,
+          category: p.entity_category_canonical || 'city_government',
+          datasetTotal: p.entity_promise_count || 1,
+          sampleWarning: Boolean(p.entity_sample_warning),
+          kept: 0,
+          broken: 0,
+          inProgress: 0,
+          undecided: 0,
+          items: []
+        });
+      }
+      const g = groups.get(name);
+      g.items.push(p);
+      const v = (p.verdict || '').toLowerCase();
+      if (v === 'kept') g.kept += 1;
+      else if (v === 'broken') g.broken += 1;
+      else if (v === 'in_progress') g.inProgress += 1;
+      else g.undecided += 1;
+    });
+
+    const sorted = Array.from(groups.values()).sort((a, b) => (b.items.length - a.items.length) || a.name.localeCompare(b.name));
+    if (sorted.length === 0) {
+      grid.innerHTML = '<div class="empty-state-box">No entities match current filters.</div>';
+      return;
+    }
+
+    grid.innerHTML = sorted.map(g => {
+      const tot = g.items.length;
+      const keptPct = Math.round((g.kept / tot) * 100);
+      const progPct = Math.round((g.inProgress / tot) * 100);
+      const brokPct = Math.max(0, 100 - keptPct - progPct);
+      const catLabel = g.category.replace(/_/g, ' ');
+      const cautionBadge = (g.datasetTotal < 3 || g.sampleWarning)
+        ? `<span class="caution-badge-n1 font-mono" title="Small sample size: fewer than 3 tracked commitments">n=${g.datasetTotal} caution</span>`
+        : `<span class="entity-count-pill font-mono">${g.datasetTotal} tracked</span>`;
+
+      return `
+        <div class="entity-profile-card">
+          <div class="entity-card-top">
+            <div>
+              <h4 class="entity-card-name">${escapeHtml(g.name)}</h4>
+              <span class="entity-card-cat font-mono">${escapeHtml(catLabel)}</span>
+            </div>
+            ${cautionBadge}
+          </div>
+          <div class="entity-stacked-bar" aria-label="Verdict breakdown">
+            ${g.kept > 0 ? `<span style="width:${keptPct}%;background:#10B981;" title="${g.kept} Kept"></span>` : ''}
+            ${g.inProgress > 0 ? `<span style="width:${progPct}%;background:#F59E0B;" title="${g.inProgress} In Progress"></span>` : ''}
+            ${g.broken > 0 ? `<span style="width:${brokPct}%;background:#EF4444;" title="${g.broken} Broken"></span>` : ''}
+            ${g.undecided > 0 ? `<span style="width:100%;background:#64748B;" title="${g.undecided} Undecided"></span>` : ''}
+          </div>
+          <div class="entity-verdict-summary font-mono">
+            <span>${g.kept} kept</span> · <span>${g.inProgress} in prog</span> · <span>${g.broken} broken</span>
+          </div>
+          <div class="entity-item-links">
+            ${g.items.slice(0, 3).map(item => `
+              <button type="button" class="btn-entity-promise-link" data-promise-id="${escapeHtml(item.promise_id)}">
+                <span class="font-mono">${escapeHtml(item.promise_id)}</span>
+                <span>${escapeHtml((item.document_title || item.title || item.promise_text || '').slice(0, 48))}…</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    grid.querySelectorAll('.btn-entity-promise-link').forEach(btn => {
+      btn.addEventListener('click', () => openInspectDrawer(btn.getAttribute('data-promise-id')));
+    });
+  }
+
+  function renderQualityAuditView() {
+    const kpisEl = document.getElementById('audit-kpis-grid');
+    const matrixEl = document.getElementById('audit-pillar-matrix');
+    const queueEl = document.getElementById('audit-review-queue-list');
+    if (!kpisEl || !matrixEl || !queueEl || !demoData) return;
+
+    const db = demoData.database_status || {};
+    const recon = db.evidence_reconciliation || {};
+    const q = db.evidence_review_queue || {};
+    const sourcing = db.sourcing_audit || {};
+    const promises = demoData.promises || [];
+
+    const passCount = promises.filter(p => p.all_checks_passed !== false).length;
+    const failPromCount = promises.length - passCount;
+    const contradictionCount = promises.filter(p => p.has_contradictory_evidence).length;
+
+    kpisEl.innerHTML = `
+      <div class="audit-kpi-card">
+        <div class="audit-kpi-label font-mono">DETERMINISTIC CHECKS</div>
+        <div class="audit-kpi-value">${passCount} / ${promises.length} pass</div>
+        <div class="audit-kpi-sub">${failPromCount} commitments have ${q.total_verification_exception_checks || 22} flagged/unrecorded checks</div>
+      </div>
+      <div class="audit-kpi-card">
+        <div class="audit-kpi-label font-mono">EVIDENCE RECONCILIATION</div>
+        <div class="audit-kpi-value">${recon.total_database_evidence_records || 124} DB rows</div>
+        <div class="audit-kpi-sub">${recon.verdict_cited_evidence_records || 99} verdict + ${recon.background_context_records || 11} background + ${recon.intake_screening_records || 8} intake + ${recon.duplicate_or_superseded_records || 6} dup</div>
+      </div>
+      <div class="audit-kpi-card">
+        <div class="audit-kpi-label font-mono">CONTRADICTORY CLAIMS</div>
+        <div class="audit-kpi-value">${contradictionCount} / ${promises.length}</div>
+        <div class="audit-kpi-sub">Adjudicated with dual supporting &amp; refuting summaries</div>
+      </div>
+      <div class="audit-kpi-card">
+        <div class="audit-kpi-label font-mono">OUTCOME-BLIND INTAKE</div>
+        <div class="audit-kpi-value">${sourcing.qualified_count || 24} qualified</div>
+        <div class="audit-kpi-sub">From ${sourcing.encountered_count || 63} discovered (${sourcing.needs_review_count || 38} review, ${sourcing.rejected_count || 1} rejected)</div>
+      </div>
+    `;
+
+    const pillarNames = [
+      'Civic Life',
+      'Housing & Neighborhoods',
+      'Transit & Movement',
+      'Weather & Environment',
+      'Work & Opportunity',
+      'Sports & Recreation',
+      'Arts, Music & Nightlife',
+      'Food & Local Business',
+      'People & Demographics',
+      'Culture & Social Life'
+    ];
+    const pubByPillar = {};
+    promises.forEach(p => {
+      const k = p.pillar || 'Civic Life';
+      pubByPillar[k] = (pubByPillar[k] || 0) + 1;
+    });
+    const intakeByPillar = sourcing.qualified_pillar_distribution || {};
+
+    matrixEl.innerHTML = pillarNames.map(pillar => {
+      const pub = pubByPillar[pillar] || 0;
+      const intake = intakeByPillar[pillar] || 0;
+      const isGap = pub === 0;
+      return `
+        <div class="pillar-matrix-row ${isGap ? 'gap-row' : ''}">
+          <span class="pillar-name">${escapeHtml(pillar)}</span>
+          <span class="pillar-counts font-mono">${pub} published · <strong>+${intake} intake</strong></span>
+        </div>
+      `;
+    }).join('');
+
+    const queueItems = [];
+    promises.forEach(p => {
+      if (p.all_checks_passed === false || (p.failed_check_count || 0) > 0) {
+        const names = Array.isArray(p.failed_check_names) && p.failed_check_names.length
+          ? p.failed_check_names.join(', ')
+          : `${p.failed_check_count || 1} flagged check(s)`;
+        queueItems.push({
+          priority: 'P2 · CHECK',
+          promise_id: p.promise_id,
+          entity: p.entity_canonical_name || p.entity || '',
+          reason: `Verification exceptions: ${names}`
+        });
+      }
+    });
+    promises.forEach(p => {
+      if (p.has_contradictory_evidence) {
+        queueItems.push({
+          priority: 'P3 · CONTRA',
+          promise_id: p.promise_id,
+          entity: p.entity_canonical_name || p.entity || '',
+          reason: `Contradictory evidence (${p.verdict_supporting_evidence_count || 0} supporting vs ${p.verdict_contradicting_evidence_count || 0} refuting)`
+        });
+      }
+    });
+
+    queueEl.innerHTML = queueItems.slice(0, 18).map(item => `
+      <button type="button" class="audit-queue-item" data-promise-id="${escapeHtml(item.promise_id)}">
+        <span class="queue-priority-tag font-mono">${escapeHtml(item.priority)}</span>
+        <div class="queue-item-body">
+          <div class="queue-item-head">${escapeHtml(item.promise_id)} · ${escapeHtml(item.entity)}</div>
+          <div class="queue-item-reason">${escapeHtml(item.reason)}</div>
+        </div>
+      </button>
+    `).join('');
+
+    queueEl.querySelectorAll('.audit-queue-item').forEach(btn => {
+      btn.addEventListener('click', () => openInspectDrawer(btn.getAttribute('data-promise-id')));
+    });
   }
 
   // -------------------------------------------------------------------------
@@ -878,13 +1284,14 @@
     if (idBadge) idBadge.textContent = `#${rank}`;
 
     const isCorporate = /visa|pg&e|pacific gas|comcast|waymo|zoox|at&t/i.test(p.entity || '') || /corporate/i.test(p.role || '');
-    const geoScope = p.geographic_scope ? p.geographic_scope.replace('_', ' ') : 'citywide';
+    const scopeRaw = p.geographic_scope ? p.geographic_scope.replace('_', ' ') : 'citywide';
+    const geoPinLabel = p.is_centroid === false ? `Exact Address (${scopeRaw})` : `Display Centroid (${scopeRaw})`;
     if (subtitleEl) {
       if (isCorporate) {
-        subtitleEl.textContent = `${p.entity} · Corporate Entity · Scope: ${geoScope}`;
+        subtitleEl.textContent = `${p.entity} · Corporate Entity · ${geoPinLabel}`;
       } else {
         const loc = (p.neighborhood && p.neighborhood !== 'Citywide') ? p.neighborhood : (p.role || 'San Francisco');
-        subtitleEl.textContent = `${p.entity} · ${loc} · Scope: ${geoScope}`;
+        subtitleEl.textContent = `${p.entity} · ${loc} · ${geoPinLabel}`;
       }
     }
     if (titleEl) {
@@ -974,7 +1381,14 @@
     if (spkVal) spkVal.textContent = isCorporate ? `${p.entity} (Corporate / Commercial Entity)` : `${p.entity} (${p.role || 'Public Official'})`;
     const saidDateFormatted = formatPrecisionDate(p.promised_date, p.promise_date_precision);
     if (saidVal) saidVal.textContent = saidDateFormatted + (p.promise_date_precision && p.promise_date_precision !== 'day' ? ` (${p.promise_date_precision})` : '');
-    const dueDateFormatted = p.due_date ? formatPrecisionDate(p.due_date, p.due_date_precision) : 'No deadline';
+    const dueStatusLabels = {
+      not_applicable: 'No deadline (not applicable)',
+      not_yet_known: 'Pending (not yet known)',
+      not_captured: 'Not captured in source'
+    };
+    const dueDateFormatted = p.due_date
+      ? formatPrecisionDate(p.due_date, p.due_date_precision)
+      : (dueStatusLabels[p.due_date_status] || 'No deadline');
     if (dueVal) dueVal.textContent = dueDateFormatted + (p.due_date && p.due_date_precision && p.due_date_precision !== 'day' ? ` (${p.due_date_precision})` : '');
     if (tierVal) tierVal.textContent = tier;
     if (srcUrl) {
@@ -1022,11 +1436,19 @@
     // Contradiction banner
     const contradictionBanner = document.getElementById('drawer-contradiction-banner');
     if (contradictionBanner) {
-      if ((kClaims.length > 0 && bClaims.length > 0) || (bundles.broken && bundles.broken.note && /interim|conflict|competing|contradict/i.test(bundles.broken.note))) {
+      const hasContra = Boolean(p.has_contradictory_evidence) || (kClaims.length > 0 && bClaims.length > 0) || (bundles.broken && bundles.broken.note && /interim|conflict|competing|contradict/i.test(bundles.broken.note));
+      if (hasContra) {
+        const supCount = p.verdict_supporting_evidence_count !== undefined ? p.verdict_supporting_evidence_count : kClaims.length;
+        const conCount = p.verdict_contradicting_evidence_count !== undefined ? p.verdict_contradicting_evidence_count : bClaims.length;
+        const supSum = p.supporting_evidence_summary || '';
+        const conSum = p.contradicting_evidence_summary || '';
+        const arbRule = p.arbitration_rule_explanation || (p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id));
         contradictionBanner.innerHTML = `
           <div class="contradiction-adjudication-box font-mono">
-            <h4>⚖ Contradictory Evidence Adjudicated (${kClaims.length} supporting vs ${bClaims.length} against)</h4>
-            <p>Both affirmative and contradictory claims were evaluated under deterministic arbitration. Outcome: ${escapeHtml(p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id))}</p>
+            <h4>&#9878; Contradictory Evidence Adjudicated (${supCount} supporting vs ${conCount} contradicting)</h4>
+            ${supSum ? `<p><strong>Supporting case:</strong> ${escapeHtml(supSum)}</p>` : ''}
+            ${conSum ? `<p><strong>Contradicting case:</strong> ${escapeHtml(conSum)}</p>` : ''}
+            <p><strong>Arbitration ruling:</strong> ${escapeHtml(arbRule)}</p>
           </div>
         `;
         contradictionBanner.style.display = 'block';
@@ -1145,6 +1567,7 @@
     ];
 
     let failedCheckCount = 0;
+    const failedNameSet = new Set(Array.isArray(p.failed_check_names) ? p.failed_check_names : []);
     const resolvedChecks = checkDefinitions.map(def => {
       if (def.id === 'relevance_gate') {
         const pass = relScore >= 5;
@@ -1157,27 +1580,30 @@
       }
       const item = checkMap[def.id];
       if (item) {
-        const pass = Boolean(item.passed);
+        const pass = item.passed === true;
         if (!pass) failedCheckCount++;
         return {
           title: def.title,
           pass,
-          desc: item.reason || (pass ? 'Check passed.' : 'Verification check failed.')
+          desc: item.reason || (pass ? 'Check passed.' : 'Verification check failed or unrecorded.')
         };
       }
+      const flaggedMissing = failedNameSet.has(def.id);
+      if (flaggedMissing) failedCheckCount++;
       return {
         title: def.title,
-        pass: true,
-        desc: def.defaultDesc
+        pass: !flaggedMissing,
+        desc: flaggedMissing ? 'Verification check failed or unrecorded.' : def.defaultDesc
       };
     });
 
     if (checksList) {
       let bannerHtml = '';
-      if (failedCheckCount > 0) {
-        bannerHtml = `<div class="checks-summary-banner fail font-mono">⚠ ${failedCheckCount} Verification Exception${failedCheckCount > 1 ? 's' : ''} Flagged (${7 - failedCheckCount}/7 passed)</div>`;
+      const reportedFailures = Math.max(failedCheckCount, p.failed_check_count || 0);
+      if (reportedFailures > 0 || p.all_checks_passed === false) {
+        bannerHtml = `<div class="checks-summary-banner fail font-mono">&#9888; ${reportedFailures} Verification Exception${reportedFailures > 1 ? 's' : ''} Flagged (${Math.max(0, 7 - reportedFailures)}/7 passed)</div>`;
       } else {
-        bannerHtml = `<div class="checks-summary-banner pass font-mono">✓ All 7 Deterministic Checks Passed (${relScore}/8 Relevance)</div>`;
+        bannerHtml = `<div class="checks-summary-banner pass font-mono">&#10003; All 7 Deterministic Checks Passed (${relScore}/8 Relevance)</div>`;
       }
 
       checksList.innerHTML = bannerHtml + resolvedChecks.map(c => `
@@ -1356,10 +1782,39 @@
       });
     }
 
+    // View mode switcher buttons (Table | Map & Districts | Entity Profiles | Quality Audit)
+    document.querySelectorAll('.btn-view-mode').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.getAttribute('data-view') || 'table';
+        if (activeTab !== 'promises') {
+          setTab('promises');
+        }
+        setViewMode(view, true);
+      });
+    });
+
     const fTier = document.getElementById('filter-tier');
     if (fTier) {
       fTier.addEventListener('change', () => {
         filterTier = fTier.value;
+        visibleRowsCount = 10;
+        renderExplore();
+      });
+    }
+
+    const fPillar = document.getElementById('filter-pillar');
+    if (fPillar) {
+      fPillar.addEventListener('change', () => {
+        filterPillar = fPillar.value;
+        visibleRowsCount = 10;
+        renderExplore();
+      });
+    }
+
+    const fAuditFlag = document.getElementById('filter-audit-flag');
+    if (fAuditFlag) {
+      fAuditFlag.addEventListener('change', () => {
+        filterAuditFlag = fAuditFlag.value;
         visibleRowsCount = 10;
         renderExplore();
       });
@@ -1388,12 +1843,16 @@
         filterCategory = 'all';
         filterEntity = 'all';
         filterTier = 'all';
+        filterPillar = 'all';
+        filterAuditFlag = 'all';
         filterSort = 'rank';
         visibleRowsCount = 10;
         if (searchInput) searchInput.value = '';
         if (fCat) fCat.value = 'all';
         if (fEnt) fEnt.value = 'all';
         if (fTier) fTier.value = 'all';
+        if (fPillar) fPillar.value = 'all';
+        if (fAuditFlag) fAuditFlag.value = 'all';
         if (fSort) fSort.value = 'rank';
         document.querySelectorAll('.btn-seg-verdict').forEach(b => {
           b.classList.toggle('active', b.getAttribute('data-verdict') === 'all');
@@ -1602,7 +2061,7 @@
 
     // Keep active stepper indicator centered on resize
     window.addEventListener('resize', () => {
-      renderActiveStage(currentScenario, currentStage);
+      renderActiveStage(currentRunType, currentStage);
     });
   }
 

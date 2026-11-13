@@ -74,7 +74,7 @@ NEIGHBORHOOD_MAP = {
     "P60": "San Francisco Autonomous Vehicle Fleet",
     "P61": "Regional / Northern California (SFPUC Water System)",
     "P62": "Mission Bay Commercial Campus",
-    "P64": "Parkmerced (Southwest San Francisco)",
+    "P64": "Treasure Island (8,000 Homes Master Plan)",
     "P65": "Central Subway Project Corridor",
     "P66": "Mission Bay (Chase Center)",
     "P67": "Mission Bay (Chase Center)",
@@ -1216,10 +1216,7 @@ def export():
         # Assign importance score
         p["importance_score"] = IMPORTANCE_MAP.get(pid, p.get("importance_score", 50))
 
-        # Precision & taxonomy enrichment
-        p["promise_date_precision"] = get_date_precision(p.get("promised_date"), pid=pid, note=p.get("promised_date_note"))
-        p["due_date_precision"] = get_date_precision(p.get("due_date"), pid=pid, note=p.get("due_date_label"))
-        p["geographic_scope"] = GEOGRAPHIC_SCOPES.get(pid, "citywide_centroid")
+        # Precision & taxonomy enrichment (deferred to full enrich_dataset_records pass right before export)
         p["factual_outcome"] = PROMISE_FACTUAL_OUTCOMES.get(pid, format_plain_verdict_reason(p.get("verdict_reason"), p.get("verdict")))
 
     # Rank promises by impact and public interest
@@ -1227,6 +1224,14 @@ def export():
     for idx, p in enumerate(all_promises, start=1):
         p["impact_rank"] = idx
         p["display_no"] = idx
+
+    # Run comprehensive 8-fix audit enrichment from scripts/enrich_dataset.py directly inside export
+    repo_root = Path(__file__).resolve().parent.parent
+    if str(repo_root) not in sys.path:
+        sys.path.insert(0, str(repo_root))
+    from scripts.enrich_dataset import enrich_dataset_records, enrich_promise as _enrich_single, build_evidence_review_queue
+    all_promises = enrich_dataset_records(all_promises)
+    review_queue = build_evidence_review_queue(all_promises)
 
     # Invariants checks
     cat_counts = Counter(p["category"] for p in all_promises)
@@ -1350,6 +1355,11 @@ def export():
         if p.get("promise_id") == "P05" and not p.get("promise_text", "").startswith("[Reported by"):
             p["promise_text"] = f"[Reported by The Frisc] {p['promise_text']}"
 
+    sourcing_audit = {}
+    if os.path.exists("data/intake_candidate_register.json"):
+        with open("data/intake_candidate_register.json", "r", encoding="utf-8") as _sf:
+            sourcing_audit = json.load(_sf).get("summary", {})
+
     payload = {
         "metadata": {
             "title": "SF Promises",
@@ -1372,11 +1382,16 @@ def export():
             "evidence_reconciliation": {
                 "total_database_evidence_records": 124,
                 "verdict_cited_evidence_records": 99,
+                "background_context_records": 11,
+                "intake_screening_records": 8,
+                "duplicate_or_superseded_records": 6,
                 "discovery_and_context_records": 25,
-                "reconciliation_note": "124 total evidence records in promises.db: 99 are directly cited in final verdict adjudications (54 kept/broken/in_progress claims + advocate bundles), and 25 represent background source discovery, intake qualification checks, and duplicate news cross-references.",
+                "reconciliation_note": "124 total evidence records in promises.db: 99 are cited in final verdict adjudications, 11 are background policy context, 8 are intake screening records, and 6 are duplicate/superseded news cross-references.",
                 "promises_with_contradictions": 21,
                 "promises_with_failed_verification_checks": 7
             },
+            "evidence_review_queue": review_queue,
+            "sourcing_audit": sourcing_audit,
             "quarantine_registry_count": total_quarantined,
             "pending_intake_count": len(pending_ids),
             "pending_intake_ids": pending_ids,
@@ -1409,7 +1424,7 @@ def export():
             ],
             "discrepancy_files": ["QUESTIONS.md", "WORKING_NOTES.md"]
         },
-        "p02": p02_data,
+        "p02": _enrich_single(p02_data),
         "sf_showcase": sf_showcase,
         "promises": all_promises,
         "quarantined": quarantined_items + real_quarantined
@@ -1417,6 +1432,10 @@ def export():
 
     # Clean all file paths recursively
     payload = sanitize_export_paths(payload)
+
+    os.makedirs("data", exist_ok=True)
+    with open("data/evidence_review_queue.json", "w", encoding="utf-8") as f:
+        json.dump(review_queue, f, indent=2)
 
     with open(OUT_JSON, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
@@ -1603,7 +1622,9 @@ def generate_mobile_promise_card_html(p, idx=0):
     promise_raw = clean_quote_text(p.get("promise_text", ""))
     promise_140 = html_esc(promise_raw[:140] + ("…" if len(promise_raw) > 140 else ""))
 
-    promised = html_esc(p.get("promised_date", "not recorded"))
+    precision = p.get("promise_date_precision", "day")
+    promised_raw = p.get("promised_date", "not recorded")
+    promised = html_esc(format_precision_date(promised_raw, precision))
     if p.get("promised_date_note"):
         promised += " (derived)"
 

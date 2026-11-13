@@ -6,7 +6,10 @@ __pycache__/
 *.sqlite3
 *.sqlite-wal
 *.sqlite-shm
-data/
+/data/*
+!/data/*.csv
+!/data/*.json
+.agents/skills/impeccable/scripts/data/
 video/node_modules/
 video/out/
 video/public/rec/

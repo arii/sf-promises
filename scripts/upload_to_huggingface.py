@@ -1,31 +1,42 @@
 #!/usr/bin/env python3
 """
-Upload enriched SF Promises dataset, schema, summary, and SQLite database to Hugging Face Hub (onasafari/sf-promises)
+Stage, validate, and upload the enriched SF Promises dataset, multi-config splits,
+schema, summary, and SQLite database to Hugging Face Hub (onasafari/sf-promises).
 """
 
-import os
+import argparse
 import csv
 import json
+import os
 import shutil
 import sqlite3
 from collections import Counter
-from huggingface_hub import HfApi
 
 REPO_ID = "onasafari/sf-promises"
-STAGING_DIR = "/tmp/hf_sf_promises_dataset"
-os.makedirs(STAGING_DIR, exist_ok=True)
+DEFAULT_STAGING_DIR = "/tmp/hf_sf_promises_dataset"
 
-with open("docs/data.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
+parser = argparse.ArgumentParser(description="Stage, validate, and upload SF Promises HF dataset.")
+parser.add_argument(
+    "--validate-only",
+    action="store_true",
+    help="Stage and validate all Hugging Face configs/splits/schemas locally without uploading.",
+)
+parser.add_argument(
+    "--staging-dir",
+    default=DEFAULT_STAGING_DIR,
+    help="Directory where Hugging Face repository artifacts are staged.",
+)
+args, _unknown = parser.parse_known_args()
 
-promises = data.get("promises", [])
-quarantined = data.get("quarantined", [])
-meta = data.get("metadata", {})
-db_status = data.get("database_status", {})
+STAGING_DIR = args.staging_dir
 
 # 1. Clean and initialize staging directory
 shutil.rmtree(STAGING_DIR, ignore_errors=True)
 os.makedirs(STAGING_DIR, exist_ok=True)
+os.makedirs(os.path.join(STAGING_DIR, "data", "commitments"), exist_ok=True)
+os.makedirs(os.path.join(STAGING_DIR, "data", "standardized_16col"), exist_ok=True)
+os.makedirs(os.path.join(STAGING_DIR, "data", "quarantined"), exist_ok=True)
+os.makedirs(os.path.join(STAGING_DIR, "data", "intake_ledger"), exist_ok=True)
 
 with open("docs/data.json", "r", encoding="utf-8") as f:
     data = json.load(f)
@@ -35,13 +46,19 @@ quarantined = data.get("quarantined", [])
 meta = data.get("metadata", {})
 db_status = data.get("database_status", {})
 
-# 2. Export canonical promises.csv (51 columns)
+# 2. Export canonical commitments CSV (72 columns including precision, missingness, geo scope, and audit checks)
 csv_fields = [
     "promise_id",
     "impact_rank",
+    "record_type",
+    "pillar",
     "entity",
     "entity_canonical_name",
     "entity_category",
+    "entity_category_canonical",
+    "entity_type_legacy",
+    "entity_promise_count",
+    "entity_sample_warning",
     "entity_party",
     "entity_term_start",
     "entity_term_end",
@@ -54,18 +71,27 @@ csv_fields = [
     "neighborhood",
     "neighborhood_canonical",
     "address_full",
+    "address_status",
     "latitude",
     "longitude",
     "supervisor_district",
+    "district_status",
     "is_citywide",
+    "geographic_scope",
+    "is_centroid",
     "promise_text",
     "verbatim_quote",
     "promised_date",
+    "promise_date_precision",
     "promise_made_date",
     "due_date",
+    "due_date_precision",
+    "due_date_status",
     "deadline_date",
     "opened_date",
     "completion_date",
+    "completion_date_precision",
+    "completion_date_status",
     "days_remaining",
     "days_overdue",
     "promise_age_days",
@@ -76,6 +102,13 @@ csv_fields = [
     "verdict_confidence",
     "verdict_evidence_count",
     "verdict_contradiction_count",
+    "affirming_evidence_count",
+    "refuting_evidence_count",
+    "verdict_supporting_evidence_count",
+    "verdict_contradicting_evidence_count",
+    "has_contradictory_evidence",
+    "all_checks_passed",
+    "failed_check_count",
     "impact_score",
     "completion_percentage",
     "source_url",
@@ -87,14 +120,21 @@ csv_fields = [
     "source_archived_url",
     "source_hash",
     "relevance_score",
-    "decided_at"
+    "decided_at",
 ]
 
 def serialize_row(p):
     row = {}
+    rel = p.get("relevance") or {}
     for k in csv_fields:
         val = p.get(k)
-        if isinstance(val, (list, tuple)):
+        if k == "relevance_score" and val is None and isinstance(rel, dict):
+            val = rel.get("score")
+        if k == "verbatim_quote" and not val:
+            val = p.get("promise_text")
+        if isinstance(val, bool):
+            row[k] = "true" if val else "false"
+        elif isinstance(val, (list, tuple)):
             row[k] = "; ".join(str(x) for x in val)
         elif val is None:
             row[k] = ""
@@ -102,14 +142,15 @@ def serialize_row(p):
             row[k] = str(val)
     return row
 
-csv_path = os.path.join(STAGING_DIR, "promises.csv")
-with open(csv_path, "w", newline="", encoding="utf-8") as f:
+commitments_split_path = os.path.join(STAGING_DIR, "data", "commitments", "train.csv")
+with open(commitments_split_path, "w", newline="", encoding="utf-8") as f:
     writer = csv.DictWriter(f, fieldnames=csv_fields)
     writer.writeheader()
     for p in promises:
         writer.writerow(serialize_row(p))
+shutil.copy(commitments_split_path, os.path.join(STAGING_DIR, "promises.csv"))
 
-# 3. Export quarantined.csv (10 columns)
+# 3. Export quarantined split CSV (10 columns)
 q_fields = [
     "quarantine_id",
     "promise_id",
@@ -120,19 +161,32 @@ q_fields = [
     "reason",
     "agent",
     "quarantined_at",
-    "destination"
+    "destination",
 ]
 
-q_csv_path = os.path.join(STAGING_DIR, "quarantined.csv")
-with open(q_csv_path, "w", newline="", encoding="utf-8") as f:
+quarantined_split_path = os.path.join(STAGING_DIR, "data", "quarantined", "train.csv")
+with open(quarantined_split_path, "w", newline="", encoding="utf-8") as f:
     writer = csv.DictWriter(f, fieldnames=q_fields)
     writer.writeheader()
     for q in quarantined:
         writer.writerow({k: q.get(k, "") for k in q_fields})
+shutil.copy(quarantined_split_path, os.path.join(STAGING_DIR, "quarantined.csv"))
 
-# 4. Export Standardized 16-Column Master Dataset & Canonical JSON
+# 4. Export Standardized 16-Column Master Dataset, Intake Ledger Split, & Canonical JSONs
 if os.path.exists("data/sf_promises_master.csv"):
     shutil.copy("data/sf_promises_master.csv", os.path.join(STAGING_DIR, "sf_promises_master.csv"))
+    shutil.copy("data/sf_promises_master.csv", os.path.join(STAGING_DIR, "data", "standardized_16col", "train.csv"))
+
+intake_rows = []
+if os.path.exists("data/intake_ledger.csv"):
+    shutil.copy("data/intake_ledger.csv", os.path.join(STAGING_DIR, "intake_ledger.csv"))
+    shutil.copy("data/intake_ledger.csv", os.path.join(STAGING_DIR, "data", "intake_ledger", "train.csv"))
+    with open("data/intake_ledger.csv", "r", encoding="utf-8") as f:
+        intake_rows = list(csv.DictReader(f))
+
+for extra_json in ("data/evidence_review_queue.json", "data/intake_candidate_register.json"):
+    if os.path.exists(extra_json):
+        shutil.copy(extra_json, os.path.join(STAGING_DIR, os.path.basename(extra_json)))
 
 with open(os.path.join(STAGING_DIR, "promises.json"), "w", encoding="utf-8") as f:
     json.dump(promises, f, indent=2)
@@ -179,8 +233,16 @@ data_summary = {
     "impact_score_stats": {
         "avg_impact_score": round(sum(impacts) / len(impacts), 1) if impacts else 0,
         "min_impact_score": min(impacts) if impacts else 0,
-        "max_impact_score": max(impacts) if impacts else 0
-    }
+        "max_impact_score": max(impacts) if impacts else 0,
+    },
+    "verification_exceptions": {
+        "all_checks_passed_count": sum(1 for p in promises if p.get("all_checks_passed") is not False),
+        "failed_or_incomplete_promises_count": sum(1 for p in promises if p.get("all_checks_passed") is False),
+        "total_failed_or_unrecorded_checks": sum(p.get("failed_check_count") or 0 for p in promises),
+    },
+    "evidence_reconciliation": db_status.get("evidence_reconciliation", {}),
+    "sourcing_audit": db_status.get("sourcing_audit", {}),
+    "total_intake_candidates": len(intake_rows),
 }
 
 with open(os.path.join(STAGING_DIR, "data_summary.json"), "w", encoding="utf-8") as f:
@@ -198,17 +260,27 @@ schema_def = {
         "promise_text",
         "verdict",
         "category_l1",
-        "neighborhood_canonical"
+        "neighborhood_canonical",
+        "promise_date_precision",
+        "geographic_scope",
+        "is_centroid",
+        "all_checks_passed",
     ],
     "properties": {
         "promise_id": {"type": "string", "pattern": "^[A-Z0-9-]+$"},
         "impact_rank": {"type": "integer", "minimum": 1},
+        "record_type": {"type": "string", "enum": ["commitment", "milestone", "statutory_mandate", "corporate_pledge"]},
+        "pillar": {"type": "string"},
         "entity": {"type": "string"},
         "entity_canonical_name": {"type": "string"},
-        "entity_category": {
+        "entity_category": {"type": "string"},
+        "entity_category_canonical": {
             "type": "string",
-            "enum": ["politician", "city_department", "sports_team", "corporation", "nonprofit", "cultural_organization"]
+            "enum": ["politician", "city_department", "corporation", "sports_team", "cultural_organization"],
         },
+        "entity_type_legacy": {"type": "string"},
+        "entity_promise_count": {"type": "integer", "minimum": 1},
+        "entity_sample_warning": {"type": "boolean"},
         "entity_party": {"type": ["string", "null"], "enum": ["D", "R", "I", None]},
         "entity_term_start": {"type": ["string", "null"]},
         "entity_term_end": {"type": ["string", "null"]},
@@ -224,18 +296,27 @@ schema_def = {
         "neighborhood": {"type": "string"},
         "neighborhood_canonical": {"type": "string"},
         "address_full": {"type": ["string", "null"]},
+        "address_status": {"type": "string", "enum": ["present", "not_applicable", "not_yet_known", "not_captured"]},
         "latitude": {"type": ["number", "null"]},
         "longitude": {"type": ["number", "null"]},
         "supervisor_district": {"type": ["integer", "null"], "minimum": 1, "maximum": 11},
+        "district_status": {"type": "string", "enum": ["present", "not_applicable", "not_yet_known", "not_captured"]},
         "is_citywide": {"type": "boolean"},
+        "geographic_scope": {"type": "string", "enum": ["exact_address", "neighborhood", "district", "regional", "citywide"]},
+        "is_centroid": {"type": "boolean"},
         "promise_text": {"type": "string"},
         "verbatim_quote": {"type": "string"},
         "promised_date": {"type": ["string", "null"]},
+        "promise_date_precision": {"type": "string", "enum": ["day", "month", "year"]},
         "promise_made_date": {"type": ["string", "null"]},
         "due_date": {"type": ["string", "null"]},
+        "due_date_precision": {"type": ["string", "null"], "enum": ["day", "month", "year", "not_applicable", "not_recorded", None]},
+        "due_date_status": {"type": "string", "enum": ["present", "not_applicable", "not_yet_known", "not_captured"]},
         "deadline_date": {"type": ["string", "null"]},
         "opened_date": {"type": ["string", "null"]},
         "completion_date": {"type": ["string", "null"]},
+        "completion_date_precision": {"type": ["string", "null"], "enum": ["day", "month", "year", "not_applicable", "not_recorded", None]},
+        "completion_date_status": {"type": "string", "enum": ["present", "not_applicable", "not_yet_known", "not_captured"]},
         "days_remaining": {"type": ["integer", "null"]},
         "days_overdue": {"type": ["integer", "null"]},
         "promise_age_days": {"type": ["integer", "null"]},
@@ -249,6 +330,13 @@ schema_def = {
         "verdict_confidence": {"type": "number", "minimum": 0.0, "maximum": 1.0},
         "verdict_evidence_count": {"type": "integer", "minimum": 0},
         "verdict_contradiction_count": {"type": "integer", "minimum": 0},
+        "affirming_evidence_count": {"type": "integer", "minimum": 0},
+        "refuting_evidence_count": {"type": "integer", "minimum": 0},
+        "verdict_supporting_evidence_count": {"type": "integer", "minimum": 1},
+        "verdict_contradicting_evidence_count": {"type": "integer", "minimum": 0},
+        "has_contradictory_evidence": {"type": "boolean"},
+        "all_checks_passed": {"type": "boolean"},
+        "failed_check_count": {"type": "integer", "minimum": 0},
         "impact_score": {"type": "integer", "minimum": 1, "maximum": 10},
         "completion_percentage": {"type": "integer", "minimum": 0, "maximum": 100},
         "source_url": {"type": "string"},
@@ -473,76 +561,88 @@ size_categories:
 - n<1K
 pretty_name: "SF Promises: Civic Accountability Ledger"
 configs:
+- config_name: default
+  data_files:
+  - split: train
+    path: data/commitments/train.csv
 - config_name: commitments
   data_files:
   - split: train
-    path: promises.csv
+    path: data/commitments/train.csv
 - config_name: standardized_16col
   data_files:
   - split: train
-    path: sf_promises_master.csv
+    path: data/standardized_16col/train.csv
 - config_name: quarantined
   data_files:
   - split: train
-    path: quarantined.csv
-default_config_name: commitments
+    path: data/quarantined/train.csv
+- config_name: intake_ledger
+  data_files:
+  - split: train
+    path: data/intake_ledger/train.csv
 ---
 
 # SF Promises Dataset
 
 ## Overview
-Civic accountability tracker for public promises made across San Francisco — from City Hall, SF Board of Supervisors, and SFO Airport to Chase Center and neighborhood commercial corridors. Each promise is tracked from announcement through verdict, verified against cryptographically archived primary evidence.
+Civic accountability tracker for public commitments made across San Francisco — from City Hall, SF Board of Supervisors, and SFO Airport to Chase Center and neighborhood commercial corridors. Each record is linked to its saved source document and SHA-256 hash, evaluated through deterministic code checks, and published with explicit verification exceptions, date precision levels, missingness codes, and geographic scope metadata.
 
-Winner of the **Best Use of Keenable** award at the Archil *"Agents Need Solid Ground"* Hackathon (Nov 10, 2026).
+## Available Configurations & Split Files
 
-## Available Configurations & Files
+Every Hugging Face Dataset Viewer configuration reads from an isolated split path under `data/` to prevent mixed-schema auto-loader collisions:
 
-This repository provides multiple dataset configurations to prevent schema mixing in Hugging Face's Dataset Viewer:
+| Config Name | Split Path | Rows | Columns | Description |
+|---|---|---|---|---|
+| `default` / `commitments` | `data/commitments/train.csv` | 54 | 72 | Primary enriched tabular ledger with precision flags, missingness semantics, geo scope/centroids, evidence counts, and check exception flags |
+| `standardized_16col` | `data/standardized_16col/train.csv` | 54 | 16 | Standardized master schema (`sf_promises_master.csv`) for cross-city comparisons |
+| `quarantined` | `data/quarantined/train.csv` | 13 | 10 | Registry of planted tests and rejected claims stopped before publishing |
+| `intake_ledger` | `data/intake_ledger/train.csv` | 63 | 23 | Outcome-blind stratified sourcing register across 10 pillars and all 11 supervisor districts |
 
-| Configuration / File | Rows | Columns | Description |
-|---|---|---|---|
-| `commitments` (`promises.csv`) | 54 | 51 | Primary enriched tabular ledger with full spatial, temporal, source credibility, and verdict features |
-| `standardized_16col` (`sf_promises_master.csv`) | 54 | 16 | Standardized master schema for cross-city civic accountability comparisons |
-| `quarantined` (`quarantined.csv`) | 13 | 10 | Registry of test cases and rejected claims that failed automated gate checks |
-| `promises.sqlite` | 54 + 13 | — | Complete relational SQLite database with `promises`, `quarantined`, and `metadata` tables |
-| `SCHEMA.json` | — | — | Formal JSON Schema (draft-07) for schema validation |
-| `data_summary.json` | — | — | Precomputed statistical distributions, category counts, and impact percentiles |
-| `promises.json` | 54 | — | Canonical JSON records including advocate findings and relevance metrics |
+Root convenience files (`promises.csv`, `sf_promises_master.csv`, `quarantined.csv`, `intake_ledger.csv`, `promises.sqlite`, `SCHEMA.json`, `data_summary.json`, `evidence_review_queue.json`, `intake_candidate_register.json`, `promises.json`) are kept alongside the `data/` split directories for direct script access.
 
 ---
 
 ## Methodology & Provenance
 
-### 1. Source Discovery & Temporal Grounding
-Commitments and outcomes are discovered by querying contemporaneous municipal archives, allowlisted local newsrooms (*SF Chronicle*, *Mission Local*, *San Francisco Standard*, *The Frisc*), agency performance dashboards (*SFMTA*, *SFPD*, *SFO*), and Board of Supervisors legislative records (*Legistar*). All queries are bounded by discovery time horizons to prevent retroactive hindsight bias.
+### 1. Outcome-Blind Sourcing & Stratified Discovery
+Commitments are discovered via a 3-stage pipeline (`src/sourcing/`):
+1. **Stratified Search Planning (`SearchPlanner`)**: Enforces outcome-blind query construction (rejecting outcome terms such as `broken`, `failed`, `kept`, `scandal`, `delayed`) across 10 San Francisco Life & Culture pillars and all 11 supervisor districts.
+2. **Retrieval (`DiscoveryHarvester`)**: Stores verbatim source bytes and SHA-256 hashes from municipal portals, allowlisted local journalism, and institutional filings.
+3. **Qualification (`QualificationIntakeAgent`)**: Strips any outcome labels before evaluating commitment specificity and date/scope readiness, recording audit status in `intake_ledger`.
 
 ### 2. Verbatim Quoting & Cryptographic Integrity
-Every promise statement is linked to an exact verbatim quote and its parent document. The raw document bytes are hashed (SHA-256) upon retrieval. If an investigator agent alters a single word (e.g. mutating "1,500 shelter beds" to "1,500 shelter units"), the verification engine detects the hash discrepancy and diverts the submission to the Quarantine Registry.
+Every statement is checked byte-for-byte against its saved disk snapshot via SHA-256 hash and substring matching. Submissions with altered quotes or unapproved domains are stopped in `quarantined`.
 
-### 3. Deterministic Arbitration Engine
-A deterministic Python engine (zero model calls at verdict time) evaluates claims across 7 independent checks:
-1. `accuracy_quote`: Verbatim quote substring match in hashed source document.
-2. `temporal_order`: Promise date must precede the deadline and verification date.
-3. `existence_check`: Required entity and source URLs must exist and resolve.
-4. `numeric_target`: Quantitative metrics (e.g. bed counts, housing units, officer staffing) must match official records.
-5. `source_authority`: Source domain must meet Tier 1 (Official Govt) or Tier 2 (Investigative Press) criteria.
-6. `contradiction_balance`: Evaluating affirming versus contradicting evidence bundles.
-7. `status_consistency`: Verdict state transitions must follow valid DAG edges.
+### 3. Deterministic Arbitration & Visible Exceptions
+Rather than hiding partial verification failures, every record exposes `all_checks_passed`, `failed_check_count`, and the specific check results:
+- **47 of 54** published commitments pass all deterministic checks (`all_checks_passed = true`).
+- **7 commitments** (`P82`, `P83`, `P17`, `P61`, `P37`, `P57`, `P58`) remain published with explicit exception flags (`all_checks_passed = false`, totaling **22** failed or unrecorded checks).
 
-### 4. Confidence & Impact Metrics
+### 4. Evidence Reconciliation Model
+`promises.db` stores **124** total evidence rows across the project:
+- **99** direct verdict-supporting/contradicting claims attached to the 54 published commitments
+- **11** background context records
+- **8** intake/archival discovery records
+- **6** duplicate/superseded claim rows retained for lineage
+
+Every published record (including all **17** broken commitments) carries `verdict_supporting_evidence_count >= 1`, distinguishing affirming vs. refuting direction from whether the evidence supports the final verdict.
+
+### 5. Confidence & Impact Metrics
 - **Verdict Confidence ($C \in [0.0, 1.0]$)**:
   $$C = W_{\\text{tier}} \\times \\left(1 - \\frac{N_{\\text{contradicting}}}{N_{\\text{total}} + 1}\\right)$$
   where Tier 1 (Official Government) has weight $1.0$, Tier 2 (Press) has $0.85$, and Tier 3 has $0.70$.
 - **Impact Score ($I \in [1, 10]$)**:
-  Standardized civic priority scale combining scope (citywide vs site-specific), budgetary magnitude ($>\\$10\\text{M}$ capital investments score $\\ge 7$), and population scale directly impacted.
+  Standardized civic priority scale combining geographic scope, budgetary magnitude ($>\\$10\\text{M}$ capital investments score $\\ge 7$), and affected population.
 
 ---
 
 ## Known Biases & Research Limitations
 
-- **Sample Size ($n=54$)**: This dataset is curated as a high-fidelity civic benchmark and evaluation set (zero-shot and few-shot testing), rather than for training large supervised models from scratch.
-- **Jurisdictional Focus**: Exclusively covers San Francisco municipal governance, regional transit (SFO Airport, BART, Muni), and select high-profile civic institutions.
-- **Reporting Bias**: High-salience issues (homelessness, public safety, transit infrastructure, downtown revitalization) receive greater media coverage and are more readily documented than routine administrative actions.
+- **Sample Size & Single-Record Entities ($n=54$, 31 canonical entities)**: 24 of 31 canonical entities currently have only $n=1$ tracked commitment (flagged via `entity_sample_warning = true`). Aggregate keep/break percentages per entity should not be extrapolated as broad track records.
+- **Topic & District Skew**: Published records skew toward Civic Life and Housing/Neighborhoods and omit Districts 2, 4, 8, and 11; the `intake_ledger` split documents ongoing outcome-blind collection closing those gaps.
+- **Coordinate Display Centroids**: Only 12 records represent exact street-level pins (`is_centroid = false`). The remaining 42 records carry `is_centroid = true` (citywide, regional, or neighborhood display centroids) and must not be interpreted as physical project locations in spatial joins.
+- **Date Precision & Missingness**: Imprecise statements (e.g., `"2024"`) preserve precision in `promise_date_precision` / `due_date_precision` (`year | month | day`). Missing dates/addresses carry explicit reason codes (`not_applicable | not_yet_known | not_captured`).
 
 ---
 
@@ -691,27 +791,50 @@ print(f"Quarantined count: {len(quarantined['train'])}")
 - **GitHub Repository**: [https://github.com/arii/sf-promises](https://github.com/arii/sf-promises)
 """)
 
-print(f"Successfully generated files in {STAGING_DIR}:")
-for f in os.listdir(STAGING_DIR):
-    fsize = os.path.getsize(os.path.join(STAGING_DIR, f))
-    print(f"  - {f} ({fsize:,} bytes)")
+# 8. Validate staged splits locally before any Hub upload
+expected_splits = {
+    "data/commitments/train.csv": (54, len(csv_fields)),
+    "data/standardized_16col/train.csv": (54, 16),
+    "data/quarantined/train.csv": (13, 10),
+    "data/intake_ledger/train.csv": (63, 23),
+}
+for rel_path, (expected_rows, expected_cols) in expected_splits.items():
+    full_path = os.path.join(STAGING_DIR, rel_path)
+    assert os.path.exists(full_path), f"Missing split CSV: {rel_path}"
+    with open(full_path, "r", encoding="utf-8") as f:
+        rows = list(csv.reader(f))
+    header = rows[0] if rows else []
+    data_rows = rows[1:] if len(rows) > 1 else []
+    assert len(header) == expected_cols, f"{rel_path}: expected {expected_cols} cols, got {len(header)}"
+    assert len(data_rows) == expected_rows, f"{rel_path}: expected {expected_rows} rows, got {len(data_rows)}"
 
-# 8. Upload to Hugging Face
+print(f"Validated all 4 Hugging Face dataset splits cleanly in {STAGING_DIR}:")
+for rel_path in expected_splits:
+    fsize = os.path.getsize(os.path.join(STAGING_DIR, rel_path))
+    print(f"  - {rel_path} ({fsize:,} bytes)")
+
+if args.validate_only:
+    print("Validate-only mode complete; skipping Hugging Face Hub upload.")
+    raise SystemExit(0)
+
+# 9. Upload to Hugging Face
+from huggingface_hub import HfApi
+
 print(f"\nUploading enriched dataset to Hugging Face repository {REPO_ID}...")
-api = HfApi()
+api = HfApi(token=os.getenv("HF_TOKEN") or None)
 
 # Delete deprecated redundant duplicate files if they exist in the remote repo
 for redundant_file in ("data.csv", "data.json"):
     try:
         api.delete_file(path_in_repo=redundant_file, repo_id=REPO_ID, repo_type="dataset")
         print(f"Removed redundant file from remote repo: {redundant_file}")
-    except Exception as e:
+    except Exception:
         pass
 
 api.upload_folder(
     folder_path=STAGING_DIR,
     repo_id=REPO_ID,
     repo_type="dataset",
-    commit_message="feat: configure multi-config dataset viewer, add provenance, methodology, and BibTeX citation"
+    commit_message="feat: isolate split paths for HF dataset viewer and expose audit schema metadata",
 )
 print("Upload complete! Dataset is now live at: https://huggingface.co/datasets/" + REPO_ID)

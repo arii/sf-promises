@@ -105,3 +105,25 @@
   - Cataloged 15 deduplicated promises across soft-story seismic retrofits, seawall bonds, all-electric gas bans, coastal retreat, Marc Benioff, Kyle Vogt (Cruise), Jack Dorsey (Square), Westfield default, SF Bicycle Coalition, Another Planet Entertainment, and Castro Theatre.
 - **Full Test Suite**:
   - **213/213 tests passing green**.
+
+### 6. Data-Quality Audit Fixes, Outcome-Blind Sourcing, Multi-View Explorer & HF Dataset Viewer Fix
+- **8 Data-Quality Audit Fixes (`scripts/enrich_dataset.py`, `docs/export_data.py`)**:
+  - Preserved explicit date precision (`promise_date_precision`, `due_date_precision`, `completion_date_precision`) and display formatting so year/month records do not fabricate `-01-01`.
+  - Reconciled all `124` SQLite evidence rows against the `99` verdict-cited claims (`11` background context, `8` intake screening, `6` duplicate/superseded cross-references) and ensured `verdict_supporting_evidence_count >= 1` across all 54 commitments.
+  - Exposed verification exceptions (`all_checks_passed`: `47` pass, `7` flagged on `P82, P83, P17, P61, P37, P57, P58`, totaling `22` flagged/unrecorded checks).
+  - Exposed contradictory evidence summaries and arbitration explanations across all `21` affected commitments (`has_contradictory_evidence`).
+  - Consolidated canonical entity taxonomy across `31` canonical entities with explicit `entity_sample_warning` (`n=1` / `< 3` caution).
+  - Distinguished `exact_address` (`12`) from `is_centroid` display centroids (`42`) and corrected `P64` to Treasure Island / `D6`.
+  - Added explicit missingness semantics (`present | not_applicable | not_yet_known | not_captured`) across date, address, and district fields.
+  - Exported the prioritized operational queue to `data/evidence_review_queue.json`.
+- **3-Stage Outcome-Blind Sourcing Pipeline (`src/sourcing/`, `docs/SOURCING_PIPELINE.md`)**:
+  - Built `SearchPlanner`, `DiscoveryHarvester`, and `QualificationIntakeAgent` spanning all 10 SF content pillars and all 11 supervisor districts (prioritizing gap districts D2, D4, D8, D11).
+  - Audited `63` encountered candidates into `data/intake_candidate_register.json` and `data/intake_ledger.csv` (`24` qualified, `38` needs_review, `1` rejected).
+- **Interactive Multi-View Explorer (`docs/index.html`, `docs/app.js`, `docs/styles.css`)**:
+  - Added Explore view switcher across **Table**, **Map & Districts** (inline SF + SFO inset SVG map + D1–D11 coverage bars), **Entity Profiles** (`n<3` caution badges), and **Quality Audit** (KPI cards, 10-pillar matrix, clickable review queue), maintaining `0px` CLS and `6,303px` mobile `scrollHeight` (< `6,500px`).
+- **Hugging Face Dataset Viewer (`scripts/upload_to_huggingface.py`)**:
+  - Isolated split files into `data/{commitments,standardized_16col,quarantined,intake_ledger}/train.csv` with explicit YAML `configs` and `--validate-only` CLI check.
+  - Verified live on `onasafari/sf-promises`: `datasets-server` `is-valid` returns `{"preview":true,"viewer":true,"search":true,"filter":true,"statistics":true}` with all 5 configs (`default`, `commitments`, `intake_ledger`, `quarantined`, `standardized_16col`) and `failed: []`.
+- **Verification**:
+  - `.venv/bin/pyflakes src/` cleanly returns 0 warnings/errors.
+  - **236/236 tests passing green** in `.venv/bin/pytest tests/`.

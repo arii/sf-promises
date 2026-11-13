@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=2f398f53">
+  <link rel="stylesheet" href="styles.css?v=b59013ba">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -265,6 +265,12 @@
               Quarantine Registry <span class="tab-badge font-mono" id="tab-count-quarantine">13</span>
             </button>
           </div>
+          <div class="view-mode-switcher" id="view-mode-switcher" role="group" aria-label="Visualization mode">
+            <button type="button" class="btn-view-mode active" id="btn-view-table" data-view="table">Table</button>
+            <button type="button" class="btn-view-mode" id="btn-view-map" data-view="map">Map &amp; Districts</button>
+            <button type="button" class="btn-view-mode" id="btn-view-entities" data-view="entities">Entity Profiles</button>
+            <button type="button" class="btn-view-mode" id="btn-view-audit" data-view="audit">Quality Audit</button>
+          </div>
         </div>
 
         <!-- Primary Explore Control Row: Search + Segmented Verdict Filters + More Filters Button -->
@@ -327,6 +333,33 @@
                 <option value="official">Official (Municipal &amp; Government)</option>
                 <option value="news">News (Journalism &amp; Reports)</option>
                 <option value="reference">Reference (Archival)</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-pillar" class="font-mono">LIFE &amp; CULTURE PILLAR</label>
+              <select id="filter-pillar" class="filter-select">
+                <option value="all">All 10 Pillars</option>
+                <option value="Arts, Music &amp; Nightlife">Arts, Music &amp; Nightlife</option>
+                <option value="Sports &amp; Recreation">Sports &amp; Recreation</option>
+                <option value="Food &amp; Local Business">Food &amp; Local Business</option>
+                <option value="Weather &amp; Environment">Weather &amp; Environment</option>
+                <option value="Transit &amp; Movement">Transit &amp; Movement</option>
+                <option value="Housing &amp; Neighborhoods">Housing &amp; Neighborhoods</option>
+                <option value="People &amp; Demographics">People &amp; Demographics</option>
+                <option value="Work &amp; Opportunity">Work &amp; Opportunity</option>
+                <option value="Culture &amp; Social Life">Culture &amp; Social Life</option>
+                <option value="Civic Life">Civic Life</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="filter-audit-flag" class="font-mono">AUDIT &amp; EVIDENCE FLAG</label>
+              <select id="filter-audit-flag" class="filter-select">
+                <option value="all">All Commitments (54)</option>
+                <option value="exceptions">Verification Exceptions Only (7)</option>
+                <option value="contradictions">Contradictory Evidence Only (21)</option>
+                <option value="exact_pin">Exact Street Address Pins Only (12)</option>
               </select>
             </div>
 
@@ -682,7 +715,7 @@
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2020-12-10</span></div>
-                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">2050-12-31</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">2050</span></div>
                   <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">2024-08-01</span></div>
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
@@ -1333,7 +1366,7 @@
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
                   </div>
-                  <div class="entity-geo-tag font-mono">Parkmerced (Southwest San Francisco)</div>
+                  <div class="entity-geo-tag font-mono">Treasure Island (8,000 Homes Master Plan)</div>
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
@@ -2220,6 +2253,58 @@
           </div><!-- end quarantine cards -->
         </div>
 
+        <!-- VIEW 2: GEOGRAPHIC MAP & SUPERVISOR DISTRICTS -->
+        <div class="explore-view-panel hidden" id="explore-map-view" aria-label="San Francisco Geographic Map and District Coverage">
+          <div class="map-layout-grid">
+            <div class="sf-svg-map-card">
+              <div class="map-card-header">
+                <div>
+                  <h3 class="map-card-title">San Francisco Coordinate Map</h3>
+                  <p class="map-card-sub">Solid markers show exact street locations; ringed markers denote citywide or regional display centroids (never physical claim sites).</p>
+                </div>
+                <div class="map-legend font-mono">
+                  <span class="legend-item"><span class="pin-dot kept"></span>Kept</span>
+                  <span class="legend-item"><span class="pin-dot broken"></span>Broken</span>
+                  <span class="legend-item"><span class="pin-dot in_progress"></span>In progress</span>
+                  <span class="legend-item"><span class="pin-ring"></span>Display Centroid</span>
+                </div>
+              </div>
+              <div class="sf-svg-canvas-wrap" id="sf-svg-map-wrap"></div>
+              <div class="map-selected-card hidden" id="map-selected-card"></div>
+            </div>
+            <div class="district-coverage-card">
+              <h3 class="map-card-title">Supervisor District Coverage (D1&ndash;D11)</h3>
+              <p class="map-card-sub">Published records omit Districts 2, 4, 8, and 11; the stratified intake queue fills those coverage gaps.</p>
+              <div class="district-bars-list" id="district-bars-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 3: CANONICAL ENTITY ACCOUNTABILITY PROFILES -->
+        <div class="explore-view-panel hidden" id="explore-entities-view" aria-label="Accountability Profiles by Entity">
+          <div class="entities-header-note">
+            <strong>Sample-size disclosure:</strong> 24 of 31 canonical entities have only 1 recorded commitment (flagged <code>n=1 caution</code> below) so raw percentages should not be read as broad track records.
+          </div>
+          <div class="entities-grid" id="entities-profiles-grid"></div>
+        </div>
+
+        <!-- VIEW 4: EVIDENCE QUALITY, CONTRADICTION & SOURCING AUDIT DASHBOARD -->
+        <div class="explore-view-panel hidden" id="explore-audit-view" aria-label="Evidence Quality and Coverage Audit Dashboard">
+          <div class="audit-kpis-grid" id="audit-kpis-grid"></div>
+          <div class="audit-two-col">
+            <div class="audit-panel-card">
+              <h3>10-Pillar Coverage: Published vs. Qualified Intake</h3>
+              <p class="audit-panel-sub">Shows concentration in Civic/Housing (52%) alongside outcome-blind intake diversification.</p>
+              <div id="audit-pillar-matrix"></div>
+            </div>
+            <div class="audit-panel-card">
+              <h3>Operational Evidence-Review Queue</h3>
+              <p class="audit-panel-sub">Click any item to inspect its checks, contradictions, and source hash in the drawer.</p>
+              <div id="audit-review-queue-list"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Pagination Controls -->
         <div class="pagination-controls" id="pagination-controls">
           <button type="button" class="btn-pagination-primary" id="btn-show-more">
@@ -2602,8 +2687,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=2f398f53"></script>
-  <script src="list.min.js?v=2f398f53"></script>
-  <script src="app.js?v=2f398f53"></script>
+  <script src="data.js?v=b59013ba"></script>
+  <script src="list.min.js?v=b59013ba"></script>
+  <script src="app.js?v=b59013ba"></script>
 </body>
 </html>

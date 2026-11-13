@@ -324,6 +324,60 @@ async function main() {
     await sleep(300);
 
     // =========================================================================
+    // 1b. Explore Multi-View Switcher (Map | Entity Profiles | Quality Audit | Table)
+    // =========================================================================
+    console.log('\n--- 1b. Testing Explore Multi-View Switcher (Desktop 1280px) ---');
+    await client.eval('document.getElementById("btn-view-map").click()');
+    await sleep(300);
+    const mapStats = await client.eval(`(() => ({
+      hidden: document.getElementById("explore-map-view").classList.contains("hidden"),
+      pins: document.querySelectorAll("#sf-svg-map-wrap svg .map-pin-node").length,
+      districts: document.querySelectorAll("#district-bars-list .district-bar-row").length
+    }))()`);
+    console.log('Map View stats:', mapStats);
+    if (mapStats.hidden || mapStats.pins === 0 || mapStats.districts !== 11) {
+      throw new Error(`Map view verification failed: ${JSON.stringify(mapStats)}`);
+    }
+
+    await client.eval('document.getElementById("btn-view-entities").click()');
+    await sleep(300);
+    const entStats = await client.eval(`(() => ({
+      hidden: document.getElementById("explore-entities-view").classList.contains("hidden"),
+      cards: document.querySelectorAll("#entities-profiles-grid .entity-profile-card").length,
+      cautions: document.querySelectorAll("#entities-profiles-grid .caution-badge-n1").length
+    }))()`);
+    console.log('Entity Profiles stats:', entStats);
+    if (entStats.hidden || entStats.cards !== 31 || entStats.cautions < 24) {
+      throw new Error(`Entity profiles verification failed: ${JSON.stringify(entStats)}`);
+    }
+
+    await client.eval('document.getElementById("btn-view-audit").click()');
+    await sleep(300);
+    const auditStats = await client.eval(`(() => ({
+      hidden: document.getElementById("explore-audit-view").classList.contains("hidden"),
+      kpis: document.querySelectorAll("#audit-kpis-grid .audit-kpi-card").length,
+      pillars: document.querySelectorAll("#audit-pillar-matrix .pillar-matrix-row").length,
+      queueItems: document.querySelectorAll("#audit-review-queue-list .audit-queue-item").length
+    }))()`);
+    console.log('Quality Audit stats:', auditStats);
+    if (auditStats.hidden || auditStats.kpis !== 4 || auditStats.pillars !== 10 || auditStats.queueItems === 0) {
+      throw new Error(`Quality audit view verification failed: ${JSON.stringify(auditStats)}`);
+    }
+
+    await client.eval('document.getElementById("btn-view-table").click()');
+    await sleep(300);
+    const backToTableHidden = await client.eval(`(() => ({
+      mapHidden: document.getElementById("explore-map-view").classList.contains("hidden"),
+      entHidden: document.getElementById("explore-entities-view").classList.contains("hidden"),
+      auditHidden: document.getElementById("explore-audit-view").classList.contains("hidden"),
+      tableHidden: document.getElementById("promises-table-container").classList.contains("hidden")
+    }))()`);
+    if (!backToTableHidden.mapHidden || !backToTableHidden.entHidden || !backToTableHidden.auditHidden || backToTableHidden.tableHidden) {
+      throw new Error(`Switch back to table failed: ${JSON.stringify(backToTableHidden)}`);
+    }
+    console.log('PASS: All 4 Explore views rendered and toggled cleanly.');
+
+    // =========================================================================
     // 2. Tablet 820px / 768px Verification
     // =========================================================================
     console.log('\n--- 2. Testing Tablet (820px & 768px) ---');

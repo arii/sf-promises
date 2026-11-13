@@ -6,15 +6,13 @@ and parallel sandbox execution (Archil disposable forks or isolated process work
 """
 
 import asyncio
-import os
 import re
 from datetime import date, datetime, timezone
-from pathlib import Path
 from typing import Any, Dict, List, Literal, Optional
 
 from pydantic import BaseModel, Field
 
-from src.evidence import is_allowlisted_url, _primary_host, _NEWS_HOSTS
+from src.evidence import _primary_host, _NEWS_HOSTS
 
 # Evidence scoring tiers as defined in DISCOVERY_AND_VERIFICATION_PLAYBOOK.md
 TIER_1_GOV = "Tier 1: Official Government Records"
