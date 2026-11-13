@@ -42,6 +42,20 @@ _FORWARD_ACTION_RE = re.compile(
     re.IGNORECASE,
 )
 
+# D2: parallel forward-action recognition for non-English statements. The
+# Spanish pattern anchors on a word start only (no trailing \b, which would
+# fail across conjugated endings like "promete"/"prometió"); the Chinese
+# pattern drops \b entirely since Han characters have no word boundaries.
+_FORWARD_ACTION_ES_RE = re.compile(
+    r"\b(promet|anunci|planea|planific|compromet|previst|programad|abrir|inaugur|"
+    r"lanzar|lanzará|espera|inici|construir|financiar|invertir)",
+    re.IGNORECASE,
+)
+
+_FORWARD_ACTION_ZH_RE = re.compile(
+    "(將|計劃|計划|承諾|承诺|宣佈|宣布|定於|预定|預計|预计|開幕|开幕|開放|开放|推出|興建|兴建|動工|动工)"
+)
+
 _SF_CONTEXT_RE = re.compile(
     r"\b(San Francisco|SF|SFMTA|SFPUC|SFPD|SFO|SFUSD|BART|Muni|CleanPowerSF|"
     r"Tenderloin|Mission|SoMa|Sunset|Marina|Castro|Excelsior|Chinatown|Union Square|"
@@ -49,6 +63,9 @@ _SF_CONTEXT_RE = re.compile(
     r"Valencias?|Potrero|Dogpatch|Parkmerced|Treasure Island|City Hall|Bay Area)\b",
     re.IGNORECASE,
 )
+
+# D2: Chinese-language SF context (the English names above never appear in Han text).
+_SF_CONTEXT_ZH_RE = re.compile("(舊金山|旧金山|三藩市)")
 
 
 def strip_outcome_fields(raw_candidate: Dict[str, Any]) -> Dict[str, Any]:
@@ -247,9 +264,18 @@ class QualificationIntakeAgent:
             )
 
         # Reviewer A (Rule check) & Reviewer B (Taxonomy/Attribution strict check)
+        # Forward/SF checks accept the English, Spanish, and Chinese patterns;
+        # the English patterns are unchanged from pre-D2 behavior.
         has_actor = bool(entity) and "spokesman" not in entity.lower() and entity.lower() not in ("unknown", "none")
-        has_forward = bool(_FORWARD_ACTION_RE.search(text))
-        has_sf = bool(_SF_CONTEXT_RE.search(text + " " + geo["neighborhood"] + " " + entity))
+        has_forward = bool(
+            _FORWARD_ACTION_RE.search(text)
+            or _FORWARD_ACTION_ES_RE.search(text)
+            or _FORWARD_ACTION_ZH_RE.search(text)
+        )
+        sf_haystack = text + " " + geo["neighborhood"] + " " + entity
+        has_sf = bool(
+            _SF_CONTEXT_RE.search(sf_haystack) or _SF_CONTEXT_ZH_RE.search(sf_haystack)
+        )
 
         rej_reason: Optional[str] = None
         if not has_actor:

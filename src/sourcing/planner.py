@@ -1,4 +1,13 @@
-"""Stage 1: Outcome-blind stratified Search Planner across all 10 SF pillars and 11 districts."""
+"""Stage 1: Outcome-blind stratified Search Planner across all 10 SF pillars and 11 districts.
+
+D2 diversification: gap-priority districts (2, 4, 8, 11) additionally get
+Spanish and Chinese query variants per pillar, and every pillar carries at
+least one non-institutional source (community/ethnic press, neighborhood
+paper). Neighborhood proper names are localized where a rendering is
+well-attested in SF's Spanish- and Chinese-language press; the canonical
+English name is always kept alongside any alias so a query never depends on
+the alias alone.
+"""
 
 from __future__ import annotations
 
@@ -94,6 +103,97 @@ COMMITMENT_VERBS = (
     "expects to",
 )
 
+# D2: gap-priority districts get query variants in these languages.
+FLAGGED_DISTRICT_LANGUAGES: tuple[str, ...] = ("es", "zh")
+
+# Per-language query scaffolding: localized city name, the "announced" OR-term,
+# and committed verbs mirroring COMMITMENT_VERBS. Traditional Chinese is used
+# for the zh set, matching the script SF's Chinese-language press publishes in.
+LANGUAGE_QUERY_LOCALIZATION: Dict[str, Dict[str, object]] = {
+    "es": {
+        "city_name": "San Francisco",
+        "announced": "anunci\u00f3",
+        "commitment_verbs": (
+            "promete",
+            "anunciar\u00e1",
+            "planea",
+            "comprometido a",
+            "previsto para",
+            "abrir\u00e1 en",
+            "lanzar\u00e1 en",
+            "espera",
+        ),
+    },
+    "zh": {
+        "city_name": "\u820a\u91d1\u5c71",
+        "announced": "\u5ba3\u4f48",
+        "commitment_verbs": (
+            "\u5c07",
+            "\u8a08\u5283",
+            "\u627f\u8afe",
+            "\u5b9a\u65bc",
+            "\u5c07\u65bc",
+            "\u958b\u5e55",
+            "\u63a8\u51fa",
+            "\u9810\u8a08",
+        ),
+    },
+}
+
+# District label and neighborhood renderings per language. Only well-attested
+# renderings from SF's Spanish- and Chinese-language press are listed; a
+# neighborhood without an attested alias keeps its canonical English name,
+# which every variant query includes regardless.
+DISTRICT_LANGUAGE_LOCALIZATION: Dict[int, Dict[str, Dict[str, object]]] = {
+    2: {
+        "es": {
+            "district_label": "Distrito 2",
+            "neighborhood_aliases": {},
+        },
+        "zh": {
+            "district_label": "\u7b2c2\u9078\u5340",
+            "neighborhood_aliases": {"Pacific Heights": "\u592a\u5e73\u6d0b\u9ad8\u5730"},
+        },
+    },
+    4: {
+        "es": {
+            "district_label": "Distrito 4",
+            "neighborhood_aliases": {"Outer Sunset": "el Sunset"},
+        },
+        "zh": {
+            "district_label": "\u7b2c4\u9078\u5340",
+            "neighborhood_aliases": {"Outer Sunset": "\u65e5\u843d\u5340"},
+        },
+    },
+    8: {
+        "es": {
+            "district_label": "Distrito 8",
+            "neighborhood_aliases": {"Castro": "el Castro"},
+        },
+        "zh": {
+            "district_label": "\u7b2c8\u9078\u5340",
+            "neighborhood_aliases": {"Castro": "\u5361\u65af\u695a\u5340", "Noe Valley": "\u8afe\u4f0a\u8c37"},
+        },
+    },
+    11: {
+        "es": {
+            "district_label": "Distrito 11",
+            "neighborhood_aliases": {},
+        },
+        "zh": {
+            "district_label": "\u7b2c11\u9078\u5340",
+            "neighborhood_aliases": {"Outer Mission": "\u7c73\u614e\u5340"},
+        },
+    },
+}
+
+
+def flagged_districts() -> List[int]:
+    """Districts with gap_priority in SF_SUPERVISOR_DISTRICTS (currently 2, 4, 8, 11)."""
+    return sorted(
+        d for d, meta in SF_SUPERVISOR_DISTRICTS.items() if meta.get("gap_priority")
+    )
+
 BANNED_OUTCOME_TERMS = frozenset({
     "failed",
     "fail",
@@ -136,6 +236,7 @@ class SearchQuerySpec:
     entity_type: str
     query_text: str
     target_domains: List[str] = field(default_factory=list)
+    language: str = "en"
 
 
 class SearchPlanner:
@@ -207,3 +308,76 @@ class SearchPlanner:
                 raise ValueError("Civic/Housing share exceeded stratified cap")
 
         return specs
+
+    def generate_diversified_variants(
+        self,
+        pillars: Optional[Sequence[str]] = None,
+        districts: Optional[Sequence[int]] = None,
+        time_window: str = "2016-01-01..2026-11-12",
+    ) -> List[SearchQuerySpec]:
+        """Spanish and Chinese query variants per pillar for gap-priority districts (D2).
+
+        The English stratified queries are untouched; variants are additive.
+        Every variant targets only domains already in the pillar's sources
+        list, so the planner and the allowlist move together per the spec.
+        """
+        selected_pillars = list(pillars) if pillars else list(TEN_CONTENT_PILLARS.keys())
+        selected_districts = list(districts) if districts else flagged_districts()
+
+        specs: List[SearchQuerySpec] = []
+        for p_idx, pillar in enumerate(selected_pillars):
+            meta = TEN_CONTENT_PILLARS[pillar]
+            nouns: List[str] = list(meta["domain_nouns"])  # type: ignore[arg-type]
+            domains: List[str] = list(meta["sources"])  # type: ignore[arg-type]
+            entity_type = (
+                "city_department"
+                if pillar in ("Civic Life", "Transit & Movement", "Weather & Environment")
+                else "cultural_or_business_entity"
+            )
+
+            for d_idx, district in enumerate(selected_districts):
+                d_meta = SF_SUPERVISOR_DISTRICTS[district]
+                localization = DISTRICT_LANGUAGE_LOCALIZATION[district]
+                neighborhoods: List[str] = list(d_meta["neighborhoods"])  # type: ignore[arg-type]
+                neighborhood = neighborhoods[p_idx % len(neighborhoods)]
+
+                for lang_idx, language in enumerate(FLAGGED_DISTRICT_LANGUAGES):
+                    lang_meta = LANGUAGE_QUERY_LOCALIZATION[language]
+                    verbs: List[str] = list(lang_meta["commitment_verbs"])  # type: ignore[arg-type]
+                    verb = verbs[(p_idx + d_idx + lang_idx) % len(verbs)]
+                    noun = nouns[(p_idx + d_idx + lang_idx) % len(nouns)]
+
+                    # Canonical neighborhood name always present; the alias is
+                    # additive so a query never depends on the alias alone.
+                    aliases: Dict[str, str] = dict(localization[language]["neighborhood_aliases"])  # type: ignore[arg-type]
+                    alias = aliases.get(neighborhood, "")
+                    parts = [
+                        str(lang_meta["city_name"]),
+                        str(localization[language]["district_label"]),
+                        neighborhood,
+                    ]
+                    if alias and alias != neighborhood:
+                        parts.append(alias)
+                    q_text = (
+                        " ".join(f'"{part}"' for part in parts)
+                        + f' ("{verb}" OR "{lang_meta["announced"]}") "{noun}"'
+                    )
+                    violations = validate_outcome_blind_query(q_text)
+                    if violations:
+                        raise ValueError(f"Outcome-biased term in planner query: {violations}")
+                    specs.append(
+                        SearchQuerySpec(
+                            query_id=f"Q-{p_idx+1:02d}-D{district:02d}-{language}",
+                            pillar=pillar,
+                            supervisor_district=district,
+                            neighborhood=neighborhood,
+                            time_window=time_window,
+                            entity_type=entity_type,
+                            query_text=q_text,
+                            target_domains=domains,
+                            language=language,
+                        )
+                    )
+
+        return specs
+
