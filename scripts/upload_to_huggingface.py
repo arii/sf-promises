@@ -792,11 +792,29 @@ print(f"Quarantined count: {len(quarantined['train'])}")
 """)
 
 # 8. Validate staged splits locally before any Hub upload
+# Expected row counts reconcile against the live export (docs/data.json, the master
+# CSV, the intake ledger) so a stale or truncated staging run fails loudly.
+master_csv = "data/sf_promises_master.csv"
+master_rows = 0
+if os.path.exists(master_csv):
+    with open(master_csv, "r", encoding="utf-8", newline="") as f:
+        master_rows = sum(1 for _ in csv.reader(f)) - 1
+
+intake_csv = "data/intake_ledger.csv"
+intake_rows_count = 0
+intake_cols = 0
+if os.path.exists(intake_csv):
+    with open(intake_csv, "r", encoding="utf-8", newline="") as f:
+        intake_reader = csv.reader(f)
+        intake_header = next(intake_reader, [])
+        intake_cols = len(intake_header)
+        intake_rows_count = sum(1 for _ in intake_reader)
+
 expected_splits = {
-    "data/commitments/train.csv": (54, len(csv_fields)),
-    "data/standardized_16col/train.csv": (54, 16),
-    "data/quarantined/train.csv": (13, 10),
-    "data/intake_ledger/train.csv": (63, 23),
+    "data/commitments/train.csv": (len(promises), len(csv_fields)),
+    "data/standardized_16col/train.csv": (master_rows, 16),
+    "data/quarantined/train.csv": (len(quarantined), len(q_fields)),
+    "data/intake_ledger/train.csv": (intake_rows_count, intake_cols),
 }
 for rel_path, (expected_rows, expected_cols) in expected_splits.items():
     full_path = os.path.join(STAGING_DIR, rel_path)
@@ -818,10 +836,19 @@ if args.validate_only:
     raise SystemExit(0)
 
 # 9. Upload to Hugging Face
+# The token comes from the environment only — never inline or prompt for it.
+hf_token = os.getenv("HF_TOKEN")
+if not hf_token:
+    raise SystemExit(
+        "HF_TOKEN is not set. Export a Hugging Face write token in the environment "
+        "to upload (e.g. `export HF_TOKEN=...` from a stored secret). "
+        "Use --validate-only for the offline dry-run, which needs no token."
+    )
+
 from huggingface_hub import HfApi
 
 print(f"\nUploading enriched dataset to Hugging Face repository {REPO_ID}...")
-api = HfApi(token=os.getenv("HF_TOKEN") or None)
+api = HfApi(token=hf_token)
 
 # Delete deprecated redundant duplicate files if they exist in the remote repo
 for redundant_file in ("data.csv", "data.json"):
