@@ -25,11 +25,14 @@ from src.evidence import (
 
 # Group sizes pinned at migration; any change to the allowlist must be a
 # reviewed config edit, so these counts act as tripwires.
+# D2 deliberately grew checks_allowlist 34→40 and news 31→37 by adding six
+# community/ethnic-press query targets (elreporterosf.com, eltecolote.org,
+# inglesidelight.com, noevalleyvoice.com, sfbayview.com, singtaousa.com).
 EXPECTED_GROUP_SIZES = {
-    "checks_allowlist": 34,
+    "checks_allowlist": 40,
     "government": 7,
     "primary": 24,
-    "news": 31,
+    "news": 37,
 }
 EXPECTED_CANARY_COUNT = 11
 
