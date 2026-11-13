@@ -396,6 +396,109 @@ IMPORTANCE_MAP = {
     "P85": 47
 }
 
+PROMISE_TITLES = {
+    "P02": "24/7 Crisis Stabilization Center",
+    "P05": "1,500 Shelter Beds in First 6 Months",
+    "SFO-01": "Runway 28L Safety Realignment & Reopening",
+    "SFO-02": "Harvey Milk Terminal 1 Final Completion",
+    "SFO-03": "Sustainable Aviation Fuel (SAF) Infrastructure",
+    "SFO-04": "Alaska Airlines Terminal 1 Flight Operations",
+    "P21": "JFK Drive Permanent Car-Free Promenade",
+    "P04": "Chase Center Valkyries Regular Season Games",
+    "P82": "Valkyries WNBA Championship Guarantee",
+    "P83": "Whole Foods Mid-Market Flagship Safety",
+    "P11": "Grateful Dead Tour Retirement & Archival Shows",
+    "P01": "Fentanyl State of Emergency Ordinance",
+    "P59": "Zoox Driverless Passenger Ride Hail in SF",
+    "P43": "Waymo Fully Autonomous Ride-Hail Expansion",
+    "P41": "Central Subway Substantial Completion (2018)",
+    "P10": "Mission Rock 40% Affordable Housing Pledges",
+    "P18": "Housing Element: 82,200 New Homes by 2031",
+    "P06": "Vision Zero: End Traffic Fatalities by 2024",
+    "P08": "1,000 SRO Housing Units Improvement",
+    "P22": "Embarcadero Navigation Center 200 Beds",
+    "P17": "Hire 425 New SFPD Police Officers",
+    "P25": "Close San Francisco Juvenile Hall Facility",
+    "P12": "6,500 Shared E-Scooter Fleet Cap",
+    "P26": "Empty Homes Tax: 4,500 Units in Year One",
+    "P27": "Housing Trust Fund: $20M First-Year Budget",
+    "P29": "Care Not Cash Homeless Services Reform",
+    "P31": "Family Zoning Plan Neighborhood Housing",
+    "P30": "Homelessness Recovery: 1,500 PSH Units",
+    "P36": "CleanPowerSF 100% Renewable Electricity",
+    "P09": "PG&E 10,000 Miles Underground Power Lines",
+    "P61": "SFPUC Water System Improvement Program",
+    "P66": "Chase Center Arena 18,064 Capacity Delivery",
+    "P64": "Treasure Island 8,000 New Residential Units",
+    "P84": "Pier 70 Historic Shipyard Redevelopment",
+    "P86": "Potrero Power Station 2,600 Homes Plan",
+    "P07": "3.5 Million New Homes in California by 2025",
+    "P13": "10-Year Plan to End Chronic Homelessness",
+    "P15": "Add 5,000 Supportive Housing Units in 10 Years",
+    "P16": "Open 1,000 Additional Shelter Beds in SF",
+    "P19": "Healthy San Francisco Universal Healthcare",
+    "P20": "Interim Mayor Non-Candidacy Pledge",
+    "P23": "Downtown Hospitality Corridor Recovery",
+    "P28": "Open 250 Additional Behavioral Health Beds",
+    "P35": "Mental Health SF Reform Implementation",
+    "P38": "Reduce PSPS Wildfire Outage Scope by Half",
+    "P39": "Install 7,500 EV Charging Ports",
+    "P40": "PG&E Fleet Vehicle Electrification by 2030",
+    "P57": "Comcast Gigabit Fiber-to-the-Home Network",
+    "P03": "Permitting Reform & Small Business Overhaul",
+    "P58": "AT&T Public Market Street Wi-Fi Expansion",
+    "P62": "Visa Mission Rock HQ 1,500 Staff Occupancy",
+    "P65": "Central Subway Contract Completion (May 2018)",
+    "P85": "Central Subway Chinatown & North Beach Study"
+}
+
+PROMISE_IMAGES = {
+    "P02": {
+        "image_url": "https://www.sf.gov/sites/default/files/styles/og_image/public/2025-04/crisis-stabilization-center-822-geary.jpg",
+        "caption": "822 Geary Street 24/7 Police-Friendly Crisis Stabilization Center in the Tenderloin"
+    },
+    "P05": {
+        "image_url": "https://assets.sfstandard.com/image/994911177489/image_s94fpd5el5549a2690grvt1g5u/-S3840x2561-FPNG",
+        "caption": "San Francisco urban shelter expansion network sites under 6-month evaluation"
+    },
+    "SFO-01": {
+        "image_url": "https://www.flysfo.com/sites/default/files/2024-06/runway_28l_reopening_airfield.jpg",
+        "caption": "SFO Runway 28L safety realignment and resurfacing project on airfield"
+    },
+    "SFO-02": {
+        "image_url": "https://www.flysfo.com/sites/default/files/2024-07/harvey_milk_terminal_1_ribbon_cutting.jpg",
+        "caption": "$2.4B Harvey Milk Terminal 1 final concourse completion ceremony"
+    },
+    "P04": {
+        "image_url": "https://cdn.abcotvs.com/dip/images/11518842_247-NOWSTREAMING_1280x720.png",
+        "caption": "Chase Center arena in Mission Bay hosting Golden State Warriors and Valkyries"
+    },
+    "P06": {
+        "image_url": "https://bloximages.chicago2.vip.townnews.com/sfexaminer.com/content/tncms/assets/v3/editorial/a/1b/a1b090c9-6651-4a89-bc8d-ff8b6cb2996c/681a934ddd28a.image.jpg",
+        "caption": "Valencia Street protected center-running bike lane and corridor safety modifications"
+    },
+    "P07": {
+        "image_url": "https://ca-times.brightspotcdn.com/dims4/default/863beb6/2147483647/strip/true/crop/6536x4358+0+0/resize/1200x800!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F12%2F99%2F5399a8ec4d70a25e815fc4f5225b%2Fgettyimages-2288620704.jpg",
+        "caption": "Residential construction progress across California housing development zones"
+    },
+    "P10": {
+        "image_url": "https://cdn.abcotvs.com/dip/images/13335905_060223-kgo-mission-rock-development-img.jpg",
+        "caption": "Mission Rock mixed-use waterfront development opposite Oracle Park"
+    },
+    "P21": {
+        "image_url": "https://sfrecpark.org/ImageRepository/Document?documentID=17234",
+        "caption": "Golden Gate Park JFK Promenade car-free recreation corridor"
+    },
+    "P41": {
+        "image_url": "https://www.sfmta.com/sites/default/files/project-images/2022/Central_Subway_Union_Square_Station.jpg",
+        "caption": "Central Subway Chinatown-Rose Pak and Union Square station platforms"
+    },
+    "P83": {
+        "image_url": "https://s.hdnux.com/photos/01/66/20/50/31001134/3/rawImage.jpg",
+        "caption": "Whole Foods Market 64,737-square-foot flagship store at 8th and Market Street"
+    }
+}
+
 
 
 PLANTED_TEST_CASES = [
@@ -945,6 +1048,20 @@ def export():
         elif p.get("source_hash"):
             p["source_file_path"] = f"{p['source_hash']}.md"
 
+        # Specific authoritative titles
+        if pid in PROMISE_TITLES:
+            p["document_title"] = PROMISE_TITLES[pid]
+            p["title"] = PROMISE_TITLES[pid]
+        elif not p.get("document_title"):
+            p["document_title"] = f"{p.get('entity', 'City')} Commitment"
+            p["title"] = p["document_title"]
+
+        # Photographic source archives & media
+        if pid in PROMISE_IMAGES:
+            p["media_image_url"] = PROMISE_IMAGES[pid]["image_url"]
+            p["image_url"] = PROMISE_IMAGES[pid]["image_url"]
+            p["media_caption"] = PROMISE_IMAGES[pid]["caption"]
+
         # Assign importance score
         p["importance_score"] = IMPORTANCE_MAP.get(pid, p.get("importance_score", 50))
 
@@ -1393,14 +1510,7 @@ def generate_featured_stories_html(promises, quarantined):
             speaker = p.get("entity", "")
             role = p.get("role", "")
             
-            titles = {
-                "P02": "24/7 Crisis Stabilization Center",
-                "SFO-01": "Runway 28L Safety Realignment",
-                "P05": "1,500 Shelter Beds in 6 Months",
-                "P06": "Vision Zero: End Traffic Fatalities",
-                "P37": "Tenderloin Encampment Outreach"
-            }
-            title = titles.get(pid, p.get("document_title") or f"Commitment {pid}")
+            title = PROMISE_TITLES.get(pid, p.get("document_title") or f"Commitment {pid}")
             
             verdict = p.get("verdict", "undecided")
             verd_class = verdict.lower().replace(" ", "_")

@@ -26,6 +26,8 @@
   --orange: #ffcf8f;
   --orange-bg: #3a2a16;
   --orange-border: #6e4c22;
+  --bg-surface: #121f2d;
+  --surface-light: #182838;
   --safe-area-inset-top: env(safe-area-inset-top, 0px);
 }
 
@@ -3632,14 +3634,29 @@ a:hover {
 
 .run-select {
   flex: 1 1 320px;
-  min-width: 240px;
+  width: 100%;
   max-width: 560px;
-  background: var(--surface);
+  height: 44px;
+  min-height: 44px;
+  max-height: 44px;
+  padding: 0.5rem 2.5rem 0.5rem 0.875rem;
+  background-color: var(--surface);
   color: var(--ink);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 10px 12px;
   font-size: 0.88rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23b5cad8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px;
+  cursor: pointer;
 }
 
 .run-select:focus-visible {
@@ -4138,9 +4155,16 @@ a:hover {
     display: none;
   }
   .run-select {
-    width: 100%;
-    min-height: 44px;
-    font-size: 0.95rem;
+    width: 100% !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 0.5rem 2.5rem 0.5rem 0.875rem !important;
+    font-size: 0.88rem !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
   }
   .pipeline-actions-row .btn-play-action {
     min-height: 44px;
@@ -4557,6 +4581,15 @@ a:hover {
   align-items: center;
   padding: 0 4px;
   transition: color 0.15s ease;
+  white-space: nowrap !important;
+}
+
+.nav-text-desktop {
+  display: inline;
+}
+
+.nav-text-mobile {
+  display: none;
 }
 
 .nav-link:hover, .nav-link:focus {
@@ -5314,13 +5347,15 @@ a:hover {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    gap: 10px !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .topbar-left {
     display: flex !important;
     align-items: center !important;
-    gap: 12px !important;
+    gap: 10px !important;
     flex: 1 1 auto !important;
     min-width: 0 !important;
     flex-wrap: nowrap !important;
@@ -5343,7 +5378,7 @@ a:hover {
   .topbar-nav {
     display: flex !important;
     align-items: center !important;
-    gap: 10px !important;
+    gap: 8px !important;
     overflow-x: auto !important;
     white-space: nowrap !important;
     -webkit-overflow-scrolling: touch !important;
@@ -5365,13 +5400,25 @@ a:hover {
     flex-shrink: 0 !important;
   }
 
+  .nav-text-desktop {
+    display: none !important;
+  }
+
+  .nav-text-mobile {
+    display: inline !important;
+  }
+
   .topbar-right {
     flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
   }
 
   .github-icon-btn {
-    min-width: 40px !important;
-    min-height: 40px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    width: 36px !important;
+    height: 36px !important;
     padding: 6px !important;
   }
 
@@ -6018,6 +6065,39 @@ a:hover {
   font-size: 0.78rem;
 }
 
+.drawer-media-box {
+  margin-top: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.drawer-media-header {
+  padding: 8px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer-media-img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+.drawer-media-caption {
+  padding: 8px 12px;
+  font-size: 0.76rem;
+  color: var(--muted);
+  line-height: 1.4;
+  background: var(--surface);
+}
+
 .drawer-verdict-card {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -6198,14 +6278,35 @@ a:hover {
 /* Mobile Drawer Bottom Sheet (<768px) */
 @media (max-width: 767px) {
   .drawer-panel {
-    width: 100vw;
-    height: 90vh;
-    border-radius: 16px 16px 0 0;
+    width: 100vw !important;
+    height: 88vh !important;
+    max-height: 88vh !important;
+    background: #121f2d !important;
+    border-radius: 16px 16px 0 0 !important;
     animation: slideUpBottom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .drawer-backdrop {
-    align-items: flex-end;
+    align-items: flex-end !important;
+  }
+
+  .drawer-header {
+    position: sticky !important;
+    top: 0 !important;
+    background: #182838 !important;
+    z-index: 20 !important;
+    border-bottom: 1px solid var(--line) !important;
+    padding: 12px 16px !important;
+  }
+
+  .drawer-title {
+    font-size: 1.15rem !important;
+    line-height: 1.25 !important;
+    margin: 2px 0 4px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 

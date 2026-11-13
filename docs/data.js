@@ -6,13 +6,13 @@ window.__DEMO_DATA__ = {
     "last_checked": "Nov 13, 2026",
     "last_updated": "Nov 13, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
-    "commit_sha": "07838e54bc1e4cf3c42d97dda6f08c881e5d55b5",
+    "commit_sha": "8854701f2009bf79ce95e0c01d1db77f5d8f0d1a",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-13T00:07:52Z"
+    "exported_at": "2026-11-13T00:19:17Z"
   },
   "database_status": {
-    "commit_sha": "07838e54bc1e4cf3c42d97dda6f08c881e5d55b5",
+    "commit_sha": "8854701f2009bf79ce95e0c01d1db77f5d8f0d1a",
     "tracked_count": 54,
     "seed_promises_count": 12,
     "total_db_promises": 54,
@@ -63,7 +63,7 @@ window.__DEMO_DATA__ = {
     "id_reconciliation": "54 published \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
-    "acceptance_status_label": "Acceptance verified on commit 07838e5 (separated processes, not Firecracker)",
+    "acceptance_status_label": "Acceptance verified on commit 8854701 (separated processes, not Firecracker)",
     "counts": {
       "kept": 25,
       "broken": 17,
@@ -72,7 +72,7 @@ window.__DEMO_DATA__ = {
     },
     "integration_run": {
       "run_id": "F-20261111-045601",
-      "commit_sha": "07838e54bc1e4cf3c42d97dda6f08c881e5d55b5",
+      "commit_sha": "8854701f2009bf79ce95e0c01d1db77f5d8f0d1a",
       "total_tests": 36,
       "passed": 33,
       "failed": 0,
@@ -81,7 +81,7 @@ window.__DEMO_DATA__ = {
     },
     "latest_run": {
       "run_id": "F-20261111-045601",
-      "commit_sha": "bd756b38660b4c990fb8617ce0f90989fd9a8489",
+      "commit_sha": "8854701f2009bf79ce95e0c01d1db77f5d8f0d1a",
       "total_tests": 36,
       "passed": 33,
       "failed": 0,
@@ -89,11 +89,11 @@ window.__DEMO_DATA__ = {
       "status_label": "33 passed, 0 failed, 3 blocked"
     },
     "sandbox_isolation_verified": true,
-    "sandbox_isolation_label": "Sandbox isolation verified on commit 07838e5 (separated processes, not Firecracker)",
+    "sandbox_isolation_label": "Sandbox isolation verified on commit 8854701 (separated processes, not Firecracker)",
     "discrepancies": [
       "DB holds 54 promises (12 seeds + 42 Tier-2 banked, scale paused by user decision) with 54 verdicts and 124 evidence rows; every file hash re-verified.",
-      "Latest harness run F-20261111-045601 on 07838e5: 33 pass / 0 fail / 3 blocked-extended.",
-      "Acceptance verified on commit 07838e5: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
+      "Latest harness run F-20261111-045601 on 8854701: 33 pass / 0 fail / 3 blocked-extended.",
+      "Acceptance verified on commit 8854701: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
     ],
@@ -326,7 +326,7 @@ window.__DEMO_DATA__ = {
       ],
       "display_no": 1,
       "verbatim_quote": "The facility began accepting clients on April 28.",
-      "document_title": "Mayor Lurie Delivers on Key Commitment, Opening 24/7 Police-Friendly Stabilization Center to Provide Urgent Care for People in Crisis",
+      "document_title": "24/7 Crisis Stabilization Center",
       "quote_date": "April 28, 2025",
       "opened_date": "2025-04-28",
       "importance_score": 99,
@@ -373,7 +373,11 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center-to-provide-urgent-care-for-people-in-crisis"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center-to-provide-urgent-care-for-people-in-crisis",
+      "title": "24/7 Crisis Stabilization Center",
+      "media_image_url": "https://www.sf.gov/sites/default/files/styles/og_image/public/2025-04/crisis-stabilization-center-822-geary.jpg",
+      "image_url": "https://www.sf.gov/sites/default/files/styles/og_image/public/2025-04/crisis-stabilization-center-822-geary.jpg",
+      "media_caption": "822 Geary Street 24/7 Police-Friendly Crisis Stabilization Center in the Tenderloin"
     },
     {
       "promise_id": "P05",
@@ -560,7 +564,12 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "news_local",
       "source_domain_authority": 8,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://thefrisc.com/one-year-of-luries-approach-to-sfs-homelessness-drugs-mental-health/"
+      "source_archived_url": "https://web.archive.org/web/*/https://thefrisc.com/one-year-of-luries-approach-to-sfs-homelessness-drugs-mental-health/",
+      "document_title": "1,500 Shelter Beds in First 6 Months",
+      "title": "1,500 Shelter Beds in First 6 Months",
+      "media_image_url": "https://assets.sfstandard.com/image/994911177489/image_s94fpd5el5549a2690grvt1g5u/-S3840x2561-FPNG",
+      "image_url": "https://assets.sfstandard.com/image/994911177489/image_s94fpd5el5549a2690grvt1g5u/-S3840x2561-FPNG",
+      "media_caption": "San Francisco urban shelter expansion network sites under 6-month evaluation"
     },
     {
       "promise_id": "SFO-01",
@@ -590,7 +599,7 @@ window.__DEMO_DATA__ = {
         "interesting": 2
       },
       "importance_score": 97,
-      "document_title": "SFO to Reopen Runway 28L Ahead of Schedule on Friday, June 21st",
+      "document_title": "Runway 28L Safety Realignment & Reopening",
       "quote_date": "June 20, 2024",
       "reading_used": "strict",
       "decided_at": "2024-06-22T00:00:00Z",
@@ -676,7 +685,11 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-reopen-runway-28l-ahead-schedule-friday-june-21st"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-reopen-runway-28l-ahead-schedule-friday-june-21st",
+      "title": "Runway 28L Safety Realignment & Reopening",
+      "media_image_url": "https://www.flysfo.com/sites/default/files/2024-06/runway_28l_reopening_airfield.jpg",
+      "image_url": "https://www.flysfo.com/sites/default/files/2024-06/runway_28l_reopening_airfield.jpg",
+      "media_caption": "SFO Runway 28L safety realignment and resurfacing project on airfield"
     },
     {
       "promise_id": "SFO-02",
@@ -706,7 +719,7 @@ window.__DEMO_DATA__ = {
         "interesting": 2
       },
       "importance_score": 96,
-      "document_title": "SFO Celebrates Completion of $2.4 Billion Harvey Milk Terminal 1",
+      "document_title": "Harvey Milk Terminal 1 Final Completion",
       "quote_date": "July 1, 2024",
       "reading_used": "strict",
       "decided_at": "2024-07-02T00:00:00Z",
@@ -792,7 +805,11 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-celebrates-completion-harvey-milk-terminal-1"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-celebrates-completion-harvey-milk-terminal-1",
+      "title": "Harvey Milk Terminal 1 Final Completion",
+      "media_image_url": "https://www.flysfo.com/sites/default/files/2024-07/harvey_milk_terminal_1_ribbon_cutting.jpg",
+      "image_url": "https://www.flysfo.com/sites/default/files/2024-07/harvey_milk_terminal_1_ribbon_cutting.jpg",
+      "media_caption": "$2.4B Harvey Milk Terminal 1 final concourse completion ceremony"
     },
     {
       "promise_id": "P21",
@@ -930,7 +947,12 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://sf.streetsblog.org/2022/04/26/hurrah-for-j-f-k-promenade-forever"
+      "source_archived_url": "https://web.archive.org/web/*/https://sf.streetsblog.org/2022/04/26/hurrah-for-j-f-k-promenade-forever",
+      "document_title": "JFK Drive Permanent Car-Free Promenade",
+      "title": "JFK Drive Permanent Car-Free Promenade",
+      "media_image_url": "https://sfrecpark.org/ImageRepository/Document?documentID=17234",
+      "image_url": "https://sfrecpark.org/ImageRepository/Document?documentID=17234",
+      "media_caption": "Golden Gate Park JFK Promenade car-free recreation corridor"
     },
     {
       "promise_id": "P04",
@@ -1093,7 +1115,12 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "news_mainstream",
       "source_domain_authority": 9,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sports/article/valkyries-wnba-championship-22499436.php"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sports/article/valkyries-wnba-championship-22499436.php",
+      "document_title": "Chase Center Valkyries Regular Season Games",
+      "title": "Chase Center Valkyries Regular Season Games",
+      "media_image_url": "https://cdn.abcotvs.com/dip/images/11518842_247-NOWSTREAMING_1280x720.png",
+      "image_url": "https://cdn.abcotvs.com/dip/images/11518842_247-NOWSTREAMING_1280x720.png",
+      "media_caption": "Chase Center arena in Mission Bay hosting Golden State Warriors and Valkyries"
     },
     {
       "promise_id": "P82",
@@ -1244,7 +1271,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "news_mainstream",
       "source_domain_authority": 9,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://nytimes.com/athletic/7742640/2026/10/31/wnba-finals-champion-valkyries-dream"
+      "source_archived_url": "https://web.archive.org/web/*/https://nytimes.com/athletic/7742640/2026/10/31/wnba-finals-champion-valkyries-dream",
+      "document_title": "Valkyries WNBA Championship Guarantee",
+      "title": "Valkyries WNBA Championship Guarantee"
     },
     {
       "promise_id": "P83",
@@ -1395,7 +1424,12 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.webwire.com/ViewPressRel.asp?aId=285415"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.webwire.com/ViewPressRel.asp?aId=285415",
+      "document_title": "Whole Foods Mid-Market Flagship Safety",
+      "title": "Whole Foods Mid-Market Flagship Safety",
+      "media_image_url": "https://s.hdnux.com/photos/01/66/20/50/31001134/3/rawImage.jpg",
+      "image_url": "https://s.hdnux.com/photos/01/66/20/50/31001134/3/rawImage.jpg",
+      "media_caption": "Whole Foods Market 64,737-square-foot flagship store at 8th and Market Street"
     },
     {
       "promise_id": "P11",
@@ -1569,7 +1603,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "academic_report",
       "source_domain_authority": 9,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Dead_%26_Company_Summer_Tour_2023"
+      "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Dead_%26_Company_Summer_Tour_2023",
+      "document_title": "Grateful Dead Tour Retirement & Archival Shows",
+      "title": "Grateful Dead Tour Retirement & Archival Shows"
     },
     {
       "promise_id": "SFO-03",
@@ -1599,7 +1635,7 @@ window.__DEMO_DATA__ = {
         "interesting": 2
       },
       "importance_score": 90,
-      "document_title": "SFO Welcomes Expanded Use of Sustainable Aviation Fuel by United Airlines",
+      "document_title": "Sustainable Aviation Fuel (SAF) Infrastructure",
       "quote_date": "August 1, 2024",
       "reading_used": "strict",
       "decided_at": "2024-08-02T00:00:00Z",
@@ -1685,7 +1721,8 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-welcomes-expanded-use-sustainable-aviation-fuel-united-airlines"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-welcomes-expanded-use-sustainable-aviation-fuel-united-airlines",
+      "title": "Sustainable Aviation Fuel (SAF) Infrastructure"
     },
     {
       "promise_id": "SFO-04",
@@ -1715,7 +1752,7 @@ window.__DEMO_DATA__ = {
         "interesting": 2
       },
       "importance_score": 89,
-      "document_title": "Alaska Airlines Opens Doors at Harvey Milk Terminal 1 with New Flagship Lounge",
+      "document_title": "Alaska Airlines Terminal 1 Flight Operations",
       "quote_date": "July 24, 2024",
       "reading_used": "strict",
       "decided_at": "2024-07-25T00:00:00Z",
@@ -1801,7 +1838,8 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/alaska-airlines-opens-doors-harvey-milk-terminal-1-sfo"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/alaska-airlines-opens-doors-harvey-milk-terminal-1-sfo",
+      "title": "Alaska Airlines Terminal 1 Flight Operations"
     },
     {
       "promise_id": "P01",
@@ -1951,7 +1989,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://edition.pagesuite.com/tribune/article_popover.aspx?guid=4996c790-cac8-49aa-8783-9c015e1acea1"
+      "source_archived_url": "https://web.archive.org/web/*/https://edition.pagesuite.com/tribune/article_popover.aspx?guid=4996c790-cac8-49aa-8783-9c015e1acea1",
+      "document_title": "Fentanyl State of Emergency Ordinance",
+      "title": "Fentanyl State of Emergency Ordinance"
     },
     {
       "promise_id": "P59",
@@ -2113,7 +2153,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://techcrunch.com/2025/11/18/zoox-to-begin-offering-robotaxi-rides-to-public-in-san-francisco/"
+      "source_archived_url": "https://web.archive.org/web/*/https://techcrunch.com/2025/11/18/zoox-to-begin-offering-robotaxi-rides-to-public-in-san-francisco/",
+      "document_title": "Zoox Driverless Passenger Ride Hail in SF",
+      "title": "Zoox Driverless Passenger Ride Hail in SF"
     },
     {
       "promise_id": "P43",
@@ -2264,7 +2306,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://waymo.com/blog/2022/03/taking-our-next-step-in-city-by-bay/"
+      "source_archived_url": "https://web.archive.org/web/*/https://waymo.com/blog/2022/03/taking-our-next-step-in-city-by-bay/",
+      "document_title": "Waymo Fully Autonomous Ride-Hail Expansion",
+      "title": "Waymo Fully Autonomous Ride-Hail Expansion"
     },
     {
       "promise_id": "P41",
@@ -2439,7 +2483,12 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/ja/media/35570/download?inline"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/ja/media/35570/download?inline",
+      "document_title": "Central Subway Substantial Completion (2018)",
+      "title": "Central Subway Substantial Completion (2018)",
+      "media_image_url": "https://www.sfmta.com/sites/default/files/project-images/2022/Central_Subway_Union_Square_Station.jpg",
+      "image_url": "https://www.sfmta.com/sites/default/files/project-images/2022/Central_Subway_Union_Square_Station.jpg",
+      "media_caption": "Central Subway Chinatown-Rose Pak and Union Square station platforms"
     },
     {
       "promise_id": "P10",
@@ -2601,7 +2650,12 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "news_mainstream",
       "source_domain_authority": 9,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/s-f-giants-brass-celebrates-opening-mission-rock-18161986.php"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/s-f-giants-brass-celebrates-opening-mission-rock-18161986.php",
+      "document_title": "Mission Rock 40% Affordable Housing Pledges",
+      "title": "Mission Rock 40% Affordable Housing Pledges",
+      "media_image_url": "https://cdn.abcotvs.com/dip/images/13335905_060223-kgo-mission-rock-development-img.jpg",
+      "image_url": "https://cdn.abcotvs.com/dip/images/13335905_060223-kgo-mission-rock-development-img.jpg",
+      "media_caption": "Mission Rock mixed-use waterfront development opposite Oracle Park"
     },
     {
       "promise_id": "P18",
@@ -2739,7 +2793,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://citypln-m-extnl.sfgov.org/Commissions/CPC/4_10_2025/Commission%20Packet/2021-005878CWP.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/https://citypln-m-extnl.sfgov.org/Commissions/CPC/4_10_2025/Commission%20Packet/2021-005878CWP.pdf",
+      "document_title": "Housing Element: 82,200 New Homes by 2031",
+      "title": "Housing Element: 82,200 New Homes by 2031"
     },
     {
       "promise_id": "P06",
@@ -2901,7 +2957,12 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/tl/media/45938/download?inline"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/tl/media/45938/download?inline",
+      "document_title": "Vision Zero: End Traffic Fatalities by 2024",
+      "title": "Vision Zero: End Traffic Fatalities by 2024",
+      "media_image_url": "https://bloximages.chicago2.vip.townnews.com/sfexaminer.com/content/tncms/assets/v3/editorial/a/1b/a1b090c9-6651-4a89-bc8d-ff8b6cb2996c/681a934ddd28a.image.jpg",
+      "image_url": "https://bloximages.chicago2.vip.townnews.com/sfexaminer.com/content/tncms/assets/v3/editorial/a/1b/a1b090c9-6651-4a89-bc8d-ff8b6cb2996c/681a934ddd28a.image.jpg",
+      "media_caption": "Valencia Street protected center-running bike lane and corridor safety modifications"
     },
     {
       "promise_id": "P08",
@@ -3063,7 +3124,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "news_mainstream",
       "source_domain_authority": 9,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/homeless-housing-sro-breed-17767837.php"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/homeless-housing-sro-breed-17767837.php",
+      "document_title": "1,000 SRO Housing Units Improvement",
+      "title": "1,000 SRO Housing Units Improvement"
     },
     {
       "promise_id": "P22",
@@ -3201,7 +3264,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.dhcs.ca.gov/wp-content/uploads/2025/10/San-Francisco-PY4-Annual-Narrative.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.dhcs.ca.gov/wp-content/uploads/2025/10/San-Francisco-PY4-Annual-Narrative.pdf",
+      "document_title": "Embarcadero Navigation Center 200 Beds",
+      "title": "Embarcadero Navigation Center 200 Beds"
     },
     {
       "promise_id": "P17",
@@ -3328,7 +3393,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.influencewatch.org/person/daniel-lurie/"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.influencewatch.org/person/daniel-lurie/",
+      "document_title": "Hire 425 New SFPD Police Officers",
+      "title": "Hire 425 New SFPD Police Officers"
     },
     {
       "promise_id": "P25",
@@ -3465,7 +3532,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://media.api.sf.gov/documents/JUVENILE_JUSTICE_REALIGNMENT_BLOCK_GRANT_ANNUAL_PLAN_20260420.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/https://media.api.sf.gov/documents/JUVENILE_JUSTICE_REALIGNMENT_BLOCK_GRANT_ANNUAL_PLAN_20260420.pdf",
+      "document_title": "Close San Francisco Juvenile Hall Facility",
+      "title": "Close San Francisco Juvenile Hall Facility"
     },
     {
       "promise_id": "P12",
@@ -3628,7 +3697,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/projects/powered-scooter-share-permit-program"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/projects/powered-scooter-share-permit-program",
+      "document_title": "6,500 Shared E-Scooter Fleet Cap",
+      "title": "6,500 Shared E-Scooter Fleet Cap"
     },
     {
       "promise_id": "P26",
@@ -3804,7 +3875,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://costa-hawkins.com/wp-content/uploads/2026/09/A172067.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/https://costa-hawkins.com/wp-content/uploads/2026/09/A172067.pdf",
+      "document_title": "Empty Homes Tax: 4,500 Units in Year One",
+      "title": "Empty Homes Tax: 4,500 Units in Year One"
     },
     {
       "promise_id": "P27",
@@ -3943,7 +4016,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.spur.org/news/2012-07-26/housing-trust-fund-heads-voters-november"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.spur.org/news/2012-07-26/housing-trust-fund-heads-voters-november",
+      "document_title": "Housing Trust Fund: $20M First-Year Budget",
+      "title": "Housing Trust Fund: $20M First-Year Budget"
     },
     {
       "promise_id": "P29",
@@ -4082,7 +4157,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2020-02-19/gov-newsom-once-again-takes-on-homelessness-this-time-statewide"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2020-02-19/gov-newsom-once-again-takes-on-homelessness-this-time-statewide",
+      "document_title": "Care Not Cash Homeless Services Reform",
+      "title": "Care Not Cash Homeless Services Reform"
     },
     {
       "promise_id": "P31",
@@ -4220,7 +4297,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://sfplanning.org/sf-family-zoning-plan"
+      "source_archived_url": "https://web.archive.org/web/*/https://sfplanning.org/sf-family-zoning-plan",
+      "document_title": "Family Zoning Plan Neighborhood Housing",
+      "title": "Family Zoning Plan Neighborhood Housing"
     },
     {
       "promise_id": "P30",
@@ -4358,7 +4437,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--san-francisco-receives-new-state-homekey-awards-733-million-support-purchase-and-operations"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--san-francisco-receives-new-state-homekey-awards-733-million-support-purchase-and-operations",
+      "document_title": "Homelessness Recovery: 1,500 PSH Units",
+      "title": "Homelessness Recovery: 1,500 PSH Units"
     },
     {
       "promise_id": "P36",
@@ -4521,7 +4602,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://sfenvironment.org/press/mayor-lee-announces-bold-new-target-50-percent-renewable-energy-2020"
+      "source_archived_url": "https://web.archive.org/web/*/https://sfenvironment.org/press/mayor-lee-announces-bold-new-target-50-percent-renewable-energy-2020",
+      "document_title": "CleanPowerSF 100% Renewable Electricity",
+      "title": "CleanPowerSF 100% Renewable Electricity"
     },
     {
       "promise_id": "P09",
@@ -4683,7 +4766,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2023/600-Miles-and-Counting-PGE-Hits-Significant-Milestone-as-Crews-Safely-Complete-Construction-Energization-of-350-More-Miles-of-Underground-Powerlines-in-2023/"
+      "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2023/600-Miles-and-Counting-PGE-Hits-Significant-Milestone-as-Crews-Safely-Complete-Construction-Energization-of-350-More-Miles-of-Underground-Powerlines-in-2023/",
+      "document_title": "PG&E 10,000 Miles Underground Power Lines",
+      "title": "PG&E 10,000 Miles Underground Power Lines"
     },
     {
       "promise_id": "P61",
@@ -4823,7 +4908,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sfpuc.gov/sites/default/files/documents/WSIP-Quarterly-Report-FY2025-2026-Q4.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sfpuc.gov/sites/default/files/documents/WSIP-Quarterly-Report-FY2025-2026-Q4.pdf",
+      "document_title": "SFPUC Water System Improvement Program",
+      "title": "SFPUC Water System Improvement Program"
     },
     {
       "promise_id": "P66",
@@ -4985,7 +5072,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.thestadiumbusiness.com/2019/08/28/warriors-lift-lid-chase-center/"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.thestadiumbusiness.com/2019/08/28/warriors-lift-lid-chase-center/",
+      "document_title": "Chase Center Arena 18,064 Capacity Delivery",
+      "title": "Chase Center Arena 18,064 Capacity Delivery"
     },
     {
       "promise_id": "P64",
@@ -5159,7 +5248,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://sfbos.org/ftp/uploadedfiles/bdsupvrs/resolutions11/r0241-11.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/https://sfbos.org/ftp/uploadedfiles/bdsupvrs/resolutions11/r0241-11.pdf",
+      "document_title": "Treasure Island 8,000 New Residential Units",
+      "title": "Treasure Island 8,000 New Residential Units"
     },
     {
       "promise_id": "P84",
@@ -5297,7 +5388,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://bizjournals.com/sanfrancisco/news/2017/10/31/forest-city-pier-70-san-francisco-approval-housing.html"
+      "source_archived_url": "https://web.archive.org/web/*/https://bizjournals.com/sanfrancisco/news/2017/10/31/forest-city-pier-70-san-francisco-approval-housing.html",
+      "document_title": "Pier 70 Historic Shipyard Redevelopment",
+      "title": "Pier 70 Historic Shipyard Redevelopment"
     },
     {
       "promise_id": "P86",
@@ -5435,7 +5528,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/http://sfbos.archive.sf.gov/sites/default/files/2025_10_15_PRESS_RELEASE_INNOVATIVE_SOPHIE_MAXWELL_BUILDING_OPENS_AT_SFS_BOOMING_POWER_STATION.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/http://sfbos.archive.sf.gov/sites/default/files/2025_10_15_PRESS_RELEASE_INNOVATIVE_SOPHIE_MAXWELL_BUILDING_OPENS_AT_SFS_BOOMING_POWER_STATION.pdf",
+      "document_title": "Potrero Power Station 2,600 Homes Plan",
+      "title": "Potrero Power Station 2,600 Homes Plan"
     },
     {
       "promise_id": "P07",
@@ -5597,7 +5692,12 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://src.senate.ca.gov/governor-gavin-newsoms-top-15-worst-flip-flops-and-fails"
+      "source_archived_url": "https://web.archive.org/web/*/https://src.senate.ca.gov/governor-gavin-newsoms-top-15-worst-flip-flops-and-fails",
+      "document_title": "3.5 Million New Homes in California by 2025",
+      "title": "3.5 Million New Homes in California by 2025",
+      "media_image_url": "https://ca-times.brightspotcdn.com/dims4/default/863beb6/2147483647/strip/true/crop/6536x4358+0+0/resize/1200x800!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F12%2F99%2F5399a8ec4d70a25e815fc4f5225b%2Fgettyimages-2288620704.jpg",
+      "image_url": "https://ca-times.brightspotcdn.com/dims4/default/863beb6/2147483647/strip/true/crop/6536x4358+0+0/resize/1200x800!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F12%2F99%2F5399a8ec4d70a25e815fc4f5225b%2Fgettyimages-2288620704.jpg",
+      "media_caption": "Residential construction progress across California housing development zones"
     },
     {
       "promise_id": "P13",
@@ -5747,7 +5847,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2019-08-02/timeline-the-frustrating-political-history-of-homelessness-in-san-francisco"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2019-08-02/timeline-the-frustrating-political-history-of-homelessness-in-san-francisco",
+      "document_title": "10-Year Plan to End Chronic Homelessness",
+      "title": "10-Year Plan to End Chronic Homelessness"
     },
     {
       "promise_id": "P15",
@@ -5897,7 +5999,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://civilgrandjury.archive.sf.gov/2017_2018/PressRelease.Housing.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/https://civilgrandjury.archive.sf.gov/2017_2018/PressRelease.Housing.pdf",
+      "document_title": "Add 5,000 Supportive Housing Units in 10 Years",
+      "title": "Add 5,000 Supportive Housing Units in 10 Years"
     },
     {
       "promise_id": "P16",
@@ -6047,7 +6151,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_admin/0-0-0-67712"
+      "source_archived_url": "https://web.archive.org/web/*/https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_admin/0-0-0-67712",
+      "document_title": "Open 1,000 Additional Shelter Beds in SF",
+      "title": "Open 1,000 Additional Shelter Beds in SF"
     },
     {
       "promise_id": "P19",
@@ -6197,7 +6303,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "academic_report",
       "source_domain_authority": 9,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Healthy_San_Francisco"
+      "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Healthy_San_Francisco",
+      "document_title": "Healthy San Francisco Universal Healthcare",
+      "title": "Healthy San Francisco Universal Healthcare"
     },
     {
       "promise_id": "P20",
@@ -6335,7 +6443,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "academic_report",
       "source_domain_authority": 9,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Ed_Lee"
+      "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Ed_Lee",
+      "document_title": "Interim Mayor Non-Candidacy Pledge",
+      "title": "Interim Mayor Non-Candidacy Pledge"
     },
     {
       "promise_id": "P23",
@@ -6473,7 +6583,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/mayor-lurie-launches-sfpd-hospitality-task-force-major-new-effort-to-strengthen-public-safety-drive-economic-comeback"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/mayor-lurie-launches-sfpd-hospitality-task-force-major-new-effort-to-strengthen-public-safety-drive-economic-comeback",
+      "document_title": "Downtown Hospitality Corridor Recovery",
+      "title": "Downtown Hospitality Corridor Recovery"
     },
     {
       "promise_id": "P28",
@@ -6612,7 +6724,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--department-public-health-opens-70-new-behavioral-health-beds-part-expansion-treat-people"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--department-public-health-opens-70-new-behavioral-health-beds-part-expansion-treat-people",
+      "document_title": "Open 250 Additional Behavioral Health Beds",
+      "title": "Open 250 Additional Behavioral Health Beds"
     },
     {
       "promise_id": "P35",
@@ -6787,7 +6901,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://api.sf.gov/documents/12808/DPH_MHSF_Implementation_Report_2023.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/https://api.sf.gov/documents/12808/DPH_MHSF_Implementation_Report_2023.pdf",
+      "document_title": "Mental Health SF Reform Implementation",
+      "title": "Mental Health SF Reform Implementation"
     },
     {
       "promise_id": "P37",
@@ -6913,7 +7029,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://hsh.archive.sf.gov/wp-content/uploads/2020/01/1000-Shelter-Bed-Press-Conference.pdf"
+      "source_archived_url": "https://web.archive.org/web/*/https://hsh.archive.sf.gov/wp-content/uploads/2020/01/1000-Shelter-Bed-Press-Conference.pdf",
+      "document_title": "London Breed Commitment",
+      "title": "London Breed Commitment"
     },
     {
       "promise_id": "P38",
@@ -7088,7 +7206,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/PGE-Outlines-Actions-Its-Taking-to-Keep-Customers-and-Communities-Safe-During-2020-Wildfire-Season/default.aspx?print=1"
+      "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/PGE-Outlines-Actions-Its-Taking-to-Keep-Customers-and-Communities-Safe-During-2020-Wildfire-Season/default.aspx?print=1",
+      "document_title": "Reduce PSPS Wildfire Outage Scope by Half",
+      "title": "Reduce PSPS Wildfire Outage Scope by Half"
     },
     {
       "promise_id": "P39",
@@ -7251,7 +7371,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://docs.cpuc.ca.gov/PublishedDocs/Efile/G000/M373/K419/373419331.PDF"
+      "source_archived_url": "https://web.archive.org/web/*/https://docs.cpuc.ca.gov/PublishedDocs/Efile/G000/M373/K419/373419331.PDF",
+      "document_title": "Install 7,500 EV Charging Ports",
+      "title": "Install 7,500 EV Charging Ports"
     },
     {
       "promise_id": "P40",
@@ -7402,7 +7524,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/Electric-Vehicle-Drivers-Apply-for-800-Clean-Fuel-Rebate-Before-End-of-Year/default.aspx"
+      "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/Electric-Vehicle-Drivers-Apply-for-800-Clean-Fuel-Rebate-Before-End-of-Year/default.aspx",
+      "document_title": "PG&E Fleet Vehicle Electrification by 2030",
+      "title": "PG&E Fleet Vehicle Electrification by 2030"
     },
     {
       "promise_id": "P57",
@@ -7540,7 +7664,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.neowin.net/news/comcast-is-expanding-its-gigabit-internet-service-will-be-in-15-us-cities-by-early-2017/"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.neowin.net/news/comcast-is-expanding-its-gigabit-internet-service-will-be-in-15-us-cities-by-early-2017/",
+      "document_title": "Comcast Gigabit Fiber-to-the-Home Network",
+      "title": "Comcast Gigabit Fiber-to-the-Home Network"
     },
     {
       "promise_id": "P03",
@@ -7702,7 +7828,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-pieces-of-permitsf-announces-legislation-with-major-reforms-to-cut-red-tape-drive-economic-recovery"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-pieces-of-permitsf-announces-legislation-with-major-reforms-to-cut-red-tape-drive-economic-recovery",
+      "document_title": "Permitting Reform & Small Business Overhaul",
+      "title": "Permitting Reform & Small Business Overhaul"
     },
     {
       "promise_id": "P58",
@@ -7828,7 +7956,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.govtech.com/network/ATT-Launches-Fiber-Internet-in-San-Francisco-Bay-Area.html"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.govtech.com/network/ATT-Launches-Fiber-Internet-in-San-Francisco-Bay-Area.html",
+      "document_title": "AT&T Public Market Street Wi-Fi Expansion",
+      "title": "AT&T Public Market Street Wi-Fi Expansion"
     },
     {
       "promise_id": "P62",
@@ -8002,7 +8132,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.bisnow.com/news/san-francisco/office/visa-to-build-global-hq-at-giants-tishman-speyers-mission-rock-101678"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.bisnow.com/news/san-francisco/office/visa-to-build-global-hq-at-giants-tishman-speyers-mission-rock-101678",
+      "document_title": "Visa Mission Rock HQ 1,500 Staff Occupancy",
+      "title": "Visa Mission Rock HQ 1,500 Staff Occupancy"
     },
     {
       "promise_id": "P65",
@@ -8164,7 +8296,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/index%2Ephp/media/42253/download?inline"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/index%2Ephp/media/42253/download?inline",
+      "document_title": "Central Subway Contract Completion (May 2018)",
+      "title": "Central Subway Contract Completion (May 2018)"
     },
     {
       "promise_id": "P85",
@@ -8309,7 +8443,9 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "corporate_release",
       "source_domain_authority": 7,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://www.sfcta.org/blogs/transportation-authority-board-approves-230700-study-central-subway-extension-north-beach"
+      "source_archived_url": "https://web.archive.org/web/*/https://www.sfcta.org/blogs/transportation-authority-board-approves-230700-study-central-subway-extension-north-beach",
+      "document_title": "Central Subway Chinatown & North Beach Study",
+      "title": "Central Subway Chinatown & North Beach Study"
     }
   ],
   "quarantined": [

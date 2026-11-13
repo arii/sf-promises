@@ -832,11 +832,66 @@
       subtitleEl.textContent = `${p.entity} · ${loc}`;
     }
     if (titleEl) {
-      let t = p.document_title || '';
-      if (t.toLowerCase().startsWith(p.entity.toLowerCase())) {
-        t = t.slice(p.entity.length).replace(/^[:\s—–-]+/, '').trim();
+      let t = p.document_title || p.title || '';
+      if (!t || t.toLowerCase() === `${p.entity.toLowerCase()} commitment`) {
+        const fallbackTitles = {
+          P02: "24/7 Crisis Stabilization Center",
+          P05: "1,500 Shelter Beds in First 6 Months",
+          "SFO-01": "Runway 28L Safety Realignment & Reopening",
+          "SFO-02": "Harvey Milk Terminal 1 Final Completion",
+          "SFO-03": "Sustainable Aviation Fuel (SAF) Infrastructure",
+          "SFO-04": "Alaska Airlines Terminal 1 Flight Operations",
+          P21: "JFK Drive Permanent Car-Free Promenade",
+          P04: "Chase Center Valkyries Regular Season Games",
+          P82: "Valkyries WNBA Championship Guarantee",
+          P83: "Whole Foods Mid-Market Flagship Safety",
+          P11: "Grateful Dead Tour Retirement & Archival Shows",
+          P01: "Fentanyl State of Emergency Ordinance",
+          P59: "Zoox Driverless Passenger Ride Hail in SF",
+          P43: "Waymo Fully Autonomous Ride-Hail Expansion",
+          P41: "Central Subway Substantial Completion (2018)",
+          P10: "Mission Rock 40% Affordable Housing Pledges",
+          P18: "Housing Element: 82,200 New Homes by 2031",
+          P06: "Vision Zero: End Traffic Fatalities by 2024",
+          P08: "1,000 SRO Housing Units Improvement",
+          P22: "Embarcadero Navigation Center 200 Beds",
+          P17: "Hire 425 New SFPD Police Officers",
+          P25: "Close San Francisco Juvenile Hall Facility",
+          P12: "6,500 Shared E-Scooter Fleet Cap",
+          P26: "Empty Homes Tax: 4,500 Units in Year One",
+          P27: "Housing Trust Fund: $20M First-Year Budget",
+          P29: "Care Not Cash Homeless Services Reform",
+          P31: "Family Zoning Plan Neighborhood Housing",
+          P30: "Homelessness Recovery: 1,500 PSH Units",
+          P36: "CleanPowerSF 100% Renewable Electricity",
+          P09: "PG&E 10,000 Miles Underground Power Lines",
+          P61: "SFPUC Water System Improvement Program",
+          P66: "Chase Center Arena 18,064 Capacity Delivery",
+          P64: "Treasure Island 8,000 New Residential Units",
+          P84: "Pier 70 Historic Shipyard Redevelopment",
+          P86: "Potrero Power Station 2,600 Homes Plan",
+          P07: "3.5 Million New Homes in California by 2025",
+          P13: "10-Year Plan to End Chronic Homelessness",
+          P15: "Add 5,000 Supportive Housing Units in 10 Years",
+          P16: "Open 1,000 Additional Shelter Beds in SF",
+          P19: "Healthy San Francisco Universal Healthcare",
+          P20: "Interim Mayor Non-Candidacy Pledge",
+          P23: "Downtown Hospitality Corridor Recovery",
+          P28: "Open 250 Additional Behavioral Health Beds",
+          P35: "Mental Health SF Reform Implementation",
+          P38: "Reduce PSPS Wildfire Outage Scope by Half",
+          P39: "Install 7,500 EV Charging Ports",
+          P40: "PG&E Fleet Vehicle Electrification by 2030",
+          P57: "Comcast Gigabit Fiber-to-the-Home Network",
+          P03: "Permitting Reform & Small Business Overhaul",
+          P58: "AT&T Public Market Street Wi-Fi Expansion",
+          P62: "Visa Mission Rock HQ 1,500 Staff Occupancy",
+          P65: "Central Subway Contract Completion (May 2018)",
+          P85: "Central Subway Chinatown & North Beach Study"
+        };
+        t = fallbackTitles[p.promise_id] || `${p.entity} Commitment`;
       }
-      titleEl.textContent = t || p.document_title || `${p.entity} Commitment`;
+      titleEl.textContent = t;
     }
     const verdClass = (p.verdict || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
     if (chipEl) {
@@ -885,9 +940,11 @@
     const mediaBox = document.getElementById('drawer-media-box');
     const mediaImg = document.getElementById('drawer-media-img');
     const mediaCaption = document.getElementById('drawer-media-caption');
-    if (p.media_image_url && mediaBox && mediaImg) {
+    const imgUrl = p.media_image_url || p.image_url;
+    if (imgUrl && mediaBox && mediaImg) {
       mediaBox.style.display = 'block';
-      mediaImg.src = p.media_image_url;
+      mediaImg.src = imgUrl;
+      mediaImg.alt = p.media_caption || (titleEl ? titleEl.textContent : '') || 'Source media photo';
       if (mediaCaption) mediaCaption.textContent = p.media_caption || 'Verified source photographic archive';
     } else if (mediaBox) {
       mediaBox.style.display = 'none';
