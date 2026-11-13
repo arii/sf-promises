@@ -219,6 +219,16 @@ def verify_visualizations(code, data):
                                                    "broken": 17, "undecided": 2},
           f"n={len(promises)} verdicts={exp_verdicts}")
 
+    # D3 audit panels: derive from the exported snapshot only.
+    for hook in ("audit-funnel-bars", "audit-reason-bars", "audit-denial-bars"):
+        check(f"audit panel hook present: {hook}",
+              hook in html and hook in app)
+    qr = data["database_status"].get("quarantine_reasons") or {}
+    check("quarantine reason-code panel sums to the registry count",
+          sum(qr.get("by_reason", {}).values()) == len(data["quarantined"])
+          and qr.get("total_quarantined") == len(data["quarantined"]),
+          f"codes {sum(qr.get('by_reason', {}).values())} vs items {len(data['quarantined'])}")
+
     # Execute the marked pure derivation block with node and compare every
     # chart count against an independent tally of docs/data.json.
     harness = """
