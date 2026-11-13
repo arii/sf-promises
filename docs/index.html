@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=1f7c7b68">
+  <link rel="stylesheet" href="styles.css?v=50bd4c9c">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -110,16 +110,17 @@
         <div class="pipeline-actions-row">
           <label class="run-select-label font-mono" for="run-select">COMMITMENT</label>
           <select id="run-select" class="run-select" aria-label="Choose a commitment to inspect through the verification pipeline">
-            <option value="P02" selected>24/7 Crisis Center &mdash; Mayor Lurie</option>
-            <option value="P05">1,500 Shelter Beds &mdash; Mayor Lurie</option>
-            <option value="N01">Quote Verification Watchdog Demo</option>
+            <option value="P02" selected>#01 &middot; 24/7 Crisis Center</option>
+            <option value="P05">#02 &middot; 1,500 Shelter Beds</option>
+            <option value="SFO-01">#03 &middot; Runway 28L Reopening</option>
+            <option value="P06">#18 &middot; Vision Zero</option>
           </select>
           <div class="pipeline-btn-group">
-            <button type="button" class="btn-play-action btn-primary-contextual" id="btn-step-next" aria-label="Advance pipeline walkthrough">
-              <span id="pipeline-primary-icon">▶</span>
-              <span id="pipeline-primary-text">Start Walkthrough &rarr;</span>
+            <button type="button" class="btn-play-action btn-primary-contextual" id="btn-step-next" aria-label="Pause or resume walkthrough">
+              <span id="pipeline-primary-icon">⏸</span>
+              <span id="pipeline-primary-text">Pause</span>
             </button>
-            <button type="button" class="btn-play-action btn-pipeline-reset-compact" id="btn-pipeline-reset" title="Reset walkthrough" aria-label="Reset walkthrough" disabled>
+            <button type="button" class="btn-play-action btn-pipeline-reset-compact" id="btn-pipeline-reset" title="Reset walkthrough to Stage 1" aria-label="Reset walkthrough to Stage 1">
               <span>Reset ↺</span>
             </button>
           </div>
@@ -128,8 +129,8 @@
         <!-- Packet Transit Card with 6 Short Milestones -->
         <div class="packet-transit-card">
           <div class="packet-transit-header font-mono">
-            <span class="packet-label" id="pipeline-stage-indicator">Stage 0 of 6</span>
-            <span class="packet-status-text" id="packet-status-text">Ready to run</span>
+            <span class="packet-label" id="pipeline-stage-indicator">Stage 1 of 6</span>
+            <span class="packet-status-text" id="packet-status-text">In progress</span>
           </div>
 
           <div class="packet-track-container">
@@ -137,12 +138,12 @@
             <div class="packet-track-fill-line" id="packet-track-fill" style="width: 0%;"></div>
             
             <div class="packet-milestones-row">
-              <div class="milestone-node"><div class="milestone-circle" id="ms-circle-1">1</div></div>
-              <div class="milestone-node"><div class="milestone-circle" id="ms-circle-2">2</div></div>
-              <div class="milestone-node"><div class="milestone-circle" id="ms-circle-3">3</div></div>
-              <div class="milestone-node"><div class="milestone-circle" id="ms-circle-4">4</div></div>
-              <div class="milestone-node"><div class="milestone-circle" id="ms-circle-5">5</div></div>
-              <div class="milestone-node"><div class="milestone-circle" id="ms-circle-6">6</div></div>
+              <div class="milestone-node" data-stage="1" role="button" tabindex="0" aria-label="Jump to Stage 1 Fetch"><div class="milestone-circle active" id="ms-circle-1">1</div></div>
+              <div class="milestone-node" data-stage="2" role="button" tabindex="0" aria-label="Jump to Stage 2 Extract"><div class="milestone-circle" id="ms-circle-2">2</div></div>
+              <div class="milestone-node" data-stage="3" role="button" tabindex="0" aria-label="Jump to Stage 3 Gate"><div class="milestone-circle" id="ms-circle-3">3</div></div>
+              <div class="milestone-node" data-stage="4" role="button" tabindex="0" aria-label="Jump to Stage 4 Argue"><div class="milestone-circle" id="ms-circle-4">4</div></div>
+              <div class="milestone-node" data-stage="5" role="button" tabindex="0" aria-label="Jump to Stage 5 Decide"><div class="milestone-circle" id="ms-circle-5">5</div></div>
+              <div class="milestone-node" data-stage="6" role="button" tabindex="0" aria-label="Jump to Stage 6 Publish"><div class="milestone-circle" id="ms-circle-6">6</div></div>
             </div>
 
             <div class="packet-ball-dot" id="packet-ball-dot" style="left: 0%;">
@@ -151,20 +152,53 @@
           </div>
 
           <div class="milestone-labels-row font-mono">
-            <span>Fetch</span>
-            <span>Extract</span>
-            <span>Gate</span>
-            <span>Argue</span>
-            <span>Decide</span>
-            <span>Publish</span>
+            <span class="milestone-label-clickable" data-stage="1">Fetch</span>
+            <span class="milestone-label-clickable" data-stage="2">Extract</span>
+            <span class="milestone-label-clickable" data-stage="3">Gate</span>
+            <span class="milestone-label-clickable" data-stage="4">Argue</span>
+            <span class="milestone-label-clickable" data-stage="5">Decide</span>
+            <span class="milestone-label-clickable" data-stage="6">Publish</span>
           </div>
         </div>
 
-        <!-- 6 Stage Cards Grid -->
-        <!-- Active Single Stage Panel -->
+        <!-- 6 Stage Cards in CSS Grid Stack (Zero Layout Shift) -->
         <div class="active-stage-panel-wrapper" id="active-stage-panel-wrapper">
-          <div class="stage-card active-stage" id="pipeline-active-stage-panel">
-            <!-- Dynamically populated by app.js based on active stage and scenario -->
+          <div class="stage-card active-stage" id="pipeline-active-stage-panel" data-stage="1">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Source Fetched</h3>
+            </div>
+            <p class="stage-desc">Archived sf.gov release (SHA-256: 582955d5&hellip;).</p>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-2" data-stage="2">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Quote Extracted</h3>
+            </div>
+            <blockquote class="stage-quote font-serif">&ldquo;That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it.&rdquo;</blockquote>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-3" data-stage="3">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Relevance Gate Passed</h3>
+            </div>
+            <p class="stage-desc">Measurable SF commitment with public impact.</p>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-4" data-stage="4">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Evidence Evaluated</h3>
+            </div>
+            <p class="stage-desc">Facility began intake April 28, 2025; zero contradicting closure records filed.</p>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-5" data-stage="5">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Code Checks Passed</h3>
+            </div>
+            <p class="stage-desc">All 7 deterministic integrity checks passed with zero discrepancies.</p>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-6" data-stage="6">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Verdict Published</h3>
+              <span class="verdict-chip kept">KEPT</span>
+            </div>
+            <p class="stage-desc">Official primary records confirm completion with zero contradicting claims.</p>
           </div>
         </div>
       </section>
@@ -3655,8 +3689,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=1f7c7b68"></script>
-  <script src="list.min.js?v=1f7c7b68"></script>
-  <script src="app.js?v=1f7c7b68"></script>
+  <script src="data.js?v=50bd4c9c"></script>
+  <script src="list.min.js?v=50bd4c9c"></script>
+  <script src="app.js?v=50bd4c9c"></script>
 </body>
 </html>

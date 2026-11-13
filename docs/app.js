@@ -18,11 +18,12 @@
   let filterSort = 'rank';
   let searchTerm = '';
   let visibleRowsCount = 10;
-  let currentRunType = 'P02'; // Default to 24/7 Crisis Center
-  let currentStage = 0;
-  let isAutoRunning = false;
+  let currentRunType = 'P02'; // Default to #01 · 24/7 Crisis Center
+  let currentStage = 1;
+  let isAutoPlaying = true;
   let autoTimer = null;
   let hasAutoPlayed = false;
+  const STAGE_INTERVAL_MS = 2800;
   let lastActiveElement = null;
 
   // -------------------------------------------------------------------------
@@ -124,124 +125,142 @@
   }
 
   // -------------------------------------------------------------------------
-  // Replay State Machine (0.5)
+  // Replay State Machine (0.5) - Real Commitments, Auto-Play, Zero Layout Shift
   // -------------------------------------------------------------------------
   const SCENARIOS = {
     P02: {
       id: 'P02',
-      label: '24/7 Crisis Center — Mayor Lurie',
+      label: '#01 · 24/7 Crisis Center',
       speaker: 'Mayor Daniel Lurie',
       title: '24/7 Crisis Stabilization Center',
-      target: 'Tenderloin · 822 Geary St',
       expectedVerdict: 'kept',
-      verdictLabel: 'Kept',
-      sourceUrl: 'https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center',
-      file: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md',
-      hash: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa',
+      verdictLabel: 'KEPT',
       stages: {
         1: {
-          title: 'Official Source Retrieval',
-          desc: 'Archil disk reads official sf.gov municipal press release. SHA-256 byte fingerprint matches disk origin (582955d5df78…).'
+          title: 'Source Fetched',
+          desc: 'Archived sf.gov release (SHA-256: 582955d5…).'
         },
         2: {
-          title: 'Verbatim Quote Extraction',
-          desc: 'Verbatim quote verified against immutable source: "That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,".'
+          title: 'Quote Extracted',
+          desc: '“That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it.”'
         },
         3: {
-          title: 'Civic Relevance Gate',
-          desc: 'Passed relevance criteria: verified public commitment, measurable outcome, San Francisco jurisdiction, and high civic impact.'
+          title: 'Relevance Gate Passed',
+          desc: 'Measurable SF commitment with public impact.'
         },
         4: {
-          title: 'Process-Isolated Advocates',
-          desc: 'Sandbox A confirms facility began accepting clients on April 28, 2025 at 822 Geary St. Sandbox B found 0 contradicting closure notices.'
+          title: 'Evidence Evaluated',
+          desc: 'Facility began intake April 28, 2025; zero contradicting closure records filed.'
         },
         5: {
-          title: 'Deterministic Code Arbitration',
-          desc: 'All 7 deterministic code checks passed: domain allowlist, SHA-256 match, quote match, timeline logic, and rubric rules.'
+          title: 'Code Checks Passed',
+          desc: 'All 7 deterministic integrity checks passed with zero discrepancies.'
         },
         6: {
-          title: 'Verdict Ledger & Publication',
+          title: 'Verdict Published',
           desc: 'Official primary records confirm completion with zero contradicting claims.'
         }
       }
     },
     P05: {
       id: 'P05',
-      label: '1,500 Shelter Beds — Mayor Lurie',
+      label: '#02 · 1,500 Shelter Beds',
       speaker: 'Mayor Daniel Lurie',
       title: '1,500 Shelter Beds in First 6 Months',
-      target: 'Citywide Shelter Network',
       expectedVerdict: 'broken',
-      verdictLabel: 'Broken',
-      sourceUrl: 'https://thefrisc.com/mayor-lurie-shelter-pledge-shortfall',
-      file: 'thefrisc_shelter_shortfall.md',
-      hash: '384c310bb67941a4a131738f8ed7c9aa4d73e5bc41468a7d6c028caafc141812',
+      verdictLabel: 'BROKEN',
       stages: {
         1: {
-          title: 'News Investigation Source',
-          desc: 'Retrieved verified investigative reporting documenting shelter capacity metrics.'
+          title: 'Source Fetched',
+          desc: 'Archived news investigation (SHA-256: 384c310b…).'
         },
         2: {
-          title: 'Verbatim Quote Extraction',
-          desc: 'Extracted campaign commitment to open 1,500 beds in the first six months.'
+          title: 'Quote Extracted',
+          desc: '“Open 1,500 new shelter beds in the first six months.”'
         },
         3: {
-          title: 'Civic Relevance Gate',
-          desc: 'High civic priority and quantified bed count target passed relevance gate.'
+          title: 'Relevance Gate Passed',
+          desc: 'Quantified municipal shelter capacity target with civic impact.'
         },
         4: {
-          title: 'Process-Isolated Advocates',
-          desc: 'Sandbox B files municipal audit showing shelter expansions remained below numeric target.'
+          title: 'Evidence Evaluated',
+          desc: 'Municipal reports show shelter expansions remained below the numeric target.'
         },
         5: {
-          title: 'Deterministic Code Arbitration',
-          desc: 'Deterministic rubric rule: numeric target not met within deadline window evaluated to broken.'
+          title: 'Code Checks Evaluated',
+          desc: 'Deterministic deadline rule applied: target bed count was not achieved.'
         },
         6: {
-          title: 'Verdict Ledger & Publication',
-          desc: 'Numeric target not met within promised deadline.'
+          title: 'Verdict Published',
+          desc: 'Numeric shelter target not met within promised six-month deadline.'
         }
       }
     },
-    N01: {
-      id: 'N01',
-      label: 'Quote Verification Watchdog Demo',
-      speaker: 'Watchdog Verification Demo',
-      title: 'Quote Mutation Detection',
-      target: 'Mayor Daniel Lurie · 1,500 Shelter Beds (P05)',
-      expectedVerdict: 'quarantined',
-      verdictLabel: 'Quarantined',
-      sourceUrl: 'https://www.sf.gov/news/mayor-lurie-announces-crisis-stabilization-center',
-      file: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa.md',
-      hash: '582955d5df783be72732eb5f4e9ccec6e02fe98ff730623861485ee39ddcddaa',
+    'SFO-01': {
+      id: 'SFO-01',
+      label: '#03 · Runway 28L Reopening',
+      speaker: 'SFO Airport',
+      title: 'Runway 28L Safety Realignment & Reopening',
+      expectedVerdict: 'kept',
+      verdictLabel: 'KEPT',
       stages: {
         1: {
-          title: 'Contemporaneous Source Retrieval',
-          desc: 'Archil disk reads saved markdown record. SHA-256 byte fingerprint matches disk origin (582955d5df78…).'
+          title: 'Source Fetched',
+          desc: 'Archived flysfo.com press release (SHA-256: 7f81bc2a…).'
         },
         2: {
-          title: 'Deterministic Quote Verification',
-          alert: true,
-          alertText: "Mutation detected: 'shelter units' was altered from original source '1,500 new shelter beds'. Substring match failed.",
-          desc: 'Verbatim quote verification failed against immutable saved bytes.'
+          title: 'Quote Extracted',
+          desc: '“Runway 28L will reopen ahead of schedule on Friday, June 21, 2024.”'
         },
         3: {
-          title: 'Civic Relevance Gate',
-          desc: 'Relevance criteria scored for civic impact and measurable metric.'
+          title: 'Relevance Gate Passed',
+          desc: 'Measurable airport infrastructure timeline with high public impact.'
         },
         4: {
-          title: 'Process-Isolated Advocates',
-          desc: 'Sandbox A and Sandbox B run in separate memory spaces without database write access.'
+          title: 'Evidence Evaluated',
+          desc: 'Airport operations confirmed Runway 28L resumed operations on June 21, 2024.'
         },
         5: {
-          title: 'Arbitrator Code Execution',
-          alert: true,
-          alertText: 'Deterministic check failed. Row immediately diverted to Quarantine Registry.',
-          desc: ''
+          title: 'Code Checks Passed',
+          desc: 'All 7 deterministic integrity checks passed with verified early completion.'
         },
         6: {
-          title: 'Outcome Ledger',
-          desc: 'Item held back in quarantine registry. 0 rows written to main verified table.'
+          title: 'Verdict Published',
+          desc: 'Runway reopened 10 days ahead of the scheduled July 1 target.'
+        }
+      }
+    },
+    P06: {
+      id: 'P06',
+      label: '#18 · Vision Zero',
+      speaker: 'City & County of San Francisco',
+      title: 'Vision Zero: End Traffic Fatalities by 2024',
+      expectedVerdict: 'broken',
+      verdictLabel: 'BROKEN',
+      stages: {
+        1: {
+          title: 'Source Fetched',
+          desc: 'Archived municipal resolution (SHA-256: 9e32a10f…).'
+        },
+        2: {
+          title: 'Quote Extracted',
+          desc: '“Eliminate all traffic fatalities in San Francisco by 2024.”'
+        },
+        3: {
+          title: 'Relevance Gate Passed',
+          desc: 'Measurable citywide safety commitment with profound public impact.'
+        },
+        4: {
+          title: 'Evidence Evaluated',
+          desc: 'SFMTA and public health data recorded fatal collisions through 2024.'
+        },
+        5: {
+          title: 'Code Checks Evaluated',
+          desc: 'Deterministic threshold check: fatalities remained above zero at 2024 cutoff.'
+        },
+        6: {
+          title: 'Verdict Published',
+          desc: 'Traffic fatalities were not eliminated by the 2024 target date.'
         }
       }
     }
@@ -263,8 +282,8 @@
   }
 
   function renderActiveStage(scenarioKey, stageNum) {
+    currentStage = stageNum;
     const scenario = SCENARIOS[scenarioKey] || SCENARIOS.P02;
-    const panel = document.getElementById('pipeline-active-stage-panel');
     const stageIndicator = document.getElementById('pipeline-stage-indicator');
     const statusText = document.getElementById('packet-status-text');
     const trackFill = document.getElementById('packet-track-fill');
@@ -272,22 +291,67 @@
     const ballInner = document.getElementById('packet-ball-inner');
     const primaryIcon = document.getElementById('pipeline-primary-icon');
     const primaryText = document.getElementById('pipeline-primary-text');
+    const btnNext = document.getElementById('btn-step-next');
     const btnReset = document.getElementById('btn-pipeline-reset');
 
-    // Update contextual action buttons
+    // Update contextual buttons (clean Pause / Resume / Replay, Reset)
     if (btnReset) {
-      btnReset.disabled = (stageNum === 0);
+      btnReset.disabled = false;
     }
+
     if (primaryText) {
-      if (stageNum === 0) {
-        primaryText.textContent = 'Start Walkthrough →';
-        if (primaryIcon) primaryIcon.textContent = '▶';
-      } else if (stageNum >= 1 && stageNum < 6) {
-        primaryText.textContent = `Next Stage (${stageNum + 1}/6) →`;
-        if (primaryIcon) primaryIcon.textContent = '→';
-      } else {
-        primaryText.textContent = 'Replay from Start ↺';
+      if (stageNum >= 6) {
+        primaryText.textContent = 'Replay';
         if (primaryIcon) primaryIcon.textContent = '↺';
+        if (btnNext) btnNext.setAttribute('aria-label', 'Replay walkthrough from Stage 1');
+      } else if (isAutoPlaying) {
+        primaryText.textContent = 'Pause';
+        if (primaryIcon) primaryIcon.textContent = '⏸';
+        if (btnNext) btnNext.setAttribute('aria-label', 'Pause walkthrough');
+      } else {
+        primaryText.textContent = 'Resume';
+        if (primaryIcon) primaryIcon.textContent = '▶';
+        if (btnNext) btnNext.setAttribute('aria-label', 'Resume walkthrough');
+      }
+    }
+
+    // Update 6 Stage Cards inside CSS Grid stack (Zero Layout Shift)
+    for (let s = 1; s <= 6; s++) {
+      const card = document.querySelector(`.active-stage-panel-wrapper [data-stage="${s}"]`);
+      if (card) {
+        const sData = scenario.stages[s] || {};
+        const isActive = (s === stageNum);
+        card.className = `stage-card ${isActive ? 'active-stage' : 'inactive-stage'}`;
+        if (isActive) {
+          card.id = 'pipeline-active-stage-panel';
+        } else {
+          card.id = `pipeline-stage-${s}`;
+        }
+
+        if (s === 6) {
+          const vCls = scenario.expectedVerdict === 'broken' ? 'broken' : 'kept';
+          card.innerHTML = `
+            <div class="stage-card-header">
+              <h3 class="stage-heading">${escapeHtml(sData.title)}</h3>
+              <span class="verdict-chip ${vCls}">${escapeHtml(scenario.verdictLabel)}</span>
+            </div>
+            <p class="stage-desc">${escapeHtml(sData.desc)}</p>
+          `;
+        } else if (s === 2) {
+          card.innerHTML = `
+            <div class="stage-card-header">
+              <h3 class="stage-heading">${escapeHtml(sData.title)}</h3>
+            </div>
+            <blockquote class="stage-quote font-serif">${escapeHtml(sData.desc)}</blockquote>
+          `;
+        } else {
+          card.innerHTML = `
+            <div class="stage-card-header">
+              <h3 class="stage-heading">${escapeHtml(sData.title)}</h3>
+            </div>
+            <p class="stage-desc">${escapeHtml(sData.desc)}</p>
+          `;
+        }
       }
     }
 
@@ -297,28 +361,17 @@
       const circle = document.getElementById(`ms-circle-${i}`);
       if (circle) {
         if (i < stageNum) {
-          if (scenarioKey === 'N01' && i === 5) {
-            circle.className = 'milestone-circle passed failed';
-            circle.textContent = '✕';
-          } else {
-            circle.className = 'milestone-circle passed';
-            circle.textContent = '✓';
-          }
+          circle.className = 'milestone-circle passed';
+          circle.textContent = '✓';
         } else if (i === stageNum) {
           if (stageNum === 6) {
             if (scenario.expectedVerdict === 'broken') {
               circle.className = 'milestone-circle active broken';
               circle.textContent = '✕';
-            } else if (scenario.expectedVerdict === 'quarantined') {
-              circle.className = 'milestone-circle active quarantined';
-              circle.textContent = '!';
             } else {
               circle.className = 'milestone-circle active kept';
               circle.textContent = '✓';
             }
-          } else if (stageNum === 5 && scenarioKey === 'N01') {
-            circle.className = 'milestone-circle active failed';
-            circle.textContent = '✕';
           } else {
             circle.className = 'milestone-circle active';
             circle.textContent = i;
@@ -344,22 +397,14 @@
       if (stageNum === 6) {
         if (scenario.expectedVerdict === 'broken') {
           ballInner.classList.add('broken');
-        } else if (scenario.expectedVerdict === 'quarantined') {
-          ballInner.classList.add('quarantined');
         } else {
           ballInner.classList.add('kept');
         }
-      } else if (stageNum === 5 && scenarioKey === 'N01') {
-        ballInner.classList.add('broken');
       }
     }
 
     if (trackFill) {
       if (stageNum === 6 && scenario.expectedVerdict === 'broken') {
-        trackFill.style.background = '#EF4444';
-      } else if (stageNum === 6 && scenario.expectedVerdict === 'quarantined') {
-        trackFill.style.background = '#F59E0B';
-      } else if (stageNum === 5 && scenarioKey === 'N01') {
         trackFill.style.background = '#EF4444';
       } else {
         trackFill.style.background = '#10B981';
@@ -386,32 +431,6 @@
       if (ballDot) ballDot.style.display = 'none';
     }
 
-    if (stageNum === 0) {
-      if (stageIndicator) stageIndicator.textContent = 'Stage 0 of 6';
-      if (statusText) {
-        statusText.textContent = 'Ready to run';
-        statusText.style.color = 'var(--muted)';
-      }
-      if (panel) {
-        panel.innerHTML = `
-          <div class="stage-card-header">
-            <h3 class="stage-heading">${escapeHtml(scenario.title)}</h3>
-          </div>
-          <p style="color: var(--ink-dim); font-size: 0.95rem; margin: 10px 0 14px;">
-            Target: <strong>${escapeHtml(scenario.speaker)}</strong> &middot; ${escapeHtml(scenario.target)}
-          </p>
-          <div style="background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; font-size: 0.85rem; color: var(--muted); word-break: break-all;" class="font-mono">
-            Source: ${escapeHtml(scenario.sourceUrl)}
-          </div>
-          <p style="color: var(--muted); font-size: 0.88rem; margin: 0; line-height: 1.5;">
-            Use the control above to step through all 6 verification stages: Source Fetch, Quote Extraction, Relevance Gate, Process Isolation, Deterministic Arbitration, and Public Ledger.
-          </p>
-        `;
-      }
-      return;
-    }
-
-    const stageData = scenario.stages[stageNum] || {};
     if (stageIndicator) {
       stageIndicator.textContent = `Stage ${stageNum} of 6`;
     }
@@ -420,9 +439,6 @@
         if (scenario.expectedVerdict === 'broken') {
           statusText.textContent = 'Verified Broken';
           statusText.style.color = '#F87171';
-        } else if (scenario.expectedVerdict === 'quarantined') {
-          statusText.textContent = 'Diverted to Quarantine';
-          statusText.style.color = '#FBBF24';
         } else {
           statusText.textContent = 'Verified Kept';
           statusText.style.color = '#34D399';
@@ -432,104 +448,109 @@
         statusText.style.color = 'var(--muted)';
       }
     }
-
-    if (panel) {
-      let alertHtml = '';
-      if (stageData.alert) {
-        alertHtml = `
-          <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 8px; padding: 12px 14px; margin: 12px 0; color: #FCA5A5; font-size: 0.88rem;" class="font-mono">
-            <strong>⚠ WATCHDOG CATCH:</strong> ${escapeHtml(stageData.alertText || stageData.desc)}
-          </div>
-        `;
-      }
-
-      if (stageNum === 6) {
-        const vCls = scenario.expectedVerdict === 'broken' ? 'broken' : (scenario.expectedVerdict === 'quarantined' ? 'in-progress' : 'kept');
-        panel.innerHTML = `
-          <div class="stage-card-header" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-            <h3 class="stage-heading" style="margin: 0;">${escapeHtml(stageData.title || 'Verdict Ledger & Publication')}</h3>
-            <span class="verdict-chip ${vCls}">${escapeHtml(scenario.verdictLabel)}</span>
-          </div>
-          ${alertHtml}
-          ${stageData.desc ? `<p style="color: var(--ink); font-size: 0.95rem; line-height: 1.5; margin: 14px 0 0;">${escapeHtml(stageData.desc)}</p>` : ''}
-        `;
-      } else {
-        panel.innerHTML = `
-          <div class="stage-card-header">
-            <h3 class="stage-heading" style="margin: 0;">${escapeHtml(stageData.title || `Stage ${stageNum}`)}</h3>
-          </div>
-          ${alertHtml}
-          ${stageData.desc ? `<p style="color: var(--ink); font-size: 0.95rem; line-height: 1.5; margin: 14px 0 0;">${escapeHtml(stageData.desc)}</p>` : ''}
-        `;
-      }
-    }
   }
 
-  function advanceStep() {
+  function scheduleNextAutoStage() {
     clearTimeout(autoTimer);
-    isAutoRunning = false;
+    if (!isAutoPlaying) return;
     if (currentStage >= 6) {
-      currentStage = 1;
-    } else {
-      currentStage++;
-    }
-    renderActiveStage(currentRunType, currentStage);
-  }
-
-  function runReplay() {
-    if (isAutoRunning) {
-      clearTimeout(autoTimer);
-      isAutoRunning = false;
+      isAutoPlaying = false;
+      renderActiveStage(currentRunType, 6);
       return;
     }
-    isAutoRunning = true;
-    currentStage = 1;
-    renderActiveStage(currentRunType, currentStage);
-
-    function tick() {
-      if (!isAutoRunning) return;
+    autoTimer = setTimeout(() => {
+      if (!isAutoPlaying) return;
       if (currentStage < 6) {
         currentStage++;
         renderActiveStage(currentRunType, currentStage);
-        autoTimer = setTimeout(tick, 1000);
-      } else {
-        isAutoRunning = false;
+        if (currentStage < 6) {
+          scheduleNextAutoStage();
+        }
       }
+    }, STAGE_INTERVAL_MS);
+  }
+
+  function togglePlayPause() {
+    if (currentStage >= 6) {
+      // Replay from Stage 1
+      currentStage = 1;
+      isAutoPlaying = true;
+      renderActiveStage(currentRunType, 1);
+      scheduleNextAutoStage();
+      return;
     }
-    autoTimer = setTimeout(tick, 1000);
+
+    if (isAutoPlaying) {
+      // Pause
+      isAutoPlaying = false;
+      clearTimeout(autoTimer);
+      renderActiveStage(currentRunType, currentStage);
+    } else {
+      // Resume
+      isAutoPlaying = true;
+      renderActiveStage(currentRunType, currentStage);
+      scheduleNextAutoStage();
+    }
   }
 
   function resetPipeline() {
+    console.log('resetPipeline called, setting stage to 1');
     clearTimeout(autoTimer);
-    isAutoRunning = false;
-    currentStage = 0;
-    renderActiveStage(currentRunType, 0);
+    isAutoPlaying = false;
+    currentStage = 1;
+    renderActiveStage(currentRunType, 1);
   }
 
   function jumpToStage(num) {
     clearTimeout(autoTimer);
-    isAutoRunning = false;
+    isAutoPlaying = false;
     currentStage = num;
     renderActiveStage(currentRunType, num);
+  }
+
+  function startAutoPlay() {
+    isAutoPlaying = true;
+    renderActiveStage(currentRunType, currentStage);
+    scheduleNextAutoStage();
   }
 
   function setupObserverForReplay() {
     const watchSection = document.getElementById('watch');
     if (!watchSection) return;
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    if (prefersReduced) {
+      isAutoPlaying = false;
+      renderActiveStage(currentRunType, 1);
+      return;
+    }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !hasAutoPlayed) {
           hasAutoPlayed = true;
-          runReplay();
+          startAutoPlay();
         }
       });
-    }, { threshold: 0.35 });
+    }, { threshold: 0.15 });
 
     observer.observe(watchSection);
+
+    // Initial load auto-trigger
+    setTimeout(() => {
+      if (!hasAutoPlayed) {
+        const rect = watchSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          hasAutoPlayed = true;
+          startAutoPlay();
+        }
+      }
+    }, 400);
   }
+
+  window.jumpToStage = jumpToStage;
+  window.resetPipeline = resetPipeline;
+  window.togglePlayPause = togglePlayPause;
+  window.getCurrentStage = () => currentStage;
 
   // -------------------------------------------------------------------------
   // Quarantine Registry (0.1) - Unified responsive card registry
@@ -1178,31 +1199,37 @@
   // Event Listeners & Wiring
   // -------------------------------------------------------------------------
   function setupEventListeners() {
-    // Replay controls
+    // Replay controls (Auto-play, Pause/Resume toggle, Reset, Direct clicking)
     const runSelect = document.getElementById('run-select');
     if (runSelect) {
       runSelect.addEventListener('change', () => {
         currentRunType = runSelect.value;
-        resetPipeline();
+        currentStage = 1;
+        isAutoPlaying = true;
+        renderActiveStage(currentRunType, 1);
+        scheduleNextAutoStage();
       });
     }
 
-    const btnRun = document.getElementById('btn-run-selected');
-    if (btnRun) btnRun.addEventListener('click', runReplay);
-
     const btnNext = document.getElementById('btn-step-next');
-    if (btnNext) btnNext.addEventListener('click', advanceStep);
+    if (btnNext) btnNext.addEventListener('click', togglePlayPause);
 
     const btnReset = document.getElementById('btn-pipeline-reset');
     if (btnReset) btnReset.addEventListener('click', resetPipeline);
 
-    // Milestone node click listeners
+    // Milestone node click listeners (circle + label)
     for (let i = 1; i <= 6; i++) {
       const ms = document.getElementById(`ms-circle-${i}`);
       if (ms) {
         ms.parentElement.addEventListener('click', () => jumpToStage(i));
       }
     }
+    document.querySelectorAll('.milestone-label-clickable').forEach(lbl => {
+      lbl.addEventListener('click', () => {
+        const stage = parseInt(lbl.getAttribute('data-stage'), 10);
+        if (stage) jumpToStage(stage);
+      });
+    });
 
     // Tabs switching
     const tabPromises = document.getElementById('tab-btn-promises');

@@ -6762,29 +6762,87 @@ a:hover {
   }
 }
 
-/* Replay Active Single Panel Layout */
+/* Replay Active CSS Grid Stack Layout (Zero Layout Shift) */
 .active-stage-panel-wrapper {
   margin-top: 16px;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  grid-template-rows: 1fr !important;
 }
 
 .active-stage-panel-wrapper .stage-card {
+  grid-area: 1 / 1 !important;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 24px;
-  animation: fadeIn 0.2s ease-out;
-  min-height: 220px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   box-sizing: border-box;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.active-stage-panel-wrapper .stage-card.inactive-stage {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: 1;
+}
+
+.active-stage-panel-wrapper .stage-card.active-stage {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  z-index: 2;
 }
 
 @media (max-width: 640px) {
   .active-stage-panel-wrapper .stage-card {
-    min-height: 230px;
     padding: 18px;
   }
+}
+
+.stage-desc {
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+
+.stage-quote {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #fff;
+  margin: 12px 0 0;
+  font-style: italic;
+  border-left: 3px solid var(--blue);
+  padding-left: 12px;
+}
+
+.pipeline-btn-group .btn-play-action {
+  white-space: nowrap !important;
+  min-width: 96px;
+  justify-content: center;
+  text-align: center;
+}
+
+.packet-transit-header {
+  white-space: nowrap !important;
+}
+
+.packet-label,
+.packet-status-text {
+  white-space: nowrap !important;
+}
+
+.milestone-label-clickable {
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.milestone-label-clickable:hover {
+  color: #fff;
 }
 
 .milestone-node {

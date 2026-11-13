@@ -70,6 +70,9 @@ class CDPClient {
       this.ws.onerror = err => reject(err);
       this.ws.onmessage = evt => {
         const msg = JSON.parse(evt.data);
+        if (msg.method === 'Runtime.consoleAPICalled') {
+          console.log('[Browser Console]', msg.params.args.map(a => a.value || a.description).join(' '));
+        }
         if (msg.id && this.callbacks.has(msg.id)) {
           const { resolve, reject } = this.callbacks.get(msg.id);
           this.callbacks.delete(msg.id);
@@ -163,65 +166,95 @@ async function main() {
       throw new Error(`Expected default replay P02, got ${defaultReplayVal}`);
     }
 
-    // Verify consolidated button bar and fixed geometry
-    console.log('Testing Walkthrough consolidated controls and fixed geometry...');
-    const initialResetDisabled = await client.eval('document.getElementById("btn-pipeline-reset").disabled');
-    const stage0Text = await client.eval('document.getElementById("pipeline-primary-text").textContent');
-    console.log(`Stage 0: primary text="${stage0Text}", reset disabled=${initialResetDisabled}`);
-    if (!initialResetDisabled || !stage0Text.includes('Start Walkthrough')) {
-      throw new Error(`Stage 0 controls mismatch: resetDisabled=${initialResetDisabled}, text="${stage0Text}"`);
+    // Verify selector options: real canonical commitments only (no N01 watchdog fake demo)
+    const options = await client.eval('Array.from(document.querySelectorAll("#run-select option")).map(o => ({ value: o.value, text: o.textContent }))');
+    console.log('Run select options:', options);
+    const hasN01 = options.some(o => o.value === 'N01' || o.text.includes('Watchdog'));
+    if (hasN01 || options.length < 3) {
+      throw new Error(`Dropdown options invalid! hasN01=${hasN01}, count=${options.length}`);
     }
 
-    // Measure height at stage 0
-    const h0 = await client.eval('document.getElementById("pipeline-active-stage-panel").getBoundingClientRect().height');
+    // Verify consolidated button bar and Pause / Resume / Replay toggle
+    console.log('Testing Walkthrough controls (Auto-play, Pause/Resume toggle, Reset)...');
+    const primaryInitialText = await client.eval('document.getElementById("pipeline-primary-text").textContent.trim()');
+    console.log(`Stage 1 initial primary button text: "${primaryInitialText}"`);
 
-    // Click next to advance to Stage 1
+    // Click Pause to pause auto-play
     await client.eval('document.getElementById("btn-step-next").click()');
     await sleep(200);
-    const stage1Text = await client.eval('document.getElementById("pipeline-primary-text").textContent');
-    const stage1ResetDisabled = await client.eval('document.getElementById("btn-pipeline-reset").disabled');
-    const h1 = await client.eval('document.getElementById("pipeline-active-stage-panel").getBoundingClientRect().height');
-    console.log(`Stage 1: primary text="${stage1Text}", reset disabled=${stage1ResetDisabled}, h0=${h0}, h1=${h1}`);
-    if (stage1ResetDisabled || !stage1Text.includes('Next Stage')) {
-      throw new Error(`Stage 1 controls mismatch: resetDisabled=${stage1ResetDisabled}, text="${stage1Text}"`);
+    const pausedText = await client.eval('document.getElementById("pipeline-primary-text").textContent.trim()');
+    console.log(`After click (paused): primary text="${pausedText}"`);
+    if (pausedText !== 'Resume' && pausedText !== 'Pause') {
+      throw new Error(`Expected Pause/Resume toggle, got "${pausedText}"`);
     }
 
-    // Jump to Stage 6 and verify verdict chip & semantic colors
-    await client.eval('document.getElementById("ms-circle-6").parentElement.click()');
+    // Click Resume to resume auto-play
+    await client.eval('document.getElementById("btn-step-next").click()');
     await sleep(200);
+    const resumedText = await client.eval('document.getElementById("pipeline-primary-text").textContent.trim()');
+    console.log(`After click (resumed): primary text="${resumedText}"`);
+
+    // Pause before manual tests
+    await client.eval('document.getElementById("btn-step-next").click()');
+    await sleep(200);
+
+    // Verify Zero Layout Shift across all 6 stages via CSS Grid Stacking
+    console.log('Verifying Zero Layout Shift across all 6 stages...');
+    const stageHeights = [];
+    for (let s = 1; s <= 6; s++) {
+      await client.eval(`jumpToStage(${s})`);
+      await sleep(150);
+      const h = await client.eval('document.getElementById("pipeline-active-stage-panel").getBoundingClientRect().height');
+      stageHeights.push(h);
+    }
+    console.log('Stage card heights across stages 1-6:', stageHeights);
+    const minH = Math.min(...stageHeights);
+    const maxH = Math.max(...stageHeights);
+    if (maxH - minH > 1.5) {
+      throw new Error(`Layout shift detected across stages: min=${minH}, max=${maxH}, diff=${maxH - minH}`);
+    }
+    console.log(`PASS: Zero Layout Shift verified (heights variance ${maxH - minH}px <= 1.5px)`);
+
+    // Verify Stage 6 shows Replay button, kept verdict chip, and circle
     const stage6VerdictClass = await client.eval('document.querySelector("#pipeline-active-stage-panel .verdict-chip").className');
     const stage6CircleClass = await client.eval('document.getElementById("ms-circle-6").className');
-    const h6 = await client.eval('document.getElementById("pipeline-active-stage-panel").getBoundingClientRect().height');
-    console.log(`Stage 6: verdictClass="${stage6VerdictClass}", circleClass="${stage6CircleClass}", h6=${h6}`);
-    if (!stage6VerdictClass.includes('kept') || !stage6CircleClass.includes('kept')) {
-      throw new Error(`Semantic color mismatch on Stage 6 kept: verdictClass=${stage6VerdictClass}, circleClass=${stage6CircleClass}`);
+    const stage6BtnText = await client.eval('document.getElementById("pipeline-primary-text").textContent.trim()');
+    console.log(`Stage 6: verdictClass="${stage6VerdictClass}", circleClass="${stage6CircleClass}", btnText="${stage6BtnText}"`);
+    if (!stage6VerdictClass.includes('kept') || !stage6CircleClass.includes('kept') || stage6BtnText !== 'Replay') {
+      throw new Error(`Stage 6 Kept mismatch: verdictClass=${stage6VerdictClass}, circleClass=${stage6CircleClass}, btnText=${stage6BtnText}`);
     }
 
     // Test P05 (Broken) semantic red styling
     console.log('Testing P05 Broken scenario semantic colors...');
-    await client.eval(`
+    await client.eval(`(() => {
       const sel = document.getElementById("run-select");
       sel.value = "P05";
       sel.dispatchEvent(new Event("change"));
-    `);
+    })()`);
     await sleep(200);
-    await client.eval('document.getElementById("ms-circle-6").parentElement.click()');
+    await client.eval('jumpToStage(6)');
     await sleep(200);
     const p05CircleClass = await client.eval('document.getElementById("ms-circle-6").className');
     const p05BallClass = await client.eval('document.getElementById("packet-ball-inner").className');
-    console.log(`P05 Stage 6: circleClass="${p05CircleClass}", ballClass="${p05BallClass}"`);
-    if (!p05CircleClass.includes('broken') || !p05BallClass.includes('broken')) {
-      throw new Error(`Semantic color mismatch on P05 broken: circleClass=${p05CircleClass}, ballClass=${p05BallClass}`);
+    const p05VerdictClass = await client.eval('document.querySelector("#pipeline-active-stage-panel .verdict-chip").className');
+    console.log(`P05 Stage 6: circleClass="${p05CircleClass}", ballClass="${p05BallClass}", verdictClass="${p05VerdictClass}"`);
+    if (!p05CircleClass.includes('broken') || !p05BallClass.includes('broken') || !p05VerdictClass.includes('broken')) {
+      throw new Error(`Semantic color mismatch on P05 broken: circleClass=${p05CircleClass}, ballClass=${p05BallClass}, verdictClass=${p05VerdictClass}`);
     }
 
-    // Reset back to P02 Stage 0
-    await client.eval(`
+    // Reset back to P02 Stage 1
+    await client.eval(`(() => {
       const sel = document.getElementById("run-select");
       sel.value = "P02";
       sel.dispatchEvent(new Event("change"));
       document.getElementById("btn-pipeline-reset").click();
-    `);
+    })()`);
     await sleep(200);
+    const resetStage = await client.eval('window.getCurrentStage()');
+    console.log(`After Reset: currentStage=${resetStage}`);
+    if (resetStage !== 1) {
+      throw new Error(`Expected currentStage=1 after reset, got ${resetStage}`);
+    }
 
     await client.captureScreenshot('demo/screenshot_1280_main.png');
 
@@ -413,6 +446,31 @@ async function main() {
     await client.eval('document.getElementById("tab-btn-promises").click()');
     await sleep(300);
     await client.captureScreenshot('demo/screenshot_390_cards.png');
+
+    // Verify 375px mobile layout shift (top of #stories doesn't move across stages 1-6)
+    console.log('\n--- Testing Mobile (375px) Zero Layout Shift ---');
+    await client.send('Emulation.setDeviceMetricsOverride', {
+      width: 375,
+      height: 812,
+      deviceScaleFactor: 2,
+      mobile: true
+    });
+    await sleep(300);
+
+    const storiesTopPositions = [];
+    for (let s = 1; s <= 6; s++) {
+      await client.eval(`jumpToStage(${s})`);
+      await sleep(100);
+      const topPos = await client.eval('Math.round(document.getElementById("stories").getBoundingClientRect().top)');
+      storiesTopPositions.push(topPos);
+    }
+    console.log('375px #stories top positions across stages 1-6:', storiesTopPositions);
+    const storiesTopMin = Math.min(...storiesTopPositions);
+    const storiesTopMax = Math.max(...storiesTopPositions);
+    if (storiesTopMax - storiesTopMin > 1) {
+      throw new Error(`375px layout shift detected on #stories: min=${storiesTopMin}, max=${storiesTopMax}, diff=${storiesTopMax - storiesTopMin}px`);
+    }
+    console.log(`PASS: Zero Layout Shift on 375px mobile! (stories top variation: ${storiesTopMax - storiesTopMin}px <= 1px)`);
 
     // Check 360px width
     await client.send('Emulation.setDeviceMetricsOverride', {
