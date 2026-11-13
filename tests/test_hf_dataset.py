@@ -64,3 +64,68 @@ def test_hf_validate_only_staging_and_splits(tmp_path):
     schema = json.loads((staging / "SCHEMA.json").read_text(encoding="utf-8"))
     assert "all_checks_passed" in schema["properties"]
     assert "is_centroid" in schema["properties"]
+
+
+
+def test_hf_upload_requires_token_from_environment(tmp_path):
+    """Without HF_TOKEN the upload path must fail with a clear message before any
+    network call; the token is read from the environment only."""
+    import os as _os
+
+    staging = tmp_path / "hf_stage"
+    env = {k: v for k, v in _os.environ.items() if k != "HF_TOKEN"}
+    res = subprocess.run(
+        [sys.executable, str(SCRIPT), "--staging-dir", str(staging)],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+    assert res.returncode != 0
+    assert "HF_TOKEN is not set" in (res.stdout + res.stderr)
+
+
+def test_hf_dry_run_reconciles_row_counts_with_export(tmp_path):
+    """Dry-run validates staged splits against the live export: commitments and
+    quarantined row counts match docs/data.json; master/intake counts match their CSVs."""
+    staging = tmp_path / "hf_stage"
+    subprocess.run(
+        [sys.executable, str(SCRIPT), "--validate-only", "--staging-dir", str(staging)],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+
+    with open(ROOT / "docs" / "data.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
+    n_promises = len(data.get("promises", []))
+    n_quarantined = len(data.get("quarantined", []))
+
+    def rows(rel):
+        with open(staging / rel, "r", encoding="utf-8", newline="") as f:
+            return list(csv.DictReader(f))
+
+    commitments = rows("data/commitments/train.csv")
+    assert len(commitments) == n_promises
+    assert len(rows("data/quarantined/train.csv")) == n_quarantined
+
+    with open(ROOT / "data" / "sf_promises_master.csv", "r", encoding="utf-8", newline="") as f:
+        n_master = sum(1 for _ in csv.reader(f)) - 1
+    assert len(rows("data/standardized_16col/train.csv")) == n_master
+
+    with open(ROOT / "data" / "intake_ledger.csv", "r", encoding="utf-8", newline="") as f:
+        n_intake = sum(1 for _ in csv.reader(f)) - 1
+    assert len(rows("data/intake_ledger/train.csv")) == n_intake
+
+    # Schema spot-check: every commitment row carries the required identifier fields.
+    for row in commitments:
+        for field in ("promise_id", "entity_canonical_name", "promise_text", "verdict"):
+            assert field in row and row[field] != ""
+
+
+def test_hf_script_has_no_inlined_token():
+    """The script must never contain an inline token or an interactive prompt."""
+    text = SCRIPT.read_text(encoding="utf-8")
+    assert "os.getenv(\"HF_TOKEN\")" in text or "os.environ" in text
+    assert "getpass" not in text and "input(" not in text
