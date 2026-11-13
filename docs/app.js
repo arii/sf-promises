@@ -93,7 +93,16 @@
 
   function cleanQuoteText(text) {
     if (!text) return '';
-    return String(text).replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/`([^`]+)`/g, '$1').trim();
+    let t = String(text);
+    // Strip markdown links [link text](http...) -> link text
+    t = t.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+    // Strip editorial notes like [Reported by The Frisc] or [Reported by ...]
+    t = t.replace(/\[(?:Reported by|Source:|Note:)[^\]]+\]\s*/gi, '');
+    // Strip bracketed words if any leftover
+    t = t.replace(/\[([^\]]+)\]/g, '$1');
+    // Strip formatting
+    t = t.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/`([^`]+)`/g, '$1');
+    return t.replace(/\s+/g, ' ').trim();
   }
 
   function escapeHtml(str) {
@@ -612,7 +621,6 @@
     const tabPromises = document.getElementById('tab-btn-promises');
     const tabQuarantine = document.getElementById('tab-btn-quarantine');
     const tablePromises = document.getElementById('promises-table-container');
-    const cardsPromises = document.getElementById('mobile-cards-list');
     const containerQuarantine = document.getElementById('quarantine-table-container');
     const qHeader = document.getElementById('quarantine-header-status');
     const primaryControls = document.querySelector('.explore-primary-controls');
@@ -636,7 +644,6 @@
       if (showingStatus) showingStatus.classList.add('hidden');
       if (paginationControls) paginationControls.classList.add('hidden');
       if (tablePromises) tablePromises.classList.add('hidden');
-      if (cardsPromises) cardsPromises.classList.add('hidden');
 
       // Show quarantine elements
       if (qHeader) qHeader.classList.remove('hidden');
@@ -656,7 +663,6 @@
       if (showingStatus) showingStatus.classList.remove('hidden');
       if (paginationControls) paginationControls.classList.remove('hidden');
       if (tablePromises) tablePromises.classList.remove('hidden');
-      if (cardsPromises) cardsPromises.classList.remove('hidden');
 
       // Hide quarantine elements
       if (qHeader) qHeader.classList.add('hidden');
@@ -763,7 +769,6 @@
 
     // Render table rows
     const tbody = document.getElementById('promises-table-body');
-    const mobileCards = document.getElementById('mobile-cards-list');
 
     if (tbody) {
       tbody.innerHTML = list.slice(0, showingCount).map((p, idx) => {
@@ -782,15 +787,12 @@
         const verdict = p.verdict || 'undecided';
         const verdClass = verdict.toLowerCase().replace(/[\s-]+/g, '_');
         const verdictLabel = formatVerdictLabel(verdict);
-        const tier = getSourceTier(p.source_url);
-        const tierClass = tier.toLowerCase();
 
         return `
           <tr class="promise-row" id="promise-${pid}" data-promise-id="${pid}" tabindex="0" role="button" aria-label="Inspect #${rank} ${entity}: ${promiseClamped.slice(0, 60)}">
             <td class="table-entity-cell">
               <div class="entity-headline-row">
                 <span class="table-entity-name">${entity}</span>
-                <span class="stable-id-pill font-mono">#${rank}</span>
               </div>
               <div class="entity-sub-row font-mono">
                 <span class="table-role-tag">${role}</span>
@@ -799,19 +801,15 @@
             </td>
             <td class="table-quote-cell">
               <div class="table-promise-block">
-                <div class="table-kicker font-mono">PROMISE</div>
                 <blockquote class="table-quote-text font-serif">&ldquo;${promiseClamped}&rdquo;</blockquote>
               </div>
               <div class="table-outcome-block">
-                <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                 <span class="table-outcome-text">${outcomeReason}</span>
               </div>
             </td>
             <td class="table-verdict-cell">
               <span class="verdict-chip ${verdClass}">${verdictLabel}</span>
-              <div class="table-tier-row">
-                <span class="source-tier-pill font-mono source-tier-${tierClass}">${tier}</span>
-              </div>
             </td>
             <td class="table-timeline-cell font-mono">
               <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">${promised}</span></div>
@@ -819,44 +817,6 @@
               <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">${done}</span></div>
             </td>
           </tr>
-        `;
-      }).join('');
-    }
-
-    if (mobileCards) {
-      mobileCards.innerHTML = list.slice(0, showingCount).map((p, idx) => {
-        const rank = String(p.impact_rank || idx + 1).padStart(2, '0');
-        const pid = escapeHtml(p.promise_id || '');
-        const entity = escapeHtml(p.entity || '');
-        const promiseRaw = cleanQuoteText(p.promise_text || '');
-        const promise140 = escapeHtml(promiseRaw.slice(0, 140) + (promiseRaw.length > 140 ? '…' : ''));
-        const outcomeReason = escapeHtml(formatPlainVerdictReason(p.verdict_reason, p.verdict));
-        let promised = escapeHtml(p.promised_date || 'not recorded');
-        if (p.promised_date_note) promised += ' (derived)';
-        const due = escapeHtml(p.due_date || 'No deadline');
-        const verdict = p.verdict || 'undecided';
-        const verdClass = verdict.toLowerCase().replace(/[\s-]+/g, '_');
-        const verdictLabel = formatVerdictLabel(verdict);
-        const tier = getSourceTier(p.source_url);
-        const tierClass = tier.toLowerCase();
-
-        return `
-          <div class="mobile-promise-card" data-pid="${pid}" tabindex="0" role="button" aria-label="Inspect #${rank} ${entity}: ${promise140.slice(0, 60)}">
-            <div class="mobile-card-header">
-              <div class="mobile-card-speaker-group">
-                <span class="mobile-card-speaker">${entity}</span>
-                <span class="mobile-card-id font-mono">#${rank}</span>
-              </div>
-              <span class="verdict-chip ${verdClass}">${verdictLabel}</span>
-            </div>
-            <div class="mobile-promise-slot">
-              <blockquote class="mobile-card-quote font-serif">&ldquo;${promise140}&rdquo;</blockquote>
-            </div>
-            <div class="mobile-card-footer font-mono">
-              <span class="mobile-card-date">Said ${promised}</span>
-              <span class="mobile-card-tap-hint">Details &rarr;</span>
-            </div>
-          </div>
         `;
       }).join('');
     }
@@ -1385,17 +1345,6 @@
             const pid = tr.getAttribute('data-promise-id');
             if (pid) openInspectDrawer(pid);
           }
-        }
-      });
-    }
-
-    const mobileList = document.getElementById('mobile-cards-list');
-    if (mobileList) {
-      mobileList.addEventListener('click', (e) => {
-        const card = e.target.closest('.mobile-promise-card');
-        if (card) {
-          const pid = card.getAttribute('data-pid');
-          if (pid) openInspectDrawer(pid);
         }
       });
     }

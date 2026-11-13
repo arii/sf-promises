@@ -159,6 +159,16 @@ async function main() {
     });
     await sleep(400);
 
+    // Verify Section Ordering
+    const sectionOrder = await client.eval(`
+      Array.from(document.querySelectorAll('main > section')).map(s => s.id)
+    `);
+    console.log('Section Order:', sectionOrder);
+    const expectedOrder = ['hero', 'status-bar', 'stories', 'explore', 'watch', 'how-it-works', 'limits'];
+    if (JSON.stringify(sectionOrder) !== JSON.stringify(expectedOrder)) {
+      throw new Error(`Section order mismatch! Expected ${JSON.stringify(expectedOrder)}, got ${JSON.stringify(sectionOrder)}`);
+    }
+
     // Assert default replay is P02
     const defaultReplayVal = await client.eval('document.getElementById("run-select").value');
     console.log(`Default Replay Scenario: ${defaultReplayVal}`);
@@ -457,20 +467,20 @@ async function main() {
     });
     await sleep(300);
 
-    const storiesTopPositions = [];
+    const howTopPositions = [];
     for (let s = 1; s <= 6; s++) {
       await client.eval(`jumpToStage(${s})`);
       await sleep(100);
-      const topPos = await client.eval('Math.round(document.getElementById("stories").getBoundingClientRect().top)');
-      storiesTopPositions.push(topPos);
+      const topPos = await client.eval('Math.round(document.getElementById("how-it-works").getBoundingClientRect().top)');
+      howTopPositions.push(topPos);
     }
-    console.log('375px #stories top positions across stages 1-6:', storiesTopPositions);
-    const storiesTopMin = Math.min(...storiesTopPositions);
-    const storiesTopMax = Math.max(...storiesTopPositions);
-    if (storiesTopMax - storiesTopMin > 1) {
-      throw new Error(`375px layout shift detected on #stories: min=${storiesTopMin}, max=${storiesTopMax}, diff=${storiesTopMax - storiesTopMin}px`);
+    console.log('375px #how-it-works top positions across stages 1-6:', howTopPositions);
+    const howTopMin = Math.min(...howTopPositions);
+    const howTopMax = Math.max(...howTopPositions);
+    if (howTopMax - howTopMin > 1) {
+      throw new Error(`375px layout shift detected on #how-it-works: min=${howTopMin}, max=${howTopMax}, diff=${howTopMax - howTopMin}px`);
     }
-    console.log(`PASS: Zero Layout Shift on 375px mobile! (stories top variation: ${storiesTopMax - storiesTopMin}px <= 1px)`);
+    console.log(`PASS: Zero Layout Shift on 375px mobile! (how-it-works top variation: ${howTopMax - howTopMin}px <= 1px)`);
 
     // Check 360px width
     await client.send('Emulation.setDeviceMetricsOverride', {

@@ -1384,17 +1384,12 @@ def generate_promise_row_html(p, idx=0):
     verd_class = verdict.lower().replace(" ", "_")
     verdict_label = format_verdict_label(verdict)
 
-    source_url = p.get("source_url", "")
-    tier = get_source_tier(source_url)
-    tier_class = tier.lower()
-
     paged_cls = " paged-row hidden-page-row" if idx >= 10 else ""
 
     return f'''              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_clamped[:60]}">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">{entity}</span>
-                    <span class="stable-id-pill font-mono">#{rank}</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">{role}</span>
@@ -1403,19 +1398,15 @@ def generate_promise_row_html(p, idx=0):
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;{promise_clamped}&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">{outcome_reason}</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip {verd_class}">{verdict_label}</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-{tier_class}">{tier}</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">{promised}</span></div>
@@ -1499,7 +1490,6 @@ def generate_featured_stories_html(promises, quarantined):
             </div>
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
-                <span class="source-tier-pill source-tier-official">{tier}</span>
                 <span class="story-evidence-count">{failing_plain}</span>
               </div>
               <button type="button" class="btn-story-evidence btn-quarantine-link" data-qid="{qid}" aria-label="See evidence for {html_esc(title)} in Quarantine">
@@ -1571,7 +1561,6 @@ def generate_featured_stories_html(promises, quarantined):
             </div>
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
-                <span class="source-tier-pill source-tier-{tier_class}">{tier}</span>
                 <span class="story-evidence-count">evidence: {k_count} for, {b_count} against</span>
               </div>
               <button type="button" class="btn-story-evidence" data-pid="{pid}" aria-label="Inspect verification for {html_esc(title)}">
@@ -1667,16 +1656,6 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
         html,
         flags=re.DOTALL
     )
-
-    # Pre-render mobile promise cards (first 10 visible, remainder paged)
-    mobile_cards = "\n".join(generate_mobile_promise_card_html(p, i) for i, p in enumerate(promises))
-    if '<div class="mobile-promise-cards-list"' in html:
-        html = re.sub(
-            r'(<div class="mobile-promise-cards-list"[^>]*>)(.*?)(</div>\s*<!-- end mobile cards -->)',
-            r'\1\n' + mobile_cards + r'\n          \3',
-            html,
-            flags=re.DOTALL
-        )
 
     # Pre-render featured story cards
     featured_stories = generate_featured_stories_html(promises, quarantined)

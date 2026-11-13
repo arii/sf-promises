@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=50bd4c9c">
+  <link rel="stylesheet" href="styles.css?v=ffbed2a5">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,20 +16,18 @@
     <header class="topbar sticky-nav" id="top">
       <div class="topbar-bar-row">
         <div class="topbar-left">
-          <a href="#top" class="brand" aria-label="SF Promises · top">
-            <span class="brand-mark">SF</span>
-            <span class="brand-text">Promises</span>
+          <a href="#hero" class="brand" aria-label="SF Promises · top">
+            <span class="brand-text">SF Promises</span>
           </a>
         </div>
         <nav class="topbar-nav desktop-nav" aria-label="Primary Navigation">
-          <a href="#watch" class="nav-link">Watch</a>
           <a href="#stories" class="nav-link">Stories</a>
           <a href="#explore" class="nav-link">Explore</a>
-          <a href="#how-it-works" class="nav-link">How it's built</a>
+          <a href="#watch" class="nav-link">How it works</a>
         </nav>
         <div class="topbar-right">
           <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" class="github-icon-btn desktop-only" aria-label="GitHub Repository">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span class="github-nav-text font-mono">GitHub &nearr;</span>
           </a>
           <button type="button" class="mobile-menu-toggle mobile-only" id="mobile-menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
             <svg class="icon-hamburger" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -46,12 +44,11 @@
       </div>
       <!-- Mobile Slide-down Navigation Menu -->
       <nav class="mobile-nav-drawer hidden" id="mobile-nav-drawer" aria-label="Mobile Navigation">
-        <a href="#watch" class="mobile-nav-link">Watch one get checked</a>
-        <a href="#stories" class="mobile-nav-link">Featured Stories</a>
-        <a href="#explore" class="mobile-nav-link">Explore Promises</a>
-        <a href="#how-it-works" class="mobile-nav-link">How it's built &amp; Origin</a>
+        <a href="#stories" class="mobile-nav-link">Stories</a>
+        <a href="#explore" class="mobile-nav-link">Explore</a>
+        <a href="#watch" class="mobile-nav-link">How it works</a>
         <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" class="mobile-nav-link mobile-nav-github">
-          <span>GitHub Repository</span>
+          <span>GitHub</span>
           <span class="ext-arrow">&nearr;</span>
         </a>
         <a href="https://huggingface.co/datasets/onasafari/sf-promises" target="_blank" rel="noopener noreferrer" class="mobile-nav-link mobile-nav-hf">
@@ -67,8 +64,8 @@
         <h1 class="hero-headline">A sourced record of what San Francisco's leaders promised, and what happened.</h1>
         <p class="hero-subline">Tracking 54 public commitments across City Hall, SFO Airport, transit, and sports against saved, hashed documents.</p>
         <div class="hero-actions-row">
-          <a href="#watch" class="btn btn-primary" id="btn-hero-watch">Watch one get checked &darr;</a>
-          <a href="#explore" class="btn btn-secondary" id="btn-hero-browse">Browse promises &darr;</a>
+          <a href="#explore" class="btn btn-primary" id="btn-hero-browse">Browse promises &darr;</a>
+          <a href="#watch" class="btn btn-secondary" id="btn-hero-watch">How it works &darr;</a>
         </div>
       </section>
 
@@ -99,111 +96,9 @@
         </div>
       </section>
 
-      <!-- SECTION 3: WATCH ONE PROMISE GET CHECKED (Centerpiece Pipeline Replay) -->
-      <section class="watch-section pipeline-interactive-section" id="watch" aria-label="Watch one promise get checked">
-        <div class="section-heading-group">
-          <h2>Watch one promise get checked</h2>
-          <p class="section-lead">Follow a public commitment from its original source through automated checks to a tamper-evident verdict.</p>
-        </div>
+      
 
-        <!-- Pipeline Controls Bar -->
-        <div class="pipeline-actions-row">
-          <label class="run-select-label font-mono" for="run-select">COMMITMENT</label>
-          <select id="run-select" class="run-select" aria-label="Choose a commitment to inspect through the verification pipeline">
-            <option value="P02" selected>#01 &middot; 24/7 Crisis Center</option>
-            <option value="P05">#02 &middot; 1,500 Shelter Beds</option>
-            <option value="SFO-01">#03 &middot; Runway 28L Reopening</option>
-            <option value="P06">#18 &middot; Vision Zero</option>
-          </select>
-          <div class="pipeline-btn-group">
-            <button type="button" class="btn-play-action btn-primary-contextual" id="btn-step-next" aria-label="Pause or resume walkthrough">
-              <span id="pipeline-primary-icon">⏸</span>
-              <span id="pipeline-primary-text">Pause</span>
-            </button>
-            <button type="button" class="btn-play-action btn-pipeline-reset-compact" id="btn-pipeline-reset" title="Reset walkthrough to Stage 1" aria-label="Reset walkthrough to Stage 1">
-              <span>Reset ↺</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Packet Transit Card with 6 Short Milestones -->
-        <div class="packet-transit-card">
-          <div class="packet-transit-header font-mono">
-            <span class="packet-label" id="pipeline-stage-indicator">Stage 1 of 6</span>
-            <span class="packet-status-text" id="packet-status-text">In progress</span>
-          </div>
-
-          <div class="packet-track-container">
-            <div class="packet-track-bg-line"></div>
-            <div class="packet-track-fill-line" id="packet-track-fill" style="width: 0%;"></div>
-            
-            <div class="packet-milestones-row">
-              <div class="milestone-node" data-stage="1" role="button" tabindex="0" aria-label="Jump to Stage 1 Fetch"><div class="milestone-circle active" id="ms-circle-1">1</div></div>
-              <div class="milestone-node" data-stage="2" role="button" tabindex="0" aria-label="Jump to Stage 2 Extract"><div class="milestone-circle" id="ms-circle-2">2</div></div>
-              <div class="milestone-node" data-stage="3" role="button" tabindex="0" aria-label="Jump to Stage 3 Gate"><div class="milestone-circle" id="ms-circle-3">3</div></div>
-              <div class="milestone-node" data-stage="4" role="button" tabindex="0" aria-label="Jump to Stage 4 Argue"><div class="milestone-circle" id="ms-circle-4">4</div></div>
-              <div class="milestone-node" data-stage="5" role="button" tabindex="0" aria-label="Jump to Stage 5 Decide"><div class="milestone-circle" id="ms-circle-5">5</div></div>
-              <div class="milestone-node" data-stage="6" role="button" tabindex="0" aria-label="Jump to Stage 6 Publish"><div class="milestone-circle" id="ms-circle-6">6</div></div>
-            </div>
-
-            <div class="packet-ball-dot" id="packet-ball-dot" style="left: 0%;">
-              <div class="packet-ball-inner" id="packet-ball-inner"></div>
-            </div>
-          </div>
-
-          <div class="milestone-labels-row font-mono">
-            <span class="milestone-label-clickable" data-stage="1">Fetch</span>
-            <span class="milestone-label-clickable" data-stage="2">Extract</span>
-            <span class="milestone-label-clickable" data-stage="3">Gate</span>
-            <span class="milestone-label-clickable" data-stage="4">Argue</span>
-            <span class="milestone-label-clickable" data-stage="5">Decide</span>
-            <span class="milestone-label-clickable" data-stage="6">Publish</span>
-          </div>
-        </div>
-
-        <!-- 6 Stage Cards in CSS Grid Stack (Zero Layout Shift) -->
-        <div class="active-stage-panel-wrapper" id="active-stage-panel-wrapper">
-          <div class="stage-card active-stage" id="pipeline-active-stage-panel" data-stage="1">
-            <div class="stage-card-header">
-              <h3 class="stage-heading">Source Fetched</h3>
-            </div>
-            <p class="stage-desc">Archived sf.gov release (SHA-256: 582955d5&hellip;).</p>
-          </div>
-          <div class="stage-card inactive-stage" id="pipeline-stage-2" data-stage="2">
-            <div class="stage-card-header">
-              <h3 class="stage-heading">Quote Extracted</h3>
-            </div>
-            <blockquote class="stage-quote font-serif">&ldquo;That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it.&rdquo;</blockquote>
-          </div>
-          <div class="stage-card inactive-stage" id="pipeline-stage-3" data-stage="3">
-            <div class="stage-card-header">
-              <h3 class="stage-heading">Relevance Gate Passed</h3>
-            </div>
-            <p class="stage-desc">Measurable SF commitment with public impact.</p>
-          </div>
-          <div class="stage-card inactive-stage" id="pipeline-stage-4" data-stage="4">
-            <div class="stage-card-header">
-              <h3 class="stage-heading">Evidence Evaluated</h3>
-            </div>
-            <p class="stage-desc">Facility began intake April 28, 2025; zero contradicting closure records filed.</p>
-          </div>
-          <div class="stage-card inactive-stage" id="pipeline-stage-5" data-stage="5">
-            <div class="stage-card-header">
-              <h3 class="stage-heading">Code Checks Passed</h3>
-            </div>
-            <p class="stage-desc">All 7 deterministic integrity checks passed with zero discrepancies.</p>
-          </div>
-          <div class="stage-card inactive-stage" id="pipeline-stage-6" data-stage="6">
-            <div class="stage-card-header">
-              <h3 class="stage-heading">Verdict Published</h3>
-              <span class="verdict-chip kept">KEPT</span>
-            </div>
-            <p class="stage-desc">Official primary records confirm completion with zero contradicting claims.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- SECTION 4: FEATURED STORIES -->
+      <!-- SECTION 2: FEATURED STORIES -->
       <section class="stories-section" id="stories" aria-label="Featured Stories">
         <div class="section-heading-group">
           <h2>Featured stories</h2>
@@ -224,7 +119,6 @@
             </div>
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
-                <span class="source-tier-pill source-tier-official">Official</span>
                 <span class="story-evidence-count">evidence: 4 for, 0 against</span>
               </div>
               <button type="button" class="btn-story-evidence" data-pid="P02" aria-label="Inspect verification for 24/7 Crisis Stabilization Center">
@@ -246,7 +140,6 @@
             </div>
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
-                <span class="source-tier-pill source-tier-official">Official</span>
                 <span class="story-evidence-count">evidence: 1 for, 0 against</span>
               </div>
               <button type="button" class="btn-story-evidence" data-pid="SFO-01" aria-label="Inspect verification for Runway 28L Safety Realignment &amp; Reopening">
@@ -268,7 +161,6 @@
             </div>
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
-                <span class="source-tier-pill source-tier-news">News</span>
                 <span class="story-evidence-count">evidence: 2 for, 3 against</span>
               </div>
               <button type="button" class="btn-story-evidence" data-pid="P05" aria-label="Inspect verification for 1,500 Shelter Beds in First 6 Months">
@@ -290,7 +182,6 @@
             </div>
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
-                <span class="source-tier-pill source-tier-official">Official</span>
                 <span class="story-evidence-count">evidence: 1 for, 2 against</span>
               </div>
               <button type="button" class="btn-story-evidence" data-pid="P06" aria-label="Inspect verification for Vision Zero: End Traffic Fatalities by 2024">
@@ -312,7 +203,6 @@
             </div>
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
-                <span class="source-tier-pill source-tier-official">Official</span>
                 <span class="story-evidence-count">evidence: 0 for, 0 against</span>
               </div>
               <button type="button" class="btn-story-evidence" data-pid="P37" aria-label="Inspect verification for London Breed Commitment">
@@ -334,7 +224,6 @@
             </div>
             <div class="story-card-bottom">
               <div class="story-provenance-info font-mono">
-                <span class="source-tier-pill source-tier-official">Official</span>
                 <span class="story-evidence-count">Quote mutation diverted</span>
               </div>
               <button type="button" class="btn-story-evidence btn-quarantine-link" data-qid="Q-N01" aria-label="See evidence for Quote Mutation Detection in Quarantine">
@@ -360,7 +249,7 @@
         </div>
       </section>
 
-      <!-- SECTION 5: EXPLORE ALL PROMISES -->
+      <!-- SECTION 3: EXPLORE ALL PROMISES -->
       <section class="explore-section table-section" id="explore" aria-label="Explore all promises">
         <div class="section-heading-group">
           <h2>Explore all promises</h2>
@@ -476,899 +365,32 @@
           <p class="quarantine-header-line">13 items stopped before publishing: 12 planted tests, 1 real candidate. 0 reached the main table.</p>
         </div>
 
-        <div class="mobile-promise-cards-list" id="mobile-cards-list">
-              <div class="mobile-promise-card" data-pid="P02" tabindex="0" role="button" aria-label="Inspect #01 Daniel Lurie: That’s exactly what this 24/7 police-friendly stabilization ">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Daniel Lurie</span>
-                    <span class="mobile-card-id font-mono">#01</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2025-01-07</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card" data-pid="P05" tabindex="0" role="button" aria-label="Inspect #02 Daniel Lurie: His campaign promise to end street homelessness, in part by ">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Daniel Lurie</span>
-                    <span class="mobile-card-id font-mono">#02</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;His campaign promise to end street homelessness, in part by opening 1,500 new shelter beds in his first six months of office, didn’t last lo…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2024-11-05</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card" data-pid="SFO-01" tabindex="0" role="button" aria-label="Inspect #03 San Francisco International Airport: SFO announced today that Runway 28L will reopen ahead of sch">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">San Francisco International Airport</span>
-                    <span class="mobile-card-id font-mono">#03</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;SFO announced today that Runway 28L will reopen ahead of schedule on Friday, June 21, 2024. The runway had been closed since January 16, 202…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2024-01-16</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card" data-pid="SFO-02" tabindex="0" role="button" aria-label="Inspect #04 San Francisco International Airport: San Francisco International Airport celebrated the completio">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">San Francisco International Airport</span>
-                    <span class="mobile-card-id font-mono">#04</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;San Francisco International Airport celebrated the completion of the $2.4 billion Harvey Milk Terminal 1, unveiling the final phase featurin…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2019-07-23</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card" data-pid="P21" tabindex="0" role="button" aria-label="Inspect #05 London Breed: to permanently ban automobile traffic on a portion of the we">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">London Breed</span>
-                    <span class="mobile-card-id font-mono">#05</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;to permanently ban automobile traffic on a portion of the western half of J.F.K. Drive&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2022-04</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card" data-pid="P04" tabindex="0" role="button" aria-label="Inspect #06 Golden State Valkyries: The Valkyries have sold out all 44 regular-season games at C">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Golden State Valkyries</span>
-                    <span class="mobile-card-id font-mono">#06</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;The Valkyries have sold out all 44 regular-season games at Chase Center over their first two seasons, to lead the WNBA in attendance.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2025-03-26</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card" data-pid="P82" tabindex="0" role="button" aria-label="Inspect #07 Joe Lacob: I’m telling you right now, we will win a WNBA championship i">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Joe Lacob</span>
-                    <span class="mobile-card-id font-mono">#07</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;I’m telling you right now, we will win a WNBA championship in the first five years of this franchise.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2023-10-05</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card" data-pid="P83" tabindex="0" role="button" aria-label="Inspect #08 Whole Foods Market: Whole Foods Market will open its new 64,737-square-foot San ">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Whole Foods Market</span>
-                    <span class="mobile-card-id font-mono">#08</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Whole Foods Market will open its new 64,737-square-foot San Francisco flagship store at Trinity Place (1185 Market Street) in San Francisco’…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2022-02-17</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card" data-pid="P11" tabindex="0" role="button" aria-label="Inspect #09 Mickey Hart: We never said we'll never play again, but we'll never tour a">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Mickey Hart</span>
-                    <span class="mobile-card-id font-mono">#09</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;We never said we'll never play again, but we'll never tour again.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2022-09-23</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card" data-pid="SFO-03" tabindex="0" role="button" aria-label="Inspect #10 United Airlines: United Airlines has expanded its commitment to fly 100% gree">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">United Airlines</span>
-                    <span class="mobile-card-id font-mono">#10</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;United Airlines has expanded its commitment to fly 100% green by 2050 without relying on voluntary carbon offsets, taking delivery of Neste …&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2020-12-10</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="SFO-04" tabindex="0" role="button" aria-label="Inspect #11 Alaska Airlines: Alaska Airlines officially commenced flight operations from ">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Alaska Airlines</span>
-                    <span class="mobile-card-id font-mono">#11</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Alaska Airlines officially commenced flight operations from Harvey Milk Terminal 1 at SFO, welcoming guests to a brand-new 11,000-square-foo…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2023-04-18</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P01" tabindex="0" role="button" aria-label="Inspect #12 Daniel Lurie: The measure, dubbed the Fentanyl State of Emergency Ordinanc">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Daniel Lurie</span>
-                    <span class="mobile-card-id font-mono">#12</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;The measure, dubbed the Fentanyl State of Emergency Ordinance, marks Lurie’s first big step in fulfilling a campaign promise&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2024-11-05</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P59" tabindex="0" role="button" aria-label="Inspect #13 Zoox: Once given access, riders will be able to use the Zoox app t">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Zoox</span>
-                    <span class="mobile-card-id font-mono">#13</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Once given access, riders will be able to use the Zoox app to hail a ride within its service area, which covers the SoMa, Mission, and Desig…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2025-11-18</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P43" tabindex="0" role="button" aria-label="Inspect #14 Waymo: Since sharing that we were ready to take the next step and b">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Waymo</span>
-                    <span class="mobile-card-id font-mono">#14</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Since sharing that we were ready to take the next step and begin testing fully autonomous operations in the city, we’ve begun fully autonomo…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2022-03-30</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P41" tabindex="0" role="button" aria-label="Inspect #15 Tutor Perini Corporation: In May 2013, the SFMTA contracted with Tutor Perini Corporat">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Tutor Perini Corporation</span>
-                    <span class="mobile-card-id font-mono">#15</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;In May 2013, the SFMTA contracted with Tutor Perini Corporation (Contractor) to construct the Central Subway Stations, Surface, Trackway and…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2013-05</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P10" tabindex="0" role="button" aria-label="Inspect #16 San Francisco Giants: Also, 40% of the project’s residential portion is below-mark">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">San Francisco Giants</span>
-                    <span class="mobile-card-id font-mono">#16</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Also, 40% of the project’s residential portion is below-market-rate units, mostly targeting middle-income families.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2015-01-01</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P18" tabindex="0" role="button" aria-label="Inspect #17 London Breed: San Francisco’s requirement is 82,200 homes by 2031.">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">London Breed</span>
-                    <span class="mobile-card-id font-mono">#17</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;San Francisco’s requirement is 82,200 homes by 2031.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2023-01-31</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P06" tabindex="0" role="button" aria-label="Inspect #18 City and County of San Francisco: In 2014, San Francisco became the third city in the country ">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">City and County of San Francisco</span>
-                    <span class="mobile-card-id font-mono">#18</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;In 2014, San Francisco became the third city in the country to adopt Vision Zero with the goal of zero traffic deaths.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2014-01-01</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P08" tabindex="0" role="button" aria-label="Inspect #19 London Breed: When Mayor London Breed announced $5 million last year for r">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">London Breed</span>
-                    <span class="mobile-card-id font-mono">#19</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;When Mayor London Breed announced $5 million last year for repairs to San Francisco’s crumbling housing stock for homeless people, the reque…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2022-05-01</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P22" tabindex="0" role="button" aria-label="Inspect #20 London Breed: Embarcadero Navigation Center (12/30/19) opened with 200 bed">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">London Breed</span>
-                    <span class="mobile-card-id font-mono">#20</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Embarcadero Navigation Center (12/30/19) opened with 200 beds (despite a lawsuit from neighbors that delayed the site’s opening until the en…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2019-03</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P17" tabindex="0" role="button" aria-label="Inspect #21 Daniel Lurie: Lurie promised to hire 425 new San Francisco Police Departme">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Daniel Lurie</span>
-                    <span class="mobile-card-id font-mono">#21</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Lurie promised to hire 425 new San Francisco Police Department officers during the first three years of his administration, prevent local ci…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2024</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P25" tabindex="0" role="button" aria-label="Inspect #22 San Francisco Board of Supervisors: Though that legislation required that the hall close on Dece">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">San Francisco Board of Supervisors</span>
-                    <span class="mobile-card-id font-mono">#22</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Though that legislation required that the hall close on December 31st, 2021, there has been no movement from the Board towards that closure.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2019-06-04</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P12" tabindex="0" role="button" aria-label="Inspect #23 SFMTA: The SFMTA allows Lime and Spin to operate scooter share serv">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">SFMTA</span>
-                    <span class="mobile-card-id font-mono">#23</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;The SFMTA allows Lime and Spin to operate scooter share services in San Francisco through June 30, 2026.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2024-07-01</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P26" tabindex="0" role="button" aria-label="Inspect #24 Dean Preston: In the first year alone, it is expected that 4,500 new units">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Dean Preston</span>
-                    <span class="mobile-card-id font-mono">#24</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;In the first year alone, it is expected that 4,500 new units will return on the market— more than our annual goals— with no increase in taxe…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2022-11-08</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P27" tabindex="0" role="button" aria-label="Inspect #25 Ed Lee: The 30-year fund would receive $20 million in its first year">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Ed Lee</span>
-                    <span class="mobile-card-id font-mono">#25</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;The 30-year fund would receive $20 million in its first year and increasing amounts thereafter, up to $50 million annually.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2012</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P29" tabindex="0" role="button" aria-label="Inspect #26 Gavin Newsom: Care Not Cash officially launched in May 2004, reducing the ">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Gavin Newsom</span>
-                    <span class="mobile-card-id font-mono">#26</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Care Not Cash officially launched in May 2004, reducing the amount of money homeless residents received from a maximum of $410 per month to …&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2002-11-05</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P31" tabindex="0" role="button" aria-label="Inspect #27 Daniel Lurie: By adopting the Family Zoning Plan in December 2025, San Fra">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Daniel Lurie</span>
-                    <span class="mobile-card-id font-mono">#27</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;By adopting the Family Zoning Plan in December 2025, San Francisco met its state law obligations to approve a compliant rezoning plan by Jan…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2025-06-24</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P30" tabindex="0" role="button" aria-label="Inspect #28 London Breed: Under the Mayor’s Homelessness Recovery Plan, the City set a">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">London Breed</span>
-                    <span class="mobile-card-id font-mono">#28</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Under the Mayor’s Homelessness Recovery Plan, the City set a goal of buying or leasing 1,500 new units of PSH over the course of two years.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2020-07</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P36" tabindex="0" role="button" aria-label="Inspect #29 CleanPowerSF: Additionally, CleanPowerSF has conservatively committed to i">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">CleanPowerSF</span>
-                    <span class="mobile-card-id font-mono">#29</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Additionally, CleanPowerSF has conservatively committed to increasing the renewable percentage of its basic Green service, from 35 percent a…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2017-04-20</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P09" tabindex="0" role="button" aria-label="Inspect #30 Patti Poppe: As of this week, Pacific Gas and Electric Company (PG&amp;E)">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Patti Poppe</span>
-                    <span class="mobile-card-id font-mono">#30</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;As of this week, Pacific Gas and Electric Company (PG&amp;E) has constructed and energized more than 600 miles of underground powerlines since i…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2021-06-01</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P61" tabindex="0" role="button" aria-label="Inspect #31 San Francisco Public Utilities Commission (SFPUC): On July 28, 2009, the Commission approved a revised WSIP sch">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">San Francisco Public Utilities Commission (SFPUC)</span>
-                    <span class="mobile-card-id font-mono">#31</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;On July 28, 2009, the Commission approved a revised WSIP schedule and budget of $4,586 million with an overall targeted program completion d…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2009-07-28</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P66" tabindex="0" role="button" aria-label="Inspect #32 Golden State Warriors: Chase Center, which will have a capacity of 18,064, is due t">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Golden State Warriors</span>
-                    <span class="mobile-card-id font-mono">#32</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Chase Center, which will have a capacity of 18,064, is due to open with a Metallica concert on September 6 before the Warriors play their fi…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2019-08-28</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P64" tabindex="0" role="button" aria-label="Inspect #33 Treasure Island Development Authority: the Project is anticipated to include (1) up to 8,000 new re">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Treasure Island Development Authority</span>
-                    <span class="mobile-card-id font-mono">#33</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;the Project is anticipated to include (1) up to 8,000 new residential units&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2011-06-07</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P84" tabindex="0" role="button" aria-label="Inspect #34 Forest City Realty Trust Inc.: After about a decade of planning, developer Forest City Real">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Forest City Realty Trust Inc.</span>
-                    <span class="mobile-card-id font-mono">#34</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;After about a decade of planning, developer Forest City Realty Trust Inc. (NYSE: FCE.A) finally scored approval for its massive Pier 70 over…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2017-10-31</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P86" tabindex="0" role="button" aria-label="Inspect #35 Associate Capital: The plan calls for more than 2,600 homes.">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Associate Capital</span>
-                    <span class="mobile-card-id font-mono">#35</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;The plan calls for more than 2,600 homes.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2020-04</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P07" tabindex="0" role="button" aria-label="Inspect #36 Gavin Newsom: build 3.5M homes by 2025">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Gavin Newsom</span>
-                    <span class="mobile-card-id font-mono">#36</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;build 3.5M homes by 2025&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2018-11-06</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P13" tabindex="0" role="button" aria-label="Inspect #37 Gavin Newsom: In his first year as mayor, he introduced an ambitious 10-ye">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Gavin Newsom</span>
-                    <span class="mobile-card-id font-mono">#37</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;In his first year as mayor, he introduced an ambitious 10-year plan to end chronic homelessness by creating 3,000 housing units with support…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2004-06-30</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P15" tabindex="0" role="button" aria-label="Inspect #38 Ed Lee: The late Mayor Ed Lee pledged in 2014 to add 5,000 new units">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Ed Lee</span>
-                    <span class="mobile-card-id font-mono">#38</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;The late Mayor Ed Lee pledged in 2014 to add 5,000 new units to the housing stock every year, for a total of 30,000 units by 2020.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2014</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P16" tabindex="0" role="button" aria-label="Inspect #39 London Breed: In October 2018, Mayor London Breed announced a commitment t">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">London Breed</span>
-                    <span class="mobile-card-id font-mono">#39</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;In October 2018, Mayor London Breed announced a commitment to open at least 1,000 additional shelter beds, including Navigation Center beds,…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2018-10</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P19" tabindex="0" role="button" aria-label="Inspect #40 Gavin Newsom: In his budget proposal for fiscal year 2007–2008, Newsom ann">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Gavin Newsom</span>
-                    <span class="mobile-card-id font-mono">#40</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;In his budget proposal for fiscal year 2007–2008, Newsom announced his intention to provide universal health care for all city residents, ba…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2007-04</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P20" tabindex="0" role="button" aria-label="Inspect #41 Ed Lee: At the time, Lee promised not to seek election if appointed,">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Ed Lee</span>
-                    <span class="mobile-card-id font-mono">#41</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;At the time, Lee promised not to seek election if appointed, a statement that helped to gain support for his appointment.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2011-01-07</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P23" tabindex="0" role="button" aria-label="Inspect #42 Daniel Lurie: The Hospitality Task Force will break down siloes to increas">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Daniel Lurie</span>
-                    <span class="mobile-card-id font-mono">#42</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;The Hospitality Task Force will break down siloes to increase the police presence across the areas that drive our city’s economy – not just …&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2024</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P28" tabindex="0" role="button" aria-label="Inspect #43 London Breed: Over the past two years, SFDPH has opened 250 additional res">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">London Breed</span>
-                    <span class="mobile-card-id font-mono">#43</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Over the past two years, SFDPH has opened 250 additional residential care and treatment beds.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2020-01-08</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P35" tabindex="0" role="button" aria-label="Inspect #44 London Breed: This program is improving behavioral health services for peo">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">London Breed</span>
-                    <span class="mobile-card-id font-mono">#44</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;This program is improving behavioral health services for people living in San Francisco with serious mental health issues and/or substance u…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2019-11-12</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P37" tabindex="0" role="button" aria-label="Inspect #45 London Breed: Mayor Breed also announced the next steps in her efforts to ">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">London Breed</span>
-                    <span class="mobile-card-id font-mono">#45</span>
-                  </div>
-                  <span class="verdict-chip undecided">Undecided</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Mayor Breed also announced the next steps in her efforts to help people living unsheltered on the City’s streets, with an initiative to crea…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2020-01-15</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P38" tabindex="0" role="button" aria-label="Inspect #46 PG&amp;E: Here’s how PG&amp;E is working to make PSPS events smaller i">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">PG&amp;E</span>
-                    <span class="mobile-card-id font-mono">#46</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Here’s how PG&amp;E is working to make PSPS events smaller in size, shorter in length and smarter for customers.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2020-02-07</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P39" tabindex="0" role="button" aria-label="Inspect #47 PG&amp;E: The program forecasted to install up to 7,500 charging ports">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">PG&amp;E</span>
-                    <span class="mobile-card-id font-mono">#47</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;The program forecasted to install up to 7,500 charging ports over a three-year period focusing on two key market segments: workplaces and mu…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2018</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P40" tabindex="0" role="button" aria-label="Inspect #48 PG&amp;E: In addition, PG&amp;E is announcing today its own commitment">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">PG&amp;E</span>
-                    <span class="mobile-card-id font-mono">#48</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;In addition, PG&amp;E is announcing today its own commitment to further electrify its vehicle fleet by 2030, including 100% of its light-duty fl…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2020-10-01</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P57" tabindex="0" role="button" aria-label="Inspect #49 Comcast: By early 2017, Comcast will have its gigabit internet servic">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Comcast</span>
-                    <span class="mobile-card-id font-mono">#49</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;By early 2017, Comcast will have its gigabit internet service available in 15 cities/metropolitan areas.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2016-11-01</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P03" tabindex="0" role="button" aria-label="Inspect #50 Daniel Lurie: Mayor Lurie today also introduced a legislative package with">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Daniel Lurie</span>
-                    <span class="mobile-card-id font-mono">#50</span>
-                  </div>
-                  <span class="verdict-chip kept">Kept</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Mayor Lurie today also introduced a legislative package with six ordinances proposing structural changes to help businesses and property own…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2025-01-07</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P58" tabindex="0" role="button" aria-label="Inspect #51 Leland Kim (AT&amp;T spokesman): AT&amp;T plans to triple that amount by the end of the year">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Leland Kim (AT&amp;T spokesman)</span>
-                    <span class="mobile-card-id font-mono">#51</span>
-                  </div>
-                  <span class="verdict-chip undecided">Undecided</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;AT&amp;T plans to triple that amount by the end of the year&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2016-05-17</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P62" tabindex="0" role="button" aria-label="Inspect #52 Visa: will hold 1,500 employees when it is expected to open in 202">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Visa</span>
-                    <span class="mobile-card-id font-mono">#52</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;will hold 1,500 employees when it is expected to open in 2024.&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2019-11-06</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P65" tabindex="0" role="button" aria-label="Inspect #53 SFMTA: Substantial completion of the contract was originally schedu">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">SFMTA</span>
-                    <span class="mobile-card-id font-mono">#53</span>
-                  </div>
-                  <span class="verdict-chip broken">Broken</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;Substantial completion of the contract was originally scheduled for February 10, 2018&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2012</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-              <div class="mobile-promise-card paged-card hidden-page-card" data-pid="P85" tabindex="0" role="button" aria-label="Inspect #54 Transportation Authority Board: At the June 9 Transportation Authority Board meeting, our bo">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">Transportation Authority Board</span>
-                    <span class="mobile-card-id font-mono">#54</span>
-                  </div>
-                  <span class="verdict-chip in_progress">In Progress</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;At the June 9 Transportation Authority Board meeting, our board approved $230,700 in Prop L transportation sales tax funds for the Central S…&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said 2026-06-09</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>
-          </div><!-- end mobile cards -->
-
         <!-- DESKTOP 4-COLUMN TABLE (>=768px) -->
         <div class="data-table-container" id="promises-table-container">
-          <table class="data-table">
+          <table class="data-table" id="promises-table">
             <thead>
               <tr>
-                <th style="width: 26%;" class="sortable-th" data-sort="entity" role="columnheader" aria-sort="none" tabindex="0">
+                <th style="width: 22%;" class="sortable-th" data-sort="entity" role="columnheader" aria-sort="none" tabindex="0">
                   <div class="th-content">
                     <span>Speaker</span>
                     <span class="sort-icon font-mono">&updownarrow;</span>
                   </div>
                 </th>
-                <th style="width: 44%;" class="sortable-th" data-sort="quote" role="columnheader" aria-sort="none" tabindex="0">
+                <th style="width: 50%;" class="sortable-th" data-sort="quote" role="columnheader" aria-sort="none" tabindex="0">
                   <div class="th-content">
-                    <span>Promise</span>
+                    <span>Promise &amp; Outcome</span>
                     <span class="sort-icon font-mono">&updownarrow;</span>
                   </div>
                 </th>
-                <th style="width: 15%;" class="sortable-th" data-sort="verdict" role="columnheader" aria-sort="none" tabindex="0">
+                <th style="width: 12%;" class="sortable-th" data-sort="verdict" role="columnheader" aria-sort="none" tabindex="0">
                   <div class="th-content">
                     <span>Verdict</span>
                     <span class="sort-icon font-mono">&updownarrow;</span>
                   </div>
                 </th>
-                <th style="width: 15%;" class="sortable-th" data-sort="timeline" role="columnheader" aria-sort="none" tabindex="0">
+                <th style="width: 16%;" class="sortable-th" data-sort="timeline" role="columnheader" aria-sort="none" tabindex="0">
                   <div class="th-content">
-                    <span>Date</span>
+                    <span>Dates</span>
                     <span class="sort-icon font-mono">&updownarrow;</span>
                   </div>
                 </th>
@@ -1379,7 +401,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Daniel Lurie</span>
-                    <span class="stable-id-pill font-mono">#01</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Mayor of San Francisco</span>
@@ -1388,19 +409,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it,&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2025-01-07</span></div>
@@ -1412,7 +429,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Daniel Lurie</span>
-                    <span class="stable-id-pill font-mono">#02</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Mayor of San Francisco</span>
@@ -1421,19 +437,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;His campaign promise to end street homelessness, in part by opening 1,500 new shelter beds in his first six months of office, didn’t last long.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Numeric target was not met or the initiative was abandoned before completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2024-11-05</span></div>
@@ -1445,7 +457,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco International Airport</span>
-                    <span class="stable-id-pill font-mono">#03</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Airport Commission / Municipal Transportation</span>
@@ -1454,19 +465,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;SFO announced today that Runway 28L will reopen ahead of schedule on Friday, June 21, 2024. The runway had been closed since January 16, 2024 for a ma…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Runway 28L reopened June 21, 2024, beating the July 1, 2024 deadline by 10 days after completing the $51M taxiway realignment.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2024-01-16</span></div>
@@ -1478,7 +485,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco International Airport</span>
-                    <span class="stable-id-pill font-mono">#04</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Airport Commission / Municipal Transportation</span>
@@ -1487,19 +493,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;San Francisco International Airport celebrated the completion of the $2.4 billion Harvey Milk Terminal 1, unveiling the final phase featuring a new No…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Final phase completed July 1, 2024, delivering all 25 gates and post-security concourse connections under the $2.4B capital program.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2019-07-23</span></div>
@@ -1511,7 +513,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">London Breed</span>
-                    <span class="stable-id-pill font-mono">#05</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Former Mayor of San Francisco</span>
@@ -1520,19 +521,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;to permanently ban automobile traffic on a portion of the western half of J.F.K. Drive&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2022-04</span></div>
@@ -1544,7 +541,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Golden State Valkyries</span>
-                    <span class="stable-id-pill font-mono">#06</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -1553,19 +549,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;The Valkyries have sold out all 44 regular-season games at Chase Center over their first two seasons, to lead the WNBA in attendance.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2025-03-26</span></div>
@@ -1577,7 +569,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Joe Lacob</span>
-                    <span class="stable-id-pill font-mono">#07</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Golden State Valkyries owner</span>
@@ -1586,19 +577,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;I’m telling you right now, we will win a WNBA championship in the first five years of this franchise.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2023-10-05</span></div>
@@ -1610,7 +597,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Whole Foods Market</span>
-                    <span class="stable-id-pill font-mono">#08</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -1619,19 +605,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Whole Foods Market will open its new 64,737-square-foot San Francisco flagship store at Trinity Place (1185 Market Street) in San Francisco’s Mid-Mark…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2022-02-17</span></div>
@@ -1643,7 +625,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Mickey Hart</span>
-                    <span class="stable-id-pill font-mono">#09</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Musician</span>
@@ -1652,19 +633,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;We never said we'll never play again, but we'll never tour again.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">re-open: 30-show Sphere leg May-Aug 2024 + 18-show Sphere leg Mar-May 2025 + sold-out 3-day Golden Gate Park run Aug 1-3 2025; contradicting primary evidence outranks affirmative claims</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-reference">Reference</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2022-09-23</span></div>
@@ -1676,7 +653,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">United Airlines</span>
-                    <span class="stable-id-pill font-mono">#10</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Major SFO Hub Airline</span>
@@ -1685,19 +661,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;United Airlines has expanded its commitment to fly 100% green by 2050 without relying on voluntary carbon offsets, taking delivery of Neste MY Sustain…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Active commercial SAF intake through SFO hydrant pipeline system; long-range net-zero fleet target ongoing through 2050.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2020-12-10</span></div>
@@ -1709,7 +681,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Alaska Airlines</span>
-                    <span class="stable-id-pill font-mono">#11</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">SFO Hub Airline</span>
@@ -1718,19 +689,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Alaska Airlines officially commenced flight operations from Harvey Milk Terminal 1 at SFO, welcoming guests to a brand-new 11,000-square-foot lounge f…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Relocated full SFO flight operations and opened the 11,000-square-foot Terminal 1 lounge on July 24, 2024.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2023-04-18</span></div>
@@ -1742,7 +709,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Daniel Lurie</span>
-                    <span class="stable-id-pill font-mono">#12</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Mayor of San Francisco</span>
@@ -1751,19 +717,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;The measure, dubbed the Fentanyl State of Emergency Ordinance, marks Lurie’s first big step in fulfilling a campaign promise&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2024-11-05</span></div>
@@ -1775,7 +737,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Zoox</span>
-                    <span class="stable-id-pill font-mono">#13</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -1784,19 +745,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Once given access, riders will be able to use the Zoox app to hail a ride within its service area, which covers the SoMa, Mission, and Design District…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2025-11-18</span></div>
@@ -1808,7 +765,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Waymo</span>
-                    <span class="stable-id-pill font-mono">#14</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -1817,19 +773,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Since sharing that we were ready to take the next step and begin testing fully autonomous operations in the city, we’ve begun fully autonomous rides w…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2022-03-30</span></div>
@@ -1841,7 +793,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Tutor Perini Corporation</span>
-                    <span class="stable-id-pill font-mono">#15</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -1850,19 +801,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;In May 2013, the SFMTA contracted with Tutor Perini Corporation (Contractor) to construct the Central Subway Stations, Surface, Trackway and Systems u…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Scheduled deadline passed with no official evidence verifying completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2013-05</span></div>
@@ -1874,7 +821,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Giants</span>
-                    <span class="stable-id-pill font-mono">#16</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -1883,19 +829,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Also, 40% of the project’s residential portion is below-market-rate units, mostly targeting middle-income families.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Milestones partially delivered, but the full promised scope remains unfinished.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2015-01-01</span></div>
@@ -1907,7 +849,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">London Breed</span>
-                    <span class="stable-id-pill font-mono">#17</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Former Mayor of San Francisco</span>
@@ -1916,19 +857,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;San Francisco’s requirement is 82,200 homes by 2031.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Active initiative with progress underway, awaiting final milestone delivery.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2023-01-31</span></div>
@@ -1940,7 +877,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">City and County of San Francisco</span>
-                    <span class="stable-id-pill font-mono">#18</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -1949,19 +885,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;In 2014, San Francisco became the third city in the country to adopt Vision Zero with the goal of zero traffic deaths.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Verified contradicting evidence outranks initial affirmative claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2014-01-01</span></div>
@@ -1973,7 +905,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">London Breed</span>
-                    <span class="stable-id-pill font-mono">#19</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Former Mayor of San Francisco</span>
@@ -1982,19 +913,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;When Mayor London Breed announced $5 million last year for repairs to San Francisco’s crumbling housing stock for homeless people, the requests floode…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Verified contradicting evidence outranks initial affirmative claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2022-05-01</span></div>
@@ -2006,7 +933,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">London Breed</span>
-                    <span class="stable-id-pill font-mono">#20</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Former Mayor of San Francisco</span>
@@ -2015,19 +941,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Embarcadero Navigation Center (12/30/19) opened with 200 beds (despite a lawsuit from neighbors that delayed the site’s opening until the end of 2019)…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2019-03</span></div>
@@ -2039,7 +961,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Daniel Lurie</span>
-                    <span class="stable-id-pill font-mono">#21</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Mayor of San Francisco</span>
@@ -2048,19 +969,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Lurie promised to hire 425 new San Francisco Police Department officers during the first three years of his administration, prevent local city departm…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Deadline is in the future; ongoing work has not yet met final completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2024</span></div>
@@ -2072,7 +989,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Board of Supervisors</span>
-                    <span class="stable-id-pill font-mono">#22</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2081,19 +997,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Though that legislation required that the hall close on December 31st, 2021, there has been no movement from the Board towards that closure.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Scheduled deadline passed with no official evidence verifying completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2019-06-04</span></div>
@@ -2105,7 +1017,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">SFMTA</span>
-                    <span class="stable-id-pill font-mono">#23</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">San Francisco Municipal Transportation Agency</span>
@@ -2114,19 +1025,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;The SFMTA allows Lime and Spin to operate scooter share services in San Francisco through June 30, 2026.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2024-07-01</span></div>
@@ -2138,7 +1045,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Dean Preston</span>
-                    <span class="stable-id-pill font-mono">#24</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2147,19 +1053,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;In the first year alone, it is expected that 4,500 new units will return on the market— more than our annual goals— with no increase in taxes, no cons…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Numeric target was not met or the initiative was abandoned before completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2022-11-08</span></div>
@@ -2171,7 +1073,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Ed Lee</span>
-                    <span class="stable-id-pill font-mono">#25</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2180,19 +1081,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;The 30-year fund would receive $20 million in its first year and increasing amounts thereafter, up to $50 million annually.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2012</span></div>
@@ -2204,7 +1101,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Gavin Newsom</span>
-                    <span class="stable-id-pill font-mono">#26</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Governor of California</span>
@@ -2213,19 +1109,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Care Not Cash officially launched in May 2004, reducing the amount of money homeless residents received from a maximum of $410 per month to $59.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2002-11-05</span></div>
@@ -2237,7 +1129,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Daniel Lurie</span>
-                    <span class="stable-id-pill font-mono">#27</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Mayor of San Francisco</span>
@@ -2246,19 +1137,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;By adopting the Family Zoning Plan in December 2025, San Francisco met its state law obligations to approve a compliant rezoning plan by January 31, 2…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Enabling legislation was enacted before the stated deadline.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2025-06-24</span></div>
@@ -2270,7 +1157,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">London Breed</span>
-                    <span class="stable-id-pill font-mono">#28</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Former Mayor of San Francisco</span>
@@ -2279,19 +1165,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Under the Mayor’s Homelessness Recovery Plan, the City set a goal of buying or leasing 1,500 new units of PSH over the course of two years.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2020-07</span></div>
@@ -2303,7 +1185,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">CleanPowerSF</span>
-                    <span class="stable-id-pill font-mono">#29</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2312,19 +1193,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Additionally, CleanPowerSF has conservatively committed to increasing the renewable percentage of its basic Green service, from 35 percent at program …&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2017-04-20</span></div>
@@ -2336,7 +1213,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Patti Poppe</span>
-                    <span class="stable-id-pill font-mono">#30</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">CEO, PG&amp;E Corporation</span>
@@ -2345,19 +1221,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;As of this week, Pacific Gas and Electric Company (PG&amp;E) has constructed and energized more than 600 miles of underground powerlines since its ambitio…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Deadline is in the future; ongoing work has not yet met final completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2021-06-01</span></div>
@@ -2369,7 +1241,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Public Utilities Commission (SFPUC)</span>
-                    <span class="stable-id-pill font-mono">#31</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2378,19 +1249,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;On July 28, 2009, the Commission approved a revised WSIP schedule and budget of $4,586 million with an overall targeted program completion date of Dec…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Scheduled deadline passed with no official evidence verifying completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2009-07-28</span></div>
@@ -2402,7 +1269,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Golden State Warriors</span>
-                    <span class="stable-id-pill font-mono">#32</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2411,19 +1277,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Chase Center, which will have a capacity of 18,064, is due to open with a Metallica concert on September 6 before the Warriors play their first pre-se…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2019-08-28</span></div>
@@ -2435,7 +1297,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Treasure Island Development Authority</span>
-                    <span class="stable-id-pill font-mono">#33</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2444,19 +1305,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;the Project is anticipated to include (1) up to 8,000 new residential units&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Milestones partially delivered, but the full promised scope remains unfinished.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2011-06-07</span></div>
@@ -2468,7 +1325,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Forest City Realty Trust Inc.</span>
-                    <span class="stable-id-pill font-mono">#34</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2477,19 +1333,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;After about a decade of planning, developer Forest City Realty Trust Inc. (NYSE: FCE.A) finally scored approval for its massive Pier 70 overhaul that …&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Milestones partially delivered, but the full promised scope remains unfinished.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2017-10-31</span></div>
@@ -2501,7 +1353,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Associate Capital</span>
-                    <span class="stable-id-pill font-mono">#35</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2510,19 +1361,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;The plan calls for more than 2,600 homes.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Milestones partially delivered, but the full promised scope remains unfinished.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2020-04</span></div>
@@ -2534,7 +1381,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Gavin Newsom</span>
-                    <span class="stable-id-pill font-mono">#36</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Governor of California</span>
@@ -2543,19 +1389,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;build 3.5M homes by 2025&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Numeric target was not met or the initiative was abandoned before completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2018-11-06</span></div>
@@ -2567,7 +1409,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Gavin Newsom</span>
-                    <span class="stable-id-pill font-mono">#37</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Governor of California</span>
@@ -2576,19 +1417,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;In his first year as mayor, he introduced an ambitious 10-year plan to end chronic homelessness by creating 3,000 housing units with supportive servic…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Scheduled deadline passed with no official evidence verifying completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2004-06-30</span></div>
@@ -2600,7 +1437,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Ed Lee</span>
-                    <span class="stable-id-pill font-mono">#38</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2609,19 +1445,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;The late Mayor Ed Lee pledged in 2014 to add 5,000 new units to the housing stock every year, for a total of 30,000 units by 2020.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Numeric target was not met or the initiative was abandoned before completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2014</span></div>
@@ -2633,7 +1465,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">London Breed</span>
-                    <span class="stable-id-pill font-mono">#39</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Former Mayor of San Francisco</span>
@@ -2642,19 +1473,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;In October 2018, Mayor London Breed announced a commitment to open at least 1,000 additional shelter beds, including Navigation Center beds, by the en…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Scheduled deadline passed with no official evidence verifying completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2018-10</span></div>
@@ -2666,7 +1493,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Gavin Newsom</span>
-                    <span class="stable-id-pill font-mono">#40</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Governor of California</span>
@@ -2675,19 +1501,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;In his budget proposal for fiscal year 2007–2008, Newsom announced his intention to provide universal health care for all city residents, based on lon…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-reference">Reference</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2007-04</span></div>
@@ -2699,7 +1521,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Ed Lee</span>
-                    <span class="stable-id-pill font-mono">#41</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2708,19 +1529,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;At the time, Lee promised not to seek election if appointed, a statement that helped to gain support for his appointment.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Scheduled deadline passed with no official evidence verifying completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-reference">Reference</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2011-01-07</span></div>
@@ -2732,7 +1549,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Daniel Lurie</span>
-                    <span class="stable-id-pill font-mono">#42</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Mayor of San Francisco</span>
@@ -2741,19 +1557,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;The Hospitality Task Force will break down siloes to increase the police presence across the areas that drive our city’s economy – not just during lar…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2024</span></div>
@@ -2765,7 +1577,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">London Breed</span>
-                    <span class="stable-id-pill font-mono">#43</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Former Mayor of San Francisco</span>
@@ -2774,19 +1585,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Over the past two years, SFDPH has opened 250 additional residential care and treatment beds.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2020-01-08</span></div>
@@ -2798,7 +1605,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">London Breed</span>
-                    <span class="stable-id-pill font-mono">#44</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Former Mayor of San Francisco</span>
@@ -2807,19 +1613,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;This program is improving behavioral health services for people living in San Francisco with serious mental health issues and/or substance use disorde…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2019-11-12</span></div>
@@ -2831,7 +1633,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">London Breed</span>
-                    <span class="stable-id-pill font-mono">#45</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Former Mayor of San Francisco</span>
@@ -2840,19 +1641,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Mayor Breed also announced the next steps in her efforts to help people living unsheltered on the City’s streets, with an initiative to create at leas…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Untestable: verifiable metrics or baseline counts were not recorded.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip undecided">Undecided</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2020-01-15</span></div>
@@ -2864,7 +1661,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">PG&amp;E</span>
-                    <span class="stable-id-pill font-mono">#46</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2873,19 +1669,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Here’s how PG&amp;E is working to make PSPS events smaller in size, shorter in length and smarter for customers.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2020-02-07</span></div>
@@ -2897,7 +1689,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">PG&amp;E</span>
-                    <span class="stable-id-pill font-mono">#47</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2906,19 +1697,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;The program forecasted to install up to 7,500 charging ports over a three-year period focusing on two key market segments: workplaces and multi-unit d…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Scheduled deadline passed with no official evidence verifying completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2018</span></div>
@@ -2930,7 +1717,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">PG&amp;E</span>
-                    <span class="stable-id-pill font-mono">#48</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2939,19 +1725,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;In addition, PG&amp;E is announcing today its own commitment to further electrify its vehicle fleet by 2030, including 100% of its light-duty fleet, 10% o…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Deadline is in the future; ongoing work has not yet met final completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2020-10-01</span></div>
@@ -2963,7 +1745,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Comcast</span>
-                    <span class="stable-id-pill font-mono">#49</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -2972,19 +1753,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;By early 2017, Comcast will have its gigabit internet service available in 15 cities/metropolitan areas.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Scheduled deadline passed with no official evidence verifying completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2016-11-01</span></div>
@@ -2996,7 +1773,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Daniel Lurie</span>
-                    <span class="stable-id-pill font-mono">#50</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">Mayor of San Francisco</span>
@@ -3005,19 +1781,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Mayor Lurie today also introduced a legislative package with six ordinances proposing structural changes to help businesses and property owners to sec…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Official primary records confirm completion with zero contradicting claims.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip kept">Kept</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2025-01-07</span></div>
@@ -3029,7 +1801,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Leland Kim (AT&amp;T spokesman)</span>
-                    <span class="stable-id-pill font-mono">#51</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -3038,19 +1809,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;AT&amp;T plans to triple that amount by the end of the year&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Untestable: verifiable metrics or baseline counts were not recorded.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip undecided">Undecided</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2016-05-17</span></div>
@@ -3062,7 +1829,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Visa</span>
-                    <span class="stable-id-pill font-mono">#52</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -3071,19 +1837,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;will hold 1,500 employees when it is expected to open in 2024.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Numeric target was not met or the initiative was abandoned before completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2019-11-06</span></div>
@@ -3095,7 +1857,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">SFMTA</span>
-                    <span class="stable-id-pill font-mono">#53</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag">San Francisco Municipal Transportation Agency</span>
@@ -3104,19 +1865,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;Substantial completion of the contract was originally scheduled for February 10, 2018&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Scheduled deadline passed with no official evidence verifying completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip broken">Broken</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-official">Official</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2012</span></div>
@@ -3128,7 +1885,6 @@
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Transportation Authority Board</span>
-                    <span class="stable-id-pill font-mono">#54</span>
                   </div>
                   <div class="entity-sub-row font-mono">
                     <span class="table-role-tag"></span>
@@ -3137,19 +1893,15 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <div class="table-kicker font-mono">PROMISE</div>
                     <blockquote class="table-quote-text font-serif">&ldquo;At the June 9 Transportation Authority Board meeting, our board approved $230,700 in Prop L transportation sales tax funds for the Central Subway Nort…&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
-                    <span class="table-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
                     <span class="table-outcome-text">Deadline is in the future; ongoing work has not yet met final completion.</span>
                   </div>
                 </td>
                 <td class="table-verdict-cell">
                   <span class="verdict-chip in_progress">In Progress</span>
-                  <div class="table-tier-row">
-                    <span class="source-tier-pill font-mono source-tier-news">News</span>
-                  </div>
                 </td>
                 <td class="table-timeline-cell font-mono">
                   <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2026-06-09</span></div>
@@ -3432,11 +2184,115 @@
         </div>
       </section>
 
-      <!-- SECTION 6: HOW IT'S BUILT -->
+      <!-- SECTION 4: WATCH ONE PROMISE GET CHECKED (Centerpiece Pipeline Replay) -->
+      <section class="watch-section pipeline-interactive-section" id="watch" aria-label="Watch one promise get checked">
+        <div class="section-heading-group">
+          <h2>Watch one promise get checked</h2>
+          <p class="section-lead">Follow a public commitment from its original source through automated checks to a verified verdict.</p>
+        </div>
+
+        <!-- Pipeline Controls Bar -->
+        <div class="pipeline-actions-row">
+          <label class="run-select-label font-mono" for="run-select">COMMITMENT</label>
+          <select id="run-select" class="run-select" aria-label="Choose a commitment to inspect through the verification pipeline">
+            <option value="P02" selected>#01 &middot; 24/7 Crisis Center</option>
+            <option value="P05">#02 &middot; 1,500 Shelter Beds</option>
+            <option value="SFO-01">#03 &middot; Runway 28L Reopening</option>
+            <option value="P06">#18 &middot; Vision Zero</option>
+          </select>
+          <div class="pipeline-btn-group">
+            <button type="button" class="btn-play-action btn-primary-contextual" id="btn-step-next" aria-label="Pause or resume walkthrough">
+              <span id="pipeline-primary-icon">⏸</span>
+              <span id="pipeline-primary-text">Pause</span>
+            </button>
+            <button type="button" class="btn-play-action btn-pipeline-reset-compact" id="btn-pipeline-reset" title="Reset walkthrough to Stage 1" aria-label="Reset walkthrough to Stage 1">
+              <span>Reset ↺</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Packet Transit Card with 6 Short Milestones -->
+        <div class="packet-transit-card">
+          <div class="packet-transit-header font-mono">
+            <span class="packet-label" id="pipeline-stage-indicator">Stage 1 of 6</span>
+            <span class="packet-status-text" id="packet-status-text">In progress</span>
+          </div>
+
+          <div class="packet-track-container">
+            <div class="packet-track-bg-line"></div>
+            <div class="packet-track-fill-line" id="packet-track-fill" style="width: 0%;"></div>
+            
+            <div class="packet-milestones-row">
+              <div class="milestone-node" data-stage="1" role="button" tabindex="0" aria-label="Jump to Stage 1 Fetch"><div class="milestone-circle active" id="ms-circle-1">1</div></div>
+              <div class="milestone-node" data-stage="2" role="button" tabindex="0" aria-label="Jump to Stage 2 Extract"><div class="milestone-circle" id="ms-circle-2">2</div></div>
+              <div class="milestone-node" data-stage="3" role="button" tabindex="0" aria-label="Jump to Stage 3 Gate"><div class="milestone-circle" id="ms-circle-3">3</div></div>
+              <div class="milestone-node" data-stage="4" role="button" tabindex="0" aria-label="Jump to Stage 4 Argue"><div class="milestone-circle" id="ms-circle-4">4</div></div>
+              <div class="milestone-node" data-stage="5" role="button" tabindex="0" aria-label="Jump to Stage 5 Decide"><div class="milestone-circle" id="ms-circle-5">5</div></div>
+              <div class="milestone-node" data-stage="6" role="button" tabindex="0" aria-label="Jump to Stage 6 Publish"><div class="milestone-circle" id="ms-circle-6">6</div></div>
+            </div>
+
+            <div class="packet-ball-dot" id="packet-ball-dot" style="left: 0%;">
+              <div class="packet-ball-inner" id="packet-ball-inner"></div>
+            </div>
+          </div>
+
+          <div class="milestone-labels-row font-mono">
+            <span class="milestone-label-clickable" data-stage="1">Fetch</span>
+            <span class="milestone-label-clickable" data-stage="2">Extract</span>
+            <span class="milestone-label-clickable" data-stage="3">Gate</span>
+            <span class="milestone-label-clickable" data-stage="4">Argue</span>
+            <span class="milestone-label-clickable" data-stage="5">Decide</span>
+            <span class="milestone-label-clickable" data-stage="6">Publish</span>
+          </div>
+        </div>
+
+        <!-- 6 Stage Cards in CSS Grid Stack (Zero Layout Shift) -->
+        <div class="active-stage-panel-wrapper" id="active-stage-panel-wrapper">
+          <div class="stage-card active-stage" id="pipeline-active-stage-panel" data-stage="1">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Source Fetched</h3>
+            </div>
+            <p class="stage-desc">Archived sf.gov release (SHA-256: 582955d5&hellip;).</p>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-2" data-stage="2">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Quote Extracted</h3>
+            </div>
+            <blockquote class="stage-quote font-serif">&ldquo;That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it.&rdquo;</blockquote>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-3" data-stage="3">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Relevance Gate Passed</h3>
+            </div>
+            <p class="stage-desc">Measurable SF commitment with public impact.</p>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-4" data-stage="4">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Evidence Evaluated</h3>
+            </div>
+            <p class="stage-desc">Facility began intake April 28, 2025; zero contradicting closure records filed.</p>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-5" data-stage="5">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Code Checks Passed</h3>
+            </div>
+            <p class="stage-desc">All 7 deterministic integrity checks passed with zero discrepancies.</p>
+          </div>
+          <div class="stage-card inactive-stage" id="pipeline-stage-6" data-stage="6">
+            <div class="stage-card-header">
+              <h3 class="stage-heading">Verdict Published</h3>
+              <span class="verdict-chip kept">KEPT</span>
+            </div>
+            <p class="stage-desc">Official primary records confirm completion with zero contradicting claims.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: HOW IT'S BUILT -->
       <section class="how-it-works-section" id="how-it-works" aria-label="How it is built">
         <div class="section-heading-group">
           <h2>How it's built</h2>
-          <p class="section-lead">A verification pipeline designed to ground public accountability in cryptographic proof.</p>
+          <p class="section-lead">A verification pipeline designed to ground public accountability in archived documents and automated checks.</p>
         </div>
 
         <!-- 3 One-Line Steps with SVG Icons -->
@@ -3452,26 +2308,25 @@
             <div class="step-icon-svg" aria-hidden="true">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--kept)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
-            <div class="step-title">Archil sandboxes keep the advocates apart and store the evidence.</div>
-            <p class="step-desc">Affirming and contradicting advocates run in separated processes to prevent cross-contamination.</p>
+            <div class=\"step-title\">Independent searches store contemporaneous evidence.</div>
+            <p class=\"step-desc\">Affirming and contradicting searches run independently to collect comprehensive documentation.</p>
           </div>
           <div class="step-card">
             <div class="step-icon-svg" aria-hidden="true">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
             </div>
             <div class="step-title">Code decides.</div>
-            <p class="step-desc">Seven deterministic checks verify hashes, dates, and quotes. The arbitrator makes no model calls.</p>
+            <p class="step-desc">Seven deterministic checks verify hashes, dates, and quotes without runtime language model calls.</p>
           </div>
         </div>
 
                 <!-- Dedicated Origin & Purpose Card -->
         <div class="origin-card" id="origin-story">
           <div class="origin-badge font-mono">PROJECT ORIGIN &amp; PURPOSE</div>
-          <h3 class="origin-title">Tamper-evident civic accountability for San Francisco</h3>
-          <p class="origin-text">
-            SF Promises was created to bring verifiable, cryptographically grounded transparency to San Francisco public commitments.
-            Originating at the <strong>Archil Hackathon</strong> (November 2026) and awarded <strong>Best Use of Keenable</strong>,
-            the pipeline replaces subjective commentary with deterministic code checks against saved, hashed municipal documents.
+          <h3 class="origin-title">Civic accountability for San Francisco</h3>
+          <p class=\"origin-text\">
+            SF Promises tracks public commitments made by San Francisco leaders against archived municipal records, agency dashboards, and contemporaneous news sources.
+            Built at the <strong>Archil Hackathon</strong> (November 2026), the system tests published statements against verifiable milestone dates and source documents.
           </p>
         </div>
 
@@ -3485,11 +2340,11 @@
               <div>
                 <h4>Verification Architecture</h4>
                 <ul class="plain-credits-list">
-                  <li><strong>Archil Cloud Disks:</strong> Separated sandboxes isolate affirming and contradicting investigators with zero cross-talk.</li>
-                  <li><strong>Keenable Temporal API:</strong> Strict contemporaneous web discovery across allowlisted SF municipal and news domains.</li>
-                  <li><strong>Cryptographic Digests:</strong> SHA-256 fingerprints lock primary document bytes upon ingest to prevent retrofitting.</li>
+                  <li><strong>Archil Cloud Disks:</strong> Isolated sandboxes store primary documents and evidence runs.</li>
+                  <li><strong>Keenable Temporal API:</strong> Web discovery across allowlisted SF municipal and news archives.</li>
+                  <li><strong>Cryptographic Digests:</strong> SHA-256 hashes lock source document bytes upon ingest.</li>
                   <li><strong>Deterministic Arbitrator:</strong> Seven rule-based checks decide outcomes with zero model calls at arbitration time.</li>
-                  <li><strong>Durability Engine:</strong> Automated re-verification monitors source URLs for status or text drift.</li>
+                  <li><strong>Re-verification:</strong> Periodic crawls detect milestone completions and status changes.</li>
                 </ul>
               </div>
               <div>
@@ -3689,8 +2544,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=50bd4c9c"></script>
-  <script src="list.min.js?v=50bd4c9c"></script>
-  <script src="app.js?v=50bd4c9c"></script>
+  <script src="data.js?v=ffbed2a5"></script>
+  <script src="list.min.js?v=ffbed2a5"></script>
+  <script src="app.js?v=ffbed2a5"></script>
 </body>
 </html>
