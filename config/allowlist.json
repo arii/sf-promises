@@ -290,6 +290,32 @@
     "canary": false
   },
   {
+    "domain": "elreporterosf.com",
+    "source_type": "community_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Spanish-language El Reportero of SF targeted for Food & Local Business and Work & Opportunity pillars",
+    "added_by": "d2-query-diversification",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "eltecolote.org",
+    "source_type": "community_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Mission-district bilingual Latinx press (El Tecolote) targeted for Arts and Housing pillars",
+    "added_by": "d2-query-diversification",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "en.wikipedia.org",
     "source_type": "reference",
     "groups": [
@@ -356,6 +382,19 @@
     ],
     "added_reason": "Initial hand-curated allowlist (migrated from src/checks.py, review pending per D1)",
     "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "inglesidelight.com",
+    "source_type": "neighborhood_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Ingleside Light neighborhood paper for District 11 targeted for Transit and Civic Life pillars",
+    "added_by": "d2-query-diversification",
     "added_at": "2026-11-13",
     "review_status": "approved",
     "canary": false
@@ -548,6 +587,19 @@
     "canary": false
   },
   {
+    "domain": "noevalleyvoice.com",
+    "source_type": "neighborhood_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Noe Valley Voice neighborhood paper for District 8 targeted for the Culture & Social Life pillar",
+    "added_by": "d2-query-diversification",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "nytimes.com",
     "source_type": "news",
     "groups": [
@@ -639,6 +691,19 @@
     ],
     "added_reason": "Parent decision: legit SF news source (P21 vote)",
     "added_by": "code-owner-decision",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfbayview.com",
+    "source_type": "community_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: SF Bay View community paper (Bayview-Hunters Point) targeted for Weather & Environment pillar",
+    "added_by": "d2-query-diversification",
     "added_at": "2026-11-13",
     "review_status": "approved",
     "canary": false
@@ -840,6 +905,19 @@
     ],
     "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
     "added_by": "build-migration",
+    "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "singtaousa.com",
+    "source_type": "community_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "D2 query diversification: Sing Tao Daily SF (Chinese-language press) targeted for Sports and People & Demographics pillars",
+    "added_by": "d2-query-diversification",
     "added_at": "2026-11-13",
     "review_status": "approved",
     "canary": false
