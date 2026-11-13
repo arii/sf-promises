@@ -3,45 +3,12 @@ import re
 from datetime import date, datetime
 from urllib.parse import urlparse
 
-# Allowed domains per 02-technical-design.md, 03-validation-and-tests.md, and source list
-DOMAIN_ALLOWLIST = {
-    "sf.gov",
-    "sfgov.org",
-    "sfbos.org",
-    "granicus.com",
-    "thefrisc.com",
-    "sfstandard.com",
-    "filtermag.org",
-    "sfpublicworkstv.org",
-    "axios.com",
-    "nytimes.com",
-    "sfchronicle.com",
-    "visionzerosf.org",
-    "pge.com",
-    "cpuc.ca.gov",
-    "sfmta.com",
-    "missionlocal.org",
-    "daniellurie.com",
-    "flysfo.com",
-    "trinitysf.com",
-    "newspack-missionlocal.s3.amazonaws.com",
-    # Parent decision 19:45: exact hosts for P01/P07/P09/P11 validation seeds.
-    # Exact hosts only, NOT parent domains (N07 random blog must still fail).
-    "edition.pagesuite.com",
-    "src.senate.ca.gov",
-    "investor.pgecorp.com",
-    "en.wikipedia.org",
-    "sf.streetsblog.org",  # parent 20:35: legit SF news (P21 vote)
-    "sfenvironment.org",  # parent 20:35: official city site (P36)
-    "sfpuc.org",  # parent 20:35: official city utility, covers www (P36)
-    "dhcs.ca.gov",  # parent 20:45: official CA government (P22 opening)
-    "ajud.assembly.ca.gov",  # parent 20:50: official CA Assembly committee (P24)
-    "khsu.org",  # parent 21:05: NPR affiliate public radio (P13/P14 claims)
-    "codelibrary.amlegal.com",  # parent 20:40: legal publisher hosting official SF code (P16)
-    "sfpuc.gov",  # parent 20:45: official SFPUC domain (sfpuc.org redirects here; P61)
-    "cleanpowersf.org",  # CleanPowerSF program linked by the SF Environment source
-    "sfplanning.org",  # parent 20:50: official SF Planning site (P31 ordinance)
-}
+from src.allowlist import domains_in_group
+
+# The allowlist is reviewed data (config/allowlist.json). Every domain carries
+# category and provenance; this set is the same hand-curated list, loaded —
+# matching semantics are unchanged (exact host or subdomain).
+DOMAIN_ALLOWLIST = domains_in_group("checks_allowlist")
 
 
 def normalize_whitespace(text: str) -> str:

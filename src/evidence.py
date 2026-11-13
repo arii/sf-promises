@@ -4,37 +4,16 @@ import json
 from datetime import datetime, timezone
 from urllib.parse import urlsplit
 
+from src.allowlist import canary_domains, domains_in_group
 from src.checks import check_domain
 from src.sources import is_verbatim_quote, load_archived_metadata, load_archived_text
 
-
-_GOVERNMENT_ORG_HOSTS = frozenset({
-    "sfgov.org", "sfbos.org", "sfmta.com", "sfplanning.org",
-    "sfpuc.org", "sfenvironment.org", "cleanpowersf.org",
-})
-
-_PRIMARY_HOSTS = frozenset({
-    "sfmta.com", "caltrain.com", "waymo.com", "zoox.com", "pge.com",
-    "visa.com", "wholefoodsmarket.com", "nba.com", "wnba.com",
-    "valkyries.com", "bayfc.com", "att.com", "comcast.com", "sfgiants.com",
-    "mlb.com", "nfl.com", "prnewswire.com", "businesswire.com", "flysfo.com",
-    "trinitysf.com", "sfhousing.org", "sfmtariders.org", "sfbike.org", "lwvba.org",
-})
-_NEWS_HOSTS = frozenset({
-    "sfchronicle.com", "sfgate.com", "sfstandard.com", "missionlocal.org",
-    "kqed.org", "sfexaminer.com", "bisnow.com", "socketsite.com",
-    "therealdeal.com", "bizjournals.com", "techcrunch.com", "theverge.com",
-    "arstechnica.com", "reuters.com", "apnews.com", "bloomberg.com",
-    "cnbc.com", "nytimes.com", "latimes.com", "mercurynews.com",
-    "eastbaytimes.com", "nbcbayarea.com", "abc7news.com", "ktvu.com",
-    "cbsnews.com", "espn.com", "theathletic.com", "axios.com",
-    "politico.com", "calmatters.org", "curbed.com",
-})
-_CANARY_HOSTS = frozenset({
-    "reddit.com", "x.com", "twitter.com", "facebook.com", "instagram.com",
-    "tiktok.com", "yelp.com", "nextdoor.com", "wikipedia.org", "medium.com",
-    "substack.com",
-})
+# Source-tier host sets are reviewed data (config/allowlist.json); the `groups`
+# field maps each domain to the tier set it originally appeared in.
+_GOVERNMENT_ORG_HOSTS = domains_in_group("government")
+_PRIMARY_HOSTS = domains_in_group("primary")
+_NEWS_HOSTS = domains_in_group("news")
+_CANARY_HOSTS = canary_domains()
 
 
 def _host_matches(host, domains):
