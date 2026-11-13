@@ -239,6 +239,27 @@ async function main() {
     });
     await sleep(400);
 
+    // Check topbar header layout on mobile
+    const headerInfo = await client.eval(`(() => {
+      const rect = el => {
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return { w: Math.round(r.width), h: Math.round(r.height), top: Math.round(r.top), left: Math.round(r.left) };
+      };
+      return {
+        topbar: rect(document.querySelector('.topbar')),
+        brand: rect(document.querySelector('.brand')),
+        brandText: rect(document.querySelector('.brand-text')),
+        nav: rect(document.querySelector('.topbar-nav')),
+        github: rect(document.querySelector('.topbar-right')),
+        navLinks: Array.from(document.querySelectorAll('.topbar-nav .nav-link')).map(a => ({
+          text: a.textContent.trim(),
+          rect: rect(a)
+        }))
+      };
+    })()`);
+    console.log('Mobile Header Info at 390px:', JSON.stringify(headerInfo, null, 2));
+
     // Check page height target (< 6,500px)
     const sectionHeights = await client.eval(`
       Array.from(document.querySelectorAll('section, header, footer, .explore-section, .mobile-promise-cards-list')).map(el => ({

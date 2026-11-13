@@ -6,6 +6,7 @@ Upload enriched SF Promises dataset, schema, summary, and SQLite database to Hug
 import os
 import csv
 import json
+import shutil
 import sqlite3
 from collections import Counter
 from huggingface_hub import HfApi
@@ -118,7 +119,10 @@ with open(q_csv_path, "w", newline="", encoding="utf-8") as f:
     for q in quarantined:
         writer.writerow({k: q.get(k, "") for k in q_fields})
 
-# 3. Export JSON files
+# 3. Export JSON and Master CSV files
+if os.path.exists("data/sf_promises_master.csv"):
+    shutil.copy("data/sf_promises_master.csv", os.path.join(STAGING_DIR, "sf_promises_master.csv"))
+
 with open(os.path.join(STAGING_DIR, "promises.json"), "w", encoding="utf-8") as f:
     json.dump(promises, f, indent=2)
 

@@ -5308,12 +5308,71 @@ a:hover {
     line-height: 1.25;
   }
 
+  .topbar {
+    padding: 0 16px !important;
+    height: 56px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+
+  .topbar-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .brand {
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .brand-mark {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.85rem !important;
+    flex-shrink: 0 !important;
+  }
+
   .topbar-nav {
-    gap: 12px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .topbar-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .topbar-nav .nav-link {
-    font-size: 0.85rem;
+    font-size: 0.82rem !important;
+    padding: 6px 4px !important;
+    min-height: 44px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  .topbar-right {
+    flex-shrink: 0 !important;
+  }
+
+  .github-icon-btn {
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 6px !important;
   }
 
   .featured-stories-grid {
@@ -5335,6 +5394,12 @@ a:hover {
     color: var(--blue);
     font-size: 0.8rem;
     font-weight: 600;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-text {
+    display: none !important;
   }
 }
 

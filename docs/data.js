@@ -6,13 +6,13 @@ window.__DEMO_DATA__ = {
     "last_checked": "Nov 13, 2026",
     "last_updated": "Nov 13, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
-    "commit_sha": "bd756b38660b4c990fb8617ce0f90989fd9a8489",
+    "commit_sha": "07838e54bc1e4cf3c42d97dda6f08c881e5d55b5",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-13T00:00:42Z"
+    "exported_at": "2026-11-13T00:07:52Z"
   },
   "database_status": {
-    "commit_sha": "bd756b38660b4c990fb8617ce0f90989fd9a8489",
+    "commit_sha": "07838e54bc1e4cf3c42d97dda6f08c881e5d55b5",
     "tracked_count": 54,
     "seed_promises_count": 12,
     "total_db_promises": 54,
@@ -63,7 +63,7 @@ window.__DEMO_DATA__ = {
     "id_reconciliation": "54 published \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
-    "acceptance_status_label": "Acceptance verified on commit bd756b3 (separated processes, not Firecracker)",
+    "acceptance_status_label": "Acceptance verified on commit 07838e5 (separated processes, not Firecracker)",
     "counts": {
       "kept": 25,
       "broken": 17,
@@ -72,7 +72,7 @@ window.__DEMO_DATA__ = {
     },
     "integration_run": {
       "run_id": "F-20261111-045601",
-      "commit_sha": "bd756b38660b4c990fb8617ce0f90989fd9a8489",
+      "commit_sha": "07838e54bc1e4cf3c42d97dda6f08c881e5d55b5",
       "total_tests": 36,
       "passed": 33,
       "failed": 0,
@@ -89,11 +89,11 @@ window.__DEMO_DATA__ = {
       "status_label": "33 passed, 0 failed, 3 blocked"
     },
     "sandbox_isolation_verified": true,
-    "sandbox_isolation_label": "Sandbox isolation verified on commit bd756b3 (separated processes, not Firecracker)",
+    "sandbox_isolation_label": "Sandbox isolation verified on commit 07838e5 (separated processes, not Firecracker)",
     "discrepancies": [
       "DB holds 54 promises (12 seeds + 42 Tier-2 banked, scale paused by user decision) with 54 verdicts and 124 evidence rows; every file hash re-verified.",
-      "Latest harness run F-20261111-045601 on bd756b3: 33 pass / 0 fail / 3 blocked-extended.",
-      "Acceptance verified on commit bd756b3: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
+      "Latest harness run F-20261111-045601 on 07838e5: 33 pass / 0 fail / 3 blocked-extended.",
+      "Acceptance verified on commit 07838e5: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
     ],
