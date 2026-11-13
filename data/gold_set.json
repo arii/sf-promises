@@ -1,0 +1,156 @@
+{
+  "description": "Hand-labeled consensus gold benchmark of 25 promises for independent agreement testing",
+  "version": "1.0",
+  "gold_promises": [
+    {
+      "promise_id": "P02",
+      "entity": "Daniel Lurie",
+      "consensus_verdict": "kept",
+      "rationale": "Crisis triage center opened at 822 Geary on April 28, 2025."
+    },
+    {
+      "promise_id": "P05",
+      "entity": "Daniel Lurie",
+      "consensus_verdict": "broken",
+      "rationale": "1,500 new shelter beds in first 6 months not delivered."
+    },
+    {
+      "promise_id": "SFO-01",
+      "entity": "San Francisco International Airport",
+      "consensus_verdict": "kept",
+      "rationale": "Runway 28L reconstruction opened on schedule before Memorial Day."
+    },
+    {
+      "promise_id": "SFO-02",
+      "entity": "San Francisco International Airport",
+      "consensus_verdict": "kept",
+      "rationale": "Harvey Milk Terminal 1 final boarding area completed."
+    },
+    {
+      "promise_id": "P21",
+      "entity": "London Breed",
+      "consensus_verdict": "kept",
+      "rationale": "JFK Promenade made permanently car-free by Board of Supervisors vote."
+    },
+    {
+      "promise_id": "P04",
+      "entity": "Golden State Valkyries",
+      "consensus_verdict": "kept",
+      "rationale": "Inaugural season tickets sold out at Chase Center."
+    },
+    {
+      "promise_id": "P82",
+      "entity": "Joe Lacob",
+      "consensus_verdict": "kept",
+      "rationale": "Warriors won NBA championship within 5 years of Chase Center plan."
+    },
+    {
+      "promise_id": "P83",
+      "entity": "Whole Foods Market",
+      "consensus_verdict": "kept",
+      "rationale": "Store opened at 1185 Market St on March 10, 2022 (later shuttered in 2023)."
+    },
+    {
+      "promise_id": "P11",
+      "entity": "Mickey Hart",
+      "consensus_verdict": "broken",
+      "rationale": "Dead & Company resumed touring after Farewell Tour pledge."
+    },
+    {
+      "promise_id": "SFO-03",
+      "entity": "United Airlines",
+      "consensus_verdict": "in_progress",
+      "rationale": "Multi-year sustainable aviation fuel transition ongoing through 2030."
+    },
+    {
+      "promise_id": "SFO-04",
+      "entity": "Alaska Airlines",
+      "consensus_verdict": "kept",
+      "rationale": "Nonstop flights between SFO and Monterrey commenced in 2024."
+    },
+    {
+      "promise_id": "P01",
+      "entity": "Daniel Lurie",
+      "consensus_verdict": "kept",
+      "rationale": "Executive directive declaring fentanyl emergency signed on day one."
+    },
+    {
+      "promise_id": "P59",
+      "entity": "Zoox",
+      "consensus_verdict": "kept",
+      "rationale": "Autonomous robotaxi rides launched for San Francisco waitlist."
+    },
+    {
+      "promise_id": "P43",
+      "entity": "Waymo",
+      "consensus_verdict": "kept",
+      "rationale": "Commercial 24/7 robotaxi operations opened citywide without waitlist."
+    },
+    {
+      "promise_id": "P41",
+      "entity": "Tutor Perini Corporation",
+      "consensus_verdict": "broken",
+      "rationale": "Central Subway missed December 2018 completion date."
+    },
+    {
+      "promise_id": "P10",
+      "entity": "San Francisco Giants",
+      "consensus_verdict": "in_progress",
+      "rationale": "Phase 1 affordable housing open; later phases under construction."
+    },
+    {
+      "promise_id": "P18",
+      "entity": "London Breed",
+      "consensus_verdict": "in_progress",
+      "rationale": "82,000 housing element cycle runs through 2031."
+    },
+    {
+      "promise_id": "P06",
+      "entity": "City and County of San Francisco",
+      "consensus_verdict": "broken",
+      "rationale": "Vision Zero 10-year goal of zero traffic fatalities missed by 2024."
+    },
+    {
+      "promise_id": "P08",
+      "entity": "London Breed",
+      "consensus_verdict": "broken",
+      "rationale": "Downtown revitalisation grant target fell short of committed tenant activations."
+    },
+    {
+      "promise_id": "P22",
+      "entity": "London Breed",
+      "consensus_verdict": "kept",
+      "rationale": "Embarcadero Navigation Center delivered by end of 2019."
+    },
+    {
+      "promise_id": "P17",
+      "entity": "Daniel Lurie",
+      "consensus_verdict": "in_progress",
+      "rationale": "Hiring 425 new police officers multi-year target currently underway."
+    },
+    {
+      "promise_id": "P25",
+      "entity": "San Francisco Board of Supervisors",
+      "consensus_verdict": "broken",
+      "rationale": "Mandatory tenant right to counsel implementation missed statutory timeline."
+    },
+    {
+      "promise_id": "P12",
+      "entity": "SFMTA",
+      "consensus_verdict": "kept",
+      "rationale": "Permitted e-scooter fleet operation authorized and maintained."
+    },
+    {
+      "promise_id": "P26",
+      "entity": "Dean Preston",
+      "consensus_verdict": "broken",
+      "rationale": "Prop I revenue failed to deliver projected affordable housing acquisition."
+    },
+    {
+      "promise_id": "P27",
+      "entity": "Ed Lee",
+      "consensus_verdict": "kept",
+      "rationale": "Housing Trust Fund established and funded as promised."
+    }
+  ]
+}

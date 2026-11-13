@@ -1,13 +1,9 @@
 """Verify that sandboxed advocate workers cannot access each other's staging files."""
 
 import pytest
-from pathlib import Path
 from src.advocates import (
-    stage_advocate,
     check_staging_isolation,
     check_sandbox_network,
-    AdvocateClaim,
-    AdvocateBundle
 )
 
 

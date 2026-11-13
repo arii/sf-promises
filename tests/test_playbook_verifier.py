@@ -2,7 +2,6 @@
 Unit and integration tests for the SF Promises Discovery & Verification Playbook Engine.
 """
 
-import asyncio
 from datetime import date
 import pytest
 

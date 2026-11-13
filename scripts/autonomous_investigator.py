@@ -18,7 +18,6 @@ import hashlib
 import json
 import os
 import re
-import shlex
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -29,8 +28,6 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from src.evidence import is_allowlisted_url, _primary_host
 from src.keenable import RetryingKeenable
-from src.relevance import score_relevance
-from src.taxonomy import screen_taxonomy
 
 
 CIVIC_TOPICS = [
@@ -221,7 +218,7 @@ async def run_discovery_pipeline(args):
                 "candidates": discovered_candidates
             }, f, indent=2)
         print(f"Wrote discovered queue to: {queue_path}")
-        print(f"Investigation dossiers saved to: investigations/discovered/")
+        print("Investigation dossiers saved to: investigations/discovered/")
     print("=" * 70)
     return 0
 

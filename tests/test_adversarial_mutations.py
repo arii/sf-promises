@@ -1,14 +1,10 @@
 """Test automated adversarial mutations against the arbitrator's verification suite."""
 
 import hashlib
-import pytest
 from src.checks import (
     check_quote,
     check_hash,
     check_domain,
-    check_date,
-    check_evidence_type,
-    DOMAIN_ALLOWLIST,
 )
 from src.arbitrator import compute_deterministic_verdict
 from datetime import date, timedelta
