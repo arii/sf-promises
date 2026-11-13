@@ -11,7 +11,9 @@ from collections import Counter
 import csv
 import json
 import os
+from pathlib import Path
 import sqlite3
+import sys
 from datetime import datetime, timezone
 
 DB_PATH = os.environ.get("PROMISES_DB", "/mnt/archil/workspace/promises.db")
@@ -1642,6 +1644,16 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"  Pre-rendered {len(promises)} promise rows, {len(promises)} mobile cards, and {len(quarantined)} quarantine items into docs/index.html")
+
+    # Sync and validate standardized master CSV for Adaption & tabular tools
+    try:
+        repo_root = Path(__file__).resolve().parent.parent
+        if str(repo_root) not in sys.path:
+            sys.path.insert(0, str(repo_root))
+        from scripts.consolidate_master_dataset import consolidate_master_dataset
+        consolidate_master_dataset(json_path=OUT_JSON, output_csv="data/sf_promises_master.csv")
+    except Exception as exc:
+        print(f"  Warning: consolidate_master_dataset failed: {exc}")
 
 
 if __name__ == "__main__":

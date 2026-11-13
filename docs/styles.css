@@ -2201,18 +2201,29 @@ a:hover {
 .footer-links-group {
   display: flex;
   gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
+.footer-links-group a,
 .btn-footer-link {
   background: transparent;
   border: none;
   color: var(--blue);
   cursor: pointer;
-  padding: 0;
+  padding: 8px 12px;
   font-size: 0.9rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.15s ease;
 }
 
+.footer-links-group a:hover,
 .btn-footer-link:hover {
+  background: rgba(255, 255, 255, 0.06);
   text-decoration: underline;
 }
 
@@ -5791,6 +5802,16 @@ a:hover {
   gap: 8px;
   align-items: center;
   margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.drawer-id-badge {
+  font-size: 0.74rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--line);
 }
 
 .drawer-horizon-badge {

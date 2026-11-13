@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=d88f50c3">
+  <link rel="stylesheet" href="styles.css?v=bd756b38">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -82,7 +82,11 @@
         <!-- Pipeline Controls Bar -->
         <div class="pipeline-actions-row">
           <label class="run-select-label font-mono" for="run-select">REPLAY</label>
-          <select id="run-select" class="run-select" aria-label="Choose a promise to replay through the pipeline"></select>
+          <select id="run-select" class="run-select" aria-label="Choose a promise to replay through the pipeline">
+            <option value="N01" selected>Watchdog N01 &middot; Quote Mutation Catch (Planted Test)</option>
+            <option value="P02">#01 &middot; 24/7 Crisis Center (Lurie &middot; Kept)</option>
+            <option value="P05">#05 &middot; 1,500 Shelter Beds (Lurie &middot; Broken)</option>
+          </select>
           <button type="button" class="btn-play-action btn-primary-filled" id="btn-run-selected" title="Replay the selected run through all 6 stages">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             <span>Replay Walkthrough</span>
@@ -3540,7 +3544,7 @@
       <div class="footer-left">
         <span class="footer-brand-title">SF Promises &middot; arii/sf-promises</span>
         <span>Built by Ariel Anders &middot; Archil Hackathon (Nov 10, 2026 &middot; Best Use of Keenable)</span>
-        <span id="footer-data-version" class="footer-data-version font-mono">Data as of Nov 12, 2026 &middot; commit d88f50c</span>
+        <span id="footer-data-version" class="footer-data-version font-mono">Data as of Nov 13, 2026 &middot; commit bd756b3</span>
       </div>
       <div class="footer-links-group">
         <a href="#top" class="btn-footer-link">Back to top &uarr;</a>
@@ -3558,6 +3562,7 @@
           <div class="drawer-subtitle font-mono" id="drawer-subtitle">Mayor Daniel Lurie &middot; Mayor of San Francisco</div>
           <h2 class="drawer-title" id="drawer-title">24/7 Crisis Stabilization Center</h2>
           <div class="drawer-badges-row">
+            <span class="drawer-id-badge font-mono" id="drawer-id-badge">#01 &middot; P02</span>
             <span class="verdict-chip kept" id="drawer-verdict-chip">Kept</span>
             <span class="source-tier-pill source-tier-official font-mono" id="drawer-source-tier-chip">Official</span>
             <span class="drawer-horizon-badge font-mono hidden" id="drawer-horizon-badge">Long-horizon: due 2050</span>
@@ -3698,8 +3703,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=d88f50c3"></script>
-  <script src="list.min.js?v=d88f50c3"></script>
-  <script src="app.js?v=d88f50c3"></script>
+  <script src="data.js?v=bd756b38"></script>
+  <script src="list.min.js?v=bd756b38"></script>
+  <script src="app.js?v=bd756b38"></script>
 </body>
 </html>

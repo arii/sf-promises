@@ -130,7 +130,7 @@
   const SCENARIOS = {
     N01: {
       id: 'N01',
-      label: 'Planted Quote Mutation Catch (Watchdog N01) [Default]',
+      label: 'Watchdog N01 · Quote Mutation Catch (Planted Test)',
       speaker: 'Planted Watchdog Test N01',
       title: 'Quote Mutation Detection',
       target: 'Mayor Daniel Lurie · 1,500 Shelter Beds (P05)',
@@ -177,7 +177,7 @@
     },
     P02: {
       id: 'P02',
-      label: '#01 · 24/7 Crisis Stabilization Center (P02, Kept)',
+      label: '#01 · 24/7 Crisis Center (Lurie · Kept)',
       speaker: 'Mayor Daniel Lurie',
       title: '24/7 Crisis Stabilization Center',
       target: 'Tenderloin (822 Geary St)',
@@ -221,7 +221,7 @@
     },
     P05: {
       id: 'P05',
-      label: '#05 · 1,500 Shelter Beds in First 6 Months (P05, Broken)',
+      label: '#05 · 1,500 Shelter Beds (Lurie · Broken)',
       speaker: 'Mayor Daniel Lurie',
       title: '1,500 Shelter Beds in First 6 Months',
       target: 'Citywide Shelter Network',
@@ -823,12 +823,20 @@
     const chipEl = document.getElementById('drawer-verdict-chip');
     const tierChipEl = document.getElementById('drawer-source-tier-chip');
     const horizonBadge = document.getElementById('drawer-horizon-badge');
+    const idBadge = document.getElementById('drawer-id-badge');
 
     const rank = String(p.impact_rank || p.display_no || '01').padStart(2, '0');
-    if (subtitleEl) subtitleEl.textContent = `${p.entity} · ${p.role || ''}`;
+    if (idBadge) idBadge.textContent = `#${rank} · ${p.promise_id}`;
+    if (subtitleEl) {
+      const loc = (p.neighborhood && p.neighborhood !== 'Citywide') ? p.neighborhood : (p.role || 'San Francisco');
+      subtitleEl.textContent = `${p.entity} · ${loc}`;
+    }
     if (titleEl) {
-      const shortTitle = p.document_title ? p.document_title.split(/[:—–-]/)[0].trim() : `${p.entity} Commitment`;
-      titleEl.textContent = `${p.entity}: ${shortTitle}`;
+      let t = p.document_title || '';
+      if (t.toLowerCase().startsWith(p.entity.toLowerCase())) {
+        t = t.slice(p.entity.length).replace(/^[:\s—–-]+/, '').trim();
+      }
+      titleEl.textContent = t || p.document_title || `${p.entity} Commitment`;
     }
     const verdClass = (p.verdict || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
     if (chipEl) {

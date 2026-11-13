@@ -117,6 +117,36 @@ class TestUICounts(unittest.TestCase):
         self.assertEqual(len(story_cards), 6, f"Expected 6 story cards, found {len(story_cards)}")
         self.assertEqual(story_cards, expected_ids, f"Story cards IDs mismatch: {story_cards}")
 
+    def test_master_dataset_schema_and_types(self):
+        """sf_promises_master.csv must strictly conform to the 16-column Adaption schema."""
+        import csv
+        csv_path = Path("data/sf_promises_master.csv")
+        self.assertTrue(csv_path.exists(), "data/sf_promises_master.csv must exist")
+
+        with open(csv_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+
+        expected_columns = [
+            "promise_id", "promise_text", "entity", "entity_role", "entity_type",
+            "category", "promise_made_date", "deadline_date", "verdict", "confidence",
+            "evidence_count", "primary_source_url", "primary_source_type",
+            "neighborhood", "impact_score", "notes"
+        ]
+        self.assertEqual(reader.fieldnames, expected_columns, "Master CSV columns mismatch")
+        self.assertEqual(len(rows), 54, f"Expected 54 rows in master CSV, got {len(rows)}")
+
+        for r in rows:
+            self.assertTrue(r["promise_id"])
+            self.assertTrue(r["promise_text"])
+            self.assertTrue(r["entity"])
+            self.assertIn(r["verdict"], ("kept", "broken", "in_progress", "undecided"))
+            conf = float(r["confidence"])
+            self.assertGreaterEqual(conf, 0.0)
+            self.assertLessEqual(conf, 1.0)
+            self.assertGreaterEqual(int(r["evidence_count"]), 1)
+            self.assertGreaterEqual(int(r["impact_score"]), 0)
+
 
 if __name__ == "__main__":
     unittest.main()
