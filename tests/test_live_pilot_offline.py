@@ -1,5 +1,6 @@
 from datetime import date
 import json
+import os
 from pathlib import Path
 import sqlite3
 import tempfile
@@ -77,12 +78,16 @@ class OfflineLivePilotTests(unittest.IsolatedAsyncioTestCase):
         with tempfile.TemporaryDirectory() as directory:
             database = Path(directory) / "promises_v2.db"
             with (
+                patch.dict(os.environ, {"MODEL_PROVIDER": "openrouter"}),
                 patch("src.run_live.credentials", return_value={
                     "KEENABLE_API_KEY": "test-key",
                     "OPENROUTER_API_KEY": "openrouter-test-key",
                 }),
                 patch("src.run_live.RetryingKeenable", FakeSearch),
                 patch("src.run_live.extract_with_model", extract),
+                # The pilot exercises the OpenRouter/Nebius provider path; the
+                # agent lane is the default lane and is covered by
+                # tests/test_agent_lane.py.
                 patch("src.run_live.completion_with_fallback", assess),
             ):
                 result = await run(database, "P36")

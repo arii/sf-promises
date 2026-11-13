@@ -16,6 +16,7 @@ import httpx
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 
 from src.advocates import stage_advocate
+from src.agent_lane import AgentLane
 from src.candidate_sandbox import WorkerAuditError, audit_in_sandbox
 from src.database import APPLICATION_ID, SCHEMA_VERSION, initialize_database
 from src.discovery import discover_and_archive, fetch_and_archive, pool_outcome_sources
@@ -31,6 +32,7 @@ from src.model import (
     ModelResponseError,
     NebiusSpendLedger,
     completion_with_fallback,
+    response_model_id,
 )
 from src.quarantine import quarantine_candidate
 from src.relevance import record_relevance
@@ -64,10 +66,38 @@ def credentials():
     for name in ("OPENROUTER_API_KEY", "KEENABLE_API_KEY", "NEBIUS_API_KEY", "ARCHIL_API_KEY"):
         if os.environ.get(name):
             result[name] = os.environ[name]
-    for name in ("OPENROUTER_API_KEY", "KEENABLE_API_KEY"):
+    for name in ("KEENABLE_API_KEY",):
         if not result.get(name):
             raise ValueError(f"{name} is missing")
+    if model_provider() in ("openrouter", "nebius") and not result.get("OPENROUTER_API_KEY"):
+        raise ValueError("OPENROUTER_API_KEY is missing for the configured model provider")
     return result
+
+
+def model_provider():
+    """Model lane selector; the agent lane is the default, providers are opt-in."""
+    return os.environ.get("MODEL_PROVIDER", "agent").strip().lower()
+
+
+def build_completion(client, keys, *, lane_root):
+    """Completion callable for pipeline stages: the agent lane by default,
+    or the OpenRouter/Nebius provider path behind the same interface when
+    MODEL_PROVIDER selects it."""
+    provider = model_provider()
+    if provider == "agent":
+        return AgentLane(lane_root).completion
+    if provider in ("openrouter", "nebius"):
+        spend_ledger = NebiusSpendLedger(Path(lane_root).parent / "nebius-spend.db")
+
+        async def complete(messages, **options):
+            return await completion_with_fallback(
+                client, keys["OPENROUTER_API_KEY"], OPENROUTER_MODELS, messages,
+                nebius_key=keys.get("NEBIUS_API_KEY"), nebius_models=NEBIUS_MODELS,
+                spend_ledger=spend_ledger, **options,
+            )
+
+        return complete
+    raise ValueError(f"Unsupported MODEL_PROVIDER: {provider}")
 
 
 def label_quote(text, phase):
@@ -84,8 +114,7 @@ def label_quote(text, phase):
     return match.group(), float(match.group("share"))
 
 
-async def advocate(client, openrouter_key, role, delivery, survival, spend_ledger,
-                   nebius_key):
+async def advocate(complete, role, delivery, survival):
     delivery_row = re.search(r"Eligible Renewable1\s+\d+(?:\.\d+)?%[^\n]*", delivery)
     survival_row = re.search(r"RPS Eligible Renewables - Subtotal[^\n]*", survival)
     if not delivery_row or not survival_row:
@@ -107,12 +136,11 @@ async def advocate(client, openrouter_key, role, delivery, survival, spend_ledge
             f"{survival_row.group()}"
         )},
     ]
-    response = await completion_with_fallback(
-        client, openrouter_key, OPENROUTER_MODELS, messages,
-        nebius_key=nebius_key, nebius_models=NEBIUS_MODELS,
-        spend_ledger=spend_ledger, max_tokens=512,
+    response = await complete(messages, max_tokens=512)
+    return (
+        json.loads(response["choices"][0]["message"]["content"]),
+        response_model_id(response),
     )
-    return json.loads(response["choices"][0]["message"]["content"])
 
 
 async def run(database, seed_id):
@@ -136,7 +164,6 @@ async def run(database, seed_id):
         conn.execute("PRAGMA journal_mode=WAL")
         if conn.execute("SELECT 1 FROM promises WHERE promise_id=?", (seed_id,)).fetchone():
             raise ValueError("P36 already published; refusing to overwrite")
-        spend_ledger = NebiusSpendLedger(database.parent / "nebius-spend.db")
         async with RetryingKeenable(api_key=keys["KEENABLE_API_KEY"]) as search:
             sources = {}
             for phase, url in URLS.items():
@@ -144,16 +171,12 @@ async def run(database, seed_id):
 
         origin = sources["ORIGIN"]
         async with httpx.AsyncClient(timeout=120) as client:
-            async def complete(messages, **options):
-                return await completion_with_fallback(
-                    client, keys["OPENROUTER_API_KEY"], OPENROUTER_MODELS,
-                    messages, nebius_key=keys.get("NEBIUS_API_KEY"),
-                    nebius_models=NEBIUS_MODELS, spend_ledger=spend_ledger,
-                    **options,
-                )
+            complete = build_completion(
+                client, keys, lane_root=database.parent / "agent-lane",
+            )
 
             candidates = await extract_with_model(
-                client, keys["OPENROUTER_API_KEY"], list(OPENROUTER_MODELS), root=root,
+                client, keys.get("OPENROUTER_API_KEY"), list(OPENROUTER_MODELS), root=root,
                 promise_id=seed_id, path=origin["path"], digest=origin["sha256"],
                 source_url=origin["url"], provider="openrouter",
                 target=seed["promise_text"], completion=complete,
@@ -184,15 +207,11 @@ async def run(database, seed_id):
                     "SELECT * FROM quarantined WHERE promise_id=? ORDER BY quarantine_id DESC LIMIT 1",
                     (seed_id,),
                 ).fetchone())}
-            kept = await advocate(
-                client, keys["OPENROUTER_API_KEY"], "kept",
-                quotes["DELIVERY"], quotes["SURVIVAL"], spend_ledger,
-                keys.get("NEBIUS_API_KEY"),
+            kept, kept_model_id = await advocate(
+                complete, "kept", quotes["DELIVERY"], quotes["SURVIVAL"],
             )
-            broken = await advocate(
-                client, keys["OPENROUTER_API_KEY"], "broken",
-                quotes["DELIVERY"], quotes["SURVIVAL"], spend_ledger,
-                keys.get("NEBIUS_API_KEY"),
+            broken, broken_model_id = await advocate(
+                complete, "broken", quotes["DELIVERY"], quotes["SURVIVAL"],
             )
 
         expected = {
@@ -263,10 +282,13 @@ async def run(database, seed_id):
                  now.isoformat()),
             )
             conn.executemany(
-                "INSERT INTO verifications (promise_id, check_type, passed, reason, checked_at) "
-                "VALUES (?, ?, 1, ?, ?)",
-                [(seed_id, f"advocate_{role}", json.dumps(result, sort_keys=True), now.isoformat())
-                 for role, result in (("kept", kept), ("broken", broken))],
+                "INSERT INTO verifications (promise_id, check_type, passed, reason, "
+                "checked_at, model_id) VALUES (?, ?, 1, ?, ?, ?)",
+                [(seed_id, f"advocate_{role}", json.dumps(result, sort_keys=True),
+                  now.isoformat(), model_id)
+                 for role, result, model_id in (
+                     ("kept", kept, kept_model_id), ("broken", broken, broken_model_id),
+                 )],
             )
             updated = conn.execute(
                 "UPDATE promises_pending SET status='published' WHERE pending_id=? AND status='pending'",
@@ -347,7 +369,6 @@ async def extract_pending(database, seed_id, run_id):
             raise ValueError("Not a supported database")
         conn.execute("PRAGMA foreign_keys=ON")
         conn.execute("PRAGMA journal_mode=WAL")
-        spend_ledger = NebiusSpendLedger(database.parent / "nebius-spend.db")
         existing = conn.execute(
             "SELECT pending_id, status, proposal_json FROM promises_pending WHERE promise_id=?",
             (seed_id,),
@@ -360,13 +381,9 @@ async def extract_pending(database, seed_id, run_id):
         root = database.parent / "sources"
         invalid_promise_date = False
         async with httpx.AsyncClient(timeout=120) as client:
-            async def complete(messages, **options):
-                return await completion_with_fallback(
-                    client, keys["OPENROUTER_API_KEY"], OPENROUTER_MODELS,
-                    messages, nebius_key=keys.get("NEBIUS_API_KEY"),
-                    nebius_models=NEBIUS_MODELS, spend_ledger=spend_ledger,
-                    **options,
-                )
+            complete = build_completion(
+                client, keys, lane_root=database.parent / "agent-lane",
+            )
 
             for source in sources:
                 try:
@@ -375,7 +392,7 @@ async def extract_pending(database, seed_id, run_id):
                     published = None
                 try:
                     candidates = await extract_with_model(
-                        client, keys["OPENROUTER_API_KEY"], list(OPENROUTER_MODELS), root=root,
+                        client, keys.get("OPENROUTER_API_KEY"), list(OPENROUTER_MODELS), root=root,
                         promise_id=seed_id, path=source["path"], digest=source["sha256"],
                         source_url=source["url"], provider="openrouter",
                         target=lead["promise_text"], completion=complete, published=published,
@@ -421,17 +438,13 @@ async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined
             raise ValueError("Not a supported database")
         conn.execute("PRAGMA foreign_keys=ON")
         conn.execute("PRAGMA journal_mode=WAL")
-        ledger = NebiusSpendLedger(database.parent / "nebius-spend.db")
         worker_ledger = WorkerLeases(worker_conn)
         run_id = uuid.uuid4().hex
         results = []
         async with httpx.AsyncClient(timeout=120) as client:
-            async def complete(messages, **options):
-                return await completion_with_fallback(
-                    client, keys["OPENROUTER_API_KEY"], OPENROUTER_MODELS,
-                    messages, nebius_key=keys.get("NEBIUS_API_KEY"),
-                    nebius_models=NEBIUS_MODELS, spend_ledger=ledger, **options,
-                )
+            complete = build_completion(
+                client, keys, lane_root=database.parent / "agent-lane",
+            )
 
             async def audit(lead, research, *, search_exhausted):
                 try:
