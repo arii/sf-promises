@@ -441,6 +441,7 @@ PROMISE_TITLES = {
     "P23": "Downtown Hospitality Corridor Recovery",
     "P28": "Open 250 Additional Behavioral Health Beds",
     "P35": "Mental Health SF Reform Implementation",
+    "P37": "Tenderloin & Encampment Outreach",
     "P38": "Reduce PSPS Wildfire Outage Scope by Half",
     "P39": "Install 7,500 EV Charging Ports",
     "P40": "PG&E Fleet Vehicle Electrification by 2030",
@@ -932,6 +933,32 @@ REJECTED_CANDIDATE_P68 = {
 }
 
 
+def synthesize_verdict_history(verdict, decided_at):
+    """Snapshot-only fallback for records whose history is not in the export DB.
+
+    Builds the minimum honest history from the record itself. A
+    kept_then_reversed verdict is the product of an append-only reopen (the
+    original kept row comes first and is never mutated), so the entry pair is
+    recorded; the original row's decided_at lives only in the promises DB and
+    is left out rather than invented.
+    """
+    v = (verdict or "undecided").lower()
+    entries = [{
+        "verdict": "kept",
+        "reason": "Kept at publish; the original verdict row is retained by the append-only reopen.",
+    }] if v == "kept_then_reversed" else []
+    newest = {"verdict": v}
+    # Delta encoding: the newest entry's verdict/decided_at/reason are the
+    # record's own fields (verdict, decided_at, verdict_reason), so only
+    # decided_at is carried and consumers fall back to the record for the
+    # rest. DB-only provenance (reviewer/model_id) is unknown here and is
+    # omitted rather than padded with nulls.
+    if decided_at:
+        newest["decided_at"] = decided_at
+    entries.append(newest)
+    return entries
+
+
 def sanitize_export_paths(obj):
     if isinstance(obj, dict):
         return {k: sanitize_export_paths(v) for k, v in obj.items()}
@@ -1001,6 +1028,53 @@ def _load_from_db(db_path):
         latest_checks[(vr["promise_id"], vr["check_type"])] = {
             "passed": bool(vr["passed"]), "reason": vr["reason"]}
 
+    # E2: verdict history — every verdicts row per promise, oldest first.
+    # Verdicts are append-only (reopen_promise_verdict never mutates a row),
+    # so a reopened promise carries both rows and the transition stays
+    # inspectable in the snapshot instead of being overwritten. Column set
+    # varies between the live schema and the legacy demo DB; introspect it.
+    verdict_cols = {r[1] for r in cur.execute("PRAGMA table_info(verdicts)")}
+    _vsel = "promise_id, verdict, reason, decided_at"
+    _vsel += ", decided_by" if "decided_by" in verdict_cols else ", NULL as decided_by"
+    _vsel += ", model_id" if "model_id" in verdict_cols else ", NULL as model_id"
+    # Delta encoding: fields that are null in the DB (e.g. model_id on older
+    # verdict rows) are omitted rather than padded, and the newest entry's
+    # reason is dropped when it repeats the record's own verdict_reason —
+    # consumers fall back to the record fields.
+    verdict_history = {}
+    for vr in cur.execute(f"SELECT {_vsel} FROM verdicts ORDER BY decided_at ASC").fetchall():
+        entry = {"verdict": (vr["verdict"] or "").lower()}
+        if vr["decided_at"]:
+            entry["decided_at"] = vr["decided_at"]
+        if vr["decided_by"]:
+            entry["reviewer"] = vr["decided_by"]
+        if vr["model_id"]:
+            entry["model_id"] = vr["model_id"]
+        if vr["reason"]:
+            entry["reason"] = vr["reason"]
+        verdict_history.setdefault(vr["promise_id"], []).append(entry)
+
+    # E2: verification history — every verifications row with its provenance.
+    # Schema v4 carries model_id per row; checked_by and run_id are included
+    # when the export DB has them (older DBs do not).
+    _chk_cols = {r[1] for r in cur.execute("PRAGMA table_info(verifications)")}
+    _csel = "promise_id, check_type, passed, checked_at"
+    _csel += ", checked_by" if "checked_by" in _chk_cols else ", NULL as checked_by"
+    _csel += ", model_id" if "model_id" in _chk_cols else ", NULL as model_id"
+    _csel += ", run_id" if "run_id" in _chk_cols else ", NULL as run_id"
+    verification_history = {}
+    for vr in cur.execute(f"SELECT {_csel} FROM verifications ORDER BY checked_at ASC").fetchall():
+        entry = {"check": vr["check_type"], "passed": bool(vr["passed"])}
+        if vr["checked_at"]:
+            entry["checked_at"] = vr["checked_at"]
+        if vr["checked_by"]:
+            entry["checked_by"] = vr["checked_by"]
+        if vr["model_id"]:
+            entry["model_id"] = vr["model_id"]
+        if vr["run_id"]:
+            entry["run_id"] = vr["run_id"]
+        verification_history.setdefault(vr["promise_id"], []).append(entry)
+
     for row in rows:
         pid = row["promise_id"]
         text = row["promise_text"]
@@ -1067,8 +1141,18 @@ def _load_from_db(db_path):
             "reading_used": reading,
             "decided_at": decided_at,
             "advocate_bundles": {"kept": kept_staging, "broken": broken_staging},
-            "checks": item_checks
+            "checks": item_checks,
+            "verdict_history": verdict_history.get(pid) or synthesize_verdict_history(verd, decided_at),
+            # No verifications rows for this promise in the export DB: an
+            # honest empty history; the latest check state rides in `checks`.
+            "verification_history": verification_history.get(pid) or []
         })
+        # Delta encoding: the newest verdict-history entry repeats the
+        # record's current verdict/reason, so a duplicate reason is dropped
+        # and consumers fall back to the record fields.
+        vh = all_promises[-1]["verdict_history"]
+        if vh and vh[-1].get("reason") == all_promises[-1]["verdict_reason"]:
+            del vh[-1]["reason"]
 
     total_db_promises = cur.execute("SELECT count(DISTINCT promise_id) FROM promises").fetchone()[0]
     total_db_verdicts = cur.execute("SELECT count(*) FROM verdicts").fetchone()[0]
@@ -1203,6 +1287,18 @@ def export():
     for sfo in SFO_PROMISES:
         if sfo["promise_id"] not in existing_pids:
             all_promises.append(dict(sfo))
+
+    # E2: the no-DB fallback path loads records from the previous snapshot;
+    # keep history that a prior DB-backed export recorded and synthesize the
+    # minimum honest history where none exists. With no verifications table
+    # available, verification history stays empty — the latest check state
+    # rides in `checks` — rather than padding null provenance.
+    for p in all_promises:
+        if not p.get("verdict_history"):
+            p["verdict_history"] = synthesize_verdict_history(
+                p.get("verdict"), p.get("decided_at"))
+        if not p.get("verification_history"):
+            p["verification_history"] = []
 
     # Re-apply taxonomy, neighborhood map, and deterministic patches across all rows
     for p in all_promises:
@@ -1709,7 +1805,7 @@ def generate_promise_row_html(p, idx=0):
 
     paged_cls = " paged-row hidden-page-row" if idx >= 10 else ""
 
-    return f'''              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_clamped[:60]}">
+    return f'''              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_clamped}">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">{entity}</span>
@@ -1738,44 +1834,6 @@ def generate_promise_row_html(p, idx=0):
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>'''
-
-
-def generate_mobile_promise_card_html(p, idx=0):
-    rank = f"{idx + 1:02d}"
-    pid = html_esc(p.get("promise_id", ""))
-    entity = html_esc(p.get("entity", ""))
-    
-    promise_raw = clean_quote_text(p.get("promise_text", ""))
-    promise_140 = html_esc(promise_raw[:140] + ("…" if len(promise_raw) > 140 else ""))
-
-    precision = p.get("promise_date_precision", "day")
-    promised_raw = p.get("promised_date", "not recorded")
-    promised = html_esc(format_precision_date(promised_raw, precision))
-    if p.get("promised_date_note"):
-        promised += " (derived)"
-
-    verdict = p.get("verdict", "undecided")
-    verd_class = verdict.lower().replace(" ", "_")
-    verdict_label = format_verdict_label(verdict)
-
-    paged_cls = " paged-card hidden-page-card" if idx >= 10 else ""
-
-    return f'''              <div class="mobile-promise-card{paged_cls}" data-pid="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_140[:60]}">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">{entity}</span>
-                    <span class="mobile-card-id font-mono">#{rank}</span>
-                  </div>
-                  <span class="verdict-chip {verd_class}">{verdict_label}</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;{promise_140}&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said {promised}</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>'''
 
 
 def generate_featured_stories_html(promises, quarantined):
@@ -2018,7 +2076,7 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
 
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"  Pre-rendered {len(promises)} promise rows, {len(promises)} mobile cards, and {len(quarantined)} quarantine items into docs/index.html")
+    print(f"  Pre-rendered {len(promises)} promise rows and {len(quarantined)} quarantine items into docs/index.html")
 
     # Sync and validate standardized master CSV for Adaption & tabular tools
     try:

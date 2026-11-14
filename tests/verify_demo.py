@@ -64,6 +64,12 @@ def main():
     check("no unhedged MicroVM isolation claim",
           not re.search(r"MicroVM", code["index.html"] + code["app.js"]),
           "hedge as 'designed to run in isolated sandboxes' until isolation is tested")
+    check("no fallbackTitles map in app.js (titles come from the export)",
+          "fallbackTitles" not in code["app.js"])
+    check("no scripted replay SCENARIOS in app.js (scenarios derive from the snapshot)",
+          not re.search(r"(const|let) SCENARIOS = \{(?!\s*\})", code["app.js"]))
+    check("no hardcoded RUN= receipt literal in app.js",
+          "ARBITRATOR_RUN_" not in code["app.js"])
     wrong = {"P61": "Transbay Transit Center", "P64": "Parkmerced", "P84": "5M Project",
              "P85": "Presidio Parkway", "P86": "Treasure Island Redevelopment"}
     still = [k for k, v in wrong.items() if re.search(rf'"{k}":\s*"{v}', code["export_data.py"])]
