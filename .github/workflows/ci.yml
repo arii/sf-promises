@@ -39,6 +39,16 @@ jobs:
         # The suite passes in well under a minute (healthy runs: 23-39s wall
         # clock). tests/conftest.py fails fast on any test that opens a real
         # network socket, so this step should never approach the timeout.
+        #
+        # 2026-11-14: two PR runs hung >5 min at the same point (healthy
+        # locally on the same Python 3.11.18). The step timeout killed the
+        # process with no traceback, so the hang could not be located.
+        # pytest-timeout turns any per-test hang into a named failure with a
+        # thread-dump traceback; PYTHONUNBUFFERED keeps -v output live so the
+        # stop point is trustworthy.
         timeout-minutes: 5
+        env:
+          PYTHONUNBUFFERED: "1"
         run: |
-          pytest tests/ -v
+          pip install pytest-timeout
+          pytest tests/ -v --timeout=120
