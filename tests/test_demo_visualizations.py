@@ -105,11 +105,13 @@ class TestDemoVisualizations(unittest.TestCase):
     def test_verdict_counts_reconcile_with_totals(self):
         counts = self.py_verdicts()
         self.assertEqual(sum(counts.values()), len(self.promises))
-        # README's last-known benchmark numbers
-        self.assertEqual(counts.get("kept"), 25)
+        # README's last-known benchmark numbers; P83 moved to
+        # kept_then_reversed in the E1b reopen.
+        self.assertEqual(counts.get("kept"), 24)
         self.assertEqual(counts.get("in_progress"), 10)
         self.assertEqual(counts.get("broken"), 17)
         self.assertEqual(counts.get("undecided"), 2)
+        self.assertEqual(counts.get("kept_then_reversed"), 1)
 
     def test_timeline_covers_every_promise_once(self):
         buckets = run_pure_fn("countByYearAndVerdict")

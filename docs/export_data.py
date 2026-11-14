@@ -1051,6 +1051,7 @@ def _load_from_db(db_path):
             "entity_type": etype,
             "category": SF_CATEGORY_MAP.get(pid, "Civic Governance"),
             "neighborhood": NEIGHBORHOOD_MAP.get(pid, "San Francisco"),
+            "geographic_scope": GEOGRAPHIC_SCOPES.get(pid),
             "promised_date": pdate,
             "due_date": ddate,
             "page_number": None,
@@ -1129,10 +1130,9 @@ def _load_from_db(db_path):
                 "source_hash": _r["source_hash"],
             })
     _qdb.close()
-    # Copy, don't alias: the loop below appends each row to real_quarantined,
-    # so iterating the same list object would grow it forever (this spun and
-    # ballooned to 6 GB the first time the quarantined table had a row).
-    _qrows = list(real_quarantined)
+    # Rows already live in real_quarantined; update them in place. (The
+    # original code aliased _qrows to real_quarantined and re-appended each
+    # row, spinning forever whenever the quarantined table had a row.)
     _csv_text = {}
     for cp in ("data/promises-P13-P112.csv", "/home/ari/sf-promises/Archil Hackathon Nov 10 - SF Promises Export/data/promises-P13-P112.csv"):
         if os.path.exists(cp):
@@ -1141,7 +1141,7 @@ def _load_from_db(db_path):
                     _csv_text[_r["promise_id"]] = _r["promise_text"]
             break
 
-    for _qr in _qrows:
+    for _qr in real_quarantined:
         _qpid = _qr["promise_id"]
         _qr.update({
             "title": _csv_text.get(_qpid, _qpid),
@@ -1152,10 +1152,19 @@ def _load_from_db(db_path):
             "agent": "relevance_gate",
             "destination": "Held back. Never published.",
         })
-        real_quarantined.append(_qr)
     _db_ids = {p["promise_id"] for p in all_promises}
-    _q_ids = {_qr["promise_id"] for _qr in _qrows}
+    _q_ids = {_qr["promise_id"] for _qr in real_quarantined}
     pending_ids = sorted(set(_csv_text) - _db_ids - _q_ids)
+    if not _csv_text and os.path.exists(OUT_JSON):
+        # The seed CSV lives on the export worker, not in git. Without it the
+        # pending queue would silently vanish from the snapshot, so carry it
+        # forward from the last committed export instead.
+        try:
+            with open(OUT_JSON, encoding="utf-8") as _pf:
+                _prev = json.load(_pf)
+            pending_ids = list(_prev.get("database_status", {}).get("pending_intake_ids", []))
+        except (OSError, ValueError):
+            pass
 
     return all_promises, total_db_promises, total_db_verdicts, total_db_evidence, test_runs, real_quarantined, pending_ids
 
@@ -1202,6 +1211,8 @@ def export():
             p["category"] = SF_CATEGORY_MAP[pid]
         if pid in NEIGHBORHOOD_MAP:
             p["neighborhood"] = NEIGHBORHOOD_MAP[pid]
+        if pid in GEOGRAPHIC_SCOPES:
+            p["geographic_scope"] = GEOGRAPHIC_SCOPES[pid]
 
         if pid == "P02":
             p["source_id"] = "S582955d5df78"
@@ -1219,6 +1230,12 @@ def export():
         elif pid == "P61":
             p["promise_text"] = "On July 28, 2009, the Commission approved a revised WSIP schedule and budget of $4,586 million with an overall targeted program completion date of December 4, 2015."
             p["neighborhood"] = "Regional / Northern California (SFPUC Water System)"
+        elif pid == "P36":
+            # The promise text is CleanPowerSF's own commitment ("CleanPowerSF
+            # has conservatively committed to increasing..."); the pipeline's
+            # entity link resolves to Ed Lee, but the curated demo attribution
+            # is the CleanPowerSF program, matching every curated map below.
+            p["entity"] = "CleanPowerSF"
         elif pid == "P17":
             p["due_date_label"] = "Derived (3-year horizon from Jan 2025 inauguration)"
         elif pid in ("P43", "P59") and p.get("promised_date") == p.get("due_date"):
