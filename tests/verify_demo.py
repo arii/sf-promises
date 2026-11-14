@@ -220,7 +220,7 @@ def verify_visualizations(code, data):
           f"n={len(promises)} verdicts={exp_verdicts}")
 
     # D3 audit panels: derive from the exported snapshot only.
-    for hook in ("audit-funnel-bars", "audit-reason-bars", "audit-denial-bars"):
+    for hook in ("audit-funnel-bars", "audit-window-funnel-bars", "audit-reason-bars", "audit-denial-bars"):
         check(f"audit panel hook present: {hook}",
               hook in html and hook in app)
     qr = data["database_status"].get("quarantine_reasons") or {}
@@ -228,6 +228,27 @@ def verify_visualizations(code, data):
           sum(qr.get("by_reason", {}).values()) == len(data["quarantined"])
           and qr.get("total_quarantined") == len(data["quarantined"]),
           f"codes {sum(qr.get('by_reason', {}).values())} vs items {len(data['quarantined'])}")
+
+    # H2 per-window funnels: each exported window's stage rows must equal its
+    # stage_counts, and every non-first stage must convert from its predecessor.
+    wf = (data["database_status"].get("funnel") or {}).get("windows") or []
+    if not wf:
+        check("per-window funnel rounds exported (honest gap until discovery records them)",
+              True, "no funnel.windows in the export yet")
+    else:
+        problems = []
+        for w in wf:
+            counts = w.get("stage_counts") or {}
+            rows = w.get("stages") or []
+            if {r["stage"] for r in rows} != set(counts):
+                problems.append(f"{w.get('window')}: stage rows != stage_counts")
+            for r in rows:
+                if counts.get(r["stage"]) != r.get("count"):
+                    problems.append(f"{w.get('window')}/{r['stage']}: row != stage_count")
+                if r["stage"] != "raw" and "conversion_from_previous" not in r:
+                    problems.append(f"{w.get('window')}/{r['stage']}: missing conversion")
+        check("per-window funnel stage rows reconcile with stage_counts",
+              not problems, "; ".join(problems[:5]))
 
     # Execute the marked pure derivation block with node and compare every
     # chart count against an independent tally of docs/data.json.
