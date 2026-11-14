@@ -51,7 +51,7 @@
       "action_required": "Confirm primary archived sources for broken/missed claims"
     }
   ],
-  "priority_2_verification_exceptions_count": 7,
+  "priority_2_verification_exceptions_count": 3,
   "priority_2_verification_exceptions": [
     {
       "promise_id": "P82",
@@ -60,31 +60,6 @@
       "failed_check_count": 1,
       "failed_check_names": [
         "authenticity_domain"
-      ],
-      "action_required": "Resolve unrecorded checks or allowlist domain exceptions"
-    },
-    {
-      "promise_id": "P83",
-      "title": "Whole Foods Mid-Market Flagship Safety",
-      "verdict": "kept",
-      "failed_check_count": 1,
-      "failed_check_names": [
-        "authenticity_domain"
-      ],
-      "action_required": "Resolve unrecorded checks or allowlist domain exceptions"
-    },
-    {
-      "promise_id": "P17",
-      "title": "Hire 425 New SFPD Police Officers",
-      "verdict": "in_progress",
-      "failed_check_count": 6,
-      "failed_check_names": [
-        "authenticity_domain",
-        "authenticity_hash",
-        "accuracy_quote",
-        "authenticity_speaker",
-        "accuracy_date",
-        "accuracy_evidence"
       ],
       "action_required": "Resolve unrecorded checks or allowlist domain exceptions"
     },
@@ -99,21 +74,6 @@
       "action_required": "Resolve unrecorded checks or allowlist domain exceptions"
     },
     {
-      "promise_id": "P37",
-      "title": "London Breed Commitment",
-      "verdict": "undecided",
-      "failed_check_count": 6,
-      "failed_check_names": [
-        "authenticity_domain",
-        "authenticity_hash",
-        "accuracy_quote",
-        "authenticity_speaker",
-        "accuracy_date",
-        "accuracy_evidence"
-      ],
-      "action_required": "Resolve unrecorded checks or allowlist domain exceptions"
-    },
-    {
       "promise_id": "P57",
       "title": "Comcast Gigabit Fiber-to-the-Home Network",
       "verdict": "broken",
@@ -122,46 +82,23 @@
         "authenticity_domain"
       ],
       "action_required": "Resolve unrecorded checks or allowlist domain exceptions"
-    },
-    {
-      "promise_id": "P58",
-      "title": "AT&T Public Market Street Wi-Fi Expansion",
-      "verdict": "undecided",
-      "failed_check_count": 6,
-      "failed_check_names": [
-        "authenticity_domain",
-        "authenticity_hash",
-        "accuracy_quote",
-        "authenticity_speaker",
-        "accuracy_date",
-        "accuracy_evidence"
-      ],
-      "action_required": "Resolve unrecorded checks or allowlist domain exceptions"
     }
   ],
-  "priority_3_contradictions_and_credibility_count": 39,
+  "priority_3_contradictions_and_credibility_count": 21,
   "priority_3_contradictions_and_credibility": [
     {
       "promise_id": "P05",
       "title": "1,500 Shelter Beds in First 6 Months",
       "verdict": "broken",
-      "source_credibility_score": 8,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P21",
-      "title": "JFK Drive Permanent Car-Free Promenade",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
     {
       "promise_id": "P83",
       "title": "Whole Foods Mid-Market Flagship Safety",
-      "verdict": "kept",
-      "source_credibility_score": 7,
+      "verdict": "kept_then_reversed",
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
@@ -169,32 +106,8 @@
       "promise_id": "P11",
       "title": "Grateful Dead Tour Retirement & Archival Shows",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P01",
-      "title": "Fentanyl State of Emergency Ordinance",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P59",
-      "title": "Zoox Driverless Passenger Ride Hail in SF",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P43",
-      "title": "Waymo Fully Autonomous Ride-Hail Expansion",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
     {
@@ -225,24 +138,8 @@
       "promise_id": "P08",
       "title": "1,000 SRO Housing Units Improvement",
       "verdict": "broken",
-      "source_credibility_score": 8,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P22",
-      "title": "Embarcadero Navigation Center 200 Beds",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P17",
-      "title": "Hire 425 New SFPD Police Officers",
-      "verdict": "in_progress",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
     {
@@ -257,87 +154,23 @@
       "promise_id": "P26",
       "title": "Empty Homes Tax: 4,500 Units in Year One",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P27",
-      "title": "Housing Trust Fund: $20M First-Year Budget",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P29",
-      "title": "Care Not Cash Homeless Services Reform",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P31",
-      "title": "Family Zoning Plan Neighborhood Housing",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P36",
-      "title": "CleanPowerSF 100% Renewable Electricity",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P09",
-      "title": "PG&E 10,000 Miles Underground Power Lines",
-      "verdict": "in_progress",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
     {
       "promise_id": "P61",
       "title": "SFPUC Water System Improvement Program",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P66",
-      "title": "Chase Center Arena 18,064 Capacity Delivery",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P64",
-      "title": "Treasure Island 8,000 New Residential Units",
-      "verdict": "in_progress",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P84",
-      "title": "Pier 70 Historic Shipyard Redevelopment",
-      "verdict": "in_progress",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
     {
       "promise_id": "P07",
       "title": "3.5 Million New Homes in California by 2025",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
@@ -345,7 +178,7 @@
       "promise_id": "P13",
       "title": "10-Year Plan to End Chronic Homelessness",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
@@ -361,63 +194,39 @@
       "promise_id": "P16",
       "title": "Open 1,000 Additional Shelter Beds in SF",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P19",
-      "title": "Healthy San Francisco Universal Healthcare",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
     {
       "promise_id": "P20",
       "title": "Interim Mayor Non-Candidacy Pledge",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
     {
       "promise_id": "P37",
-      "title": "London Breed Commitment",
+      "title": "Tenderloin & Encampment Outreach",
       "verdict": "undecided",
       "source_credibility_score": 10,
       "has_contradictory_evidence": true,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
     {
-      "promise_id": "P38",
-      "title": "Reduce PSPS Wildfire Outage Scope by Half",
-      "verdict": "kept",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
       "promise_id": "P39",
       "title": "Install 7,500 EV Charging Ports",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P40",
-      "title": "PG&E Fleet Vehicle Electrification by 2030",
-      "verdict": "in_progress",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
     {
       "promise_id": "P57",
       "title": "Comcast Gigabit Fiber-to-the-Home Network",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
@@ -425,7 +234,7 @@
       "promise_id": "P58",
       "title": "AT&T Public Market Street Wi-Fi Expansion",
       "verdict": "undecided",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
@@ -433,7 +242,7 @@
       "promise_id": "P62",
       "title": "Visa Mission Rock HQ 1,500 Staff Occupancy",
       "verdict": "broken",
-      "source_credibility_score": 7,
+      "source_credibility_score": 10,
       "has_contradictory_evidence": true,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     },
@@ -444,15 +253,7 @@
       "source_credibility_score": 10,
       "has_contradictory_evidence": true,
       "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
-    },
-    {
-      "promise_id": "P85",
-      "title": "Central Subway Chinatown & North Beach Study",
-      "verdict": "in_progress",
-      "source_credibility_score": 7,
-      "has_contradictory_evidence": false,
-      "action_required": "Upgrade source credibility >= 8/10 or review contradiction arbitration"
     }
   ],
-  "total_verification_exception_checks": 22
+  "total_verification_exception_checks": 3
 }

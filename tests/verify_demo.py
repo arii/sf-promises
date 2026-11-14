@@ -64,6 +64,12 @@ def main():
     check("no unhedged MicroVM isolation claim",
           not re.search(r"MicroVM", code["index.html"] + code["app.js"]),
           "hedge as 'designed to run in isolated sandboxes' until isolation is tested")
+    check("no fallbackTitles map in app.js (titles come from the export)",
+          "fallbackTitles" not in code["app.js"])
+    check("no scripted replay SCENARIOS in app.js (scenarios derive from the snapshot)",
+          not re.search(r"(const|let) SCENARIOS = \{(?!\s*\})", code["app.js"]))
+    check("no hardcoded RUN= receipt literal in app.js",
+          "ARBITRATOR_RUN_" not in code["app.js"])
     wrong = {"P61": "Transbay Transit Center", "P64": "Parkmerced", "P84": "5M Project",
              "P85": "Presidio Parkway", "P86": "Treasure Island Redevelopment"}
     still = [k for k, v in wrong.items() if re.search(rf'"{k}":\s*"{v}', code["export_data.py"])]
@@ -199,7 +205,8 @@ def verify_visualizations(code, data):
     check("viz section present in index.html",
           'id="visualizations"' in html
           and all(h in html for h in ("viz-verdict-bars", "viz-domain-bars",
-                                      "viz-timeline", "viz-source-bars")))
+                                      "viz-timeline", "viz-source-bars",
+                                      "viz-phase-timelines")))
     check("viz hooks rendered from app.js",
           "renderVisualizations" in app
           and "SFPVIZ_PURE_START" in app and "SFPVIZ_PURE_END" in app)
@@ -209,14 +216,53 @@ def verify_visualizations(code, data):
                 if m.startswith(("http://", "https://"))]
     check("no external runtime scripts on the demo page", not external, ",".join(external))
 
+    # Same rule for stylesheets and fonts: everything must be served locally.
+    external_css = [m for m in re.findall(r'<link[^>]+href="([^"]+)"', html)
+                    if m.startswith(("http://", "https://"))]
+    check("no external stylesheets or fonts on the demo page", not external_css,
+          ",".join(external_css))
+    font_dirs = sorted(f for f in os.listdir(os.path.join(DEMO, "fonts"))
+                       if f.endswith(".woff2")) if os.path.isdir(os.path.join(DEMO, "fonts")) else []
+    faces = code["styles.css"].count("@font-face")
+    check("fonts self-hosted: @font-face rules backed by local woff2 files",
+          faces > 0 and len(font_dirs) >= faces
+          and not re.search(r"url\(\s*['\"]?https?://", code["styles.css"]),
+          f"{faces} @font-face rules vs {len(font_dirs)} local woff2 files")
+
+    # list.min.js was vendored but never instantiated — it must stay gone.
+    check("unused list.min.js removed from the demo",
+          not os.path.exists(os.path.join(DEMO, "list.min.js"))
+          and "list.min.js" not in html and "list.min.js" not in code["export_data.py"])
+
+    # Baked row aria-labels must carry the full displayed promise text (no
+    # separate bake-time truncation): the label's quote portion equals the
+    # visible blockquote text of the same row.
+    def label_pairs(src):
+        rows = re.findall(r'<tr[^>]+class="promise-row[^"]*"[^>]*>(.*?)</tr>', src, re.S)
+        out = []
+        for row in rows:
+            m_label = re.search(r'aria-label="Inspect #\d+ [^"]*: ([^"]*)"', row)
+            m_quote = re.search(r'<blockquote class="table-quote-text font-serif">(.*?)</blockquote>', row, re.S)
+            if m_label and m_quote:
+                quote = re.sub(r"&ldquo;|&rdquo;", '"', m_quote.group(1))
+                out.append((m_label.group(1), quote.strip()))
+        return out
+
+    baked_rows = label_pairs(html)
+    truncated = [lbl[-40:] for lbl, quote in baked_rows
+                 if lbl != quote and not (lbl.endswith("…") and quote.startswith(lbl[:-1]))]
+    check("row aria-labels carry the full displayed promise text", not truncated,
+          f"{len(truncated)}/{len(baked_rows)} mismatched", )
+
     promises = data["promises"]
     exp_verdicts = {}
     for p in promises:
         v = (p.get("verdict") or "undecided").lower()
         exp_verdicts[v] = exp_verdicts.get(v, 0) + 1
-    check("viz reconciliation benchmark (54 = 25 kept / 10 in progress / 17 broken / 2 undecided)",
-          len(promises) == 54 and exp_verdicts == {"kept": 25, "in_progress": 10,
-                                                   "broken": 17, "undecided": 2},
+    check("viz reconciliation benchmark (54 = 24 kept / 10 in progress / 17 broken / 2 undecided / 1 kept_then_reversed)",
+          len(promises) == 54 and exp_verdicts == {"kept": 24, "in_progress": 10,
+                                                   "broken": 17, "undecided": 2,
+                                                   "kept_then_reversed": 1},
           f"n={len(promises)} verdicts={exp_verdicts}")
 
     # D3 audit panels: derive from the exported snapshot only.
@@ -275,7 +321,9 @@ for (const p of promises) {
   timelineSum += 1;
 }
 console.log(JSON.stringify({ verdicts, categories, sourceTypes, timelineSum,
-  counted: window.SFPViz.countByVerdict(promises) }));
+  counted: window.SFPViz.countByVerdict(promises),
+  sourceLabels: Object.keys(sourceTypes).map(t => window.SFPViz.formatSourceTypeLabel(t)),
+  phaseTimelines: window.SFPViz.phaseTimelines(promises) }));
 """
     try:
         proc = subprocess.run(
@@ -294,6 +342,59 @@ console.log(JSON.stringify({ verdicts, categories, sourceTypes, timelineSum,
         check("viz verdict counts reconcile with export",
               got["verdicts"] == got["counted"] and got["timelineSum"] == len(promises),
               f"js={got['verdicts']}")
+        raw_labels = [l for l in got.get("sourceLabels", []) if "_" in l]
+        check("source-type chart labels are display names, not raw enums",
+              not raw_labels, ",".join(raw_labels))
+
+        # Outcome-phase timelines (E5): the card's rows must equal an
+        # independent tally of records carrying >= 2 dated phases
+        # (made/due/delivered/reversed), and the sole reversed record must
+        # lead with a made -> ... -> reversed sequence.
+        import re as _re
+
+        def _date_key(value):
+            m = _re.match(r"^(\d{4}-\d{2}-\d{2})", str(value or "").strip())
+            return m.group(1) if m else None
+
+        def _phases(p):
+            v = (p.get("verdict") or "undecided").lower()
+            out = []
+            made = _date_key(p.get("promise_made_date")) or _date_key(p.get("promised_date"))
+            if made:
+                out.append(("made", made))
+            due = _date_key(p.get("deadline_date")) or _date_key(p.get("due_date"))
+            if due:
+                out.append(("due", due))
+            delivered = _date_key(p.get("completion_date"))
+            if not delivered and v in ("kept", "kept_then_reversed"):
+                claims = ((p.get("advocate_bundles") or {}).get("kept") or {}).get("claims") or []
+                dates = sorted(d for d in (_date_key(c.get("evidence_date")) for c in claims) if d)
+                delivered = dates[0] if dates else None
+            if delivered:
+                out.append(("delivered", delivered))
+            if v == "kept_then_reversed":
+                for e in reversed(p.get("verdict_history") or []):
+                    if (e.get("verdict") or "").lower() == "kept_then_reversed":
+                        rev = _date_key(e.get("decided_at"))
+                        if rev:
+                            out.append(("reversed", rev))
+                        break
+            return out
+
+        expected_ids = sorted(
+            (p["promise_id"] for p in promises if len(_phases(p)) >= 2),
+        )
+        js_rows = got.get("phaseTimelines") or []
+        js_ids = [r.get("promiseId") for r in js_rows]
+        check("outcome-phase timeline rows reconcile with export",
+              sorted(js_ids) == sorted(expected_ids)
+              and all(len(r.get("phases") or []) >= 2 for r in js_rows),
+              f"js {len(js_ids)} rows vs export {len(expected_ids)}")
+        reversed_rows = [r for r in js_rows if any(ph.get("phase") == "reversed" for ph in r.get("phases") or [])]
+        check("reversed record leads outcome timelines (kept -> reversed)",
+              len(reversed_rows) == 1
+              and js_ids and js_ids[0] == reversed_rows[0].get("promiseId") == "P83",
+              f"reversed={[r.get('promiseId') for r in reversed_rows]} first={js_ids[:1]}")
 
 
 if __name__ == "__main__":

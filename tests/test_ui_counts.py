@@ -140,7 +140,7 @@ class TestUICounts(unittest.TestCase):
             self.assertTrue(r["promise_id"])
             self.assertTrue(r["promise_text"])
             self.assertTrue(r["entity"])
-            self.assertIn(r["verdict"], ("kept", "broken", "in_progress", "undecided"))
+            self.assertIn(r["verdict"], ("kept", "broken", "in_progress", "undecided", "kept_then_reversed"))
             conf = float(r["confidence"])
             self.assertGreaterEqual(conf, 0.0)
             self.assertLessEqual(conf, 1.0)

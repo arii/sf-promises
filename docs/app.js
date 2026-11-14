@@ -28,6 +28,11 @@
   let hasAutoPlayed = false;
   const STAGE_INTERVAL_MS = 1800;
   let lastActiveElement = null;
+  // Replay scenarios are built from the exported snapshot in init(); the
+  // walkthrough showcases are the pipeline demo records, with every stage
+  // string derived from the record's own fields.
+  let SCENARIOS = {};
+  const SCENARIO_SHOWCASE_IDS = ['P02', 'P05', 'SFO-01', 'P06'];
 
   function formatPrecisionDate(dateStr, precision) {
     if (!dateStr || String(dateStr).trim() === '' || dateStr === 'None' || dateStr === '—' || dateStr === 'not recorded') {
@@ -84,7 +89,10 @@
     if (r.startsWith('ordinance signed pre-deadline')) {
       return 'Enabling legislation was enacted before the stated deadline.';
     }
-    return r.replace(/\s*\([^)]*\)/g, '').replace(/\s*\[[^\]]*\]/g, '').trim() || r;
+    const cleaned = r.replace(/\s*\([^)]*\)/g, '').replace(/\s*\[[^\]]*\]/g, '').trim() || r;
+    // Display strings must not start lowercase: pipeline reasons like
+    // "re-open: 30-show Sphere leg..." surface verbatim in the drawer.
+    return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
   }
 
   function formatVerdictLabel(verdict) {
@@ -255,35 +263,238 @@
     })).sort((a, b) => (b.count - a.count) || a.domain.localeCompare(b.domain));
   }
 
+    // Human-readable labels for the source-type enum values; anything not
+    // mapped falls back to a title-cased version of the raw value.
+    function formatSourceTypeLabel(t) {
+      const k = String(t || 'unknown').toLowerCase().replace(/[\s-]+/g, '_');
+      const labels = {
+        news_report: 'News report',
+        press_release: 'Press release',
+        official_press_release: 'Official press release',
+        sf_gov_page: 'SF government page',
+        other_official: 'Other official source',
+        social_media: 'Social media post',
+        unknown: 'Unknown'
+      };
+      if (labels[k]) return labels[k];
+      return t ? String(t).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Unknown';
+    }
+
+  // -------------------------------------------------------------------------
+  // Outcome-phase timeline (E5): per-promise made -> due -> delivered ->
+  // reversed, derived purely from the exported snapshot. Dates come from the
+  // existing enrichment fields (promise_made_date, deadline_date,
+  // completion_date) and the evidence dates already carried by the advocate
+  // bundles and verdict history — no new collection, no invented dates.
+  // -------------------------------------------------------------------------
+  const PHASE_LABELS = {
+    made: 'Made',
+    due: 'Due',
+    delivered: 'Delivered',
+    reversed: 'Reversed'
+  };
+
+  const PHASE_ORDER = ['made', 'due', 'delivered', 'reversed'];
+
+  // 'YYYY-MM-DD…' -> 'YYYY-MM-DD'; null when absent or unparseable. A missing
+  // export date is never replaced with a guessed one.
+  function dateKey(value) {
+    const s = String(value || '').trim();
+    return /^\d{4}-\d{2}-\d{2}/.test(s) ? s.slice(0, 10) : null;
+  }
+
+  // '2023-04-01T…' -> 'April 2023'; '' when absent or unparseable. Same
+  // month-year form the drawer's verdict timeline displays, so the chart-level
+  // phase display and the drawer stay consistent.
+  function formatPhaseMonth(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+  }
+
+  // Earliest DELIVERY evidence date from one advocate bundle's claims; null
+  // when the bundle carries no dated claim.
+  function earliestBundleEvidenceDate(promise, side) {
+    const bundle = ((promise || {}).advocate_bundles || {})[side];
+    const claims = (bundle && Array.isArray(bundle.claims)) ? bundle.claims : [];
+    const dates = claims.map(c => dateKey(c && c.evidence_date)).filter(Boolean).sort();
+    return dates.length ? dates[0] : null;
+  }
+
+  // SURVIVAL transition date: the decided_at of the record's most recent
+  // kept_then_reversed verdict-history entry — the same date the drawer's
+  // verdict timeline renders for the reversal step. Null when the record was
+  // never reversed.
+  function reversalDate(promise) {
+    const history = Array.isArray((promise || {}).verdict_history) ? promise.verdict_history : [];
+    for (let i = history.length - 1; i >= 0; i--) {
+      const entry = history[i] || {};
+      if (normalizeVerdict(entry.verdict) === 'kept_then_reversed') {
+        return dateKey(entry.decided_at);
+      }
+    }
+    return null;
+  }
+
+  // Ordered dated phases for one record. A phase appears only when the
+  // snapshot records a date for it:
+  //   made      — ORIGIN: promise_made_date (falling back to promised_date)
+  //   due       — deadline_date (falling back to due_date)
+  //   delivered — DELIVERY: completion_date, else for verdicts whose outcome
+  //               confirms delivery (kept / kept_then_reversed) the earliest
+  //               kept-advocate evidence date
+  //   reversed  — SURVIVAL: the kept_then_reversed verdict-history date
+  function outcomePhases(p) {
+    if (!p || typeof p !== 'object') return [];
+    const phases = [];
+    const made = dateKey(p.promise_made_date) || dateKey(p.promised_date);
+    if (made) phases.push({ phase: 'made', date: made });
+    const due = dateKey(p.deadline_date) || dateKey(p.due_date);
+    if (due) phases.push({ phase: 'due', date: due });
+    const verdict = normalizeVerdict(p.verdict);
+    let delivered = dateKey(p.completion_date);
+    if (!delivered && (verdict === 'kept' || verdict === 'kept_then_reversed')) {
+      delivered = earliestBundleEvidenceDate(p, 'kept');
+    }
+    if (delivered) phases.push({ phase: 'delivered', date: delivered });
+    if (verdict === 'kept_then_reversed') {
+      const reversed = reversalDate(p);
+      if (reversed) phases.push({ phase: 'reversed', date: reversed });
+    }
+    return phases.sort((a, b) =>
+      (PHASE_ORDER.indexOf(a.phase) - PHASE_ORDER.indexOf(b.phase)) ||
+      a.date.localeCompare(b.date));
+  }
+
+  // Timeline rows for the outcome-timelines card: one per record carrying at
+  // least two dated phases. Records whose verdict history shows a transition
+  // lead the card (P83, kept -> reversed, is the showcase), then by display
+  // order, so the sort is fully determined by the snapshot.
+  function phaseTimelines(promises) {
+    const rows = [];
+    (promises || []).forEach(p => {
+      if (!p || typeof p !== 'object') return;
+      const phases = outcomePhases(p);
+      if (phases.length < 2) return;
+      const history = Array.isArray(p.verdict_history) ? p.verdict_history : [];
+      rows.push({
+        promiseId: String(p.promise_id || ''),
+        displayNo: Number.isFinite(Number(p.display_no)) ? Number(p.display_no) : null,
+        label: String(p.document_title || p.title || `${p.entity || 'Unknown'} commitment`),
+        historyChanged: history.length > 1,
+        reversed: phases.some(ph => ph.phase === 'reversed'),
+        phases: phases.map(ph => ({
+          phase: ph.phase,
+          label: PHASE_LABELS[ph.phase] || ph.phase,
+          date: ph.date,
+          display: formatPhaseMonth(ph.date)
+        }))
+      });
+    });
+    // Reversed records lead (P83 is the showcase), then other verdict
+    // transitions, then display order — all determined by the snapshot.
+    return rows.sort((a, b) =>
+      (Number(b.reversed) - Number(a.reversed)) ||
+      (Number(b.historyChanged) - Number(a.historyChanged)) ||
+      ((a.displayNo == null ? Infinity : a.displayNo) - (b.displayNo == null ? Infinity : b.displayNo)) ||
+      a.promiseId.localeCompare(b.promiseId));
+  }
+
   const SFPViz = {
     VERDICT_ORDER,
     countByVerdict,
     countByCategory,
     countBySourceType,
+    formatSourceTypeLabel,
     countByYearAndVerdict,
     funnelStages,
     windowFunnelStages,
     quarantineReasons,
-    denialDomains
+    denialDomains,
+    outcomePhases,
+    phaseTimelines,
+    formatPhaseMonth
   };
   /* SFPVIZ_PURE_END */
+
+  /* SFPUX_PURE_START */
+  // Pure UX-state helpers: the error-banner and empty-state copy and the
+  // focus-trap cycling math live here so the node harness can exercise them
+  // without a DOM.
+  const SFPUX = {
+    // Visible failure copy for a failed snapshot load. Empty return means the
+    // banner stays hidden.
+    dataLoadErrorHtml() {
+      return 'The live dataset could not be loaded. The record list below is ' +
+        'the last statically published snapshot, but filters, charts and the ' +
+        'inspect drawer are unavailable. Try refreshing the page.';
+    },
+    // Prompt rendered when the active filters match zero records.
+    noResultsHtml() {
+      return '<div class="no-results-inner">' +
+        '<p class="no-results-title">No commitments match the current filters.</p>' +
+        '<p class="no-results-sub">Try a different search, or clear the filters to see every record.</p>' +
+        '<button type="button" class="btn-clear-filters-empty" id="btn-clear-filters-empty">Clear filters</button>' +
+        '</div>';
+    },
+    // Focus-trap cycling: given the count of focusable nodes, the index of the
+    // currently focused one (-1 when focus is outside the set) and the
+    // direction (Tab vs Shift+Tab), return the next index, wrapping at both
+    // ends so Tab can never escape the container.
+    nextFocusableIndex(count, currentIndex, backward) {
+      if (!Number.isFinite(count) || count <= 0) return currentIndex;
+      if (count === 1) return 0;
+      const cur = Number.isFinite(currentIndex) && currentIndex >= 0
+        ? currentIndex
+        : (backward ? count : -1);
+      return backward ? (cur - 1 + count) % count : (cur + 1) % count;
+    }
+  };
+  /* SFPUX_PURE_END */
+
 
   // -------------------------------------------------------------------------
   // Initialization
   // -------------------------------------------------------------------------
+  // Toggle the data-load status and error-banner elements from init().
+  // 'loading' shows the status line, 'error' swaps it for the alert banner,
+  // 'loaded' hides both.
+  function setDataLoadState(state) {
+    const errEl = document.getElementById('data-load-error');
+    const statusEl = document.getElementById('data-load-status');
+    if (errEl) {
+      errEl.hidden = state !== 'error';
+      if (state === 'error') errEl.textContent = SFPUX.dataLoadErrorHtml();
+    }
+    if (statusEl) statusEl.hidden = state !== 'loading';
+  }
+
   async function init() {
     if (window.__DEMO_DATA__) {
       demoData = window.__DEMO_DATA__;
     } else {
+      // Late-data path: show a loading state while fetching, and a visible
+      // error banner on failure — the statically-baked table stays readable,
+      // but the user must know that charts, filters and the drawer are dead.
+      setDataLoadState('loading');
       try {
         const res = await fetch('data.json');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         demoData = await res.json();
       } catch (err) {
         console.error('Failed to load data.json', err);
+        setDataLoadState('error');
         return;
       }
     }
+    setDataLoadState('loaded');
 
+    SCENARIOS = buildScenarios(demoData && demoData.promises);
+    if (!SCENARIOS[currentRunType]) {
+      const first = Object.keys(SCENARIOS)[0];
+      if (first) currentRunType = first;
+    }
     setupReplayScenarios();
     setupEventListeners();
     renderExplore();
@@ -291,148 +502,78 @@
     setupFeaturedStories();
     renderVisualizations();
   }
-
   // -------------------------------------------------------------------------
   // Replay State Machine (0.5) - Real Commitments, Auto-Play, Zero Layout Shift
   // -------------------------------------------------------------------------
-  const SCENARIOS = {
-    P02: {
-      id: 'P02',
-      label: '#01 · 24/7 Crisis Center',
-      speaker: 'Mayor Daniel Lurie',
-      title: '24/7 Crisis Stabilization Center',
-      expectedVerdict: 'kept',
-      verdictLabel: 'KEPT',
+  // Replay scenarios are derived from the exported snapshot: the walkthrough
+  // showcases are selected from demoData.promises and every stage string is
+  // built from the record's own fields (source, quote, gate score, claim
+  // counts, check outcomes, verdict reason). No hardcoded record copy.
+  function scenarioFromRecord(p) {
+    const rank = String(p.impact_rank || p.display_no || '').padStart(2, '0');
+    const rel = p.relevance || {};
+    const bundles = p.advocate_bundles || {};
+    const keptClaims = ((bundles.kept || {}).claims || []).length;
+    const brokenClaims = ((bundles.broken || {}).claims || []).length;
+    const checks = p.checks || [];
+    const passedChecks = checks.filter(c => c.passed).length;
+    const verdict = String(p.verdict || 'undecided').toUpperCase();
+    const title = p.document_title || p.title || `${p.entity} Commitment`;
+    const quote = cleanQuoteText(p.promise_text || '');
+    const hash = String(p.source_hash || '');
+    const relTotal = (rel.score != null) ? `${rel.score}/8` : 'recorded in the export';
+    return {
+      id: p.promise_id,
+      label: `#${rank} · ${title}`,
+      speaker: p.entity || 'Unknown speaker',
+      title,
+      expectedVerdict: p.verdict === 'broken' ? 'broken' : 'kept',
+      verdictLabel: verdict,
       stages: {
         1: {
           title: 'Source Fetched',
-          desc: 'Archived sf.gov release 582955d5… from official municipal domain allowlist.'
+          desc: `Archived ${p.source_type || 'source'} ${hash.slice(0, 8)}… from the ${p.source_tier || 'recorded'} tier.`
         },
         2: {
           title: 'Quote Extracted',
-          desc: '“That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it.”'
+          desc: `“${quote.slice(0, 220)}${quote.length > 220 ? '…' : ''}”`
         },
         3: {
           title: 'Relevance Gate Passed',
-          desc: 'Relevance gate score 8/8: quantified Tenderloin civic commitment with measurable timeline.'
+          desc: `Relevance gate score ${relTotal} across real-promise, measurable, SF-relevant and interesting signals.`
         },
         4: {
           title: 'Evidence Evaluated',
-          desc: 'Adjudicated 4 supporting vs 0 contradicting claims; verified 344 admissions recorded since April 28, 2025.'
+          desc: `Adjudicated ${keptClaims} supporting vs ${brokenClaims} contradicting claims from the archived record set.`
         },
         5: {
           title: 'Code Checks Passed',
-          desc: 'All 7 deterministic code checks passed: SHA-256 byte-match, date consistency, and speaker attribution verified.'
+          desc: checks.length
+            ? `${passedChecks} of ${checks.length} deterministic code checks passed on the archived source.`
+            : 'Deterministic code checks are recorded in the verification history.'
         },
         6: {
           title: 'Verdict Published',
-          desc: 'Published KEPT verdict: official primary records confirm 24/7 crisis center operational at 822 Geary St.'
+          desc: `Published ${verdict} verdict: ${p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id)}`
         }
       }
-    },
-    P05: {
-      id: 'P05',
-      label: '#02 · 1,500 Shelter Beds',
-      speaker: 'Mayor Daniel Lurie',
-      title: '1,500 Shelter Beds in First 6 Months',
-      expectedVerdict: 'broken',
-      verdictLabel: 'BROKEN',
-      stages: {
-        1: {
-          title: 'Source Fetched',
-          desc: 'Archived SF Standard source document 384c310b… from news tier.'
-        },
-        2: {
-          title: 'Quote Extracted',
-          desc: '“Open 1,500 new shelter beds in the first six months of the administration.”'
-        },
-        3: {
-          title: 'Relevance Gate Passed',
-          desc: 'Relevance gate score 8/8: citywide shelter bed expansion with concrete numeric threshold.'
-        },
-        4: {
-          title: 'Evidence Evaluated',
-          desc: 'Adjudicated 1 supporting vs 2 contradicting claims; city shelter capacity tracker logged ~500 beds added.'
-        },
-        5: {
-          title: 'Code Checks Evaluated',
-          desc: 'Deterministic code checks failed deadline threshold: 6-month window passed with <50% target delivery.'
-        },
-        6: {
-          title: 'Verdict Published',
-          desc: 'Published BROKEN verdict: numeric target not met; administration pivoted strategy after 6 months.'
-        }
-      }
-    },
-    'SFO-01': {
-      id: 'SFO-01',
-      label: '#03 · Runway 28L Reopening',
-      speaker: 'SFO Airport',
-      title: 'Runway 28L Safety Realignment & Reopening',
-      expectedVerdict: 'kept',
-      verdictLabel: 'KEPT',
-      stages: {
-        1: {
-          title: 'Source Fetched',
-          desc: 'Archived flysfo.com press release b6a2f59f… from verified SFO airport domain.'
-        },
-        2: {
-          title: 'Quote Extracted',
-          desc: '“Runway 28L will reopen ahead of schedule on Friday, June 21, 2024.”'
-        },
-        3: {
-          title: 'Relevance Gate Passed',
-          desc: 'Relevance gate score 8/8: critical airfield safety capital project with defined completion target.'
-        },
-        4: {
-          title: 'Evidence Evaluated',
-          desc: 'Adjudicated 3 supporting vs 0 contradicting operational flight logs; runway operational June 21, 2024.'
-        },
-        5: {
-          title: 'Code Checks Passed',
-          desc: 'All 7 deterministic code checks passed: SHA-256 verified, reopening date beat July 1 deadline by 10 days.'
-        },
-        6: {
-          title: 'Verdict Published',
-          desc: 'Published KEPT verdict: Runway 28L reopened ahead of schedule following $51M taxiway realignment.'
-        }
-      }
-    },
-    P06: {
-      id: 'P06',
-      label: '#18 · Vision Zero',
-      speaker: 'City & County of San Francisco',
-      title: 'Vision Zero: End Traffic Fatalities by 2024',
-      expectedVerdict: 'broken',
-      verdictLabel: 'BROKEN',
-      stages: {
-        1: {
-          title: 'Source Fetched',
-          desc: 'Archived municipal resolution 9e32a10f… from official City & County of San Francisco records.'
-        },
-        2: {
-          title: 'Quote Extracted',
-          desc: '“Adopt Vision Zero with the goal of eliminating all traffic fatalities in San Francisco by 2024.”'
-        },
-        3: {
-          title: 'Relevance Gate Passed',
-          desc: 'Relevance gate score 8/8: high-impact citywide transit and pedestrian safety mandate.'
-        },
-        4: {
-          title: 'Evidence Evaluated',
-          desc: 'Adjudicated 0 supporting vs 5 contradicting SFMTA collision records; 39 traffic fatalities logged in 2024.'
-        },
-        5: {
-          title: 'Code Checks Evaluated',
-          desc: 'Deterministic code checks evaluated target condition: fatalities > 0 at deadline triggers automatic broken verdict.'
-        },
-        6: {
-          title: 'Verdict Published',
-          desc: 'Published BROKEN verdict: fatal traffic collisions were not eliminated by the 2024 milestone.'
-        }
-      }
+    };
+  }
+
+  function buildScenarios(promises) {
+    const byId = {};
+    (promises || []).forEach(p => { byId[p.promise_id] = p; });
+    const scenarios = {};
+    SCENARIO_SHOWCASE_IDS.forEach(pid => {
+      if (byId[pid]) scenarios[pid] = scenarioFromRecord(byId[pid]);
+    });
+    // Honest degradation: if none of the showcase records are in the
+    // snapshot, build the walkthrough from whatever records the snapshot has.
+    if (!Object.keys(scenarios).length) {
+      (promises || []).slice(0, 2).forEach(p => { scenarios[p.promise_id] = scenarioFromRecord(p); });
     }
-  };
+    return scenarios;
+  }
 
   function triggerProgressBar() {
     const bar = document.getElementById('pipeline-progress-bar');
@@ -466,7 +607,7 @@
 
   function renderActiveStage(scenarioKey, stageNum) {
     currentStage = stageNum;
-    const scenario = SCENARIOS[scenarioKey] || SCENARIOS.P02;
+    const scenario = SCENARIOS[scenarioKey] || SCENARIOS[currentRunType] || Object.values(SCENARIOS)[0] || {};
     const stageIndicator = document.getElementById('pipeline-stage-indicator');
     const statusText = document.getElementById('packet-status-text');
     const trackFill = document.getElementById('packet-track-fill');
@@ -845,7 +986,7 @@
 
     const stEntries = Object.entries(SFPViz.countBySourceType(promises))
       .sort((a, b) => b[1] - a[1])
-      .map(([label, count]) => ({ label, count, color: 'var(--purple)' }));
+      .map(([st, count]) => ({ label: SFPViz.formatSourceTypeLabel(st), count, color: 'var(--purple)' }));
     renderBarRows(document.getElementById('viz-source-bars'), stEntries, total);
 
     renderTimelineChart(promises);
@@ -855,10 +996,39 @@
 
     const legendEl = document.getElementById('viz-timeline-legend');
     if (legendEl) {
-      legendEl.innerHTML = SFPViz.VERDICT_ORDER.map(v => `
+      // Legend derives from the data: only verdicts actually present get a
+      // row, so the timeline legend matches the verdict-distribution charts
+      // (a verdict like 'stalled' shows up only when a record carries it).
+      legendEl.innerHTML = SFPViz.VERDICT_ORDER
+        .filter(v => (verdictCounts[v] || 0) > 0)
+        .map(v => `
         <span class="viz-legend-item"><span class="viz-legend-swatch" style="background:${VERDICT_COLORS[v]}"></span>${formatVerdictLabel(v)}</span>
       `).join('');
     }
+
+    renderPhaseTimelines(promises);
+  }
+
+  // Outcome-timelines card (E5): one phase row per record with >= 2 dated
+  // phases, derived by SFPViz.phaseTimelines from the exported snapshot. Row
+  // count must reconcile with the export (tests + verify_demo node harness).
+  function renderPhaseTimelines(promises) {
+    const listEl = document.getElementById('viz-phase-timelines');
+    if (!listEl) return;
+    const rows = SFPViz.phaseTimelines(promises);
+    listEl.innerHTML = rows.map(row => {
+      const steps = row.phases.map(ph =>
+        `<span class="viz-phase-chip ${escapeHtml(ph.phase)}" title="${escapeHtml(ph.display)}">${escapeHtml(ph.label)} &mdash; ${escapeHtml(ph.display)}</span>`
+      ).join('<span class="viz-phase-arrow" aria-hidden="true">&rarr;</span>');
+      const spoken = row.phases.map(ph => `${ph.label} ${ph.display}`).join(', ');
+      return `
+        <div class="viz-phase-row${row.historyChanged ? ' showcase' : ''}" role="listitem"
+             aria-label="${escapeHtml(row.promiseId)} outcome timeline: ${escapeHtml(spoken)}">
+          <span class="viz-phase-id font-mono">${escapeHtml(row.promiseId)}</span>
+          <span class="viz-phase-name">${escapeHtml(row.label)}</span>
+          <span class="viz-phase-steps">${steps}</span>
+        </div>`;
+    }).join('');
   }
 
   // -------------------------------------------------------------------------
@@ -1085,6 +1255,19 @@
     const totalCount = (demoData && demoData.promises && demoData.promises.length) || 54;
     const showingCount = Math.min(visibleRowsCount, list.length);
 
+    // Zero-match empty state: at the point of emptiness, say so and offer the
+    // way out instead of rendering a bare header row.
+    const emptyStateEl = document.getElementById('promises-empty-state');
+    if (emptyStateEl) {
+      if (!list.length) {
+        emptyStateEl.innerHTML = SFPUX.noResultsHtml();
+        emptyStateEl.hidden = false;
+      } else {
+        emptyStateEl.innerHTML = '';
+        emptyStateEl.hidden = true;
+      }
+    }
+
     // Update status line
     const showingCountEl = document.getElementById('table-showing-count');
     const totalCountEl = document.getElementById('table-total-count');
@@ -1113,58 +1296,39 @@
       }
     }
 
-    // Render table rows
+    // Single render path: the exporter bakes the one record markup (the
+    // <tr class="promise-row"> rows in this tbody). Filtering, sorting and
+    // pagination reuse those baked rows — reorder them for sort, and toggle
+    // the paged classes for visibility — instead of regenerating a second
+    // client-side template that can drift from the baked one.
     const tbody = document.getElementById('promises-table-body');
 
     if (tbody) {
-      tbody.innerHTML = list.slice(0, showingCount).map((p, idx) => {
-        const rank = String(p.impact_rank || idx + 1).padStart(2, '0');
-        const pid = escapeHtml(p.promise_id || '');
-        const entity = escapeHtml(p.entity || '');
-        const role = escapeHtml(p.role || '');
-        const neighborhood = escapeHtml(p.neighborhood || 'Citywide San Francisco');
-        const promiseRaw = cleanQuoteText(p.promise_text || '');
-        const promiseClamped = escapeHtml(promiseRaw.slice(0, 150) + (promiseRaw.length > 150 ? '…' : ''));
-        const outcomeReason = escapeHtml(formatPlainVerdictReason(p.verdict_reason, p.verdict));
-        let promised = escapeHtml(p.promised_date_display || formatPrecisionDate(p.promised_date, p.promise_date_precision) || 'not recorded');
-        if (p.promised_date_note) promised += ' (derived)';
-        const due = escapeHtml(p.due_date_display || (p.due_date ? formatPrecisionDate(p.due_date, p.due_date_precision) : 'No deadline'));
-        const done = escapeHtml(p.opened_date || p.completed_date || (p.verdict === 'kept' ? 'Verified completed' : '—'));
-        const verdict = p.verdict || 'undecided';
-        const verdClass = verdict.toLowerCase().replace(/[\s-]+/g, '_');
-        const verdictLabel = formatVerdictLabel(verdict);
+      const rowsById = {};
+      Array.prototype.forEach.call(
+        tbody.querySelectorAll('tr[data-promise-id]'),
+        row => { rowsById[row.getAttribute('data-promise-id')] = row; }
+      );
 
-        return `
-          <tr class="promise-row" id="promise-${pid}" data-promise-id="${pid}" tabindex="0" role="button" aria-label="Inspect #${rank} ${entity}: ${promiseClamped.slice(0, 60)}">
-            <td class="table-entity-cell">
-              <div class="entity-headline-row">
-                <span class="table-entity-name">${entity}</span>
-              </div>
-              <div class="entity-sub-row font-mono">
-                <span class="table-role-tag">${role}</span>
-              </div>
-              <div class="entity-geo-tag font-mono">${neighborhood}</div>
-            </td>
-            <td class="table-quote-cell">
-              <div class="table-promise-block">
-                <blockquote class="table-quote-text font-serif">&ldquo;${promiseClamped}&rdquo;</blockquote>
-              </div>
-              <div class="table-outcome-block">
-                <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
-                <span class="table-outcome-text">${outcomeReason}</span>
-              </div>
-            </td>
-            <td class="table-verdict-cell">
-              <span class="verdict-chip ${verdClass}">${verdictLabel}</span>
-            </td>
-            <td class="table-timeline-cell font-mono">
-              <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">${promised}</span></div>
-              <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">${due}</span></div>
-              <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">${done}</span></div>
-            </td>
-          </tr>
-        `;
-      }).join('');
+      if (!Object.keys(rowsById).length) {
+        console.warn('renderExplore: no baked promise rows found in the table body; nothing to render');
+      }
+
+      const visible = list.slice(0, showingCount);
+      const shownIds = new Set(visible.map(p => String(p.promise_id)));
+
+      visible.forEach(p => {
+        const row = rowsById[String(p.promise_id)];
+        if (!row) return;
+        row.classList.remove('paged-row', 'hidden-page-row');
+        tbody.appendChild(row); // appendChild moves the node, producing sort order
+      });
+
+      Object.keys(rowsById).forEach(pid => {
+        if (!shownIds.has(pid)) {
+          rowsById[pid].classList.add('paged-row', 'hidden-page-row');
+        }
+      });
     }
 
     if (activeViewMode === 'map') {
@@ -1643,6 +1807,72 @@
   }
 
   // -------------------------------------------------------------------------
+  // Drawer pure render helpers (SFPDRAWER_PURE_START .. END)
+  //
+  // Self-contained (no closure over outer state) so tests/test_drawer_render.py
+  // can execute this marked block with node against docs/data.json and assert
+  // the drawer renders exactly what the export carries.
+  // -------------------------------------------------------------------------
+  /* SFPDRAWER_PURE_START */
+  const DRAWER_HISTORY_LABELS = {
+    kept: 'Kept',
+    broken: 'Broken',
+    in_progress: 'In progress',
+    undecided: 'Undecided',
+    delayed_or_partial: 'Delayed / partial',
+    kept_then_reversed: 'Later closed / reversed',
+    quarantined: 'Quarantined'
+  };
+
+  function drawerEscapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
+  // '2023-04-01T…' -> 'April 2023'; '' when absent or unparseable — a missing
+  // export date is never replaced with an invented one.
+  function formatHistoryMonth(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+  }
+
+  function verdictStepHtml(entry) {
+    const v = String((entry && entry.verdict) || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
+    const label = DRAWER_HISTORY_LABELS[v] || (entry && entry.verdict) || 'Undecided';
+    const when = formatHistoryMonth(entry && entry.decided_at);
+    const reason = entry && entry.reason ? ` title="${drawerEscapeHtml(entry.reason)}"` : '';
+    return `<span class="verdict-chip ${drawerEscapeHtml(v)}"${reason}>${drawerEscapeHtml(label)}${when ? ' — ' + drawerEscapeHtml(when) : ''}</span>`;
+  }
+
+  // Timeline replaces the single static chip only when history carries more
+  // than one verdict; single-verdict records keep the chip unchanged.
+  function verdictTimelineHtml(history) {
+    if (!Array.isArray(history) || history.length < 2) return null;
+    return history.map(verdictStepHtml)
+      .join('<span class="drawer-timeline-arrow" aria-hidden="true">&rarr;</span>');
+  }
+
+  // Provenance line for one verification row: model / reviewer / run / date,
+  // each only when the export records it. No entry or no provenance -> ''.
+  function checkProvenanceHtml(entry) {
+    if (!entry) return '';
+    const bits = [];
+    if (entry.model_id) bits.push(`model ${entry.model_id}`);
+    if (entry.checked_by) bits.push(`reviewer ${entry.checked_by}`);
+    if (entry.run_id) bits.push(`run ${entry.run_id}`);
+    if (entry.checked_at) bits.push(String(entry.checked_at).split('T')[0]);
+    if (!bits.length) return '';
+    return `<div class="drawer-check-provenance font-mono">${drawerEscapeHtml(bits.join(' · '))}</div>`;
+  }
+
+  const SFPDrawer = { verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth };
+  window.SFPDrawer = SFPDrawer;
+  /* SFPDRAWER_PURE_END */
+
+  // -------------------------------------------------------------------------
   // 4-Part Detail Drawer (1.4)
   // -------------------------------------------------------------------------
   function openInspectDrawer(promiseId) {
@@ -1678,71 +1908,29 @@
       }
     }
     if (titleEl) {
+      // Titles come from the export (PROMISE_TITLES is baked per record);
+      // the entity-name fallback is the exporter's own default shape.
       let t = p.document_title || p.title || '';
       if (!t || t.toLowerCase() === `${p.entity.toLowerCase()} commitment`) {
-        const fallbackTitles = {
-          P02: "24/7 Crisis Stabilization Center",
-          P05: "1,500 Shelter Beds in First 6 Months",
-          "SFO-01": "Runway 28L Safety Realignment & Reopening",
-          "SFO-02": "Harvey Milk Terminal 1 Final Completion",
-          "SFO-03": "Sustainable Aviation Fuel (SAF) Infrastructure",
-          "SFO-04": "Alaska Airlines Terminal 1 Flight Operations",
-          P21: "JFK Drive Permanent Car-Free Promenade",
-          P04: "Chase Center Valkyries Regular Season Games",
-          P82: "Valkyries WNBA Championship Guarantee",
-          P83: "Whole Foods Mid-Market Flagship Safety",
-          P11: "Grateful Dead Tour Retirement & Archival Shows",
-          P01: "Fentanyl State of Emergency Ordinance",
-          P59: "Zoox Driverless Passenger Ride Hail in SF",
-          P43: "Waymo Fully Autonomous Ride-Hail Expansion",
-          P41: "Central Subway Substantial Completion (2018)",
-          P10: "Mission Rock 40% Affordable Housing Pledges",
-          P18: "Housing Element: 82,200 New Homes by 2031",
-          P06: "Vision Zero: End Traffic Fatalities by 2024",
-          P08: "1,000 SRO Housing Units Improvement",
-          P22: "Embarcadero Navigation Center 200 Beds",
-          P17: "Hire 425 New SFPD Police Officers",
-          P25: "Close San Francisco Juvenile Hall Facility",
-          P12: "6,500 Shared E-Scooter Fleet Cap",
-          P26: "Empty Homes Tax: 4,500 Units in Year One",
-          P27: "Housing Trust Fund: $20M First-Year Budget",
-          P29: "Care Not Cash Homeless Services Reform",
-          P31: "Family Zoning Plan Neighborhood Housing",
-          P30: "Homelessness Recovery: 1,500 PSH Units",
-          P36: "CleanPowerSF 100% Renewable Electricity",
-          P09: "PG&E 10,000 Miles Underground Power Lines",
-          P61: "SFPUC Water System Improvement Program",
-          P66: "Chase Center Arena 18,064 Capacity Delivery",
-          P64: "Treasure Island 8,000 New Residential Units",
-          P84: "Pier 70 Historic Shipyard Redevelopment",
-          P86: "Potrero Power Station 2,600 Homes Plan",
-          P07: "3.5 Million New Homes in California by 2025",
-          P13: "10-Year Plan to End Chronic Homelessness",
-          P15: "Add 5,000 Supportive Housing Units in 10 Years",
-          P16: "Open 1,000 Additional Shelter Beds in SF",
-          P19: "Healthy San Francisco Universal Healthcare",
-          P20: "Interim Mayor Non-Candidacy Pledge",
-          P23: "Downtown Hospitality Corridor Recovery",
-          P28: "Open 250 Additional Behavioral Health Beds",
-          P35: "Mental Health SF Reform Implementation",
-          P38: "Reduce PSPS Wildfire Outage Scope by Half",
-          P39: "Install 7,500 EV Charging Ports",
-          P40: "PG&E Fleet Vehicle Electrification by 2030",
-          P57: "Comcast Gigabit Fiber-to-the-Home Network",
-          P03: "Permitting Reform & Small Business Overhaul",
-          P58: "AT&T Public Market Street Wi-Fi Expansion",
-          P62: "Visa Mission Rock HQ 1,500 Staff Occupancy",
-          P65: "Central Subway Contract Completion (May 2018)",
-          P85: "Central Subway Chinatown & North Beach Study"
-        };
-        t = fallbackTitles[p.promise_id] || `${p.entity} Commitment`;
+        t = `${p.entity} Commitment`;
       }
       titleEl.textContent = t;
     }
     const verdClass = (p.verdict || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
+    // When the export carries more than one verdict, the static chip is
+    // replaced by the history timeline; single-verdict records keep the chip.
+    const timelineHtml = window.SFPDrawer
+      ? window.SFPDrawer.verdictTimelineHtml(p.verdict_history)
+      : null;
+    const timelineWrap = document.getElementById('drawer-verdict-timeline');
     if (chipEl) {
       chipEl.className = `verdict-chip ${verdClass}`;
       chipEl.textContent = formatVerdictLabel(p.verdict);
+      chipEl.classList.toggle('hidden', Boolean(timelineHtml));
+    }
+    if (timelineWrap) {
+      timelineWrap.innerHTML = timelineHtml || '';
+      timelineWrap.classList.toggle('hidden', !timelineHtml);
     }
     if (horizonBadge) {
       horizonBadge.classList.toggle('hidden', !p.long_horizon);
@@ -1791,8 +1979,23 @@
     const mediaImg = document.getElementById('drawer-media-img');
     const mediaCaption = document.getElementById('drawer-media-caption');
     const imgUrl = p.media_image_url || p.image_url;
+    const mediaFallback = document.getElementById('drawer-media-fallback');
     if (imgUrl && mediaBox && mediaImg) {
       mediaBox.style.display = 'block';
+      // A hotlinked image that fails to load shows the styled fallback, never
+      // the browser's broken-image glyph or alt text.
+      if (mediaFallback) mediaFallback.hidden = true;
+      mediaImg.style.display = '';
+      mediaImg.onerror = () => {
+        mediaImg.style.display = 'none';
+        if (mediaFallback) mediaFallback.hidden = false;
+      };
+      mediaImg.onload = () => {
+        if (mediaFallback) mediaFallback.hidden = true;
+      };
+      if (mediaImg.getAttribute('src') === imgUrl) {
+        mediaImg.removeAttribute('src');
+      }
       mediaImg.src = imgUrl;
       mediaImg.alt = p.media_caption || (titleEl ? titleEl.textContent : '') || 'Source media photo';
       if (mediaCaption) mediaCaption.textContent = p.media_caption || 'Verified source photographic archive';
@@ -1951,6 +2154,13 @@
 
     let failedCheckCount = 0;
     const failedNameSet = new Set(Array.isArray(p.failed_check_names) ? p.failed_check_names : []);
+    // Per-review provenance (model/reviewer/run) indexed by check id; only
+    // rows the export carries provenance for render a provenance line.
+    const verifByCheck = {};
+    (Array.isArray(p.verification_history) ? p.verification_history : []).forEach(v => {
+      if (v && v.check) verifByCheck[v.check] = v;
+    });
+    const provFor = id => (window.SFPDrawer ? window.SFPDrawer.checkProvenanceHtml(verifByCheck[id]) : '');
     const resolvedChecks = checkDefinitions.map(def => {
       if (def.id === 'relevance_gate') {
         const pass = relScore >= 5;
@@ -1958,7 +2168,8 @@
         return {
           title: def.title,
           pass,
-          desc: def.defaultDesc
+          desc: def.defaultDesc,
+          provenance: provFor(def.id)
         };
       }
       const item = checkMap[def.id];
@@ -1968,7 +2179,8 @@
         return {
           title: def.title,
           pass,
-          desc: item.reason || (pass ? 'Check passed.' : 'Verification check failed or unrecorded.')
+          desc: item.reason || (pass ? 'Check passed.' : 'Verification check failed or unrecorded.'),
+          provenance: provFor(def.id)
         };
       }
       const flaggedMissing = failedNameSet.has(def.id);
@@ -1976,7 +2188,8 @@
       return {
         title: def.title,
         pass: !flaggedMissing,
-        desc: flaggedMissing ? 'Verification check failed or unrecorded.' : def.defaultDesc
+        desc: flaggedMissing ? 'Verification check failed or unrecorded.' : def.defaultDesc,
+        provenance: provFor(def.id)
       };
     });
 
@@ -1995,6 +2208,7 @@
           <div class="drawer-check-desc">
             <strong>${escapeHtml(c.title)}</strong>
             <div style="font-size: 0.76rem; color: var(--muted); margin-top: 2px;">${escapeHtml(c.desc)}</div>
+            ${c.provenance || ''}
           </div>
         </div>
       `).join('');
@@ -2014,7 +2228,12 @@
 
     const changelogEl = document.getElementById('drawer-changelog-entry');
     const copyReceiptBtn = document.getElementById('btn-copy-receipt');
-    const receiptText = `COMMITMENT #${rank} (${p.promise_id}) · VERDICT=${(p.verdict || 'KEPT').toUpperCase()} · HASH=${(p.source_hash || '').slice(0, 16)}… · RUN=ARBITRATOR_RUN_accd67e9`;
+    // Receipt is built from exported fields; the run id comes from the
+    // snapshot's recorded integration run, never a hardcoded literal.
+    const runId = (demoData && demoData.database_status &&
+      ((demoData.database_status.latest_run || {}).run_id ||
+       (demoData.database_status.integration_run || {}).run_id)) || 'RUN_UNRECORDED';
+    const receiptText = `COMMITMENT #${rank} (${p.promise_id}) · VERDICT=${(p.verdict || 'undecided').toUpperCase()} · HASH=${(p.source_hash || '').slice(0, 16)}… · RUN=${runId}`;
     if (changelogEl) {
       changelogEl.textContent = receiptText;
     }
@@ -2217,30 +2436,42 @@
       });
     }
 
+    // Shared reset used by both clear-filters buttons (status line and the
+    // zero-match empty state).
+    function clearAllFilters() {
+      searchTerm = '';
+      filterVerdict = 'all';
+      filterCategory = 'all';
+      filterEntity = 'all';
+      filterTier = 'all';
+      filterPillar = 'all';
+      filterAuditFlag = 'all';
+      filterSort = 'rank';
+      visibleRowsCount = 10;
+      if (searchInput) searchInput.value = '';
+      if (fCat) fCat.value = 'all';
+      if (fEnt) fEnt.value = 'all';
+      if (fTier) fTier.value = 'all';
+      if (fPillar) fPillar.value = 'all';
+      if (fAuditFlag) fAuditFlag.value = 'all';
+      if (fSort) fSort.value = 'rank';
+      document.querySelectorAll('.btn-seg-verdict').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-verdict') === 'all');
+      });
+      renderExplore();
+    }
+
     // Clear filters button
     const btnClear = document.getElementById('btn-clear-filters');
     if (btnClear) {
-      btnClear.addEventListener('click', () => {
-        searchTerm = '';
-        filterVerdict = 'all';
-        filterCategory = 'all';
-        filterEntity = 'all';
-        filterTier = 'all';
-        filterPillar = 'all';
-        filterAuditFlag = 'all';
-        filterSort = 'rank';
-        visibleRowsCount = 10;
-        if (searchInput) searchInput.value = '';
-        if (fCat) fCat.value = 'all';
-        if (fEnt) fEnt.value = 'all';
-        if (fTier) fTier.value = 'all';
-        if (fPillar) fPillar.value = 'all';
-        if (fAuditFlag) fAuditFlag.value = 'all';
-        if (fSort) fSort.value = 'rank';
-        document.querySelectorAll('.btn-seg-verdict').forEach(b => {
-          b.classList.toggle('active', b.getAttribute('data-verdict') === 'all');
-        });
-        renderExplore();
+      btnClear.addEventListener('click', clearAllFilters);
+    }
+
+    // Zero-match empty state: its clear-filters button reuses the same reset.
+    const emptyState = document.getElementById('promises-empty-state');
+    if (emptyState) {
+      emptyState.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-clear-filters-empty')) clearAllFilters();
       });
     }
 
@@ -2294,13 +2525,31 @@
       });
     }
 
-    // Escape key listener for drawer
+    // Escape closes the drawer; Tab is trapped inside it while it is open.
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const backdrop = document.getElementById('inspect-drawer-backdrop');
-        if (backdrop && !backdrop.classList.contains('hidden')) {
-          closeInspectDrawer();
-        }
+      const backdrop = document.getElementById('inspect-drawer-backdrop');
+      const drawerOpen = !!(backdrop && !backdrop.classList.contains('hidden'));
+      if (e.key === 'Escape' && drawerOpen) {
+        closeInspectDrawer();
+      } else if (e.key === 'Tab' && drawerOpen) {
+        const drawer = document.getElementById('inspect-drawer');
+        if (!drawer) return;
+        const focusables = Array.prototype.filter.call(
+          drawer.querySelectorAll(
+            'a[href], button:not([disabled]), input:not([disabled]), ' +
+            'select:not([disabled]), textarea:not([disabled]), ' +
+            '[tabindex]:not([tabindex="-1"])'
+          ),
+          el => el.getClientRects().length > 0
+        );
+        if (!focusables.length) return;
+        const next = SFPUX.nextFocusableIndex(
+          focusables.length,
+          focusables.indexOf(document.activeElement),
+          e.shiftKey
+        );
+        e.preventDefault();
+        focusables[next].focus();
       }
     });
 

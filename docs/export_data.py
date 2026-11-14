@@ -441,6 +441,7 @@ PROMISE_TITLES = {
     "P23": "Downtown Hospitality Corridor Recovery",
     "P28": "Open 250 Additional Behavioral Health Beds",
     "P35": "Mental Health SF Reform Implementation",
+    "P37": "Tenderloin & Encampment Outreach",
     "P38": "Reduce PSPS Wildfire Outage Scope by Half",
     "P39": "Install 7,500 EV Charging Ports",
     "P40": "PG&E Fleet Vehicle Electrification by 2030",
@@ -460,7 +461,7 @@ PROMISE_FACTUAL_OUTCOMES = {
     "SFO-02": "Harvey Milk Terminal 1 final phase completed July 1, 2024, delivering all 25 gates and post-security concourse connections under $2.4B program.",
     "P21": "Board of Supervisors voted 7-4 to make JFK Drive permanent car-free promenade; reaffirmed by San Francisco voters via Prop J.",
     "P04": "Golden State Valkyries officially scheduled and hosted inaugural WNBA regular season home games at Chase Center.",
-    "P82": "Guaranteed WNBA championship within first five years of Valkyries franchise; five-year term active through October 2028.",
+    "P82": "Won the 2026 WNBA Finals on October 31, 2026, defeating Atlanta in Game 7 — fulfilling the five-year championship guarantee in year two.",
     "P83": "Opened 64,737-sq-ft flagship store at 8th and Market on March 10, 2022; later temporarily suspended operations in April 2023.",
     "P11": "Promised final tour retirement; Dead & Company subsequently staged multi-month Sphere residency and 3-day Golden Gate Park concerts.",
     "SFO-03": "Active commercial SAF intake delivered through SFO hydrant pipeline system; airline net-zero fleet target ongoing through 2050.",
@@ -932,6 +933,32 @@ REJECTED_CANDIDATE_P68 = {
 }
 
 
+def synthesize_verdict_history(verdict, decided_at):
+    """Snapshot-only fallback for records whose history is not in the export DB.
+
+    Builds the minimum honest history from the record itself. A
+    kept_then_reversed verdict is the product of an append-only reopen (the
+    original kept row comes first and is never mutated), so the entry pair is
+    recorded; the original row's decided_at lives only in the promises DB and
+    is left out rather than invented.
+    """
+    v = (verdict or "undecided").lower()
+    entries = [{
+        "verdict": "kept",
+        "reason": "Kept at publish; the original verdict row is retained by the append-only reopen.",
+    }] if v == "kept_then_reversed" else []
+    newest = {"verdict": v}
+    # Delta encoding: the newest entry's verdict/decided_at/reason are the
+    # record's own fields (verdict, decided_at, verdict_reason), so only
+    # decided_at is carried and consumers fall back to the record for the
+    # rest. DB-only provenance (reviewer/model_id) is unknown here and is
+    # omitted rather than padded with nulls.
+    if decided_at:
+        newest["decided_at"] = decided_at
+    entries.append(newest)
+    return entries
+
+
 def sanitize_export_paths(obj):
     if isinstance(obj, dict):
         return {k: sanitize_export_paths(v) for k, v in obj.items()}
@@ -1001,6 +1028,63 @@ def _load_from_db(db_path):
         latest_checks[(vr["promise_id"], vr["check_type"])] = {
             "passed": bool(vr["passed"]), "reason": vr["reason"]}
 
+    # E2: verdict history — every verdicts row per promise, oldest first.
+    # Verdicts are append-only (reopen_promise_verdict never mutates a row),
+    # so a reopened promise carries both rows and the transition stays
+    # inspectable in the snapshot instead of being overwritten. Column set
+    # varies between the live schema and the legacy demo DB; introspect it.
+    verdict_cols = {r[1] for r in cur.execute("PRAGMA table_info(verdicts)")}
+    _vsel = "promise_id, verdict, reason, decided_at"
+    _vsel += ", decided_by" if "decided_by" in verdict_cols else ", NULL as decided_by"
+    _vsel += ", model_id" if "model_id" in verdict_cols else ", NULL as model_id"
+    # Delta encoding: fields that are null in the DB (e.g. model_id on older
+    # verdict rows) are omitted rather than padded, and the newest entry's
+    # reason is dropped when it repeats the record's own verdict_reason —
+    # consumers fall back to the record fields.
+    verdict_history = {}
+    for vr in cur.execute(f"SELECT {_vsel} FROM verdicts ORDER BY decided_at ASC").fetchall():
+        entry = {"verdict": (vr["verdict"] or "").lower()}
+        if vr["decided_at"]:
+            entry["decided_at"] = vr["decided_at"]
+        if vr["decided_by"]:
+            entry["reviewer"] = vr["decided_by"]
+        if vr["model_id"]:
+            entry["model_id"] = vr["model_id"]
+        if vr["reason"]:
+            entry["reason"] = vr["reason"]
+        verdict_history.setdefault(vr["promise_id"], []).append(entry)
+
+    # E2: verification history — provenance per check type. The verifications
+    # table accumulates one row per pipeline round (1,000+ rows corpus-wide);
+    # the snapshot carries the latest row per (promise, check) so every check
+    # is inspectable with its provenance without replaying every round. Full
+    # round-by-round granularity stays in the database.
+    _chk_cols = {r[1] for r in cur.execute("PRAGMA table_info(verifications)")}
+    _csel = "promise_id, check_type, passed, checked_at"
+    _csel += ", checked_by" if "checked_by" in _chk_cols else ", NULL as checked_by"
+    _csel += ", model_id" if "model_id" in _chk_cols else ", NULL as model_id"
+    _csel += ", run_id" if "run_id" in _chk_cols else ", NULL as run_id"
+    verification_history = {}
+    _vrank = ("ROW_NUMBER() OVER (PARTITION BY promise_id, check_type "
+              "ORDER BY checked_at DESC) AS _rank")
+    _latest_sql = (
+        f"SELECT {_csel}, {_vrank} FROM verifications"
+    )
+    for vr in cur.execute(
+            f"SELECT promise_id, check_type, passed, checked_at, checked_by, "
+            f"model_id, run_id FROM ({_latest_sql}) WHERE _rank = 1 "
+            f"ORDER BY checked_at ASC").fetchall():
+        entry = {"check": vr["check_type"], "passed": bool(vr["passed"])}
+        if vr["checked_at"]:
+            entry["checked_at"] = vr["checked_at"]
+        if vr["checked_by"]:
+            entry["checked_by"] = vr["checked_by"]
+        if vr["model_id"]:
+            entry["model_id"] = vr["model_id"]
+        if vr["run_id"]:
+            entry["run_id"] = vr["run_id"]
+        verification_history.setdefault(vr["promise_id"], []).append(entry)
+
     for row in rows:
         pid = row["promise_id"]
         text = row["promise_text"]
@@ -1051,6 +1135,7 @@ def _load_from_db(db_path):
             "entity_type": etype,
             "category": SF_CATEGORY_MAP.get(pid, "Civic Governance"),
             "neighborhood": NEIGHBORHOOD_MAP.get(pid, "San Francisco"),
+            "geographic_scope": GEOGRAPHIC_SCOPES.get(pid),
             "promised_date": pdate,
             "due_date": ddate,
             "page_number": None,
@@ -1066,8 +1151,18 @@ def _load_from_db(db_path):
             "reading_used": reading,
             "decided_at": decided_at,
             "advocate_bundles": {"kept": kept_staging, "broken": broken_staging},
-            "checks": item_checks
+            "checks": item_checks,
+            "verdict_history": verdict_history.get(pid) or synthesize_verdict_history(verd, decided_at),
+            # No verifications rows for this promise in the export DB: an
+            # honest empty history; the latest check state rides in `checks`.
+            "verification_history": verification_history.get(pid) or []
         })
+        # Delta encoding: the newest verdict-history entry repeats the
+        # record's current verdict/reason, so a duplicate reason is dropped
+        # and consumers fall back to the record fields.
+        vh = all_promises[-1]["verdict_history"]
+        if vh and vh[-1].get("reason") == all_promises[-1]["verdict_reason"]:
+            del vh[-1]["reason"]
 
     total_db_promises = cur.execute("SELECT count(DISTINCT promise_id) FROM promises").fetchone()[0]
     total_db_verdicts = cur.execute("SELECT count(*) FROM verdicts").fetchone()[0]
@@ -1129,7 +1224,9 @@ def _load_from_db(db_path):
                 "source_hash": _r["source_hash"],
             })
     _qdb.close()
-    _qrows = real_quarantined
+    # Rows already live in real_quarantined; update them in place. (The
+    # original code aliased _qrows to real_quarantined and re-appended each
+    # row, spinning forever whenever the quarantined table had a row.)
     _csv_text = {}
     for cp in ("data/promises-P13-P112.csv", "/home/ari/sf-promises/Archil Hackathon Nov 10 - SF Promises Export/data/promises-P13-P112.csv"):
         if os.path.exists(cp):
@@ -1138,7 +1235,7 @@ def _load_from_db(db_path):
                     _csv_text[_r["promise_id"]] = _r["promise_text"]
             break
 
-    for _qr in _qrows:
+    for _qr in real_quarantined:
         _qpid = _qr["promise_id"]
         _qr.update({
             "title": _csv_text.get(_qpid, _qpid),
@@ -1147,12 +1244,21 @@ def _load_from_db(db_path):
             "failing_check": "Relevance Gate 2.5 (code-only)",
             "relevance": {},
             "agent": "relevance_gate",
-            "destination": "quarantined table in promises.db",
+            "destination": "Held back. Never published.",
         })
-        real_quarantined.append(_qr)
     _db_ids = {p["promise_id"] for p in all_promises}
-    _q_ids = {_qr["promise_id"] for _qr in _qrows}
+    _q_ids = {_qr["promise_id"] for _qr in real_quarantined}
     pending_ids = sorted(set(_csv_text) - _db_ids - _q_ids)
+    if not _csv_text and os.path.exists(OUT_JSON):
+        # The seed CSV lives on the export worker, not in git. Without it the
+        # pending queue would silently vanish from the snapshot, so carry it
+        # forward from the last committed export instead.
+        try:
+            with open(OUT_JSON, encoding="utf-8") as _pf:
+                _prev = json.load(_pf)
+            pending_ids = list(_prev.get("database_status", {}).get("pending_intake_ids", []))
+        except (OSError, ValueError):
+            pass
 
     return all_promises, total_db_promises, total_db_verdicts, total_db_evidence, test_runs, real_quarantined, pending_ids
 
@@ -1192,6 +1298,18 @@ def export():
         if sfo["promise_id"] not in existing_pids:
             all_promises.append(dict(sfo))
 
+    # E2: the no-DB fallback path loads records from the previous snapshot;
+    # keep history that a prior DB-backed export recorded and synthesize the
+    # minimum honest history where none exists. With no verifications table
+    # available, verification history stays empty — the latest check state
+    # rides in `checks` — rather than padding null provenance.
+    for p in all_promises:
+        if not p.get("verdict_history"):
+            p["verdict_history"] = synthesize_verdict_history(
+                p.get("verdict"), p.get("decided_at"))
+        if not p.get("verification_history"):
+            p["verification_history"] = []
+
     # Re-apply taxonomy, neighborhood map, and deterministic patches across all rows
     for p in all_promises:
         pid = p["promise_id"]
@@ -1199,6 +1317,8 @@ def export():
             p["category"] = SF_CATEGORY_MAP[pid]
         if pid in NEIGHBORHOOD_MAP:
             p["neighborhood"] = NEIGHBORHOOD_MAP[pid]
+        if pid in GEOGRAPHIC_SCOPES:
+            p["geographic_scope"] = GEOGRAPHIC_SCOPES[pid]
 
         if pid == "P02":
             p["source_id"] = "S582955d5df78"
@@ -1216,6 +1336,12 @@ def export():
         elif pid == "P61":
             p["promise_text"] = "On July 28, 2009, the Commission approved a revised WSIP schedule and budget of $4,586 million with an overall targeted program completion date of December 4, 2015."
             p["neighborhood"] = "Regional / Northern California (SFPUC Water System)"
+        elif pid == "P36":
+            # The promise text is CleanPowerSF's own commitment ("CleanPowerSF
+            # has conservatively committed to increasing..."); the pipeline's
+            # entity link resolves to Ed Lee, but the curated demo attribution
+            # is the CleanPowerSF program, matching every curated map below.
+            p["entity"] = "CleanPowerSF"
         elif pid == "P17":
             p["due_date_label"] = "Derived (3-year horizon from Jan 2025 inauguration)"
         elif pid in ("P43", "P59") and p.get("promised_date") == p.get("due_date"):
@@ -1393,8 +1519,6 @@ def export():
 
     for p in all_promises:
         p["source_tier"] = get_source_tier(p.get("source_url", ""))
-        if p.get("promise_id") == "P05" and not p.get("promise_text", "").startswith("[Reported by"):
-            p["promise_text"] = f"[Reported by The Frisc] {p['promise_text']}"
 
     sourcing_audit = {}
     if os.path.exists("data/intake_candidate_register.json"):
@@ -1646,7 +1770,10 @@ def format_plain_verdict_reason(reason, verdict=None):
     import re
     cleaned = re.sub(r'\s*\([^)]*\)', '', r)
     cleaned = re.sub(r'\s*\[[^\]]*\]', '', cleaned)
-    return cleaned.strip() or r
+    cleaned = cleaned.strip() or r
+    # Display strings must not start lowercase: pipeline reasons like
+    # "re-open: 30-show Sphere leg..." surface verbatim in the demo.
+    return cleaned[0].upper() + cleaned[1:] if cleaned[:1].islower() else cleaned
 
 
 def generate_promise_row_html(p, idx=0):
@@ -1689,7 +1816,7 @@ def generate_promise_row_html(p, idx=0):
 
     paged_cls = " paged-row hidden-page-row" if idx >= 10 else ""
 
-    return f'''              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_clamped[:60]}">
+    return f'''              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_clamped}">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">{entity}</span>
@@ -1718,44 +1845,6 @@ def generate_promise_row_html(p, idx=0):
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>'''
-
-
-def generate_mobile_promise_card_html(p, idx=0):
-    rank = f"{idx + 1:02d}"
-    pid = html_esc(p.get("promise_id", ""))
-    entity = html_esc(p.get("entity", ""))
-    
-    promise_raw = clean_quote_text(p.get("promise_text", ""))
-    promise_140 = html_esc(promise_raw[:140] + ("…" if len(promise_raw) > 140 else ""))
-
-    precision = p.get("promise_date_precision", "day")
-    promised_raw = p.get("promised_date", "not recorded")
-    promised = html_esc(format_precision_date(promised_raw, precision))
-    if p.get("promised_date_note"):
-        promised += " (derived)"
-
-    verdict = p.get("verdict", "undecided")
-    verd_class = verdict.lower().replace(" ", "_")
-    verdict_label = format_verdict_label(verdict)
-
-    paged_cls = " paged-card hidden-page-card" if idx >= 10 else ""
-
-    return f'''              <div class="mobile-promise-card{paged_cls}" data-pid="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_140[:60]}">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">{entity}</span>
-                    <span class="mobile-card-id font-mono">#{rank}</span>
-                  </div>
-                  <span class="verdict-chip {verd_class}">{verdict_label}</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;{promise_140}&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said {promised}</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>'''
 
 
 def generate_featured_stories_html(promises, quarantined):
@@ -1943,7 +2032,6 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     html = re.sub(r'href="styles\.css(?:\?[^"]*)?"', f'href="styles.css?v={commit_sha}"', html)
     html = re.sub(r'src="data\.js(?:\?[^"]*)?"', f'src="data.js?v={commit_sha}"', html)
     html = re.sub(r'src="app\.js(?:\?[^"]*)?"', f'src="app.js?v={commit_sha}"', html)
-    html = re.sub(r'src="list\.min\.js(?:\?[^"]*)?"', f'src="list.min.js?v={commit_sha}"', html)
 
     # Update tally numbers in hero & bar
     html = re.sub(r'(<strong id="tally-total">)[^<]*(</strong>)', rf'\g<1>{len(promises)}\g<2>', html)
@@ -1998,7 +2086,7 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
 
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"  Pre-rendered {len(promises)} promise rows, {len(promises)} mobile cards, and {len(quarantined)} quarantine items into docs/index.html")
+    print(f"  Pre-rendered {len(promises)} promise rows and {len(quarantined)} quarantine items into docs/index.html")
 
     # Sync and validate standardized master CSV for Adaption & tabular tools
     try:

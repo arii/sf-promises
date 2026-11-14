@@ -105,11 +105,13 @@ class TestDemoVisualizations(unittest.TestCase):
     def test_verdict_counts_reconcile_with_totals(self):
         counts = self.py_verdicts()
         self.assertEqual(sum(counts.values()), len(self.promises))
-        # README's last-known benchmark numbers
-        self.assertEqual(counts.get("kept"), 25)
+        # README's last-known benchmark numbers; P83 moved to
+        # kept_then_reversed in the E1b reopen.
+        self.assertEqual(counts.get("kept"), 24)
         self.assertEqual(counts.get("in_progress"), 10)
         self.assertEqual(counts.get("broken"), 17)
         self.assertEqual(counts.get("undecided"), 2)
+        self.assertEqual(counts.get("kept_then_reversed"), 1)
 
     def test_timeline_covers_every_promise_once(self):
         buckets = run_pure_fn("countByYearAndVerdict")
@@ -184,6 +186,111 @@ class TestDemoVisualizations(unittest.TestCase):
         if total is not None:
             self.assertEqual(sum(d["count"] for d in js), total)
 
+    # ---- outcome-phase timelines (E5) ----
+
+    @staticmethod
+    def _date_key(value):
+        # Mirrors the pure block's dateKey: 'YYYY-MM-DD…' -> 'YYYY-MM-DD'.
+        import re
+        s = str(value or "").strip()
+        m = re.match(r"^(\d{4}-\d{2}-\d{2})", s)
+        return m.group(1) if m else None
+
+    def py_outcome_phases(self, p):
+        # Independent re-derivation of the phase rules from the export:
+        # made <- promise_made_date/promised_date; due <- deadline_date/
+        # due_date; delivered <- completion_date, else for kept outcomes the
+        # earliest kept-advocate evidence date; reversed <- the kept_then_
+        # reversed verdict-history date (kept_then_reversed records only).
+        phases = []
+        made = self._date_key(p.get("promise_made_date")) or self._date_key(p.get("promised_date"))
+        if made:
+            phases.append(("made", made))
+        due = self._date_key(p.get("deadline_date")) or self._date_key(p.get("due_date"))
+        if due:
+            phases.append(("due", due))
+        verdict = (p.get("verdict") or "undecided").lower().replace(" ", "_").replace("-", "_")
+        delivered = self._date_key(p.get("completion_date"))
+        if not delivered and verdict in ("kept", "kept_then_reversed"):
+            kept_claims = ((p.get("advocate_bundles") or {}).get("kept") or {}).get("claims") or []
+            dates = sorted(d for d in (self._date_key(c.get("evidence_date")) for c in kept_claims) if d)
+            delivered = dates[0] if dates else None
+        if delivered:
+            phases.append(("delivered", delivered))
+        if verdict == "kept_then_reversed":
+            history = p.get("verdict_history") or []
+            for entry in reversed(history):
+                if (entry.get("verdict") or "").lower() == "kept_then_reversed":
+                    rev = self._date_key(entry.get("decided_at"))
+                    if rev:
+                        phases.append(("reversed", rev))
+                    break
+        return phases
+
+    def py_phase_timelines(self):
+        rows = []
+        for p in self.promises:
+            phases = self.py_outcome_phases(p)
+            if len(phases) < 2:
+                continue
+            history = p.get("verdict_history") or []
+            rows.append({
+                "promiseId": str(p.get("promise_id") or ""),
+                "displayNo": p.get("display_no") if isinstance(p.get("display_no"), (int, float)) else None,
+                "historyChanged": len(history) > 1,
+                "reversed": any(ph[0] == "reversed" for ph in phases),
+                "phases": phases,
+            })
+        return sorted(rows, key=lambda r: (
+            not r["reversed"],
+            not r["historyChanged"],
+            r["displayNo"] if r["displayNo"] is not None else float("inf"),
+            r["promiseId"],
+        ))
+
+    def test_phase_timelines_match_export(self):
+        js = run_pure_fn("phaseTimelines")
+        expected = self.py_phase_timelines()
+        self.assertEqual([r["promiseId"] for r in js], [r["promiseId"] for r in expected])
+        for got, exp in zip(js, expected):
+            self.assertEqual(
+                [(ph["phase"], ph["date"]) for ph in got["phases"]], exp["phases"],
+                f"{got['promiseId']} phase dates differ from the export",
+            )
+
+    def test_phase_timeline_renders_iff_two_dated_events(self):
+        # The rendered row count equals the number of records carrying >= 2
+        # dated phases, and every record with < 2 is excluded.
+        js = run_pure_fn("phaseTimelines")
+        expected_ids = [r["promiseId"] for r in self.py_phase_timelines()]
+        self.assertEqual([r["promiseId"] for r in js], expected_ids)
+        self.assertLess(len(expected_ids), len(self.promises))  # gate actually filters
+
+    def test_p83_outcome_phases_fixture(self):
+        # Unit check of the derivation function against the corpus fixture:
+        # P83 is made -> due -> delivered -> reversed, its reversal date being
+        # the kept_then_reversed verdict-history entry the drawer also shows.
+        js = run_pure_fn("outcomePhases", "promises.find(x => x.promise_id === 'P83')")
+        p83 = next(p for p in self.promises if p["promise_id"] == "P83")
+        reversal = next(
+            self._date_key(e.get("decided_at")) for e in reversed(p83["verdict_history"])
+            if (e.get("verdict") or "").lower() == "kept_then_reversed"
+        )
+        self.assertEqual(js, [
+            {"phase": "made", "date": "2022-02-17"},
+            {"phase": "due", "date": "2022-03-10"},
+            {"phase": "delivered", "date": "2022-03-10"},
+            {"phase": "reversed", "date": reversal},
+        ])
+        self.assertEqual(reversal, "2026-11-14")
+
+    def test_p83_leads_timeline_with_reversed_phase(self):
+        js = run_pure_fn("phaseTimelines")
+        self.assertEqual(js[0]["promiseId"], "P83")
+        phase_names = [ph["phase"] for ph in js[0]["phases"]]
+        self.assertIn("made", phase_names)
+        self.assertIn("reversed", phase_names)
+
     def test_audit_panel_hooks_present(self):
         for hook in ("audit-funnel-bars", "audit-window-funnel-bars", "audit-reason-bars", "audit-denial-bars"):
             self.assertIn(hook, self.index_html)
@@ -194,7 +301,8 @@ class TestDemoVisualizations(unittest.TestCase):
     def test_visualization_section_present(self):
         self.assertIn('id="visualizations"', self.index_html)
         for hook in ("viz-verdict-bars", "viz-domain-bars", "viz-timeline",
-                     "viz-timeline-legend", "viz-source-bars", "viz-total"):
+                     "viz-timeline-legend", "viz-source-bars", "viz-total",
+                     "viz-phase-timelines"):
             self.assertIn(hook, self.index_html)
             self.assertIn(hook, self.app_js)
 

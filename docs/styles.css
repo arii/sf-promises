@@ -1,5 +1,183 @@
+/* Self-hosted fonts (latin subsets): replaces fonts.googleapis.com so the
+   demo has zero external runtime assets. Files live in docs/fonts/. */
+@font-face {
+  font-family: 'DM Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/dmsans-400-italic.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/dmsans-400.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/dmsans-500.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/dmsans-600.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/dmsans-700.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/jetbrainsmono-400.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/jetbrainsmono-500.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/jetbrainsmono-600.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/jetbrainsmono-700.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/newsreader-400-italic.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/newsreader-500-italic.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/newsreader-400.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/newsreader-500.woff2') format('woff2');
+  
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/newsreader-600.woff2') format('woff2');
+  
+}
+
 /* SF Promises — Civic Record San Francisco Design System */
 /* Editorial Serif + DM Sans Clean Modern Aesthetic */
+
+/* Data-load states: a loading line for the late-fetch path and a visible
+   alert banner when the snapshot fails to load entirely. */
+.data-load-status {
+  margin: 10px auto 0;
+  max-width: 1100px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.data-load-error {
+  margin: 10px auto 0;
+  max-width: 1100px;
+  padding: 14px 18px;
+  border: 1px solid var(--red, #ef4444);
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--ink);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+/* Zero-match empty state inside the explore table container. */
+.promises-empty-state {
+  padding: 34px 20px;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  margin: 12px 0;
+}
+
+.promises-empty-state .no-results-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.promises-empty-state .no-results-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.btn-clear-filters-empty {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-clear-filters-empty:hover {
+  background: var(--surface-raised, var(--surface));
+  border-color: var(--ink-dim, var(--line));
+}
+
 
 :root {
   --bg: #0f1a26;
@@ -441,6 +619,44 @@ a:hover {
   background: rgba(245, 158, 11, 0.15);
   color: #fbbf24;
   border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+/* Verdict history timeline (multi-verdict records, e.g. kept_then_reversed).
+   Steps reuse the existing verdict-chip styling. */
+.drawer-verdict-timeline {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.drawer-verdict-timeline .verdict-chip {
+  font-size: 0.72rem;
+}
+
+.drawer-timeline-arrow {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.drawer-check-provenance {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 4px;
+  word-break: break-word;
+}
+
+.drawer-media-fallback {
+  padding: 18px 14px;
+  border: 1px dashed var(--line, rgba(255, 255, 255, 0.15));
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.drawer-media-fallback[hidden] {
+  display: none;
 }
 
 
@@ -3964,6 +4180,23 @@ a:hover {
 .bar-segment {
   height: 100%;
   transition: width 0.3s ease;
+  position: relative;
+}
+
+/* The undecided slice is ~14px wide at mobile widths — below the 44px touch
+   minimum. A minimum visual width plus an extended invisible hit area keeps
+   it reachable without distorting the larger proportional segments. */
+.bar-segment.seg-undecided {
+  min-width: 24px;
+}
+
+.bar-segment.seg-undecided::after {
+  content: '';
+  position: absolute;
+  top: -14px;
+  bottom: -14px;
+  left: -12px;
+  right: -12px;
 }
 
 .bar-segment.seg-kept, .legend-swatch.seg-kept {
@@ -5159,10 +5392,10 @@ a:hover {
 }
 
 .carousel-arrow {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -7645,6 +7878,94 @@ a:hover {
   color: var(--muted);
   font-size: 0.88rem;
   margin: 0;
+}
+
+/* Outcome timelines (E5): per-promise made -> due -> delivered -> reversed
+   rows. Phase chips reuse the verdict-chip palette so a reversed phase reads
+   the same orange as the drawer's kept_then_reversed chip. */
+.viz-phase-timelines {
+  display: flex;
+  flex-direction: column;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.viz-phase-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  padding: 8px 2px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.85rem;
+}
+
+.viz-phase-row:first-child {
+  border-top: none;
+}
+
+.viz-phase-row.showcase {
+  background: rgba(234, 88, 12, 0.06);
+  border-radius: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.viz-phase-id {
+  color: var(--muted);
+  font-size: 0.78rem;
+  min-width: 34px;
+}
+
+.viz-phase-name {
+  color: var(--ink-dim);
+  min-width: 140px;
+  flex: 0 1 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.viz-phase-steps {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  min-width: 0;
+}
+
+.viz-phase-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  background: var(--line-soft);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+.viz-phase-chip.made {
+  background: var(--blue-soft);
+  color: var(--blue);
+  border-color: var(--line);
+}
+
+.viz-phase-chip.delivered {
+  background: var(--kept-bg);
+  color: var(--kept);
+  border-color: var(--kept-border);
+}
+
+.viz-phase-chip.reversed {
+  background: rgba(234, 88, 12, 0.15);
+  color: #fdba74;
+  border-color: rgba(234, 88, 12, 0.4);
+}
+
+.viz-phase-arrow {
+  color: var(--muted);
+  font-size: 0.78rem;
 }
 
 @media (max-width: 720px) {
