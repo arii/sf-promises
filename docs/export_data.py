@@ -461,7 +461,7 @@ PROMISE_FACTUAL_OUTCOMES = {
     "SFO-02": "Harvey Milk Terminal 1 final phase completed July 1, 2024, delivering all 25 gates and post-security concourse connections under $2.4B program.",
     "P21": "Board of Supervisors voted 7-4 to make JFK Drive permanent car-free promenade; reaffirmed by San Francisco voters via Prop J.",
     "P04": "Golden State Valkyries officially scheduled and hosted inaugural WNBA regular season home games at Chase Center.",
-    "P82": "Guaranteed WNBA championship within first five years of Valkyries franchise; five-year term active through October 2028.",
+    "P82": "Won the 2026 WNBA Finals on October 31, 2026, defeating Atlanta in Game 7 — fulfilling the five-year championship guarantee in year two.",
     "P83": "Opened 64,737-sq-ft flagship store at 8th and Market on March 10, 2022; later temporarily suspended operations in April 2023.",
     "P11": "Promised final tour retirement; Dead & Company subsequently staged multi-month Sphere residency and 3-day Golden Gate Park concerts.",
     "SFO-03": "Active commercial SAF intake delivered through SFO hydrant pipeline system; airline net-zero fleet target ongoing through 2050.",
@@ -1054,16 +1054,26 @@ def _load_from_db(db_path):
             entry["reason"] = vr["reason"]
         verdict_history.setdefault(vr["promise_id"], []).append(entry)
 
-    # E2: verification history — every verifications row with its provenance.
-    # Schema v4 carries model_id per row; checked_by and run_id are included
-    # when the export DB has them (older DBs do not).
+    # E2: verification history — provenance per check type. The verifications
+    # table accumulates one row per pipeline round (1,000+ rows corpus-wide);
+    # the snapshot carries the latest row per (promise, check) so every check
+    # is inspectable with its provenance without replaying every round. Full
+    # round-by-round granularity stays in the database.
     _chk_cols = {r[1] for r in cur.execute("PRAGMA table_info(verifications)")}
     _csel = "promise_id, check_type, passed, checked_at"
     _csel += ", checked_by" if "checked_by" in _chk_cols else ", NULL as checked_by"
     _csel += ", model_id" if "model_id" in _chk_cols else ", NULL as model_id"
     _csel += ", run_id" if "run_id" in _chk_cols else ", NULL as run_id"
     verification_history = {}
-    for vr in cur.execute(f"SELECT {_csel} FROM verifications ORDER BY checked_at ASC").fetchall():
+    _vrank = ("ROW_NUMBER() OVER (PARTITION BY promise_id, check_type "
+              "ORDER BY checked_at DESC) AS _rank")
+    _latest_sql = (
+        f"SELECT {_csel}, {_vrank} FROM verifications"
+    )
+    for vr in cur.execute(
+            f"SELECT promise_id, check_type, passed, checked_at, checked_by, "
+            f"model_id, run_id FROM ({_latest_sql}) WHERE _rank = 1 "
+            f"ORDER BY checked_at ASC").fetchall():
         entry = {"check": vr["check_type"], "passed": bool(vr["passed"])}
         if vr["checked_at"]:
             entry["checked_at"] = vr["checked_at"]
@@ -1509,8 +1519,6 @@ def export():
 
     for p in all_promises:
         p["source_tier"] = get_source_tier(p.get("source_url", ""))
-        if p.get("promise_id") == "P05" and not p.get("promise_text", "").startswith("[Reported by"):
-            p["promise_text"] = f"[Reported by The Frisc] {p['promise_text']}"
 
     sourcing_audit = {}
     if os.path.exists("data/intake_candidate_register.json"):
@@ -1762,7 +1770,10 @@ def format_plain_verdict_reason(reason, verdict=None):
     import re
     cleaned = re.sub(r'\s*\([^)]*\)', '', r)
     cleaned = re.sub(r'\s*\[[^\]]*\]', '', cleaned)
-    return cleaned.strip() or r
+    cleaned = cleaned.strip() or r
+    # Display strings must not start lowercase: pipeline reasons like
+    # "re-open: 30-show Sphere leg..." surface verbatim in the demo.
+    return cleaned[0].upper() + cleaned[1:] if cleaned[:1].islower() else cleaned
 
 
 def generate_promise_row_html(p, idx=0):
