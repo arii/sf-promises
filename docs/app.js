@@ -1113,58 +1113,39 @@
       }
     }
 
-    // Render table rows
+    // Single render path: the exporter bakes the one record markup (the
+    // <tr class="promise-row"> rows in this tbody). Filtering, sorting and
+    // pagination reuse those baked rows — reorder them for sort, and toggle
+    // the paged classes for visibility — instead of regenerating a second
+    // client-side template that can drift from the baked one.
     const tbody = document.getElementById('promises-table-body');
 
     if (tbody) {
-      tbody.innerHTML = list.slice(0, showingCount).map((p, idx) => {
-        const rank = String(p.impact_rank || idx + 1).padStart(2, '0');
-        const pid = escapeHtml(p.promise_id || '');
-        const entity = escapeHtml(p.entity || '');
-        const role = escapeHtml(p.role || '');
-        const neighborhood = escapeHtml(p.neighborhood || 'Citywide San Francisco');
-        const promiseRaw = cleanQuoteText(p.promise_text || '');
-        const promiseClamped = escapeHtml(promiseRaw.slice(0, 150) + (promiseRaw.length > 150 ? '…' : ''));
-        const outcomeReason = escapeHtml(formatPlainVerdictReason(p.verdict_reason, p.verdict));
-        let promised = escapeHtml(p.promised_date_display || formatPrecisionDate(p.promised_date, p.promise_date_precision) || 'not recorded');
-        if (p.promised_date_note) promised += ' (derived)';
-        const due = escapeHtml(p.due_date_display || (p.due_date ? formatPrecisionDate(p.due_date, p.due_date_precision) : 'No deadline'));
-        const done = escapeHtml(p.opened_date || p.completed_date || (p.verdict === 'kept' ? 'Verified completed' : '—'));
-        const verdict = p.verdict || 'undecided';
-        const verdClass = verdict.toLowerCase().replace(/[\s-]+/g, '_');
-        const verdictLabel = formatVerdictLabel(verdict);
+      const rowsById = {};
+      Array.prototype.forEach.call(
+        tbody.querySelectorAll('tr[data-promise-id]'),
+        row => { rowsById[row.getAttribute('data-promise-id')] = row; }
+      );
 
-        return `
-          <tr class="promise-row" id="promise-${pid}" data-promise-id="${pid}" tabindex="0" role="button" aria-label="Inspect #${rank} ${entity}: ${promiseClamped.slice(0, 60)}">
-            <td class="table-entity-cell">
-              <div class="entity-headline-row">
-                <span class="table-entity-name">${entity}</span>
-              </div>
-              <div class="entity-sub-row font-mono">
-                <span class="table-role-tag">${role}</span>
-              </div>
-              <div class="entity-geo-tag font-mono">${neighborhood}</div>
-            </td>
-            <td class="table-quote-cell">
-              <div class="table-promise-block">
-                <blockquote class="table-quote-text font-serif">&ldquo;${promiseClamped}&rdquo;</blockquote>
-              </div>
-              <div class="table-outcome-block">
-                <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
-                <span class="table-outcome-text">${outcomeReason}</span>
-              </div>
-            </td>
-            <td class="table-verdict-cell">
-              <span class="verdict-chip ${verdClass}">${verdictLabel}</span>
-            </td>
-            <td class="table-timeline-cell font-mono">
-              <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">${promised}</span></div>
-              <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">${due}</span></div>
-              <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">${done}</span></div>
-            </td>
-          </tr>
-        `;
-      }).join('');
+      if (!Object.keys(rowsById).length) {
+        console.warn('renderExplore: no baked promise rows found in the table body; nothing to render');
+      }
+
+      const visible = list.slice(0, showingCount);
+      const shownIds = new Set(visible.map(p => String(p.promise_id)));
+
+      visible.forEach(p => {
+        const row = rowsById[String(p.promise_id)];
+        if (!row) return;
+        row.classList.remove('paged-row', 'hidden-page-row');
+        tbody.appendChild(row); // appendChild moves the node, producing sort order
+      });
+
+      Object.keys(rowsById).forEach(pid => {
+        if (!shownIds.has(pid)) {
+          rowsById[pid].classList.add('paged-row', 'hidden-page-row');
+        }
+      });
     }
 
     if (activeViewMode === 'map') {

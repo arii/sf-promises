@@ -1801,7 +1801,7 @@ def generate_promise_row_html(p, idx=0):
 
     paged_cls = " paged-row hidden-page-row" if idx >= 10 else ""
 
-    return f'''              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_clamped[:60]}">
+    return f'''              <tr class="promise-row{paged_cls}" id="promise-{pid}" data-promise-id="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_clamped}">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">{entity}</span>
@@ -1830,44 +1830,6 @@ def generate_promise_row_html(p, idx=0):
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>'''
-
-
-def generate_mobile_promise_card_html(p, idx=0):
-    rank = f"{idx + 1:02d}"
-    pid = html_esc(p.get("promise_id", ""))
-    entity = html_esc(p.get("entity", ""))
-    
-    promise_raw = clean_quote_text(p.get("promise_text", ""))
-    promise_140 = html_esc(promise_raw[:140] + ("…" if len(promise_raw) > 140 else ""))
-
-    precision = p.get("promise_date_precision", "day")
-    promised_raw = p.get("promised_date", "not recorded")
-    promised = html_esc(format_precision_date(promised_raw, precision))
-    if p.get("promised_date_note"):
-        promised += " (derived)"
-
-    verdict = p.get("verdict", "undecided")
-    verd_class = verdict.lower().replace(" ", "_")
-    verdict_label = format_verdict_label(verdict)
-
-    paged_cls = " paged-card hidden-page-card" if idx >= 10 else ""
-
-    return f'''              <div class="mobile-promise-card{paged_cls}" data-pid="{pid}" tabindex="0" role="button" aria-label="Inspect #{rank} {entity}: {promise_140[:60]}">
-                <div class="mobile-card-header">
-                  <div class="mobile-card-speaker-group">
-                    <span class="mobile-card-speaker">{entity}</span>
-                    <span class="mobile-card-id font-mono">#{rank}</span>
-                  </div>
-                  <span class="verdict-chip {verd_class}">{verdict_label}</span>
-                </div>
-                <div class="mobile-promise-slot">
-                  <blockquote class="mobile-card-quote font-serif">&ldquo;{promise_140}&rdquo;</blockquote>
-                </div>
-                <div class="mobile-card-footer font-mono">
-                  <span class="mobile-card-date">Said {promised}</span>
-                  <span class="mobile-card-tap-hint">Details &rarr;</span>
-                </div>
-              </div>'''
 
 
 def generate_featured_stories_html(promises, quarantined):
@@ -2110,7 +2072,7 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
 
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"  Pre-rendered {len(promises)} promise rows, {len(promises)} mobile cards, and {len(quarantined)} quarantine items into docs/index.html")
+    print(f"  Pre-rendered {len(promises)} promise rows and {len(quarantined)} quarantine items into docs/index.html")
 
     # Sync and validate standardized master CSV for Adaption & tabular tools
     try:
