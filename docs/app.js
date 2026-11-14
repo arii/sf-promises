@@ -89,7 +89,10 @@
     if (r.startsWith('ordinance signed pre-deadline')) {
       return 'Enabling legislation was enacted before the stated deadline.';
     }
-    return r.replace(/\s*\([^)]*\)/g, '').replace(/\s*\[[^\]]*\]/g, '').trim() || r;
+    const cleaned = r.replace(/\s*\([^)]*\)/g, '').replace(/\s*\[[^\]]*\]/g, '').trim() || r;
+    // Display strings must not start lowercase: pipeline reasons like
+    // "re-open: 30-show Sphere leg..." surface verbatim in the drawer.
+    return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
   }
 
   function formatVerdictLabel(verdict) {

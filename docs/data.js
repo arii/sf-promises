@@ -6,17 +6,17 @@ window.__DEMO_DATA__ = {
     "last_checked": "Nov 14, 2026",
     "last_updated": "Nov 14, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
-    "commit_sha": "f4ae6caa431ad8a402e84949e6d7b4595055d727",
+    "commit_sha": "cbff51c57ee82607b403ee4bf69a6521bccc57ed",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-14T10:02:07Z"
+    "exported_at": "2026-11-14T10:57:08Z"
   },
   "database_status": {
-    "commit_sha": "f4ae6caa431ad8a402e84949e6d7b4595055d727",
+    "commit_sha": "cbff51c57ee82607b403ee4bf69a6521bccc57ed",
     "tracked_count": 54,
     "seed_promises_count": 12,
     "total_db_promises": 62,
-    "total_db_verdicts": 86,
+    "total_db_verdicts": 87,
     "total_db_evidence": 124,
     "evidence_reconciliation": {
       "total_database_evidence_records": 124,
@@ -239,7 +239,7 @@ window.__DEMO_DATA__ = {
         },
         {
           "promise_id": "P37",
-          "title": "London Breed Commitment",
+          "title": "Tenderloin & Encampment Outreach",
           "verdict": "undecided",
           "source_credibility_score": 10,
           "has_contradictory_evidence": true,
@@ -3716,7 +3716,7 @@ window.__DEMO_DATA__ = {
     "id_reconciliation": "54 published \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
-    "acceptance_status_label": "Acceptance verified on commit f4ae6ca (separated processes, not Firecracker)",
+    "acceptance_status_label": "Acceptance verified on commit cbff51c (separated processes, not Firecracker)",
     "counts": {
       "kept": 24,
       "broken": 17,
@@ -3726,7 +3726,7 @@ window.__DEMO_DATA__ = {
     },
     "integration_run": {
       "run_id": "F-20261111-045601",
-      "commit_sha": "f4ae6caa431ad8a402e84949e6d7b4595055d727",
+      "commit_sha": "cbff51c57ee82607b403ee4bf69a6521bccc57ed",
       "total_tests": 36,
       "passed": 33,
       "failed": 0,
@@ -3742,11 +3742,11 @@ window.__DEMO_DATA__ = {
       "run_at": "2026-11-11T04:56:24.469855+00:00"
     },
     "sandbox_isolation_verified": true,
-    "sandbox_isolation_label": "Sandbox isolation verified on commit f4ae6ca (separated processes, not Firecracker)",
+    "sandbox_isolation_label": "Sandbox isolation verified on commit cbff51c (separated processes, not Firecracker)",
     "discrepancies": [
-      "DB holds 62 promises (12 seeds + 50 Tier-2 banked, scale paused by user decision) with 86 verdicts and 124 evidence rows; every file hash re-verified.",
-      "Latest harness run F-20261111-045601 on f4ae6ca: 33 pass / 0 fail / 3 blocked-extended.",
-      "Acceptance verified on commit f4ae6ca: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
+      "DB holds 62 promises (12 seeds + 50 Tier-2 banked, scale paused by user decision) with 87 verdicts and 124 evidence rows; every file hash re-verified.",
+      "Latest harness run F-20261111-045601 on cbff51c: 33 pass / 0 fail / 3 blocked-extended.",
+      "Acceptance verified on commit cbff51c: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
     ],
@@ -7496,6 +7496,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:31:14Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:31:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:31:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:31:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:31:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:31:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:31:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:31:14Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "opened_date": "2025-04-28",
       "verbatim_quote": "The facility began accepting clients on April 28.",
       "document_title": "24/7 Crisis Stabilization Center",
@@ -7577,18 +7628,11 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center-to-provide-urgent-care-for-people-in-crisis",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T03:31:14Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P05",
-      "promise_text": "[Reported by The Frisc] His campaign promise to [end street homelessness](https://sfstandard.com/2025/01/28/san-francisco-daniel-lurie-homelessness-shelter-promise/), in part by opening 1,500 new shelter beds in his first six months of office, didn\u2019t last long.",
+      "promise_text": "\u201cFifteen hundred, very quickly\u2026 I\u2019ve given myself six months. It shouldn\u2019t take us that long.\u201d",
       "entity": "Daniel Lurie",
       "role": "Mayor of San Francisco",
       "entity_type": "politician",
@@ -7596,14 +7640,14 @@ window.__DEMO_DATA__ = {
       "neighborhood": "Citywide Shelter Network",
       "geographic_scope": "citywide",
       "promised_date": "2024-11-05",
-      "due_date": null,
+      "due_date": "2025-07-08",
       "page_number": null,
       "verdict": "broken",
       "verdict_reason": "numeric target not met or plan abandoned",
       "source_id": "S6b445cb1ab31",
-      "source_url": "https://thefrisc.com/one-year-of-luries-approach-to-sfs-homelessness-drugs-mental-health/",
-      "source_file_path": "6b445cb1ab3198e5bc72810651999042c6630826bd1da44e8002e76955c7a6aa.md",
-      "source_hash": "6b445cb1ab3198e5bc72810651999042c6630826bd1da44e8002e76955c7a6aa",
+      "source_url": "https://missionlocal.org/2025/07/mayor-lurie-deserves-credit-for-dropping-1500-shelter-bed-campaign-pledge-but-also-grief/",
+      "source_file_path": "b3d8acf998e1dfe14ed2cc62af5f0a8b2204f93d84080083392fdbdbc6cc2fed.md",
+      "source_hash": "b3d8acf998e1dfe14ed2cc62af5f0a8b2204f93d84080083392fdbdbc6cc2fed",
       "source_type": "news_report",
       "fetched_at": "2026-11-11T03:08:55.078040+00:00",
       "relevance": {
@@ -7728,6 +7772,57 @@ window.__DEMO_DATA__ = {
           "reason": "numeric target not met or plan abandoned"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:34:00Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:00Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "1,500 Shelter Beds in First 6 Months",
       "title": "1,500 Shelter Beds in First 6 Months",
       "media_image_url": "https://assets.sfstandard.com/image/994911177489/image_s94fpd5el5549a2690grvt1g5u/-S3840x2561-FPNG",
@@ -7747,18 +7842,18 @@ window.__DEMO_DATA__ = {
       "is_citywide": true,
       "is_centroid": true,
       "promise_made_date": "2024-11-05",
-      "deadline_date": null,
+      "deadline_date": "2025-07-08",
       "completion_date": null,
       "promise_date_precision": "day",
-      "due_date_precision": "not_applicable",
+      "due_date_precision": "day",
       "completion_date_precision": "not_recorded",
       "promised_date_display": "Nov 5, 2024",
-      "due_date_display": "Not captured",
+      "due_date_display": "Jul 8, 2025",
       "days_remaining": null,
-      "days_overdue": null,
+      "days_overdue": 492,
       "promise_age_days": 737,
       "time_to_verdict_days": 736,
-      "due_date_status": "not_captured",
+      "due_date_status": "present",
       "completion_date_status": "not_applicable",
       "address_status": "not_applicable",
       "district_status": "not_applicable",
@@ -7802,17 +7897,10 @@ window.__DEMO_DATA__ = {
       "source_type_standardized": "official_government",
       "source_domain_authority": 10,
       "fact_check_status": "verified",
-      "source_archived_url": "https://web.archive.org/web/*/https://thefrisc.com/one-year-of-luries-approach-to-sfs-homelessness-drugs-mental-health/",
+      "source_archived_url": "https://web.archive.org/web/*/https://missionlocal.org/2025/07/mayor-lurie-deserves-credit-for-dropping-1500-shelter-bed-campaign-pledge-but-also-grief/",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T03:34:00Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "SFO-01",
@@ -7887,6 +7975,13 @@ window.__DEMO_DATA__ = {
           "reason": "deterministic rubric: affirmative completion prior to deadline = kept"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2024-06-22T00:00:00Z"
+        }
+      ],
+      "verification_history": [],
       "geographic_scope": "exact_address",
       "title": "Runway 28L Safety Realignment & Reopening",
       "media_image_url": "https://www.flysfo.com/sites/default/files/2024-06/runway_28l_reopening_airfield.jpg",
@@ -7962,14 +8057,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-reopen-runway-28l-ahead-schedule-friday-june-21st",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2024-06-22T00:00:00Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "SFO-02",
@@ -8043,6 +8131,13 @@ window.__DEMO_DATA__ = {
           "reason": "deterministic rubric: full scope verified operational = kept"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2024-07-02T00:00:00Z"
+        }
+      ],
+      "verification_history": [],
       "geographic_scope": "exact_address",
       "title": "Harvey Milk Terminal 1 Final Completion",
       "media_image_url": "https://www.flysfo.com/sites/default/files/2024-07/harvey_milk_terminal_1_ribbon_cutting.jpg",
@@ -8118,14 +8213,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-celebrates-completion-harvey-milk-terminal-1",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2024-07-02T00:00:00Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P21",
@@ -8221,6 +8309,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: official primary evidence confirms completion with zero contradicting claims (re-open R2: sf.streetsblog.org allowlisted; 7-4 board vote to make JFK Promenade permanent now passes domain)"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T04:07:13Z",
+          "reviewer": "arbitrator",
+          "reason": "both sides have competing claims or insufficient evidence to decide"
+        },
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:10:17Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:17Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:17Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:17Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:17Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:17Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:17Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:17Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "JFK Drive Permanent Car-Free Promenade",
       "title": "JFK Drive Permanent Car-Free Promenade",
       "media_image_url": "https://sfrecpark.org/ImageRepository/Document?documentID=17234",
@@ -8297,14 +8442,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sf.streetsblog.org/2022/04/26/hurrah-for-j-f-k-promenade-forever",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:10:17Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P04",
@@ -8424,6 +8562,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:33:26Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:33:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:33:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:33:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:33:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:33:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:33:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:33:26Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Chase Center Valkyries Regular Season Games",
       "title": "Chase Center Valkyries Regular Season Games",
       "media_image_url": "https://cdn.abcotvs.com/dip/images/11518842_247-NOWSTREAMING_1280x720.png",
@@ -8501,14 +8690,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sports/article/valkyries-wnba-championship-22499436.php",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T03:33:26Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P82",
@@ -8523,7 +8705,7 @@ window.__DEMO_DATA__ = {
       "due_date": "2028-10-05",
       "page_number": null,
       "verdict": "kept",
-      "verdict_reason": "official primary evidence confirms completion with zero contradicting claims [due 2028-10-05 = promised 2023-10-05 + five-year term stated in source]",
+      "verdict_reason": "Durability recheck: promise delivered early - the Valkyries won the 2026 WNBA Finals Game 7 on 2026-10-31, fulfilling the five-year guarantee in year two of the deadline window; archived NYT/Athletic source passes the evidence bar (TIER2_NEWS, verbatim quote, SHA b55705803b0e6ea0890577d6a9fa3e08578eeb0fcf50f2ed49597eeca6ad4444); verdict retained.",
       "source_id": "S7ce6c45c9f3a",
       "source_url": "https://nytimes.com/athletic/7742640/2026/10/31/wnba-finals-champion-valkyries-dream",
       "source_file_path": "b55705803b0e6ea0890577d6a9fa3e08578eeb0fcf50f2ed49597eeca6ad4444.md",
@@ -8538,7 +8720,7 @@ window.__DEMO_DATA__ = {
         "interesting": 0
       },
       "reading_used": null,
-      "decided_at": "2026-11-11T04:03:04Z",
+      "decided_at": "2026-11-14T10:54:12Z",
       "advocate_bundles": {
         "kept": {
           "advocate_role": "kept_advocate",
@@ -8616,10 +8798,67 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:03:04Z",
+          "reviewer": "arbitrator",
+          "reason": "official primary evidence confirms completion with zero contradicting claims [due 2028-10-05 = promised 2023-10-05 + five-year term stated in source]"
+        },
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-14T10:54:12Z",
+          "reviewer": "durability_cron"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:03:04Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:03:04Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:03:04Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:03:04Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:03:04Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:03:04Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:03:04Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Valkyries WNBA Championship Guarantee",
       "title": "Valkyries WNBA Championship Guarantee",
       "importance_score": 93,
-      "factual_outcome": "Guaranteed WNBA championship within first five years of Valkyries franchise; five-year term active through October 2028.",
+      "factual_outcome": "Won the 2026 WNBA Finals on October 31, 2026, defeating Atlanta in Game 7 \u2014 fulfilling the five-year championship guarantee in year two.",
       "impact_rank": 7,
       "display_no": 7,
       "record_type": "promise",
@@ -8642,7 +8881,7 @@ window.__DEMO_DATA__ = {
       "days_remaining": 693,
       "days_overdue": null,
       "promise_age_days": 1134,
-      "time_to_verdict_days": 1133,
+      "time_to_verdict_days": 1136,
       "due_date_status": "present",
       "completion_date_status": "not_captured",
       "address_status": "present",
@@ -8692,14 +8931,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://nytimes.com/athletic/7742640/2026/10/31/wnba-finals-champion-valkyries-dream",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:03:04Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P83",
@@ -8807,6 +9039,63 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:07:13Z",
+          "reviewer": "arbitrator",
+          "reason": "official primary evidence confirms completion with zero contradicting claims [due 2022-03-10 stated explicitly in Feb 17, 2022 source: on Thursday, March 10]"
+        },
+        {
+          "verdict": "kept_then_reversed",
+          "decided_at": "2026-11-14T09:35:18Z",
+          "reviewer": "durability_cron"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:07:13Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:07:13Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:07:13Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:07:13Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:07:13Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:07:13Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-14T09:40:00Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Whole Foods Mid-Market Flagship Safety",
       "title": "Whole Foods Mid-Market Flagship Safety",
       "media_image_url": "https://s.hdnux.com/photos/01/66/20/50/31001134/3/rawImage.jpg",
@@ -8884,18 +9173,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.webwire.com/ViewPressRel.asp?aId=285415",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "reason": "Kept at publish; the original verdict row is retained by the append-only reopen."
-        },
-        {
-          "verdict": "kept_then_reversed",
-          "decided_at": "2026-11-14T09:35:18Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P11",
@@ -9027,6 +9305,63 @@ window.__DEMO_DATA__ = {
           "reason": "contradicting primary evidence outranks affirmative claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T03:40:27Z",
+          "reviewer": "arbitrator",
+          "reason": "wording ambiguous, reading used: tour = multi-city concert tour, distinct from one-off shows or a residency; no post-2023 tour in saved evidence, and news-only evidence caps below kept"
+        },
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:54:43Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:54:43Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:54:43Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:54:43Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:54:43Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:54:43Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:54:43Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:54:43Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Grateful Dead Tour Retirement & Archival Shows",
       "title": "Grateful Dead Tour Retirement & Archival Shows",
       "importance_score": 91,
@@ -9100,14 +9435,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Dead_%26_Company_Summer_Tour_2023",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Reference",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:54:43Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Reference"
     },
     {
       "promise_id": "SFO-03",
@@ -9183,6 +9511,13 @@ window.__DEMO_DATA__ = {
           "reason": "deterministic rubric: active delivery ahead of final target = in_progress"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2024-08-02T00:00:00Z"
+        }
+      ],
+      "verification_history": [],
       "geographic_scope": "regional",
       "title": "Sustainable Aviation Fuel (SAF) Infrastructure",
       "factual_outcome": "Active commercial SAF intake delivered through SFO hydrant pipeline system; airline net-zero fleet target ongoing through 2050.",
@@ -9255,14 +9590,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-welcomes-expanded-use-sustainable-aviation-fuel-united-airlines",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2024-08-02T00:00:00Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "SFO-04",
@@ -9336,6 +9664,13 @@ window.__DEMO_DATA__ = {
           "reason": "deterministic rubric: verified completed = kept"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2024-07-25T00:00:00Z"
+        }
+      ],
+      "verification_history": [],
       "geographic_scope": "exact_address",
       "title": "Alaska Airlines Terminal 1 Flight Operations",
       "factual_outcome": "Relocated full SFO flight operations and opened the 11,000-square-foot Terminal 1 lounge on July 24, 2024.",
@@ -9408,14 +9743,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/alaska-airlines-opens-doors-harvey-milk-terminal-1-sfo",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2024-07-25T00:00:00Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P01",
@@ -9523,6 +9851,63 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:29:26Z",
+          "reviewer": "arbitrator",
+          "reason": "numeric target not met or plan abandoned"
+        },
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:49:29Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:49:29Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:49:29Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:49:29Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:49:29Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:49:29Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:49:29Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:49:29Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Fentanyl State of Emergency Ordinance",
       "title": "Fentanyl State of Emergency Ordinance",
       "importance_score": 88,
@@ -9596,14 +9981,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://edition.pagesuite.com/tribune/article_popover.aspx?guid=4996c790-cac8-49aa-8783-9c015e1acea1",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T03:49:29Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P59",
@@ -9723,6 +10101,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:07:48Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:07:48Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:00Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:00Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Zoox Driverless Passenger Ride Hail in SF",
       "title": "Zoox Driverless Passenger Ride Hail in SF",
       "importance_score": 87,
@@ -9796,14 +10225,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://techcrunch.com/2025/11/18/zoox-to-begin-offering-robotaxi-rides-to-public-in-san-francisco/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:07:48Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P43",
@@ -9912,6 +10334,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:32:42Z",
+          "reviewer": "arbitrator",
+          "reason": "due date passed with no passing kept evidence; due 2022-03-30 same-day begin anchored to promised 2022-03-30"
+        },
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:33:30Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:30Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:30Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:30Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:30Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:30Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:30Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:30Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Waymo Fully Autonomous Ride-Hail Expansion",
       "title": "Waymo Fully Autonomous Ride-Hail Expansion",
       "importance_score": 86,
@@ -9985,14 +10464,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://waymo.com/blog/2022/03/taking-our-next-step-in-city-by-bay/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:33:30Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P41",
@@ -10125,6 +10597,57 @@ window.__DEMO_DATA__ = {
           "reason": "due date passed with no passing kept evidence"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:26:10Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:10Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Central Subway Substantial Completion (2018)",
       "title": "Central Subway Substantial Completion (2018)",
       "media_image_url": "https://www.sfmta.com/sites/default/files/project-images/2022/Central_Subway_Union_Square_Station.jpg",
@@ -10201,14 +10724,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/ja/media/35570/download?inline",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:26:10Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P10",
@@ -10328,6 +10844,57 @@ window.__DEMO_DATA__ = {
           "reason": "genuine partial completion, full scope unresolved"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T03:39:36Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:39:36Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:39:36Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:39:36Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:39:36Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:39:36Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:39:36Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:39:36Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Mission Rock 40% Affordable Housing Pledges",
       "title": "Mission Rock 40% Affordable Housing Pledges",
       "media_image_url": "https://cdn.abcotvs.com/dip/images/13335905_060223-kgo-mission-rock-development-img.jpg",
@@ -10404,14 +10971,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/s-f-giants-brass-celebrates-opening-mission-rock-18161986.php",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2026-11-11T03:39:36Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P18",
@@ -10507,6 +11067,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: in_progress: partial progress only; outcome-satisfaction principle \u2014 the Jan-2023 adoption vote proves the Housing Element PLAN exists, not the promised outcome of 82,200 HOMES by 2031; due 2031-12-31 future, homes unbuilt (mechanical Rule 4 kept overridden: plan/enabling votes are supporting evidence, never completion)"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:01:34Z",
+          "reviewer": "arbitrator",
+          "reason": "official primary evidence confirms completion with zero contradicting claims"
+        },
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:03:59Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:01:34Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:01:34Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:01:34Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:01:34Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:01:34Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:01:34Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:03:59Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Housing Element: 82,200 New Homes by 2031",
       "title": "Housing Element: 82,200 New Homes by 2031",
       "importance_score": 83,
@@ -10580,14 +11197,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://citypln-m-extnl.sfgov.org/Commissions/CPC/4_10_2025/Commission%20Packet/2021-005878CWP.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2026-11-11T04:03:59Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P06",
@@ -10707,6 +11317,57 @@ window.__DEMO_DATA__ = {
           "reason": "contradicting primary evidence outranks affirmative claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:34:38Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:34:38Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Vision Zero: End Traffic Fatalities by 2024",
       "title": "Vision Zero: End Traffic Fatalities by 2024",
       "media_image_url": "https://bloximages.chicago2.vip.townnews.com/sfexaminer.com/content/tncms/assets/v3/editorial/a/1b/a1b090c9-6651-4a89-bc8d-ff8b6cb2996c/681a934ddd28a.image.jpg",
@@ -10783,14 +11444,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/tl/media/45938/download?inline",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T03:34:38Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P08",
@@ -10910,6 +11564,57 @@ window.__DEMO_DATA__ = {
           "reason": "contradicting primary evidence outranks affirmative claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:36:38Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:36:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:36:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:36:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:36:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:36:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:36:38Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:36:38Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "1,000 SRO Housing Units Improvement",
       "title": "1,000 SRO Housing Units Improvement",
       "importance_score": 81,
@@ -10983,14 +11688,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/homeless-housing-sro-breed-17767837.php",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T03:36:38Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P22",
@@ -11086,6 +11784,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: official primary evidence confirms completion with zero contradicting claims (re-open R2: dhcs.ca.gov allowlisted, speaker per org-speaker principle; 200-bed opening 12/30/19 IS the promised outcome)"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:09:08Z",
+          "reviewer": "arbitrator",
+          "reason": "due date passed with no passing kept evidence"
+        },
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:15:08Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:15:08Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:15:08Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:15:08Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:15:08Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:15:08Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:15:08Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:15:08Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Embarcadero Navigation Center 200 Beds",
       "title": "Embarcadero Navigation Center 200 Beds",
       "importance_score": 80,
@@ -11159,14 +11914,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.dhcs.ca.gov/wp-content/uploads/2025/10/San-Francisco-PY4-Annual-Narrative.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:15:08Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P17",
@@ -11218,6 +11966,27 @@ window.__DEMO_DATA__ = {
           "check": "verdict_rubric",
           "passed": true,
           "reason": "re-open R2: due date in future and no definitive resolution yet; due 2028-01-31 = three-year admin window from Jan-2025 start, both in-source (full-date form: arbitrator requires YYYY-MM-DD)"
+        }
+      ],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T03:58:54Z",
+          "reviewer": "arbitrator",
+          "reason": "both sides have competing claims or insufficient evidence to decide"
+        },
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T03:59:15Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:59:15Z",
+          "checked_by": "arbitrator"
         }
       ],
       "due_date_label": "Derived (3-year horizon from Jan 2025 inauguration)",
@@ -11294,14 +12063,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.influencewatch.org/person/daniel-lurie/",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2026-11-11T03:59:15Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P25",
@@ -11397,6 +12159,57 @@ window.__DEMO_DATA__ = {
           "reason": "due date passed with no passing kept evidence"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:16:32Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:16:32Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:16:32Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:16:32Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:16:32Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:16:32Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:16:32Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:16:32Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Close San Francisco Juvenile Hall Facility",
       "title": "Close San Francisco Juvenile Hall Facility",
       "importance_score": 78,
@@ -11469,14 +12282,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://media.api.sf.gov/documents/JUVENILE_JUSTICE_REALIGNMENT_BLOCK_GRANT_ANNUAL_PLAN_20260420.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:16:32Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P12",
@@ -11596,6 +12402,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:41:24Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:41:24Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:41:24Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:41:24Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:41:24Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:41:24Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:41:24Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:41:24Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "6,500 Shared E-Scooter Fleet Cap",
       "title": "6,500 Shared E-Scooter Fleet Cap",
       "importance_score": 77,
@@ -11670,14 +12527,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/projects/powered-scooter-share-permit-program",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T03:41:24Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P26",
@@ -11811,6 +12661,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: Rule 3 numeric/abandoned; numeric target not met or plan abandoned (re-open R2: Prop M voided by courts, 4,500-units-first-year outcome impossible; kept passage vote is enabling step per outcome-satisfaction principle)"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "stalled",
+          "decided_at": "2026-11-11T04:19:45Z",
+          "reviewer": "arbitrator",
+          "reason": "90 days with no action, zero passing claims"
+        },
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:29:10Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:29:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:29:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:29:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": false,
+          "checked_at": "2026-11-11T04:29:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:29:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": false,
+          "checked_at": "2026-11-11T04:29:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:29:10Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Empty Homes Tax: 4,500 Units in Year One",
       "title": "Empty Homes Tax: 4,500 Units in Year One",
       "importance_score": 76,
@@ -11884,14 +12791,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://costa-hawkins.com/wp-content/uploads/2026/09/A172067.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:29:10Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P27",
@@ -11988,6 +12888,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: official primary evidence confirms completion with zero contradicting claims (re-open R2: Prop C passage 65.15% Nov 6 2012 vote IS the fund-creation outcome)"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T04:21:35Z",
+          "reviewer": "arbitrator",
+          "reason": "both sides have competing claims or insufficient evidence to decide"
+        },
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:31:06Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:31:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:31:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:31:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:31:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:31:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:31:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:31:06Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Housing Trust Fund: $20M First-Year Budget",
       "title": "Housing Trust Fund: $20M First-Year Budget",
       "importance_score": 75,
@@ -12061,14 +13018,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.spur.org/news/2012-07-26/housing-trust-fund-heads-voters-november",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:31:06Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P29",
@@ -12165,6 +13115,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:32:15Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:32:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:32:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:32:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:32:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:32:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:32:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:32:15Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Care Not Cash Homeless Services Reform",
       "title": "Care Not Cash Homeless Services Reform",
       "importance_score": 74,
@@ -12238,14 +13239,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2020-02-19/gov-newsom-once-again-takes-on-homelessness-this-time-statewide",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:32:15Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P31",
@@ -12341,6 +13335,63 @@ window.__DEMO_DATA__ = {
           "reason": "due date passed with no passing kept evidence"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:36:56Z",
+          "reviewer": "arbitrator",
+          "reason": "due date passed with no passing kept evidence"
+        },
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:41:16Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:36:56Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:36:56Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:41:16Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:41:16Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:41:16Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:41:16Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:41:16Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Family Zoning Plan Neighborhood Housing",
       "title": "Family Zoning Plan Neighborhood Housing",
       "importance_score": 73,
@@ -12414,14 +13465,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sfplanning.org/sf-family-zoning-plan",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:41:16Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P30",
@@ -12517,6 +13561,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:33:58Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:58Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:58Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:58Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:58Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:58Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:58Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:33:58Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Homelessness Recovery: 1,500 PSH Units",
       "title": "Homelessness Recovery: 1,500 PSH Units",
       "importance_score": 72,
@@ -12590,14 +13685,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--san-francisco-receives-new-state-homekey-awards-733-million-support-purchase-and-operations",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:33:58Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P36",
@@ -12718,6 +13806,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T04:07:03Z",
+          "reviewer": "arbitrator",
+          "reason": "both sides have competing claims or insufficient evidence to decide"
+        },
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:10:59Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:59Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:59Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:59Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:59Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:59Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:59Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:10:59Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "CleanPowerSF 100% Renewable Electricity",
       "title": "CleanPowerSF 100% Renewable Electricity",
       "importance_score": 71,
@@ -12791,14 +13936,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sfenvironment.org/press/mayor-lee-announces-bold-new-target-50-percent-renewable-energy-2020",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:10:59Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P09",
@@ -12918,6 +14056,57 @@ window.__DEMO_DATA__ = {
           "reason": "due date in future and no definitive resolution yet"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T03:38:12Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:38:12Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:38:12Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:38:12Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:38:12Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:38:12Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:38:12Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:38:12Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "PG&E 10,000 Miles Underground Power Lines",
       "title": "PG&E 10,000 Miles Underground Power Lines",
       "importance_score": 70,
@@ -12991,14 +14180,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2023/600-Miles-and-Counting-PGE-Hits-Significant-Milestone-as-Crews-Safely-Complete-Construction-Energization-of-350-More-Miles-of-Underground-Powerlines-in-2023/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2026-11-11T03:38:12Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P61",
@@ -13095,6 +14277,57 @@ window.__DEMO_DATA__ = {
           "reason": "due date passed with no passing kept evidence"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:18:06Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": false,
+          "checked_at": "2026-11-11T04:18:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:06Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:06Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "SFPUC Water System Improvement Program",
       "title": "SFPUC Water System Improvement Program",
       "importance_score": 69,
@@ -13171,14 +14404,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfpuc.gov/sites/default/files/documents/WSIP-Quarterly-Report-FY2025-2026-Q4.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:18:06Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P66",
@@ -13298,6 +14524,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:30:10Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:30:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:30:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:30:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:30:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:30:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:30:10Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:30:10Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Chase Center Arena 18,064 Capacity Delivery",
       "title": "Chase Center Arena 18,064 Capacity Delivery",
       "importance_score": 68,
@@ -13371,14 +14648,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.thestadiumbusiness.com/2019/08/28/warriors-lift-lid-chase-center/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:30:10Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P64",
@@ -13510,6 +14780,63 @@ window.__DEMO_DATA__ = {
           "reason": "both sides have competing claims or insufficient evidence to decide"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T04:24:15Z",
+          "reviewer": "arbitrator",
+          "reason": "both sides have competing claims or insufficient evidence to decide; due NULL: no deadline in source (open-ended buildout)"
+        },
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:24:55Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:15Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:15Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Treasure Island 8,000 New Residential Units",
       "title": "Treasure Island 8,000 New Residential Units",
       "importance_score": 67,
@@ -13583,14 +14910,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sfbos.org/ftp/uploadedfiles/bdsupvrs/resolutions11/r0241-11.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2026-11-11T04:24:55Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P84",
@@ -13686,6 +15006,57 @@ window.__DEMO_DATA__ = {
           "reason": "genuine partial completion, full scope unresolved"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:11:01Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:01Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Pier 70 Historic Shipyard Redevelopment",
       "title": "Pier 70 Historic Shipyard Redevelopment",
       "importance_score": 66,
@@ -13759,14 +15130,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://bizjournals.com/sanfrancisco/news/2017/10/31/forest-city-pier-70-san-francisco-approval-housing.html",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2026-11-11T04:11:01Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P86",
@@ -13862,6 +15226,57 @@ window.__DEMO_DATA__ = {
           "reason": "genuine partial completion, full scope unresolved"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:21:09Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:09Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:09Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:09Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:09Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:09Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:09Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:09Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Potrero Power Station 2,600 Homes Plan",
       "title": "Potrero Power Station 2,600 Homes Plan",
       "importance_score": 65,
@@ -13935,14 +15350,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/http://sfbos.archive.sf.gov/sites/default/files/2025_10_15_PRESS_RELEASE_INNOVATIVE_SOPHIE_MAXWELL_BUILDING_OPENS_AT_SFS_BOOMING_POWER_STATION.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2026-11-11T04:21:09Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P07",
@@ -14062,6 +15470,57 @@ window.__DEMO_DATA__ = {
           "reason": "numeric target not met or plan abandoned"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:35:46Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:35:46Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:35:46Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:35:46Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:35:46Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:35:46Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:35:46Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:35:46Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "3.5 Million New Homes in California by 2025",
       "title": "3.5 Million New Homes in California by 2025",
       "media_image_url": "https://ca-times.brightspotcdn.com/dims4/default/863beb6/2147483647/strip/true/crop/6536x4358+0+0/resize/1200x800!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F12%2F99%2F5399a8ec4d70a25e815fc4f5225b%2Fgettyimages-2288620704.jpg",
@@ -14138,14 +15597,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://src.senate.ca.gov/governor-gavin-newsoms-top-15-worst-flip-flops-and-fails",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T03:35:46Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P13",
@@ -14253,6 +15705,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-check R3: khsu.org allowlisted, kept(2)+broken(2) both pass; broken stands via Rule 5 (was Rule 1, kept evidence now exists)"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "stalled",
+          "decided_at": "2026-11-11T03:52:32Z",
+          "reviewer": "arbitrator",
+          "reason": "90 days with no action, zero passing claims"
+        },
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:56:06Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:40Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:40Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:40Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:40Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:40Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:40Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:40Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "10-Year Plan to End Chronic Homelessness",
       "title": "10-Year Plan to End Chronic Homelessness",
       "importance_score": 63,
@@ -14326,14 +15835,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2019-08-02/timeline-the-frustrating-political-history-of-homelessness-in-san-francisco",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T03:56:06Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P15",
@@ -14441,6 +15943,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: numeric target not met or plan abandoned; due 2020-12-31 from explicit by-2020 deadline in source (also satisfies due-passed rule)"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:55:01Z",
+          "reviewer": "arbitrator",
+          "reason": "numeric target not met or plan abandoned"
+        },
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:56:06Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:55:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:55:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:55:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:55:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:55:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:55:01Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:56:06Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Add 5,000 Supportive Housing Units in 10 Years",
       "title": "Add 5,000 Supportive Housing Units in 10 Years",
       "importance_score": 62,
@@ -14514,14 +16073,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://civilgrandjury.archive.sf.gov/2017_2018/PressRelease.Housing.pdf",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T03:56:06Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P16",
@@ -14629,6 +16181,57 @@ window.__DEMO_DATA__ = {
           "reason": "re-check R3: codelibrary.amlegal.com allowlisted, kept(2)+broken(2) both pass; broken stands via Rule 3 numeric (880<1000, late) \u2014 was Rule 1"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:57:27Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:34:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:34:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:34:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:34:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:34:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:34:14Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:34:14Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Open 1,000 Additional Shelter Beds in SF",
       "title": "Open 1,000 Additional Shelter Beds in SF",
       "importance_score": 61,
@@ -14702,14 +16305,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_admin/0-0-0-67712",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T03:57:27Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P19",
@@ -14817,6 +16413,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:02:52Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:02:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:02:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:02:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:02:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:02:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:02:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:02:52Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Healthy San Francisco Universal Healthcare",
       "title": "Healthy San Francisco Universal Healthcare",
       "importance_score": 60,
@@ -14890,14 +16537,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Healthy_San_Francisco",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
-      "source_tier": "Reference",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:02:52Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Reference"
     },
     {
       "promise_id": "P20",
@@ -14993,6 +16633,57 @@ window.__DEMO_DATA__ = {
           "reason": "due date passed with no passing kept evidence"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:05:35Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:05:35Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:05:35Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:05:35Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:05:35Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:05:35Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:05:35Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:05:35Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Interim Mayor Non-Candidacy Pledge",
       "title": "Interim Mayor Non-Candidacy Pledge",
       "importance_score": 59,
@@ -15066,14 +16757,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Ed_Lee",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "Reference",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:05:35Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Reference"
     },
     {
       "promise_id": "P23",
@@ -15169,6 +16853,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:11:22Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:22Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:22Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:22Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:22Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:22Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:22Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:22Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Downtown Hospitality Corridor Recovery",
       "title": "Downtown Hospitality Corridor Recovery",
       "importance_score": 58,
@@ -15242,14 +16977,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/mayor-lurie-launches-sfpd-hospitality-task-force-major-new-effort-to-strengthen-public-safety-drive-economic-comeback",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:11:22Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P28",
@@ -15346,6 +17074,63 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: official primary evidence confirms completion with zero contradicting claims (re-open R2: evidence_date corrected to local observation date; 250 beds opened satisfies 200-bed outcome)"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "stalled",
+          "decided_at": "2026-11-11T04:24:01Z",
+          "reviewer": "arbitrator",
+          "reason": "90 days with no action, zero passing claims"
+        },
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:26:07Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:07Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:07Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:07Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:07Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:07Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:07Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:26:07Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Open 250 Additional Behavioral Health Beds",
       "title": "Open 250 Additional Behavioral Health Beds",
       "importance_score": 57,
@@ -15419,14 +17204,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--department-public-health-opens-70-new-behavioral-health-beds-part-expansion-treat-people",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:26:07Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P35",
@@ -15559,6 +17337,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:58:02Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:58:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:58:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:58:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:58:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:58:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:58:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:58:02Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Mental Health SF Reform Implementation",
       "title": "Mental Health SF Reform Implementation",
       "importance_score": 56,
@@ -15632,14 +17461,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://api.sf.gov/documents/12808/DPH_MHSF_Implementation_Report_2023.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T03:58:02Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P37",
@@ -15691,6 +17513,27 @@ window.__DEMO_DATA__ = {
           "check": "verdict_rubric",
           "passed": true,
           "reason": "re-open R2: untestable, no outcome count either way"
+        }
+      ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:11:34Z",
+          "reviewer": "arbitrator",
+          "reason": "due date passed with no passing kept evidence"
+        },
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T04:11:49Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:11:49Z",
+          "checked_by": "arbitrator"
         }
       ],
       "document_title": "Tenderloin & Encampment Outreach",
@@ -15766,14 +17609,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://hsh.archive.sf.gov/wp-content/uploads/2020/01/1000-Shelter-Bed-Press-Conference.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "undecided",
-          "decided_at": "2026-11-11T04:11:49Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P38",
@@ -15906,6 +17742,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims; due 2020-12-31 derived from 2020-wildfire-season/this-year scope in source anchored to promised 2020-02-07"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:17:25Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:17:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:17:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:17:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:17:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:17:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:17:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:17:25Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Reduce PSPS Wildfire Outage Scope by Half",
       "title": "Reduce PSPS Wildfire Outage Scope by Half",
       "importance_score": 54,
@@ -15979,14 +17866,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/PGE-Outlines-Actions-Its-Taking-to-Keep-Customers-and-Communities-Safe-During-2020-Wildfire-Season/default.aspx?print=1",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T04:17:25Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P39",
@@ -16107,6 +17987,57 @@ window.__DEMO_DATA__ = {
           "reason": "due date passed with no passing kept evidence; due 2020-12-31 derived from three-year period from Jan-2018 launch anchored to promised 2018"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:20:52Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:20:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:20:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:20:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:20:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:20:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:20:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:20:52Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Install 7,500 EV Charging Ports",
       "title": "Install 7,500 EV Charging Ports",
       "importance_score": 53,
@@ -16180,14 +18111,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://docs.cpuc.ca.gov/PublishedDocs/Efile/G000/M373/K419/373419331.PDF",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:20:52Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P40",
@@ -16296,6 +18220,57 @@ window.__DEMO_DATA__ = {
           "reason": "due date in future and no definitive resolution yet; interim program active, completion unverified (P18: partial progress + future due)"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:24:02Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:02Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:24:02Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "PG&E Fleet Vehicle Electrification by 2030",
       "title": "PG&E Fleet Vehicle Electrification by 2030",
       "importance_score": 52,
@@ -16369,14 +18344,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/Electric-Vehicle-Drivers-Apply-for-800-Clean-Fuel-Rebate-Before-End-of-Year/default.aspx",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2026-11-11T04:24:02Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P57",
@@ -16472,6 +18440,57 @@ window.__DEMO_DATA__ = {
           "reason": "due date passed with no passing kept evidence"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:00:26Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:00:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:00:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:00:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": false,
+          "checked_at": "2026-11-11T04:00:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:00:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:00:26Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:00:26Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Comcast Gigabit Fiber-to-the-Home Network",
       "title": "Comcast Gigabit Fiber-to-the-Home Network",
       "importance_score": 51,
@@ -16547,14 +18566,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.neowin.net/news/comcast-is-expanding-its-gigabit-internet-service-will-be-in-15-us-cities-by-early-2017/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:00:26Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P03",
@@ -16674,6 +18686,57 @@ window.__DEMO_DATA__ = {
           "reason": "official primary evidence confirms completion with zero contradicting claims"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:32:52Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T03:32:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T03:32:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T03:32:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T03:32:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T03:32:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T03:32:52Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T03:32:52Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Permitting Reform & Small Business Overhaul",
       "title": "Permitting Reform & Small Business Overhaul",
       "importance_score": 50,
@@ -16747,14 +18810,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-pieces-of-permitsf-announces-legislation-with-major-reforms-to-cut-red-tape-drive-economic-recovery",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "kept",
-          "decided_at": "2026-11-11T03:32:52Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P58",
@@ -16806,6 +18862,33 @@ window.__DEMO_DATA__ = {
           "check": "verdict_rubric",
           "passed": true,
           "reason": "due date passed with no passing kept evidence"
+        }
+      ],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T04:00:00Z",
+          "reviewer": "arbitrator",
+          "reason": "untestable: no end-of-2016 Bay Area location count exists to check the tripling against; never broken on fully-empty bundles (parent P58 principle); prior Rule-1 broken superseded"
+        },
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:03:20Z",
+          "reviewer": "arbitrator",
+          "reason": "due date passed with no passing kept evidence; due 2016-12-31 = year end from 'by the end of the year' in source"
+        },
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T04:10:29Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:03:20Z",
+          "checked_by": "arbitrator"
         }
       ],
       "document_title": "AT&T Public Market Street Wi-Fi Expansion",
@@ -16881,14 +18964,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.govtech.com/network/ATT-Launches-Fiber-Internet-in-San-Francisco-Bay-Area.html",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "undecided",
-          "decided_at": "2026-11-11T04:10:29Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P62",
@@ -17020,6 +19096,57 @@ window.__DEMO_DATA__ = {
           "reason": "numeric target not met or plan abandoned"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:21:25Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:25Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:21:25Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Visa Mission Rock HQ 1,500 Staff Occupancy",
       "title": "Visa Mission Rock HQ 1,500 Staff Occupancy",
       "importance_score": 49,
@@ -17093,14 +19220,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.bisnow.com/news/san-francisco/office/visa-to-build-global-hq-at-giants-tishman-speyers-mission-rock-101678",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:21:25Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     },
     {
       "promise_id": "P65",
@@ -17220,6 +19340,57 @@ window.__DEMO_DATA__ = {
           "reason": "due date passed with no passing kept evidence"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:27:33Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:27:33Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:27:33Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:27:33Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:27:33Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:27:33Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:27:33Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:27:33Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Central Subway Contract Completion (May 2018)",
       "title": "Central Subway Contract Completion (May 2018)",
       "importance_score": 48,
@@ -17293,14 +19464,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/index%2Ephp/media/42253/download?inline",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
-      "source_tier": "Official",
-      "verdict_history": [
-        {
-          "verdict": "broken",
-          "decided_at": "2026-11-11T04:27:33Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "Official"
     },
     {
       "promise_id": "P85",
@@ -17403,6 +19567,69 @@ window.__DEMO_DATA__ = {
           "reason": "due date in future and no definitive resolution yet"
         }
       ],
+      "verdict_history": [
+        {
+          "verdict": "stalled",
+          "decided_at": "2026-11-11T04:13:38Z",
+          "reviewer": "arbitrator",
+          "reason": "90 days with no action, zero passing claims [due 2028-05-31 from source: SFMTA expects to complete the Study in May 2028]"
+        },
+        {
+          "verdict": "stalled",
+          "decided_at": "2026-11-11T04:16:07Z",
+          "reviewer": "arbitrator",
+          "reason": "90 days with no action, zero passing claims [due 2028-05-31 from source: SFMTA expects to complete the Study in May 2028]"
+        },
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:18:18Z",
+          "reviewer": "arbitrator"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:18Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_evidence",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:18Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:18Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:18Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:18Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "authenticity_speaker",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:18Z",
+          "checked_by": "arbitrator"
+        },
+        {
+          "check": "verdict_rubric",
+          "passed": true,
+          "checked_at": "2026-11-11T04:18:18Z",
+          "checked_by": "arbitrator"
+        }
+      ],
       "document_title": "Central Subway Chinatown & North Beach Study",
       "title": "Central Subway Chinatown & North Beach Study",
       "importance_score": 47,
@@ -17476,14 +19703,7 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfcta.org/blogs/transportation-authority-board-approves-230700-study-central-subway-extension-north-beach",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News",
-      "verdict_history": [
-        {
-          "verdict": "in_progress",
-          "decided_at": "2026-11-11T04:18:18Z"
-        }
-      ],
-      "verification_history": []
+      "source_tier": "News"
     }
   ],
   "quarantined": [

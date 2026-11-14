@@ -94,9 +94,18 @@ class TestDrawerTimeline(unittest.TestCase):
                 bool(r["html"]), r["n"] > 1,
                 f"{r['id']}: timeline truthiness must match history length {r['n']}",
             )
-        # Exactly one corpus record (P83) carries the two-step timeline.
+        # Every committed multi-verdict record renders a timeline. Calibrated
+        # on the first DB-backed export: 14 records carry real multi-verdict
+        # histories (re-opens, arbitrator corrections, the P82 durability
+        # recheck). The earlier "exactly P83" pin matched the offline
+        # snapshot, whose synthesized histories gave every record one entry.
         with_timeline = [r["id"] for r in self.out["perRecord"] if r["html"]]
-        self.assertEqual(with_timeline, ["P83"])
+        self.assertIn("P83", with_timeline, "P83 must render its two-step timeline")
+        self.assertEqual(
+            with_timeline,
+            [r["id"] for r in self.out["perRecord"] if r["n"] > 1],
+            "timeline set must equal the multi-verdict set",
+        )
 
     def test_provenance_line_carries_exported_fields(self):
         html = self.out["provenanceFull"]
