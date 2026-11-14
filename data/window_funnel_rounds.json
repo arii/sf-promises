@@ -1,0 +1,24 @@
+[
+  {
+    "window": "rolling-183d",
+    "round_id": "o4-rolling",
+    "counts": {
+      "raw": 2450,
+      "allowlisted": 697,
+      "archived": 76,
+      "leads": 25,
+      "gate": 25
+    }
+  },
+  {
+    "window": "backfill-12m",
+    "round_id": "o4-sweep",
+    "counts": {
+      "raw": 2450,
+      "allowlisted": 762,
+      "archived": 23,
+      "leads": 13,
+      "gate": 13
+    }
+  }
+]
