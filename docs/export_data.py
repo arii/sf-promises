@@ -441,6 +441,7 @@ PROMISE_TITLES = {
     "P23": "Downtown Hospitality Corridor Recovery",
     "P28": "Open 250 Additional Behavioral Health Beds",
     "P35": "Mental Health SF Reform Implementation",
+    "P37": "Tenderloin & Encampment Outreach",
     "P38": "Reduce PSPS Wildfire Outage Scope by Half",
     "P39": "Install 7,500 EV Charging Ports",
     "P40": "PG&E Fleet Vehicle Electrification by 2030",

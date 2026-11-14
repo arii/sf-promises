@@ -28,6 +28,11 @@
   let hasAutoPlayed = false;
   const STAGE_INTERVAL_MS = 1800;
   let lastActiveElement = null;
+  // Replay scenarios are built from the exported snapshot in init(); the
+  // walkthrough showcases are the pipeline demo records, with every stage
+  // string derived from the record's own fields.
+  let SCENARIOS = {};
+  const SCENARIO_SHOWCASE_IDS = ['P02', 'P05', 'SFO-01', 'P06'];
 
   function formatPrecisionDate(dateStr, precision) {
     if (!dateStr || String(dateStr).trim() === '' || dateStr === 'None' || dateStr === '—' || dateStr === 'not recorded') {
@@ -284,6 +289,11 @@
       }
     }
 
+    SCENARIOS = buildScenarios(demoData && demoData.promises);
+    if (!SCENARIOS[currentRunType]) {
+      const first = Object.keys(SCENARIOS)[0];
+      if (first) currentRunType = first;
+    }
     setupReplayScenarios();
     setupEventListeners();
     renderExplore();
@@ -291,148 +301,78 @@
     setupFeaturedStories();
     renderVisualizations();
   }
-
   // -------------------------------------------------------------------------
   // Replay State Machine (0.5) - Real Commitments, Auto-Play, Zero Layout Shift
   // -------------------------------------------------------------------------
-  const SCENARIOS = {
-    P02: {
-      id: 'P02',
-      label: '#01 · 24/7 Crisis Center',
-      speaker: 'Mayor Daniel Lurie',
-      title: '24/7 Crisis Stabilization Center',
-      expectedVerdict: 'kept',
-      verdictLabel: 'KEPT',
+  // Replay scenarios are derived from the exported snapshot: the walkthrough
+  // showcases are selected from demoData.promises and every stage string is
+  // built from the record's own fields (source, quote, gate score, claim
+  // counts, check outcomes, verdict reason). No hardcoded record copy.
+  function scenarioFromRecord(p) {
+    const rank = String(p.impact_rank || p.display_no || '').padStart(2, '0');
+    const rel = p.relevance || {};
+    const bundles = p.advocate_bundles || {};
+    const keptClaims = ((bundles.kept || {}).claims || []).length;
+    const brokenClaims = ((bundles.broken || {}).claims || []).length;
+    const checks = p.checks || [];
+    const passedChecks = checks.filter(c => c.passed).length;
+    const verdict = String(p.verdict || 'undecided').toUpperCase();
+    const title = p.document_title || p.title || `${p.entity} Commitment`;
+    const quote = cleanQuoteText(p.promise_text || '');
+    const hash = String(p.source_hash || '');
+    const relTotal = (rel.score != null) ? `${rel.score}/8` : 'recorded in the export';
+    return {
+      id: p.promise_id,
+      label: `#${rank} · ${title}`,
+      speaker: p.entity || 'Unknown speaker',
+      title,
+      expectedVerdict: p.verdict === 'broken' ? 'broken' : 'kept',
+      verdictLabel: verdict,
       stages: {
         1: {
           title: 'Source Fetched',
-          desc: 'Archived sf.gov release 582955d5… from official municipal domain allowlist.'
+          desc: `Archived ${p.source_type || 'source'} ${hash.slice(0, 8)}… from the ${p.source_tier || 'recorded'} tier.`
         },
         2: {
           title: 'Quote Extracted',
-          desc: '“That’s exactly what this 24/7 police-friendly stabilization center will be, and I am proud to be opening it.”'
+          desc: `“${quote.slice(0, 220)}${quote.length > 220 ? '…' : ''}”`
         },
         3: {
           title: 'Relevance Gate Passed',
-          desc: 'Relevance gate score 8/8: quantified Tenderloin civic commitment with measurable timeline.'
+          desc: `Relevance gate score ${relTotal} across real-promise, measurable, SF-relevant and interesting signals.`
         },
         4: {
           title: 'Evidence Evaluated',
-          desc: 'Adjudicated 4 supporting vs 0 contradicting claims; verified 344 admissions recorded since April 28, 2025.'
+          desc: `Adjudicated ${keptClaims} supporting vs ${brokenClaims} contradicting claims from the archived record set.`
         },
         5: {
           title: 'Code Checks Passed',
-          desc: 'All 7 deterministic code checks passed: SHA-256 byte-match, date consistency, and speaker attribution verified.'
+          desc: checks.length
+            ? `${passedChecks} of ${checks.length} deterministic code checks passed on the archived source.`
+            : 'Deterministic code checks are recorded in the verification history.'
         },
         6: {
           title: 'Verdict Published',
-          desc: 'Published KEPT verdict: official primary records confirm 24/7 crisis center operational at 822 Geary St.'
+          desc: `Published ${verdict} verdict: ${p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id)}`
         }
       }
-    },
-    P05: {
-      id: 'P05',
-      label: '#02 · 1,500 Shelter Beds',
-      speaker: 'Mayor Daniel Lurie',
-      title: '1,500 Shelter Beds in First 6 Months',
-      expectedVerdict: 'broken',
-      verdictLabel: 'BROKEN',
-      stages: {
-        1: {
-          title: 'Source Fetched',
-          desc: 'Archived SF Standard source document 384c310b… from news tier.'
-        },
-        2: {
-          title: 'Quote Extracted',
-          desc: '“Open 1,500 new shelter beds in the first six months of the administration.”'
-        },
-        3: {
-          title: 'Relevance Gate Passed',
-          desc: 'Relevance gate score 8/8: citywide shelter bed expansion with concrete numeric threshold.'
-        },
-        4: {
-          title: 'Evidence Evaluated',
-          desc: 'Adjudicated 1 supporting vs 2 contradicting claims; city shelter capacity tracker logged ~500 beds added.'
-        },
-        5: {
-          title: 'Code Checks Evaluated',
-          desc: 'Deterministic code checks failed deadline threshold: 6-month window passed with <50% target delivery.'
-        },
-        6: {
-          title: 'Verdict Published',
-          desc: 'Published BROKEN verdict: numeric target not met; administration pivoted strategy after 6 months.'
-        }
-      }
-    },
-    'SFO-01': {
-      id: 'SFO-01',
-      label: '#03 · Runway 28L Reopening',
-      speaker: 'SFO Airport',
-      title: 'Runway 28L Safety Realignment & Reopening',
-      expectedVerdict: 'kept',
-      verdictLabel: 'KEPT',
-      stages: {
-        1: {
-          title: 'Source Fetched',
-          desc: 'Archived flysfo.com press release b6a2f59f… from verified SFO airport domain.'
-        },
-        2: {
-          title: 'Quote Extracted',
-          desc: '“Runway 28L will reopen ahead of schedule on Friday, June 21, 2024.”'
-        },
-        3: {
-          title: 'Relevance Gate Passed',
-          desc: 'Relevance gate score 8/8: critical airfield safety capital project with defined completion target.'
-        },
-        4: {
-          title: 'Evidence Evaluated',
-          desc: 'Adjudicated 3 supporting vs 0 contradicting operational flight logs; runway operational June 21, 2024.'
-        },
-        5: {
-          title: 'Code Checks Passed',
-          desc: 'All 7 deterministic code checks passed: SHA-256 verified, reopening date beat July 1 deadline by 10 days.'
-        },
-        6: {
-          title: 'Verdict Published',
-          desc: 'Published KEPT verdict: Runway 28L reopened ahead of schedule following $51M taxiway realignment.'
-        }
-      }
-    },
-    P06: {
-      id: 'P06',
-      label: '#18 · Vision Zero',
-      speaker: 'City & County of San Francisco',
-      title: 'Vision Zero: End Traffic Fatalities by 2024',
-      expectedVerdict: 'broken',
-      verdictLabel: 'BROKEN',
-      stages: {
-        1: {
-          title: 'Source Fetched',
-          desc: 'Archived municipal resolution 9e32a10f… from official City & County of San Francisco records.'
-        },
-        2: {
-          title: 'Quote Extracted',
-          desc: '“Adopt Vision Zero with the goal of eliminating all traffic fatalities in San Francisco by 2024.”'
-        },
-        3: {
-          title: 'Relevance Gate Passed',
-          desc: 'Relevance gate score 8/8: high-impact citywide transit and pedestrian safety mandate.'
-        },
-        4: {
-          title: 'Evidence Evaluated',
-          desc: 'Adjudicated 0 supporting vs 5 contradicting SFMTA collision records; 39 traffic fatalities logged in 2024.'
-        },
-        5: {
-          title: 'Code Checks Evaluated',
-          desc: 'Deterministic code checks evaluated target condition: fatalities > 0 at deadline triggers automatic broken verdict.'
-        },
-        6: {
-          title: 'Verdict Published',
-          desc: 'Published BROKEN verdict: fatal traffic collisions were not eliminated by the 2024 milestone.'
-        }
-      }
+    };
+  }
+
+  function buildScenarios(promises) {
+    const byId = {};
+    (promises || []).forEach(p => { byId[p.promise_id] = p; });
+    const scenarios = {};
+    SCENARIO_SHOWCASE_IDS.forEach(pid => {
+      if (byId[pid]) scenarios[pid] = scenarioFromRecord(byId[pid]);
+    });
+    // Honest degradation: if none of the showcase records are in the
+    // snapshot, build the walkthrough from whatever records the snapshot has.
+    if (!Object.keys(scenarios).length) {
+      (promises || []).slice(0, 2).forEach(p => { scenarios[p.promise_id] = scenarioFromRecord(p); });
     }
-  };
+    return scenarios;
+  }
 
   function triggerProgressBar() {
     const bar = document.getElementById('pipeline-progress-bar');
@@ -466,7 +406,7 @@
 
   function renderActiveStage(scenarioKey, stageNum) {
     currentStage = stageNum;
-    const scenario = SCENARIOS[scenarioKey] || SCENARIOS.P02;
+    const scenario = SCENARIOS[scenarioKey] || SCENARIOS[currentRunType] || Object.values(SCENARIOS)[0] || {};
     const stageIndicator = document.getElementById('pipeline-stage-indicator');
     const statusText = document.getElementById('packet-status-text');
     const trackFill = document.getElementById('packet-track-fill');
@@ -1659,64 +1599,11 @@
       }
     }
     if (titleEl) {
+      // Titles come from the export (PROMISE_TITLES is baked per record);
+      // the entity-name fallback is the exporter's own default shape.
       let t = p.document_title || p.title || '';
       if (!t || t.toLowerCase() === `${p.entity.toLowerCase()} commitment`) {
-        const fallbackTitles = {
-          P02: "24/7 Crisis Stabilization Center",
-          P05: "1,500 Shelter Beds in First 6 Months",
-          "SFO-01": "Runway 28L Safety Realignment & Reopening",
-          "SFO-02": "Harvey Milk Terminal 1 Final Completion",
-          "SFO-03": "Sustainable Aviation Fuel (SAF) Infrastructure",
-          "SFO-04": "Alaska Airlines Terminal 1 Flight Operations",
-          P21: "JFK Drive Permanent Car-Free Promenade",
-          P04: "Chase Center Valkyries Regular Season Games",
-          P82: "Valkyries WNBA Championship Guarantee",
-          P83: "Whole Foods Mid-Market Flagship Safety",
-          P11: "Grateful Dead Tour Retirement & Archival Shows",
-          P01: "Fentanyl State of Emergency Ordinance",
-          P59: "Zoox Driverless Passenger Ride Hail in SF",
-          P43: "Waymo Fully Autonomous Ride-Hail Expansion",
-          P41: "Central Subway Substantial Completion (2018)",
-          P10: "Mission Rock 40% Affordable Housing Pledges",
-          P18: "Housing Element: 82,200 New Homes by 2031",
-          P06: "Vision Zero: End Traffic Fatalities by 2024",
-          P08: "1,000 SRO Housing Units Improvement",
-          P22: "Embarcadero Navigation Center 200 Beds",
-          P17: "Hire 425 New SFPD Police Officers",
-          P25: "Close San Francisco Juvenile Hall Facility",
-          P12: "6,500 Shared E-Scooter Fleet Cap",
-          P26: "Empty Homes Tax: 4,500 Units in Year One",
-          P27: "Housing Trust Fund: $20M First-Year Budget",
-          P29: "Care Not Cash Homeless Services Reform",
-          P31: "Family Zoning Plan Neighborhood Housing",
-          P30: "Homelessness Recovery: 1,500 PSH Units",
-          P36: "CleanPowerSF 100% Renewable Electricity",
-          P09: "PG&E 10,000 Miles Underground Power Lines",
-          P61: "SFPUC Water System Improvement Program",
-          P66: "Chase Center Arena 18,064 Capacity Delivery",
-          P64: "Treasure Island 8,000 New Residential Units",
-          P84: "Pier 70 Historic Shipyard Redevelopment",
-          P86: "Potrero Power Station 2,600 Homes Plan",
-          P07: "3.5 Million New Homes in California by 2025",
-          P13: "10-Year Plan to End Chronic Homelessness",
-          P15: "Add 5,000 Supportive Housing Units in 10 Years",
-          P16: "Open 1,000 Additional Shelter Beds in SF",
-          P19: "Healthy San Francisco Universal Healthcare",
-          P20: "Interim Mayor Non-Candidacy Pledge",
-          P23: "Downtown Hospitality Corridor Recovery",
-          P28: "Open 250 Additional Behavioral Health Beds",
-          P35: "Mental Health SF Reform Implementation",
-          P38: "Reduce PSPS Wildfire Outage Scope by Half",
-          P39: "Install 7,500 EV Charging Ports",
-          P40: "PG&E Fleet Vehicle Electrification by 2030",
-          P57: "Comcast Gigabit Fiber-to-the-Home Network",
-          P03: "Permitting Reform & Small Business Overhaul",
-          P58: "AT&T Public Market Street Wi-Fi Expansion",
-          P62: "Visa Mission Rock HQ 1,500 Staff Occupancy",
-          P65: "Central Subway Contract Completion (May 2018)",
-          P85: "Central Subway Chinatown & North Beach Study"
-        };
-        t = fallbackTitles[p.promise_id] || `${p.entity} Commitment`;
+        t = `${p.entity} Commitment`;
       }
       titleEl.textContent = t;
     }
@@ -1995,7 +1882,12 @@
 
     const changelogEl = document.getElementById('drawer-changelog-entry');
     const copyReceiptBtn = document.getElementById('btn-copy-receipt');
-    const receiptText = `COMMITMENT #${rank} (${p.promise_id}) · VERDICT=${(p.verdict || 'KEPT').toUpperCase()} · HASH=${(p.source_hash || '').slice(0, 16)}… · RUN=ARBITRATOR_RUN_accd67e9`;
+    // Receipt is built from exported fields; the run id comes from the
+    // snapshot's recorded integration run, never a hardcoded literal.
+    const runId = (demoData && demoData.database_status &&
+      ((demoData.database_status.latest_run || {}).run_id ||
+       (demoData.database_status.integration_run || {}).run_id)) || 'RUN_UNRECORDED';
+    const receiptText = `COMMITMENT #${rank} (${p.promise_id}) · VERDICT=${(p.verdict || 'undecided').toUpperCase()} · HASH=${(p.source_hash || '').slice(0, 16)}… · RUN=${runId}`;
     if (changelogEl) {
       changelogEl.textContent = receiptText;
     }
