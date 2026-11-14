@@ -2032,7 +2032,6 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     html = re.sub(r'href="styles\.css(?:\?[^"]*)?"', f'href="styles.css?v={commit_sha}"', html)
     html = re.sub(r'src="data\.js(?:\?[^"]*)?"', f'src="data.js?v={commit_sha}"', html)
     html = re.sub(r'src="app\.js(?:\?[^"]*)?"', f'src="app.js?v={commit_sha}"', html)
-    html = re.sub(r'src="list\.min\.js(?:\?[^"]*)?"', f'src="list.min.js?v={commit_sha}"', html)
 
     # Update tally numbers in hero & bar
     html = re.sub(r'(<strong id="tally-total">)[^<]*(</strong>)', rf'\g<1>{len(promises)}\g<2>', html)

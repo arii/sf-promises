@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=cbff51c5">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=d5229e9e">
 </head>
 <body>
   <div class="shell">
@@ -61,13 +58,18 @@
     </header>
 
     <main class="wrap">
+      <!-- Data-load state: a loading line for the late-fetch path and a visible
+           alert banner when the snapshot cannot be loaded at all. -->
+      <div class="data-load-status font-mono" id="data-load-status" hidden>Loading live dataset…</div>
+      <div class="data-load-error" id="data-load-error" role="alert" hidden></div>
+
       <!-- SECTION 1: WHAT IS THIS? (Hero) -->
       <section class="hero-section" id="hero" aria-label="Overview">
-        <h1 class="hero-headline">A sourced record of what San Francisco's leaders promised, and what happened.</h1>
+        <h1 class="hero-headline">A sourced record of San Francisco's public promises — kept, broken, and everything between.</h1>
         <p class="hero-subline">Tracking 54 public commitments across City Hall, SFO Airport, transit, and sports against saved, hashed documents.</p>
         <div class="hero-actions-row">
-          <a href="#explore" class="btn btn-primary" id="btn-hero-browse">Browse promises &darr;</a>
-          <a href="#watch" class="btn btn-secondary" id="btn-hero-watch">How it works &darr;</a>
+          <a href="#explore" class="btn btn-primary" id="btn-hero-browse">Browse promises</a>
+          <a href="#watch" class="btn btn-secondary" id="btn-hero-watch">How it works</a>
         </div>
       </section>
 
@@ -2000,6 +2002,8 @@
               </tr>
             </tbody>
           </table>
+          <!-- Rendered by app.js when the active filters match zero records. -->
+          <div class="promises-empty-state" id="promises-empty-state" hidden></div>
         </div>
 
         <!-- Unified Quarantine Registry Cards (Exactly 13 items) -->
@@ -2473,7 +2477,7 @@
             <div class="stage-card-header">
               <h3 class="stage-heading">Code Checks Passed</h3>
             </div>
-            <p class="stage-desc">All 7 deterministic code checks passed: SHA-256 byte-match, date consistency, and speaker attribution verified.</p>
+            <p class="stage-desc">All seven code checks passed: SHA-256 byte-match, date consistency, and speaker attribution verified.</p>
           </div>
           <div class="stage-card inactive-stage" id="pipeline-stage-6" data-stage="6">
             <div class="stage-card-header">
@@ -2505,15 +2509,15 @@
             <div class="step-icon-svg" aria-hidden="true">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--kept)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
-            <div class=\"step-title\">Independent searches store contemporaneous evidence.</div>
-            <p class=\"step-desc\">Affirming and contradicting searches run independently to collect comprehensive documentation.</p>
+            <div class="step-title">Independent searches archive their own evidence.</div>
+            <p class="step-desc">Affirming and contradicting searches run independently to collect comprehensive documentation.</p>
           </div>
           <div class="step-card">
             <div class="step-icon-svg" aria-hidden="true">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
             </div>
             <div class="step-title">Code decides.</div>
-            <p class="step-desc">Seven deterministic checks verify hashes, dates, and quotes without runtime language model calls.</p>
+            <p class="step-desc">The same seven checks run on every record, without language-model calls at decision time.</p>
           </div>
         </div>
 
@@ -2521,7 +2525,7 @@
         <div class="origin-card" id="origin-story">
           <div class="origin-badge font-mono">PROJECT ORIGIN &amp; PURPOSE</div>
           <h3 class="origin-title">Civic accountability for San Francisco</h3>
-          <p class=\"origin-text\">
+          <p class="origin-text">
             SF Promises tracks public commitments made by San Francisco leaders against archived municipal records, agency dashboards, and contemporaneous news sources.
             Built at the <strong>Archil Hackathon</strong> (November 2026), the system tests published statements against verifiable milestone dates and source documents.
           </p>
@@ -2699,7 +2703,7 @@
         <!-- Part 4: Arbitrator checks -->
         <section class="drawer-section" aria-label="Part 4: Arbitrator Code Checks">
           <div class="drawer-section-heading font-mono">4 &middot; ARBITRATOR DETERMINISTIC CHECKS</div>
-          <p class="drawer-section-sub">Seven deterministic checks verify hashes, dates, and quotes.</p>
+          <p class="drawer-section-sub">Every verdict traces to hashes, dates, and quotes you can re-check yourself.</p>
           <details class="drawer-checks-accordion" id="drawer-checks-accordion">
             <summary class="drawer-checks-summary font-mono">
               <span class="checks-summary-icon">✓</span>
@@ -2744,8 +2748,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=cbff51c5"></script>
-  <script src="list.min.js?v=cbff51c5"></script>
-  <script src="app.js?v=cbff51c5"></script>
+  <script src="data.js?v=d5229e9e"></script>
+  <script src="app.js?v=d5229e9e"></script>
 </body>
 </html>
