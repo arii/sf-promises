@@ -933,45 +933,30 @@ REJECTED_CANDIDATE_P68 = {
 }
 
 
-def synthesize_verdict_history(verdict, decided_at, reason):
+def synthesize_verdict_history(verdict, decided_at):
     """Snapshot-only fallback for records whose history is not in the export DB.
 
     Builds the minimum honest history from the record itself. A
     kept_then_reversed verdict is the product of an append-only reopen (the
     original kept row comes first and is never mutated), so the entry pair is
     recorded; the original row's decided_at lives only in the promises DB and
-    is left null rather than invented.
+    is left out rather than invented.
     """
     v = (verdict or "undecided").lower()
     entries = [{
         "verdict": "kept",
-        "decided_at": None,
-        "reviewer": "arbitrator",
-        "model_id": None,
         "reason": "Kept at publish; the original verdict row is retained by the append-only reopen.",
     }] if v == "kept_then_reversed" else []
-    entries.append({
-        "verdict": v,
-        "decided_at": decided_at,
-        "reviewer": "durability_cron" if v == "kept_then_reversed" else "arbitrator",
-        "model_id": None,
-        "reason": reason,
-    })
+    newest = {"verdict": v}
+    # Delta encoding: the newest entry's verdict/decided_at/reason are the
+    # record's own fields (verdict, decided_at, verdict_reason), so only
+    # decided_at is carried and consumers fall back to the record for the
+    # rest. DB-only provenance (reviewer/model_id) is unknown here and is
+    # omitted rather than padded with nulls.
+    if decided_at:
+        newest["decided_at"] = decided_at
+    entries.append(newest)
     return entries
-
-
-def synthesize_verification_history(checks):
-    """Snapshot-only fallback: per-check history from the record's own check
-    rows. checked_at/model_id/run_id are DB-only provenance and stay null."""
-    return [{
-        "check": c.get("check"),
-        "passed": bool(c.get("passed")),
-        "reason": c.get("reason"),
-        "checked_at": None,
-        "checked_by": "arbitrator",
-        "model_id": None,
-        "run_id": None,
-    } for c in (checks or [])]
 
 
 def sanitize_export_paths(obj):
@@ -1052,35 +1037,43 @@ def _load_from_db(db_path):
     _vsel = "promise_id, verdict, reason, decided_at"
     _vsel += ", decided_by" if "decided_by" in verdict_cols else ", NULL as decided_by"
     _vsel += ", model_id" if "model_id" in verdict_cols else ", NULL as model_id"
+    # Delta encoding: fields that are null in the DB (e.g. model_id on older
+    # verdict rows) are omitted rather than padded, and the newest entry's
+    # reason is dropped when it repeats the record's own verdict_reason —
+    # consumers fall back to the record fields.
     verdict_history = {}
     for vr in cur.execute(f"SELECT {_vsel} FROM verdicts ORDER BY decided_at ASC").fetchall():
-        verdict_history.setdefault(vr["promise_id"], []).append({
-            "verdict": (vr["verdict"] or "").lower(),
-            "decided_at": vr["decided_at"],
-            "reviewer": vr["decided_by"],
-            "model_id": vr["model_id"],
-            "reason": vr["reason"],
-        })
+        entry = {"verdict": (vr["verdict"] or "").lower()}
+        if vr["decided_at"]:
+            entry["decided_at"] = vr["decided_at"]
+        if vr["decided_by"]:
+            entry["reviewer"] = vr["decided_by"]
+        if vr["model_id"]:
+            entry["model_id"] = vr["model_id"]
+        if vr["reason"]:
+            entry["reason"] = vr["reason"]
+        verdict_history.setdefault(vr["promise_id"], []).append(entry)
 
     # E2: verification history — every verifications row with its provenance.
     # Schema v4 carries model_id per row; checked_by and run_id are included
     # when the export DB has them (older DBs do not).
     _chk_cols = {r[1] for r in cur.execute("PRAGMA table_info(verifications)")}
-    _csel = "promise_id, check_type, passed, reason, checked_at"
+    _csel = "promise_id, check_type, passed, checked_at"
     _csel += ", checked_by" if "checked_by" in _chk_cols else ", NULL as checked_by"
     _csel += ", model_id" if "model_id" in _chk_cols else ", NULL as model_id"
     _csel += ", run_id" if "run_id" in _chk_cols else ", NULL as run_id"
     verification_history = {}
     for vr in cur.execute(f"SELECT {_csel} FROM verifications ORDER BY checked_at ASC").fetchall():
-        verification_history.setdefault(vr["promise_id"], []).append({
-            "check": vr["check_type"],
-            "passed": bool(vr["passed"]),
-            "reason": vr["reason"],
-            "checked_at": vr["checked_at"],
-            "checked_by": vr["checked_by"],
-            "model_id": vr["model_id"],
-            "run_id": vr["run_id"],
-        })
+        entry = {"check": vr["check_type"], "passed": bool(vr["passed"])}
+        if vr["checked_at"]:
+            entry["checked_at"] = vr["checked_at"]
+        if vr["checked_by"]:
+            entry["checked_by"] = vr["checked_by"]
+        if vr["model_id"]:
+            entry["model_id"] = vr["model_id"]
+        if vr["run_id"]:
+            entry["run_id"] = vr["run_id"]
+        verification_history.setdefault(vr["promise_id"], []).append(entry)
 
     for row in rows:
         pid = row["promise_id"]
@@ -1149,9 +1142,17 @@ def _load_from_db(db_path):
             "decided_at": decided_at,
             "advocate_bundles": {"kept": kept_staging, "broken": broken_staging},
             "checks": item_checks,
-            "verdict_history": verdict_history.get(pid) or synthesize_verdict_history(verd, decided_at, reason),
-            "verification_history": verification_history.get(pid) or synthesize_verification_history(item_checks)
+            "verdict_history": verdict_history.get(pid) or synthesize_verdict_history(verd, decided_at),
+            # No verifications rows for this promise in the export DB: an
+            # honest empty history; the latest check state rides in `checks`.
+            "verification_history": verification_history.get(pid) or []
         })
+        # Delta encoding: the newest verdict-history entry repeats the
+        # record's current verdict/reason, so a duplicate reason is dropped
+        # and consumers fall back to the record fields.
+        vh = all_promises[-1]["verdict_history"]
+        if vh and vh[-1].get("reason") == all_promises[-1]["verdict_reason"]:
+            del vh[-1]["reason"]
 
     total_db_promises = cur.execute("SELECT count(DISTINCT promise_id) FROM promises").fetchone()[0]
     total_db_verdicts = cur.execute("SELECT count(*) FROM verdicts").fetchone()[0]
@@ -1289,13 +1290,15 @@ def export():
 
     # E2: the no-DB fallback path loads records from the previous snapshot;
     # keep history that a prior DB-backed export recorded and synthesize the
-    # minimum honest history where none exists.
+    # minimum honest history where none exists. With no verifications table
+    # available, verification history stays empty — the latest check state
+    # rides in `checks` — rather than padding null provenance.
     for p in all_promises:
         if not p.get("verdict_history"):
             p["verdict_history"] = synthesize_verdict_history(
-                p.get("verdict"), p.get("decided_at"), p.get("verdict_reason"))
+                p.get("verdict"), p.get("decided_at"))
         if not p.get("verification_history"):
-            p["verification_history"] = synthesize_verification_history(p.get("checks"))
+            p["verification_history"] = []
 
     # Re-apply taxonomy, neighborhood map, and deterministic patches across all rows
     for p in all_promises:
