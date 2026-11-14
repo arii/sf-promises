@@ -406,6 +406,12 @@ def compute_deterministic_verdict(
     return "IN_PROGRESS"
 
 
+def _table_columns(conn: sqlite3.Connection, table: str) -> dict[str, str]:
+    """Map column name -> declared type for a table (empty when missing)."""
+    return {row[1]: (row[2] or "").upper()
+            for row in conn.execute(f"PRAGMA table_info({table})")}
+
+
 def reopen_promise_verdict(
     conn: sqlite3.Connection,
     promise_id: str,
@@ -413,37 +419,87 @@ def reopen_promise_verdict(
     reason: str,
     reviewer: str = "human_editor",
     reading_used: str | None = None,
-) -> dict[str, str]:
+) -> dict[str, str | None]:
     """Turn corrections principle into append-only code.
-    Inserts a new verdict row and logs the transition in change_log.
+    Inserts a new verdict row and logs the transition in change_log; existing
+    verdict rows are never mutated. Adapts to both the live schema
+    (src/schema.sql: integer verdict ids, no promises.status column — the
+    current status is the latest verdicts row) and the legacy durability
+    schema (text verdict ids plus a materialized promises.status).
     """
     now = utcnow()
-    cur = conn.execute("SELECT status FROM promises WHERE promise_id = ?", (promise_id,))
-    row = cur.fetchone()
+    promise_columns = _table_columns(conn, "promises")
+    verdict_columns = _table_columns(conn, "verdicts")
+    change_log_columns = _table_columns(conn, "change_log")
+    if not change_log_columns:
+        raise ValueError("change_log table is missing; the durability cycle requires it")
+
+    if "status" in promise_columns:
+        row = conn.execute(
+            "SELECT status FROM promises WHERE promise_id = ?", (promise_id,)
+        ).fetchone()
+    else:
+        row = conn.execute(
+            "SELECT verdict FROM verdicts WHERE promise_id = ? "
+            "ORDER BY decided_at DESC, verdict_id DESC LIMIT 1",
+            (promise_id,),
+        ).fetchone()
     if not row:
         raise ValueError(f"Promise {promise_id} does not exist in promises table")
     old_status = row[0]
 
     with conn:
         conn.execute("PRAGMA busy_timeout = 30000")
-        conn.execute(
-            "UPDATE promises SET status = ?, updated_at = ? WHERE promise_id = ?",
-            (new_verdict, now, promise_id)
-        )
+        if "status" in promise_columns:
+            if "updated_at" in promise_columns:
+                conn.execute(
+                    "UPDATE promises SET status = ?, updated_at = ? WHERE promise_id = ?",
+                    (new_verdict, now, promise_id)
+                )
+            else:
+                conn.execute(
+                    "UPDATE promises SET status = ? WHERE promise_id = ?",
+                    (new_verdict, promise_id)
+                )
+
         ts_suffix = int(datetime.now(timezone.utc).timestamp())
-        verdict_id = f"VER-{promise_id}-{ts_suffix}"
-        conn.execute(
-            """INSERT INTO verdicts (verdict_id, promise_id, verdict, reason,
-               reading_used, decided_at, decided_by)
-               VALUES (?, ?, ?, ?, ?, ?, ?)""",
-            (verdict_id, promise_id, new_verdict, reason, reading_used, now, reviewer),
+        verdict_names = ["promise_id", "verdict", "reason"]
+        verdict_values = [promise_id, new_verdict, reason]
+        verdict_id: str | int | None = None
+        if verdict_columns.get("verdict_id") == "TEXT":
+            verdict_id = f"VER-{promise_id}-{ts_suffix}"
+            verdict_names.append("verdict_id")
+            verdict_values.append(verdict_id)
+        if "reading_used" in verdict_columns:
+            verdict_names.append("reading_used")
+            verdict_values.append(reading_used)
+        if "decided_by" in verdict_columns:
+            verdict_names.append("decided_by")
+            verdict_values.append(reviewer)
+        verdict_names.append("decided_at")
+        verdict_values.append(now)
+        cursor = conn.execute(
+            f"INSERT INTO verdicts ({', '.join(verdict_names)}) "
+            f"VALUES ({', '.join('?' for _ in verdict_names)})",
+            verdict_values,
         )
-        log_id = f"LOG-{promise_id}-{ts_suffix}"
+        if verdict_id is None:
+            verdict_id = cursor.lastrowid
+
+        log_id = None
+        log_names = ["promise_id", "change_date", "old_status", "new_status", "reason"]
+        log_values = [promise_id, now, old_status, new_verdict, reason]
+        if change_log_columns.get("log_id") == "TEXT":
+            log_id = f"LOG-{promise_id}-{ts_suffix}"
+            log_names.insert(0, "log_id")
+            log_values.insert(0, log_id)
+        if "evidence_file_path" in change_log_columns:
+            log_names.append("evidence_file_path")
+            log_values.append(None)
         conn.execute(
-            """INSERT INTO change_log (log_id, promise_id, change_date,
-               old_status, new_status, reason, evidence_file_path)
-               VALUES (?, ?, ?, ?, ?, ?, NULL)""",
-            (log_id, promise_id, now, old_status, new_verdict, reason),
+            f"INSERT INTO change_log ({', '.join(log_names)}) "
+            f"VALUES ({', '.join('?' for _ in log_names)})",
+            log_values,
         )
 
     return {
