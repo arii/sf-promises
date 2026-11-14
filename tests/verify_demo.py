@@ -205,7 +205,8 @@ def verify_visualizations(code, data):
     check("viz section present in index.html",
           'id="visualizations"' in html
           and all(h in html for h in ("viz-verdict-bars", "viz-domain-bars",
-                                      "viz-timeline", "viz-source-bars")))
+                                      "viz-timeline", "viz-source-bars",
+                                      "viz-phase-timelines")))
     check("viz hooks rendered from app.js",
           "renderVisualizations" in app
           and "SFPVIZ_PURE_START" in app and "SFPVIZ_PURE_END" in app)
@@ -321,7 +322,8 @@ for (const p of promises) {
 }
 console.log(JSON.stringify({ verdicts, categories, sourceTypes, timelineSum,
   counted: window.SFPViz.countByVerdict(promises),
-  sourceLabels: Object.keys(sourceTypes).map(t => window.SFPViz.formatSourceTypeLabel(t)) }));
+  sourceLabels: Object.keys(sourceTypes).map(t => window.SFPViz.formatSourceTypeLabel(t)),
+  phaseTimelines: window.SFPViz.phaseTimelines(promises) }));
 """
     try:
         proc = subprocess.run(
@@ -343,6 +345,56 @@ console.log(JSON.stringify({ verdicts, categories, sourceTypes, timelineSum,
         raw_labels = [l for l in got.get("sourceLabels", []) if "_" in l]
         check("source-type chart labels are display names, not raw enums",
               not raw_labels, ",".join(raw_labels))
+
+        # Outcome-phase timelines (E5): the card's rows must equal an
+        # independent tally of records carrying >= 2 dated phases
+        # (made/due/delivered/reversed), and the sole reversed record must
+        # lead with a made -> ... -> reversed sequence.
+        import re as _re
+
+        def _date_key(value):
+            m = _re.match(r"^(\d{4}-\d{2}-\d{2})", str(value or "").strip())
+            return m.group(1) if m else None
+
+        def _phases(p):
+            v = (p.get("verdict") or "undecided").lower()
+            out = []
+            made = _date_key(p.get("promise_made_date")) or _date_key(p.get("promised_date"))
+            if made:
+                out.append(("made", made))
+            due = _date_key(p.get("deadline_date")) or _date_key(p.get("due_date"))
+            if due:
+                out.append(("due", due))
+            delivered = _date_key(p.get("completion_date"))
+            if not delivered and v in ("kept", "kept_then_reversed"):
+                claims = ((p.get("advocate_bundles") or {}).get("kept") or {}).get("claims") or []
+                dates = sorted(d for d in (_date_key(c.get("evidence_date")) for c in claims) if d)
+                delivered = dates[0] if dates else None
+            if delivered:
+                out.append(("delivered", delivered))
+            if v == "kept_then_reversed":
+                for e in reversed(p.get("verdict_history") or []):
+                    if (e.get("verdict") or "").lower() == "kept_then_reversed":
+                        rev = _date_key(e.get("decided_at"))
+                        if rev:
+                            out.append(("reversed", rev))
+                        break
+            return out
+
+        expected_ids = sorted(
+            (p["promise_id"] for p in promises if len(_phases(p)) >= 2),
+        )
+        js_rows = got.get("phaseTimelines") or []
+        js_ids = [r.get("promiseId") for r in js_rows]
+        check("outcome-phase timeline rows reconcile with export",
+              sorted(js_ids) == sorted(expected_ids)
+              and all(len(r.get("phases") or []) >= 2 for r in js_rows),
+              f"js {len(js_ids)} rows vs export {len(expected_ids)}")
+        reversed_rows = [r for r in js_rows if any(ph.get("phase") == "reversed" for ph in r.get("phases") or [])]
+        check("reversed record leads outcome timelines (kept -> reversed)",
+              len(reversed_rows) == 1
+              and js_ids and js_ids[0] == reversed_rows[0].get("promiseId") == "P83",
+              f"reversed={[r.get('promiseId') for r in reversed_rows]} first={js_ids[:1]}")
 
 
 if __name__ == "__main__":
