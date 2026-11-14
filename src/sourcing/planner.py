@@ -15,6 +15,8 @@ import re
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Sequence
 
+from src.discovery_config import rolling_time_window
+
 TEN_CONTENT_PILLARS: Dict[str, Dict[str, object]] = {
     "Arts, Music & Nightlife": {
         "target_share": 0.10,
@@ -249,9 +251,12 @@ class SearchPlanner:
         self,
         pillars: Optional[Sequence[str]] = None,
         districts: Optional[Sequence[int]] = None,
-        time_window: str = "2016-01-01..2026-11-12",
+        time_window: Optional[str] = None,
         max_per_pillar: int = 2,
     ) -> List[SearchQuerySpec]:
+        # Default window comes from config/discovery.json, computed at run
+        # time — never a hardcoded endpoint that can go stale.
+        window = time_window or rolling_time_window()
         selected_pillars = list(pillars) if pillars else list(TEN_CONTENT_PILLARS.keys())
         selected_districts = list(districts) if districts else list(SF_SUPERVISOR_DISTRICTS.keys())
 
@@ -294,7 +299,7 @@ class SearchPlanner:
                         pillar=pillar,
                         supervisor_district=district,
                         neighborhood=neighborhood,
-                        time_window=time_window,
+                        time_window=window,
                         entity_type=entity_type,
                         query_text=q_text,
                         target_domains=domains,
@@ -313,7 +318,7 @@ class SearchPlanner:
         self,
         pillars: Optional[Sequence[str]] = None,
         districts: Optional[Sequence[int]] = None,
-        time_window: str = "2016-01-01..2026-11-12",
+        time_window: Optional[str] = None,
     ) -> List[SearchQuerySpec]:
         """Spanish and Chinese query variants per pillar for gap-priority districts (D2).
 
@@ -321,6 +326,9 @@ class SearchPlanner:
         Every variant targets only domains already in the pillar's sources
         list, so the planner and the allowlist move together per the spec.
         """
+        # Same config-sourced default as the stratified generator; explicit
+        # windows still override.
+        window = time_window or rolling_time_window()
         selected_pillars = list(pillars) if pillars else list(TEN_CONTENT_PILLARS.keys())
         selected_districts = list(districts) if districts else flagged_districts()
 
@@ -371,7 +379,7 @@ class SearchPlanner:
                             pillar=pillar,
                             supervisor_district=district,
                             neighborhood=neighborhood,
-                            time_window=time_window,
+                            time_window=window,
                             entity_type=entity_type,
                             query_text=q_text,
                             target_domains=domains,
