@@ -181,6 +181,27 @@ class CandidateExportTests(unittest.TestCase):
         )
         self.assertEqual(json.loads(output.read_text())["tallies"], {"IN_PROGRESS": 1})
 
+    def test_p83_is_the_sole_kept_then_reversed_record(self):
+        """E1b: P83 (Whole Foods) is the only corpus record reopened to
+        kept_then_reversed, and its gold-set consensus mirrors the flip."""
+        docs_json = Path("docs/data.json")
+        if not docs_json.exists():
+            return
+        data = json.loads(docs_json.read_text(encoding="utf-8"))
+        promises = data.get("promises", [])
+        reversed_records = [p for p in promises if p.get("verdict") == "kept_then_reversed"]
+        self.assertEqual(len(reversed_records), 1)
+        self.assertEqual(reversed_records[0].get("promise_id"), "P83")
+
+        gold = json.loads(Path("data/gold_set.json").read_text(encoding="utf-8"))
+        entries = gold if isinstance(gold, list) else gold.get("gold_promises", [])
+        p83_gold = next(
+            (g for g in entries if g.get("promise_id") == "P83"),
+            None,
+        )
+        self.assertIsNotNone(p83_gold)
+        self.assertEqual(p83_gold.get("consensus_verdict"), "kept_then_reversed")
+
     def test_live_docs_data_export_integrity(self):
         docs_json = Path("docs/data.json")
         if not docs_json.exists():

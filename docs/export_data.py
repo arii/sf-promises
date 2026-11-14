@@ -1129,7 +1129,10 @@ def _load_from_db(db_path):
                 "source_hash": _r["source_hash"],
             })
     _qdb.close()
-    _qrows = real_quarantined
+    # Copy, don't alias: the loop below appends each row to real_quarantined,
+    # so iterating the same list object would grow it forever (this spun and
+    # ballooned to 6 GB the first time the quarantined table had a row).
+    _qrows = list(real_quarantined)
     _csv_text = {}
     for cp in ("data/promises-P13-P112.csv", "/home/ari/sf-promises/Archil Hackathon Nov 10 - SF Promises Export/data/promises-P13-P112.csv"):
         if os.path.exists(cp):
@@ -1147,7 +1150,7 @@ def _load_from_db(db_path):
             "failing_check": "Relevance Gate 2.5 (code-only)",
             "relevance": {},
             "agent": "relevance_gate",
-            "destination": "quarantined table in promises.db",
+            "destination": "Held back. Never published.",
         })
         real_quarantined.append(_qr)
     _db_ids = {p["promise_id"] for p in all_promises}
