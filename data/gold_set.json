@@ -47,8 +47,8 @@
     {
       "promise_id": "P83",
       "entity": "Whole Foods Market",
-      "consensus_verdict": "kept",
-      "rationale": "Store opened at 1185 Market St on March 10, 2022 (later shuttered in 2023)."
+      "consensus_verdict": "kept_then_reversed",
+      "rationale": "Store opened at 1185 Market St on March 10, 2022 as promised; the flagship was later shuttered in April 2023 (SF Chronicle closure coverage, quoted in the kept-advocate bundle)."
     },
     {
       "promise_id": "P11",
