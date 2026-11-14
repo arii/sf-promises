@@ -7577,7 +7577,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center-to-provide-urgent-care-for-people-in-crisis",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:31:14Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P05",
@@ -7798,7 +7805,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://thefrisc.com/one-year-of-luries-approach-to-sfs-homelessness-drugs-mental-health/",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:34:00Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "SFO-01",
@@ -7948,7 +7962,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-reopen-runway-28l-ahead-schedule-friday-june-21st",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2024-06-22T00:00:00Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "SFO-02",
@@ -8097,7 +8118,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-celebrates-completion-harvey-milk-terminal-1",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2024-07-02T00:00:00Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P21",
@@ -8269,7 +8297,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sf.streetsblog.org/2022/04/26/hurrah-for-j-f-k-promenade-forever",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:10:17Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P04",
@@ -8466,7 +8501,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sports/article/valkyries-wnba-championship-22499436.php",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:33:26Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P82",
@@ -8650,7 +8692,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://nytimes.com/athletic/7742640/2026/10/31/wnba-finals-champion-valkyries-dream",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:03:04Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P83",
@@ -8835,7 +8884,18 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.webwire.com/ViewPressRel.asp?aId=285415",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "reason": "Kept at publish; the original verdict row is retained by the append-only reopen."
+        },
+        {
+          "verdict": "kept_then_reversed",
+          "decided_at": "2026-11-14T09:35:18Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P11",
@@ -9040,7 +9100,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Dead_%26_Company_Summer_Tour_2023",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Reference"
+      "source_tier": "Reference",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:54:43Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "SFO-03",
@@ -9188,7 +9255,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-welcomes-expanded-use-sustainable-aviation-fuel-united-airlines",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2024-08-02T00:00:00Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "SFO-04",
@@ -9334,7 +9408,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/alaska-airlines-opens-doors-harvey-milk-terminal-1-sfo",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2024-07-25T00:00:00Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P01",
@@ -9515,7 +9596,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://edition.pagesuite.com/tribune/article_popover.aspx?guid=4996c790-cac8-49aa-8783-9c015e1acea1",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:49:29Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P59",
@@ -9708,7 +9796,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://techcrunch.com/2025/11/18/zoox-to-begin-offering-robotaxi-rides-to-public-in-san-francisco/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:07:48Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P43",
@@ -9890,7 +9985,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://waymo.com/blog/2022/03/taking-our-next-step-in-city-by-bay/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:33:30Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P41",
@@ -10099,7 +10201,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/ja/media/35570/download?inline",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:26:10Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P10",
@@ -10295,7 +10404,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/s-f-giants-brass-celebrates-opening-mission-rock-18161986.php",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T03:39:36Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P18",
@@ -10464,7 +10580,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://citypln-m-extnl.sfgov.org/Commissions/CPC/4_10_2025/Commission%20Packet/2021-005878CWP.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:03:59Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P06",
@@ -10660,7 +10783,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/tl/media/45938/download?inline",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:34:38Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P08",
@@ -10853,7 +10983,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/homeless-housing-sro-breed-17767837.php",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:36:38Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P22",
@@ -11022,7 +11159,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.dhcs.ca.gov/wp-content/uploads/2025/10/San-Francisco-PY4-Annual-Narrative.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:15:08Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P17",
@@ -11150,7 +11294,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.influencewatch.org/person/daniel-lurie/",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T03:59:15Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P25",
@@ -11318,7 +11469,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://media.api.sf.gov/documents/JUVENILE_JUSTICE_REALIGNMENT_BLOCK_GRANT_ANNUAL_PLAN_20260420.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:16:32Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P12",
@@ -11512,7 +11670,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/projects/powered-scooter-share-permit-program",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:41:24Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P26",
@@ -11719,7 +11884,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://costa-hawkins.com/wp-content/uploads/2026/09/A172067.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:29:10Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P27",
@@ -11889,7 +12061,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.spur.org/news/2012-07-26/housing-trust-fund-heads-voters-november",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:31:06Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P29",
@@ -12059,7 +12238,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2020-02-19/gov-newsom-once-again-takes-on-homelessness-this-time-statewide",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:32:15Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P31",
@@ -12228,7 +12414,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sfplanning.org/sf-family-zoning-plan",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:41:16Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P30",
@@ -12397,7 +12590,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--san-francisco-receives-new-state-homekey-awards-733-million-support-purchase-and-operations",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:33:58Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P36",
@@ -12591,7 +12791,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sfenvironment.org/press/mayor-lee-announces-bold-new-target-50-percent-renewable-energy-2020",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:10:59Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P09",
@@ -12784,7 +12991,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2023/600-Miles-and-Counting-PGE-Hits-Significant-Milestone-as-Crews-Safely-Complete-Construction-Energization-of-350-More-Miles-of-Underground-Powerlines-in-2023/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T03:38:12Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P61",
@@ -12957,7 +13171,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfpuc.gov/sites/default/files/documents/WSIP-Quarterly-Report-FY2025-2026-Q4.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:18:06Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P66",
@@ -13150,7 +13371,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.thestadiumbusiness.com/2019/08/28/warriors-lift-lid-chase-center/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:30:10Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P64",
@@ -13355,7 +13583,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sfbos.org/ftp/uploadedfiles/bdsupvrs/resolutions11/r0241-11.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:24:55Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P84",
@@ -13524,7 +13759,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://bizjournals.com/sanfrancisco/news/2017/10/31/forest-city-pier-70-san-francisco-approval-housing.html",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:11:01Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P86",
@@ -13693,7 +13935,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/http://sfbos.archive.sf.gov/sites/default/files/2025_10_15_PRESS_RELEASE_INNOVATIVE_SOPHIE_MAXWELL_BUILDING_OPENS_AT_SFS_BOOMING_POWER_STATION.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:21:09Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P07",
@@ -13889,7 +14138,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://src.senate.ca.gov/governor-gavin-newsoms-top-15-worst-flip-flops-and-fails",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:35:46Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P13",
@@ -14070,7 +14326,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2019-08-02/timeline-the-frustrating-political-history-of-homelessness-in-san-francisco",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:56:06Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P15",
@@ -14251,7 +14514,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://civilgrandjury.archive.sf.gov/2017_2018/PressRelease.Housing.pdf",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:56:06Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P16",
@@ -14432,7 +14702,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_admin/0-0-0-67712",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T03:57:27Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P19",
@@ -14613,7 +14890,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Healthy_San_Francisco",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
-      "source_tier": "Reference"
+      "source_tier": "Reference",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:02:52Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P20",
@@ -14782,7 +15066,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Ed_Lee",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "Reference"
+      "source_tier": "Reference",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:05:35Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P23",
@@ -14951,7 +15242,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/mayor-lurie-launches-sfpd-hospitality-task-force-major-new-effort-to-strengthen-public-safety-drive-economic-comeback",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:11:22Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P28",
@@ -15121,7 +15419,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--department-public-health-opens-70-new-behavioral-health-beds-part-expansion-treat-people",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:26:07Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P35",
@@ -15327,7 +15632,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://api.sf.gov/documents/12808/DPH_MHSF_Implementation_Report_2023.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:58:02Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P37",
@@ -15381,8 +15693,8 @@ window.__DEMO_DATA__ = {
           "reason": "re-open R2: untestable, no outcome count either way"
         }
       ],
-      "document_title": "London Breed Commitment",
-      "title": "London Breed Commitment",
+      "document_title": "Tenderloin & Encampment Outreach",
+      "title": "Tenderloin & Encampment Outreach",
       "importance_score": 55,
       "factual_outcome": "City expanded street crisis response teams, but documentation verifying the specific 2,000-placement milestone was not recorded.",
       "impact_rank": 45,
@@ -15454,7 +15766,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://hsh.archive.sf.gov/wp-content/uploads/2020/01/1000-Shelter-Bed-Press-Conference.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T04:11:49Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P38",
@@ -15660,7 +15979,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/PGE-Outlines-Actions-Its-Taking-to-Keep-Customers-and-Communities-Safe-During-2020-Wildfire-Season/default.aspx?print=1",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T04:17:25Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P39",
@@ -15854,7 +16180,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://docs.cpuc.ca.gov/PublishedDocs/Efile/G000/M373/K419/373419331.PDF",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:20:52Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P40",
@@ -16036,7 +16369,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/Electric-Vehicle-Drivers-Apply-for-800-Clean-Fuel-Rebate-Before-End-of-Year/default.aspx",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:24:02Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P57",
@@ -16207,7 +16547,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.neowin.net/news/comcast-is-expanding-its-gigabit-internet-service-will-be-in-15-us-cities-by-early-2017/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:00:26Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P03",
@@ -16400,7 +16747,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-pieces-of-permitsf-announces-legislation-with-major-reforms-to-cut-red-tape-drive-economic-recovery",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-11T03:32:52Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P58",
@@ -16527,7 +16881,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.govtech.com/network/ATT-Launches-Fiber-Internet-in-San-Francisco-Bay-Area.html",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-11T04:10:29Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P62",
@@ -16732,7 +17093,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.bisnow.com/news/san-francisco/office/visa-to-build-global-hq-at-giants-tishman-speyers-mission-rock-101678",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:21:25Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P65",
@@ -16925,7 +17293,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/index%2Ephp/media/42253/download?inline",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
-      "source_tier": "Official"
+      "source_tier": "Official",
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-11T04:27:33Z"
+        }
+      ],
+      "verification_history": []
     },
     {
       "promise_id": "P85",
@@ -17101,7 +17476,14 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfcta.org/blogs/transportation-authority-board-approves-230700-study-central-subway-extension-north-beach",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
-      "source_tier": "News"
+      "source_tier": "News",
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-11T04:18:18Z"
+        }
+      ],
+      "verification_history": []
     }
   ],
   "quarantined": [
