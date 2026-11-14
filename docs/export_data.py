@@ -1271,6 +1271,7 @@ def export():
         funnel_counts_from_db,
         reason_codes_for_item,
         summarize_quarantine_reasons,
+        window_funnel_rounds_from_file,
     )
 
     # Invariants checks
@@ -1507,6 +1508,10 @@ def export():
         quarantined_table_rows = len(real_quarantined)
 
     register_summary = sourcing_audit if isinstance(sourcing_audit, dict) else {}
+    # Per-window funnel stages (H2): discovery rounds append
+    # {"window", "round_id", "counts"} rows to data/window_funnel_rounds.json;
+    # a missing file is an honest gap — the funnel simply carries no windows.
+    window_rounds = window_funnel_rounds_from_file(Path("data/window_funnel_rounds.json"))
     funnel_summary = build_funnel_summary(
         leads_encountered=register_summary.get("encountered_count"),
         sources_archived=sources_archived,
@@ -1514,6 +1519,7 @@ def export():
         screened=screened,
         published=len(all_promises),
         quarantined=quarantined_table_rows,
+        window_rounds=window_rounds,
     )
 
     denied_leads_path = Path("data/denied_leads.json")

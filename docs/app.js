@@ -207,6 +207,27 @@
       }));
   }
 
+  function windowFunnelStages(databaseStatus) {
+    // Per-window funnel summaries from the exported snapshot; each window's
+    // stages flow raw -> allowlisted -> archived -> leads -> gate. Windows
+    // without a window label or a stages array are dropped.
+    const funnel = (databaseStatus && databaseStatus.funnel) || {};
+    const windows = Array.isArray(funnel.windows) ? funnel.windows : [];
+    return windows.filter(w => w && w.window && Array.isArray(w.stages))
+      .map(w => ({
+        window: String(w.window),
+        roundCount: Array.isArray(w.round_ids) ? w.round_ids.length : 0,
+        stages: w.stages.filter(s => s && s.stage && Number.isFinite(Number(s.count)))
+          .map(s => ({
+            stage: String(s.stage),
+            count: Number(s.count),
+            conversion: Number.isFinite(Number(s.conversion_from_previous))
+              ? Number(s.conversion_from_previous)
+              : null
+          }))
+      }));
+  }
+
   function quarantineReasons(databaseStatus) {
     // Reason-code distribution over the exported quarantine registry.
     const qr = (databaseStatus && databaseStatus.quarantine_reasons) || {};
@@ -241,6 +262,7 @@
     countBySourceType,
     countByYearAndVerdict,
     funnelStages,
+    windowFunnelStages,
     quarantineReasons,
     denialDomains
   };
@@ -1406,6 +1428,7 @@
     const promises = demoData.promises || [];
 
     renderAuditFunnelPanel(db);
+    renderAuditWindowFunnelPanel(db);
     renderAuditReasonPanel(db);
     renderAuditDenialPanel(db);
 
@@ -1540,6 +1563,44 @@
           <span class="viz-bar-count font-mono">${s.count}${conv} · ${universe}</span>
         </div>
       `;
+    }).join('');
+  }
+
+  const WINDOW_FUNNEL_STAGE_LABELS = {
+    raw: 'Raw results',
+    allowlisted: 'Allowlisted',
+    archived: 'Archived sources',
+    leads: 'Leads',
+    gate: 'Gate reached'
+  };
+
+  function renderAuditWindowFunnelPanel(db) {
+    const el = document.getElementById('audit-window-funnel-bars');
+    if (!el) return;
+    const windows = SFPViz.windowFunnelStages(db);
+    if (!windows.length) {
+      el.innerHTML = '<p class="viz-empty">No per-window funnel rounds in the exported snapshot; discovery rounds append {window, round_id, counts} rows to data/window_funnel_rounds.json and this panel fills from the export.</p>';
+      return;
+    }
+    el.innerHTML = windows.map(w => {
+      const max = Math.max(...w.stages.map(s => s.count), 1);
+      const rows = w.stages.map(s => {
+        const label = WINDOW_FUNNEL_STAGE_LABELS[s.stage] || s.stage;
+        const conv = s.conversion !== null
+          ? ` <span class="viz-bar-pct">(${(s.conversion * 100).toFixed(1)}%)</span>`
+          : '';
+        return `
+          <div class="viz-bar-row">
+            <span class="viz-bar-label" title="${escapeHtml(label)}">${escapeHtml(label)}</span>
+            <span class="viz-bar-track">
+              <span class="viz-bar-fill" style="width:${((s.count / max) * 100).toFixed(2)}%; background:var(--kept)"></span>
+            </span>
+            <span class="viz-bar-count font-mono">${s.count}${conv}</span>
+          </div>
+        `;
+      }).join('');
+      const header = `<p class="audit-panel-sub font-mono">${escapeHtml(w.window)} · ${w.roundCount} round${w.roundCount === 1 ? '' : 's'}</p>`;
+      return header + rows;
     }).join('');
   }
 
