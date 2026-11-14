@@ -1736,8 +1736,23 @@
     const mediaImg = document.getElementById('drawer-media-img');
     const mediaCaption = document.getElementById('drawer-media-caption');
     const imgUrl = p.media_image_url || p.image_url;
+    const mediaFallback = document.getElementById('drawer-media-fallback');
     if (imgUrl && mediaBox && mediaImg) {
       mediaBox.style.display = 'block';
+      // A hotlinked image that fails to load shows the styled fallback, never
+      // the browser's broken-image glyph or alt text.
+      if (mediaFallback) mediaFallback.hidden = true;
+      mediaImg.style.display = '';
+      mediaImg.onerror = () => {
+        mediaImg.style.display = 'none';
+        if (mediaFallback) mediaFallback.hidden = false;
+      };
+      mediaImg.onload = () => {
+        if (mediaFallback) mediaFallback.hidden = true;
+      };
+      if (mediaImg.getAttribute('src') === imgUrl) {
+        mediaImg.removeAttribute('src');
+      }
       mediaImg.src = imgUrl;
       mediaImg.alt = p.media_caption || (titleEl ? titleEl.textContent : '') || 'Source media photo';
       if (mediaCaption) mediaCaption.textContent = p.media_caption || 'Verified source photographic archive';
