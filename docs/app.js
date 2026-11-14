@@ -1564,6 +1564,72 @@
   }
 
   // -------------------------------------------------------------------------
+  // Drawer pure render helpers (SFPDRAWER_PURE_START .. END)
+  //
+  // Self-contained (no closure over outer state) so tests/test_drawer_render.py
+  // can execute this marked block with node against docs/data.json and assert
+  // the drawer renders exactly what the export carries.
+  // -------------------------------------------------------------------------
+  /* SFPDRAWER_PURE_START */
+  const DRAWER_HISTORY_LABELS = {
+    kept: 'Kept',
+    broken: 'Broken',
+    in_progress: 'In progress',
+    undecided: 'Undecided',
+    delayed_or_partial: 'Delayed / partial',
+    kept_then_reversed: 'Later closed / reversed',
+    quarantined: 'Quarantined'
+  };
+
+  function drawerEscapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
+  // '2023-04-01T…' -> 'April 2023'; '' when absent or unparseable — a missing
+  // export date is never replaced with an invented one.
+  function formatHistoryMonth(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+  }
+
+  function verdictStepHtml(entry) {
+    const v = String((entry && entry.verdict) || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
+    const label = DRAWER_HISTORY_LABELS[v] || (entry && entry.verdict) || 'Undecided';
+    const when = formatHistoryMonth(entry && entry.decided_at);
+    const reason = entry && entry.reason ? ` title="${drawerEscapeHtml(entry.reason)}"` : '';
+    return `<span class="verdict-chip ${drawerEscapeHtml(v)}"${reason}>${drawerEscapeHtml(label)}${when ? ' — ' + drawerEscapeHtml(when) : ''}</span>`;
+  }
+
+  // Timeline replaces the single static chip only when history carries more
+  // than one verdict; single-verdict records keep the chip unchanged.
+  function verdictTimelineHtml(history) {
+    if (!Array.isArray(history) || history.length < 2) return null;
+    return history.map(verdictStepHtml)
+      .join('<span class="drawer-timeline-arrow" aria-hidden="true">&rarr;</span>');
+  }
+
+  // Provenance line for one verification row: model / reviewer / run / date,
+  // each only when the export records it. No entry or no provenance -> ''.
+  function checkProvenanceHtml(entry) {
+    if (!entry) return '';
+    const bits = [];
+    if (entry.model_id) bits.push(`model ${entry.model_id}`);
+    if (entry.checked_by) bits.push(`reviewer ${entry.checked_by}`);
+    if (entry.run_id) bits.push(`run ${entry.run_id}`);
+    if (entry.checked_at) bits.push(String(entry.checked_at).split('T')[0]);
+    if (!bits.length) return '';
+    return `<div class="drawer-check-provenance font-mono">${drawerEscapeHtml(bits.join(' · '))}</div>`;
+  }
+
+  const SFPDrawer = { verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth };
+  window.SFPDrawer = SFPDrawer;
+  /* SFPDRAWER_PURE_END */
+
+  // -------------------------------------------------------------------------
   // 4-Part Detail Drawer (1.4)
   // -------------------------------------------------------------------------
   function openInspectDrawer(promiseId) {
@@ -1608,9 +1674,20 @@
       titleEl.textContent = t;
     }
     const verdClass = (p.verdict || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
+    // When the export carries more than one verdict, the static chip is
+    // replaced by the history timeline; single-verdict records keep the chip.
+    const timelineHtml = window.SFPDrawer
+      ? window.SFPDrawer.verdictTimelineHtml(p.verdict_history)
+      : null;
+    const timelineWrap = document.getElementById('drawer-verdict-timeline');
     if (chipEl) {
       chipEl.className = `verdict-chip ${verdClass}`;
       chipEl.textContent = formatVerdictLabel(p.verdict);
+      chipEl.classList.toggle('hidden', Boolean(timelineHtml));
+    }
+    if (timelineWrap) {
+      timelineWrap.innerHTML = timelineHtml || '';
+      timelineWrap.classList.toggle('hidden', !timelineHtml);
     }
     if (horizonBadge) {
       horizonBadge.classList.toggle('hidden', !p.long_horizon);
@@ -1659,8 +1736,23 @@
     const mediaImg = document.getElementById('drawer-media-img');
     const mediaCaption = document.getElementById('drawer-media-caption');
     const imgUrl = p.media_image_url || p.image_url;
+    const mediaFallback = document.getElementById('drawer-media-fallback');
     if (imgUrl && mediaBox && mediaImg) {
       mediaBox.style.display = 'block';
+      // A hotlinked image that fails to load shows the styled fallback, never
+      // the browser's broken-image glyph or alt text.
+      if (mediaFallback) mediaFallback.hidden = true;
+      mediaImg.style.display = '';
+      mediaImg.onerror = () => {
+        mediaImg.style.display = 'none';
+        if (mediaFallback) mediaFallback.hidden = false;
+      };
+      mediaImg.onload = () => {
+        if (mediaFallback) mediaFallback.hidden = true;
+      };
+      if (mediaImg.getAttribute('src') === imgUrl) {
+        mediaImg.removeAttribute('src');
+      }
       mediaImg.src = imgUrl;
       mediaImg.alt = p.media_caption || (titleEl ? titleEl.textContent : '') || 'Source media photo';
       if (mediaCaption) mediaCaption.textContent = p.media_caption || 'Verified source photographic archive';
@@ -1819,6 +1911,13 @@
 
     let failedCheckCount = 0;
     const failedNameSet = new Set(Array.isArray(p.failed_check_names) ? p.failed_check_names : []);
+    // Per-review provenance (model/reviewer/run) indexed by check id; only
+    // rows the export carries provenance for render a provenance line.
+    const verifByCheck = {};
+    (Array.isArray(p.verification_history) ? p.verification_history : []).forEach(v => {
+      if (v && v.check) verifByCheck[v.check] = v;
+    });
+    const provFor = id => (window.SFPDrawer ? window.SFPDrawer.checkProvenanceHtml(verifByCheck[id]) : '');
     const resolvedChecks = checkDefinitions.map(def => {
       if (def.id === 'relevance_gate') {
         const pass = relScore >= 5;
@@ -1826,7 +1925,8 @@
         return {
           title: def.title,
           pass,
-          desc: def.defaultDesc
+          desc: def.defaultDesc,
+          provenance: provFor(def.id)
         };
       }
       const item = checkMap[def.id];
@@ -1836,7 +1936,8 @@
         return {
           title: def.title,
           pass,
-          desc: item.reason || (pass ? 'Check passed.' : 'Verification check failed or unrecorded.')
+          desc: item.reason || (pass ? 'Check passed.' : 'Verification check failed or unrecorded.'),
+          provenance: provFor(def.id)
         };
       }
       const flaggedMissing = failedNameSet.has(def.id);
@@ -1844,7 +1945,8 @@
       return {
         title: def.title,
         pass: !flaggedMissing,
-        desc: flaggedMissing ? 'Verification check failed or unrecorded.' : def.defaultDesc
+        desc: flaggedMissing ? 'Verification check failed or unrecorded.' : def.defaultDesc,
+        provenance: provFor(def.id)
       };
     });
 
@@ -1863,6 +1965,7 @@
           <div class="drawer-check-desc">
             <strong>${escapeHtml(c.title)}</strong>
             <div style="font-size: 0.76rem; color: var(--muted); margin-top: 2px;">${escapeHtml(c.desc)}</div>
+            ${c.provenance || ''}
           </div>
         </div>
       `).join('');

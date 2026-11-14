@@ -443,6 +443,44 @@ a:hover {
   border: 1px solid rgba(245, 158, 11, 0.4);
 }
 
+/* Verdict history timeline (multi-verdict records, e.g. kept_then_reversed).
+   Steps reuse the existing verdict-chip styling. */
+.drawer-verdict-timeline {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.drawer-verdict-timeline .verdict-chip {
+  font-size: 0.72rem;
+}
+
+.drawer-timeline-arrow {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.drawer-check-provenance {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 4px;
+  word-break: break-word;
+}
+
+.drawer-media-fallback {
+  padding: 18px 14px;
+  border: 1px dashed var(--line, rgba(255, 255, 255, 0.15));
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.drawer-media-fallback[hidden] {
+  display: none;
+}
+
 
 .badge-verified {
   font-size: 0.76rem;
