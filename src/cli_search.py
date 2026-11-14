@@ -13,8 +13,14 @@ import asyncio
 import json
 import os
 import sys
+from datetime import date
 from pathlib import Path
 
+from src.discovery_config import (
+    load_discovery_config,
+    rolling_window_end,
+    rolling_window_start,
+)
 from src.evidence import is_allowlisted_url
 from src.keenable import RetryingKeenable
 
@@ -28,21 +34,37 @@ def _load_env_if_needed():
                 os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
 
 
-async def search_keenable(query: str, after: str = None, before: str = None, limit: int = 5):
+def resolve_search_window(
+    after: str | None,
+    before: str | None,
+    today: date | None = None,
+    path: str = "",
+) -> tuple[str, str]:
+    """Defaults for --after/--before: the config-defined rolling window.
+
+    Explicit flags always win. The config carries relative days only, so
+    the concrete dates are computed relative to the run date.
+    """
+    if after and before:
+        return after, before
+    config = load_discovery_config(path)
+    resolved_after = after or rolling_window_start(config.rolling_days, today)
+    resolved_before = before or rolling_window_end(today)
+    return resolved_after, resolved_before
+
+
+async def search_keenable(query: str, after: str | None = None, before: str | None = None, limit: int = 5):
     _load_env_if_needed()
     api_key = os.environ.get("KEENABLE_API_KEY")
     if not api_key:
         print("Error: KEENABLE_API_KEY environment variable is required.", file=sys.stderr)
         return []
 
+    window_after, window_before = resolve_search_window(after, before)
     client = RetryingKeenable(api_key=api_key)
-    kwargs = {"max_results": limit}
-    if after:
-        kwargs["published_after"] = after
-    if before:
-        kwargs["published_before"] = before
+    kwargs = {"max_results": limit, "published_after": window_after, "published_before": window_before}
 
-    print(f"Searching Keenable for: {query!r} (after={after}, before={before}, limit={limit})...")
+    print(f"Searching Keenable for: {query!r} (after={window_after}, before={window_before}, limit={limit})...")
     try:
         response = await client.search(query, **kwargs)
         results = getattr(response, "results", []) or []
@@ -71,8 +93,8 @@ def main():
     parser = argparse.ArgumentParser(description="Search civic promises on Keenable.")
     parser.add_argument("--query", "-q", type=str, help="Search query string")
     parser.add_argument("--topic", "-t", type=str, help="Search topic (e.g. 'SFO runway construction')")
-    parser.add_argument("--after", type=str, default=None, help="Published after date (YYYY-MM-DD)")
-    parser.add_argument("--before", type=str, default=None, help="Published before date (YYYY-MM-DD)")
+    parser.add_argument("--after", type=str, default=None, help="Published after date (YYYY-MM-DD; default: config rolling window start)")
+    parser.add_argument("--before", type=str, default=None, help="Published before date (YYYY-MM-DD; default: run date)")
     parser.add_argument("--limit", "-n", type=int, default=5, help="Maximum number of leads (default: 5)")
     parser.add_argument("--json", action="store_true", help="Output results as JSON")
 
