@@ -215,6 +215,44 @@ def verify_visualizations(code, data):
                 if m.startswith(("http://", "https://"))]
     check("no external runtime scripts on the demo page", not external, ",".join(external))
 
+    # Same rule for stylesheets and fonts: everything must be served locally.
+    external_css = [m for m in re.findall(r'<link[^>]+href="([^"]+)"', html)
+                    if m.startswith(("http://", "https://"))]
+    check("no external stylesheets or fonts on the demo page", not external_css,
+          ",".join(external_css))
+    font_dirs = sorted(f for f in os.listdir(os.path.join(DEMO, "fonts"))
+                       if f.endswith(".woff2")) if os.path.isdir(os.path.join(DEMO, "fonts")) else []
+    faces = code["styles.css"].count("@font-face")
+    check("fonts self-hosted: @font-face rules backed by local woff2 files",
+          faces > 0 and len(font_dirs) >= faces
+          and not re.search(r"url\(\s*['\"]?https?://", code["styles.css"]),
+          f"{faces} @font-face rules vs {len(font_dirs)} local woff2 files")
+
+    # list.min.js was vendored but never instantiated — it must stay gone.
+    check("unused list.min.js removed from the demo",
+          not os.path.exists(os.path.join(DEMO, "list.min.js"))
+          and "list.min.js" not in html and "list.min.js" not in code["export_data.py"])
+
+    # Baked row aria-labels must carry the full displayed promise text (no
+    # separate bake-time truncation): the label's quote portion equals the
+    # visible blockquote text of the same row.
+    def label_pairs(src):
+        rows = re.findall(r'<tr[^>]+class="promise-row[^"]*"[^>]*>(.*?)</tr>', src, re.S)
+        out = []
+        for row in rows:
+            m_label = re.search(r'aria-label="Inspect #\d+ [^"]*: ([^"]*)"', row)
+            m_quote = re.search(r'<blockquote class="table-quote-text font-serif">(.*?)</blockquote>', row, re.S)
+            if m_label and m_quote:
+                quote = re.sub(r"&ldquo;|&rdquo;", '"', m_quote.group(1))
+                out.append((m_label.group(1), quote.strip()))
+        return out
+
+    baked_rows = label_pairs(html)
+    truncated = [lbl[-40:] for lbl, quote in baked_rows
+                 if lbl != quote and not (lbl.endswith("…") and quote.startswith(lbl[:-1]))]
+    check("row aria-labels carry the full displayed promise text", not truncated,
+          f"{len(truncated)}/{len(baked_rows)} mismatched", )
+
     promises = data["promises"]
     exp_verdicts = {}
     for p in promises:
@@ -282,7 +320,8 @@ for (const p of promises) {
   timelineSum += 1;
 }
 console.log(JSON.stringify({ verdicts, categories, sourceTypes, timelineSum,
-  counted: window.SFPViz.countByVerdict(promises) }));
+  counted: window.SFPViz.countByVerdict(promises),
+  sourceLabels: Object.keys(sourceTypes).map(t => window.SFPViz.formatSourceTypeLabel(t)) }));
 """
     try:
         proc = subprocess.run(
@@ -301,6 +340,9 @@ console.log(JSON.stringify({ verdicts, categories, sourceTypes, timelineSum,
         check("viz verdict counts reconcile with export",
               got["verdicts"] == got["counted"] and got["timelineSum"] == len(promises),
               f"js={got['verdicts']}")
+        raw_labels = [l for l in got.get("sourceLabels", []) if "_" in l]
+        check("source-type chart labels are display names, not raw enums",
+              not raw_labels, ",".join(raw_labels))
 
 
 if __name__ == "__main__":

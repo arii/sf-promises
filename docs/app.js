@@ -263,11 +263,29 @@
     })).sort((a, b) => (b.count - a.count) || a.domain.localeCompare(b.domain));
   }
 
+    // Human-readable labels for the source-type enum values; anything not
+    // mapped falls back to a title-cased version of the raw value.
+    function formatSourceTypeLabel(t) {
+      const k = String(t || 'unknown').toLowerCase().replace(/[\s-]+/g, '_');
+      const labels = {
+        news_report: 'News report',
+        press_release: 'Press release',
+        official_press_release: 'Official press release',
+        sf_gov_page: 'SF government page',
+        other_official: 'Other official source',
+        social_media: 'Social media post',
+        unknown: 'Unknown'
+      };
+      if (labels[k]) return labels[k];
+      return t ? String(t).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Unknown';
+    }
+
   const SFPViz = {
     VERDICT_ORDER,
     countByVerdict,
     countByCategory,
     countBySourceType,
+    formatSourceTypeLabel,
     countByYearAndVerdict,
     funnelStages,
     windowFunnelStages,
@@ -276,21 +294,77 @@
   };
   /* SFPVIZ_PURE_END */
 
+  /* SFPUX_PURE_START */
+  // Pure UX-state helpers: the error-banner and empty-state copy and the
+  // focus-trap cycling math live here so the node harness can exercise them
+  // without a DOM.
+  const SFPUX = {
+    // Visible failure copy for a failed snapshot load. Empty return means the
+    // banner stays hidden.
+    dataLoadErrorHtml() {
+      return 'The live dataset could not be loaded. The record list below is ' +
+        'the last statically published snapshot, but filters, charts and the ' +
+        'inspect drawer are unavailable. Try refreshing the page.';
+    },
+    // Prompt rendered when the active filters match zero records.
+    noResultsHtml() {
+      return '<div class="no-results-inner">' +
+        '<p class="no-results-title">No commitments match the current filters.</p>' +
+        '<p class="no-results-sub">Try a different search, or clear the filters to see every record.</p>' +
+        '<button type="button" class="btn-clear-filters-empty" id="btn-clear-filters-empty">Clear filters</button>' +
+        '</div>';
+    },
+    // Focus-trap cycling: given the count of focusable nodes, the index of the
+    // currently focused one (-1 when focus is outside the set) and the
+    // direction (Tab vs Shift+Tab), return the next index, wrapping at both
+    // ends so Tab can never escape the container.
+    nextFocusableIndex(count, currentIndex, backward) {
+      if (!Number.isFinite(count) || count <= 0) return currentIndex;
+      if (count === 1) return 0;
+      const cur = Number.isFinite(currentIndex) && currentIndex >= 0
+        ? currentIndex
+        : (backward ? count : -1);
+      return backward ? (cur - 1 + count) % count : (cur + 1) % count;
+    }
+  };
+  /* SFPUX_PURE_END */
+
+
   // -------------------------------------------------------------------------
   // Initialization
   // -------------------------------------------------------------------------
+  // Toggle the data-load status and error-banner elements from init().
+  // 'loading' shows the status line, 'error' swaps it for the alert banner,
+  // 'loaded' hides both.
+  function setDataLoadState(state) {
+    const errEl = document.getElementById('data-load-error');
+    const statusEl = document.getElementById('data-load-status');
+    if (errEl) {
+      errEl.hidden = state !== 'error';
+      if (state === 'error') errEl.textContent = SFPUX.dataLoadErrorHtml();
+    }
+    if (statusEl) statusEl.hidden = state !== 'loading';
+  }
+
   async function init() {
     if (window.__DEMO_DATA__) {
       demoData = window.__DEMO_DATA__;
     } else {
+      // Late-data path: show a loading state while fetching, and a visible
+      // error banner on failure — the statically-baked table stays readable,
+      // but the user must know that charts, filters and the drawer are dead.
+      setDataLoadState('loading');
       try {
         const res = await fetch('data.json');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         demoData = await res.json();
       } catch (err) {
         console.error('Failed to load data.json', err);
+        setDataLoadState('error');
         return;
       }
     }
+    setDataLoadState('loaded');
 
     SCENARIOS = buildScenarios(demoData && demoData.promises);
     if (!SCENARIOS[currentRunType]) {
@@ -788,7 +862,7 @@
 
     const stEntries = Object.entries(SFPViz.countBySourceType(promises))
       .sort((a, b) => b[1] - a[1])
-      .map(([label, count]) => ({ label, count, color: 'var(--purple)' }));
+      .map(([st, count]) => ({ label: SFPViz.formatSourceTypeLabel(st), count, color: 'var(--purple)' }));
     renderBarRows(document.getElementById('viz-source-bars'), stEntries, total);
 
     renderTimelineChart(promises);
@@ -798,7 +872,12 @@
 
     const legendEl = document.getElementById('viz-timeline-legend');
     if (legendEl) {
-      legendEl.innerHTML = SFPViz.VERDICT_ORDER.map(v => `
+      // Legend derives from the data: only verdicts actually present get a
+      // row, so the timeline legend matches the verdict-distribution charts
+      // (a verdict like 'stalled' shows up only when a record carries it).
+      legendEl.innerHTML = SFPViz.VERDICT_ORDER
+        .filter(v => (verdictCounts[v] || 0) > 0)
+        .map(v => `
         <span class="viz-legend-item"><span class="viz-legend-swatch" style="background:${VERDICT_COLORS[v]}"></span>${formatVerdictLabel(v)}</span>
       `).join('');
     }
@@ -1027,6 +1106,19 @@
     const list = filterAndSortPromises();
     const totalCount = (demoData && demoData.promises && demoData.promises.length) || 54;
     const showingCount = Math.min(visibleRowsCount, list.length);
+
+    // Zero-match empty state: at the point of emptiness, say so and offer the
+    // way out instead of rendering a bare header row.
+    const emptyStateEl = document.getElementById('promises-empty-state');
+    if (emptyStateEl) {
+      if (!list.length) {
+        emptyStateEl.innerHTML = SFPUX.noResultsHtml();
+        emptyStateEl.hidden = false;
+      } else {
+        emptyStateEl.innerHTML = '';
+        emptyStateEl.hidden = true;
+      }
+    }
 
     // Update status line
     const showingCountEl = document.getElementById('table-showing-count');
@@ -2196,30 +2288,42 @@
       });
     }
 
+    // Shared reset used by both clear-filters buttons (status line and the
+    // zero-match empty state).
+    function clearAllFilters() {
+      searchTerm = '';
+      filterVerdict = 'all';
+      filterCategory = 'all';
+      filterEntity = 'all';
+      filterTier = 'all';
+      filterPillar = 'all';
+      filterAuditFlag = 'all';
+      filterSort = 'rank';
+      visibleRowsCount = 10;
+      if (searchInput) searchInput.value = '';
+      if (fCat) fCat.value = 'all';
+      if (fEnt) fEnt.value = 'all';
+      if (fTier) fTier.value = 'all';
+      if (fPillar) fPillar.value = 'all';
+      if (fAuditFlag) fAuditFlag.value = 'all';
+      if (fSort) fSort.value = 'rank';
+      document.querySelectorAll('.btn-seg-verdict').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-verdict') === 'all');
+      });
+      renderExplore();
+    }
+
     // Clear filters button
     const btnClear = document.getElementById('btn-clear-filters');
     if (btnClear) {
-      btnClear.addEventListener('click', () => {
-        searchTerm = '';
-        filterVerdict = 'all';
-        filterCategory = 'all';
-        filterEntity = 'all';
-        filterTier = 'all';
-        filterPillar = 'all';
-        filterAuditFlag = 'all';
-        filterSort = 'rank';
-        visibleRowsCount = 10;
-        if (searchInput) searchInput.value = '';
-        if (fCat) fCat.value = 'all';
-        if (fEnt) fEnt.value = 'all';
-        if (fTier) fTier.value = 'all';
-        if (fPillar) fPillar.value = 'all';
-        if (fAuditFlag) fAuditFlag.value = 'all';
-        if (fSort) fSort.value = 'rank';
-        document.querySelectorAll('.btn-seg-verdict').forEach(b => {
-          b.classList.toggle('active', b.getAttribute('data-verdict') === 'all');
-        });
-        renderExplore();
+      btnClear.addEventListener('click', clearAllFilters);
+    }
+
+    // Zero-match empty state: its clear-filters button reuses the same reset.
+    const emptyState = document.getElementById('promises-empty-state');
+    if (emptyState) {
+      emptyState.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-clear-filters-empty')) clearAllFilters();
       });
     }
 
@@ -2273,13 +2377,31 @@
       });
     }
 
-    // Escape key listener for drawer
+    // Escape closes the drawer; Tab is trapped inside it while it is open.
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const backdrop = document.getElementById('inspect-drawer-backdrop');
-        if (backdrop && !backdrop.classList.contains('hidden')) {
-          closeInspectDrawer();
-        }
+      const backdrop = document.getElementById('inspect-drawer-backdrop');
+      const drawerOpen = !!(backdrop && !backdrop.classList.contains('hidden'));
+      if (e.key === 'Escape' && drawerOpen) {
+        closeInspectDrawer();
+      } else if (e.key === 'Tab' && drawerOpen) {
+        const drawer = document.getElementById('inspect-drawer');
+        if (!drawer) return;
+        const focusables = Array.prototype.filter.call(
+          drawer.querySelectorAll(
+            'a[href], button:not([disabled]), input:not([disabled]), ' +
+            'select:not([disabled]), textarea:not([disabled]), ' +
+            '[tabindex]:not([tabindex="-1"])'
+          ),
+          el => el.getClientRects().length > 0
+        );
+        if (!focusables.length) return;
+        const next = SFPUX.nextFocusableIndex(
+          focusables.length,
+          focusables.indexOf(document.activeElement),
+          e.shiftKey
+        );
+        e.preventDefault();
+        focusables[next].focus();
       }
     });
 
