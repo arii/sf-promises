@@ -280,6 +280,127 @@
       return t ? String(t).replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Unknown';
     }
 
+  // -------------------------------------------------------------------------
+  // Outcome-phase timeline (E5): per-promise made -> due -> delivered ->
+  // reversed, derived purely from the exported snapshot. Dates come from the
+  // existing enrichment fields (promise_made_date, deadline_date,
+  // completion_date) and the evidence dates already carried by the advocate
+  // bundles and verdict history — no new collection, no invented dates.
+  // -------------------------------------------------------------------------
+  const PHASE_LABELS = {
+    made: 'Made',
+    due: 'Due',
+    delivered: 'Delivered',
+    reversed: 'Reversed'
+  };
+
+  const PHASE_ORDER = ['made', 'due', 'delivered', 'reversed'];
+
+  // 'YYYY-MM-DD…' -> 'YYYY-MM-DD'; null when absent or unparseable. A missing
+  // export date is never replaced with a guessed one.
+  function dateKey(value) {
+    const s = String(value || '').trim();
+    return /^\d{4}-\d{2}-\d{2}/.test(s) ? s.slice(0, 10) : null;
+  }
+
+  // '2023-04-01T…' -> 'April 2023'; '' when absent or unparseable. Same
+  // month-year form the drawer's verdict timeline displays, so the chart-level
+  // phase display and the drawer stay consistent.
+  function formatPhaseMonth(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+  }
+
+  // Earliest DELIVERY evidence date from one advocate bundle's claims; null
+  // when the bundle carries no dated claim.
+  function earliestBundleEvidenceDate(promise, side) {
+    const bundle = ((promise || {}).advocate_bundles || {})[side];
+    const claims = (bundle && Array.isArray(bundle.claims)) ? bundle.claims : [];
+    const dates = claims.map(c => dateKey(c && c.evidence_date)).filter(Boolean).sort();
+    return dates.length ? dates[0] : null;
+  }
+
+  // SURVIVAL transition date: the decided_at of the record's most recent
+  // kept_then_reversed verdict-history entry — the same date the drawer's
+  // verdict timeline renders for the reversal step. Null when the record was
+  // never reversed.
+  function reversalDate(promise) {
+    const history = Array.isArray((promise || {}).verdict_history) ? promise.verdict_history : [];
+    for (let i = history.length - 1; i >= 0; i--) {
+      const entry = history[i] || {};
+      if (normalizeVerdict(entry.verdict) === 'kept_then_reversed') {
+        return dateKey(entry.decided_at);
+      }
+    }
+    return null;
+  }
+
+  // Ordered dated phases for one record. A phase appears only when the
+  // snapshot records a date for it:
+  //   made      — ORIGIN: promise_made_date (falling back to promised_date)
+  //   due       — deadline_date (falling back to due_date)
+  //   delivered — DELIVERY: completion_date, else for verdicts whose outcome
+  //               confirms delivery (kept / kept_then_reversed) the earliest
+  //               kept-advocate evidence date
+  //   reversed  — SURVIVAL: the kept_then_reversed verdict-history date
+  function outcomePhases(p) {
+    if (!p || typeof p !== 'object') return [];
+    const phases = [];
+    const made = dateKey(p.promise_made_date) || dateKey(p.promised_date);
+    if (made) phases.push({ phase: 'made', date: made });
+    const due = dateKey(p.deadline_date) || dateKey(p.due_date);
+    if (due) phases.push({ phase: 'due', date: due });
+    const verdict = normalizeVerdict(p.verdict);
+    let delivered = dateKey(p.completion_date);
+    if (!delivered && (verdict === 'kept' || verdict === 'kept_then_reversed')) {
+      delivered = earliestBundleEvidenceDate(p, 'kept');
+    }
+    if (delivered) phases.push({ phase: 'delivered', date: delivered });
+    if (verdict === 'kept_then_reversed') {
+      const reversed = reversalDate(p);
+      if (reversed) phases.push({ phase: 'reversed', date: reversed });
+    }
+    return phases.sort((a, b) =>
+      (PHASE_ORDER.indexOf(a.phase) - PHASE_ORDER.indexOf(b.phase)) ||
+      a.date.localeCompare(b.date));
+  }
+
+  // Timeline rows for the outcome-timelines card: one per record carrying at
+  // least two dated phases. Records whose verdict history shows a transition
+  // lead the card (P83, kept -> reversed, is the showcase), then by display
+  // order, so the sort is fully determined by the snapshot.
+  function phaseTimelines(promises) {
+    const rows = [];
+    (promises || []).forEach(p => {
+      if (!p || typeof p !== 'object') return;
+      const phases = outcomePhases(p);
+      if (phases.length < 2) return;
+      const history = Array.isArray(p.verdict_history) ? p.verdict_history : [];
+      rows.push({
+        promiseId: String(p.promise_id || ''),
+        displayNo: Number.isFinite(Number(p.display_no)) ? Number(p.display_no) : null,
+        label: String(p.document_title || p.title || `${p.entity || 'Unknown'} commitment`),
+        historyChanged: history.length > 1,
+        reversed: phases.some(ph => ph.phase === 'reversed'),
+        phases: phases.map(ph => ({
+          phase: ph.phase,
+          label: PHASE_LABELS[ph.phase] || ph.phase,
+          date: ph.date,
+          display: formatPhaseMonth(ph.date)
+        }))
+      });
+    });
+    // Reversed records lead (P83 is the showcase), then other verdict
+    // transitions, then display order — all determined by the snapshot.
+    return rows.sort((a, b) =>
+      (Number(b.reversed) - Number(a.reversed)) ||
+      (Number(b.historyChanged) - Number(a.historyChanged)) ||
+      ((a.displayNo == null ? Infinity : a.displayNo) - (b.displayNo == null ? Infinity : b.displayNo)) ||
+      a.promiseId.localeCompare(b.promiseId));
+  }
+
   const SFPViz = {
     VERDICT_ORDER,
     countByVerdict,
@@ -290,7 +411,10 @@
     funnelStages,
     windowFunnelStages,
     quarantineReasons,
-    denialDomains
+    denialDomains,
+    outcomePhases,
+    phaseTimelines,
+    formatPhaseMonth
   };
   /* SFPVIZ_PURE_END */
 
@@ -881,6 +1005,30 @@
         <span class="viz-legend-item"><span class="viz-legend-swatch" style="background:${VERDICT_COLORS[v]}"></span>${formatVerdictLabel(v)}</span>
       `).join('');
     }
+
+    renderPhaseTimelines(promises);
+  }
+
+  // Outcome-timelines card (E5): one phase row per record with >= 2 dated
+  // phases, derived by SFPViz.phaseTimelines from the exported snapshot. Row
+  // count must reconcile with the export (tests + verify_demo node harness).
+  function renderPhaseTimelines(promises) {
+    const listEl = document.getElementById('viz-phase-timelines');
+    if (!listEl) return;
+    const rows = SFPViz.phaseTimelines(promises);
+    listEl.innerHTML = rows.map(row => {
+      const steps = row.phases.map(ph =>
+        `<span class="viz-phase-chip ${escapeHtml(ph.phase)}" title="${escapeHtml(ph.display)}">${escapeHtml(ph.label)} &mdash; ${escapeHtml(ph.display)}</span>`
+      ).join('<span class="viz-phase-arrow" aria-hidden="true">&rarr;</span>');
+      const spoken = row.phases.map(ph => `${ph.label} ${ph.display}`).join(', ');
+      return `
+        <div class="viz-phase-row${row.historyChanged ? ' showcase' : ''}" role="listitem"
+             aria-label="${escapeHtml(row.promiseId)} outcome timeline: ${escapeHtml(spoken)}">
+          <span class="viz-phase-id font-mono">${escapeHtml(row.promiseId)}</span>
+          <span class="viz-phase-name">${escapeHtml(row.label)}</span>
+          <span class="viz-phase-steps">${steps}</span>
+        </div>`;
+    }).join('');
   }
 
   // -------------------------------------------------------------------------
