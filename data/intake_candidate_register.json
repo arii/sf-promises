@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generated_at": "2026-11-13T21:04:33Z",
+    "generated_at": "2026-11-14T08:34:23Z",
     "planner_query_count": 98,
     "planner_variant_query_count": 80,
     "planner_pillars_covered": [
@@ -72,9 +72,3313 @@
       }
     },
     "denials": {
-      "total_denials": 0,
-      "distinct_domains": 0,
-      "by_domain": {}
+      "total_denials": 834,
+      "distinct_domains": 367,
+      "by_domain": {
+        "48hills.org": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "511.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "7x7.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "a-du.homes": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "abada.org": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "abc7news.pages.dev": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "acwdb.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "ai2.work": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "al.gov.mo": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "alojapan.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "amchamcolombia.co": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "amsires.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "amtvusa.tv": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "aol.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "apafss.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "app.karpo.ai": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "app.omnilex.ai": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "archiwise.ai": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "archyde.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "arras.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "artdecosocietyofcalifornia.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "asamnews.com": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "assets.alm.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "atlas-premier.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "atthebanquet.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "ava.ead.domalberto.edu.br": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "avwhere.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "awardswatch.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "ballotpedia.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bapc.photo": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bavc.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bayareachronicle.com": {
+          "count": 5,
+          "reasons": {
+            "domain_not_allowlisted": 5
+          },
+          "source_types": {
+            "unlisted": 5
+          }
+        },
+        "baylink.us": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "baynavigator.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "beauxsf.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "believeinsf.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "berkeleyside.org": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "bernalconnect.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bestversionmedia.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bidopportunities.apps.sfdpw.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bigcitylocals.com": {
+          "count": 13,
+          "reasons": {
+            "domain_not_allowlisted": 13
+          },
+          "source_types": {
+            "unlisted": 13
+          }
+        },
+        "biography.guide": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bit.ly": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "blog.resy.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "blog.ticketmaster.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "briefly.co": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "broadwayworld.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bulldogbrief.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bwf.org.au": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "bydanzi.substack.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "canary_social": 1
+          }
+        },
+        "californiantimes.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "calrcv.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "castrostreetfair.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "cdn1.creativecirclemedia.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "charliebrownsf.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "chcf.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "chilichili.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "chinatimes.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "chineseinla.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "chineseparade.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "christineso.gallery": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "chronopin.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "citybiz.co": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "cityofconcord.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "cityofmarina.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "clarkconstruction.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "cna.com.tw": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "commissions.sfplanning.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "official_government": 1
+          }
+        },
+        "commonwealthclub.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "compass.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "contracostavote.gov": {
+          "count": 1,
+          "reasons": {
+            "ValueError: Source is empty or completeness is unknown": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "countyconnection.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "crabtreej.substack.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "canary_social": 1
+          }
+        },
+        "csfn.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "cuesa.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "cvent.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "cycsf.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "dailysanfrancisco.news": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "dallascityhall.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "danvilletimes.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "davidjromano.substack.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "canary_social": 1
+          }
+        },
+        "democraticunderground.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "designmynight.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "diamondgroupestates.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "diningwithfrankie.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "dlvr.it": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "dothebay.com": {
+          "count": 7,
+          "reasons": {
+            "domain_not_allowlisted": 7
+          },
+          "source_types": {
+            "unlisted": 7
+          }
+        },
+        "ec.ltn.com.tw": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "eddies-list.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "edmsauce.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "edukatesg.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "elpais.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "en.wikipedia.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "en.wikipedia.org": {
+          "count": 55,
+          "reasons": {
+            "domain_not_allowlisted": 55
+          },
+          "source_types": {
+            "reference": 55
+          }
+        },
+        "en.wikivoyage.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "encoreplus.app": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "erate.techpolicyinstitute.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "es-us.noticias.yahoo.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "es.wikipedia.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "canary_social": 1
+          }
+        },
+        "ethosguides.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "ettoday.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "eurobasket.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "europesays.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "eventbrite.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "events.thebolditalic.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "excelsior.com.mx": {
+          "count": 5,
+          "reasons": {
+            "domain_not_allowlisted": 5
+          },
+          "source_types": {
+            "unlisted": 5
+          }
+        },
+        "eyebeam.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "familyfriendlysf.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "famsf.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "files-backend.assets.thrillshare.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "filmthreat.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "fliphtml5.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "fmi.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "focalnews.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "fortmason.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "gaelengates.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "gatherground.io": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "glassandnote.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "glenparkassociation.org": {
+          "count": 24,
+          "reasons": {
+            "domain_not_allowlisted": 24
+          },
+          "source_types": {
+            "unlisted": 24
+          }
+        },
+        "gocodebook.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "gpbeautiful.org": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "gratefulweb.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "gredos.usal.es": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "greenbelt.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "grokipedia.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "growsf.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "gsmglobalnews.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "gsp-ssl.ls.apple.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "gutenberg.org": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "haightandashbury.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "hamonterey.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "hanc-sf.org": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "healthysanfrancisco.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "histhermann.wordpress.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "hoodline.com": {
+          "count": 7,
+          "reasons": {
+            "domain_not_allowlisted": 7
+          },
+          "source_types": {
+            "unlisted": 7
+          }
+        },
+        "houseberry.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "houston.culturemap.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "huggingface.co": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "hughesmarino.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "images.lumacdn.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "img1.wsimg.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "impreso.excelsior.com.mx": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "imtravelholic.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "indiewire.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "indivisiblesf.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "instagram.com": {
+          "count": 5,
+          "reasons": {
+            "domain_not_allowlisted": 5
+          },
+          "source_types": {
+            "canary_social": 5
+          }
+        },
+        "issuu.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "isthefoodgood.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "jessicasilvermangallery.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "jewishlatinamerica.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "jp.headtopics.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "justinemartinez.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "k.sina.com.cn": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "kcra.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "kpbs.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "kron4.com": {
+          "count": 9,
+          "reasons": {
+            "domain_not_allowlisted": 9
+          },
+          "source_types": {
+            "unlisted": 9
+          }
+        },
+        "labs.songkick.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "lapost.us": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "leesperspective.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "leftnews.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "legalclarity.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "link.newyorker.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "livenation.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "liveoaksf.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "lkesich.github.io": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "llmscentral.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "localconditions.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "localnewsmatters.org": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "lup.lub.lu.se": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "mainedems.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "marinij.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "masstransitmag.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "mavenproperties.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "mcfadden-finch-group.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "media.api.sf.gov": {
+          "count": 1,
+          "reasons": {
+            "ValueError: Source is empty or completeness is unknown": 1
+          },
+          "source_types": {
+            "reference": 1
+          }
+        },
+        "metermadness.wordpress.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "michaelnguyen4sf.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "mobilize.us": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "mst.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "multco.us": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "neoteo.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "newfillmore.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "newsbreak.com": {
+          "count": 20,
+          "reasons": {
+            "domain_not_allowlisted": 20
+          },
+          "source_types": {
+            "unlisted": 20
+          }
+        },
+        "newsforchinese.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "newsforthefoodlover.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "newsite.yieldpro.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "newsletter.bernalconnect.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "newsletter.greeningprojects.org": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "newslocker.com": {
+          "count": 19,
+          "reasons": {
+            "domain_not_allowlisted": 19
+          },
+          "source_types": {
+            "unlisted": 19
+          }
+        },
+        "newzino.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "noevalleyvoice.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "neighborhood_press": 1
+          }
+        },
+        "nownews.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "oaklandside.org": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "oazis.app": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "obhistory.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "obrag.org": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "occupysf.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "oceanbeachpark.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "okdiario.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "ontherightpaige.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "otherfuture.substack.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "canary_social": 1
+          }
+        },
+        "ow.ly": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "paloaltoonline.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "patch.com": {
+          "count": 6,
+          "reasons": {
+            "domain_not_allowlisted": 6
+          },
+          "source_types": {
+            "unlisted": 6
+          }
+        },
+        "pcpb.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "pdf.euro.savills.co.uk": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "petalumahistorian.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "planbayarea.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "play.google.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "podnews.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "portal.findresearcher.sdu.dk": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "portales.sre.gob.mx": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "poststar.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "prensarte.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "presidioassociation.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "prismnews.com": {
+          "count": 7,
+          "reasons": {
+            "domain_not_allowlisted": 7
+          },
+          "source_types": {
+            "unlisted": 7
+          }
+        },
+        "probsee.com": {
+          "count": 7,
+          "reasons": {
+            "domain_not_allowlisted": 7
+          },
+          "source_types": {
+            "unlisted": 7
+          }
+        },
+        "projectsf.com": {
+          "count": 10,
+          "reasons": {
+            "domain_not_allowlisted": 10
+          },
+          "source_types": {
+            "unlisted": 10
+          }
+        },
+        "public-meetings.burke.services": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "publicpowersf.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "puntolatino.app": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "readflaneur.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "reddit.com": {
+          "count": 6,
+          "reasons": {
+            "domain_not_allowlisted": 6
+          },
+          "source_types": {
+            "canary_social": 6
+          }
+        },
+        "redoakrealty.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "redtaperecordings.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "remoteok.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "resy.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "richmondside.org": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "richmondsunsetnews.com": {
+          "count": 10,
+          "reasons": {
+            "domain_not_allowlisted": 10
+          },
+          "source_types": {
+            "unlisted": 10
+          }
+        },
+        "ridgelaneneighborssf.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "rises.co": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "roadtrip.waoonetwork.com": {
+          "count": 6,
+          "reasons": {
+            "domain_not_allowlisted": 6
+          },
+          "source_types": {
+            "unlisted": 6
+          }
+        },
+        "rockbarlegends.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "salt-artandculture.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "samtrans.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sandiegomagazine.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sandiegouniontribune.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sanfranciscobayferry.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "sanfranciscopolice.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sanfranciscopost.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "scoutonight.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "secure.wikimedia.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sehcyt.es": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sequoialiving.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sf-based.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "sf-parks.com": {
+          "count": 10,
+          "reasons": {
+            "domain_not_allowlisted": 10
+          },
+          "source_types": {
+            "unlisted": 10
+          }
+        },
+        "sf.eater.com": {
+          "count": 5,
+          "reasons": {
+            "domain_not_allowlisted": 5
+          },
+          "source_types": {
+            "unlisted": 5
+          }
+        },
+        "sf.funcheap.com": {
+          "count": 13,
+          "reasons": {
+            "domain_not_allowlisted": 13
+          },
+          "source_types": {
+            "unlisted": 13
+          }
+        },
+        "sf.gazetteer.co": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "sf.uli.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfbayareatimes.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "sfbayferry.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "sfbaytimes.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "sfbos.info": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfcamerawork.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfceqa.wordpress.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "sfchronicle.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "news": 1
+          }
+        },
+        "sfcta.org": {
+          "count": 13,
+          "reasons": {
+            "domain_not_allowlisted": 13
+          },
+          "source_types": {
+            "unlisted": 13
+          }
+        },
+        "sfdailybrief.com": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "sfdems.org": {
+          "count": 5,
+          "reasons": {
+            "domain_not_allowlisted": 5
+          },
+          "source_types": {
+            "unlisted": 5
+          }
+        },
+        "sfelections.org": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "sffilm.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfgoodwill.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfgov.legistar.com": {
+          "count": 12,
+          "reasons": {
+            "domain_not_allowlisted": 12
+          },
+          "source_types": {
+            "unlisted": 12
+          }
+        },
+        "sfguide.co": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "sfheritage.org": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "sfhsa.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfhss.org": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "sfinquirer.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "sfist.com": {
+          "count": 8,
+          "reasons": {
+            "domain_not_allowlisted": 8
+          },
+          "source_types": {
+            "unlisted": 8
+          }
+        },
+        "sflcv.org": {
+          "count": 5,
+          "reasons": {
+            "domain_not_allowlisted": 5
+          },
+          "source_types": {
+            "unlisted": 5
+          }
+        },
+        "sfmoma.org": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "sfnewstoday.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfocii.org": {
+          "count": 6,
+          "reasons": {
+            "domain_not_allowlisted": 6
+          },
+          "source_types": {
+            "unlisted": 6
+          }
+        },
+        "sfpl.org": {
+          "count": 11,
+          "reasons": {
+            "domain_not_allowlisted": 11
+          },
+          "source_types": {
+            "unlisted": 11
+          }
+        },
+        "sfpublicpress.org": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "sfpublicworks.org": {
+          "count": 6,
+          "reasons": {
+            "domain_not_allowlisted": 6
+          },
+          "source_types": {
+            "unlisted": 6
+          }
+        },
+        "sfrecpark.org": {
+          "count": 6,
+          "reasons": {
+            "domain_not_allowlisted": 6
+          },
+          "source_types": {
+            "unlisted": 6
+          }
+        },
+        "sftimes.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "sftots.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sfyimby.com": {
+          "count": 7,
+          "reasons": {
+            "domain_not_allowlisted": 7
+          },
+          "source_types": {
+            "unlisted": 7
+          }
+        },
+        "showbams.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sierraclub.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "simplify.jobs": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "smchealth.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "smdailyjournal.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "somarts.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "songkick.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "sonomamag.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "southdakotamagazine.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "specialcity.sfheritage.org": {
+          "count": 7,
+          "reasons": {
+            "domain_not_allowlisted": 7
+          },
+          "source_types": {
+            "unlisted": 7
+          }
+        },
+        "spur.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "static1.squarespace.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "stratfordschools.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "streetsforallsf.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "sunsetdunes.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "tablehopper.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "tailormadeitineraries.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "taiwannews.com.tw": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "tandem.space": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "tandemspace.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "techflowpost.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "thebayareabrief.com": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "thecalifornian.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "thechargeport.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "thedailyscout.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "thedissentsf.com": {
+          "count": 5,
+          "reasons": {
+            "domain_not_allowlisted": 5
+          },
+          "source_types": {
+            "unlisted": 5
+          }
+        },
+        "thehomefashion.in": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "theoldnet.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "theroselight.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "thesanfrancisco.org": {
+          "count": 7,
+          "reasons": {
+            "domain_not_allowlisted": 7
+          },
+          "source_types": {
+            "unlisted": 7
+          }
+        },
+        "thesunreporter.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "thetideofmoriches.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "thevoicesf.org": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "thewholekameese.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "thomaslong.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "timeout.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "timesofsf.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "tombutt.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "ufdcimages.uflib.ufl.edu": {
+          "count": 1,
+          "reasons": {
+            "ValueError: Source is empty or completeness is unknown": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "upeace.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "upto.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "urbanmilwaukee.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "us.headtopics.com": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "vancouver.page": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "ventsmagazine.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "villageofoceanbeach.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "voices.aaja.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "walksf.org": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "waltdisney.org": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "wenxuecity.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "wesanfrancisco.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "wesinglove.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "westsideobserver.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "whitlock.one-name.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "wildbayco.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "wipi.ai.kr": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "worldjournal.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "wunderground.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "unlisted": 3
+          }
+        },
+        "www.49ers.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.carescout.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.chinatimes.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.denairusd.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.facebook.com": {
+          "count": 6,
+          "reasons": {
+            "domain_not_allowlisted": 6
+          },
+          "source_types": {
+            "canary_social": 6
+          }
+        },
+        "www.flix.com.mx": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.fotw.info": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.guiasviajarplus.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.instagram.com": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "canary_social": 3
+          }
+        },
+        "www.kanji.zinbun.kyoto-u.ac.jp": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.memoria.fahce.unlp.edu.ar": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.nomadotravel.app": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.opentable.com.mx": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.sanfranciscopolice.org": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.soundofhope.org": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        },
+        "www.telemundoareadelabahia.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.threads.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "www.tiktok.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "canary_social": 1
+          }
+        },
+        "www.tripadvisor.es": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.veritaglobal.net": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.windnewspaper.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "www.worldjournal.com": {
+          "count": 8,
+          "reasons": {
+            "domain_not_allowlisted": 8
+          },
+          "source_types": {
+            "unlisted": 8
+          }
+        },
+        "www.xtreet.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "x.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "canary_social": 1
+          }
+        },
+        "yahoo.com": {
+          "count": 12,
+          "reasons": {
+            "domain_not_allowlisted": 12
+          },
+          "source_types": {
+            "unlisted": 12
+          }
+        },
+        "youtube.com": {
+          "count": 2,
+          "reasons": {
+            "domain_not_allowlisted": 2
+          },
+          "source_types": {
+            "unlisted": 2
+          }
+        },
+        "zh.wikipedia.org": {
+          "count": 23,
+          "reasons": {
+            "domain_not_allowlisted": 23
+          },
+          "source_types": {
+            "canary_social": 23
+          }
+        },
+        "zillow.com": {
+          "count": 4,
+          "reasons": {
+            "domain_not_allowlisted": 4
+          },
+          "source_types": {
+            "unlisted": 4
+          }
+        }
+      }
     },
     "outcome_blind_enforced": true
   },
@@ -1879,7 +5183,7 @@
       "candidate_id": "DISC-20261112-003",
       "source_batch": "keenable_discovery_sweep",
       "discovery_channel": "keenable_temporal_search",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "SFMTA",
       "pillar": "Transit & Movement",
       "record_type": "project_or_opening",
@@ -1909,7 +5213,7 @@
       "candidate_id": "DISC-20261112-004",
       "source_batch": "keenable_discovery_sweep",
       "discovery_channel": "keenable_temporal_search",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "SFMTA",
       "pillar": "Transit & Movement",
       "record_type": "project_or_opening",
@@ -2059,7 +5363,7 @@
       "candidate_id": "DISC-20261112-009",
       "source_batch": "keenable_discovery_sweep",
       "discovery_channel": "keenable_temporal_search",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Housing & Homelessness",
       "pillar": "Housing & Neighborhoods",
       "record_type": "claim_or_forecast",
@@ -2119,7 +5423,7 @@
       "candidate_id": "P32",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2149,7 +5453,7 @@
       "candidate_id": "P33",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2179,7 +5483,7 @@
       "candidate_id": "P34",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2209,7 +5513,7 @@
       "candidate_id": "P45",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2239,7 +5543,7 @@
       "candidate_id": "P46",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2269,7 +5573,7 @@
       "candidate_id": "P47",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2299,7 +5603,7 @@
       "candidate_id": "P48",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2329,7 +5633,7 @@
       "candidate_id": "P49",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2359,7 +5663,7 @@
       "candidate_id": "P50",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2389,7 +5693,7 @@
       "candidate_id": "P51",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2419,7 +5723,7 @@
       "candidate_id": "P52",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2449,7 +5753,7 @@
       "candidate_id": "P53",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2479,7 +5783,7 @@
       "candidate_id": "P54",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2509,7 +5813,7 @@
       "candidate_id": "P55",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2539,7 +5843,7 @@
       "candidate_id": "P56",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2569,7 +5873,7 @@
       "candidate_id": "P69",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2599,7 +5903,7 @@
       "candidate_id": "P70",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2629,7 +5933,7 @@
       "candidate_id": "P71",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2659,7 +5963,7 @@
       "candidate_id": "P72",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2689,7 +5993,7 @@
       "candidate_id": "P73",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2719,7 +6023,7 @@
       "candidate_id": "P74",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2749,7 +6053,7 @@
       "candidate_id": "P75",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2779,7 +6083,7 @@
       "candidate_id": "P76",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2809,7 +6113,7 @@
       "candidate_id": "P77",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2839,7 +6143,7 @@
       "candidate_id": "P78",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2869,7 +6173,7 @@
       "candidate_id": "P79",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2899,7 +6203,7 @@
       "candidate_id": "P97",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2929,7 +6233,7 @@
       "candidate_id": "S10",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2959,7 +6263,7 @@
       "candidate_id": "S11",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -2989,7 +6293,7 @@
       "candidate_id": "S12",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -3019,7 +6323,7 @@
       "candidate_id": "S13",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -3049,7 +6353,7 @@
       "candidate_id": "S14",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -3079,7 +6383,7 @@
       "candidate_id": "S4",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -3109,7 +6413,7 @@
       "candidate_id": "S5",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -3139,7 +6443,7 @@
       "candidate_id": "S6",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -3169,7 +6473,7 @@
       "candidate_id": "S7",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -3199,7 +6503,7 @@
       "candidate_id": "S8",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -3229,7 +6533,7 @@
       "candidate_id": "S9",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-13",
+      "encounter_date": "2026-11-14",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
