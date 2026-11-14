@@ -24,6 +24,7 @@ import json
 import sqlite3
 from collections import Counter
 from collections.abc import Iterable, Mapping
+from pathlib import Path
 from typing import Any
 
 # Canonical stage order; every stage with the universe that measures it.
@@ -38,6 +39,122 @@ FUNNEL_STAGES: tuple[tuple[str, str], ...] = (
 
 STAGE_ORDER = tuple(stage for stage, _ in FUNNEL_STAGES)
 
+# Per-window discovery funnel: the stages one discovery window records, in
+# flow order. Unlike FUNNEL_STAGES these all measure the same cohort (raw
+# search results seen by that window's queries), so conversions run the
+# full chain sequentially. Discovery rounds append
+# ``{"window", "round_id", "counts"}`` rows to data/window_funnel_rounds.json;
+# its absence is an honest gap — no window rows, no panel.
+WINDOW_FUNNEL_STAGES: tuple[str, ...] = (
+    "raw",
+    "allowlisted",
+    "archived",
+    "leads",
+    "gate",
+)
+
+
+def summarize_window_funnel(counts: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """Stage rows for one window's funnel.
+
+    Only supplied stages appear. A stage converts from the immediately
+    preceding stage in WINDOW_FUNNEL_STAGES when that stage was also
+    supplied — a missing middle stage is an honest gap, so the next stage
+    gets no conversion rather than one computed across the gap.
+    """
+    supplied: dict[str, int] = {}
+    for stage, count in counts.items():
+        if stage not in WINDOW_FUNNEL_STAGES:
+            raise ValueError(f"Unknown per-window stage {stage!r}")
+        if not isinstance(count, int) or count < 0:
+            raise ValueError(f"Stage {stage} requires a non-negative integer count")
+        supplied[stage] = count
+
+    stages: list[dict[str, Any]] = []
+    previous_count: int | None = None
+    for index, stage in enumerate(WINDOW_FUNNEL_STAGES):
+        if stage not in supplied:
+            continue
+        entry: dict[str, Any] = {"stage": stage, "count": supplied[stage]}
+        # Convert only from the immediately preceding flow stage; a missing
+        # middle stage is an honest gap, not a conversion across it.
+        if index > 0 and WINDOW_FUNNEL_STAGES[index - 1] in supplied and previous_count:
+            entry["conversion_from_previous"] = round(
+                supplied[stage] / previous_count, 3
+            )
+        stages.append(entry)
+        previous_count = supplied[stage]
+    return stages
+
+
+def summarize_window_funnels(rounds: Iterable[Any]) -> dict[str, Any]:
+    """Aggregate recorded discovery rounds into per-window funnels.
+
+    Each round row is ``{"window": str, "round_id": str, "counts": {stage:
+    count}}``; counts accumulate per window label. Rows that are not
+    mappings or carry no window label are skipped (they cannot be
+    attributed); attributable rows with malformed counts raise. Windows are
+    returned sorted by label so the export is deterministic.
+    """
+    totals: dict[str, dict[str, int]] = {}
+    round_ids: dict[str, list[str]] = {}
+    for row in rounds:
+        if not isinstance(row, Mapping):
+            continue
+        window = row.get("window")
+        if not isinstance(window, str) or not window.strip():
+            continue
+        window = window.strip()
+        counts = row.get("counts") or {}
+        if not isinstance(counts, Mapping):
+            counts = {}
+        stage_counts = totals.setdefault(window, {})
+        for stage in WINDOW_FUNNEL_STAGES:
+            if stage not in counts:
+                continue
+            stage_counts[stage] = stage_counts.get(stage, 0) + counts[stage]
+        # Surface unknown stage names here too: a typo'd stage key must not
+        # silently drop from the aggregate.
+        for stage in counts:
+            if stage not in WINDOW_FUNNEL_STAGES:
+                raise ValueError(f"Unknown per-window stage {stage!r}")
+        rid = row.get("round_id")
+        if isinstance(rid, str) and rid.strip():
+            round_ids.setdefault(window, []).append(rid.strip())
+
+    windows: list[dict[str, Any]] = []
+    for window in sorted(totals):
+        stage_counts = totals[window]
+        stages = summarize_window_funnel(stage_counts)
+        entry: dict[str, Any] = {
+            "window": window,
+            "round_ids": round_ids.get(window, []),
+            "stage_counts": stage_counts,
+            "stages": stages,
+        }
+        windows.append(entry)
+    return {
+        "stage_order": list(WINDOW_FUNNEL_STAGES),
+        "windows": windows,
+    }
+
+
+def window_funnel_rounds_from_file(path: Path) -> list[dict[str, Any]]:
+    """Round rows from a ``window_funnel_rounds.json``-shaped file.
+
+    A missing file is an honest gap (no rounds recorded yet) and returns
+    an empty list; a malformed or non-list payload raises, because a corrupt
+    measurement file should fail the export loudly rather than quietly
+    empty the panel.
+    """
+    if not path.exists():
+        return []
+    loaded = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(loaded, list):
+        raise ValueError(f"{path} must contain a list of round rows")
+    return [row for row in loaded if isinstance(row, Mapping)]
+
+
 # published and quarantined are sibling outcomes of the verification lane, not
 # sequential steps: each converts from the last pre-outcome stage (screened).
 OUTCOME_STAGES = ("published", "quarantined")
@@ -51,12 +168,19 @@ def build_funnel_summary(
     screened: int | None = None,
     published: int | None = None,
     quarantined: int | None = None,
+    window_rounds: Iterable[Any] | None = None,
 ) -> dict[str, Any]:
     """Assemble stage counts into a conversion summary.
 
     Only supplied stages appear (an unmounted database is an honest gap, not a
     zero). Conversion rates compare each stage against the last pre-outcome
     stage of the same measuring universe.
+
+    ``window_rounds`` optionally carries recorded discovery-round rows
+    (``{"window", "round_id", "counts"}``); when supplied, their aggregate
+    is embedded under ``"windows"`` so the audit panels can render each
+    window's raw → allowlisted → archived → leads → gate funnel separately
+    and a horizon change is measurable round over round.
     """
     supplied = {
         "leads_encountered": leads_encountered,
@@ -95,10 +219,13 @@ def build_funnel_summary(
         if stage not in OUTCOME_STAGES:
             flow_base[universe] = entry
 
-    return {
+    summary: dict[str, Any] = {
         "stages": stages,
         "stage_counts": {s["stage"]: s["count"] for s in stages},
     }
+    if window_rounds is not None:
+        summary["windows"] = summarize_window_funnels(window_rounds)["windows"]
+    return summary
 
 
 def funnel_counts_from_db(conn: sqlite3.Connection) -> dict[str, int]:

@@ -101,7 +101,7 @@ class AgentLane:
         return request_id
 
     def pending(self):
-        """List request IDs that have no response yet, oldest first."""
+        """List request IDs that have no response yet, uuid-hex sorted (not oldest first)."""
         if not self.requests_dir.exists():
             return []
         ids = []

@@ -139,6 +139,14 @@ class TestDemoVisualizations(unittest.TestCase):
                 tally[str(code)] += 1
         return tally
 
+    def py_window_funnel_counts(self):
+        # Independent tally: per-window stage_counts from the exported funnel.
+        windows = (self.database_status.get("funnel") or {}).get("windows") or []
+        return {
+            w["window"]: dict(w.get("stage_counts") or {})
+            for w in windows if isinstance(w, dict) and w.get("window")
+        }
+
     def test_funnel_panel_matches_export(self):
         js = {s["stage"]: s["count"] for s in run_pure_fn("funnelStages", "databaseStatus")}
         self.assertEqual(js, self.py_funnel_stage_counts())
@@ -146,6 +154,17 @@ class TestDemoVisualizations(unittest.TestCase):
         published = (self.database_status.get("funnel") or {}).get("stage_counts", {}).get("published")
         if published is not None:
             self.assertEqual(published, len(self.promises))
+
+    def test_window_funnel_panel_matches_export(self):
+        js_windows = run_pure_fn("windowFunnelStages", "databaseStatus")
+        self.assertEqual(
+            {w["window"]: {s["stage"]: s["count"] for s in w["stages"]} for w in js_windows},
+            self.py_window_funnel_counts(),
+        )
+        # round counts match the exported round_ids length
+        exported = {w["window"]: w for w in (self.database_status.get("funnel") or {}).get("windows") or []}
+        for w in js_windows:
+            self.assertEqual(w["roundCount"], len(exported[w["window"]].get("round_ids") or []))
 
     def test_reason_code_panel_sums_to_quarantine_registry(self):
         js = run_pure_fn("quarantineReasons", "databaseStatus")
@@ -166,7 +185,7 @@ class TestDemoVisualizations(unittest.TestCase):
             self.assertEqual(sum(d["count"] for d in js), total)
 
     def test_audit_panel_hooks_present(self):
-        for hook in ("audit-funnel-bars", "audit-reason-bars", "audit-denial-bars"):
+        for hook in ("audit-funnel-bars", "audit-window-funnel-bars", "audit-reason-bars", "audit-denial-bars"):
             self.assertIn(hook, self.index_html)
             self.assertIn(hook, self.app_js)
 
