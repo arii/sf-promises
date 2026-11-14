@@ -7,14 +7,20 @@ the same tables — the panels may only ever show what the tables contain.
 
 import json
 import sqlite3
+import tempfile
 import unittest
+from pathlib import Path
 
 from src.funnel import (
+    WINDOW_FUNNEL_STAGES,
     build_funnel_summary,
     funnel_counts_from_db,
     reason_codes_for_item,
     summarize_quarantine_reasons,
     summarize_reason_codes_from_db,
+    summarize_window_funnel,
+    summarize_window_funnels,
+    window_funnel_rounds_from_file,
 )
 
 
@@ -139,6 +145,140 @@ class TestFunnelCountsFromDb(unittest.TestCase):
     def test_negative_counts_are_rejected(self):
         with self.assertRaises(ValueError):
             build_funnel_summary(published=-1)
+
+
+class TestPerWindowFunnel(unittest.TestCase):
+    """H2: per-window funnel stages (raw -> allowlisted -> archived -> leads -> gate)."""
+
+    ROUNDS = [
+        {"window": "rolling_183d", "round_id": "r1",
+         "counts": {"raw": 25, "allowlisted": 12, "archived": 5, "leads": 3, "gate": 2}},
+        {"window": "rolling_183d", "round_id": "r2",
+         "counts": {"raw": 25, "allowlisted": 10, "archived": 3, "leads": 2, "gate": 1}},
+        {"window": "backfill_12m", "round_id": "b1",
+         "counts": {"raw": 25, "allowlisted": 8, "archived": 2, "leads": 1, "gate": 1}},
+    ]
+
+    def test_rounds_accumulate_per_window(self):
+        summary = summarize_window_funnels(self.ROUNDS)
+        self.assertEqual(summary["stage_order"], list(WINDOW_FUNNEL_STAGES))
+        self.assertEqual(
+            [w["window"] for w in summary["windows"]], ["backfill_12m", "rolling_183d"]
+        )
+        by_window = {w["window"]: w for w in summary["windows"]}
+        rolling = by_window["rolling_183d"]
+        self.assertEqual(
+            rolling["stage_counts"],
+            {"raw": 50, "allowlisted": 22, "archived": 8, "leads": 5, "gate": 3},
+        )
+        self.assertEqual(rolling["round_ids"], ["r1", "r2"])
+        self.assertEqual(by_window["backfill_12m"]["round_ids"], ["b1"])
+
+    def test_conversions_run_sequentially_within_a_window(self):
+        summary = summarize_window_funnels(self.ROUNDS)
+        by_window = {w["window"]: w for w in summary["windows"]}
+        stages = {s["stage"]: s for s in by_window["rolling_183d"]["stages"]}
+        self.assertNotIn("conversion_from_previous", stages["raw"])  # first stage
+        self.assertEqual(stages["allowlisted"]["conversion_from_previous"], 0.44)
+        self.assertEqual(stages["archived"]["conversion_from_previous"], 0.364)
+        self.assertEqual(stages["leads"]["conversion_from_previous"], 0.625)
+        self.assertEqual(stages["gate"]["conversion_from_previous"], 0.6)
+
+    def test_horizon_change_is_visible_round_over_round(self):
+        # Two windows with the same raw cap but different gate yield: the
+        # per-window funnels must differ, or a horizon change would be invisible.
+        summary = summarize_window_funnels(self.ROUNDS)
+        by_window = {w["window"]: w for w in summary["windows"]}
+        rolling_gate = {s["stage"]: s for s in by_window["rolling_183d"]["stages"]}["gate"]
+        backfill_gate = {s["stage"]: s for s in by_window["backfill_12m"]["stages"]}["gate"]
+        self.assertNotEqual(rolling_gate["conversion_from_previous"], backfill_gate["conversion_from_previous"])
+
+    def test_missing_middle_stage_leaves_no_conversion_across_the_gap(self):
+        stages = summarize_window_funnel({"raw": 10, "gate": 2})
+        self.assertEqual([s["stage"] for s in stages], ["raw", "gate"])
+        self.assertNotIn("conversion_from_previous", stages[1])
+
+    def test_unknown_stage_is_rejected(self):
+        with self.assertRaises(ValueError):
+            summarize_window_funnel({"raw": 5, "rawls": 2})
+        with self.assertRaises(ValueError):
+            summarize_window_funnels([{"window": "w", "counts": {"nope": 1}}])
+
+    def test_negative_and_non_integer_counts_are_rejected(self):
+        with self.assertRaises(ValueError):
+            summarize_window_funnel({"raw": -1})
+        with self.assertRaises(ValueError):
+            summarize_window_funnel({"raw": 1.5})
+
+    def test_unattributable_rows_are_skipped(self):
+        summary = summarize_window_funnels(
+            self.ROUNDS + ["junk", None, {"counts": {"raw": 99}}]
+        )
+        by_window = {w["window"]: w for w in summary["windows"]}
+        # the windowless raw=99 row cannot be attributed and is dropped
+        self.assertEqual(by_window["rolling_183d"]["stage_counts"]["raw"], 50)
+
+    def test_no_rounds_is_an_honest_gap(self):
+        self.assertEqual(summarize_window_funnels([]), {
+            "stage_order": list(WINDOW_FUNNEL_STAGES), "windows": [],
+        })
+
+    def test_build_funnel_summary_embeds_windows_when_supplied(self):
+        summary = build_funnel_summary(
+            leads_encountered=10, qualified=6, window_rounds=self.ROUNDS
+        )
+        self.assertEqual(
+            [w["window"] for w in summary["windows"]], ["backfill_12m", "rolling_183d"]
+        )
+        # the top-level stage rows are untouched by the window breakdown
+        self.assertEqual(
+            summary["stage_counts"], {"leads_encountered": 10, "qualified": 6}
+        )
+
+    def test_build_funnel_summary_omits_windows_key_without_rounds(self):
+        summary = build_funnel_summary(leads_encountered=10)
+        self.assertNotIn("windows", summary)
+
+
+class TestWindowFunnelExportSchema(unittest.TestCase):
+    """The export schema: stages recorded on disk must round-trip into the
+    funnel summary the audit panels read (funnel.windows[].stages)."""
+
+    def _write_rounds(self, path: Path, rows) -> None:
+        path.write_text(json.dumps(rows, indent=2), encoding="utf-8")
+
+    def test_stages_round_trip_from_file_into_the_funnel_summary(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "window_funnel_rounds.json"
+            self._write_rounds(path, TestPerWindowFunnel.ROUNDS)
+            rounds = window_funnel_rounds_from_file(path)
+        summary = build_funnel_summary(leads_encountered=63, qualified=24, window_rounds=rounds)
+        by_window = {w["window"]: w for w in summary["windows"]}
+        rolling = by_window["rolling_183d"]
+        self.assertEqual(
+            rolling["stage_counts"],
+            {"raw": 50, "allowlisted": 22, "archived": 8, "leads": 5, "gate": 3},
+        )
+        # every stage row carries exactly what the panel renders; every
+        # stage except the first flow stage converts from its predecessor
+        for index, stage_row in enumerate(rolling["stages"]):
+            self.assertEqual(rolling["stage_counts"][stage_row["stage"]], stage_row["count"])
+            if index > 0:
+                self.assertIn("conversion_from_previous", stage_row)
+
+    def test_missing_file_is_an_honest_gap(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertEqual(window_funnel_rounds_from_file(Path(tmp) / "nope.json"), [])
+
+    def test_malformed_payload_fails_loudly(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "window_funnel_rounds.json"
+            path.write_text("{not json", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                window_funnel_rounds_from_file(path)
+            path.write_text(json.dumps({"windows": []}), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                window_funnel_rounds_from_file(path)
 
 
 class TestQuarantineReasonSums(unittest.TestCase):
