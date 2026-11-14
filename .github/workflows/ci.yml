@@ -11,6 +11,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # A hung pytest run fails the job in minutes instead of burning the
+    # 6-hour runner default (seen: 50-120 min hangs on PR runs).
+    timeout-minutes: 10
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -22,14 +25,20 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
+        timeout-minutes: 5
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Verify JavaScript syntax
+        timeout-minutes: 1
         run: |
           node -c docs/app.js
 
       - name: Run Pytest test suite
+        # The suite passes in well under a minute (healthy runs: 23-39s wall
+        # clock). tests/conftest.py fails fast on any test that opens a real
+        # network socket, so this step should never approach the timeout.
+        timeout-minutes: 5
         run: |
           pytest tests/ -v
