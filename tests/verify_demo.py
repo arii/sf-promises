@@ -214,9 +214,10 @@ def verify_visualizations(code, data):
     for p in promises:
         v = (p.get("verdict") or "undecided").lower()
         exp_verdicts[v] = exp_verdicts.get(v, 0) + 1
-    check("viz reconciliation benchmark (54 = 25 kept / 10 in progress / 17 broken / 2 undecided)",
-          len(promises) == 54 and exp_verdicts == {"kept": 25, "in_progress": 10,
-                                                   "broken": 17, "undecided": 2},
+    check("viz reconciliation benchmark (54 = 24 kept / 10 in progress / 17 broken / 2 undecided / 1 kept_then_reversed)",
+          len(promises) == 54 and exp_verdicts == {"kept": 24, "in_progress": 10,
+                                                   "broken": 17, "undecided": 2,
+                                                   "kept_then_reversed": 1},
           f"n={len(promises)} verdicts={exp_verdicts}")
 
     # D3 audit panels: derive from the exported snapshot only.
