@@ -46,7 +46,15 @@ def test_queue_round_trip_with_scripted_responder(tmp_path):
             _messages(), tools=[{"type": "function"}], tool_choice=_tool_choice(),
         ))
         await asyncio.sleep(0)
-        in_flight = lane.pending()[0]
+        # The request emitted by the test above is still pending, so
+        # pending()[0] is either request with ~50% probability (uuid sort
+        # order); fulfilling the wrong one left the completion polling for
+        # its 3600s default timeout — the intermittent CI pytest hang.
+        # Fulfill the request the completion under test actually emitted.
+        in_flight = next(
+            (rid for rid in lane.pending() if rid != request_id), None
+        )
+        assert in_flight is not None, "completion did not enqueue its request"
         lane.fulfill(in_flight, _tool_response(
             "verify_origin", {"action": True, "explanation": "ok"},
         ))
