@@ -4,7 +4,7 @@ import sys
 import tempfile
 import unittest
 import importlib.util
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 import json
@@ -203,7 +203,11 @@ class SnapshotHistoryAssertions(unittest.TestCase):
             history_bytes += len(json.dumps(vh)) + len(json.dumps(p["verification_history"]))
         # The history adds little: the whole corpus's history must stay a
         # small fraction of the snapshot rather than growing unchecked.
-        self.assertLess(history_bytes, 40000)
+        # Calibrated on the first DB-backed export: 76 verdict rows plus one
+        # verification row per (promise, check) type — the offline snapshot
+        # this pin replaced carried synthesized histories and none of the
+        # per-check provenance.
+        self.assertLess(history_bytes, 60000)
         # Flat-or-smaller target: the full snapshot stays well under the
         # pre-history baseline plus a small history allowance.
         self.assertLess(docs_json.stat().st_size, 700000)
@@ -397,6 +401,60 @@ class CandidateExportTests(unittest.TestCase):
         )
         self.assertIsNotNone(p83_gold)
         self.assertEqual(p83_gold.get("consensus_verdict"), "kept_then_reversed")
+
+    def test_future_dated_kept_requires_transition_evidence(self):
+        """E1c: a record whose deadline is still in the future cannot export
+        verdict=kept unless a durability recheck recorded the delivery
+        evidence in its verdict history (kept on an unmet future deadline is
+        how the premature Lacob verdict shipped)."""
+        docs_json = Path("docs/data.json")
+        if not docs_json.exists():
+            return
+        data = json.loads(docs_json.read_text(encoding="utf-8"))
+        for p in data.get("promises", []):
+            due = p.get("due_date")
+            if p.get("verdict") != "kept" or not due:
+                continue
+            try:
+                due_date = date.fromisoformat(str(due)[:10])
+            except ValueError:
+                continue
+            if due_date <= date.today():
+                continue
+            history = p.get("verdict_history") or []
+            newest = history[-1] if history else {}
+            self.assertEqual(
+                newest.get("reviewer"), "durability_cron",
+                f"{p.get('promise_id')}: future-dated kept record carries no "
+                "recorded durability recheck as transition evidence")
+
+    def test_primary_quotes_are_speaker_owned(self):
+        """E1c: every published record's primary quote is the promiser's own
+        words. Third-person journalist commentary ("His campaign promise to
+        ... didn't last long") fails the primary-quote evidence bar."""
+        docs_json = Path("docs/data.json")
+        if not docs_json.exists():
+            return
+        data = json.loads(docs_json.read_text(encoding="utf-8"))
+        third_person_markers = (
+            "[Reported by", "didn\u2019t last long", "didn't last long",
+            "His campaign promise", "Her campaign promise",
+            "Their campaign promise",
+        )
+        for p in data.get("promises", []):
+            text = p.get("promise_text", "")
+            for marker in third_person_markers:
+                self.assertNotIn(
+                    marker, text,
+                    f"{p.get('promise_id')}: primary quote is journalist "
+                    f"commentary, not the promiser's own words ({marker!r})")
+        # P05 regression pin: the quote is Lurie's own first-person words
+        # from the archived Mission Local source (SHA b3d8acf9...).
+        p05 = next((p for p in data.get("promises", [])
+                    if p.get("promise_id") == "P05"), None)
+        if p05 is not None:
+            self.assertIn("given myself six months", p05.get("promise_text", ""))
+            self.assertIn("missionlocal.org", p05.get("source_url", ""))
 
     def test_live_docs_data_export_integrity(self):
         docs_json = Path("docs/data.json")
