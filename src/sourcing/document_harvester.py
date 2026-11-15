@@ -478,6 +478,16 @@ async def harvest_collections(
         ],
         "collections": collections,
         "dropped_reasons": dict(sorted(Counter(d["reason"] for d in dropped).items())),
+        # Lane-aware reporting only: the same drop rows, histogrammed per
+        # collection so a register collision is explainable per lane. The
+        # dedupe union itself (build_dedupe_index / dedupe_verdict above) is
+        # untouched.
+        "dropped_by_collection": dict(sorted(
+            (collection, dict(sorted(Counter(
+                d["reason"] for d in dropped if d["collection"] == collection
+            ).items())))
+            for collection in {d["collection"] for d in dropped}
+        )),
         "dropped": dropped,
         "denials": denials,
         "max_documents": max_documents,

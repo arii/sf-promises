@@ -452,6 +452,11 @@ class DedupeHistogramTests(HarvesterTestBase):
             extract_pdf=fork.extract_pdf, inspect_pdf=fork.inspect_pdf, sleep=self.sleep,
         )
         self.assertEqual(result["dropped_reasons"], {"url_register": 1})
+        # Lane-aware reporting only: the same union verdicts, histogrammed
+        # per collection. The union itself is unchanged.
+        self.assertEqual(
+            result["dropped_by_collection"], {"budget_documents": {"url_register": 1}}
+        )
         self.assertEqual(result["dropped"][0]["matched_value"], BUDGET_PDF)
 
     async def test_identical_bytes_from_a_second_url_are_dropped_not_archived_twice(self):
