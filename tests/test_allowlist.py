@@ -12,7 +12,9 @@ from src.allowlist import (
     canary_domains,
     domains_in_group,
     entry_for_host,
+    is_canary_replay,
     load_allowlist,
+    replay_target_host,
 )
 from src.checks import DOMAIN_ALLOWLIST, check_domain
 from src.evidence import (
@@ -20,6 +22,8 @@ from src.evidence import (
     _GOVERNMENT_ORG_HOSTS,
     _NEWS_HOSTS,
     _PRIMARY_HOSTS,
+    _government_host,
+    _primary_host,
     is_allowlisted_url,
 )
 
@@ -165,6 +169,18 @@ def test_check_domain_probe_set(url, expected):
         # OD-22 R2 reviewed additions match, approved entries only
         ("https://sfgov.legistar.com/LegislationDetail.aspx?ID=6431980", True),
         ("https://sfcontroller.org/reports", True),
+        # Wayback replays are judged by the embedded target, never the archive host
+        ("https://web.archive.org/web/20260101000000/https://www.reddit.com/r/sanfrancisco", False),
+        ("https://web.archive.org/web/20260101000000/https://x.com/someone/status/1", False),
+        ("https://web.archive.org/web/20260101000000/https://en.wikipedia.org/wiki/San_Francisco", False),
+        ("https://web.archive.org/web/20260101000000/https://example.com/never-allowlisted", False),
+        ("https://web.archive.org/web/20260101000000/https://sf.gov/news", True),
+        ("https://web.archive.org/web/20260101000000/https://wholefoodsmarket.com/stores/soma", True),
+        ("https://web.archive.org/web/20260101000000/https://sfgov.legistar.com/LegislationDetail.aspx?ID=6431980", True),
+        # no replay target to judge — the archive host alone is not a source
+        ("https://web.archive.org/", False),
+        ("https://web.archive.org/web/", False),
+        ("http://web.archive.org/web/20260101000000/https://sf.gov/news", False),  # https-only
     ],
 )
 def test_is_allowlisted_url_probe_set(url, expected):
@@ -181,6 +197,34 @@ def test_entry_for_host_prefers_the_closest_listed_ancestor():
     assert entry_for_host("sfgov.legistar.com").domain == "sfgov.legistar.com"
     assert entry_for_host("sfcontroller.org").domain == "sfcontroller.org"
     assert entry_for_host("web.archive.org").domain == "web.archive.org"
+
+
+def test_wayback_replay_guard_judges_the_embedded_target():
+    # canary replays are recognized regardless of timestamp or nested path
+    assert replay_target_host(
+        "https://web.archive.org/web/20260101000000/https://www.reddit.com/r/sanfrancisco"
+    ) == "www.reddit.com"
+    assert is_canary_replay(
+        "https://web.archive.org/web/20260101000000/https://www.reddit.com/r/sanfrancisco"
+    )
+    # non-canary primary replays are not canary replays
+    assert not is_canary_replay(
+        "https://web.archive.org/web/20260101000000/https://wholefoodsmarket.com/stores/soma"
+    )
+    # anything that is not a Wayback replay link has no replay target
+    assert replay_target_host("https://sf.gov/news") is None
+    assert replay_target_host("https://web.archive.org/") is None
+    # scheme-less embedded targets (bare-host form) still resolve to a host
+    assert replay_target_host("https://web.archive.org/web/20260101000000/sf.gov/news") == "sf.gov"
+
+
+def test_wayback_tier_classification_follows_the_replay_target():
+    archived_gov = "https://web.archive.org/web/20260101000000/https://sf.gov/news"
+    archived_primary = "https://web.archive.org/web/20260101000000/https://wholefoodsmarket.com/stores/soma"
+    assert _government_host(archived_gov)
+    assert _primary_host(archived_gov)
+    assert _primary_host(archived_primary)
+    assert not _government_host(archived_primary)
 
 
 def test_pending_entries_do_not_match():
