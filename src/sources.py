@@ -93,6 +93,29 @@ def verify_source(path: str, digest: str, quote: str) -> bool:
     return is_verbatim_quote(quote, text)
 
 
+# Canonical fetch-metadata manifest shape, written by src/discovery.py's
+# fetch_and_archive. D4 adds the Wayback Save-Page-Now capture fields; the
+# pre-D4 six-key shape stays valid so already-archived sources keep verifying.
+FETCH_METADATA_FIELDS = (
+    "path", "sha256", "url", "requested_url", "published_at", "fetched_at",
+)
+WAYBACK_METADATA_FIELDS = ("wayback_capture_url", "wayback_capture_error")
+_FETCH_METADATA_SHAPES = (
+    frozenset(FETCH_METADATA_FIELDS),
+    frozenset(FETCH_METADATA_FIELDS) | frozenset(WAYBACK_METADATA_FIELDS),
+)
+
+
+def is_fetch_metadata(metadata: object) -> bool:
+    """True for a manifest carrying exactly the fetch-metadata keys.
+
+    The key-set check stays exact — either the legacy six-key shape or the
+    shape with the D4 Wayback capture fields — so an unexpected extra or
+    missing key still fails provenance validation.
+    """
+    return isinstance(metadata, dict) and frozenset(metadata) in _FETCH_METADATA_SHAPES
+
+
 def _load_archived_bytes(root, promise_id, path, digest, suffixes, max_bytes=None):
     if (not isinstance(promise_id, str)
             or not re.fullmatch(r"[A-Za-z0-9_-]+", promise_id)
