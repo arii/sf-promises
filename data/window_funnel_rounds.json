@@ -20,5 +20,72 @@
       "leads": 13,
       "gate": 13
     }
+  },
+  {
+    "window": "intake-20261115",
+    "round_id": "r6-intake-bos_transcript",
+    "lane": "bos_transcript",
+    "counts": {
+      "raw": 70,
+      "allowlisted": 4,
+      "archived": 4,
+      "leads": 4,
+      "gate": 4
+    },
+    "run_id": "R6-20261115T103336Z",
+    "dropped_reasons": {},
+    "denied_reasons": {
+      "run_document_cap": 62,
+      "unsupported_source_format": 4
+    }
+  },
+  {
+    "window": "intake-20261115",
+    "round_id": "r6-intake-budget",
+    "lane": "budget",
+    "counts": {
+      "raw": 0,
+      "allowlisted": 0,
+      "archived": 0,
+      "leads": 0,
+      "gate": 0
+    },
+    "run_id": "R6-20261115T103336Z",
+    "dropped_reasons": {},
+    "denied_reasons": {
+      "http_202": 1
+    }
+  },
+  {
+    "window": "intake-20261115",
+    "round_id": "r6-intake-ballot",
+    "lane": "ballot",
+    "counts": {
+      "raw": 0,
+      "allowlisted": 0,
+      "archived": 0,
+      "leads": 0,
+      "gate": 0
+    },
+    "run_id": "R6-20261115T103336Z",
+    "dropped_reasons": {},
+    "denied_reasons": {
+      "http_202": 1
+    }
+  },
+  {
+    "window": "intake-20261115",
+    "round_id": "r6-intake-campaign_query",
+    "lane": "campaign_query",
+    "counts": {
+      "raw": 32,
+      "allowlisted": 32,
+      "archived": 8,
+      "leads": 8,
+      "gate": 8
+    },
+    "run_id": "R6-20261115T103336Z",
+    "dropped_reasons": {},
+    "denied_reasons": {}
   }
 ]

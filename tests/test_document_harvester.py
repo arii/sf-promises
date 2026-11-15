@@ -426,6 +426,49 @@ class DenialAndCapTests(HarvesterTestBase):
             [{"url": "https://sfcontroller.org/scanned.pdf", "reason": "no_extractable_text"}],
         )
 
+    async def test_unsupported_source_format_denied_and_run_continues(self):
+        """Non-PDF bytes (a routine Legistar doc/html attachment) are recorded
+        as a denial row and never abort the remaining documents."""
+        pdf = one_page_pdf("A real transcript document body.")
+
+        def handler(request):
+            url = str(request.url)
+            if url.endswith("agenda.doc"):
+                return self.response(200, b"<html>not a pdf</html>")
+            return self.response(200, pdf)
+
+        async def format_checking_extract(*, path, digest, promise_id, page_from=None, page_to=None):
+            data = Path(path).read_bytes()
+            if not data.startswith(b"%PDF-"):
+                raise ValueError("source_format_unsupported")
+            from src.pdf_worker import extract
+            return extract(path)
+
+        spec = self.spec_with(["https://sfgov.legistar.com/agenda.doc", TRANSCRIPT_PDF])
+        # Simulate the production fork path: load_archived_pdf rejects
+        # non-PDF bytes inside extract AND inspect.
+        async def format_checking_inspect(*, path, digest, promise_id):
+            data = Path(path).read_bytes()
+            if not data.startswith(b"%PDF-"):
+                raise ValueError("source_format_unsupported")
+            from src.pdf_worker import inspect
+            return inspect(path)
+
+        result = await harvester.harvest_collections(
+            specs=(spec,), archive_root=self.archive_root, repo_root=self.repo_root,
+            fetcher=self.http_fetcher(handler), extract_pdf=format_checking_extract,
+            inspect_pdf=format_checking_inspect, sleep=self.sleep,
+        )
+        self.assertEqual(
+            result["denials"],
+            [{"url": "https://sfgov.legistar.com/agenda.doc",
+              "reason": "unsupported_source_format"}],
+        )
+        # The run continued: the following PDF document is archived.
+        self.assertEqual(result["collections"]["budget_documents"]["archived"], 1)
+        self.assertEqual(result["collections"]["budget_documents"]["denied"], 1)
+        self.assertEqual(len(result["documents"]), 1)
+
 
 class DedupeHistogramTests(HarvesterTestBase):
     async def test_register_collision_appears_in_dropped_reasons_histogram(self):

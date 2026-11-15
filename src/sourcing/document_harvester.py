@@ -83,6 +83,14 @@ class ScannedDocumentError(Exception):
         self.urls = urls
 
 
+class UnsupportedSourceFormat(ValueError):
+    """The archived bytes are not a PDF (Legistar serves doc/html attachments)."""
+
+    def __init__(self, url: str):
+        super().__init__(f"source_format_unsupported: {url}")
+        self.url = url
+
+
 @dataclass(frozen=True)
 class CollectionSpec:
     """One enumerable collection: listing URLs plus pure link parsers."""
@@ -276,7 +284,14 @@ async def _extract_document(
         result = await extract_pdf(path=saved["path"], digest=saved["sha256"], promise_id=promise_id)
     except ValueError:
         # Distinguish caps (slice), scanned (loud), and unknown (loud).
-        inspection = await inspect_pdf(path=saved["path"], digest=saved["sha256"], promise_id=promise_id)
+        try:
+            inspection = await inspect_pdf(path=saved["path"], digest=saved["sha256"], promise_id=promise_id)
+        except ValueError as exc:
+            # Non-PDF bytes are a routine Legistar attachment (doc/html),
+            # denied and recorded by the runner — not an unknown failure.
+            if "source_format_unsupported" in str(exc):
+                raise UnsupportedSourceFormat(url) from None
+            raise
         if not exceeds_caps(inspection["pages"], max_chars=max_chars):
             if not any(page["chars"] for page in inspection["pages"]):
                 raise ScannedDocumentError((url,)) from None
@@ -447,6 +462,10 @@ async def harvest_collections(
                         inspect_pdf=inspect_pdf, range_boundaries=range_boundaries,
                         lane_key=listing_url, max_chars=max_chars,
                     )
+                except UnsupportedSourceFormat:
+                    deny(url, "unsupported_source_format")
+                    stats["denied"] += 1
+                    continue
                 except ScannedDocumentError:
                     deny(url, "no_extractable_text")
                     scanned.append(url)
