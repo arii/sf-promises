@@ -27,6 +27,10 @@ from collections.abc import Iterable, Mapping
 from pathlib import Path
 from typing import Any
 
+# The fixed lane vocabulary lives with lead construction; the funnel only
+# reports it. Importing keeps one source of truth for channel names.
+from src.lane_leads import INTAKE_CHANNELS
+
 # Canonical stage order; every stage with the universe that measures it.
 FUNNEL_STAGES: tuple[tuple[str, str], ...] = (
     ("leads_encountered", "intake_register"),
@@ -91,12 +95,18 @@ def summarize_window_funnels(rounds: Iterable[Any]) -> dict[str, Any]:
     """Aggregate recorded discovery rounds into per-window funnels.
 
     Each round row is ``{"window": str, "round_id": str, "counts": {stage:
-    count}}``; counts accumulate per window label. Rows that are not
-    mappings or carry no window label are skipped (they cannot be
-    attributed); attributable rows with malformed counts raise. Windows are
-    returned sorted by label so the export is deterministic.
+    count}}``; counts accumulate per window label. A row may also carry
+    ``"lane"`` (an intake channel from src/lane_leads.py): lane-tagged rows
+    accumulate a per-lane breakdown inside their window, reported next to
+    the window total, so each intake lane's funnel is measurable against
+    O4's. A typo'd lane name raises rather than silently dropping from the
+    aggregate. Rows that are not mappings or carry no window label are
+    skipped (they cannot be attributed); attributable rows with malformed
+    counts raise. Windows are returned sorted by label so the export is
+    deterministic.
     """
     totals: dict[str, dict[str, int]] = {}
+    lane_totals: dict[str, dict[str, dict[str, int]]] = {}
     round_ids: dict[str, list[str]] = {}
     for row in rounds:
         if not isinstance(row, Mapping):
@@ -108,11 +118,20 @@ def summarize_window_funnels(rounds: Iterable[Any]) -> dict[str, Any]:
         counts = row.get("counts") or {}
         if not isinstance(counts, Mapping):
             counts = {}
+        lane = row.get("lane")
+        if lane is not None and (not isinstance(lane, str) or lane not in INTAKE_CHANNELS):
+            raise ValueError(f"Unknown lane {lane!r}")
         stage_counts = totals.setdefault(window, {})
         for stage in WINDOW_FUNNEL_STAGES:
             if stage not in counts:
                 continue
             stage_counts[stage] = stage_counts.get(stage, 0) + counts[stage]
+        if lane is not None:
+            lane_stage_counts = lane_totals.setdefault(window, {}).setdefault(lane, {})
+            for stage in WINDOW_FUNNEL_STAGES:
+                if stage not in counts:
+                    continue
+                lane_stage_counts[stage] = lane_stage_counts.get(stage, 0) + counts[stage]
         # Surface unknown stage names here too: a typo'd stage key must not
         # silently drop from the aggregate.
         for stage in counts:
@@ -132,6 +151,17 @@ def summarize_window_funnels(rounds: Iterable[Any]) -> dict[str, Any]:
             "stage_counts": stage_counts,
             "stages": stages,
         }
+        if window in lane_totals:
+            # Per-lane breakdown, sorted by lane for a deterministic export:
+            # the same stage rows the window total carries, computed only
+            # over that lane's counts.
+            entry["lanes"] = {
+                lane: {
+                    "stage_counts": lane_stage_counts,
+                    "stages": summarize_window_funnel(lane_stage_counts),
+                }
+                for lane, lane_stage_counts in sorted(lane_totals[window].items())
+            }
         windows.append(entry)
     return {
         "stage_order": list(WINDOW_FUNNEL_STAGES),

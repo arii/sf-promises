@@ -240,6 +240,91 @@ class TestPerWindowFunnel(unittest.TestCase):
         self.assertNotIn("windows", summary)
 
 
+LANE_ROUNDS = [
+    {"window": "rolling_183d", "round_id": "od22-r5",
+     "lane": "bos_transcript",
+     "counts": {"raw": 20, "allowlisted": 20, "archived": 12, "leads": 6, "gate": 2}},
+    {"window": "rolling_183d", "round_id": "od22-r5",
+     "lane": "budget",
+     "counts": {"raw": 8, "allowlisted": 8, "archived": 3, "leads": 2, "gate": 1}},
+    {"window": "rolling_183d", "round_id": "od22-r5",
+     "lane": "campaign_query",
+     "counts": {"raw": 40, "allowlisted": 9, "archived": 4, "leads": 2, "gate": 0}},
+    {"window": "rolling_183d", "round_id": "od22-r5",
+     "counts": {"raw": 5}},  # a lane-less row still accumulates the total
+]
+
+
+class TestPerLaneFunnel(unittest.TestCase):
+    """The lane dimension: per-lane rows accumulate beside the window total
+    and round-trip to the funnel summary the export carries."""
+
+    def test_lane_rows_accumulate_beside_the_window_total(self):
+        summary = summarize_window_funnels(LANE_ROUNDS)
+        rolling = summary["windows"][0]
+        self.assertEqual(rolling["stage_counts"],
+                         {"raw": 73, "allowlisted": 37, "archived": 19,
+                          "leads": 10, "gate": 3})
+        self.assertEqual(
+            sorted(rolling["lanes"]), ["bos_transcript", "budget", "campaign_query"],
+        )
+
+    def test_lane_stage_counts_are_lane_only(self):
+        rolling = summarize_window_funnels(LANE_ROUNDS)["windows"][0]
+        self.assertEqual(rolling["lanes"]["bos_transcript"]["stage_counts"],
+                         {"raw": 20, "allowlisted": 20, "archived": 12,
+                          "leads": 6, "gate": 2})
+        self.assertEqual(rolling["lanes"]["budget"]["stage_counts"],
+                         {"raw": 8, "allowlisted": 8, "archived": 3,
+                          "leads": 2, "gate": 1})
+
+    def test_lane_stages_convert_within_the_lane(self):
+        rolling = summarize_window_funnels(LANE_ROUNDS)["windows"][0]
+        bos = rolling["lanes"]["bos_transcript"]["stages"]
+        by_stage = {s["stage"]: s for s in bos}
+        self.assertEqual(by_stage["gate"]["count"], 2)
+        self.assertEqual(by_stage["gate"]["conversion_from_previous"], round(2 / 6, 3))
+
+    def test_window_without_lane_rows_omits_lanes_key(self):
+        summary = summarize_window_funnels(TestPerWindowFunnel.ROUNDS)
+        for window in summary["windows"]:
+            self.assertNotIn("lanes", window)
+
+    def test_unknown_lane_name_raises(self):
+        with self.assertRaises(ValueError):
+            summarize_window_funnels(
+                [{"window": "w", "lane": "twitter", "counts": {"raw": 1}}]
+            )
+
+    def test_lane_counts_must_be_non_negative_integers(self):
+        with self.assertRaises(ValueError):
+            summarize_window_funnels(
+                [{"window": "w", "lane": "budget", "counts": {"raw": -1}}]
+            )
+
+    def test_lane_dimension_round_trips_from_file_to_the_export(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "window_funnel_rounds.json"
+            path.write_text(json.dumps(LANE_ROUNDS, indent=2), encoding="utf-8")
+            rounds = window_funnel_rounds_from_file(path)
+        summary = build_funnel_summary(leads_encountered=73, qualified=13,
+                                       window_rounds=rounds)
+        rolling = summary["windows"][0]
+        # The lanes the leads carried arrive intact in the export payload.
+        self.assertEqual(rolling["lanes"]["campaign_query"]["stage_counts"],
+                         {"raw": 40, "allowlisted": 9, "archived": 4,
+                          "leads": 2, "gate": 0})
+        # Window totals still reconcile with the lane sums.
+        for stage in ("raw", "allowlisted", "archived", "leads", "gate"):
+            self.assertEqual(
+                rolling["stage_counts"].get(stage, 0),
+                sum(lane["stage_counts"].get(stage, 0)
+                    for lane in rolling["lanes"].values())
+                # the lane-less row's raw=5 lands in the total only
+                + (5 if stage == "raw" else 0),
+            )
+
+
 class TestWindowFunnelExportSchema(unittest.TestCase):
     """The export schema: stages recorded on disk must round-trip into the
     funnel summary the audit panels read (funnel.windows[].stages)."""
