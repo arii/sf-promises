@@ -3,7 +3,7 @@ import re
 from datetime import date, datetime
 from urllib.parse import urlparse
 
-from src.allowlist import domains_in_group
+from src.allowlist import WAYBACK_HOST, domains_in_group, entry_for_host, replay_target_host
 
 # The allowlist is reviewed data (config/allowlist.json). Every domain carries
 # category and provenance; this set is the same hand-curated list, loaded —
@@ -27,6 +27,19 @@ def check_domain(url: str) -> tuple[bool, str]:
 
         if not netloc:
             return False, "unlisted source domain"
+
+        # Wayback replays must be judged by the embedded target, never by
+        # web.archive.org itself: the archive can serve any host, canaries included.
+        if netloc == WAYBACK_HOST:
+            target_host = replay_target_host(url)
+            if target_host is None:
+                return False, "unlisted source domain"
+            target_entry = entry_for_host(target_host)
+            if target_entry is None:
+                return False, "unlisted source domain"
+            if target_entry.canary:
+                return False, "canary host blocked"
+            return True, "pass"
 
         if (netloc == "static1.squarespace.com"
                 and parsed.path.startswith("/static/66df74757ae89b28c38bb175/")):

@@ -9,9 +9,11 @@ loads, validates, and answers membership questions.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
+from urllib.parse import urlsplit
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_ALLOWLIST_PATH = REPO_ROOT / "config" / "allowlist.json"
@@ -102,6 +104,53 @@ def domains_in_group(group: str, path: str = "") -> frozenset[str]:
 def canary_domains(path: str = "") -> frozenset[str]:
     """Domains flagged canary — hard-blocked, never matched by allowlist consumers."""
     return frozenset(entry.domain for entry in load_allowlist(path) if entry.canary)
+
+
+# Wayback Machine replay host: web.archive.org/web/<ts>/<target-url> can replay
+# ANY archived host — including hard-blocked canaries — so consumers must judge
+# these URLs by the embedded target, never by web.archive.org itself.
+WAYBACK_HOST = "web.archive.org"
+
+_SCHEME_RE = re.compile(r"^[a-z][a-z0-9+.\-]*://")
+
+
+def replay_target_host(url: str) -> str | None:
+    """The host embedded in a web.archive.org/web/<ts>/<url> replay URL.
+
+    Returns None for any URL that is not a Wayback replay link (including the
+    bare web.archive.org host), or whose embedded target has no parseable host.
+    """
+    try:
+        parsed = urlsplit(url)
+    except ValueError:
+        return None
+    if (parsed.hostname or "").lower() != WAYBACK_HOST:
+        return None
+    segments = (parsed.path or "").split("/")
+    # /web/<timestamp>/<target...>: segments[2] is the timestamp, target follows
+    if len(segments) < 4 or segments[0] != "" or segments[1] != "web" or not segments[2]:
+        return None
+    target_raw = "/".join(segments[3:])
+    if not _SCHEME_RE.match(target_raw):
+        target_raw = "http://" + target_raw
+    try:
+        target = urlsplit(target_raw)
+    except ValueError:
+        return None
+    return (target.hostname or "").lower() or None
+
+
+def is_canary_replay(
+    url: str,
+    entries: tuple[AllowlistEntry, ...] | None = None,
+    path: str = "",
+) -> bool:
+    """True when a Wayback replay URL's embedded target is a canary host."""
+    target_host = replay_target_host(url)
+    if target_host is None:
+        return False
+    entry = entry_for_host(target_host, entries=entries, path=path)
+    return entry is not None and entry.canary
 
 
 def entry_for_host(
