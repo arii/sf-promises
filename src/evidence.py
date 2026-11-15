@@ -6,7 +6,13 @@ from urllib.parse import urlsplit
 
 from src.allowlist import WAYBACK_HOST, canary_domains, domains_in_group, entry_for_host, is_canary_replay, replay_target_host
 from src.checks import check_domain
-from src.sources import is_verbatim_quote, load_archived_metadata, load_archived_text
+from src.sources import (
+    FETCH_METADATA_FIELDS,
+    is_fetch_metadata,
+    is_verbatim_quote,
+    load_archived_metadata,
+    load_archived_text,
+)
 
 # Source-tier host sets are reviewed data (config/allowlist.json); the `groups`
 # field maps each domain to the tier set it originally appeared in.
@@ -131,8 +137,8 @@ def record_preliminary_evidence(conn, *, root, promise_id, source, phase, source
         metadata = load_archived_metadata(
             root, promise_id, source.get("metadata_path"), source.get("metadata_sha256")
         )
-        expected = {"path", "sha256", "url", "requested_url", "published_at", "fetched_at"}
-        if (set(metadata) != expected or any(source.get(k) != metadata[k] for k in expected)
+        if (not is_fetch_metadata(metadata)
+                or any(source.get(k) != metadata[k] for k in FETCH_METADATA_FIELDS)
                 or not is_allowlisted_url(metadata["requested_url"])
                 or (metadata["published_at"] is not None
                     and not isinstance(metadata["published_at"], str))):
@@ -211,7 +217,7 @@ def record_preliminary_evidence(conn, *, root, promise_id, source, phase, source
                     saved = load_archived_metadata(
                         root, promise_id, saved_record["metadata_path"], saved_record["metadata_sha256"]
                     )
-                    if (set(saved) != expected
+                    if (not is_fetch_metadata(saved)
                             or any(saved[key] != metadata[key] for key in ("path", "sha256", "url", "published_at"))
                             or not is_allowlisted_url(saved["requested_url"])
                             or datetime.fromisoformat(saved["fetched_at"]).utcoffset() is None):

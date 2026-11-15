@@ -12,7 +12,7 @@ from pathlib import Path
 from src.database import APPLICATION_ID, SCHEMA_VERSION
 from src.evidence import is_allowlisted_url
 from src.extract import parse_extraction
-from src.sources import load_archived_metadata
+from src.sources import FETCH_METADATA_FIELDS, is_fetch_metadata, load_archived_metadata
 
 
 def load_extraction(conn, *, root, promise_id, canonical_slug, source, response,
@@ -27,9 +27,8 @@ def load_extraction(conn, *, root, promise_id, canonical_slug, source, response,
     metadata = load_archived_metadata(
         root, promise_id, source.get("metadata_path"), source.get("metadata_sha256")
     )
-    expected = {"path", "sha256", "url", "requested_url", "published_at", "fetched_at"}
-    if (set(metadata) != expected
-            or any(metadata[key] != source.get(key) for key in expected)
+    if (not is_fetch_metadata(metadata)
+            or any(metadata[key] != source.get(key) for key in FETCH_METADATA_FIELDS)
             or not is_allowlisted_url(metadata["url"])
             or not is_allowlisted_url(metadata["requested_url"])
             or (metadata["published_at"] is not None

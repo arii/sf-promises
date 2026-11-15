@@ -9,7 +9,7 @@ from pydantic import ValidationError
 from src.evidence import _government_host, is_allowlisted_url, screen_saved_source
 from src.extract import Candidate
 from src.quarantine import quarantine_candidate
-from src.sources import load_archived_metadata
+from src.sources import is_fetch_metadata, load_archived_metadata
 from src.temporal import check_origin_dates, screen_forward_looking
 
 
@@ -48,8 +48,7 @@ def screen_pending_origin(conn, *, root, pending_id, source_tier, search_exhaust
         return failed("pending_proposal_invalid")
     try:
         metadata = load_archived_metadata(root, promise_id, metadata_path, metadata_sha)
-        expected = {"path", "sha256", "url", "requested_url", "published_at", "fetched_at"}
-        if (set(metadata) != expected or metadata["path"] != path
+        if (not is_fetch_metadata(metadata) or metadata["path"] != path
                 or metadata["sha256"] != digest or metadata["url"] != url
                 or not is_allowlisted_url(metadata["requested_url"])):
             raise ValueError

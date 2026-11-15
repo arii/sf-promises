@@ -56,7 +56,9 @@ async def discover_timeline(client, topic, *, promised, deadline, delivered, as_
     return results
 
 
-async def fetch_and_archive(client, url: str, root: Path, promise_id: str) -> dict:
+async def fetch_and_archive(
+    client, url: str, root: Path, promise_id: str, *, capture=None
+) -> dict:
     if not is_allowlisted_url(url):
         raise ValueError("Source URL is not allowlisted")
     page = await client.fetch(url)
@@ -67,12 +69,25 @@ async def fetch_and_archive(client, url: str, root: Path, promise_id: str) -> di
     if page.published_at is not None and not isinstance(page.published_at, str):
         raise ValueError("Source publication metadata is invalid")
     saved = archive_source(root, promise_id, page.content.encode("utf-8"), ".md")
+    # D4: selective per-page Wayback capture (Save-Page-Now) so the bytes
+    # survive site death. Captures are corroborating provenance only — public
+    # availability at a time, never authorship — so a failed or refused capture
+    # never blocks an otherwise-valid fetch; the manifest records the outcome.
+    capture_url = None
+    capture_error = None
+    if capture is not None:
+        try:
+            capture_url = await capture(url)
+        except Exception as exc:
+            capture_error = f"{type(exc).__name__}: {exc}"
     metadata = {
         **saved,
         "url": page.url,
         "requested_url": url,
         "published_at": page.published_at,
         "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "wayback_capture_url": capture_url,
+        "wayback_capture_error": capture_error,
     }
     manifest = archive_source(
         root, promise_id,
@@ -101,7 +116,7 @@ def pool_outcome_sources(phases, *, promised, as_of):
     return pooled
 
 
-async def discover_and_archive(client, lead, *, root, as_of):
+async def discover_and_archive(client, lead, *, root, as_of, capture=None):
     """Search the three phases and archive complete allowlisted sources."""
     promise_id = lead["promise_id"]
     promised = date.fromisoformat(lead["promised_date"])
@@ -134,7 +149,7 @@ async def discover_and_archive(client, lead, *, root, as_of):
             seen.add(url)
             if url not in saved:
                 try:
-                    saved[url] = await fetch_and_archive(client, url, root, promise_id)
+                    saved[url] = await fetch_and_archive(client, url, root, promise_id, capture=capture)
                 except ValueError as exc:
                     saved[url] = str(exc)
             if isinstance(saved[url], dict):

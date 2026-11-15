@@ -89,7 +89,9 @@ def run_sourcing_cycle(
     # D2: Spanish/Chinese variants for gap-priority districts join the same
     # query-generation path; English queries themselves are unchanged.
     variant_queries = planner.generate_diversified_variants()
-    queries = queries + variant_queries
+    # D4: campaign/fact-sheet lane, scoped to reviewed campaign domains.
+    campaign_queries = planner.generate_campaign_fact_sheet_queries()
+    queries = queries + variant_queries + campaign_queries
 
     qualifier = QualificationIntakeAgent()
     raw_pool = _load_existing_candidate_pools(repo_root)
@@ -142,6 +144,10 @@ def run_sourcing_cycle(
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "planner_query_count": len(queries),
         "planner_variant_query_count": len(variant_queries),
+        "planner_campaign_query_count": len(campaign_queries),
+        "planner_campaign_target_domains": sorted(
+            {d for q in campaign_queries for d in q.target_domains}
+        ),
         "planner_pillars_covered": sorted({q.pillar for q in queries}),
         "planner_districts_covered": sorted({q.supervisor_district for q in queries}),
         "encountered_count": len(register),
@@ -167,6 +173,7 @@ def run_sourcing_cycle(
                 "neighborhood": q.neighborhood,
                 "query_text": q.query_text,
                 "target_domains": q.target_domains,
+                "lane": q.lane,
             }
             for q in queries
         ],

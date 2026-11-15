@@ -10,7 +10,7 @@ import archil
 from src.candidate import audit_candidate
 from src.evidence import _primary_host, is_allowlisted_url
 from src.sandbox import run_in_fork
-from src.sources import load_archived_metadata, load_archived_text
+from src.sources import FETCH_METADATA_FIELDS, is_fetch_metadata, load_archived_metadata, load_archived_text
 
 TEMPLATE = "01a1cd7a-6b6d-7bbd-a49d-cfad0054435e"
 REMOTE = "/tmp/sf-promises-audit"
@@ -73,8 +73,8 @@ async def audit_in_sandbox(conn, *, api_key, ledger, run_id, job_id, root, lead,
                         root, lead["promise_id"], source["metadata_path"],
                         source["metadata_sha256"],
                     )
-                    keys = ("path", "sha256", "url", "requested_url", "published_at", "fetched_at")
-                    if (set(metadata) != set(keys) or any(metadata[k] != source.get(k) for k in keys)
+                    if (not is_fetch_metadata(metadata)
+                            or any(metadata[k] != source.get(k) for k in FETCH_METADATA_FIELDS)
                             or not is_allowlisted_url(metadata["requested_url"])):
                         raise WorkerAuditError("Source provenance mismatch")
                     text = load_archived_text(root, lead["promise_id"], source["path"], source["sha256"])
