@@ -20,6 +20,7 @@ from src.agent_lane import AgentLane
 from src.candidate_sandbox import WorkerAuditError, audit_in_sandbox
 from src.database import APPLICATION_ID, SCHEMA_VERSION, initialize_database
 from src.discovery import discover_and_archive, fetch_and_archive, pool_outcome_sources
+from src.wayback import save_page_now
 from src.durability_cron import ensure_change_log, run_durability_cycle
 from src.evidence import record_preliminary_evidence, screen_saved_source
 from src.export import build_snapshot
@@ -317,7 +318,7 @@ async def run(database, seed_id):
         async with RetryingKeenable(api_key=keys["KEENABLE_API_KEY"]) as search:
             sources = {}
             for phase, url in URLS.items():
-                sources[phase] = await fetch_and_archive(search, url, root, seed_id)
+                sources[phase] = await fetch_and_archive(search, url, root, seed_id, capture=save_page_now)
 
         origin = sources["ORIGIN"]
         async with httpx.AsyncClient(timeout=120) as client:
@@ -481,7 +482,8 @@ async def discover_run(database, seed_id, run_id):
         async with RetryingKeenable(api_key=keys["KEENABLE_API_KEY"]) as client:
             async def worker(lead):
                 return await discover_and_archive(
-                    client, lead, root=root, as_of=datetime.now(timezone.utc).date()
+                    client, lead, root=root, as_of=datetime.now(timezone.utc).date(),
+                    capture=save_page_now,
                 )
 
             graph = build_audit_graph(worker, checkpointer=checkpointer)
