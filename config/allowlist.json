@@ -734,6 +734,34 @@
     "canary": false
   },
   {
+    "domain": "sfgov.legistar.com",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government",
+      "primary"
+    ],
+    "added_reason": "Reviewed: official SF Board of Supervisors legislative record (Legistar) — the planner and harvester already target this host, so the allowlist was the missing half of that latent inconsistency",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-15",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfcontroller.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government",
+      "primary"
+    ],
+    "added_reason": "Reviewed: SF Controller's office — government primary source for budget and accountability records",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-15",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "sfchronicle.com",
     "source_type": "news",
     "groups": [
@@ -1094,6 +1122,18 @@
     "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
     "added_by": "build-migration",
     "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "web.archive.org",
+    "source_type": "reference",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Reviewed: Wayback Machine replay host — permitted ONLY for /web/<ts>/<url> replay URLs whose embedded target is an approved non-canary entry; replayed canary hosts are hard-denied by the replay guard (src/allowlist.py)",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-15",
     "review_status": "approved",
     "canary": false
   },
