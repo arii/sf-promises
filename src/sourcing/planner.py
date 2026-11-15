@@ -15,6 +15,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Sequence
 
+from src.allowlist import entry_for_host
 from src.discovery_config import rolling_time_window
 
 TEN_CONTENT_PILLARS: Dict[str, Dict[str, object]] = {
@@ -93,6 +94,21 @@ SF_SUPERVISOR_DISTRICTS: Dict[int, Dict[str, object]] = {
     10: {"label": "District 10", "neighborhoods": ["Bayview-Hunters Point", "Dogpatch", "Potrero Hill", "Visitacion Valley"]},
     11: {"label": "District 11", "neighborhoods": ["Excelsior", "Ingleside", "Outer Mission"], "gap_priority": True},
 }
+
+# D4 campaign lane: candidate campaign/fact-sheet hosts for SF elected
+# officials' on-the-record commitment pages. Listing here is only a query
+# candidate — a domain reaches target_domains solely as an approved,
+# non-canary entry in the reviewed allowlist (config/allowlist.json), so
+# campaign-lane hits are the primary pages themselves rather than summaries
+# about them. New candidates need an allowlist review first.
+CAMPAIGN_FACT_SHEET_DOMAIN_CANDIDATES: tuple[str, ...] = ("daniellurie.com",)
+
+CAMPAIGN_FACT_SHEET_NOUNS: tuple[str, ...] = (
+    "housing",
+    "small business",
+    "public safety",
+    "city budget",
+)
 
 COMMITMENT_VERBS = (
     "will",
@@ -196,6 +212,23 @@ def flagged_districts() -> List[int]:
         d for d, meta in SF_SUPERVISOR_DISTRICTS.items() if meta.get("gap_priority")
     )
 
+
+def reviewed_campaign_domains(path: str = "") -> List[str]:
+    """D4: campaign-lane target domains, restricted to reviewed data.
+
+    A candidate domain emits only as an approved, non-canary entry in the
+    reviewed allowlist (config/allowlist.json) — the mechanical gate that
+    keeps campaign-lane hits on primary pages rather than summaries about
+    them. Everything else is dropped, never guessed.
+    """
+    reviewed: List[str] = []
+    for domain in CAMPAIGN_FACT_SHEET_DOMAIN_CANDIDATES:
+        entry = entry_for_host(domain, path=path)
+        if entry is not None and not entry.canary:
+            reviewed.append(domain)
+    return reviewed
+
+
 BANNED_OUTCOME_TERMS = frozenset({
     "failed",
     "fail",
@@ -239,6 +272,9 @@ class SearchQuerySpec:
     query_text: str
     target_domains: List[str] = field(default_factory=list)
     language: str = "en"
+    # Which intake lane the query belongs to: "pillar" (stratified +
+    # diversified variants) or "campaign" (D4 fact-sheet lane).
+    lane: str = "pillar"
 
 
 class SearchPlanner:
@@ -387,5 +423,42 @@ class SearchPlanner:
                         )
                     )
 
+        return specs
+
+    def generate_campaign_fact_sheet_queries(
+        self,
+        time_window: Optional[str] = None,
+    ) -> List[SearchQuerySpec]:
+        """D4: campaign/fact-sheet lane queries for the mayor's on-the-record pages.
+
+        target_domains are restricted to reviewed campaign domains
+        (reviewed_campaign_domains), so campaign-lane hits are the primary
+        pages themselves rather than summaries about them. supervisor_district
+        0 marks a citywide scope: campaign fact sheets are not
+        district-specific.
+        """
+        window = time_window or rolling_time_window()
+        domains = reviewed_campaign_domains()
+
+        specs: List[SearchQuerySpec] = []
+        for idx, noun in enumerate(CAMPAIGN_FACT_SHEET_NOUNS):
+            verb = COMMITMENT_VERBS[idx % len(COMMITMENT_VERBS)]
+            q_text = f'"San Francisco" "mayor" ("{verb}" OR "announced") "{noun}"'
+            violations = validate_outcome_blind_query(q_text)
+            if violations:
+                raise ValueError(f"Outcome-biased term in planner query: {violations}")
+            specs.append(
+                SearchQuerySpec(
+                    query_id=f"Q-CAMP-{idx+1:02d}",
+                    pillar="Campaign Fact Sheets",
+                    supervisor_district=0,
+                    neighborhood="Citywide",
+                    time_window=window,
+                    entity_type="civic_official",
+                    query_text=q_text,
+                    target_domains=domains,
+                    lane="campaign",
+                )
+            )
         return specs
 
