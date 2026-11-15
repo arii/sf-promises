@@ -3334,5 +3334,29 @@
   {
     "url": "https://sfgov.legistar.com/View.ashx?GUID=D027FE8D-087A-4CE5-BD8F-3BE365835C63&ID=15502333&M=F",
     "reason": "domain_not_allowlisted"
+  },
+  {
+    "url": "https://sfgov.legistar.com/View.ashx?M=IC&ID=1462992&GUID=9E7FA469-A378-4F34-B5AD-03FD15F32EDD",
+    "reason": "unsupported_source_format"
+  },
+  {
+    "url": "https://sfgov.legistar.com/View.ashx?M=IC&ID=1462300&GUID=B22A9638-934E-464B-B58C-B52E935CE4DE",
+    "reason": "unsupported_source_format"
+  },
+  {
+    "url": "https://sfgov.legistar.com/View.ashx?M=IC&ID=1464054&GUID=8E6D11BE-6588-4115-BDE0-54EC9D16A4DA",
+    "reason": "unsupported_source_format"
+  },
+  {
+    "url": "https://sfgov.legistar.com/View.ashx?M=IC&ID=1463323&GUID=492FAABE-537D-4EC5-B939-61C7746E652F",
+    "reason": "unsupported_source_format"
+  },
+  {
+    "url": "https://sfcontroller.org/",
+    "reason": "http_202"
+  },
+  {
+    "url": "https://sfelections.sfgov.org/",
+    "reason": "http_202"
   }
 ]
