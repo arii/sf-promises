@@ -7,10 +7,11 @@ model identity, and time out when no validated response arrives.
 import asyncio
 import json
 from pathlib import Path
+import uuid
 
 import pytest
 
-from src.agent_lane import AGENT_MODEL_ID, AgentLane, LaneTimeout
+from src.agent_lane import AGENT_MODEL_ID, AgentLane, LaneRequest, LaneTimeout
 from src.model import ModelResponseError
 
 

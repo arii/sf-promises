@@ -101,14 +101,27 @@ class AgentLane:
         return request_id
 
     def pending(self):
-        """List request IDs that have no response yet, uuid-hex sorted (not oldest first)."""
+        """List pending request IDs oldest-first (FIFO by created_at).
+
+        Ordering by created_at rather than by uuid-hex filename makes claiming
+        deterministic regardless of insertion timing: document-led lanes
+        multiply extraction requests, so queue fairness is load-bearing.
+        """
         if not self.requests_dir.exists():
             return []
-        ids = []
-        for path in sorted(self.requests_dir.glob("*.json")):
-            if not self._response_path(path.stem).exists():
-                ids.append(path.stem)
-        return ids
+        stamped = []
+        for path in self.requests_dir.glob("*.json"):
+            if self._response_path(path.stem).exists():
+                continue
+            try:
+                created_at = json.loads(path.read_text(encoding="utf-8"))["created_at"]
+            except (ValueError, KeyError, TypeError):
+                # A malformed or unreadable stamp must not break the queue;
+                # sort it last so healthy requests claim first.
+                created_at = "9999-12-31"
+            stamped.append((created_at, path.stem))
+        stamped.sort(key=lambda item: (item[0], item[1]))
+        return [request_id for _, request_id in stamped]
 
     def read_request(self, request_id):
         """Return a pending request dict, or None when it does not exist."""
