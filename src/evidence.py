@@ -4,9 +4,15 @@ import json
 from datetime import datetime, timezone
 from urllib.parse import urlsplit
 
-from src.allowlist import canary_domains, domains_in_group
+from src.allowlist import WAYBACK_HOST, canary_domains, domains_in_group, entry_for_host, is_canary_replay, replay_target_host
 from src.checks import check_domain
-from src.sources import is_verbatim_quote, load_archived_metadata, load_archived_text
+from src.sources import (
+    FETCH_METADATA_FIELDS,
+    is_fetch_metadata,
+    is_verbatim_quote,
+    load_archived_metadata,
+    load_archived_text,
+)
 
 # Source-tier host sets are reviewed data (config/allowlist.json); the `groups`
 # field maps each domain to the tier set it originally appeared in.
@@ -24,6 +30,16 @@ def is_allowlisted_url(url):
     try:
         parsed = urlsplit(url)
         host = parsed.hostname
+        # Outer hygiene rules apply to the archive URL itself.
+        if host == WAYBACK_HOST:
+            return (
+                parsed.scheme == "https"
+                and parsed.username is None
+                and parsed.password is None
+                and parsed.port in (None, 443)
+                and not any(ord(char) <= 32 for char in url)
+                and _wayback_replay_allowed(url)
+            )
         return (
             parsed.scheme == "https"
             and host is not None
@@ -40,23 +56,49 @@ def is_allowlisted_url(url):
         return False
 
 
+def _wayback_replay_allowed(url):
+    """Replay URLs pass only when the embedded target is an approved non-canary entry.
+
+    The outer web.archive.org host is never the basis for a pass: the archive can
+    replay arbitrary hosts, including hard-blocked canary domains.
+    """
+    target_host = replay_target_host(url)
+    if target_host is None or is_canary_replay(url):
+        return False
+    return (
+        not _host_matches(target_host, _CANARY_HOSTS)
+        and (target_host.endswith((".gov", ".mil", ".edu"))
+             or _host_matches(target_host, _PRIMARY_HOSTS | _NEWS_HOSTS)
+             or entry_for_host(target_host) is not None)
+    )
+
+
+def _classification_host(url):
+    """Host tier decisions should be made on: the replay target for Wayback URLs, else the URL host."""
+    host = urlsplit(url).hostname
+    if host == WAYBACK_HOST:
+        return replay_target_host(url)
+    return host
+
+
 def _government_host(url):
     if not is_allowlisted_url(url):
         return False
-    host = urlsplit(url).hostname
-    return (host == "static1.squarespace.com"
-            and urlsplit(url).path.startswith("/static/66df74757ae89b28c38bb175/")) or host.endswith(".gov") or any(
-        host == domain or host.endswith("." + domain)
-        for domain in _GOVERNMENT_ORG_HOSTS
-    )
+    host = _classification_host(url)
+    return (host is not None
+            and ((host == "static1.squarespace.com"
+                  and urlsplit(url).path.startswith("/static/66df74757ae89b28c38bb175/"))
+                 or host.endswith(".gov")
+                 or _host_matches(host, _GOVERNMENT_ORG_HOSTS)))
 
 
 def _primary_host(url):
     if not is_allowlisted_url(url):
         return False
-    host = urlsplit(url).hostname
-    return (_government_host(url) or host.endswith((".mil", ".edu"))
-            or _host_matches(host, _PRIMARY_HOSTS))
+    host = _classification_host(url)
+    return (host is not None
+            and (_government_host(url) or host.endswith((".mil", ".edu"))
+                 or _host_matches(host, _PRIMARY_HOSTS)))
 
 
 def screen_saved_source(*, root, promise_id, path, digest, quote, url, source_tier):
@@ -95,8 +137,8 @@ def record_preliminary_evidence(conn, *, root, promise_id, source, phase, source
         metadata = load_archived_metadata(
             root, promise_id, source.get("metadata_path"), source.get("metadata_sha256")
         )
-        expected = {"path", "sha256", "url", "requested_url", "published_at", "fetched_at"}
-        if (set(metadata) != expected or any(source.get(k) != metadata[k] for k in expected)
+        if (not is_fetch_metadata(metadata)
+                or any(source.get(k) != metadata[k] for k in FETCH_METADATA_FIELDS)
                 or not is_allowlisted_url(metadata["requested_url"])
                 or (metadata["published_at"] is not None
                     and not isinstance(metadata["published_at"], str))):
@@ -175,7 +217,7 @@ def record_preliminary_evidence(conn, *, root, promise_id, source, phase, source
                     saved = load_archived_metadata(
                         root, promise_id, saved_record["metadata_path"], saved_record["metadata_sha256"]
                     )
-                    if (set(saved) != expected
+                    if (not is_fetch_metadata(saved)
                             or any(saved[key] != metadata[key] for key in ("path", "sha256", "url", "published_at"))
                             or not is_allowlisted_url(saved["requested_url"])
                             or datetime.fromisoformat(saved["fetched_at"]).utcoffset() is None):

@@ -296,6 +296,41 @@ def verify_visualizations(code, data):
         check("per-window funnel stage rows reconcile with stage_counts",
               not problems, "; ".join(problems[:5]))
 
+        # Per-lane funnel rows: each intake lane's stage rows must equal its
+        # own lane stage_counts (same shape as the window total above), so a
+        # lane row recorded in data/window_funnel_rounds.json cannot diverge
+        # from what the export reports for that lane. Conversions follow the
+        # exporter's rule: a stage converts from its predecessor only when
+        # that predecessor was supplied and non-zero (a 0->0 ratio is a
+        # division by zero — an honest gap, not a conversion).
+        lane_problems = []
+        lane_windows = 0
+        for w in wf:
+            lanes = w.get("lanes") or {}
+            if not lanes:
+                continue
+            lane_windows += 1
+            for lane, entry in sorted(lanes.items()):
+                counts = entry.get("stage_counts") or {}
+                rows = entry.get("stages") or []
+                if {r["stage"] for r in rows} != set(counts):
+                    lane_problems.append(f"{w.get('window')}/{lane}: stage rows != stage_counts")
+                previous_count = None
+                for r in rows:
+                    if counts.get(r["stage"]) != r.get("count"):
+                        lane_problems.append(f"{w.get('window')}/{lane}/{r['stage']}: row != stage_count")
+                    if (previous_count and
+                            "conversion_from_previous" not in r):
+                        lane_problems.append(
+                            f"{w.get('window')}/{lane}/{r['stage']}: missing conversion")
+                    previous_count = r.get("count")
+        if lane_windows:
+            check("per-lane funnel stage rows reconcile with lane stage_counts",
+                  not lane_problems, "; ".join(lane_problems[:5]))
+        else:
+            check("per-lane funnel rows exported (honest gap until lane-tagged rounds record them)",
+                  True, "no lanes in the export yet")
+
     # Execute the marked pure derivation block with node and compare every
     # chart count against an independent tally of docs/data.json.
     harness = """
