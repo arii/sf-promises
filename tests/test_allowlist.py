@@ -28,10 +28,12 @@ from src.evidence import (
 # D2 deliberately grew checks_allowlist 34→40 and news 31→37 by adding six
 # community/ethnic-press query targets (elreporterosf.com, eltecolote.org,
 # inglesidelight.com, noevalleyvoice.com, sfbayview.com, singtaousa.com).
+# OD-22 R2 grew checks_allowlist 40→43 (sfgov.legistar.com, sfcontroller.org,
+# web.archive.org), government 7→9 and primary 24→26 (the two gov hosts).
 EXPECTED_GROUP_SIZES = {
-    "checks_allowlist": 40,
-    "government": 7,
-    "primary": 24,
+    "checks_allowlist": 43,
+    "government": 9,
+    "primary": 26,
     "news": 37,
 }
 EXPECTED_CANARY_COUNT = 11
@@ -136,6 +138,12 @@ def test_consumers_are_backed_by_the_config_file():
         # pre-migration quirk preserved: check_domain sees the exact seeded host,
         # while is_allowlisted_url blocks it as a canary subdomain (probe below)
         ("https://en.wikipedia.org/wiki/x", True),
+        # OD-22 R2 reviewed additions: legistar closes the planner-targets-but-
+        # allowlist-lacks gap; sfcontroller.org is a government primary source
+        ("https://sfgov.legistar.com/LegislationDetail.aspx?ID=6431980", True),
+        ("https://www.sfgov.legistar.com/LegislationDetail.aspx?ID=1", True),
+        ("https://sfcontroller.org/reports", True),
+        ("https://example.com/news", False),
     ],
 )
 def test_check_domain_probe_set(url, expected):
@@ -154,6 +162,9 @@ def test_check_domain_probe_set(url, expected):
         ("https://www.reddit.com/r/sanfrancisco", False),
         ("https://en.wikipedia.org/wiki/x", False),  # canary subdomain
         ("not a url", False),
+        # OD-22 R2 reviewed additions match, approved entries only
+        ("https://sfgov.legistar.com/LegislationDetail.aspx?ID=6431980", True),
+        ("https://sfcontroller.org/reports", True),
     ],
 )
 def test_is_allowlisted_url_probe_set(url, expected):
@@ -166,6 +177,10 @@ def test_entry_for_host_prefers_the_closest_listed_ancestor():
     assert entry_for_host("en.wikipedia.org", entries=entries).domain == "en.wikipedia.org"
     assert entry_for_host("random-sf-blog.example.com", entries=entries) is None
     assert entry_for_host("", entries=entries) is None
+    # OD-22 R2: the three reviewed additions are approved and match
+    assert entry_for_host("sfgov.legistar.com").domain == "sfgov.legistar.com"
+    assert entry_for_host("sfcontroller.org").domain == "sfcontroller.org"
+    assert entry_for_host("web.archive.org").domain == "web.archive.org"
 
 
 def test_pending_entries_do_not_match():
