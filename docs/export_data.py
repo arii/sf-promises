@@ -1257,12 +1257,13 @@ def _load_from_db(db_path):
     _db_ids = {p["promise_id"] for p in all_promises}
     _q_ids = {_qr["promise_id"] for _qr in real_quarantined}
     pending_ids = sorted(set(_csv_text) - _db_ids - _q_ids)
-    if not _csv_text and os.path.exists(OUT_JSON):
+    previous_export = Path(__file__).with_name("data.json")
+    if not _csv_text and previous_export.exists():
         # The seed CSV lives on the export worker, not in git. Without it the
         # pending queue would silently vanish from the snapshot, so carry it
         # forward from the last committed export instead.
         try:
-            with open(OUT_JSON, encoding="utf-8") as _pf:
+            with previous_export.open(encoding="utf-8") as _pf:
                 _prev = json.load(_pf)
             pending_ids = list(_prev.get("database_status", {}).get("pending_intake_ids", []))
         except (OSError, ValueError):

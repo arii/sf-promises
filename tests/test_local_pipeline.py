@@ -221,6 +221,28 @@ def test_backup_restore_verifies_database_and_all_source_hashes(tmp_path):
         verify(restored)
 
 
+@pytest.mark.parametrize("stale_output", [False, True])
+def test_staged_legacy_export_preserves_committed_pending_ids(tmp_path, stale_output):
+    database = tmp_path / "legacy.db"
+    _make_history_fixture_db(database)
+    script = Path("docs/export_data.py").resolve()
+    baseline = json.loads(script.with_name("data.json").read_text())
+    expected = baseline["database_status"]["pending_intake_ids"]
+    assert expected
+    output = tmp_path / "export"
+    if stale_output:
+        output.mkdir()
+        (output / "data.json").write_text(json.dumps({
+            "database_status": {"pending_intake_ids": ["STALE-PENDING"]},
+        }))
+    result = subprocess.run([
+        sys.executable, str(script), "--db", str(database), "--output-dir", str(output),
+    ], cwd=tmp_path, capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    payload = json.loads((output / "data.json").read_text())
+    assert payload["database_status"]["pending_intake_ids"] == expected
+
+
 def test_backup_manifest_detects_missing_sources(tmp_path):
     root = tmp_path / "original"
     root.mkdir()
