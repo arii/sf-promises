@@ -97,3 +97,25 @@ def test_empty_legacy_baseline_and_cli(legacy_workspace, tmp_path):
         db.execute("INSERT INTO sources VALUES (2, 'new-missing')")
     with pytest.raises(ValueError, match="baseline mismatch"):
         verify(backup, allow_existing_fk_violations=True)
+
+
+def test_legacy_baseline_detects_changed_text_after_nul(legacy_workspace, tmp_path):
+    before, after = "missing\x00before", "missing\x00after"
+    with sqlite3.connect(legacy_workspace / "promises.db") as db:
+        assert db.execute("SELECT quote(?) = quote(?)", (before, after)).fetchone()[0] == 1
+        db.execute("UPDATE sources SET promise_id = ?", (before,))
+    backup, restored = tmp_path / "backup", tmp_path / "restored"
+    snapshot(legacy_workspace, backup, allow_existing_fk_violations=True)
+    result = subprocess.run([
+        sys.executable, "-m", "scripts.workspace_backup", "restore",
+        "--workspace", str(backup), "--destination", str(restored),
+        "--allow-existing-fk-violations",
+    ], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    verify(restored, allow_existing_fk_violations=True)
+    with sqlite3.connect(restored / "promises.db") as db:
+        db.execute("UPDATE sources SET promise_id = ?", (after,))
+    with pytest.raises(ValueError, match="baseline mismatch"):
+        verify(restored, allow_existing_fk_violations=True)
+    with pytest.raises(ValueError, match="baseline mismatch"):
+        snapshot(restored, tmp_path / "bad-backup", allow_existing_fk_violations=True)

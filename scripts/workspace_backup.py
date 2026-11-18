@@ -42,7 +42,8 @@ def _foreign_key_violations(conn):
             row[3] for row in conn.execute(f"PRAGMA foreign_key_list({quoted_table})")
             if row[0] == key
         ]
-        expressions = ", ".join('quote("' + column.replace('"', '""') + '")' for column in columns)
+        quoted_columns = ['"' + column.replace('"', '""') + '"' for column in columns]
+        expressions = ", ".join(f"typeof({column}) || ':' || hex({column})" for column in quoted_columns)
         values = conn.execute(
             f"SELECT {expressions} FROM {quoted_table} WHERE rowid = ?", (rowid,),
         ).fetchone()
