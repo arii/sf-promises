@@ -375,61 +375,7 @@ python -m src.swarm_runner \
 
 Step 3: Run the Automated Quality Gate Suite (tests/verify_demo.py)Add these five assertions to tests/test_checks.py so CI/CD refuses to export docs/data.json if any v1 bug regresses:   assert_no_future_kept_unverified(): Ensures no promise with date_deadline > 2026-11-11 is marked KEPT unless explicitly verified complete.assert_forward_looking_quotes(): Ensures quote_published_date <= date_promised + 45 days for 100% of records.assert_valid_taxonomy(): Ensures every sector and neighborhood matches the strict Enum sets.assert_unique_canonical_slugs(): Prevents duplicate extraction of the same policy/project.assert_known_canary_cases():Whole Foods Mid-Market (#36) must resolve to KEPT_THEN_REVERSED.Joe Lacob WNBA Championship (#45) must resolve to IN_PROGRESS.Ed Lee 2011 No-Run Pledge (#8) must resolve to BROKEN.Central Subway (#11/#12) must resolve to DELAYED_OR_PARTIAL (or BROKEN against original 2018 contract, with 2022 completion noted in current_survival).Step 4: Update Frontend Badges in docs/app.js & docs/styles.css[cite: 4]   Add support for the two new high-signal status badges in docs/app.js[cite: 4]:KEPT_THEN_REVERSED → Render as "KEPT → LATER CLOSED / REVERSED" (Amber/Purple badge).DELAYED_OR_PARTIAL → Render as "DELIVERED LATE / PARTIAL" (Yellow/Orange badge).Commit the updated docs/data.json and docs/data.js[cite: 4] directly from the Archil sandbox to GitHub to update arii.github.io/sf-promises automatically.
 
-To equip your coding agent (Claude Code, Codex, Cursor, or your custom runner) inside the sf-promises workspace and your Archil sandbox, install these specific npx skills packages (requires Node.js 22.20+).1. Official Stack Skills (Install in /workspace/sf-promises)These map directly to the v2 architecture (LangGraph state machines, Remotion video pipeline in video/, and headless browser verification in docs/capture_screenshots.js):   LangGraph & Deep Agents (langchain-ai/langchain-skills):
-Teaches your agent current LangGraph StateGraph, Send() fan-out, and checkpointing syntax so it doesn't write deprecated LangChain boilerplate.
-
-```
-npx skills add langchain-ai/langchain-skills --skill langgraph-fundamentals --skill langgraph-persistence --skill deep-agents-memory -y
-```
-
-
-Remotion Video Pipeline (remotion-dev/skills):
-Covers video/src/PromisesVideo.tsx and headless rendering (remotion-markup, remotion-render, remotion-docs)
-Playwright / Headless Verification (microsoft/playwright-cli):
-For running docs/capture_screenshots.js, video/record_site.js, and tests/verify_demo.py inside the sandbox.   
-Spec-Driven & Test-First Workflows (addyosmani/agent-skills):
-Provides /spec, /test, and /review workflows that pair cleanly with your PRD.md and pytest verification gates.
-Skill Discovery (vercel-labs/skills@find-skills):
-Allows your coding agent to search skills.sh autonomously when it hits a new library during the weekend hackathon
-
-```bash
-
-npx skills add remotion-dev/skills -y
-npx skills add microsoft/playwright-cli -y
-npx skills add addyosmani/agent-skills -y
-npx skills add vercel-labs/skills@find-skills -g -y
-```
-
-2. Scaffold 2 Local Skills (npx skills init) for Archil & Keenable
-Because Archil VM Forking and Keenable Temporal Search are specialized APIs, coding agents will hallucinate their SDK methods unless given explicit SKILL.md instructions. Scaffold both locally so your swarm and coding agents use them deterministically:
-
-```
-# 1. Create a local skill for Archil Sandbox VM Forking
-npx skills init archil-vm-swarm
-
-# 2. Create a local skill for Keenable Temporal Search + Tiered Evidence
-npx skills init keenable-temporal-audit
-```
-
-
-What to put in archil-vm-swarm/SKILL.md:When to trigger: Whenever executing untrusted code, parsing PDFs with pdfplumber, or running parallel pytest checks.   Core Pattern: Always use worker = await golden_sandbox.fork(), run commands via proc = await worker.run(...), await proc.wait(), and always wrap in try...finally: await worker.delete()
-
-
-What to put in keenable-temporal-audit/SKILL.md:When to trigger: Whenever searching or verifying facts for a promise.Core Pattern: Enforce the 3-Phase Temporal Search against [https://api.keenable.ai/v1/search](https://api.keenable.ai/v1/search) using published_before and published_after (Origin $T_0$, Delivery $T_1$, and Survival $T_{now}$), and never cite Tier 3 canary sources without a corroborating Tier 1/2 link.
-
-
-One-Shot Bootstrap Script for Your Archil Sandbox
-Run this inside /workspace/sf-promises on your Golden Sandbox so every forked VM inherits the skills and lockfile (skills-lock.json):
-
-
-```
-# Install project skills & lock them for CI/forked VMs
-npx skills@latest add langchain-ai/langchain-skills --skill langgraph-fundamentals --skill langgraph-persistence -y
-npx skills@latest add remotion-dev/skills -y
-npx skills@latest add microsoft/playwright-cli -y
-npx skills@latest add addyosmani/agent-skills -y
-
-# Verify installed skills
-npx skills list
-```
-
+For agent guidance, use the checked-in [Archil sandbox](.agents/skills/archil-vm-swarm/SKILL.md)
+and [Keenable temporal search](.agents/skills/keenable-temporal-audit/SKILL.md)
+skills. Sandbox forks and CI do not install skills. See
+[Optional agent skills](README.md#optional-agent-skills) for editor setup.

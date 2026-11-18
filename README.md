@@ -38,6 +38,27 @@ not proof of current results.
 4. Comments/collaboration go in `WORKING_NOTES.md`. Blockers/questions go in
    `QUESTIONS.md`.
 
+### Optional agent skills
+
+The SF Promises-specific `archil-vm-swarm` and `keenable-temporal-audit`
+skills ship with this repo. No external skills are required to develop, test,
+or deploy SF Promises.
+
+Install generic skills only when needed, directly from their upstream sources.
+For example, `npx skills add microsoft/playwright-cli --skill playwright-cli -g`
+installs the Playwright skill without adding files to this checkout.
+
+| Skills | Upstream |
+| --- | --- |
+| General engineering practices | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) |
+| Playwright CLI | [microsoft/playwright-cli](https://github.com/microsoft/playwright-cli) |
+| Hugging Face | [huggingface/skills](https://github.com/huggingface/skills) |
+| LangGraph | [langchain-ai/langchain-skills](https://github.com/langchain-ai/langchain-skills) |
+| Remotion | [remotion-dev/skills](https://github.com/remotion-dev/skills) |
+| Impeccable | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) |
+
+Don't commit personal installs or downloaded copies to this public repo.
+
 ## Dispatch: tell an agent one line
 
 | Say | Agent reads | Does |

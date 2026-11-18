@@ -9,10 +9,7 @@ __pycache__/
 /data/*
 !/data/*.csv
 !/data/*.json
-.agents/skills/impeccable/scripts/data/
 video/node_modules/
 video/out/
 video/public/rec/
-.agents/skills/impeccable/scripts/bin/
 demo/
-
