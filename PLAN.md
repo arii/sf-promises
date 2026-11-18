@@ -418,18 +418,6 @@ What to put in archil-vm-swarm/SKILL.md:When to trigger: Whenever executing untr
 What to put in keenable-temporal-audit/SKILL.md:When to trigger: Whenever searching or verifying facts for a promise.Core Pattern: Enforce the 3-Phase Temporal Search against [https://api.keenable.ai/v1/search](https://api.keenable.ai/v1/search) using published_before and published_after (Origin $T_0$, Delivery $T_1$, and Survival $T_{now}$), and never cite Tier 3 canary sources without a corroborating Tier 1/2 link.
 
 
-One-Shot Bootstrap Script for Your Archil Sandbox
-Run this inside /workspace/sf-promises on your Golden Sandbox so every forked VM inherits the skills and lockfile (skills-lock.json):
-
-
-```
-# Install project skills & lock them for CI/forked VMs
-npx skills@latest add langchain-ai/langchain-skills --skill langgraph-fundamentals --skill langgraph-persistence -y
-npx skills@latest add remotion-dev/skills -y
-npx skills@latest add microsoft/playwright-cli -y
-npx skills@latest add addyosmani/agent-skills -y
-
-# Verify installed skills
-npx skills list
-```
-
+The two project-specific skills now ship with SF Promises. The Golden Sandbox,
+forks, and CI do not need a skill installer or lockfile. For optional editor
+skills, see the [upstream sources](README.md#optional-agent-skills).
