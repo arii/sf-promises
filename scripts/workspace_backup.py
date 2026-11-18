@@ -43,11 +43,15 @@ def _foreign_key_violations(conn):
             if row[0] == key
         ]
         quoted_columns = ['"' + column.replace('"', '""') + '"' for column in columns]
-        expressions = ", ".join(f"typeof({column}) || ':' || hex({column})" for column in quoted_columns)
+        expressions = ", ".join(quoted_columns)
         values = conn.execute(
             f"SELECT {expressions} FROM {quoted_table} WHERE rowid = ?", (rowid,),
         ).fetchone()
-        violations.append([table, rowid, parent, key, list(values)])
+        fingerprints = [
+            [type(value).__name__, value.hex() if isinstance(value, bytes) else repr(value)]
+            for value in values
+        ]
+        violations.append([table, rowid, parent, key, fingerprints])
     return sorted(violations, key=lambda row: json.dumps(row))
 
 

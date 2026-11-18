@@ -119,3 +119,29 @@ def test_legacy_baseline_detects_changed_text_after_nul(legacy_workspace, tmp_pa
         verify(restored, allow_existing_fk_violations=True)
     with pytest.raises(ValueError, match="baseline mismatch"):
         snapshot(restored, tmp_path / "bad-backup", allow_existing_fk_violations=True)
+
+
+def test_legacy_baseline_detects_changed_real_key(legacy_workspace, tmp_path):
+    before, after = 1.000000000000001, 1.000000000000002
+    with sqlite3.connect(legacy_workspace / "promises.db") as db:
+        assert db.execute("SELECT hex(?) = hex(?)", (before, after)).fetchone()[0] == 1
+        db.executescript("""
+            CREATE TABLE real_parents (key REAL PRIMARY KEY);
+            CREATE TABLE real_refs (key REAL REFERENCES real_parents(key));
+        """)
+        db.execute("INSERT INTO real_refs VALUES (?)", (before,))
+    backup, restored = tmp_path / "backup", tmp_path / "restored"
+    snapshot(legacy_workspace, backup, allow_existing_fk_violations=True)
+    result = subprocess.run([
+        sys.executable, "-m", "scripts.workspace_backup", "restore",
+        "--workspace", str(backup), "--destination", str(restored),
+        "--allow-existing-fk-violations",
+    ], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    verify(restored, allow_existing_fk_violations=True)
+    with sqlite3.connect(restored / "promises.db") as db:
+        db.execute("UPDATE real_refs SET key = ?", (after,))
+    with pytest.raises(ValueError, match="baseline mismatch"):
+        verify(restored, allow_existing_fk_violations=True)
+    with pytest.raises(ValueError, match="baseline mismatch"):
+        snapshot(restored, tmp_path / "bad-backup", allow_existing_fk_violations=True)
