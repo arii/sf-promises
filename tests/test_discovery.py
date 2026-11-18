@@ -80,6 +80,24 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(origin["blocked"], [{"url": original, "reason": "http_404"}])
         self.assertEqual([item["url"] for item in result["outcome_sources"]], [outcome])
 
+    async def test_provider_fetch_error_propagates(self):
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[])
+
+            async def fetch(self, url):
+                raise KeenableAPIError("Fetch service unavailable", status_code)
+
+        with tempfile.TemporaryDirectory() as root:
+            for status_code in (402, 503):
+                with self.subTest(status_code=status_code), self.assertRaises(KeenableAPIError):
+                    await discover_and_archive(
+                        Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                                   "source_url": "https://missionlocal.org/pledge",
+                                   "promise_text": "Open a library branch"},
+                        root=Path(root), as_of=date(2025, 1, 1),
+                    )
+
     def test_pool_dated_outcome_sources_from_both_searches(self):
         source = {"url": "https://sf.gov/report", "sha256": "abc",
                   "published_at": "2022-01-01"}

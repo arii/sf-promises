@@ -6,7 +6,7 @@ import re
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from keenable import KeenableAPIError, KeenableAuthError, KeenableRateLimitError
+from keenable import KeenableAPIError
 
 from src.evidence import is_allowlisted_url
 from src.sources import archive_source
@@ -158,9 +158,9 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
             if url not in saved:
                 try:
                     saved[url] = await fetch_and_archive(client, url, root, promise_id, capture=capture)
-                except (KeenableAuthError, KeenableRateLimitError):
-                    raise
                 except KeenableAPIError as exc:
+                    if exc.status_code not in (404, 410):
+                        raise
                     saved[url] = f"http_{exc.status_code}"
                 except ValueError as exc:
                     saved[url] = str(exc)
