@@ -6,11 +6,98 @@ from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
 
-from src.discovery import discover_timeline, fetch_and_archive, pool_outcome_sources, search_window
+from keenable import KeenableAPIError
+
+from src.discovery import (
+    discover_and_archive, discover_timeline, fetch_and_archive, pool_outcome_sources, search_window,
+)
 from src.sources import load_archived_text
 
 
 class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
+    async def test_retains_original_news_lead_and_distinguishes_origin_rejections(self):
+        original = "https://missionlocal.org/pledge"
+        denied = "https://en.wikipedia.org/wiki/project"
+        incomplete = [f"https://sf.gov/incomplete-{i}" for i in range(3)]
+        another = "https://sf.gov/announcement"
+
+        class Client:
+            def __init__(self):
+                self.fetched = []
+
+            async def search(self, query, **kwargs):
+                urls = [denied, *incomplete, another, original] if "pledged" in query else []
+                return SimpleNamespace(results=[SimpleNamespace(url=url) for url in urls])
+
+            async def fetch(self, url):
+                self.fetched.append(url)
+                return SimpleNamespace(url=url, content="Archived statement",
+                                       published_at="2024-01-01",
+                                       raw={"truncated": url in incomplete})
+
+        client = Client()
+        with tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                client, {"promise_id": "P01", "promised_date": "2024-01-01",
+                         "source_url": original, "entity": "Library",
+                         "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+            origin = result["phases"]["origin"]
+            self.assertEqual([item["url"] for item in origin["sources"]], [original, another])
+            self.assertEqual(client.fetched, [original, *incomplete, another])
+            self.assertEqual([item["url"] for item in origin["blocked"]], incomplete)
+            self.assertEqual(origin["denied"], [{"url": denied, "reason": "source_url_not_allowlisted"}])
+
+    async def test_dead_original_url_does_not_block_search_hits(self):
+        original = "https://missionlocal.org/removed"
+        fallback = "https://sf.gov/original-announcement"
+        outcome = "https://sf.gov/project-opening"
+
+        class Client:
+            async def search(self, query, **kwargs):
+                url = fallback if "pledged" in query else outcome
+                return SimpleNamespace(results=[SimpleNamespace(url=url)])
+
+            async def fetch(self, url):
+                if url == original:
+                    raise KeenableAPIError("Page not found", status_code=404)
+                return SimpleNamespace(
+                    url=url, content="Archived statement", published_at="2024-01-02",
+                    raw={"truncated": False},
+                )
+
+        with tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "source_url": original, "entity": "Library",
+                           "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+
+        origin = result["phases"]["origin"]
+        self.assertEqual([item["url"] for item in origin["sources"]], [fallback])
+        self.assertEqual(origin["blocked"], [{"url": original, "reason": "http_404"}])
+        self.assertEqual([item["url"] for item in result["outcome_sources"]], [outcome])
+
+    async def test_provider_fetch_error_propagates(self):
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[])
+
+            async def fetch(self, url):
+                raise KeenableAPIError("Fetch service unavailable", status_code)
+
+        with tempfile.TemporaryDirectory() as root:
+            for status_code in (402, 503):
+                with self.subTest(status_code=status_code), self.assertRaises(KeenableAPIError):
+                    await discover_and_archive(
+                        Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                                   "source_url": "https://missionlocal.org/pledge",
+                                   "promise_text": "Open a library branch"},
+                        root=Path(root), as_of=date(2025, 1, 1),
+                    )
+
     def test_pool_dated_outcome_sources_from_both_searches(self):
         source = {"url": "https://sf.gov/report", "sha256": "abc",
                   "published_at": "2022-01-01"}

@@ -34,11 +34,12 @@ from src.evidence import (
 # inglesidelight.com, noevalleyvoice.com, sfbayview.com, singtaousa.com).
 # OD-22 R2 grew checks_allowlist 40→43 (sfgov.legistar.com, sfcontroller.org,
 # web.archive.org), government 7→9 and primary 24→26 (the two gov hosts).
+# Local news review added five publishers to checks_allowlist and news.
 EXPECTED_GROUP_SIZES = {
-    "checks_allowlist": 43,
+    "checks_allowlist": 48,
     "government": 9,
     "primary": 26,
-    "news": 37,
+    "news": 42,
 }
 EXPECTED_CANARY_COUNT = 11
 
@@ -185,6 +186,17 @@ def test_check_domain_probe_set(url, expected):
 )
 def test_is_allowlisted_url_probe_set(url, expected):
     assert is_allowlisted_url(url) is expected
+
+
+@pytest.mark.parametrize("host", [
+    "kron4.com", "richmondsunsetnews.com", "sf.eater.com", "sfpublicpress.org",
+    "www.worldjournal.com",
+])
+def test_reviewed_local_outlets_are_eligible_as_news(host):
+    url = f"https://{host}/local-story"
+    assert is_allowlisted_url(url)
+    assert check_domain(url)[0]
+    assert not _primary_host(url)
 
 
 def test_entry_for_host_prefers_the_closest_listed_ancestor():

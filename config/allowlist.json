@@ -446,6 +446,19 @@
     "canary": false
   },
   {
+    "domain": "kron4.com",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "KRON-TV Bay Area newsroom, identified in discovery denials for local openings and public projects",
+    "added_by": "devin-local-news-review",
+    "added_at": "2026-11-18",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "ktvu.com",
     "source_type": "news",
     "groups": [
@@ -672,6 +685,32 @@
     "canary": false
   },
   {
+    "domain": "richmondsunsetnews.com",
+    "source_type": "neighborhood_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "Richmond Review and Sunset Beacon newsroom, identified in discovery denials for westside housing, local elections and cultural events",
+    "added_by": "devin-local-news-review",
+    "added_at": "2026-11-18",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sf.eater.com",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "Eater San Francisco newsroom, identified in discovery denials for local restaurant and bar openings",
+    "added_by": "devin-local-news-review",
+    "added_at": "2026-11-18",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "sf.gov",
     "source_type": "reference",
     "groups": [
@@ -884,6 +923,19 @@
     "added_reason": "Parent decision: official SF Planning site (P31 ordinance)",
     "added_by": "code-owner-decision",
     "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfpublicpress.org",
+    "source_type": "news",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "San Francisco Public Press nonprofit newsroom, identified in discovery denials for local ballot measures and housing",
+    "added_by": "devin-local-news-review",
+    "added_at": "2026-11-18",
     "review_status": "approved",
     "canary": false
   },
@@ -1168,6 +1220,19 @@
     "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
     "added_by": "build-migration",
     "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "worldjournal.com",
+    "source_type": "community_press",
+    "groups": [
+      "checks_allowlist",
+      "news"
+    ],
+    "added_reason": "World Journal Chinese-language newsroom with Bay Area coverage, identified in Chinese-language discovery denials",
+    "added_by": "devin-local-news-review",
+    "added_at": "2026-11-18",
     "review_status": "approved",
     "canary": false
   },
