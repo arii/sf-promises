@@ -56,5 +56,7 @@ Each discovered candidate must satisfy the **Relevance & Worthiness Gate (≥ 5/
 
 ---
 
-## Archil Sandbox Execution
-Where possible, candidate verification, URL screening, and source validation run within **Archil disposable sandboxes** (`run_in_fork` from `sf-promises-golden`), preserving isolation and preventing host pollution.
+## Local worker execution
+Candidate source checks and PDF parsing run in bounded local subprocesses with
+credential-free environments. These are not VM, filesystem, or network security
+boundaries. Use the shared workspace and backup instructions in README.md.

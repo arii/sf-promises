@@ -4,7 +4,7 @@ Autonomous Civic Promise Discovery & Sandbox Investigation Pipeline.
 
 Discovers new civic commitments and public promises autonomously from official
 allowlisted sources using Keenable and extracts/verifies candidates inside an
-isolated sandbox environment (Archil disposable fork or isolated process worker).
+bounded local process environment (not a VM security boundary).
 
 Usage:
     python -m scripts.autonomous_investigator --topic "Daniel Lurie public safety" --limit 3
@@ -48,7 +48,7 @@ def load_credentials():
             if line and not line.startswith("#") and "=" in line:
                 k, v = line.split("=", 1)
                 creds[k.strip()] = v.strip().strip('"').strip("'")
-    for k in ("KEENABLE_API_KEY", "ARCHIL_API_KEY", "OPENROUTER_API_KEY", "NEBIUS_API_KEY"):
+    for k in ("KEENABLE_API_KEY", "OPENROUTER_API_KEY", "NEBIUS_API_KEY"):
         if os.environ.get(k):
             creds[k] = os.environ[k]
     return creds
@@ -126,7 +126,7 @@ def generate_investigation_dossier(candidate_id: str, entity: str, title: str, u
 - **Fragment SHA-256 Digest:** `{sha}`
 
 ## 2. Sandbox Verification Status
-- **Execution Mode:** Isolated Sandbox Process / Disposable Archil Worker
+- **Execution Mode:** Local process (not a VM security boundary)
 - **Allowlisted URL Check:** PASSED (`{url.split('/')[2] if '://' in url else url}`)
 - **Quote Exact Substring Match:** VERIFIED against retrieved page bytes
 - **Deterministic Gate Check:** PASSED
@@ -230,7 +230,7 @@ def main():
     parser.add_argument("--entity", "-e", type=str, help="Specific public official or agency entity")
     parser.add_argument("--query", "-q", type=str, help="Raw search query")
     parser.add_argument("--limit", "-n", type=int, default=3, help="Max results per search sweep (default: 3)")
-    parser.add_argument("--sandbox", choices=["process", "archil"], default="process", help="Sandbox isolation mode")
+    parser.add_argument("--sandbox", choices=["process"], default="process", help="Local process mode (not a VM)")
     parser.add_argument("--dry-run", action="store_true", help="Print findings without writing queue or dossiers")
 
     args = parser.parse_args()

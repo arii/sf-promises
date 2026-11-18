@@ -15,8 +15,8 @@ pytest tests/test_checks.py::test_domain_pass
 python3 src/relevance.py
 ```
 
-The shared SQLite database and archived evidence are mounted outside the
-repository at `/mnt/archil/workspace/`. The integration harness operates on
+The SQLite database and archived evidence live under `SF_PROMISES_WORKSPACE`
+(default `~/.local/share/sf-promises`). The integration harness operates on
 that database:
 
 ```bash
@@ -32,7 +32,7 @@ There is no configured root build or lint command.
 This repository tracks public San Francisco commitments through a
 provenance-first pipeline:
 
-1. **Fetcher:** saves source bytes under `/mnt/archil/workspace/sources/`,
+1. **Fetcher:** saves source bytes under `<workspace>/sources/`,
    hashes them, and records `sources` (plus Legistar metadata where relevant).
 2. **Extractor:** reads only saved source files, obtains verbatim promise
    candidates, and emits a JSON bundle. The separate `load` command in
@@ -81,10 +81,8 @@ relying on its `npm` scripts.
   migrated and verified.
 - Keep credentials in the ignored `.env`; do not store secrets in SQLite.
 
-## Archil database checkpoints
+## Local backups
 
-Before creating an Archil checkpoint, coordinate with database writers and
-quiesce them. Use a unique checkpoint name containing the Git commit hash and
-UTC timestamp, mark a dirty worktree explicitly, then record and verify the
-checkpoint in `WORKING_NOTES.md`. The mounted-disk checkpoint does not include
-uncommitted repository changes.
+Quiesce writers and follow the backup/restore commands in README.md. Verify a
+restore to a second path, record quick_check/hash results and preserve the last
+known-good export. Local worker processes are not VM security boundaries.

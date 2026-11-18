@@ -1,16 +1,14 @@
 import hashlib
 import json
-import sqlite3
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
-from types import SimpleNamespace
+from unittest import mock
 
-from src.pdf import extract_archived_pdf
+from src.pdf import extract_archived_pdf, extract_archived_pdf_range, inspect_archived_pdf
 from src.sources import archive_source
-from src.worker_leases import WorkerLeases
 
 
 def small_pdf():
@@ -35,138 +33,52 @@ def small_pdf():
     return data + b"trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n" + str(xref).encode() + b"\n%%EOF\n"
 
 
-class AsyncMethod:
-    def __init__(self, func):
-        self.aio = func
-
-
 class PDFTests(unittest.IsolatedAsyncioTestCase):
-    def fake_client(self, directory, upload, execute):
-        async def delete():
-            pass
-
-        async def stop():
-            return worker
-
-        worker = SimpleNamespace(
-            id="worker", status="running", mounts=[],
-            files=SimpleNamespace(upload_file=AsyncMethod(upload)),
-            exec=AsyncMethod(execute), stop=AsyncMethod(stop), delete=AsyncMethod(delete),
-        )
-
-        async def fork(*, name):
-            worker.name = name
-            return worker
-
-        async def get(_):
-            return SimpleNamespace(status="stopped", mounts=[], fork=AsyncMethod(fork))
-
-        connection = sqlite3.connect(Path(directory) / "worker-ledger.sqlite")
-        self.addCleanup(connection.close)
-        return (SimpleNamespace(sandboxes=SimpleNamespace(get=AsyncMethod(get))),
-                WorkerLeases(connection))
-
-    async def test_real_pdf_is_parsed_by_worker_script(self):
-        with tempfile.TemporaryDirectory() as directory:
-            path = Path(directory) / "fixture.pdf"
-            path.write_bytes(small_pdf())
-            result = subprocess.run(
-                [sys.executable, "src/pdf_worker.py", str(path)],
-                capture_output=True, check=True, text=True,
-            )
-            data = json.loads(result.stdout)
-            self.assertEqual(data["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
-            self.assertEqual(data["pages"], [{"page": 1, "text": "We will build a library."}])
-
-    async def test_transfer_validates_result_and_saved_source(self):
+    async def test_local_worker_validates_saved_source(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             saved = archive_source(root, "P1", small_pdf(), ".pdf")
-            uploads = []
-
-            async def upload(local, remote):
-                uploads.append((Path(local).read_bytes(), remote))
-
-            async def execute(command):
-                self.assertEqual(command, "python3 /tmp/sf-promises-pdf-worker.py /tmp/sf-promises-source.pdf")
-                local_pdf = root / "uploaded.pdf"
-                local_pdf.write_bytes(uploads[0][0])
-                output = subprocess.run(
-                    [sys.executable, "src/pdf_worker.py", str(local_pdf)],
-                    capture_output=True, check=True, text=True,
-                )
-                return SimpleNamespace(exit_code=0, stdout=output.stdout)
-
-            client, ledger = self.fake_client(directory, upload, execute)
-            result = await extract_archived_pdf(
-                client, "golden", ledger=ledger, run_id="run", job_id="P1", template_reviewed=True,
-                network_reviewed=True,
-                root=root, promise_id="P1", path=saved["path"], digest=saved["sha256"]
-            )
-            self.assertEqual(result["pages"][0]["text"], "We will build a library.")
-            self.assertEqual(uploads[0][0], small_pdf())
+            result = await extract_archived_pdf(root=root, promise_id="P1",
+                                               path=saved["path"], digest=saved["sha256"])
+            self.assertEqual(result["pages"], [{"page": 1, "text": "We will build a library."}])
+            self.assertEqual(result["sha256"], saved["sha256"])
             Path(saved["path"]).write_bytes(b"tampered")
             with self.assertRaises(ValueError):
-                await extract_archived_pdf(
-                    client, "golden", ledger=ledger, run_id="run", job_id="P2", template_reviewed=True,
-                    network_reviewed=True,
-                    root=root, promise_id="P1", path=saved["path"], digest=saved["sha256"]
-                )
-            self.assertEqual(len(uploads), 2)
+                await extract_archived_pdf(root=root, promise_id="P1",
+                                           path=saved["path"], digest=saved["sha256"])
 
-    async def test_mismatched_hash_fails_closed_and_cleans_worker(self):
+    async def test_mismatched_worker_hash_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             saved = archive_source(root, "P1", small_pdf(), ".pdf")
+            with mock.patch("src.pdf.run_worker", new=mock.AsyncMock(return_value={
+                "sha256": "0" * 64, "pages": [{"page": 1, "text": "Quoted text"}],
+            })):
+                with self.assertRaises(ValueError):
+                    await extract_archived_pdf(root=root, promise_id="P1",
+                                               path=saved["path"], digest=saved["sha256"])
 
-            async def upload(local, remote):
-                pass
-
-            async def execute(command):
-                return SimpleNamespace(exit_code=0, stdout=json.dumps({
-                    "sha256": "0" * 64, "pages": [{"page": 1, "text": "Quoted text"}]
-                }))
-
-            client, ledger = self.fake_client(directory, upload, execute)
-            with self.assertRaises(ValueError):
-                await extract_archived_pdf(
-                    client, "golden", ledger=ledger, run_id="run", job_id="P1", template_reviewed=True,
-                    network_reviewed=True,
-                    root=root, promise_id="P1", path=saved["path"], digest=saved["sha256"]
-                )
-            self.assertEqual(ledger.get("run", "P1")["state"], "cleaned")
-
-    async def test_no_extractable_text_is_not_reported_as_success(self):
-        with tempfile.TemporaryDirectory() as directory:
-            path = Path(directory) / "blank.pdf"
-            original = b"We will build a library."
-            path.write_bytes(small_pdf().replace(original, b" " * len(original)))
-            result = subprocess.run(
-                [sys.executable, "src/pdf_worker.py", str(path)],
-                capture_output=True, text=True,
-            )
-            self.assertNotEqual(result.returncode, 0)
-            self.assertFalse(result.stdout)
-
-    async def test_worker_failure_cleans_fork_without_returning_text(self):
+    async def test_scanned_pdf_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            saved = archive_source(root, "P1", small_pdf(), ".pdf")
-
-            async def upload(local, remote):
-                pass
-
-            async def execute(command):
-                return SimpleNamespace(exit_code=1, stdout="worker failed")
-
-            client, ledger = self.fake_client(directory, upload, execute)
+            data = small_pdf().replace(b"We will build a library.", b" " * 24)
+            saved = archive_source(root, "P1", data, ".pdf")
             with self.assertRaises(ValueError):
-                await extract_archived_pdf(
-                    client, "golden", ledger=ledger, run_id="run", job_id="P1",
-                    template_reviewed=True, network_reviewed=True, root=root,
-                    promise_id="P1", path=saved["path"], digest=saved["sha256"]
-                )
-            self.assertEqual(ledger.get("run", "P1")["state"], "cleaned")
+                await extract_archived_pdf(root=root, promise_id="P1",
+                                           path=saved["path"], digest=saved["sha256"])
+
+    async def test_local_range_and_inspect_keep_page_provenance(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            saved = archive_source(root, "P1", multi_page_pdf(["First page", "Second page"]), ".pdf")
+            options = dict(root=root, promise_id="P1", path=saved["path"], digest=saved["sha256"])
+            summary = await inspect_archived_pdf(**options)
+            self.assertEqual([page["page"] for page in summary["pages"]], [1, 2])
+            result = await extract_archived_pdf_range(**options, page_from=2, page_to=2)
+            self.assertEqual(result["pages"], [{"page": 2, "text": "Second page"}])
+            self.assertEqual(result["sha256"], saved["sha256"])
+            with self.assertRaises(ValueError):
+                await extract_archived_pdf_range(**options, page_from=0, page_to=2)
 
 
 def multi_page_pdf(texts):

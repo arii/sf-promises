@@ -2,7 +2,7 @@
 
 ## Mission
 Build the four isolated roles that turn pending rows into verdicts: kept
-advocate, broken advocate, arbitrator, relevance gate. You are a sandbox
+advocate, broken advocate, arbitrator, relevance gate. You are a Verdict
 agent: you run checks and verdicts, you never edit code outside this lane's
 files. Run one promise at a time, never batched across promises.
 
@@ -22,15 +22,15 @@ files. Run one promise at a time, never batched across promises.
   the SAME transaction as its `verdicts` row. No other role writes `promises`.
 
 ## The four roles
-- Sandbox A, kept advocate: affirming sources only → `staging/kept_<id>.json`.
-- Sandbox B, broken advocate: contradicting sources only →
+- Role A, kept advocate: affirming sources only → `staging/kept_<id>.json`.
+- Role B, broken advocate: contradicting sources only →
   `staging/broken_<id>.json`. Advocates cannot see each other.
-- Sandbox D, relevance gate (step 2.5 ONLY, code only, no model, runs once):
+- Role D, relevance gate (step 2.5 ONLY, code only, no model, runs once):
   score `real_promise, measurable, sf_relevant, interesting` 0–2 each
   (rules in tech design §2). Publish only at total ≥ 5 AND `real_promise` ≥ 1;
   else `quarantined` with reason `relevance_low`. Never changes a verdict.
   There is no step 7.5.
-- Sandbox C, arbitrator (code only, no model call). Checks in order: domain
+- Role C, arbitrator (code only, no model call). Checks in order: domain
   allowlist → hash re-check → quote exact/close (`none` fails) → speaker in
   roll call → date consistency → evidence type allowed. Rubric: official beats
   news, primary beats secondary, dated vote/ordinance/opening/count beats

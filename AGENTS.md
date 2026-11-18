@@ -16,7 +16,7 @@ Read `README.md`, then your lane brief in `agent/lanes/`. Dispatch needs only:
 - `tests/test_checks.py` — 11/11 passing, keep green (`pytest`)
 - `mocks/` — P02/P05 fixtures for advocates and demo
 - `WORKING_NOTES.md` — collaboration log · `QUESTIONS.md` — blockers/questions
-- `/mnt/archil/workspace/` — `promises.db` (20 tables), `sources/`, `staging/`
+- `SF_PROMISES_WORKSPACE` (default `~/.local/share/sf-promises`) — `promises.db`, `sources/`, `staging/`
 
 ## Rules
 
@@ -92,17 +92,25 @@ For extraction, pass the Pydantic bundle schema as a function tool named
 it against the same Pydantic schema. Source quotes must still match saved
 bytes exactly.
 
-## Archil checkpoints
+## Local backup and restore
 
-- Coordinate with database writers and quiesce them before checkpointing so the
-  SQLite database and source files represent a consistent state.
-- Create a uniquely named checkpoint with
-  `sudo archil checkpoints create /mnt/archil <checkpoint-name> --region aws-us-east-1`.
-  Include the Git commit hash and a UTC timestamp in the name; explicitly mark
-  it `dirty` if the worktree has uncommitted changes. A Git hash does not
-  capture those changes, and the checkpoint captures the mounted disk, not the
-  repository.
-- Record the checkpoint name, Git commit, worktree state, and result in
-  `WORKING_NOTES.md`. Verify creation via
-  `archil checkpoints list <disk-id> --region aws-us-east-1`; do not claim a
-  successful or application-consistent backup without verifying it.
+Quiesce all database and source writers first; SQLite backup alone cannot make
+a changing source tree application-consistent. Choose new destination paths:
+
+```bash
+python3 -m scripts.workspace_backup backup --destination /path/to/backup-UTC-COMMIT
+python3 -m scripts.workspace_backup restore --workspace /path/to/backup-UTC-COMMIT --destination /path/to/restore-test
+python3 -m scripts.workspace_backup verify --workspace /path/to/restore-test
+```
+
+The script uses SQLite's backup API, copies sources/manifests, checks SQLite
+`quick_check`/foreign keys, verifies content-addressed filenames and a complete
+SHA-256 inventory, and refuses overwrite. Record the Git hash, dirty state,
+UTC timestamp, destination and verification output in `WORKING_NOTES.md`.
+Keep writers stopped until completion. Source records may contain historical
+absolute paths: recovery must reconcile those paths and evidence provenance
+before switching a restored archive into production; this script preserves
+the database and saved bytes rather than rewriting historical records.
+
+Retain the last known-good Pages files separately. To roll back publication,
+restore that reviewed export, not an unvalidated database-generated replacement.

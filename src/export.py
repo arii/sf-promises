@@ -15,6 +15,7 @@ from src.relevance import evaluate_relevance
 from src.sources import is_verbatim_quote
 from src.taxonomy import screen_taxonomy
 from src.temporal import check_origin_dates, screen_forward_looking
+from src.workspace import database_path
 
 
 def _utc_datetime(value):
@@ -177,15 +178,15 @@ def write_candidate_snapshot(conn, *, source_root, as_of, output):
 
 def main():
     parser = argparse.ArgumentParser(description="Export a review-only candidate snapshot")
-    parser.add_argument("--database", required=True, type=Path)
-    parser.add_argument("--sources", required=True, type=Path)
+    parser.add_argument("--database", default=database_path(), type=Path)
+    parser.add_argument("--sources", type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--as-of", type=datetime.fromisoformat, default=None)
     args = parser.parse_args()
     database_uri = args.database.resolve(strict=True).as_uri() + "?mode=ro"
     with closing(sqlite3.connect(database_uri, uri=True)) as conn:
         output = write_candidate_snapshot(
-            conn, source_root=args.sources, as_of=args.as_of or datetime.now(timezone.utc),
+            conn, source_root=args.sources or args.database.resolve().parent / "sources", as_of=args.as_of or datetime.now(timezone.utc),
             output=args.output,
         )
     print(f"Review-only snapshot written to {output}")

@@ -18,24 +18,23 @@ It starts with a promise made in public, finds the official source, and re-check
 
 **Demo:** the 24/7 crisis center at 822 Geary Street, promised by Mayor Daniel Lurie, opened April 28, 2025, verdict kept. And 1,500 shelter beds in six months, verdict broken.
 
-**Built with:** Archil sandboxes and shared disks, native SQLite, Keenable search and fetch, Nebius and Meta models for extraction only, and a static demo page on GitHub Pages.
+**Built with:** bounded local worker processes, native SQLite, Keenable search and fetch, Nebius and Meta models for extraction only, and a static demo page on GitHub Pages.
 
 Track SF public promises with sourced verdicts: fetch official sources, extract
 verbatim promises, run kept/broken advocates plus a deterministic arbitrator,
 and present verified outcomes. The working SQLite database and archived sources
-live on an Archil-mounted filesystem.
+live in a configurable local workspace; no Archil account, mount, or package is required.
 
 The current product requirements are in [PRD.md](PRD.md). The original
 `Archil Hackathon Nov 10 - SF Promises Export/` contains historical plans and
-research as well as the active runbook; its old counts and budget limits are
+research and the historical runbook; its old counts and budget limits are
 not proof of current results.
 
 ## For agents: start here
 
 1. Read this README.
 2. Open ONLY your lane brief in `agent/lanes/` and follow it.
-3. Status = checkboxes in `Archil Hackathon Nov 10 - SF Promises Export/10-event-runbook.md`.
-   Check a box only when its validation passes.
+3. Record current checks and blockers in the collaboration log; the hackathon runbook is historical.
 4. Comments/collaboration go in `WORKING_NOTES.md`. Blockers/questions go in
    `QUESTIONS.md`.
 
@@ -50,8 +49,8 @@ not proof of current results.
 | "Work on Demo Page" | `agent/lanes/lane-e-demo.md` | Static page from DB export |
 | "Work on Tests" | `agent/lanes/lane-f-tests.md` | Harness, P01–P12, planted N01–N12 |
 
-Database setup is complete: `/mnt/archil/workspace/promises.db` initialized with schema,
-filesystem + row round-trip verified.
+Set `SF_PROMISES_WORKSPACE` to the local workspace (default `~/.local/share/sf-promises`).
+Initialize a fresh database only for new work; do not replace the historical archive with an empty database.
 
 ## Shared rules (all lanes)
 
@@ -76,8 +75,10 @@ filesystem + row round-trip verified.
 
 ## Key paths
 
-- DB: `/mnt/archil/workspace/promises.db` (schema: `src/schema.sql`)
-- Source files: `/mnt/archil/workspace/sources/` — Staging: `/mnt/archil/workspace/staging/`
+- Workspace: `SF_PROMISES_WORKSPACE`, default `~/.local/share/sf-promises`
+- DB: `<workspace>/promises.db` (new-work schema: `src/schema.sql`)
+- Source files and manifests: `<workspace>/sources/`; staging: `<workspace>/staging/`
+- Intake reports: `<workspace>/runs/intake-round/results.json`
 - Code: `src/checks.py`, `src/arbitrator.py` — Fixtures: `mocks/`
 - Tests: `tests/test_checks.py` (`pytest`)
 - Seed data: `Archil Hackathon Nov 10 - SF Promises Export/05-sources-and-seed-promises.md`,
@@ -87,28 +88,37 @@ The extended CSV is currently used by the validation harness; do not remove it
 until its inputs and independent test expectations have been migrated and
 verified. Keep `mocks/` for deterministic offline tests.
 
-## Archil sandbox example
+## Local workers and staged exports
 
-Install the Python dependencies with `pip install -r requirements.txt`, then
-export `ARCHIL_API_KEY` (an account key starting with `key-`, from the
-[Archil console](https://console.archil.com)) and `ARCHIL_REGION`. Run:
+Install Python dependencies with `pip install -r requirements.txt`. PDF parsing
+also needs `pdfplumber` (included). Commands run from the repository root:
 
 ```bash
-python3 src/archil_sandbox_example.py
+export SF_PROMISES_WORKSPACE="$HOME/.local/share/sf-promises"
+mkdir -p "$SF_PROMISES_WORKSPACE"
+python3 -m src.database "$SF_PROMISES_WORKSPACE/promises.db" # new work only
+python3 -m src.run_live --candidate-batch P01
+python3 -m src.run_live --durability-cycle --dry-run
+python3 scripts/run_intake_round.py
+python3 docs/export_data.py --output-dir "$SF_PROMISES_WORKSPACE/staging/exports/review"
 ```
 
-The example creates a separate sandbox, writes a file to its persistent root
-filesystem, stops and starts it, reads the file, and stops it again. It does
-not modify `sf-promises-golden` or mount the shared project disk. The stopped
-sandbox and its root disk remain in Archil and may incur storage charges;
-delete the example sandbox in the console when no longer needed. Persistent
-sandboxes are available in Archil's public AWS regions, not public GCP regions.
+Intake needs `SECRET_KEENABLE_API_KEY`; discovery needs `KEENABLE_API_KEY`.
+Model calls use the agent lane by default; provider credentials remain in the
+coordinator only. Candidate and PDF workers receive only public job inputs and
+an allowlisted environment, with timeout/output bounds, process-group cleanup
+and Linux resource limits. These are local processes, **not VMs**: they do not
+provide filesystem or network isolation against malicious same-user code.
 
-For one-off checks against a mounted disk, Archil's `Disk.exec()` starts a
-fresh microVM for one command and then shuts it down. Agent tool adapters can
-expose disk reads, writes and execution to models; their permissions and
-outputs still require validation. See the [Python SDK](https://docs.archil.com/sdks/python.md)
-and [serverless execution](https://docs.archil.com/compute/serverless-execution.md).
+Existing explicit `--db`/`--database`, source, and output overrides remain.
+Sources and advocate staging for an explicit database default to its parent.
+The Pages export refuses missing/invalid databases and stages outside `docs/`.
+Legacy databases retain the existing Pages adapter; current-schema databases
+produce review-only snapshots using the existing evidence-validating exporter.
+There is no schema migration and neither path authorizes automatic publication.
+Compare staged IDs, verdict counts, and missing provenance with committed
+`docs/data.json` before publishing. Keep that public snapshot live until the
+historical database and evidence have been recovered and validated.
 
 ## V2 development status
 
@@ -125,9 +135,7 @@ regenerate unverified snapshot leads without overwriting an existing file:
 python3 -m src.v2_seeds docs/data.json seeds/leads-review.json
 ```
 
-The resulting leads are not authoritative records or saved evidence. The
-live sandbox pilot requires a valid Archil account key and a verified golden
-template; the OpenRouter credential must also work before live extraction.
+The resulting leads are not authoritative records or saved evidence. Live extraction needs a working model lane and discovery credentials, not an Archil template.
 
 To create a new, separate v2 database (the parent directory must exist):
 
@@ -159,13 +167,28 @@ python3 -m src.v2_export --database /path/to/v2.sqlite --sources /path/to/source
 
 Open `docs/index.html` to inspect its tallies, filters, and pipeline visualization.
 
-## Archil checkpoints
+## Local backup and restore
 
-After coordinating and quiescing database writers, create an Archil checkpoint
-with `sudo archil checkpoints create /mnt/archil <name> --region aws-us-east-1`.
-Use a unique name containing the Git commit and timestamp; mark a dirty worktree
-explicitly. Record and verify the checkpoint separately: it snapshots the
-mounted filesystem, not uncommitted repository files. See `AGENTS.md`.
+Quiesce all database and source writers first; SQLite backup alone cannot make
+a changing source tree application-consistent. Choose new destination paths:
+
+```bash
+python3 -m scripts.workspace_backup backup --destination /path/to/backup-UTC-COMMIT
+python3 -m scripts.workspace_backup restore --workspace /path/to/backup-UTC-COMMIT --destination /path/to/restore-test
+python3 -m scripts.workspace_backup verify --workspace /path/to/restore-test
+```
+
+The script uses SQLite's backup API, copies sources/manifests, checks SQLite
+`quick_check`/foreign keys, verifies content-addressed filenames and a complete
+SHA-256 inventory, and refuses overwrite. Record the Git hash, dirty state,
+UTC timestamp, destination and verification output in `WORKING_NOTES.md`.
+Keep writers stopped until completion. Source records may contain historical
+absolute paths: recovery must reconcile those paths and evidence provenance
+before switching a restored archive into production; this script preserves
+the database and saved bytes rather than rewriting historical records.
+
+Retain the last known-good Pages files separately. To roll back publication,
+restore that reviewed export, not an unvalidated database-generated replacement.
 
 ## Event milestones
 

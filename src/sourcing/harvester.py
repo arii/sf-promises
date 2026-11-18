@@ -11,7 +11,6 @@ from typing import Dict, Optional
 from urllib.parse import urlparse
 
 from src.evidence import _government_host, _primary_host, is_allowlisted_url
-from src.sandbox import run_in_fork
 
 SOURCE_HIERARCHY_TIERS = (
     "TIER1_PRIMARY",
@@ -119,25 +118,4 @@ class DiscoveryHarvester:
             media_image_url=img_url,
             media_caption=img_caption,
             needs_primary_upgrade=(tier == "TIER3_DISCOVERY_ONLY"),
-        )
-
-    async def harvest_in_archil_sandbox(
-        self,
-        archil_client,
-        golden_id: str,
-        ledger,
-        run_id: str,
-        job_id: str,
-        operation,
-    ):
-        """Dispatch live Keenable discovery inside an isolated Archil fork with policy gates."""
-        return await run_in_fork(
-            archil_client,
-            golden_id,
-            operation,
-            ledger=ledger,
-            run_id=run_id,
-            job_id=job_id,
-            template_reviewed=True,
-            network_reviewed=True,
         )

@@ -260,7 +260,7 @@ class QualificationIntakeAgent:
                 dual_review_sample=False,
                 dual_review_agreed=None,
                 outcome_blind_verified=True,
-                missingness_note="Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage.",
+                missingness_note="Awaiting source CSV/local database to hydrate seed text for intake triage.",
             )
 
         # Reviewer A (Rule check) & Reviewer B (Taxonomy/Attribution strict check)

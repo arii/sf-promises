@@ -28,9 +28,10 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.arbitrator import decide_verdict  # noqa: E402
 from src.checks import check_domain, check_hash, check_quote, check_speaker  # noqa: E402
+from src.workspace import database_path
 from tests.lane_f_cases import CLEAN_EXTRA, HARD_EXTRA, N01_N12, P01_P12  # noqa: E402
 
-DB_PATH = "/mnt/archil/workspace/promises.db"
+DB_PATH = str(database_path())
 CSV_PATH = "Archil Hackathon Nov 10 - SF Promises Export/data/promises-P13-P112.csv"
 RUN_ID = "F-" + datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
 

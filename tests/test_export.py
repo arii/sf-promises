@@ -489,9 +489,9 @@ class CandidateExportTests(unittest.TestCase):
             except ValueError:
                 pass
 
-        # 5. Sandbox isolation is verified
-        self.assertTrue(data.get("database_status", {}).get("sandbox_isolation_verified"))
-        self.assertIn("verified", data.get("database_status", {}).get("sandbox_isolation_label", "").lower())
+        # 5. Local processes are not represented as VM isolation.
+        self.assertFalse(data.get("database_status", {}).get("sandbox_isolation_verified"))
+        self.assertIn("not a VM", data.get("database_status", {}).get("sandbox_isolation_label", ""))
 
         # 6. P02 source is official sf.gov with verified hash
         p02 = next((p for p in promises if p.get("promise_id") == "P02"), None)

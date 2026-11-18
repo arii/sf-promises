@@ -8,18 +8,16 @@ and writes round results (funnel rows, leads, denied leads) to results.json
 under the round root — the rows a committed data PR appends to
 data/window_funnel_rounds.json and data/denied_leads.json.
 
-Usage: ROUND_ROOT=<dir> python3 scripts/run_intake_round.py
-Requires SECRET_ARCHIL_API_KEY and SECRET_KEENABLE_API_KEY in the
+Usage: SF_PROMISES_WORKSPACE=<dir> python3 scripts/run_intake_round.py
+Requires SECRET_KEENABLE_API_KEY in the
 environment.
 """
 
 import asyncio
 import hashlib
-import itertools
 import json
 import os
 import re
-import sqlite3
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -27,9 +25,6 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
-import archil
-
-from src.candidate_sandbox import TEMPLATE, _resolve_template_id
 from src.discovery import fetch_and_archive
 from src.evidence import screen_saved_source
 from src.keenable import RetryingKeenable
@@ -41,13 +36,13 @@ from src.sourcing.document_harvester import (
 )
 from src.sourcing.planner import SearchPlanner, reviewed_campaign_domains
 from src.wayback import save_page_now
-from src.worker_leases import WorkerLeases
+from src.workspace import workspace
 
 WINDOW = "intake-20261115"
 DOC_CAP_PER_LANE = 8
 CAMPAIGN_ARCHIVED_CAP = 8
-ROUND_ROOT = Path(os.environ.get("ROUND_ROOT", str(REPO.parent / "intake-round")))
-ARCHIVE_ROOT = ROUND_ROOT / "sources"
+ROUND_ROOT = Path(os.environ.get("ROUND_ROOT", str(workspace() / "runs" / "intake-round")))
+ARCHIVE_ROOT = workspace() / "sources"
 
 LANE_ENTITY = {
     "bos_transcript": "SF Board of Supervisors",
@@ -109,16 +104,11 @@ def doc_lane_row(channel: str, round_id: str, harvest: dict, leads: list[dict],
     }
 
 
-async def run_document_lane(spec, client, golden_id, ledger, run_id, jobs, fetcher):
-    job = f"job-{next(jobs)}"
-
+async def run_document_lane(spec, fetcher):
     async def extract_pdf(**kw):
-        call_job = f"job-{next(jobs)}"
         common = dict(
-            client=client, golden_id=golden_id, ledger=ledger, run_id=run_id,
-            job_id=call_job, root=ARCHIVE_ROOT,
+            root=ARCHIVE_ROOT,
             promise_id=kw["promise_id"], path=kw["path"], digest=kw["digest"],
-            template_reviewed=True, network_reviewed=True,
         )
         if kw.get("page_from") is not None:
             from src.pdf import extract_archived_pdf_range
@@ -130,10 +120,8 @@ async def run_document_lane(spec, client, golden_id, ledger, run_id, jobs, fetch
     async def inspect_pdf(**kw):
         from src.pdf import inspect_archived_pdf
         return await inspect_archived_pdf(
-            client=client, golden_id=golden_id, ledger=ledger,
-            run_id=run_id, job_id=f"job-{next(jobs)}", root=ARCHIVE_ROOT,
+            root=ARCHIVE_ROOT,
             promise_id=kw["promise_id"], path=kw["path"], digest=kw["digest"],
-            template_reviewed=True, network_reviewed=True,
         )
 
     return await harvest_collections(
@@ -248,14 +236,6 @@ async def main():
     run_id = f"R6-{round_id_stamp}"
     ROUND_ROOT.mkdir(parents=True, exist_ok=True)
     ARCHIVE_ROOT.mkdir(parents=True, exist_ok=True)
-    ledger_conn = sqlite3.connect(ROUND_ROOT / "worker-leases.sqlite")
-    ledger = WorkerLeases(ledger_conn)
-    jobs = iter(itertools.count())
-
-    archil_client = archil.Archil(
-        api_key=os.environ["SECRET_ARCHIL_API_KEY"], region="aws-us-east-1")
-    golden_id = await _resolve_template_id(archil_client, TEMPLATE)
-
     specs = {spec.key: spec for spec in default_specs()}
     fetcher = RawByteFetcher()
 
@@ -267,7 +247,7 @@ async def main():
             ("ballot_measures", "ballot"),
         ):
             harvest = await run_document_lane(
-                specs[key], archil_client, golden_id, ledger, run_id, jobs, fetcher)
+                specs[key], fetcher)
             leads, _ = leads_from_harvest(harvest, channel)
             gate_passes, gate_failures = 0, {}
             for lead in leads:

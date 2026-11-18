@@ -8,18 +8,26 @@ and Civic Accountability.
 """
 
 from collections import Counter
+import argparse
 import csv
 import json
 import os
 from pathlib import Path
 import sqlite3
+import shutil
 import sys
 from datetime import datetime, timezone
 
-DB_PATH = os.environ.get("PROMISES_DB", "/mnt/archil/workspace/promises.db")
-STAGING_DIR = os.environ.get("STAGING_DIR", "/mnt/archil/workspace/staging")
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from src.database import APPLICATION_ID, SCHEMA_VERSION
+from src.export import write_candidate_snapshot
+from src.workspace import database_path, workspace
+
+DB_PATH = os.environ.get("PROMISES_DB", str(database_path()))
+STAGING_DIR = os.environ.get("STAGING_DIR", str(workspace() / "staging"))
 OUT_JSON = "docs/data.json"
 OUT_JS = "docs/data.js"
+OUTPUT_DIR = Path("docs")
 
 # Rich SF Neighborhoods mapping
 NEIGHBORHOOD_MAP = {
@@ -1266,28 +1274,11 @@ def _load_from_db(db_path):
 def export():
     now_utc = datetime.now(timezone.utc)
 
-    if os.path.exists(DB_PATH):
-        all_promises, total_db_promises, total_db_verdicts, total_db_evidence, test_runs, real_quarantined, pending_ids = _load_from_db(DB_PATH)
-        quarantined_items = list(PLANTED_TEST_CASES)
-        if not real_quarantined:
-            real_quarantined = [dict(REJECTED_CANDIDATE_P68)]
-    elif os.path.exists(OUT_JSON):
-        with open(OUT_JSON, "r", encoding="utf-8") as f:
-            existing = json.load(f)
-        all_promises = existing.get("promises", [])
-        total_db_promises = len(all_promises)
-        total_db_verdicts = len(all_promises)
-        total_db_evidence = existing.get("database_status", {}).get("total_db_evidence", 124)
-        quarantined_items = list(PLANTED_TEST_CASES)
+    validate_database(Path(DB_PATH))
+    all_promises, total_db_promises, total_db_verdicts, total_db_evidence, test_runs, real_quarantined, pending_ids = _load_from_db(DB_PATH)
+    quarantined_items = list(PLANTED_TEST_CASES)
+    if not real_quarantined:
         real_quarantined = [dict(REJECTED_CANDIDATE_P68)]
-        test_runs = [existing.get("database_status", {}).get("integration_run", {
-            "run_id": "accd67e91c05426bbc5b279b83cf9537",
-            "total_tests": 36, "passed": 33, "failed": 0, "blocked": 3,
-            "status_label": "33 passed, 0 failed, 3 blocked"
-        })]
-        pending_ids = existing.get("database_status", {}).get("pending_intake_ids", [])
-    else:
-        raise FileNotFoundError(f"Neither {DB_PATH} nor {OUT_JSON} found.")
 
     # Prune duplicates and low-signal records
     all_promises = [p for p in all_promises if p.get("promise_id") not in PRUNED_PROMISE_IDS]
@@ -1298,11 +1289,7 @@ def export():
         if sfo["promise_id"] not in existing_pids:
             all_promises.append(dict(sfo))
 
-    # E2: the no-DB fallback path loads records from the previous snapshot;
-    # keep history that a prior DB-backed export recorded and synthesize the
-    # minimum honest history where none exists. With no verifications table
-    # available, verification history stays empty — the latest check state
-    # rides in `checks` — rather than padding null provenance.
+    # Curated supplemental rows may lack database history.
     for p in all_promises:
         if not p.get("verdict_history"):
             p["verdict_history"] = synthesize_verdict_history(
@@ -1578,12 +1565,12 @@ def export():
                 "status_label": f"{f_run.get('passed', 33)} passed, {f_run.get('failed', 0)} failed, {f_run.get('blocked', 3)} blocked"
             },
             "latest_run": f_run,
-            "sandbox_isolation_verified": True,
-            "sandbox_isolation_label": f"Sandbox isolation verified on commit {commit_sha[:7]} (separated processes, not Firecracker)",
+            "sandbox_isolation_verified": False,
+            "sandbox_isolation_label": "Bounded local processes; not a VM or filesystem/network security boundary",
             "discrepancies": [
                 f"DB holds {total_db_promises} promises (12 seeds + {total_db_promises - 12} Tier-2 banked, scale paused by user decision) with {total_db_verdicts} verdicts and {total_db_evidence} evidence rows; every file hash re-verified.",
                 f"Latest harness run {f_run['run_id']} on {commit_sha[:7]}: {f_run.get('passed', 33)} pass / {f_run.get('failed', 0)} fail / {f_run.get('blocked', 3)} blocked-extended.",
-                f"Acceptance verified on commit {commit_sha[:7]}: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
+                "Local worker processes are not a VM or filesystem/network security boundary.",
                 "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
                 "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
             ],
@@ -1663,8 +1650,7 @@ def export():
 
     payload = sanitize_export_paths(payload)
 
-    os.makedirs("data", exist_ok=True)
-    with open("data/evidence_review_queue.json", "w", encoding="utf-8") as f:
+    with open(OUTPUT_DIR / "evidence_review_queue.json", "w", encoding="utf-8") as f:
         json.dump(review_queue, f, indent=2)
 
     with open(OUT_JSON, "w", encoding="utf-8") as f:
@@ -1940,8 +1926,8 @@ def generate_featured_stories_html(promises, quarantined):
             tier_class = tier.lower()
             
             bundles = p.get("advocate_bundles", {})
-            k_claims = (bundles.get("kept", {}) if isinstance(bundles, dict) else {}).get("claims", [])
-            b_claims = (bundles.get("broken", {}) if isinstance(bundles, dict) else {}).get("claims", [])
+            k_claims = ((bundles.get("kept") or {}) if isinstance(bundles, dict) else {}).get("claims", [])
+            b_claims = ((bundles.get("broken") or {}) if isinstance(bundles, dict) else {}).get("claims", [])
             k_count = len(k_claims) if isinstance(k_claims, list) else (1 if verdict == "kept" else 0)
             b_count = len(b_claims) if isinstance(b_claims, list) else (1 if verdict == "broken" else 0)
             
@@ -2020,7 +2006,7 @@ def generate_quarantine_card_html(q, idx):
 
 
 def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
-    index_path = "docs/index.html"
+    index_path = OUTPUT_DIR / "index.html"
     if not os.path.exists(index_path):
         return
 
@@ -2094,10 +2080,67 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
         if str(repo_root) not in sys.path:
             sys.path.insert(0, str(repo_root))
         from scripts.consolidate_master_dataset import consolidate_master_dataset
-        consolidate_master_dataset(json_path=OUT_JSON, output_csv="data/sf_promises_master.csv")
+        consolidate_master_dataset(json_path=OUT_JSON, output_csv=OUTPUT_DIR / "sf_promises_master.csv")
     except Exception as exc:
         print(f"  Warning: consolidate_master_dataset failed: {exc}")
 
 
+def validate_database(path):
+    uri = path.resolve(strict=True).as_uri() + "?mode=ro"
+    with sqlite3.connect(uri, uri=True) as conn:
+        if conn.execute("PRAGMA quick_check").fetchall() != [("ok",)]:
+            raise ValueError("Database quick_check failed")
+        if conn.execute("PRAGMA foreign_key_check").fetchone():
+            raise ValueError("Database foreign key check failed")
+        application_id = conn.execute("PRAGMA application_id").fetchone()[0]
+        if application_id == APPLICATION_ID:
+            if conn.execute("PRAGMA user_version").fetchone()[0] != SCHEMA_VERSION:
+                raise ValueError("Unsupported database schema version")
+            return "current"
+        if application_id != 0:
+            raise ValueError("Unsupported database application ID")
+        conn.execute("SELECT file_path, source_hash, source_type FROM sources LIMIT 0")
+        conn.execute("SELECT source_file_path, source_hash FROM promises LIMIT 0")
+        conn.execute("SELECT verdict, decided_at FROM verdicts LIMIT 0")
+        return "legacy"
+
+
+def main():
+    global DB_PATH, STAGING_DIR, OUT_JSON, OUT_JS, OUTPUT_DIR
+    parser = argparse.ArgumentParser(description="Stage a validated database-backed export")
+    parser.add_argument("--db", "--database", type=Path, default=Path(DB_PATH))
+    parser.add_argument("--sources", type=Path)
+    parser.add_argument("--output-dir", type=Path, default=workspace() / "staging" / "exports")
+    args = parser.parse_args()
+    kind = validate_database(args.db)
+    OUTPUT_DIR = args.output_dir.resolve()
+    docs = Path(__file__).resolve().parent
+    if OUTPUT_DIR == docs or docs in OUTPUT_DIR.parents:
+        parser.error("Stage exports outside the live docs directory")
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    DB_PATH = str(args.db.resolve())
+    STAGING_DIR = os.environ.get("STAGING_DIR", str(args.db.resolve().parent / "staging"))
+    OUT_JSON, OUT_JS = str(OUTPUT_DIR / "data.json"), str(OUTPUT_DIR / "data.js")
+    if kind == "current":
+        with sqlite3.connect(args.db.resolve().as_uri() + "?mode=ro", uri=True) as conn:
+            write_candidate_snapshot(
+                conn, source_root=args.sources or args.db.resolve().parent / "sources",
+                as_of=datetime.now(timezone.utc), output=Path(OUT_JSON),
+            )
+        payload = json.loads(Path(OUT_JSON).read_text())
+        Path(OUT_JS).write_text("window.__DEMO_DATA__ = " + json.dumps(payload) + ";\n")
+        print(f"Review-only export: {len(payload['promises'])} promises; {payload['tallies']}")
+    else:
+        export()
+        for name in ("index.html", "app.js", "styles.css", "list.min.js"):
+            source = docs / name
+            if source.is_file():
+                shutil.copyfile(source, OUTPUT_DIR / name)
+        payload = json.loads(Path(OUT_JSON).read_text())
+        pre_render_index_html(payload["promises"], payload["quarantined"],
+                              payload["database_status"]["counts"],
+                              payload["metadata"]["commit_sha"][:8])
+
+
 if __name__ == "__main__":
-    export()
+    main()

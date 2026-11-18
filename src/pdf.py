@@ -1,95 +1,54 @@
-"""Transfer a saved PDF to an isolated worker and receive unverified text.
+"""Parse a saved PDF in a bounded local process and receive unverified text.
 
 Three transfer shapes over the same disposable worker (spec OD-22 D2):
 whole-document extraction, one page-range extraction, and a per-page
 inspect summary used to build slicing plans for oversized documents.
 """
 
-import asyncio
-import json
-import tempfile
-from pathlib import Path
-
-from src.sandbox import run_in_fork
+from src.local_worker import run_worker
 from src.sources import load_archived_pdf
-
-_WORKER_REMOTE = "/tmp/sf-promises-pdf-worker.py"
-_SOURCE_REMOTE = "/tmp/sf-promises-source.pdf"
 
 
 async def extract_archived_pdf(
-    client, golden_id, *, ledger, run_id, job_id, root, promise_id, path, digest,
-    template_reviewed=False, network_reviewed=False,
+    *, root, promise_id, path, digest,
 ):
-    """Extract unverified page text only within a tracked disposable fork."""
+    """Extract unverified page text in a disposable local process."""
     data = load_archived_pdf(root, promise_id, path, digest)
 
-    async def operation(worker):
-        return await _pdf_worker_call(worker, data, digest, [], _validate_extract)
-
-    return await run_in_fork(
-        client, golden_id, operation, ledger=ledger, run_id=run_id, job_id=job_id,
-        template_reviewed=template_reviewed, network_reviewed=network_reviewed,
-    )
+    return await _pdf_worker_call(data, digest, [], _validate_extract)
 
 
 async def extract_archived_pdf_range(
-    client, golden_id, *, ledger, run_id, job_id, root, promise_id, path, digest,
+    *, root, promise_id, path, digest,
     page_from, page_to,
-    template_reviewed=False, network_reviewed=False,
 ):
-    """Extract one page range of a saved PDF within a tracked disposable fork."""
+    """Extract one page range of a saved PDF in a local process."""
     if (type(page_from) is not int or type(page_to) is not int
             or not 1 <= page_from <= page_to):
         raise ValueError("Invalid page range")
     data = load_archived_pdf(root, promise_id, path, digest)
 
-    async def operation(worker):
-        arguments = ["--from", str(page_from), "--to", str(page_to)]
-        return await _pdf_worker_call(worker, data, digest, arguments, _validate_extract_range)
-
-    return await run_in_fork(
-        client, golden_id, operation, ledger=ledger, run_id=run_id, job_id=job_id,
-        template_reviewed=template_reviewed, network_reviewed=network_reviewed,
-    )
+    arguments = ["--from", str(page_from), "--to", str(page_to)]
+    output = await _pdf_worker_call(data, digest, arguments, _validate_extract_range)
+    if (output["page_from"] != page_from or output["page_to"] != page_to
+            or len(output["pages"]) != page_to - page_from + 1):
+        raise ValueError("PDF worker returned a different page range")
+    return output
 
 
 async def inspect_archived_pdf(
-    client, golden_id, *, ledger, run_id, job_id, root, promise_id, path, digest,
-    template_reviewed=False, network_reviewed=False,
+    *, root, promise_id, path, digest,
 ):
     """Per-page char counts and first lines for a saved PDF; no text body."""
     data = load_archived_pdf(root, promise_id, path, digest)
 
-    async def operation(worker):
-        return await _pdf_worker_call(worker, data, digest, ["--inspect"], _validate_inspect)
-
-    return await run_in_fork(
-        client, golden_id, operation, ledger=ledger, run_id=run_id, job_id=job_id,
-        template_reviewed=template_reviewed, network_reviewed=network_reviewed,
-    )
+    return await _pdf_worker_call(data, digest, ["--inspect"], _validate_inspect)
 
 
-async def _pdf_worker_call(worker, data, digest, arguments, validate):
-    with tempfile.TemporaryDirectory() as directory:
-        local_pdf = Path(directory) / "source.pdf"
-        local_pdf.write_bytes(data)
-        # https://docs.archil.com/sdks/python.md#persistent-sandboxes
-        await worker.files.upload_file.aio(local_pdf, _SOURCE_REMOTE)
-        await worker.files.upload_file.aio(
-            Path(__file__).with_name("pdf_worker.py"), _WORKER_REMOTE
-        )
-        command = " ".join(["python3", _WORKER_REMOTE, _SOURCE_REMOTE, *arguments])
-        result = await asyncio.wait_for(
-            worker.exec.aio(command),
-            timeout=120,
-        )
-    if (getattr(result, "exit_code", None) != 0
-            or not isinstance(getattr(result, "stdout", None), str)
-            or len(result.stdout) > 2_500_000):
-        raise ValueError("PDF worker failed")
+async def _pdf_worker_call(data, digest, arguments, validate):
+    output = await run_worker("src.pdf_worker", files={"source.pdf": data},
+                              arguments=["source.pdf", *arguments])
     try:
-        output = json.loads(result.stdout)
         validate(output, digest)
     except (TypeError, KeyError, ValueError):
         raise ValueError("Invalid PDF worker result") from None

@@ -2,7 +2,7 @@
 
 ## Mission
 Seed 12 validation sources (P01–P12): fetch each URL, save the bytes to the
-Archil disk, SHA-256 them, record a `sources` row. You are a sandbox agent:
+local workspace, SHA-256 them, record a `sources` row. You are a fetcher agent:
 you run fetches and checks, you never edit code, never extract promises,
 never decide verdicts.
 
@@ -12,7 +12,7 @@ never decide verdicts.
   re-verified on re-fetch.
 
 ## Owns / touches
-- Writes: `/mnt/archil/workspace/sources/` files, `sources` rows,
+- Writes: `<workspace>/sources/` files (`SF_PROMISES_WORKSPACE`, see README), `sources` rows,
   `legistar_matters` rows.
 - Must not touch: `promises_pending`, `promises`, checks, demo, tests.
 

@@ -2,7 +2,7 @@
 
 ## Mission
 Build the validation harness and run it: P01–P12 plus planted bad examples
-N01–N12. You are a sandbox agent: you run tests, you never edit pipeline
+N01–N12. You are a Tests agent: you run tests, you never edit pipeline
 code to make tests pass.
 
 ## Owns / touches

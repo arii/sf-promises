@@ -3740,12 +3740,12 @@
       "blocked": 3,
       "run_at": "2026-11-11T04:56:24.469855+00:00"
     },
-    "sandbox_isolation_verified": true,
-    "sandbox_isolation_label": "Sandbox isolation verified on commit cbff51c (separated processes, not Firecracker)",
+    "sandbox_isolation_verified": false,
+    "sandbox_isolation_label": "Bounded local processes; not a VM or filesystem/network security boundary",
     "discrepancies": [
       "DB holds 62 promises (12 seeds + 50 Tier-2 banked, scale paused by user decision) with 87 verdicts and 124 evidence rows; every file hash re-verified.",
       "Latest harness run F-20261111-045601 on cbff51c: 33 pass / 0 fail / 3 blocked-extended.",
-      "Acceptance verified on commit cbff51c: loop, per-row hash, change log, N-catches, demo verified. Sandbox isolation verified (separated processes, not Firecracker).",
+      "Historical acceptance on commit cbff51c: loop, per-row hash, change log, N-catches, demo. Local worker processes are not a VM security boundary.",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
     ],

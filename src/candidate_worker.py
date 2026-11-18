@@ -1,4 +1,4 @@
-"""Run candidate source and temporal checks inside an isolated fork."""
+"""Run candidate source and temporal checks in a local job directory."""
 
 import json
 from datetime import date
@@ -30,6 +30,6 @@ def check_request(request, root):
 
 
 if __name__ == "__main__":
-    root = Path("/tmp/sf-promises-audit/sources")
-    request = json.loads(Path("/tmp/sf-promises-audit/request.json").read_text())
+    root = Path("sources").resolve()
+    request = json.loads(Path("request.json").read_text())
     print(json.dumps(check_request(request, root)))

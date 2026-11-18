@@ -12,6 +12,7 @@ from typing import Any, Dict, List
 
 from src.denials import summarize_denials
 from src.funnel import build_funnel_summary
+from src.workspace import workspace
 from src.sourcing.planner import SearchPlanner
 from src.sourcing.qualification import AuditableCandidate, QualificationIntakeAgent
 
@@ -42,7 +43,7 @@ def _load_existing_candidate_pools(repo_root: Path) -> List[Dict[str, Any]]:
             row["_discovery_channel"] = "keenable_temporal_search"
             pool.append(row)
 
-    # 3. 38 Pending seed IDs from data.json (check if Archil CSV or promises.db provides text, else transparent pending_hydration)
+    # 3. Pending seed IDs from data.json, hydrated from a local CSV when available.
     data_json_path = repo_root / "docs" / "data.json"
     pending_ids: List[str] = []
     if data_json_path.exists():
@@ -52,7 +53,7 @@ def _load_existing_candidate_pools(repo_root: Path) -> List[Dict[str, Any]]:
     csv_seed_rows: Dict[str, Dict[str, Any]] = {}
     for cp in (
         repo_root / "data" / "promises-P13-P112.csv",
-        Path("/mnt/archil/workspace/staging/promises-P13-P112.csv"),
+        workspace() / "staging" / "promises-P13-P112.csv",
     ):
         if cp.exists():
             with cp.open(encoding="utf-8") as cf:

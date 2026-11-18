@@ -355,9 +355,8 @@ async def harvest_collections(
 
     ``extract_pdf``/``inspect_pdf`` are async callables
     ``(path=, digest=, promise_id=, page_from=, page_to=)`` /
-    ``(path=, digest=, promise_id=)``; when omitted they default to the
-    Archil fork transfers in src/pdf.py (constructed by the caller at run
-    time — a fork client is a live resource, not module state).
+    ``(path=, digest=, promise_id=)``. Callers supply the bounded local
+    process callbacks from src/pdf.py with archive_root bound as root.
 
     In ``strict`` mode (the default) a scanned document raises
     ScannedDocumentError after the run records its denial row; a rejected
