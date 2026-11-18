@@ -267,8 +267,37 @@ def test_restored_workspace_can_be_updated_and_backed_up(tmp_path):
         "--workspace", str(backup), "--destination", str(restored),
     ], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
+    with sqlite3.connect(restored / "promises.db") as conn:
+        conn.execute("CREATE TABLE new_activity (value TEXT)")
     archive_source(restored / "sources", "P2", b"new evidence", ".txt")
     files = snapshot(restored, next_backup)
     assert len(files) == len(original_files) + 1
     assert verify(next_backup) == files
     assert verify(backup) == original_files
+
+
+@pytest.mark.parametrize("fault", ["missing", "changed"])
+def test_restored_workspace_retains_source_completeness(tmp_path, fault):
+    original, backup, restored = (tmp_path / name for name in ("original", "backup", "restored"))
+    original.mkdir()
+    initialize_database(original / "promises.db")
+    (original / "sources").mkdir()
+    (original / "sources" / "legacy.txt").write_bytes(b"original evidence")
+    expected = snapshot(original, backup)
+    result = subprocess.run([
+        sys.executable, "-m", "scripts.workspace_backup", "restore",
+        "--workspace", str(backup), "--destination", str(restored),
+    ], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    archive_source(restored / "sources", "P2", b"new evidence", ".txt")
+    archived = restored / "sources" / "legacy.txt"
+    if fault == "missing":
+        archived.unlink()
+    else:
+        archived.write_bytes(b"changed evidence")
+    with pytest.raises(ValueError, match="manifest mismatch"):
+        verify(restored)
+    with pytest.raises(ValueError, match="manifest mismatch"):
+        snapshot(restored, tmp_path / "next-backup")
+    assert not (tmp_path / "next-backup").exists()
+    assert verify(backup) == expected

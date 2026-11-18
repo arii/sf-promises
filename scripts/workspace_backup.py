@@ -44,7 +44,15 @@ def verify(root):
     manifest = root / "backup.json"
     if manifest.exists():
         expected = json.loads(manifest.read_text())
-        if expected != {"database_sha256": _hash(database), "sources": files}:
+        if isinstance(expected, dict) and expected.get("kind") == "workspace":
+            matches = (
+                set(expected) == {"kind", "sources"}
+                and isinstance(expected["sources"], dict)
+                and all(files.get(name) == digest for name, digest in expected["sources"].items())
+            )
+        else:
+            matches = expected == {"database_sha256": _hash(database), "sources": files}
+        if not matches:
             raise ValueError("Backup manifest mismatch")
     return files
 
@@ -89,7 +97,9 @@ def main():
             parser.error("Restore requires a verified backup manifest")
         files = snapshot(args.workspace, args.destination)
         if args.action == "restore":
-            (args.destination / "backup.json").unlink()
+            (args.destination / "backup.json").write_text(json.dumps({
+                "kind": "workspace", "sources": files,
+            }, indent=2) + "\n")
     print(f"{args.action}: quick_check ok; {len(files)} source hashes verified")
 
 
