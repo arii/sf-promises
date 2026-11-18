@@ -6,8 +6,8 @@ A sweep lead is dropped BEFORE audit when any of these matches:
 - sha256 byte-lock: the same page bytes are already archived (the harvester's
   ``ingest_raw_document``/``archive_source`` sha256 no-op is the same lock
   applied at write time; this check catches the lead before it gets there);
-- URL match: the 54-record corpus, the candidate register, the D6b denials
-  ledger, or a round-quarantine origin (P113-P118) already contains its URL;
+- URL match: the corpus, the candidate register, a still-applicable denial,
+  or a round-quarantine origin already contains its URL;
 - token overlap: >= 0.8 Jaccard overlap on entity+promise_text against the
   corpus or the register's statement previews.
 
@@ -24,6 +24,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 from urllib.parse import urlparse
+
+from src.evidence import is_allowlisted_url
 
 TOKEN_OVERLAP_THRESHOLD = 0.8
 
@@ -185,7 +187,11 @@ def build_dedupe_index(
         if isinstance(denials, list):
             for event in denials:
                 if isinstance(event, dict) and event.get("url"):
-                    denial_urls.add(normalize_url(event["url"]))
+                    url = event["url"]
+                    if (event.get("reason") in ("domain_not_allowlisted", "source_url_not_allowlisted")
+                            and is_allowlisted_url(url)):
+                        continue
+                    denial_urls.add(normalize_url(url))
 
     archived: set[str] = {digest for digest in known_sha256 if _SHA256_RE.match(digest)}
     if archive_root is not None and Path(archive_root).exists():

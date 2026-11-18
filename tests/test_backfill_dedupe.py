@@ -123,6 +123,20 @@ def test_url_denials_ledger_match_dropped(index):
     assert match is not None and match.reason == "url_denial"
 
 
+def test_backfill_reconsiders_allowlist_denials_under_current_policy(tmp_path):
+    reopened_url = "https://sfpublicpress.org/local-pledge"
+    still_denied_url = "https://en.wikipedia.org/wiki/Local_pledge"
+    fetch_failure_url = "https://sfpublicpress.org/unavailable"
+    repo = write_repo(tmp_path, denials=[
+        {"url": reopened_url, "reason": "domain_not_allowlisted"},
+        {"url": still_denied_url, "reason": "domain_not_allowlisted"},
+        {"url": fetch_failure_url, "reason": "http_202"},
+    ])
+    index = build_dedupe_index(repo)
+    assert_novel({**NOVEL_LEAD, "url": reopened_url}, index)
+    assert index.denial_urls == {still_denied_url, fetch_failure_url}
+
+
 def test_url_quarantine_origin_match_dropped(index_repo):
     index = build_dedupe_index(
         index_repo, quarantine_urls=("https://sf.gov/quiet-pilot-p113",)
