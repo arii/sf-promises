@@ -176,10 +176,6 @@ EXPLICIT_RULES = [
     # Common docker compose forms
     "command(docker compose)",
     "command(docker compose *)",
-
-    # Impeccable script binary
-    "command(./.agents/skills/impeccable/scripts/bin/linux-x64/impeccable)",
-    "command(./.agents/skills/impeccable/scripts/bin/linux-x64/impeccable *)",
 ]
 
 # Generate composite rule list
