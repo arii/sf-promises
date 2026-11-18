@@ -70,6 +70,25 @@ def test_worker_timeout_kills_group_and_cleans_directory(tmp_path):
     assert not stat.exists() or stat.read_text().split()[2] == "Z"
 
 
+def test_worker_accepts_inputs_under_symlinked_temp_directory(tmp_path, monkeypatch):
+    directory = tmp_path / "real"
+    directory.mkdir()
+    link = tmp_path / "linked"
+    link.symlink_to(directory, target_is_directory=True)
+    monkeypatch.setattr("tempfile.tempdir", str(link))
+    result = asyncio.run(run_worker("src.candidate_worker", files={
+        "request.json": json.dumps({"sources": [], "origin": None}).encode(),
+    }))
+    assert result == {"failures": []}
+    assert list(directory.iterdir()) == []
+
+
+@pytest.mark.parametrize("name", ["../escape", "/absolute/escape"])
+def test_worker_rejects_input_paths_outside_job_directory(name):
+    with pytest.raises(WorkerError, match="Invalid worker input path"):
+        asyncio.run(run_worker("src.candidate_worker", files={name: b"input"}))
+
+
 @pytest.mark.skipif(sys.platform != "linux", reason="Linux resource limits")
 def test_worker_resource_limits():
     limits = asyncio.run(run_worker("tests.worker_probe", files={}, arguments=["limits"]))

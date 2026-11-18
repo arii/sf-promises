@@ -28,7 +28,7 @@ def _limits():
 
 async def run_worker(module, *, files, arguments=(), timeout=120, output_cap=2_500_000):
     with tempfile.TemporaryDirectory(prefix="sf-promises-worker-") as directory:
-        root = Path(directory)
+        root = Path(directory).resolve()
         for name, data in files.items():
             target = root / name
             if not target.resolve().is_relative_to(root):
