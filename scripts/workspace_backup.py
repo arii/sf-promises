@@ -32,18 +32,48 @@ def _sources(root):
     return files
 
 
-def verify(root):
+def _foreign_key_violations(conn):
+    violations = []
+    for table, rowid, parent, key in conn.execute("PRAGMA foreign_key_check"):
+        if rowid is None:
+            raise ValueError("Cannot baseline foreign key violations without rowids")
+        quoted_table = '"' + table.replace('"', '""') + '"'
+        columns = [
+            row[3] for row in conn.execute(f"PRAGMA foreign_key_list({quoted_table})")
+            if row[0] == key
+        ]
+        quoted_columns = ['"' + column.replace('"', '""') + '"' for column in columns]
+        expressions = ", ".join(quoted_columns)
+        values = conn.execute(
+            f"SELECT {expressions} FROM {quoted_table} WHERE rowid = ?", (rowid,),
+        ).fetchone()
+        fingerprints = [
+            [type(value).__name__, value.hex() if isinstance(value, bytes) else repr(value)]
+            for value in values
+        ]
+        violations.append([table, rowid, parent, key, fingerprints])
+    return sorted(violations, key=lambda row: json.dumps(row))
+
+
+def _verify(root, *, allow_existing_fk_violations=False, record_baseline=False):
     root = Path(root).resolve(strict=True)
     database = root / "promises.db"
     with sqlite3.connect(database.as_uri() + "?mode=ro", uri=True) as conn:
         if conn.execute("PRAGMA quick_check").fetchall() != [("ok",)]:
             raise ValueError("Database quick_check failed")
-        if conn.execute("PRAGMA foreign_key_check").fetchone():
+        violations = _foreign_key_violations(conn)
+        if violations and not allow_existing_fk_violations:
             raise ValueError("Database foreign key check failed")
     files = _sources(root / "sources")
     manifest = root / "backup.json"
+    expected = json.loads(manifest.read_text()) if manifest.exists() else None
+    baseline = violations if record_baseline and not manifest.exists() else []
+    if isinstance(expected, dict):
+        expected = dict(expected)
+        baseline = expected.pop("foreign_key_violations", [])
+    if violations != baseline:
+        raise ValueError("Database foreign key baseline mismatch")
     if manifest.exists():
-        expected = json.loads(manifest.read_text())
         if isinstance(expected, dict) and expected.get("kind") == "workspace":
             matches = (
                 set(expected) == {"kind", "sources"}
@@ -54,17 +84,25 @@ def verify(root):
             matches = expected == {"database_sha256": _hash(database), "sources": files}
         if not matches:
             raise ValueError("Backup manifest mismatch")
+    return files, violations
+
+
+def verify(root, *, allow_existing_fk_violations=False):
+    files, _ = _verify(root, allow_existing_fk_violations=allow_existing_fk_violations)
     return files
 
 
-def snapshot(source, destination):
+def snapshot(source, destination, *, allow_existing_fk_violations=False):
     source = Path(source).resolve(strict=True)
     destination = Path(destination).absolute()
     if destination.exists():
         raise FileExistsError(destination)
     if source == destination or source in destination.parents:
         raise ValueError("Backup must be outside the source workspace")
-    files = verify(source)
+    files, violations = _verify(
+        source, allow_existing_fk_violations=allow_existing_fk_violations,
+        record_baseline=allow_existing_fk_violations,
+    )
     with tempfile.TemporaryDirectory(prefix=".sf-promises-backup-", dir=destination.parent) as directory:
         temporary = Path(directory) / "workspace"
         temporary.mkdir()
@@ -74,10 +112,13 @@ def snapshot(source, destination):
         shutil.copytree(source / "sources", temporary / "sources", symlinks=True)
         if _sources(temporary / "sources") != files:
             raise ValueError("Source archive changed during backup; quiesce writers")
-        (temporary / "backup.json").write_text(json.dumps({
+        manifest = {
             "database_sha256": _hash(temporary / "promises.db"), "sources": files,
-        }, indent=2) + "\n")
-        verify(temporary)
+        }
+        if allow_existing_fk_violations:
+            manifest["foreign_key_violations"] = violations
+        (temporary / "backup.json").write_text(json.dumps(manifest, indent=2) + "\n")
+        verify(temporary, allow_existing_fk_violations=allow_existing_fk_violations)
         temporary.rename(destination)
     return files
 
@@ -87,20 +128,38 @@ def main():
     parser.add_argument("action", choices=["backup", "restore", "verify"])
     parser.add_argument("--workspace", type=Path, default=workspace())
     parser.add_argument("--destination", type=Path)
+    parser.add_argument(
+        "--allow-existing-fk-violations", action="store_true",
+        help="Record legacy FK violations on initial backup; otherwise require an exact recorded baseline",
+    )
     args = parser.parse_args()
     if args.action == "verify":
-        files = verify(args.workspace)
+        files = verify(args.workspace, allow_existing_fk_violations=args.allow_existing_fk_violations)
     else:
         if args.destination is None:
             parser.error("--destination is required")
         if args.action == "restore" and not (args.workspace / "backup.json").is_file():
             parser.error("Restore requires a verified backup manifest")
-        files = snapshot(args.workspace, args.destination)
+        files = snapshot(
+            args.workspace, args.destination,
+            allow_existing_fk_violations=args.allow_existing_fk_violations,
+        )
         if args.action == "restore":
-            (args.destination / "backup.json").write_text(json.dumps({
+            manifest_path = args.destination / "backup.json"
+            baseline = json.loads(manifest_path.read_text()).get("foreign_key_violations")
+            manifest = {
                 "kind": "workspace", "sources": files,
-            }, indent=2) + "\n")
-    print(f"{args.action}: quick_check ok; {len(files)} source hashes verified")
+            }
+            if baseline is not None:
+                manifest["foreign_key_violations"] = baseline
+            manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+    message = f"{args.action}: quick_check ok; {len(files)} source hashes verified"
+    if args.allow_existing_fk_violations:
+        root = args.workspace if args.action == "verify" else args.destination
+        manifest_path = root / "backup.json"
+        manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+        message += f"; {len(manifest.get('foreign_key_violations', []))} baseline foreign key violations accepted"
+    print(message)
 
 
 if __name__ == "__main__":

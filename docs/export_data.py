@@ -19,6 +19,7 @@ import sys
 from datetime import datetime, timezone
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from scripts.workspace_backup import verify as verify_workspace
 from src.database import APPLICATION_ID, SCHEMA_VERSION
 from src.export import write_candidate_snapshot
 from src.workspace import database_path, workspace
@@ -1272,10 +1273,10 @@ def _load_from_db(db_path):
     return all_promises, total_db_promises, total_db_verdicts, total_db_evidence, test_runs, real_quarantined, pending_ids
 
 
-def export():
+def export(*, allow_existing_fk_violations=False):
     now_utc = datetime.now(timezone.utc)
 
-    validate_database(Path(DB_PATH))
+    validate_database(Path(DB_PATH), allow_existing_fk_violations=allow_existing_fk_violations)
     all_promises, total_db_promises, total_db_verdicts, total_db_evidence, test_runs, real_quarantined, pending_ids = _load_from_db(DB_PATH)
     quarantined_items = list(PLANTED_TEST_CASES)
     if not real_quarantined:
@@ -2086,12 +2087,17 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
         print(f"  Warning: consolidate_master_dataset failed: {exc}")
 
 
-def validate_database(path):
+def validate_database(path, *, allow_existing_fk_violations=False):
+    if allow_existing_fk_violations:
+        path = path.resolve(strict=True)
+        if path.name != "promises.db":
+            raise ValueError("Legacy FK opt-in requires a workspace database named promises.db")
+        verify_workspace(path.parent, allow_existing_fk_violations=True)
     uri = path.resolve(strict=True).as_uri() + "?mode=ro"
     with sqlite3.connect(uri, uri=True) as conn:
         if conn.execute("PRAGMA quick_check").fetchall() != [("ok",)]:
             raise ValueError("Database quick_check failed")
-        if conn.execute("PRAGMA foreign_key_check").fetchone():
+        if not allow_existing_fk_violations and conn.execute("PRAGMA foreign_key_check").fetchone():
             raise ValueError("Database foreign key check failed")
         application_id = conn.execute("PRAGMA application_id").fetchone()[0]
         if application_id == APPLICATION_ID:
@@ -2112,8 +2118,12 @@ def main():
     parser.add_argument("--db", "--database", type=Path, default=Path(DB_PATH))
     parser.add_argument("--sources", type=Path)
     parser.add_argument("--output-dir", type=Path, default=workspace() / "staging" / "exports")
+    parser.add_argument(
+        "--allow-existing-fk-violations", action="store_true",
+        help="Accept only the FK baseline recorded by workspace_backup in the database workspace",
+    )
     args = parser.parse_args()
-    kind = validate_database(args.db)
+    kind = validate_database(args.db, allow_existing_fk_violations=args.allow_existing_fk_violations)
     OUTPUT_DIR = args.output_dir.resolve()
     docs = Path(__file__).resolve().parent
     if OUTPUT_DIR == docs or docs in OUTPUT_DIR.parents:
@@ -2132,7 +2142,7 @@ def main():
         Path(OUT_JS).write_text("window.__DEMO_DATA__ = " + json.dumps(payload) + ";\n")
         print(f"Review-only export: {len(payload['promises'])} promises; {payload['tallies']}")
     else:
-        export()
+        export(allow_existing_fk_violations=args.allow_existing_fk_violations)
         for name in ("index.html", "app.js", "styles.css", "list.min.js"):
             source = docs / name
             if source.is_file():
