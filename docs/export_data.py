@@ -1265,7 +1265,7 @@ def _load_from_db(db_path):
         try:
             with previous_export.open(encoding="utf-8") as _pf:
                 _prev = json.load(_pf)
-            pending_ids = list(_prev.get("database_status", {}).get("pending_intake_ids", []))
+            pending_ids = sorted(set(_prev.get("database_status", {}).get("pending_intake_ids", [])) - _db_ids - _q_ids)
         except (OSError, ValueError):
             pass
 

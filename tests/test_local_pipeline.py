@@ -22,7 +22,7 @@ from src.sourcing.document_harvester import (
 from src.workspace import database_path, workspace
 from tests.offline_pipeline import reconcile, run
 from tests.test_pdf import small_pdf
-from tests.test_export import _make_history_fixture_db
+from tests.test_export import _load_exporter_module, _make_history_fixture_db
 
 
 def test_workspace_defaults_and_override(monkeypatch, tmp_path):
@@ -253,6 +253,29 @@ def test_backup_manifest_detects_missing_sources(tmp_path):
     (backup / "sources" / "P1" / Path(saved["path"]).name).unlink()
     with pytest.raises(ValueError, match="manifest mismatch"):
         verify(backup)
+
+
+def test_fallback_pending_ids_exclude_published_and_quarantined(tmp_path, monkeypatch):
+    exporter = _load_exporter_module()
+    previous = json.loads(Path(exporter.__file__).with_name("data.json").read_text())
+    pending = previous["database_status"]["pending_intake_ids"]
+    published_id, quarantined_id = pending[:2]
+    database = tmp_path / "legacy.db"
+    _make_history_fixture_db(database)
+    with sqlite3.connect(database) as conn:
+        conn.execute(
+            """INSERT INTO promises
+               SELECT ?, entity_id, promise_text, promised_date, due_date, source_url,
+                      source_file_path, source_hash, source_type, status
+               FROM promises WHERE promise_id = 'P06'""", (published_id,),
+        )
+        conn.execute("INSERT INTO quarantined VALUES (?, ?, ?, ?, NULL, NULL)",
+                     ("Q1", quarantined_id, "relevance_low", "2026-01-01T00:00:00Z"))
+    monkeypatch.chdir(tmp_path)
+    result = exporter._load_from_db(str(database))
+    assert published_id in {row["promise_id"] for row in result[0]}
+    assert quarantined_id in {row["promise_id"] for row in result[-2]}
+    assert result[-1] == sorted(set(pending) - {published_id, quarantined_id})
 
 
 def test_restored_workspace_can_be_updated_and_backed_up(tmp_path):
