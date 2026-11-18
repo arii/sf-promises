@@ -212,3 +212,22 @@ def test_backup_manifest_detects_missing_sources(tmp_path):
     (backup / "sources" / "P1" / Path(saved["path"]).name).unlink()
     with pytest.raises(ValueError, match="manifest mismatch"):
         verify(backup)
+
+
+def test_restored_workspace_can_be_updated_and_backed_up(tmp_path):
+    original, backup = tmp_path / "original", tmp_path / "backup"
+    restored, next_backup = tmp_path / "restored", tmp_path / "next-backup"
+    original.mkdir()
+    initialize_database(original / "promises.db")
+    archive_source(original / "sources", "P1", b"original evidence", ".txt")
+    original_files = snapshot(original, backup)
+    result = subprocess.run([
+        sys.executable, "-m", "scripts.workspace_backup", "restore",
+        "--workspace", str(backup), "--destination", str(restored),
+    ], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    archive_source(restored / "sources", "P2", b"new evidence", ".txt")
+    files = snapshot(restored, next_backup)
+    assert len(files) == len(original_files) + 1
+    assert verify(next_backup) == files
+    assert verify(backup) == original_files

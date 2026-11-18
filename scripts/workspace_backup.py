@@ -88,6 +88,8 @@ def main():
         if args.action == "restore" and not (args.workspace / "backup.json").is_file():
             parser.error("Restore requires a verified backup manifest")
         files = snapshot(args.workspace, args.destination)
+        if args.action == "restore":
+            (args.destination / "backup.json").unlink()
     print(f"{args.action}: quick_check ok; {len(files)} source hashes verified")
 
 
