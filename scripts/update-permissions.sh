@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Script to canonically configure permissions in Antigravity settings:
 # - Boomtick & Browser / Chrome DevTools MCP commands
-# - Common agent and developer CLI tools (git, gh, archil, pytest, python, venv, etc.)
+# - Common agent and developer CLI tools (git, gh, pytest, python, venv, etc.)
 # - Common CLI utility commands (echo, head, tail, stat, file, touch, sed, etc.)
 # Both exact command and wildcard argument forms 'command(<tool> *)' are registered
 # so that subcommands and flags never trigger repeated manual confirmation prompts.
@@ -31,7 +31,6 @@ CLI_TOOLS = [
     # Developer & agent execution tooling
     "git",
     "gh",
-    "archil",
     "docker",
     "docker-compose",
     "pnpm",

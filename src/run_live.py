@@ -41,7 +41,7 @@ from src.relevance import record_relevance
 from src.screening import screen_pending_origin
 from src.taxonomy import screen_taxonomy
 from src.lifecycle_rubric import decide_verdict
-from src.worker_leases import WorkerLeases
+from src.workspace import database_path
 
 URLS = {
     "ORIGIN": "https://sfenvironment.org/press/mayor-lee-announces-bold-new-target-50-percent-renewable-energy-2020",
@@ -57,7 +57,7 @@ def credentials():
         for line in path.read_text(encoding="utf-8").splitlines():
             match = re.match(
                 r"^\s*(?:export\s+)?"
-                r"(OPENROUTER_API_KEY|KEENABLE_API_KEY|NEBIUS_API_KEY|ARCHIL_API_KEY)\s*=\s*(.*)$",
+                r"(OPENROUTER_API_KEY|KEENABLE_API_KEY|NEBIUS_API_KEY)\s*=\s*(.*)$",
                 line,
             )
             if match:
@@ -65,7 +65,7 @@ def credentials():
                 if len(values) != 1 or match.group(1) in result:
                     raise ValueError("Invalid or duplicate credential in .env")
                 result[match.group(1)] = values[0]
-    for name in ("OPENROUTER_API_KEY", "KEENABLE_API_KEY", "NEBIUS_API_KEY", "ARCHIL_API_KEY"):
+    for name in ("OPENROUTER_API_KEY", "KEENABLE_API_KEY", "NEBIUS_API_KEY"):
         if os.environ.get(name):
             result[name] = os.environ[name]
     for name in ("KEENABLE_API_KEY",):
@@ -219,7 +219,7 @@ def durability_cycle(database, *, as_of=None, evaluator_fn=None, completion=None
     database = Path(database)
     if not database.exists():
         raise DurabilityCycleError(
-            f"{database} does not exist; if this is an Archil mount, mount it and retry"
+            f"{database} does not exist; restore a validated local workspace and retry"
         )
     try:
         conn = sqlite3.connect(database)
@@ -580,18 +580,16 @@ async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined
     if set(resumes) - set(seed_ids):
         raise ValueError("Resume IDs must refer to requested seeds")
     keys = credentials()
+    database.parent.mkdir(parents=True, exist_ok=True)
     if not database.exists():
         initialize_database(database)
     conn = sqlite3.connect(database)
-    worker_conn = sqlite3.connect(database.parent / "worker-leases.sqlite")
     try:
         if (conn.execute("PRAGMA application_id").fetchone()[0] != APPLICATION_ID
                 or conn.execute("PRAGMA user_version").fetchone()[0] != SCHEMA_VERSION):
             raise ValueError("Not a supported database")
         conn.execute("PRAGMA foreign_keys=ON")
         conn.execute("PRAGMA journal_mode=WAL")
-        worker_ledger = WorkerLeases(worker_conn)
-        run_id = uuid.uuid4().hex
         results = []
         async with httpx.AsyncClient(timeout=120) as client:
             complete = build_completion(
@@ -601,8 +599,7 @@ async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined
             async def audit(lead, research, *, search_exhausted):
                 try:
                     return await audit_in_sandbox(
-                        conn, api_key=keys.get("ARCHIL_API_KEY"), ledger=worker_ledger,
-                        run_id=run_id, job_id=uuid.uuid4().hex,
+                        conn,
                         root=database.parent / "sources",
                         staging_root=database.parent / "staging", lead=lead,
                         research=research, complete=complete,
@@ -666,14 +663,13 @@ async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined
                 print(json.dumps(result, ensure_ascii=False), flush=True)
         return results
     finally:
-        worker_conn.close()
         conn.close()
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seed-id")
-    parser.add_argument("--db", required=True, type=Path)
+    parser.add_argument("--db", default=database_path(), type=Path)
     parser.add_argument("--discover-only", action="store_true")
     parser.add_argument("--extract-pending", action="store_true")
     parser.add_argument("--run-id", help="Resume a discovery run using its thread ID")

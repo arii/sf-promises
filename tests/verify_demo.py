@@ -4,7 +4,7 @@ Run: python3 tests/verify_demo.py
 Prints PASS/FAIL per item and exits nonzero if any item fails. Never writes to the DB.
 
 The demo site lives in docs/ (served from GitHub Pages). promises.db and the
-archived source files live on the Archil workspace; when they are not mounted,
+archived source files live in the local workspace; when they are unavailable,
 DB-dependent checks are reported as skipped instead of crashing the run.
 """
 import csv
@@ -17,7 +17,10 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEMO = os.path.join(ROOT, "docs")
-DB = os.environ.get("PROMISES_DB", "/mnt/archil/workspace/promises.db")
+sys.path.insert(0, ROOT)
+from src.workspace import database_path
+
+DB = os.environ.get("PROMISES_DB", str(database_path()))
 results = []
 
 
@@ -35,7 +38,7 @@ def main():
     if os.path.exists(DB):
         con = sqlite3.connect(f"file:{DB}?mode=ro", uri=True, timeout=30)
     else:
-        check("promises.db mounted for DB-dependent checks", True,
+        check("promises.db available for DB-dependent checks", True,
               "skipped: DB not available; file-based checks still ran")
     q = lambda s, a=(): con.execute(s, a).fetchall()
     code = {n: read(n) for n in ("app.js", "index.html", "export_data.py", "styles.css")}

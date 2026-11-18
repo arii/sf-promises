@@ -2,7 +2,7 @@
 SF Promises Playbook Verifier: Parallel Sandbox Verification & Evidence Scoring Engine.
 
 Implements the multi-tier evidence rubric, contradiction detection, confidence scoring,
-and parallel sandbox execution (Archil disposable forks or isolated process workers).
+and bounded parallel local execution (not a VM security boundary).
 """
 
 import asyncio
@@ -286,7 +286,7 @@ async def verify_one_candidate_sandbox(
 
         # Execute Playbook synthesis inside the sandbox worker
         result = synthesize_verdict(pid, text, due_date, evidence_items)
-        # Bounded sleep to simulate isolated worker process/microVM step
+        # Bounded sleep to simulate a local worker step
         await asyncio.sleep(0.02)
         return result
 

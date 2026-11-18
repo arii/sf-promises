@@ -385,7 +385,7 @@ new_html = f"""<!DOCTYPE html>
           <div class="step-card">
             <div class="step-icon" aria-hidden="true">⚖️</div>
             <div class="step-title">Argue both sides</div>
-            <p class="step-desc">Two model advocates debate kept vs. broken outcomes from isolated sandboxes.</p>
+            <p class="step-desc">Two model advocates assess kept vs. broken outcomes from separate source bundles.</p>
           </div>
           <div class="step-card">
             <div class="step-icon" aria-hidden="true">🔒</div>
@@ -397,9 +397,9 @@ new_html = f"""<!DOCTYPE html>
         <!-- 3 Architecture Blocks -->
         <div class="tech-blocks-row">
           <div class="tech-block">
-            <div class="tech-kicker">Persistent sandboxes</div>
-            <h3>Archil sandboxes</h3>
-            <p>Isolated microVM workers run checks without direct access to production databases.</p>
+            <div class="tech-kicker">Bounded local checks</div>
+            <h3>Local worker processes</h3>
+            <p>Bounded, credential-free worker processes check public inputs. These are not VM security boundaries.</p>
           </div>
           <div class="tech-block">
             <div class="tech-kicker">Temporal retrieval</div>
@@ -419,7 +419,7 @@ new_html = f"""<!DOCTYPE html>
             <div>
               <h4>Built With</h4>
               <ul class="plain-credits-list">
-                <li><strong>Archil Cloud Disks:</strong> Isolated microVM forks and persistent verification filesystem (<span class="font-mono">/mnt/archil</span>).</li>
+                <li><strong>Local SQLite workspace:</strong> Content-addressed source files, staged audits, and tested local backups.</li>
                 <li><strong>Keenable API:</strong> Strict temporal retrieval across allowlisted contemporaneous SF domains.</li>
                 <li><strong>SF Legistar &amp; DataSF:</strong> Official Board of Supervisors agendas, resolutions, and 311 operational signals.</li>
                 <li><strong>Granicus Transcripts:</strong> Verbatim City Hall hearing records.</li>

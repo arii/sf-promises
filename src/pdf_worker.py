@@ -1,4 +1,4 @@
-"""Extract bounded PDF text inside an isolated disposable worker.
+"""Extract bounded PDF text in a disposable local process.
 
 Three modes (spec OD-22 D2):
 
