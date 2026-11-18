@@ -42,10 +42,8 @@ not proof of current results.
 ### Optional agent skills
 
 The SF Promises-specific `archil-vm-swarm` and `keenable-temporal-audit`
-skills ship with this repo. Ariel's personal skills live in
-[arii/skills](https://github.com/arii/skills). If you have access, follow that
-repo's install guide or add `arii/skills` as a **personal** Devin plugin.
-The private repo is not required to develop, test, or deploy SF Promises.
+skills ship with this repo. No external skills are required to develop, test,
+or deploy SF Promises.
 
 Install generic skills only when needed, directly from their upstream sources.
 For example, `npx skills add microsoft/playwright-cli --skill playwright-cli -g`
