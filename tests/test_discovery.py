@@ -6,11 +6,47 @@ from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
 
-from src.discovery import discover_timeline, fetch_and_archive, pool_outcome_sources, search_window
+from src.discovery import (
+    discover_and_archive, discover_timeline, fetch_and_archive, pool_outcome_sources, search_window,
+)
 from src.sources import load_archived_text
 
 
 class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
+    async def test_retains_original_news_lead_and_distinguishes_origin_rejections(self):
+        original = "https://missionlocal.org/pledge"
+        denied = "https://en.wikipedia.org/wiki/project"
+        incomplete = [f"https://sf.gov/incomplete-{i}" for i in range(3)]
+        another = "https://sf.gov/announcement"
+
+        class Client:
+            def __init__(self):
+                self.fetched = []
+
+            async def search(self, query, **kwargs):
+                urls = [denied, *incomplete, another, original] if "pledged" in query else []
+                return SimpleNamespace(results=[SimpleNamespace(url=url) for url in urls])
+
+            async def fetch(self, url):
+                self.fetched.append(url)
+                return SimpleNamespace(url=url, content="Archived statement",
+                                       published_at="2024-01-01",
+                                       raw={"truncated": url in incomplete})
+
+        client = Client()
+        with tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                client, {"promise_id": "P01", "promised_date": "2024-01-01",
+                         "source_url": original, "entity": "Library",
+                         "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+            origin = result["phases"]["origin"]
+            self.assertEqual([item["url"] for item in origin["sources"]], [original, another])
+            self.assertEqual(client.fetched, [original, *incomplete, another])
+            self.assertEqual([item["url"] for item in origin["blocked"]], incomplete)
+            self.assertEqual(origin["denied"], [{"url": denied, "reason": "source_url_not_allowlisted"}])
+
     def test_pool_dated_outcome_sources_from_both_searches(self):
         source = {"url": "https://sf.gov/report", "sha256": "abc",
                   "published_at": "2022-01-01"}

@@ -139,14 +139,20 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
     saved = {}
     phases = {}
     for phase, entries in results.items():
+        urls = [getattr(entry, "url", None) for entry in entries]
+        if phase == "origin":
+            urls.insert(0, lead.get("source_url"))
         sources = []
         blocked = []
+        denied = []
         seen = set()
-        for entry in entries:
-            url = getattr(entry, "url", None)
-            if not isinstance(url, str) or url in seen or not is_allowlisted_url(url):
+        for url in urls:
+            if not isinstance(url, str) or not url or url in seen:
                 continue
             seen.add(url)
+            if not is_allowlisted_url(url):
+                denied.append({"url": url, "reason": "source_url_not_allowlisted"})
+                continue
             if url not in saved:
                 try:
                     saved[url] = await fetch_and_archive(client, url, root, promise_id, capture=capture)
@@ -154,10 +160,12 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
                     saved[url] = str(exc)
             if isinstance(saved[url], dict):
                 sources.append(saved[url])
+                if len(sources) >= 3:
+                    break
             else:
                 blocked.append({"url": url, "reason": saved[url]})
-            if len(seen) >= 3:
-                break
-        phases[phase] = {"leads_found": len(entries), "sources": sources, "blocked": blocked}
+        phases[phase] = {
+            "leads_found": len(entries), "sources": sources, "blocked": blocked, "denied": denied,
+        }
     return {"promise_id": promise_id, "phases": phases,
             "outcome_sources": pool_outcome_sources(phases, promised=promised, as_of=as_of)}
