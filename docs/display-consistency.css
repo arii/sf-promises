@@ -42,3 +42,5 @@
 }
 /* The full provenance digest must stay inside the narrow drawer. */
 .drawer-hash { min-width: 0; max-width: 100%; box-sizing: border-box; overflow-wrap: anywhere; }
+/* View switching must beat the mobile table's forced display mode. */
+#promises-table-container.hidden { display: none !important; }
