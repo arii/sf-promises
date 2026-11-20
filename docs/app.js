@@ -925,8 +925,9 @@
       return;
     }
 
-    const W = 760;
-    const H = 250;
+    const compact = window.matchMedia('(max-width: 600px)').matches;
+    const W = compact ? 360 : 760;
+    const H = compact ? 280 : 250;
     const pad = { top: 14, right: 12, bottom: 26, left: 34 };
     const innerW = W - pad.left - pad.right;
     const innerH = H - pad.top - pad.bottom;
@@ -958,11 +959,17 @@
     }
 
     let axisSvg = '';
+    let previousLabelX = -Infinity;
+    const lastLabelX = pad.left + (buckets.length - 0.5) * colW;
+    const labelGap = compact ? 40 : 30;
     buckets.forEach((b, i) => {
-      const showLabel = i === 0 || i === buckets.length - 1 || Number(b.year) % 5 === 0;
-      if (!showLabel) return;
+      const endpoint = i === 0 || i === buckets.length - 1;
       const x = pad.left + i * colW + colW / 2;
-      axisSvg += `<text x="${x.toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="9" fill="var(--muted)" font-family="monospace">${b.year}</text>`;
+      const showLabel = endpoint || (Number(b.year) % 5 === 0 &&
+        x - previousLabelX >= labelGap && lastLabelX - x >= labelGap);
+      if (!showLabel) return;
+      previousLabelX = x;
+      axisSvg += `<text x="${x.toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="${compact ? 11 : 9}" fill="var(--muted)" font-family="monospace">${b.year}</text>`;
     });
 
     wrap.innerHTML = `
@@ -1920,8 +1927,9 @@
     if (idBadge) idBadge.textContent = `#${rank}`;
 
     const isCorporate = /visa|pg&e|pacific gas|comcast|waymo|zoox|at&t/i.test(p.entity || '') || /corporate/i.test(p.role || '');
-    const scopeRaw = p.geographic_scope ? p.geographic_scope.replace('_', ' ') : 'citywide';
-    const geoPinLabel = p.is_centroid === false ? `Exact Address (${scopeRaw})` : `Display Centroid (${scopeRaw})`;
+    const scopeRaw = p.geographic_scope ? p.geographic_scope.replace(/_/g, ' ') : 'citywide';
+    const geoType = p.is_centroid === false ? 'Exact address' : 'Display centroid';
+    const geoPinLabel = scopeRaw.toLowerCase() === geoType.toLowerCase() ? geoType : `${geoType} (${scopeRaw})`;
     if (subtitleEl) {
       if (isCorporate) {
         subtitleEl.textContent = `${p.entity} · Corporate Entity · ${geoPinLabel}`;

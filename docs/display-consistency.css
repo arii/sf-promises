@@ -4,3 +4,41 @@
 .bar-segment.seg-undecided, .legend-swatch.seg-undecided { background: var(--verdict-undecided); }
 .bar-segment.seg-reversed, .legend-swatch.seg-reversed { background: #F97316; }
 #viz-verdict-bars .viz-bar-label { white-space: normal; overflow: visible; line-height: 1.3; }
+
+@media (max-width: 767px) {
+  .data-table tbody tr.promise-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: "speaker" "verdict" "quote" "timeline" !important;
+  }
+  .data-table tbody tr.promise-row td.table-verdict-cell {
+    justify-self: start;
+    max-width: 100%;
+  }
+  .data-table tbody tr.promise-row .verdict-chip {
+    white-space: normal;
+    max-width: 100%;
+  }
+  .tab-buttons-group { flex-wrap: wrap; width: 100%; }
+  .tab-nav-btn { flex: 1 1 100%; text-align: left; }
+}
+@media (min-width: 768px) {
+  #promises-table-container .data-table { min-width: 0; }
+  #promises-table-container .data-table th:nth-child(2),
+  #promises-table-container .data-table td:nth-child(2) { width: 36% !important; }
+  #promises-table-container .data-table th:nth-child(3),
+  #promises-table-container .data-table td:nth-child(3) { width: 22% !important; }
+  #promises-table-container .data-table th:nth-child(4),
+  #promises-table-container .data-table td:nth-child(4) { width: 20% !important; }
+  #promises-table-container .timeline-row { flex-wrap: wrap; white-space: normal; }
+  #promises-table-container .timeline-val { white-space: normal; overflow-wrap: anywhere; }
+}
+
+#promises-table-container .verdict-chip {
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+/* The full provenance digest must stay inside the narrow drawer. */
+.drawer-hash { min-width: 0; max-width: 100%; box-sizing: border-box; overflow-wrap: anywhere; }
