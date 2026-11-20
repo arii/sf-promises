@@ -298,11 +298,11 @@
           </div>
 
           <div class="segmented-verdict-control" id="segmented-verdict-control" role="group" aria-label="Filter by verdict">
-            <button type="button" class="btn-seg-verdict active" data-verdict="all">All (54)</button>
-            <button type="button" class="btn-seg-verdict" data-verdict="kept">Kept (25)</button>
-            <button type="button" class="btn-seg-verdict" data-verdict="in_progress">In progress (10)</button>
-            <button type="button" class="btn-seg-verdict" data-verdict="broken">Broken (17)</button>
-            <button type="button" class="btn-seg-verdict" data-verdict="undecided">Undecided (2)</button>
+            <button type="button" class="btn-seg-verdict active" data-verdict="all" aria-pressed="true">All (54)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="kept" aria-pressed="false">Kept (25)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="in_progress" aria-pressed="false">In progress (10)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="broken" aria-pressed="false">Broken (17)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="undecided" aria-pressed="false">Undecided (2)</button>
           </div>
 
           <button type="button" class="btn-more-filters" id="btn-more-filters" aria-haspopup="dialog" aria-expanded="false">
@@ -400,7 +400,7 @@
           <span class="status-sep">&middot;</span>
           <span id="table-sort-text">Sorted by most significant</span>
           <span class="status-sep">&middot;</span>
-          <button type="button" class="btn-clear-filters" id="btn-clear-filters">Clear filters</button>
+          <button type="button" class="btn-clear-filters" id="btn-clear-filters" disabled>Clear filters</button>
         </div>
 
         <!-- Active Chips Tray -->

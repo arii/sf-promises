@@ -1250,6 +1250,26 @@
     return list;
   }
 
+  // Segmented verdict control: keep the pressed state programmatic, not
+  // color-only (issue #50), and keep the status-line Clear filters button
+  // live only when there is a non-default filter or sort to clear.
+  function syncVerdictControl() {
+    document.querySelectorAll('.btn-seg-verdict').forEach(b => {
+      b.setAttribute('aria-pressed', b.classList.contains('active') ? 'true' : 'false');
+    });
+    const btnClear = document.getElementById('btn-clear-filters');
+    if (btnClear) {
+      btnClear.disabled = filterVerdict === 'all'
+        && filterCategory === 'all'
+        && filterEntity === 'all'
+        && filterTier === 'all'
+        && filterPillar === 'all'
+        && filterAuditFlag === 'all'
+        && filterSort === 'rank'
+        && !searchTerm.trim();
+    }
+  }
+
   function renderExplore() {
     const list = filterAndSortPromises();
     const totalCount = (demoData && demoData.promises && demoData.promises.length) || 54;
@@ -1338,6 +1358,8 @@
     } else if (activeViewMode === 'audit') {
       renderQualityAuditView();
     }
+
+    syncVerdictControl();
   }
 
   function renderMapAndDistrictsView(list) {
