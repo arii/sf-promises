@@ -114,3 +114,32 @@ the database and saved bytes rather than rewriting historical records.
 
 Retain the last known-good Pages files separately. To roll back publication,
 restore that reviewed export, not an unvalidated database-generated replacement.
+
+## Manual utility scripts
+
+These `scripts/` entries are referenced by no CI job, doc, or other code; each
+is a manual entry point retained for the purpose below. Run from the
+repository root.
+
+- `scripts/autonomous_investigator.py` — manual discovery/investigation
+  utility. Queries Keenable (network access and `KEENABLE_API_KEY` required,
+  billed usage) and extracts/verifies candidates inside a bounded local
+  process. Try a bounded dry run first:
+  `python3 -m scripts.autonomous_investigator --entity "SFMTA" --dry-run`.
+- `scripts/update-permissions.sh` — local agent-environment helper that merges
+  agent-tool permission rules into the Antigravity CLI settings
+  (`$SETTINGS_FILE`/`$CONFIG_FILE`, defaulting to `~/.gemini/...`). Modifies
+  no repository files; run only when configuring a local agent environment.
+- `scripts/rebuild_index_html.py` — one-shot migration (2026-11-12) that
+  rewrote `docs/index.html` into the 7-section page flow. Historical: the
+  markup markers it extracts no longer exist in `docs/index.html`, so running
+  it against the current page fails its own assertions. Retained for
+  provenance of that redesign; do not run it.
+- `scripts/fill_investigations.py` — one-shot backfill (2026-11-12) that
+  created missing `investigations/<promise_id>.md` records from
+  `docs/data.json`; skips records that already exist. Retained for provenance
+  of the investigation records.
+- `scripts/build_outside_the_box_promises.py` — one-shot generator
+  (2026-11-12) of the tracked `seeds/outside_the_box_candidates.json`
+  (hand-curated outside-the-box promise set with media fields). Retained as
+  that seed file's generator of record.
