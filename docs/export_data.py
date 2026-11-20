@@ -1697,6 +1697,9 @@ def clean_quote_text(text):
     t = re.sub(r"\*([^*]+)\*", r"\1", t)
     t = re.sub(r"`([^`]+)`", r"\1", t)
     t = re.sub(r'\s+', ' ', t).strip()
+    while ((t.startswith("“") and t.endswith("”"))
+           or (t.startswith('"') and t.endswith('"'))):
+        t = t[1:-1].strip()
     return t
 
 
@@ -1769,6 +1772,11 @@ def generate_promise_row_html(p, idx=0):
     pid = html_esc(p.get("promise_id", ""))
     entity = html_esc(p.get("entity", ""))
     role = html_esc(p.get("role", ""))
+    role_markup = ""
+    if role and str(p.get("role", "")).strip().casefold() != str(p.get("entity", "")).strip().casefold():
+        role_markup = f'''<div class="entity-sub-row font-mono">
+                    <span class="table-role-tag">{role}</span>
+                  </div>'''
     neighborhood = html_esc(p.get("neighborhood", "Citywide San Francisco"))
     category = html_esc(p.get("category", "Civic Governance"))
     
@@ -1809,10 +1817,7 @@ def generate_promise_row_html(p, idx=0):
                   <div class="entity-headline-row">
                     <span class="table-entity-name">{entity}</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag">{role}</span>
-                  </div>
-                  <div class="entity-geo-tag font-mono">{neighborhood}</div>
+{('                  ' + role_markup + chr(10)) if role_markup else ''}                  <div class="entity-geo-tag font-mono">{neighborhood}</div>
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
@@ -2020,6 +2025,29 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     html = re.sub(r'href="styles\.css(?:\?[^"]*)?"', f'href="styles.css?v={commit_sha}"', html)
     html = re.sub(r'src="data\.js(?:\?[^"]*)?"', f'src="data.js?v={commit_sha}"', html)
     html = re.sub(r'src="app\.js(?:\?[^"]*)?"', f'src="app.js?v={commit_sha}"', html)
+
+    # Keep every visible count and filter on the same latest-verdict snapshot.
+    summary = [
+        ("kept", "kept", "Kept"),
+        ("in_progress", "progress", "In progress"),
+        ("broken", "broken", "Broken"),
+        ("undecided", "undecided", "Undecided"),
+        ("kept_then_reversed", "reversed", "Later closed / reversed"),
+    ]
+    total = len(promises)
+    for verdict, suffix, label in summary:
+        count = verdict_counts.get(verdict, 0)
+        percent = count / total * 100 if total else 0
+        segment = (f'<button type="button" class="bar-segment seg-{suffix}" '
+                   f'id="bar-seg-{suffix}" data-verdict="{verdict}" '
+                   f'style="width: {percent:.1f}%;" title="Filter {label} ({count})" '
+                   f'aria-label="Filter {label} ({count})"></button>')
+        html = re.sub(r'<button[^>]+id="bar-seg-' + suffix + r'"[^>]*></button>', segment, html)
+        html = re.sub(r'(<span id="legend-text-' + suffix + r'">)[^<]*(</span>)',
+                      lambda m: f'{m[1]}{count} {label} ({percent:.0f}%){m[2]}', html)
+        html = re.sub(r'(<button[^>]+class="btn-seg-verdict[^"\n]*"[^>]+data-verdict="'
+                      + verdict + r'"[^>]*>)[^<]*(</button>)',
+                      lambda m: f'{m[1]}{label} ({count}){m[2]}', html)
 
     # Update tally numbers in hero & bar
     html = re.sub(r'(<strong id="tally-total">)[^<]*(</strong>)', rf'\g<1>{len(promises)}\g<2>', html)
