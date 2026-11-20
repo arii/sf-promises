@@ -10,11 +10,11 @@ The original submission code created during the hackathon is preserved in the [h
 
 SF Promises tracks public commitments across all of San Francisco, not just City Hall, but sports teams, concerts, robotaxis, tech companies, and neighborhood developments.
 
-It starts with a promise made in public, finds the official source, and re-checks the promise against later official evidence. The verdict is kept, in progress, broken, stalled, or undecided. Every promise links to its source, so a reader can verify it.
+It starts with a promise made in public, finds the official source, and re-checks the promise against later official evidence. The verdict is kept, in progress, broken, stalled, or undecided; a kept promise that is later reopened is marked later closed / reversed. Every promise links to its source, so a reader can verify it.
 
 **How it works:** fetch the official source and save it, extract the promise text from saved files only, check that the promise is real, measurable, and about San Francisco, then let one advocate argue the promise was kept and another argue it was broken, from separate sources. A code-only check runs the rules and decides, with deadlines checked first. No verdict comes from a single model call.
 
-**Verified scope:** 54 tracked promises (25 kept, 10 in progress, 17 broken, 2 undecided) across City Hall, SFO Airport, regional transit, sports, and tech. 13 quarantined items caught by deterministic checks and kept out of public tables. 100% agreement against the 25-promise hand-labeled gold set, and 0.0% false-accept rate across 50 automated adversarial mutations.
+**Verified scope (as of November 20, 2026):** 54 tracked promises (24 kept, 10 in progress, 17 broken, 2 undecided, 1 later closed / reversed) across City Hall, SFO Airport, regional transit, sports, and tech. 13 quarantined items caught by deterministic checks and kept out of public tables. 100% agreement against the 25-promise hand-labeled gold set, and 0.0% false-accept rate across 50 automated adversarial mutations.
 
 **Demo:** the 24/7 crisis center at 822 Geary Street, promised by Mayor Daniel Lurie, opened April 28, 2025, verdict kept. And 1,500 shelter beds in six months, verdict broken.
 
@@ -153,7 +153,7 @@ Run the Python tests from the repository root with `python3 -m pytest`. To
 regenerate unverified snapshot leads without overwriting an existing file:
 
 ```bash
-python3 -m src.v2_seeds docs/data.json seeds/leads-review.json
+python3 -m src.seeds docs/data.json seeds/leads-review.json
 ```
 
 The resulting leads are not authoritative records or saved evidence. Live extraction needs a working model lane and discovery credentials, not an Archil template.
@@ -161,7 +161,7 @@ The resulting leads are not authoritative records or saved evidence. Live extrac
 To create a new, separate v2 database (the parent directory must exist):
 
 ```bash
-python3 -m src.v2_database /path/to/new-v2.sqlite
+python3 -m src.database /path/to/new-v2.sqlite
 ```
 
 The command refuses to overwrite an existing file. It does not migrate older
@@ -171,7 +171,7 @@ database with a v2 application ID and schema version.
 To load a saved extraction response and its archived fetch metadata:
 
 ```bash
-python3 -m src.v2_load --database /path/to/new-v2.sqlite --sources /path/to/sources \
+python3 -m src.load --database /path/to/new-v2.sqlite --sources /path/to/sources \
   --promise-id P01 --slug example --metadata /path/to/metadata.json \
   --metadata-sha256 HASH --response /path/to/extraction.json
 ```
@@ -183,7 +183,7 @@ saved source and metadata; it never creates a missing database.
 For an existing v2 database and source archive, write an export file:
 
 ```bash
-python3 -m src.v2_export --database /path/to/v2.sqlite --sources /path/to/sources --output docs/data.json
+python3 -m src.export --database /path/to/v2.sqlite --sources /path/to/sources --output docs/data.json
 ```
 
 Open `docs/index.html` to inspect its tallies, filters, and pipeline visualization.
