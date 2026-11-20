@@ -5268,6 +5268,51 @@ a:hover {
   flex-shrink: 0;
 }
 
+.story-card-media {
+  margin: 0 0 12px;
+}
+
+.btn-story-media {
+  display: block;
+  width: 100%;
+  min-height: 38px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-story-media:hover {
+  background: var(--surface-alt);
+  border-color: var(--blue);
+  color: var(--ink);
+}
+
+.btn-story-media:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.story-card-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.story-card-media-caption {
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
 .story-entity {
   font-size: 0.82rem;
   font-weight: 700;
