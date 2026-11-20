@@ -1585,7 +1585,7 @@
           </div>
           <div class="entity-stacked-bar" aria-label="Verdict breakdown">
             ${g.kept > 0 ? `<span style="width:${keptPct}%;background:#10B981;" title="${g.kept} Kept"></span>` : ''}
-            ${g.inProgress > 0 ? `<span style="width:${progPct}%;background:#F59E0B;" title="${g.inProgress} In Progress"></span>` : ''}
+            ${g.inProgress > 0 ? `<span style="width:${progPct}%;background:var(--verdict-progress);" title="${g.inProgress} In Progress"></span>` : ''}
             ${g.broken > 0 ? `<span style="width:${brokPct}%;background:#EF4444;" title="${g.broken} Broken"></span>` : ''}
             ${g.undecided > 0 ? `<span style="width:100%;background:#64748B;" title="${g.undecided} Undecided"></span>` : ''}
           </div>

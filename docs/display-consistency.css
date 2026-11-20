@@ -44,3 +44,6 @@
 .drawer-hash { min-width: 0; max-width: 100%; box-sizing: border-box; overflow-wrap: anywhere; }
 /* View switching must beat the mobile table's forced display mode. */
 #promises-table-container.hidden { display: none !important; }
+
+/* Match the static map legend to progress markers and charts. */
+.pin-dot.in_progress { background: var(--verdict-progress); }
