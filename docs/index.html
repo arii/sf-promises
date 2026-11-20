@@ -18,7 +18,8 @@
   <meta name="twitter:description" content="A sourced record of 54 San Francisco public commitments, each checked against primary sources and marked kept, in progress, broken or undecided.">
   <meta name="twitter:image" content="https://arii.github.io/assets/research/sf-promises/verdict-board.webp">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=d5229e9e">
+  <link rel="stylesheet" href="styles.css?v=ui-consistency">
+  <link rel="stylesheet" href="display-consistency.css?v=ui-consistency">
 </head>
 <body>
   <div class="shell">
@@ -93,16 +94,18 @@
           <span class="bar-header-count" id="outcome-dist-verified">54 VERIFIED</span>
         </div>
         <div class="proportional-stacked-bar interactive-bar" id="hero-stacked-bar" role="group" aria-label="Outcome breakdown: tap a segment to filter promises">
-          <button type="button" class="bar-segment seg-kept" id="bar-seg-kept" data-verdict="kept" style="width: 46.3%;" title="Filter Kept (25)" aria-label="Filter Kept (25)"></button>
-          <button type="button" class="bar-segment seg-progress" id="bar-seg-progress" data-verdict="in_progress" style="width: 18.5%;" title="Filter In Progress (10)" aria-label="Filter In Progress (10)"></button>
+          <button type="button" class="bar-segment seg-kept" id="bar-seg-kept" data-verdict="kept" style="width: 44.4%;" title="Filter Kept (24)" aria-label="Filter Kept (24)"></button>
+          <button type="button" class="bar-segment seg-progress" id="bar-seg-progress" data-verdict="in_progress" style="width: 18.5%;" title="Filter In progress (10)" aria-label="Filter In progress (10)"></button>
           <button type="button" class="bar-segment seg-broken" id="bar-seg-broken" data-verdict="broken" style="width: 31.5%;" title="Filter Broken (17)" aria-label="Filter Broken (17)"></button>
           <button type="button" class="bar-segment seg-undecided" id="bar-seg-undecided" data-verdict="undecided" style="width: 3.7%;" title="Filter Undecided (2)" aria-label="Filter Undecided (2)"></button>
+          <button type="button" class="bar-segment seg-reversed" id="bar-seg-reversed" data-verdict="kept_then_reversed" style="width: 1.9%;" title="Filter Later closed / reversed (1)" aria-label="Filter Later closed / reversed (1)"></button>
         </div>
         <div class="stacked-legend-grid">
-          <button type="button" class="legend-btn" data-verdict="kept"><span class="legend-swatch seg-kept"></span> <span id="legend-text-kept">25 Kept (46%)</span></button>
-          <button type="button" class="legend-btn" data-verdict="in_progress"><span class="legend-swatch seg-progress"></span> <span id="legend-text-progress">10 In Progress (19%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="kept"><span class="legend-swatch seg-kept"></span> <span id="legend-text-kept">24 Kept (44%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="in_progress"><span class="legend-swatch seg-progress"></span> <span id="legend-text-progress">10 In progress (19%)</span></button>
           <button type="button" class="legend-btn" data-verdict="broken"><span class="legend-swatch seg-broken"></span> <span id="legend-text-broken">17 Broken (31%)</span></button>
           <button type="button" class="legend-btn" data-verdict="undecided"><span class="legend-swatch seg-undecided"></span> <span id="legend-text-undecided">2 Undecided (4%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="kept_then_reversed"><span class="legend-swatch seg-reversed"></span> <span id="legend-text-reversed">1 Later closed / reversed (2%)</span></button>
         </div>
         <div class="tally-hero-line font-mono" id="tally-hero-line" style="display: none;">
           <strong id="tally-total">54</strong>
@@ -113,7 +116,7 @@
         </div>
       </section>
 
-      
+
 
       <!-- SECTION 2: FEATURED STORIES -->
       <section class="stories-section" id="stories" aria-label="Featured Stories">
@@ -170,7 +173,7 @@
               <span class="verdict-chip broken">BROKEN</span>
             </div>
             <h3 class="story-title">1,500 Shelter Beds in First 6 Months</h3>
-            <p class="story-promise-quote font-serif">&ldquo;“Fifteen hundred, very quickly… I’ve given myself six months. It shouldn’t take us that long.”&rdquo;</p>
+            <p class="story-promise-quote font-serif">&ldquo;Fifteen hundred, very quickly… I’ve given myself six months. It shouldn’t take us that long.&rdquo;</p>
             <div class="story-dates-row font-mono">Said 2024-11-05 &middot; Due 2025-07-08</div>
             <div class="story-outcome-box">
               <div class="story-outcome-kicker font-mono">WHAT HAPPENED</div>
@@ -299,10 +302,11 @@
 
           <div class="segmented-verdict-control" id="segmented-verdict-control" role="group" aria-label="Filter by verdict">
             <button type="button" class="btn-seg-verdict active" data-verdict="all" aria-pressed="true">All (54)</button>
-            <button type="button" class="btn-seg-verdict" data-verdict="kept" aria-pressed="false">Kept (25)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="kept" aria-pressed="false">Kept (24)</button>
             <button type="button" class="btn-seg-verdict" data-verdict="in_progress" aria-pressed="false">In progress (10)</button>
             <button type="button" class="btn-seg-verdict" data-verdict="broken" aria-pressed="false">Broken (17)</button>
             <button type="button" class="btn-seg-verdict" data-verdict="undecided" aria-pressed="false">Undecided (2)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="kept_then_reversed" aria-pressed="false">Later closed / reversed (1)</button>
           </div>
 
           <button type="button" class="btn-more-filters" id="btn-more-filters" aria-haspopup="dialog" aria-expanded="false">
@@ -476,7 +480,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row" id="promise-P05" data-promise-id="P05" tabindex="0" role="button" aria-label="Inspect #02 Daniel Lurie: “Fifteen hundred, very quickly… I’ve given myself six months. It shouldn’t take us that long.”">
+              <tr class="promise-row" id="promise-P05" data-promise-id="P05" tabindex="0" role="button" aria-label="Inspect #02 Daniel Lurie: Fifteen hundred, very quickly… I’ve given myself six months. It shouldn’t take us that long.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Daniel Lurie</span>
@@ -488,7 +492,7 @@
                 </td>
                 <td class="table-quote-cell">
                   <div class="table-promise-block">
-                    <blockquote class="table-quote-text font-serif">&ldquo;“Fifteen hundred, very quickly… I’ve given myself six months. It shouldn’t take us that long.”&rdquo;</blockquote>
+                    <blockquote class="table-quote-text font-serif">&ldquo;Fifteen hundred, very quickly… I’ve given myself six months. It shouldn’t take us that long.&rdquo;</blockquote>
                   </div>
                   <div class="table-outcome-block">
                     <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
@@ -510,9 +514,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco International Airport</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag">San Francisco International Airport</span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">SFO (Airfield &amp; Runways)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -539,9 +541,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco International Airport</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag">San Francisco International Airport</span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">SFO (Harvey Milk Terminal 1)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -597,9 +597,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Golden State Valkyries</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Mission Bay (Chase Center)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -655,9 +653,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Whole Foods Market</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Mid-Market (8th &amp; Market Flagship)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -800,9 +796,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Zoox</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">SoMa &amp; Financial District (Zoox Autonomous)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -829,9 +823,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Waymo</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">San Francisco Driverless Testing Zones</div>
                 </td>
                 <td class="table-quote-cell">
@@ -858,9 +850,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Tutor Perini Corporation</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Central Subway (SoMa to Chinatown)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -887,9 +877,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Giants</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Mission Rock &amp; South Beach (Oracle Park)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -945,9 +933,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">City and County of San Francisco</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Citywide Streets (Vision Zero)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1061,9 +1047,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Board of Supervisors</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Juvenile Hall (Twin Peaks)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1119,9 +1103,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Dean Preston</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Citywide Vacant Homes</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1148,9 +1130,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Ed Lee</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Affordable Housing Trust Fund</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1264,9 +1244,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">CleanPowerSF</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">CleanPowerSF Renewable Grid</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1322,9 +1300,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Public Utilities Commission (SFPUC)</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Regional / Northern California (SFPUC Water System)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1351,9 +1327,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Golden State Warriors</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Mission Bay (Chase Center)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1380,9 +1354,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Treasure Island Development Authority</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Treasure Island (8,000 Homes Master Plan)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1409,9 +1381,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Forest City Realty Trust Inc.</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Pier 70 &amp; Dogpatch (Pier 70 Development)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1438,9 +1408,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Associate Capital</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Pier 70 &amp; Dogpatch (Potrero Power Station)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1525,9 +1493,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Ed Lee</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">San Francisco Housing Stock</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1612,9 +1578,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Ed Lee</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">San Francisco City Hall</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1757,9 +1721,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">PG&amp;E</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Northern California &amp; Bay Area Grid</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1786,9 +1748,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">PG&amp;E</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Northern California EV Network</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1815,9 +1775,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">PG&amp;E</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Northern California Utility Fleet</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1844,9 +1802,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Comcast</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Bay Area Fiber Network</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1902,9 +1858,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Leland Kim (AT&amp;T spokesman)</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Bay Area Gigabit Infrastructure</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1931,9 +1885,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Visa</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Mission Bay Commercial Campus</div>
                 </td>
                 <td class="table-quote-cell">
@@ -1989,9 +1941,7 @@
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Transportation Authority Board</span>
                   </div>
-                  <div class="entity-sub-row font-mono">
-                    <span class="table-role-tag"></span>
-                  </div>
+
                   <div class="entity-geo-tag font-mono">Chinatown &amp; North Beach (Central Subway Extension)</div>
                 </td>
                 <td class="table-quote-cell">
@@ -2259,7 +2209,7 @@
                   <span class="verdict-chip quarantined">Quarantined</span>
                 </div>
                 <blockquote class="quarantine-claim-quote font-serif">&ldquo;P68&rdquo;</blockquote>
-                
+
                 <div class="quarantine-check-block">
                   <div class="quarantine-check-plain">Relevance Gate 2.5 (code-only) <code class="quarantine-check-code font-mono">relevance_gate</code></div>
                   <p class="quarantine-reason-text">relevance_low</p>
@@ -2437,7 +2387,7 @@
           <div class="packet-track-container">
             <div class="packet-track-bg-line"></div>
             <div class="packet-track-fill-line" id="packet-track-fill" style="width: 0%;"></div>
-            
+
             <div class="packet-milestones-row">
               <div class="milestone-node" data-stage="1" role="button" tabindex="0" aria-label="Jump to Stage 1 Fetch"><div class="milestone-circle active" id="ms-circle-1">1</div></div>
               <div class="milestone-node" data-stage="2" role="button" tabindex="0" aria-label="Jump to Stage 2 Extract"><div class="milestone-circle" id="ms-circle-2">2</div></div>
@@ -2766,7 +2716,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=d5229e9e"></script>
-  <script src="app.js?v=d5229e9e"></script>
+  <script src="data.js?v=ui-consistency"></script>
+  <script src="app.js?v=ui-consistency"></script>
 </body>
 </html>

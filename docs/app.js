@@ -99,6 +99,7 @@
     const v = (verdict || '').toLowerCase().replace(/[\s-]+/g, '_');
     if (v === 'in_progress') return 'In progress';
     if (v === 'kept') return 'Kept';
+    if (v === 'kept_then_reversed') return 'Later closed / reversed';
     if (v === 'broken') return 'Broken';
     if (v === 'undecided') return 'Undecided';
     if (v === 'quarantined') return 'Quarantined';
@@ -127,7 +128,11 @@
     t = t.replace(/\[([^\]]+)\]/g, '$1');
     // Strip formatting
     t = t.replace(/\*\*([^*]+)\*\*/g, '$1').replace(/\*([^*]+)\*/g, '$1').replace(/`([^`]+)`/g, '$1');
-    return t.replace(/\s+/g, ' ').trim();
+    t = t.replace(/\s+/g, ' ').trim();
+    while ((t.startsWith('“') && t.endsWith('”')) || (t.startsWith('"') && t.endsWith('"'))) {
+      t = t.slice(1, -1).trim();
+    }
+    return t;
   }
 
   function escapeHtml(str) {
@@ -141,7 +146,7 @@
   // exported snapshot.
   // -------------------------------------------------------------------------
   /* SFPVIZ_PURE_START */
-  const VERDICT_ORDER = ['kept', 'in_progress', 'broken', 'stalled', 'undecided'];
+  const VERDICT_ORDER = ['kept', 'in_progress', 'broken', 'stalled', 'undecided', 'kept_then_reversed'];
 
   function normalizeVerdict(value) {
     return String(value || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
@@ -883,10 +888,11 @@
   // -------------------------------------------------------------------------
   const VERDICT_COLORS = {
     kept: '#10B981',
-    in_progress: '#F59E0B',
+    in_progress: 'var(--verdict-progress)',
     broken: '#EF4444',
     stalled: '#C084FC',
-    undecided: '#94A3B8'
+    kept_then_reversed: '#F97316',
+    undecided: 'var(--verdict-undecided)'
   };
 
   function renderBarRows(container, entries, total) {
@@ -1387,12 +1393,7 @@
       return { x: Math.max(428, Math.min(540, x)), y: Math.max(336, Math.min(408, y)) };
     }
 
-    const verdictColor = {
-      kept: '#10B981',
-      broken: '#EF4444',
-      in_progress: '#F59E0B',
-      undecided: '#94A3B8'
-    };
+    const verdictColor = VERDICT_COLORS;
 
     const sfOutlinePath = 'M 55,298 L 62,210 L 66,142 L 88,92 L 154,68 L 238,68 L 315,76 L 372,110 L 398,176 L 408,248 L 392,302 L 320,312 L 222,312 L 125,308 Z';
     const tiPath = 'M 412,56 L 434,54 L 438,84 L 414,88 Z';

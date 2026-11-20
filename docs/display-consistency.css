@@ -1,0 +1,6 @@
+
+:root { --verdict-undecided: #F59E0B; }
+.bar-segment.seg-progress, .legend-swatch.seg-progress { background: var(--verdict-progress); }
+.bar-segment.seg-undecided, .legend-swatch.seg-undecided { background: var(--verdict-undecided); }
+.bar-segment.seg-reversed, .legend-swatch.seg-reversed { background: #F97316; }
+#viz-verdict-bars .viz-bar-label { white-space: normal; overflow: visible; line-height: 1.3; }
