@@ -9,7 +9,14 @@ __pycache__/
 /data/*
 !/data/*.csv
 !/data/*.json
+.agents/skills/impeccable/scripts/data/
 video/node_modules/
 video/out/
 video/public/rec/
+.agents/skills/impeccable/scripts/bin/
 demo/
+
+# Local tool runtime state (generated per checkout, never commit)
+.td_rag/
+project_config.json
+.agent_tool_receipt.json
