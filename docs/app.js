@@ -2289,9 +2289,91 @@
   }
 
   // -------------------------------------------------------------------------
+  // Story-card media pure helpers (SFPSTORY_PURE_START .. END)
+  //
+  // Self-contained (no closure over outer state) so
+  // tests/test_story_card_media.py can execute this marked block with node
+  // against docs/data.json and assert the cards surface exactly the media
+  // the export carries.
+  // -------------------------------------------------------------------------
+  /* SFPSTORY_PURE_START */
+  function storyEscapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+  }
+
+  // Media block for one featured-story card: an opt-in button, never an
+  // automatic request. '' when the export carries no image for the record,
+  // so imageless cards keep their text-only layout. The export URL and
+  // caption travel in escaped data-* attributes; the wiring turns them into
+  // an <img> only after the reader taps the button. This keeps the page's
+  // third-party request boundary exactly where it was before the cards
+  // showed media: every remote image load follows an explicit user action,
+  // the same pattern as the inspect drawer.
+  function storyCardMediaHtml(promise) {
+    if (!promise) return '';
+    const url = promise.media_image_url || promise.image_url;
+    if (!url) return '';
+    const caption = promise.media_caption || '';
+    const title = promise.title || 'this promise';
+    return `<div class="story-card-media" data-img-url="${storyEscapeHtml(url)}" data-img-caption="${storyEscapeHtml(caption)}" data-img-title="${storyEscapeHtml(title)}"><button type="button" class="btn-story-media" aria-label="Show source photo for ${storyEscapeHtml(title)}">Show source photo</button></div>`;
+  }
+
+  // Loaded state, built only after the reader taps the opt-in button: the
+  // photo plus its exported caption line (when the export records one).
+  function storyCardMediaLoadedHtml(url, caption, title) {
+    const alt = caption || title || 'Source media photo';
+    const capHtml = caption
+      ? `<div class="story-card-media-caption font-mono">${storyEscapeHtml(caption)}</div>`
+      : '';
+    return `<img src="${storyEscapeHtml(url)}" alt="${storyEscapeHtml(alt)}" loading="lazy">${capHtml}`;
+  }
+
+  const SFPStory = { storyCardMediaHtml, storyCardMediaLoadedHtml };
+  window.SFPStory = SFPStory;
+  /* SFPSTORY_PURE_END */
+
+  // -------------------------------------------------------------------------
   // Featured Stories (0.2)
   // -------------------------------------------------------------------------
   function setupFeaturedStories() {
+    // Surface the export's source media on cards whose record carries an
+    // image (issue #44), opt-in only: each card gets a "Show source photo"
+    // button, and the remote image loads only when the reader taps it, so
+    // simply viewing or scrolling the page issues no new third-party
+    // requests. Imageless records keep the text-only card, and a hotlinked
+    // image that fails after activation removes its block, never showing
+    // the browser's broken-image glyph.
+    document.querySelectorAll('.story-card[data-story-pid]').forEach(card => {
+      const pid = card.getAttribute('data-story-pid');
+      const record = demoData && (demoData.promises || []).find(x => x.promise_id === pid);
+      const html = record ? SFPStory.storyCardMediaHtml(record) : '';
+      if (!html) return;
+      const tpl = document.createElement('template');
+      tpl.innerHTML = html;
+      const media = tpl.content.firstElementChild;
+      const btn = media.querySelector('.btn-story-media');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const loaded = document.createElement('template');
+          loaded.innerHTML = SFPStory.storyCardMediaLoadedHtml(
+            media.getAttribute('data-img-url') || '',
+            media.getAttribute('data-img-caption') || '',
+            media.getAttribute('data-img-title') || ''
+          );
+          const img = loaded.content.querySelector('img');
+          if (img) img.addEventListener('error', () => media.remove());
+          media.replaceChildren(...loaded.content.childNodes);
+        });
+      }
+      const top = card.querySelector('.story-card-top');
+      if (top && top.nextSibling) {
+        card.insertBefore(media, top.nextSibling);
+      } else {
+        card.appendChild(media);
+      }
+    });
     document.querySelectorAll('.btn-story-evidence').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
