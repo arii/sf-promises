@@ -1379,6 +1379,10 @@ def export(*, allow_existing_fk_violations=False):
     all_promises = enrich_dataset_records(all_promises)
     review_queue = build_evidence_review_queue(all_promises)
 
+    # Self-hosted media (issues #82/#83): presentation only, fields come from docs/media/manifest.json.
+    from src.media import apply_manifest_fields
+    apply_manifest_fields(all_promises)
+
     # D3 summaries (local imports: module may run as a script from docs/)
     from src.denials import summarize_denials
     from src.funnel import (
