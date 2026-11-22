@@ -33,7 +33,7 @@ def test_hf_validate_only_staging_and_splits(tmp_path):
         "data/commitments/train.csv": (54, 73),
         "data/standardized_16col/train.csv": (54, 16),
         "data/quarantined/train.csv": (13, 10),
-        "data/intake_ledger/train.csv": (63, 23),
+        "data/intake_ledger/train.csv": (75, 23),
     }
     for rel, (exp_rows, exp_cols) in expected_splits.items():
         p = staging / rel

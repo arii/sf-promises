@@ -288,11 +288,16 @@
       "total_verification_exception_checks": 3
     },
     "sourcing_audit": {
-      "generated_at": "2026-11-14T08:34:23Z",
-      "planner_query_count": 98,
+      "generated_at": "2026-11-22T17:34:58Z",
+      "planner_query_count": 102,
       "planner_variant_query_count": 80,
+      "planner_campaign_query_count": 4,
+      "planner_campaign_target_domains": [
+        "daniellurie.com"
+      ],
       "planner_pillars_covered": [
         "Arts, Music & Nightlife",
+        "Campaign Fact Sheets",
         "Civic Life",
         "Culture & Social Life",
         "Food & Local Business",
@@ -304,6 +309,7 @@
         "Work & Opportunity"
       ],
       "planner_districts_covered": [
+        0,
         1,
         2,
         3,
@@ -316,52 +322,57 @@
         10,
         11
       ],
-      "encountered_count": 63,
-      "qualified_count": 24,
+      "encountered_count": 75,
+      "qualified_count": 36,
       "needs_review_count": 38,
       "rejected_count": 1,
       "qualified_pillar_distribution": {
-        "Weather & Environment": 7,
+        "Weather & Environment": 13,
         "Work & Opportunity": 3,
-        "Transit & Movement": 6,
+        "Transit & Movement": 7,
         "Food & Local Business": 2,
-        "Arts, Music & Nightlife": 2,
+        "Arts, Music & Nightlife": 3,
         "Civic Life": 1,
-        "Housing & Neighborhoods": 3
+        "Housing & Neighborhoods": 5,
+        "Sports & Recreation": 2
       },
       "qualified_district_distribution": {
         "D2": 1,
-        "D3": 2,
+        "D3": 4,
         "D4": 1,
-        "D6": 5,
-        "D9": 1,
+        "D6": 7,
+        "D9": 3,
         "D8": 1,
-        "D7": 1
+        "D7": 1,
+        "D11": 1,
+        "D1": 1,
+        "D10": 1,
+        "D5": 1
       },
-      "dual_review_sampled_count": 3,
+      "dual_review_sampled_count": 4,
       "dual_review_agreement_rate": 1.0,
       "funnel": {
         "stages": [
           {
             "stage": "leads_encountered",
-            "count": 63,
+            "count": 75,
             "universe": "intake_register"
           },
           {
             "stage": "qualified",
-            "count": 24,
+            "count": 36,
             "universe": "intake_register",
-            "conversion_from_previous": 0.381
+            "conversion_from_previous": 0.48
           }
         ],
         "stage_counts": {
-          "leads_encountered": 63,
-          "qualified": 24
+          "leads_encountered": 75,
+          "qualified": 36
         }
       },
       "denials": {
-        "total_denials": 834,
-        "distinct_domains": 367,
+        "total_denials": 846,
+        "distinct_domains": 373,
         "by_domain": {
           "48hills.org": {
             "count": 2,
@@ -1668,6 +1679,15 @@
               "unlisted": 1
             }
           },
+          "infraday.com": {
+            "count": 1,
+            "reasons": {
+              "domain_not_allowlisted": 1
+            },
+            "source_types": {
+              "unlisted": 1
+            }
+          },
           "instagram.com": {
             "count": 5,
             "reasons": {
@@ -1687,6 +1707,15 @@
             }
           },
           "isthefoodgood.com": {
+            "count": 1,
+            "reasons": {
+              "domain_not_allowlisted": 1
+            },
+            "source_types": {
+              "unlisted": 1
+            }
+          },
+          "jacobs.com": {
             "count": 1,
             "reasons": {
               "domain_not_allowlisted": 1
@@ -1764,7 +1793,7 @@
               "domain_not_allowlisted": 9
             },
             "source_types": {
-              "unlisted": 9
+              "news": 9
             }
           },
           "labs.songkick.com": {
@@ -2421,7 +2450,7 @@
               "domain_not_allowlisted": 10
             },
             "source_types": {
-              "unlisted": 10
+              "neighborhood_press": 10
             }
           },
           "ridgelaneneighborssf.org": {
@@ -2583,7 +2612,7 @@
               "domain_not_allowlisted": 5
             },
             "source_types": {
-              "unlisted": 5
+              "news": 5
             }
           },
           "sf.funcheap.com": {
@@ -2676,6 +2705,15 @@
               "news": 1
             }
           },
+          "sfcontroller.org": {
+            "count": 1,
+            "reasons": {
+              "http_202": 1
+            },
+            "source_types": {
+              "official_government": 1
+            }
+          },
           "sfcta.org": {
             "count": 13,
             "reasons": {
@@ -2712,6 +2750,15 @@
               "unlisted": 3
             }
           },
+          "sfelections.sfgov.org": {
+            "count": 1,
+            "reasons": {
+              "http_202": 1
+            },
+            "source_types": {
+              "official_government": 1
+            }
+          },
           "sffilm.org": {
             "count": 1,
             "reasons": {
@@ -2731,12 +2778,13 @@
             }
           },
           "sfgov.legistar.com": {
-            "count": 12,
+            "count": 16,
             "reasons": {
-              "domain_not_allowlisted": 12
+              "domain_not_allowlisted": 12,
+              "unsupported_source_format": 4
             },
             "source_types": {
-              "unlisted": 12
+              "official_government": 16
             }
           },
           "sfguide.co": {
@@ -2785,12 +2833,12 @@
             }
           },
           "sfist.com": {
-            "count": 8,
+            "count": 9,
             "reasons": {
-              "domain_not_allowlisted": 8
+              "domain_not_allowlisted": 9
             },
             "source_types": {
-              "unlisted": 8
+              "unlisted": 9
             }
           },
           "sflcv.org": {
@@ -2838,13 +2886,22 @@
               "unlisted": 11
             }
           },
+          "sfport.com": {
+            "count": 1,
+            "reasons": {
+              "domain_not_allowlisted": 1
+            },
+            "source_types": {
+              "unlisted": 1
+            }
+          },
           "sfpublicpress.org": {
             "count": 3,
             "reasons": {
               "domain_not_allowlisted": 3
             },
             "source_types": {
-              "unlisted": 3
+              "news": 3
             }
           },
           "sfpublicworks.org": {
@@ -2992,6 +3049,15 @@
             }
           },
           "static1.squarespace.com": {
+            "count": 1,
+            "reasons": {
+              "domain_not_allowlisted": 1
+            },
+            "source_types": {
+              "unlisted": 1
+            }
+          },
+          "stormwater.com": {
             "count": 1,
             "reasons": {
               "domain_not_allowlisted": 1
@@ -3154,12 +3220,12 @@
             }
           },
           "thesanfrancisco.org": {
-            "count": 7,
+            "count": 8,
             "reasons": {
-              "domain_not_allowlisted": 7
+              "domain_not_allowlisted": 8
             },
             "source_types": {
-              "unlisted": 7
+              "unlisted": 8
             }
           },
           "thesunreporter.com": {
@@ -3402,7 +3468,7 @@
               "domain_not_allowlisted": 2
             },
             "source_types": {
-              "unlisted": 2
+              "community_press": 2
             }
           },
           "wunderground.com": {
@@ -3609,7 +3675,7 @@
               "domain_not_allowlisted": 8
             },
             "source_types": {
-              "unlisted": 8
+              "community_press": 8
             }
           },
           "www.xtreet.com": {
