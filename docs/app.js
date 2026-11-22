@@ -502,6 +502,8 @@
     }
     setupReplayScenarios();
     setupEventListeners();
+    enhanceRegistryRows();
+    syncCardsLayout();
     renderExplore();
     renderQuarantineTable();
     setupFeaturedStories();
@@ -1137,11 +1139,13 @@
       return;
     }
 
-    if (tableEl) tableEl.classList.toggle('hidden', activeViewMode !== 'table');
+    const listLike = activeViewMode === 'table' || activeViewMode === 'grid';
+    if (tableEl) tableEl.classList.toggle('hidden', !listLike);
+    syncCardsLayout();
     if (mapEl) mapEl.classList.toggle('hidden', activeViewMode !== 'map');
     if (entEl) entEl.classList.toggle('hidden', activeViewMode !== 'entities');
     if (auditEl) auditEl.classList.toggle('hidden', activeViewMode !== 'audit');
-    if (paginationEl) paginationEl.classList.toggle('hidden', activeViewMode !== 'table');
+    if (paginationEl) paginationEl.classList.toggle('hidden', !listLike);
     if (shouldRender) renderExplore();
   }
 
@@ -2032,8 +2036,20 @@
     const mediaCaption = document.getElementById('drawer-media-caption');
     const imgUrl = p.media_image_url || p.image_url;
     const mediaFallback = document.getElementById('drawer-media-fallback');
+    const mediaIllo = document.getElementById('drawer-media-illustration');
+    const mediaHeader = mediaBox && mediaBox.querySelector('.drawer-media-header');
+    // Category illustration stands in whenever the record has no image, or
+    // the hotlinked image fails to load, so no drawer is text-only.
+    const showIllustration = (on) => {
+      if (!mediaIllo) return;
+      mediaIllo.hidden = !on;
+      mediaIllo.innerHTML = on ? categoryThumbHtml(p, 'cat-thumb-lg') : '';
+      if (mediaHeader) mediaHeader.hidden = on;
+      if (mediaCaption) mediaCaption.hidden = on;
+    };
     if (imgUrl && mediaBox && mediaImg) {
       mediaBox.style.display = 'block';
+      showIllustration(false);
       // A hotlinked image that fails to load shows the styled fallback, never
       // the browser's broken-image glyph or alt text.
       if (mediaFallback) mediaFallback.hidden = true;
@@ -2041,6 +2057,7 @@
       mediaImg.onerror = () => {
         mediaImg.style.display = 'none';
         if (mediaFallback) mediaFallback.hidden = false;
+        showIllustration(true);
       };
       mediaImg.onload = () => {
         if (mediaFallback) mediaFallback.hidden = true;
@@ -2052,7 +2069,11 @@
       mediaImg.alt = p.media_caption || (titleEl ? titleEl.textContent : '') || 'Source media photo';
       if (mediaCaption) mediaCaption.textContent = p.media_caption || 'Verified source photographic archive';
     } else if (mediaBox) {
-      mediaBox.style.display = 'none';
+      mediaBox.style.display = 'block';
+      mediaImg.style.display = 'none';
+      mediaImg.removeAttribute('src');
+      if (mediaFallback) mediaFallback.hidden = true;
+      showIllustration(true);
     }
 
     // Part 2: Verdict & Plain Reason
@@ -2372,6 +2393,7 @@
     document.querySelectorAll('.story-card[data-story-pid]').forEach(card => {
       const pid = card.getAttribute('data-story-pid');
       const record = demoData && (demoData.promises || []).find(x => x.promise_id === pid);
+      addStoryThumb(card, record);
       const html = record ? SFPStory.storyCardMediaHtml(record) : '';
       if (!html) return;
       const tpl = document.createElement('template');
@@ -2410,6 +2432,136 @@
         }
       });
     });
+  }
+
+  // -------------------------------------------------------------------------
+  // Glanceable registry (issue #81): category illustrations, one-line
+  // timeline strips, outcome expanders and the card layout. All of it is
+  // built client-side from the export record on top of the baked rows, so the
+  // exporter's markup stays the single source of the row text. Illustrations
+  // are inline SVG: no image request of any kind.
+  // -------------------------------------------------------------------------
+  const CATEGORY_ICONS = {
+    'Civic Governance': '<path d="M3 10l9-6 9 6"/><path d="M5 10v8M10 10v8M14 10v8M19 10v8"/><path d="M3 20h18"/>',
+    'Housing & Neighborhoods': '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+    'Transit & Streets': '<rect x="5" y="3" width="14" height="14" rx="2"/><path d="M5 11h14"/><circle cx="9" cy="14" r="0.8"/><circle cx="15" cy="14" r="0.8"/><path d="M7 17v3M17 17v3"/>',
+    'Bay Area & Regional': '<path d="M2 19h20"/><path d="M7 5v14M17 5v14"/><path d="M2 15c3 0 4-10 5-10M7 5c1 0 2 10 5 10s4-10 5-10M17 5c1 0 2 10 5 10"/>',
+    'Airport & Airlines': '<path d="M21 15l-8-4V5a1.5 1.5 0 0 0-3 0v6l-8 4v2l8-2v4l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-4l8 2z"/>',
+    'Sports': '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3.5 3.5 3.5 14.5 0 18M12 3c-3.5 3.5-3.5 14.5 0 18"/>',
+    'Environment & Energy': '<path d="M5 19c0-9 5-14 15-14 0 10-5 15-14 15"/><path d="M5 19l8-8"/>',
+    'Infrastructure & Tech': '<rect x="7" y="7" width="10" height="10" rx="1"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/>',
+    'Culture & Music': '<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>'
+  };
+  const CATEGORY_ICON_DEFAULT = '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>';
+
+  // Self-hosted media written by the media pipeline (record.media_path). A
+  // plain relative path only: no scheme, no host, no parent segments. Absent
+  // on most records, in which case the illustration is the whole thumbnail.
+  function localMediaPath(p) {
+    const m = p && p.media_path;
+    if (typeof m !== 'string' || !m) return '';
+    if (/^[a-z][a-z0-9+.-]*:|^\/|\.\.|\\/i.test(m)) return '';
+    return m;
+  }
+
+  // Category illustration tinted with the verdict colour. Always built, so a
+  // record is never text-only; a local image, when the record has one, is
+  // layered on top and removed again if it fails to load.
+  function categoryThumbHtml(p, extraClass) {
+    const category = (p && p.category) || '';
+    const icon = CATEGORY_ICONS[category] || CATEGORY_ICON_DEFAULT;
+    const verdict = normalizeVerdict(p && p.verdict);
+    const local = localMediaPath(p);
+    const img = local ? `<img class="cat-thumb-img" src="${escapeHtml(local)}" alt="" loading="lazy">` : '';
+    return `<span class="cat-thumb v-${escapeHtml(verdict)}${extraClass ? ' ' + extraClass : ''}" role="img" aria-label="${escapeHtml(category || 'Commitment')} illustration"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${icon}</svg>${img}</span>`;
+  }
+
+  document.addEventListener('error', (e) => {
+    const t = e.target;
+    if (t && t.classList && t.classList.contains('cat-thumb-img')) t.remove();
+  }, true);
+
+  function timelineStripHtml(p) {
+    const verdict = normalizeVerdict(p.verdict);
+    // Compact form so the strip fits one line on a phone: YYYY-MM, or YYYY
+    // when the export only knows the year; the em dash marks an absent date.
+    const compact = (iso, precision) => {
+      const m = String(iso || '').trim().match(/^(\d{4})(?:-(\d{2}))?/);
+      if (!m) return '\u2014';
+      return (precision === 'year' || !m[2]) ? m[1] : `${m[1]}-${m[2]}`;
+    };
+    const said = compact(p.promise_made_date || p.promised_date, p.promise_date_precision);
+    const due = compact(p.deadline_date || p.due_date, p.due_date_precision);
+    const delivered = outcomePhases(p).find(x => x.phase === 'delivered');
+    const done = compact(p.completion_date || (delivered && delivered.date), p.completion_date_precision);
+    const chip = (cls, label, val) => `<span class="viz-phase-chip ${cls}"><span class="strip-label">${label}</span> ${escapeHtml(val)}</span>`;
+    const arrow = '<span class="viz-phase-arrow" aria-hidden="true">\u2192</span>';
+    const reversed = verdict === 'kept_then_reversed';
+    // A reversed record carries a fourth step; its empty Due is left out so
+    // the strip still fits one line on a phone.
+    let html = chip('made', 'Said', said) + arrow;
+    if (!(reversed && due === '\u2014')) html += chip('due', 'Due', due) + arrow;
+    html += chip(done === '\u2014' ? 'pending' : 'delivered', 'Done', done);
+    if (reversed) html += arrow + chip('reversed', 'Reversed', compact(reversalDate(p), 'day'));
+    return `<div class="row-timeline-strip font-mono" role="group" aria-label="Timeline: said ${escapeHtml(said)}, due ${escapeHtml(due)}, done ${escapeHtml(done)}">${html}</div>`;
+  }
+
+  function enhanceRegistryRows() {
+    const byId = {};
+    ((demoData && demoData.promises) || []).forEach(p => { byId[p.promise_id] = p; });
+    document.querySelectorAll('#promises-table-body tr.promise-row').forEach(tr => {
+      if (tr.getAttribute('data-glance')) return;
+      const pid = tr.getAttribute('data-promise-id');
+      const p = byId[pid];
+      if (!p) return;
+      tr.setAttribute('data-glance', '1');
+      const ent = tr.querySelector('.table-entity-cell');
+      if (ent) ent.insertAdjacentHTML('afterbegin', categoryThumbHtml(p));
+      const quoteCell = tr.querySelector('.table-quote-cell');
+      if (quoteCell) {
+        if (p.title) quoteCell.insertAdjacentHTML('afterbegin', `<div class="row-title">${escapeHtml(p.title)}</div>`);
+        const outcome = quoteCell.querySelector('.table-outcome-block');
+        if (outcome) outcome.id = `row-outcome-${pid}`;
+      }
+      const tl = tr.querySelector('.table-timeline-cell');
+      if (tl) {
+        tl.innerHTML = timelineStripHtml(p) +
+          `<div class="row-actions"><button type="button" class="btn-row-outcome" aria-expanded="false" aria-controls="row-outcome-${escapeHtml(pid)}">Show outcome</button><span class="table-card-action">Inspect &rarr;</span></div>`;
+        const btn = tl.querySelector('.btn-row-outcome');
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const open = !tr.classList.contains('outcome-open');
+          tr.classList.toggle('outcome-open', open);
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          btn.textContent = open ? 'Hide outcome' : 'Show outcome';
+        });
+        btn.addEventListener('keydown', (e) => e.stopPropagation());
+      }
+    });
+  }
+
+  // Card layout: phones always, and desktop when the Cards view is chosen.
+  // The class is what the stylesheet keys on, so the table markup is the same
+  // in both layouts.
+  const phoneQuery = window.matchMedia ? window.matchMedia('(max-width: 768px)') : null;
+  function syncCardsLayout() {
+    const container = document.getElementById('promises-table-container');
+    if (!container) return;
+    const cards = activeViewMode === 'grid' || Boolean(phoneQuery && phoneQuery.matches);
+    container.classList.toggle('cards-layout', cards);
+    container.classList.toggle('cards-grid', activeViewMode === 'grid');
+  }
+  if (phoneQuery && phoneQuery.addEventListener) phoneQuery.addEventListener('change', syncCardsLayout);
+
+  // Thumbnail slot on a featured card: the category illustration sits beside
+  // the entity name. The opt-in photo button below it is unchanged.
+  function addStoryThumb(card, record) {
+    if (card.querySelector('.cat-thumb')) return;
+    const top = card.querySelector('.story-card-top');
+    if (!top) return;
+    const chip = top.querySelector('.verdict-chip');
+    const verdict = chip ? ((chip.className.match(/\b(kept_then_reversed|in_progress|kept|broken|undecided)\b/) || [])[1] || 'undecided') : 'undecided';
+    top.insertAdjacentHTML('afterbegin', categoryThumbHtml(record || { verdict }));
   }
 
   // -------------------------------------------------------------------------
