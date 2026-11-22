@@ -36,6 +36,19 @@ new_html = f"""<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0f1a26">
+  <meta name="description" content="A sourced record of 54 San Francisco public commitments, each checked against primary sources and marked kept, in progress, broken or undecided.">
+  <link rel="canonical" href="https://arii.github.io/sf-promises/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SF Promises">
+  <meta property="og:url" content="https://arii.github.io/sf-promises/">
+  <meta property="og:title" content="SF Promises: Sourced Record of San Francisco Public Commitments">
+  <meta property="og:description" content="A sourced record of 54 San Francisco public commitments, each checked against primary sources and marked kept, in progress, broken or undecided.">
+  <meta property="og:image" content="https://arii.github.io/assets/research/sf-promises/verdict-board.webp">
+  <meta property="og:image:alt" content="SF Promises verdict board: outcome distribution of 54 verified promises">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SF Promises: Sourced Record of San Francisco Public Commitments">
+  <meta name="twitter:description" content="A sourced record of 54 San Francisco public commitments, each checked against primary sources and marked kept, in progress, broken or undecided.">
+  <meta name="twitter:image" content="https://arii.github.io/assets/research/sf-promises/verdict-board.webp">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -459,16 +472,22 @@ new_html = f"""<!DOCTYPE html>
       </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer: Clean 3-Line Attribution & Links -->
     <footer class="app-footer">
-      <div class="footer-left">
-        <span class="footer-brand-title">SF Promises &middot; arii/sf-promises</span>
-        <span>Built by Ariel Anders &middot; Archil Hackathon (Nov 10, 2026 &middot; Best Use of Keenable)</span>
-      </div>
-      <div class="footer-links-group">
-        <a href="#watch" class="btn-footer-link">Watch &uarr;</a>
-        <a href="https://huggingface.co/datasets/onasafari/sf-promises" target="_blank" rel="noopener noreferrer" style="color: #FCD34D;">Hugging Face 🤗</a>
-        <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer" style="color: var(--blue);">GitHub &nearr;</a>
+      <div class="footer-scannable-content">
+        <div class="footer-line footer-line-brand">
+          <strong>SF Promises</strong> &mdash; Built by <a href="https://arii.github.io">Ariel Anders</a> (Nov 2026 &middot; Archil Hackathon)
+        </div>
+        <div class="footer-line footer-line-date font-mono">
+          Data updated Nov 13, 2026
+        </div>
+        <div class="footer-line footer-line-links">
+          <a href="https://github.com/arii/sf-promises" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
+          <span class="footer-dot">&middot;</span>
+          <a href="https://huggingface.co/datasets/onasafari/sf-promises" target="_blank" rel="noopener noreferrer">Hugging Face Dataset</a>
+          <span class="footer-dot">&middot;</span>
+          <a href="#top">Back to top &uarr;</a>
+        </div>
       </div>
     </footer>
   </div>
