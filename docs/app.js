@@ -25,7 +25,6 @@
   let currentStage = 1;
   let isAutoPlaying = true;
   let autoTimer = null;
-  let hasAutoPlayed = false;
   const STAGE_INTERVAL_MS = 1800;
   let lastActiveElement = null;
   // Replay scenarios are built from the exported snapshot in init(); the
@@ -855,45 +854,6 @@
     isAutoPlaying = false;
     currentStage = num;
     renderActiveStage(currentRunType, num);
-  }
-
-  function startAutoPlay() {
-    isAutoPlaying = true;
-    renderActiveStage(currentRunType, currentStage);
-    scheduleNextAutoStage();
-  }
-
-  function setupObserverForReplay() {
-    const watchSection = document.getElementById('watch');
-    if (!watchSection) return;
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      isAutoPlaying = false;
-      renderActiveStage(currentRunType, 1);
-      return;
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !hasAutoPlayed) {
-          hasAutoPlayed = true;
-          startAutoPlay();
-        }
-      });
-    }, { threshold: 0.15 });
-
-    observer.observe(watchSection);
-
-    // Initial load auto-trigger
-    setTimeout(() => {
-      if (!hasAutoPlayed) {
-        const rect = watchSection.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          hasAutoPlayed = true;
-          startAutoPlay();
-        }
-      }
-    }, 400);
   }
 
   window.jumpToStage = jumpToStage;
