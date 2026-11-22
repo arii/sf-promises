@@ -117,11 +117,11 @@ def test_intake_candidate_register_and_ledger_counts():
     with reg_path.open("r", encoding="utf-8") as f:
         reg = json.load(f)
     summary = reg["summary"]
-    assert summary["encountered_count"] == 88
-    assert summary["qualified_count"] == 49
+    assert summary["encountered_count"] == 87
+    assert summary["qualified_count"] == 48
     assert summary["needs_review_count"] == 38
     assert summary["rejected_count"] == 1
 
     with csv_path.open("r", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
-    assert len(rows) == 88
+    assert len(rows) == 87

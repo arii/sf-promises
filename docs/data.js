@@ -289,7 +289,7 @@ window.__DEMO_DATA__ = {
       "total_verification_exception_checks": 3
     },
     "sourcing_audit": {
-      "generated_at": "2026-11-22T23:46:22Z",
+      "generated_at": "2026-11-22T23:48:33Z",
       "planner_query_count": 102,
       "planner_variant_query_count": 80,
       "planner_campaign_query_count": 4,
@@ -323,8 +323,8 @@ window.__DEMO_DATA__ = {
         10,
         11
       ],
-      "encountered_count": 88,
-      "qualified_count": 49,
+      "encountered_count": 87,
+      "qualified_count": 48,
       "needs_review_count": 38,
       "rejected_count": 1,
       "qualified_pillar_distribution": {
@@ -332,7 +332,7 @@ window.__DEMO_DATA__ = {
         "Work & Opportunity": 3,
         "Transit & Movement": 9,
         "Food & Local Business": 2,
-        "Arts, Music & Nightlife": 5,
+        "Arts, Music & Nightlife": 4,
         "Civic Life": 4,
         "Housing & Neighborhoods": 7,
         "Sports & Recreation": 2
@@ -341,7 +341,7 @@ window.__DEMO_DATA__ = {
         "D2": 1,
         "D3": 7,
         "D4": 2,
-        "D6": 9,
+        "D6": 8,
         "D9": 5,
         "D8": 3,
         "D7": 1,
@@ -350,25 +350,25 @@ window.__DEMO_DATA__ = {
         "D10": 1,
         "D5": 2
       },
-      "dual_review_sampled_count": 7,
+      "dual_review_sampled_count": 6,
       "dual_review_agreement_rate": 1.0,
       "funnel": {
         "stages": [
           {
             "stage": "leads_encountered",
-            "count": 88,
+            "count": 87,
             "universe": "intake_register"
           },
           {
             "stage": "qualified",
-            "count": 49,
+            "count": 48,
             "universe": "intake_register",
-            "conversion_from_previous": 0.557
+            "conversion_from_previous": 0.552
           }
         ],
         "stage_counts": {
-          "leads_encountered": 88,
-          "qualified": 49
+          "leads_encountered": 87,
+          "qualified": 48
         }
       },
       "denials": {

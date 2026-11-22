@@ -144,7 +144,7 @@ def test_english_stratified_queries_byte_identical_to_release_base():
 
 def test_english_qualification_reproduces_the_frozen_register():
     """Re-evaluating the frozen intake pool must reproduce the committed
-    register counts exactly (49 qualified / 38 needs_review / 1 rejected)."""
+    register counts exactly (48 qualified / 38 needs_review / 1 rejected)."""
     pool = _load_existing_candidate_pools(REPO_ROOT)
     qualifier = QualificationIntakeAgent()
     statuses = Counter()
@@ -158,7 +158,7 @@ def test_english_qualification_reproduces_the_frozen_register():
             dual_sample=dual,
         )
         statuses[result.qualification_status] += 1
-    assert statuses == Counter({"needs_review": 38, "qualified": 49, "rejected": 1})
+    assert statuses == Counter({"needs_review": 38, "qualified": 48, "rejected": 1})
 
 
 def test_spanish_forward_statement_qualifies():
@@ -273,3 +273,12 @@ def test_round2_forward_wording_variants_not_vague():
             _sfpuc_raw(text), source_batch="d2_test", discovery_channel="keenable"
         )
         assert result.rejection_reason != "vague_aspiration", text
+
+
+def test_round2_forward_wording_does_not_accept_past_tense_expectation():
+    result = QualificationIntakeAgent().evaluate_candidate(
+        _sfpuc_raw("SFPUC staff said the tunnel had been discussed at the meeting."),
+        source_batch="d2_test",
+        discovery_channel="keenable",
+    )
+    assert result.rejection_reason == "vague_aspiration"

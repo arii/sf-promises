@@ -324,23 +324,6 @@
       "relevance_score": 8
     },
     {
-      "candidate_id": "DISC-20261122-015",
-      "entity": "Mayor's Office",
-      "url": "https://sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
-      "tier": "TIER1_GOV",
-      "published_at": "2026-07-28T00:00:00Z",
-      "snippet": "In early 2027, the city will launch its",
-      "verbatim_quote": "In early 2027, the city will launch its",
-      "promised_date": "2026-07-28",
-      "due_date": "2027-03-31",
-      "pillar": "Arts, Music & Nightlife",
-      "record_type": "project_or_opening",
-      "neighborhood": "SoMa",
-      "supervisor_district": 6,
-      "content_sha256": "f9befe1d8b838e9d59f2767e8f9556c0f5e3f0fab3cc2a3db070e156a7e0cae3",
-      "relevance_score": 8
-    },
-    {
       "candidate_id": "DISC-20261122-016",
       "entity": "Mayor's Office",
       "url": "https://sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",

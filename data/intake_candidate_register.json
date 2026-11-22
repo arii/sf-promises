@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generated_at": "2026-11-22T23:46:22Z",
+    "generated_at": "2026-11-22T23:48:33Z",
     "planner_query_count": 102,
     "planner_variant_query_count": 80,
     "planner_campaign_query_count": 4,
@@ -34,8 +34,8 @@
       10,
       11
     ],
-    "encountered_count": 88,
-    "qualified_count": 49,
+    "encountered_count": 87,
+    "qualified_count": 48,
     "needs_review_count": 38,
     "rejected_count": 1,
     "qualified_pillar_distribution": {
@@ -43,7 +43,7 @@
       "Work & Opportunity": 3,
       "Transit & Movement": 9,
       "Food & Local Business": 2,
-      "Arts, Music & Nightlife": 5,
+      "Arts, Music & Nightlife": 4,
       "Civic Life": 4,
       "Housing & Neighborhoods": 7,
       "Sports & Recreation": 2
@@ -52,7 +52,7 @@
       "D2": 1,
       "D3": 7,
       "D4": 2,
-      "D6": 9,
+      "D6": 8,
       "D9": 5,
       "D8": 3,
       "D7": 1,
@@ -61,25 +61,25 @@
       "D10": 1,
       "D5": 2
     },
-    "dual_review_sampled_count": 7,
+    "dual_review_sampled_count": 6,
     "dual_review_agreement_rate": 1.0,
     "funnel": {
       "stages": [
         {
           "stage": "leads_encountered",
-          "count": 88,
+          "count": 87,
           "universe": "intake_register"
         },
         {
           "stage": "qualified",
-          "count": 49,
+          "count": 48,
           "universe": "intake_register",
-          "conversion_from_previous": 0.557
+          "conversion_from_previous": 0.552
         }
       ],
       "stage_counts": {
-        "leads_encountered": 88,
-        "qualified": 49
+        "leads_encountered": 87,
+        "qualified": 48
       }
     },
     "denials": {
@@ -6023,36 +6023,6 @@
       "rejection_reason": null,
       "dual_review_sample": false,
       "dual_review_agreed": null,
-      "outcome_blind_verified": true,
-      "missingness_note": "Screened strictly without outcome fields."
-    },
-    {
-      "candidate_id": "DISC-20261122-015",
-      "source_batch": "keenable_discovery_sweep",
-      "discovery_channel": "keenable_temporal_search",
-      "encounter_date": "2026-07-28",
-      "entity": "Mayor's Office",
-      "pillar": "Arts, Music & Nightlife",
-      "record_type": "project_or_opening",
-      "statement_preview": "In early 2027, the city will launch its",
-      "promised_date": "2026-07-28",
-      "promise_date_precision": "day",
-      "due_date": "2027-03-31",
-      "due_date_status": "present",
-      "geographic_scope": "district",
-      "is_centroid": true,
-      "supervisor_district": 6,
-      "neighborhood": "SoMa",
-      "address_status": "not_captured",
-      "district_status": "present",
-      "source_url": "https://sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
-      "source_tier": "TIER1_GOV",
-      "media_image_url": null,
-      "media_caption": null,
-      "qualification_status": "qualified",
-      "rejection_reason": null,
-      "dual_review_sample": true,
-      "dual_review_agreed": true,
       "outcome_blind_verified": true,
       "missingness_note": "Screened strictly without outcome fields."
     },

@@ -107,18 +107,6 @@
       "quote_verbatim": true
     },
     {
-      "candidate_id": "DISC-20261122-015",
-      "url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
-      "requested_url": "https://sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
-      "published_at": "2026-07-28T00:00:00Z",
-      "fetched_at": "2026-11-22T23:38:11.461158+00:00",
-      "sha256": "f9befe1d8b838e9d59f2767e8f9556c0f5e3f0fab3cc2a3db070e156a7e0cae3",
-      "source_tier": "TIER1_GOV",
-      "verbatim_quote": "In early 2027, the city will launch its",
-      "gate_failures": [],
-      "quote_verbatim": true
-    },
-    {
       "candidate_id": "DISC-20261122-016",
       "url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
       "requested_url": "https://sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
@@ -450,6 +438,11 @@
       "lead": "38 banked seed IDs (P32-P34, P45-P56, P69-P79, P97, S4-S14)",
       "reason": "no source text anywhere: data/promises-P13-P112.csv is absent from the repo, git history and the Hugging Face dataset (onasafari/sf-promises has only P01-P86 and SFO-01..04 in commitments). Not fabricated.",
       "url": null
+    },
+    {
+      "lead": "Artist Housing Certification Program launching early 2027 (sf.gov 2026-07-28)",
+      "reason": "the sentence contains a markdown link, so no full verbatim sentence could be quoted; the same page's housing lottery launch is DISC-20261122-016. Withdrawn after review.",
+      "url": "https://sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street"
     }
   ],
   "proposed_allowlist_additions": [
@@ -487,6 +480,7 @@
     "fiscal_year_start": "Jul 1 for 'Beginning in Fiscal Year 2028-29'",
     "year_only": "Dec 31",
     "january_2027": "2027-01-31",
-    "next_march": "2027-03-31 ('March of next year' in an article dated 2026-11-19)"
+    "next_march": "2027-03-31 ('March of next year' in an article dated 2026-11-19)",
+    "through_April": "DISC-20261122-022 'through April' has no year in the source; 2027-04-30 is inferred from the article date (2026-11-11) and the barriers' winter-season purpose."
   }
 }

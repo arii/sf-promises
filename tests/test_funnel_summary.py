@@ -337,7 +337,7 @@ class TestWindowFunnelExportSchema(unittest.TestCase):
             path = Path(tmp) / "window_funnel_rounds.json"
             self._write_rounds(path, TestPerWindowFunnel.ROUNDS)
             rounds = window_funnel_rounds_from_file(path)
-        summary = build_funnel_summary(leads_encountered=88, qualified=49, window_rounds=rounds)
+        summary = build_funnel_summary(leads_encountered=87, qualified=48, window_rounds=rounds)
         by_window = {w["window"]: w for w in summary["windows"]}
         rolling = by_window["rolling_183d"]
         self.assertEqual(
