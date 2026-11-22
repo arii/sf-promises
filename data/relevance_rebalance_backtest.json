@@ -19,13 +19,13 @@
   },
   "per_style": {
     "capital_project": {
-      "n": 39,
-      "pass_before": 36,
-      "pass_after": 36,
-      "pass_rate_before": 0.9231,
-      "pass_rate_after": 0.9231,
-      "mean_total_before": 7.128,
-      "mean_total_after": 7.051
+      "n": 51,
+      "pass_before": 48,
+      "pass_after": 48,
+      "pass_rate_before": 0.9412,
+      "pass_rate_after": 0.9412,
+      "mean_total_before": 7.255,
+      "mean_total_after": 7.196
     },
     "service_program": {
       "n": 52,
