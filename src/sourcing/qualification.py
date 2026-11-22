@@ -39,6 +39,7 @@ _FORWARD_ACTION_RE = re.compile(
     r"\b(will|commit|commits|committed|pledge|pledges|pledged|plan|plans|planned|scheduled|"
     r"set to|aims|target|goal|must complete|prohibiting|begin|opening|launching|construct|"
     r"add \d+|hire|fund|invest|maintain|evaluate|anticipated|expected to|estimated to|slated|"
+    r"expects? to|we anticipate|must be (?:commissioned|completed|operational)|"
     r"by \d{4})\b",
     re.IGNORECASE,
 )

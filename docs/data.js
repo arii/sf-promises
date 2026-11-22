@@ -289,7 +289,7 @@ window.__DEMO_DATA__ = {
       "total_verification_exception_checks": 3
     },
     "sourcing_audit": {
-      "generated_at": "2026-11-22T17:39:24Z",
+      "generated_at": "2026-11-22T23:46:22Z",
       "planner_query_count": 102,
       "planner_variant_query_count": 80,
       "planner_campaign_query_count": 4,
@@ -323,57 +323,57 @@ window.__DEMO_DATA__ = {
         10,
         11
       ],
-      "encountered_count": 74,
-      "qualified_count": 35,
+      "encountered_count": 88,
+      "qualified_count": 49,
       "needs_review_count": 38,
       "rejected_count": 1,
       "qualified_pillar_distribution": {
-        "Weather & Environment": 12,
+        "Weather & Environment": 17,
         "Work & Opportunity": 3,
-        "Transit & Movement": 7,
+        "Transit & Movement": 9,
         "Food & Local Business": 2,
-        "Arts, Music & Nightlife": 3,
-        "Civic Life": 1,
-        "Housing & Neighborhoods": 5,
+        "Arts, Music & Nightlife": 5,
+        "Civic Life": 4,
+        "Housing & Neighborhoods": 7,
         "Sports & Recreation": 2
       },
       "qualified_district_distribution": {
         "D2": 1,
-        "D3": 3,
-        "D4": 1,
-        "D6": 7,
-        "D9": 3,
-        "D8": 1,
+        "D3": 7,
+        "D4": 2,
+        "D6": 9,
+        "D9": 5,
+        "D8": 3,
         "D7": 1,
         "D11": 1,
         "D1": 1,
         "D10": 1,
-        "D5": 1
+        "D5": 2
       },
-      "dual_review_sampled_count": 4,
+      "dual_review_sampled_count": 7,
       "dual_review_agreement_rate": 1.0,
       "funnel": {
         "stages": [
           {
             "stage": "leads_encountered",
-            "count": 74,
+            "count": 88,
             "universe": "intake_register"
           },
           {
             "stage": "qualified",
-            "count": 35,
+            "count": 49,
             "universe": "intake_register",
-            "conversion_from_previous": 0.473
+            "conversion_from_previous": 0.557
           }
         ],
         "stage_counts": {
-          "leads_encountered": 74,
-          "qualified": 35
+          "leads_encountered": 88,
+          "qualified": 49
         }
       },
       "denials": {
-        "total_denials": 846,
-        "distinct_domains": 373,
+        "total_denials": 852,
+        "distinct_domains": 374,
         "by_domain": {
           "48hills.org": {
             "count": 2,
@@ -2536,12 +2536,12 @@ window.__DEMO_DATA__ = {
             }
           },
           "sanfranciscopolice.org": {
-            "count": 1,
+            "count": 2,
             "reasons": {
-              "domain_not_allowlisted": 1
+              "domain_not_allowlisted": 2
             },
             "source_types": {
-              "unlisted": 1
+              "unlisted": 2
             }
           },
           "sanfranciscopost.com": {
@@ -2789,12 +2789,12 @@ window.__DEMO_DATA__ = {
             }
           },
           "sfguide.co": {
-            "count": 2,
+            "count": 3,
             "reasons": {
-              "domain_not_allowlisted": 2
+              "domain_not_allowlisted": 3
             },
             "source_types": {
-              "unlisted": 2
+              "unlisted": 3
             }
           },
           "sfheritage.org": {
@@ -2825,12 +2825,12 @@ window.__DEMO_DATA__ = {
             }
           },
           "sfinquirer.com": {
-            "count": 2,
+            "count": 3,
             "reasons": {
-              "domain_not_allowlisted": 2
+              "domain_not_allowlisted": 3
             },
             "source_types": {
-              "unlisted": 2
+              "unlisted": 3
             }
           },
           "sfist.com": {
@@ -2888,12 +2888,12 @@ window.__DEMO_DATA__ = {
             }
           },
           "sfport.com": {
-            "count": 1,
+            "count": 3,
             "reasons": {
-              "domain_not_allowlisted": 1
+              "domain_not_allowlisted": 3
             },
             "source_types": {
-              "unlisted": 1
+              "unlisted": 3
             }
           },
           "sfpublicpress.org": {
@@ -2921,6 +2921,15 @@ window.__DEMO_DATA__ = {
             },
             "source_types": {
               "unlisted": 6
+            }
+          },
+          "sfseacliff.california58.com": {
+            "count": 1,
+            "reasons": {
+              "domain_not_allowlisted": 1
+            },
+            "source_types": {
+              "unlisted": 1
             }
           },
           "sftimes.com": {
