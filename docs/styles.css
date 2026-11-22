@@ -8129,3 +8129,27 @@ a:hover {
     margin-bottom: 8px;
   }
 }
+
+/* UX audit: touch targets, legibility and contrast */
+.btn-pagination-primary,
+.btn-pagination-primary:hover { background: #1D4ED8; }
+.btn-pagination-primary:hover { background: #1E40AF; }
+.explore-status-line .status-sep,
+.footer-dot { color: var(--muted); }
+.carousel-dot { position: relative; }
+.carousel-dot::after {
+  content: '';
+  position: absolute;
+  inset: -17px -4px;
+}
+.btn-clear-filters {
+  min-height: 44px;
+  padding: 0 8px;
+}
+.timeline-label, .timeline-val, .entity-geo-tag, .table-outcome-kicker,
+.story-outcome-kicker, .table-card-action, .table-role-tag, .origin-badge,
+.btn-view-mode { font-size: max(0.75rem, 12px); }
+@media (max-width: 767px) {
+  .view-mode-switcher .btn-view-mode { min-height: 44px; font-size: 0.75rem; }
+  .brand { display: inline-flex; align-items: center; min-height: 44px; }
+}
