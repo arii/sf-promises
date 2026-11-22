@@ -289,7 +289,7 @@ window.__DEMO_DATA__ = {
       "total_verification_exception_checks": 3
     },
     "sourcing_audit": {
-      "generated_at": "2026-11-22T17:34:58Z",
+      "generated_at": "2026-11-22T17:39:24Z",
       "planner_query_count": 102,
       "planner_variant_query_count": 80,
       "planner_campaign_query_count": 4,
@@ -323,12 +323,12 @@ window.__DEMO_DATA__ = {
         10,
         11
       ],
-      "encountered_count": 75,
-      "qualified_count": 36,
+      "encountered_count": 74,
+      "qualified_count": 35,
       "needs_review_count": 38,
       "rejected_count": 1,
       "qualified_pillar_distribution": {
-        "Weather & Environment": 13,
+        "Weather & Environment": 12,
         "Work & Opportunity": 3,
         "Transit & Movement": 7,
         "Food & Local Business": 2,
@@ -339,7 +339,7 @@ window.__DEMO_DATA__ = {
       },
       "qualified_district_distribution": {
         "D2": 1,
-        "D3": 4,
+        "D3": 3,
         "D4": 1,
         "D6": 7,
         "D9": 3,
@@ -356,19 +356,19 @@ window.__DEMO_DATA__ = {
         "stages": [
           {
             "stage": "leads_encountered",
-            "count": 75,
+            "count": 74,
             "universe": "intake_register"
           },
           {
             "stage": "qualified",
-            "count": 36,
+            "count": 35,
             "universe": "intake_register",
-            "conversion_from_previous": 0.48
+            "conversion_from_previous": 0.473
           }
         ],
         "stage_counts": {
-          "leads_encountered": 75,
-          "qualified": 36
+          "leads_encountered": 74,
+          "qualified": 35
         }
       },
       "denials": {

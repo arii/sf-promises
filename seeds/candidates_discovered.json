@@ -1,6 +1,6 @@
 {
   "discovered_at": "2026-11-12T23:13:35.273551+00:00",
-  "total_count": 22,
+  "total_count": 21,
   "candidates": [
     {
       "candidate_id": "DISC-20261112-001",
@@ -188,23 +188,6 @@
       "relevance_score": 8
     },
     {
-      "candidate_id": "DISC-20261122-006",
-      "entity": "Port of San Francisco",
-      "url": "https://sfchronicle.com/climate/article/san-francisco-waterfront-plan-22387088.php",
-      "tier": "TIER2_NEWS",
-      "published_at": "2026-08-14T01:08:46Z",
-      "snippet": "Benson said construction may begin in 2030 or 2031.",
-      "verbatim_quote": "Benson said construction may begin in 2030 or 2031.",
-      "promised_date": "2026-08-14",
-      "due_date": "2031-12-31",
-      "pillar": "Weather & Environment",
-      "record_type": "project_or_opening",
-      "neighborhood": "Embarcadero",
-      "supervisor_district": 3,
-      "content_sha256": "d892fd3eebd691a290b82ce5d35e756a4673edc99eb68842e161cd07d4fd85c1",
-      "relevance_score": 8
-    },
-    {
       "candidate_id": "DISC-20261122-007",
       "entity": "SFMTA",
       "url": "https://sf.gov/news-mayor-lurie-celebrates-expansion-of-muni-service-following-success-of-transit-funding-measures",
@@ -281,7 +264,7 @@
       "snippet": "Artwork is scheduled for installation in spring 2027 with full project completion that summer.",
       "verbatim_quote": "Artwork is scheduled for installation in spring 2027 with full project completion that summer.",
       "promised_date": "2026-08-05",
-      "due_date": "2027-09-22",
+      "due_date": "2027-09-30",
       "pillar": "Arts, Music & Nightlife",
       "record_type": "project_or_opening",
       "neighborhood": "SoMa",

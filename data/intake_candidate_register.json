@@ -1,6 +1,6 @@
 {
   "summary": {
-    "generated_at": "2026-11-22T17:34:58Z",
+    "generated_at": "2026-11-22T17:39:24Z",
     "planner_query_count": 102,
     "planner_variant_query_count": 80,
     "planner_campaign_query_count": 4,
@@ -34,12 +34,12 @@
       10,
       11
     ],
-    "encountered_count": 75,
-    "qualified_count": 36,
+    "encountered_count": 74,
+    "qualified_count": 35,
     "needs_review_count": 38,
     "rejected_count": 1,
     "qualified_pillar_distribution": {
-      "Weather & Environment": 13,
+      "Weather & Environment": 12,
       "Work & Opportunity": 3,
       "Transit & Movement": 7,
       "Food & Local Business": 2,
@@ -50,7 +50,7 @@
     },
     "qualified_district_distribution": {
       "D2": 1,
-      "D3": 4,
+      "D3": 3,
       "D4": 1,
       "D6": 7,
       "D9": 3,
@@ -67,19 +67,19 @@
       "stages": [
         {
           "stage": "leads_encountered",
-          "count": 75,
+          "count": 74,
           "universe": "intake_register"
         },
         {
           "stage": "qualified",
-          "count": 36,
+          "count": 35,
           "universe": "intake_register",
-          "conversion_from_previous": 0.48
+          "conversion_from_previous": 0.473
         }
       ],
       "stage_counts": {
-        "leads_encountered": 75,
-        "qualified": 36
+        "leads_encountered": 74,
+        "qualified": 35
       }
     },
     "denials": {
@@ -5778,36 +5778,6 @@
       "missingness_note": "Screened strictly without outcome fields."
     },
     {
-      "candidate_id": "DISC-20261122-006",
-      "source_batch": "keenable_discovery_sweep",
-      "discovery_channel": "keenable_temporal_search",
-      "encounter_date": "2026-08-14",
-      "entity": "Port of San Francisco",
-      "pillar": "Weather & Environment",
-      "record_type": "project_or_opening",
-      "statement_preview": "Benson said construction may begin in 2030 or 2031.",
-      "promised_date": "2026-08-14",
-      "promise_date_precision": "day",
-      "due_date": "2031-12-31",
-      "due_date_status": "present",
-      "geographic_scope": "district",
-      "is_centroid": true,
-      "supervisor_district": 3,
-      "neighborhood": "Embarcadero",
-      "address_status": "not_captured",
-      "district_status": "present",
-      "source_url": "https://sfchronicle.com/climate/article/san-francisco-waterfront-plan-22387088.php",
-      "source_tier": "TIER2_NEWS",
-      "media_image_url": null,
-      "media_caption": null,
-      "qualification_status": "qualified",
-      "rejection_reason": null,
-      "dual_review_sample": false,
-      "dual_review_agreed": null,
-      "outcome_blind_verified": true,
-      "missingness_note": "Screened strictly without outcome fields."
-    },
-    {
       "candidate_id": "DISC-20261122-007",
       "source_batch": "keenable_discovery_sweep",
       "discovery_channel": "keenable_temporal_search",
@@ -5938,7 +5908,7 @@
       "statement_preview": "Artwork is scheduled for installation in spring 2027 with full project completion that summer.",
       "promised_date": "2026-08-05",
       "promise_date_precision": "day",
-      "due_date": "2027-09-22",
+      "due_date": "2027-09-30",
       "due_date_status": "present",
       "geographic_scope": "district",
       "is_centroid": true,

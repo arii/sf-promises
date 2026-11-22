@@ -102,18 +102,6 @@
       "quote_verbatim": true
     },
     {
-      "candidate_id": "DISC-20261122-006",
-      "url": "https://www.sfchronicle.com/climate/article/san-francisco-waterfront-plan-22387088.php",
-      "requested_url": "https://sfchronicle.com/climate/article/san-francisco-waterfront-plan-22387088.php",
-      "published_at": "2026-08-14T01:08:46Z",
-      "fetched_at": "2026-11-22T17:29:26.898721+00:00",
-      "sha256": "d892fd3eebd691a290b82ce5d35e756a4673edc99eb68842e161cd07d4fd85c1",
-      "source_tier": "TIER2_NEWS",
-      "verbatim_quote": "Benson said construction may begin in 2030 or 2031.",
-      "gate_failures": [],
-      "quote_verbatim": true
-    },
-    {
       "candidate_id": "DISC-20261122-007",
       "url": "https://www.sf.gov/news-mayor-lurie-celebrates-expansion-of-muni-service-following-success-of-transit-funding-measures",
       "requested_url": "https://sf.gov/news-mayor-lurie-celebrates-expansion-of-muni-service-following-success-of-transit-funding-measures",
@@ -216,7 +204,7 @@
     },
     {
       "candidate_id": "DISC-20261122-006",
-      "note": "Pending: hedged ('may begin') statement; the Chronicle also reports the final plan costs $17.8B and takes about 32 years versus 14 years and $13.5B in the January 2024 draft. Official Port documents (sfport.com) are not on the allowlist."
+      "note": "Removed from candidates: hedged ('may begin') statement, not a firm commitment. The Chronicle also reports the final plan costs $17.8B and takes about 32 years versus 14 years and $13.5B in the January 2024 draft. Official Port documents (sfport.com) are not on the allowlist."
     },
     {
       "candidate_id": "DISC-20261122-007",
@@ -258,10 +246,29 @@
       "lead": "SEISMIC-02 (Port seawall) and ARTS-03 (Stern Grove flood repairs)",
       "reason": "already in data/intake_candidate_register.json; not duplicated",
       "url": "https://sfport.com/seawall"
+    },
+    {
+      "lead": "Port of San Francisco waterfront plan: \"Benson said construction may begin in 2030 or 2031.\" (SF Chronicle 2026-08-14)",
+      "reason": "hedged statement (\"may begin\"), not a firm commitment",
+      "url": "https://www.sfchronicle.com/climate/article/san-francisco-waterfront-plan-22387088.php",
+      "sha256": "d892fd3eebd691a290b82ce5d35e756a4673edc99eb68842e161cd07d4fd85c1"
     }
   ],
   "pipeline_notes": [
     "src.v2_discovery and src.v2_keenable named in the skill do not exist; the equivalents are src.discovery and src.keenable.",
-    "Intake qualification (src/sourcing/qualification.py) rejected 'anticipated'/'expected to be' commitments as vague_aspiration because _FORWARD_ACTION_RE lacked those words; this round extends the regex."
-  ]
+    "Intake qualification (src/sourcing/qualification.py) rejected 'anticipated'/'expected to be' commitments as vague_aspiration because _FORWARD_ACTION_RE lacked those words; this round extends the regex.",
+    "Regenerating with src/sourcing/pipeline.py also changed fields on the original 63 rows: encounter_date is stamped by the pipeline with the run date, and missingness_note wording comes from the pipeline code. Both are regenerated output, not hand edits. Statuses, due dates, text, URLs and tiers of the original rows are unchanged.",
+    "The Q-CAMP-01..04 planned queries, planner_campaign_* summary fields and relevance_rebalance_backtest outputs come from campaign and backtest code already on origin/main whose outputs had not been regenerated. They are not produced by this round's changes.",
+    "Source bytes are stored in the local SF_PROMISES_WORKSPACE sources directory per AGENTS.md and are not committed. The SHA-256 values in this record identify those files.",
+    "The forward-action regex adds the phrase forms 'anticipated', 'expected to', 'estimated to' and 'slated' (not bare 'expected' or 'estimated'). DISC-20261122-006 was removed after review as a hedged statement; 11 candidates remain from this round."
+  ],
+  "date_conventions": {
+    "rule": "Due dates are converted to period ends with one convention.",
+    "year_only": "Dec 31",
+    "season_summer": "Sep 30",
+    "first_half": "Jun 30",
+    "late_year": "Dec 31",
+    "month_only": "last day of the month",
+    "applied_to": "DISC-20261122-011 ('that summer' 2027) uses 2027-09-30, same as DISC-20261122-002 (Summer 2026 -> 2026-09-30)."
+  }
 }

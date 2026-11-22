@@ -144,7 +144,7 @@ def test_english_stratified_queries_byte_identical_to_release_base():
 
 def test_english_qualification_reproduces_the_frozen_register():
     """Re-evaluating the frozen intake pool must reproduce the committed
-    register counts exactly (36 qualified / 38 needs_review / 1 rejected)."""
+    register counts exactly (35 qualified / 38 needs_review / 1 rejected)."""
     pool = _load_existing_candidate_pools(REPO_ROOT)
     qualifier = QualificationIntakeAgent()
     statuses = Counter()
@@ -158,7 +158,7 @@ def test_english_qualification_reproduces_the_frozen_register():
             dual_sample=dual,
         )
         statuses[result.qualification_status] += 1
-    assert statuses == Counter({"needs_review": 38, "qualified": 36, "rejected": 1})
+    assert statuses == Counter({"needs_review": 38, "qualified": 35, "rejected": 1})
 
 
 def test_spanish_forward_statement_qualifies():
@@ -245,6 +245,16 @@ def test_dated_schedule_statement_is_forward_looking():
 def test_statement_without_forward_wording_still_vague_aspiration():
     result = QualificationIntakeAgent().evaluate_candidate(
         _sfpuc_raw("The Bayview stormwater tunnel project was discussed by SFPUC staff at the meeting."),
+        source_batch="d2_test",
+        discovery_channel="keenable",
+    )
+    assert result.qualification_status == "rejected"
+    assert result.rejection_reason == "vague_aspiration"
+
+
+def test_backward_looking_estimate_still_vague_aspiration():
+    result = QualificationIntakeAgent().evaluate_candidate(
+        _sfpuc_raw("Attendance was estimated at 4,000 and expected levels were met."),
         source_batch="d2_test",
         discovery_channel="keenable",
     )
