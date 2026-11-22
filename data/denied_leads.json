@@ -3358,5 +3358,29 @@
   {
     "url": "https://sfelections.sfgov.org/",
     "reason": "http_202"
+  },
+  {
+    "url": "https://sfist.com/2026/11/19/sf-officials-urge-residents-to-use-311-for-storm-related-issues-after-record-911-calls",
+    "reason": "domain_not_allowlisted"
+  },
+  {
+    "url": "https://thesanfrancisco.org/news/sf-mayor-defends-storm-preparations-after-city-inundated-with-severe-flooding",
+    "reason": "domain_not_allowlisted"
+  },
+  {
+    "url": "https://infraday.com/2026/11/22/san-francisco-storm-mission-district-sewer-tunnel",
+    "reason": "domain_not_allowlisted"
+  },
+  {
+    "url": "https://sfport.com/sites/default/files/2026-08/260817_Highlights%20Document_Rec%20Plan.pdf",
+    "reason": "domain_not_allowlisted"
+  },
+  {
+    "url": "https://jacobs.com/projects/port-san-francisco-waterfront-resilience-program",
+    "reason": "domain_not_allowlisted"
+  },
+  {
+    "url": "https://stormwater.com/stormwater-management/flood-control/news/55330072/san-francisco-strengthens-storm-readiness-with-major-stormwater-and-infrastructure-investments",
+    "reason": "domain_not_allowlisted"
   }
 ]

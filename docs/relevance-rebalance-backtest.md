@@ -7,7 +7,7 @@ The publish threshold is unchanged: **total >= 5 with `real_promise >= 1`**; res
 
 | Style | n | pass before | pass after | mean total before | mean total after |
 |---|---|---|---|---|---|
-| capital_project | 39 | 36/39 (92%) | 36/39 (92%) | 7.128 | 7.051 |
+| capital_project | 50 | 47/50 (94%) | 47/50 (94%) | 7.24 | 7.18 |
 | service_program | 52 | 37/52 (71%) | 37/52 (71%) | 6.327 | 6.481 |
 
 ## Reading

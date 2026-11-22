@@ -1,10 +1,15 @@
 {
   "summary": {
-    "generated_at": "2026-11-14T08:34:23Z",
-    "planner_query_count": 98,
+    "generated_at": "2026-11-22T17:39:24Z",
+    "planner_query_count": 102,
     "planner_variant_query_count": 80,
+    "planner_campaign_query_count": 4,
+    "planner_campaign_target_domains": [
+      "daniellurie.com"
+    ],
     "planner_pillars_covered": [
       "Arts, Music & Nightlife",
+      "Campaign Fact Sheets",
       "Civic Life",
       "Culture & Social Life",
       "Food & Local Business",
@@ -16,6 +21,7 @@
       "Work & Opportunity"
     ],
     "planner_districts_covered": [
+      0,
       1,
       2,
       3,
@@ -28,52 +34,57 @@
       10,
       11
     ],
-    "encountered_count": 63,
-    "qualified_count": 24,
+    "encountered_count": 74,
+    "qualified_count": 35,
     "needs_review_count": 38,
     "rejected_count": 1,
     "qualified_pillar_distribution": {
-      "Weather & Environment": 7,
+      "Weather & Environment": 12,
       "Work & Opportunity": 3,
-      "Transit & Movement": 6,
+      "Transit & Movement": 7,
       "Food & Local Business": 2,
-      "Arts, Music & Nightlife": 2,
+      "Arts, Music & Nightlife": 3,
       "Civic Life": 1,
-      "Housing & Neighborhoods": 3
+      "Housing & Neighborhoods": 5,
+      "Sports & Recreation": 2
     },
     "qualified_district_distribution": {
       "D2": 1,
-      "D3": 2,
+      "D3": 3,
       "D4": 1,
-      "D6": 5,
-      "D9": 1,
+      "D6": 7,
+      "D9": 3,
       "D8": 1,
-      "D7": 1
+      "D7": 1,
+      "D11": 1,
+      "D1": 1,
+      "D10": 1,
+      "D5": 1
     },
-    "dual_review_sampled_count": 3,
+    "dual_review_sampled_count": 4,
     "dual_review_agreement_rate": 1.0,
     "funnel": {
       "stages": [
         {
           "stage": "leads_encountered",
-          "count": 63,
+          "count": 74,
           "universe": "intake_register"
         },
         {
           "stage": "qualified",
-          "count": 24,
+          "count": 35,
           "universe": "intake_register",
-          "conversion_from_previous": 0.381
+          "conversion_from_previous": 0.473
         }
       ],
       "stage_counts": {
-        "leads_encountered": 63,
-        "qualified": 24
+        "leads_encountered": 74,
+        "qualified": 35
       }
     },
     "denials": {
-      "total_denials": 834,
-      "distinct_domains": 367,
+      "total_denials": 846,
+      "distinct_domains": 373,
       "by_domain": {
         "48hills.org": {
           "count": 2,
@@ -1380,6 +1391,15 @@
             "unlisted": 1
           }
         },
+        "infraday.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
         "instagram.com": {
           "count": 5,
           "reasons": {
@@ -1399,6 +1419,15 @@
           }
         },
         "isthefoodgood.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "jacobs.com": {
           "count": 1,
           "reasons": {
             "domain_not_allowlisted": 1
@@ -1476,7 +1505,7 @@
             "domain_not_allowlisted": 9
           },
           "source_types": {
-            "unlisted": 9
+            "news": 9
           }
         },
         "labs.songkick.com": {
@@ -2133,7 +2162,7 @@
             "domain_not_allowlisted": 10
           },
           "source_types": {
-            "unlisted": 10
+            "neighborhood_press": 10
           }
         },
         "ridgelaneneighborssf.org": {
@@ -2295,7 +2324,7 @@
             "domain_not_allowlisted": 5
           },
           "source_types": {
-            "unlisted": 5
+            "news": 5
           }
         },
         "sf.funcheap.com": {
@@ -2388,6 +2417,15 @@
             "news": 1
           }
         },
+        "sfcontroller.org": {
+          "count": 1,
+          "reasons": {
+            "http_202": 1
+          },
+          "source_types": {
+            "official_government": 1
+          }
+        },
         "sfcta.org": {
           "count": 13,
           "reasons": {
@@ -2424,6 +2462,15 @@
             "unlisted": 3
           }
         },
+        "sfelections.sfgov.org": {
+          "count": 1,
+          "reasons": {
+            "http_202": 1
+          },
+          "source_types": {
+            "official_government": 1
+          }
+        },
         "sffilm.org": {
           "count": 1,
           "reasons": {
@@ -2443,12 +2490,13 @@
           }
         },
         "sfgov.legistar.com": {
-          "count": 12,
+          "count": 16,
           "reasons": {
-            "domain_not_allowlisted": 12
+            "domain_not_allowlisted": 12,
+            "unsupported_source_format": 4
           },
           "source_types": {
-            "unlisted": 12
+            "official_government": 16
           }
         },
         "sfguide.co": {
@@ -2497,12 +2545,12 @@
           }
         },
         "sfist.com": {
-          "count": 8,
+          "count": 9,
           "reasons": {
-            "domain_not_allowlisted": 8
+            "domain_not_allowlisted": 9
           },
           "source_types": {
-            "unlisted": 8
+            "unlisted": 9
           }
         },
         "sflcv.org": {
@@ -2550,13 +2598,22 @@
             "unlisted": 11
           }
         },
+        "sfport.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
         "sfpublicpress.org": {
           "count": 3,
           "reasons": {
             "domain_not_allowlisted": 3
           },
           "source_types": {
-            "unlisted": 3
+            "news": 3
           }
         },
         "sfpublicworks.org": {
@@ -2704,6 +2761,15 @@
           }
         },
         "static1.squarespace.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "stormwater.com": {
           "count": 1,
           "reasons": {
             "domain_not_allowlisted": 1
@@ -2866,12 +2932,12 @@
           }
         },
         "thesanfrancisco.org": {
-          "count": 7,
+          "count": 8,
           "reasons": {
-            "domain_not_allowlisted": 7
+            "domain_not_allowlisted": 8
           },
           "source_types": {
-            "unlisted": 7
+            "unlisted": 8
           }
         },
         "thesunreporter.com": {
@@ -3114,7 +3180,7 @@
             "domain_not_allowlisted": 2
           },
           "source_types": {
-            "unlisted": 2
+            "community_press": 2
           }
         },
         "wunderground.com": {
@@ -3321,7 +3387,7 @@
             "domain_not_allowlisted": 8
           },
           "source_types": {
-            "unlisted": 8
+            "community_press": 8
           }
         },
         "www.xtreet.com": {
@@ -3394,7 +3460,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-01-D04-2",
@@ -3407,7 +3474,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D08-1",
@@ -3420,7 +3488,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D11-2",
@@ -3433,7 +3502,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D01-1",
@@ -3446,7 +3516,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D03-2",
@@ -3459,7 +3530,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D05-1",
@@ -3473,7 +3545,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D06-2",
@@ -3487,7 +3560,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D07-1",
@@ -3500,7 +3574,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D09-2",
@@ -3513,7 +3588,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-06-D10-1",
@@ -3526,7 +3602,8 @@
         "sf.gov",
         "missionlocal.org",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D02-1",
@@ -3539,7 +3616,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D04-2",
@@ -3552,7 +3630,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D08-1",
@@ -3565,7 +3644,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D11-2",
@@ -3578,7 +3658,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D01-1",
@@ -3591,7 +3672,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D03-2",
@@ -3604,7 +3686,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-10-D05-1",
@@ -3617,7 +3700,8 @@
         "sfgov.legistar.com",
         "sf.gov",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-01-D02-es",
@@ -3630,7 +3714,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-01-D02-zh",
@@ -3643,7 +3728,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-01-D04-es",
@@ -3656,7 +3742,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-01-D04-zh",
@@ -3669,7 +3756,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-01-D08-es",
@@ -3682,7 +3770,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-01-D08-zh",
@@ -3695,7 +3784,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-01-D11-es",
@@ -3708,7 +3798,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-01-D11-zh",
@@ -3721,7 +3812,8 @@
         "sfmoma.org",
         "sfchronicle.com",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D02-es",
@@ -3734,7 +3826,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D02-zh",
@@ -3747,7 +3840,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D04-es",
@@ -3760,7 +3854,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D04-zh",
@@ -3773,7 +3868,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D08-es",
@@ -3786,7 +3882,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D08-zh",
@@ -3799,7 +3896,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D11-es",
@@ -3812,7 +3910,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-02-D11-zh",
@@ -3825,7 +3924,8 @@
         "bayfc.com",
         "sfrecpark.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D02-es",
@@ -3838,7 +3938,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D02-zh",
@@ -3851,7 +3952,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D04-es",
@@ -3864,7 +3966,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D04-zh",
@@ -3877,7 +3980,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D08-es",
@@ -3890,7 +3994,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D08-zh",
@@ -3903,7 +4008,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D11-es",
@@ -3916,7 +4022,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-03-D11-zh",
@@ -3929,7 +4036,8 @@
         "sfstandard.com",
         "sf.gov",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D02-es",
@@ -3943,7 +4051,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D02-zh",
@@ -3957,7 +4066,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D04-es",
@@ -3971,7 +4081,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D04-zh",
@@ -3985,7 +4096,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D08-es",
@@ -3999,7 +4111,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D08-zh",
@@ -4013,7 +4126,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D11-es",
@@ -4027,7 +4141,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-04-D11-zh",
@@ -4041,7 +4156,8 @@
         "sfpuc.org",
         "sfport.com",
         "sfbayview.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D02-es",
@@ -4054,7 +4170,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D02-zh",
@@ -4067,7 +4184,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D04-es",
@@ -4080,7 +4198,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D04-zh",
@@ -4093,7 +4212,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D08-es",
@@ -4106,7 +4226,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D08-zh",
@@ -4119,7 +4240,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D11-es",
@@ -4132,7 +4254,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-05-D11-zh",
@@ -4145,7 +4268,8 @@
         "flysfo.com",
         "sfcta.org",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-06-D02-es",
@@ -4158,7 +4282,8 @@
         "sf.gov",
         "missionlocal.org",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-06-D02-zh",
@@ -4171,7 +4296,8 @@
         "sf.gov",
         "missionlocal.org",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-06-D04-es",
@@ -4184,7 +4310,8 @@
         "sf.gov",
         "missionlocal.org",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-06-D04-zh",
@@ -4197,7 +4324,8 @@
         "sf.gov",
         "missionlocal.org",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-06-D08-es",
@@ -4210,7 +4338,8 @@
         "sf.gov",
         "missionlocal.org",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-06-D08-zh",
@@ -4223,7 +4352,8 @@
         "sf.gov",
         "missionlocal.org",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-06-D11-es",
@@ -4236,7 +4366,8 @@
         "sf.gov",
         "missionlocal.org",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-06-D11-zh",
@@ -4249,7 +4380,8 @@
         "sf.gov",
         "missionlocal.org",
         "eltecolote.org"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D02-es",
@@ -4262,7 +4394,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D02-zh",
@@ -4275,7 +4408,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D04-es",
@@ -4288,7 +4422,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D04-zh",
@@ -4301,7 +4436,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D08-es",
@@ -4314,7 +4450,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D08-zh",
@@ -4327,7 +4464,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D11-es",
@@ -4340,7 +4478,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-07-D11-zh",
@@ -4353,7 +4492,8 @@
         "dcyf.org",
         "sfpublicpress.org",
         "singtaousa.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D02-es",
@@ -4366,7 +4506,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D02-zh",
@@ -4379,7 +4520,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D04-es",
@@ -4392,7 +4534,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D04-zh",
@@ -4405,7 +4548,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D08-es",
@@ -4418,7 +4562,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D08-zh",
@@ -4431,7 +4576,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D11-es",
@@ -4444,7 +4590,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-08-D11-zh",
@@ -4457,7 +4604,8 @@
         "sf.gov",
         "sfchronicle.com",
         "elreporterosf.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D02-es",
@@ -4470,7 +4618,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D02-zh",
@@ -4483,7 +4632,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D04-es",
@@ -4496,7 +4646,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D04-zh",
@@ -4509,7 +4660,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D08-es",
@@ -4522,7 +4674,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D08-zh",
@@ -4535,7 +4688,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D11-es",
@@ -4548,7 +4702,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-09-D11-zh",
@@ -4561,7 +4716,8 @@
         "thefrisc.com",
         "kqed.org",
         "noevalleyvoice.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-10-D02-es",
@@ -4574,7 +4730,8 @@
         "sfgov.legistar.com",
         "sf.gov",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-10-D02-zh",
@@ -4587,7 +4744,8 @@
         "sfgov.legistar.com",
         "sf.gov",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-10-D04-es",
@@ -4600,7 +4758,8 @@
         "sfgov.legistar.com",
         "sf.gov",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-10-D04-zh",
@@ -4613,7 +4772,8 @@
         "sfgov.legistar.com",
         "sf.gov",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-10-D08-es",
@@ -4626,7 +4786,8 @@
         "sfgov.legistar.com",
         "sf.gov",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-10-D08-zh",
@@ -4639,7 +4800,8 @@
         "sfgov.legistar.com",
         "sf.gov",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-10-D11-es",
@@ -4652,7 +4814,8 @@
         "sfgov.legistar.com",
         "sf.gov",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
     },
     {
       "query_id": "Q-10-D11-zh",
@@ -4665,7 +4828,52 @@
         "sfgov.legistar.com",
         "sf.gov",
         "inglesidelight.com"
-      ]
+      ],
+      "lane": "pillar"
+    },
+    {
+      "query_id": "Q-CAMP-01",
+      "pillar": "Campaign Fact Sheets",
+      "supervisor_district": 0,
+      "neighborhood": "Citywide",
+      "query_text": "\"San Francisco\" \"mayor\" (\"will\" OR \"announced\") \"housing\"",
+      "target_domains": [
+        "daniellurie.com"
+      ],
+      "lane": "campaign"
+    },
+    {
+      "query_id": "Q-CAMP-02",
+      "pillar": "Campaign Fact Sheets",
+      "supervisor_district": 0,
+      "neighborhood": "Citywide",
+      "query_text": "\"San Francisco\" \"mayor\" (\"plans to\" OR \"announced\") \"small business\"",
+      "target_domains": [
+        "daniellurie.com"
+      ],
+      "lane": "campaign"
+    },
+    {
+      "query_id": "Q-CAMP-03",
+      "pillar": "Campaign Fact Sheets",
+      "supervisor_district": 0,
+      "neighborhood": "Citywide",
+      "query_text": "\"San Francisco\" \"mayor\" (\"committed to\" OR \"announced\") \"public safety\"",
+      "target_domains": [
+        "daniellurie.com"
+      ],
+      "lane": "campaign"
+    },
+    {
+      "query_id": "Q-CAMP-04",
+      "pillar": "Campaign Fact Sheets",
+      "supervisor_district": 0,
+      "neighborhood": "Citywide",
+      "query_text": "\"San Francisco\" \"mayor\" (\"scheduled to\" OR \"announced\") \"city budget\"",
+      "target_domains": [
+        "daniellurie.com"
+      ],
+      "lane": "campaign"
     }
   ],
   "candidates": [
@@ -5183,7 +5391,7 @@
       "candidate_id": "DISC-20261112-003",
       "source_batch": "keenable_discovery_sweep",
       "discovery_channel": "keenable_temporal_search",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "SFMTA",
       "pillar": "Transit & Movement",
       "record_type": "project_or_opening",
@@ -5213,7 +5421,7 @@
       "candidate_id": "DISC-20261112-004",
       "source_batch": "keenable_discovery_sweep",
       "discovery_channel": "keenable_temporal_search",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "SFMTA",
       "pillar": "Transit & Movement",
       "record_type": "project_or_opening",
@@ -5363,7 +5571,7 @@
       "candidate_id": "DISC-20261112-009",
       "source_batch": "keenable_discovery_sweep",
       "discovery_channel": "keenable_temporal_search",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Housing & Homelessness",
       "pillar": "Housing & Neighborhoods",
       "record_type": "claim_or_forecast",
@@ -5420,10 +5628,340 @@
       "missingness_note": "Screened strictly without outcome fields."
     },
     {
+      "candidate_id": "DISC-20261122-001",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2025-06-12",
+      "entity": "SFPUC",
+      "pillar": "Weather & Environment",
+      "record_type": "project_or_opening",
+      "statement_preview": "Project \ncompletion is anticipated in 2028.",
+      "promised_date": "2025-06-12",
+      "promise_date_precision": "day",
+      "due_date": "2028-12-31",
+      "due_date_status": "present",
+      "geographic_scope": "district",
+      "is_centroid": true,
+      "supervisor_district": 9,
+      "neighborhood": "Mission",
+      "address_status": "not_captured",
+      "district_status": "present",
+      "source_url": "https://sfpuc.gov/sites/default/files/documents/SSIP_%20FASIP_factsheet_2025-06-_v21_DH.pdf",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-002",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2025-10-16",
+      "entity": "SFPUC",
+      "pillar": "Weather & Environment",
+      "record_type": "project_or_opening",
+      "statement_preview": "Pending SFPUC \nCommission approvals, construction is anticipated to start in Summer \n2026 with an expected duration of 4 years.",
+      "promised_date": "2025-10-16",
+      "promise_date_precision": "day",
+      "due_date": "2026-09-30",
+      "due_date_status": "present",
+      "geographic_scope": "district",
+      "is_centroid": true,
+      "supervisor_district": 9,
+      "neighborhood": "Bernal Heights",
+      "address_status": "not_captured",
+      "district_status": "present",
+      "source_url": "https://sfpuc.gov/sites/default/files/documents/SSIP_LowerAlemanyArea_FactSheet_2025-10-16_v20_DH.pdf",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-003",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2026-09-25",
+      "entity": "SFPUC",
+      "pillar": "Weather & Environment",
+      "record_type": "project_or_opening",
+      "statement_preview": "Design is expected to begin in 2026, with construction planned to start in March 2028.",
+      "promised_date": "2026-09-25",
+      "promise_date_precision": "day",
+      "due_date": "2028-03-31",
+      "due_date_status": "present",
+      "geographic_scope": "district",
+      "is_centroid": true,
+      "supervisor_district": 11,
+      "neighborhood": "Outer Mission",
+      "address_status": "not_captured",
+      "district_status": "present",
+      "source_url": "https://sfpuc.gov/about-us/news/epa-awards-sfpuc-5-million-san-francisco-stormwater-projects",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-004",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2026-09-25",
+      "entity": "SFPUC",
+      "pillar": "Weather & Environment",
+      "record_type": "project_or_opening",
+      "statement_preview": "San Francisco has a long term goal of capturing 1 billion gallons of stormwater each year by 2050 and is on track to meet that target.",
+      "promised_date": "2026-09-25",
+      "promise_date_precision": "day",
+      "due_date": "2050-12-31",
+      "due_date_status": "present",
+      "geographic_scope": "neighborhood",
+      "is_centroid": true,
+      "supervisor_district": null,
+      "neighborhood": "San Francisco",
+      "address_status": "not_captured",
+      "district_status": "not_captured",
+      "source_url": "https://sfpuc.gov/about-us/news/epa-awards-sfpuc-5-million-san-francisco-stormwater-projects",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-005",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2026-09-10",
+      "entity": "SFPUC",
+      "pillar": "Weather & Environment",
+      "record_type": "project_or_opening",
+      "statement_preview": "Both Seacliff 1 & 2 pump station facilities are approaching completed construction status, with both locations anticipated to be finished with the sewer upgrades in the area in late 2026.",
+      "promised_date": "2026-09-10",
+      "promise_date_precision": "day",
+      "due_date": "2026-12-31",
+      "due_date_status": "present",
+      "geographic_scope": "district",
+      "is_centroid": true,
+      "supervisor_district": 1,
+      "neighborhood": "Sea Cliff",
+      "address_status": "not_captured",
+      "district_status": "present",
+      "source_url": "https://sfpuc.gov/about-us/news/pumped-upgrades-sea-cliff-sewer-improvements",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-007",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2026-11-16",
+      "entity": "SFMTA",
+      "pillar": "Transit & Movement",
+      "record_type": "project_or_opening",
+      "statement_preview": "Starting January 30, 2027, riders will see changes across the system: more frequent service on busy routes, easier rides downtown, more room on crowded trips, and more reliable schedules.",
+      "promised_date": "2026-11-16",
+      "promise_date_precision": "day",
+      "due_date": "2027-01-30",
+      "due_date_status": "present",
+      "geographic_scope": "neighborhood",
+      "is_centroid": true,
+      "supervisor_district": null,
+      "neighborhood": "San Francisco",
+      "address_status": "not_captured",
+      "district_status": "not_captured",
+      "source_url": "https://sf.gov/news-mayor-lurie-celebrates-expansion-of-muni-service-following-success-of-transit-funding-measures",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-008",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2026-11-12",
+      "entity": "SF Mayor's Office (SF Department of Public Health)",
+      "pillar": "Housing & Neighborhoods",
+      "record_type": "project_or_opening",
+      "statement_preview": "Mercy Housing is leading development of the six-story, 68,000-square-foot building at Trade Winds Avenue and Macky Road, which is expected to be completed in late 2028.",
+      "promised_date": "2026-11-12",
+      "promise_date_precision": "day",
+      "due_date": "2028-12-31",
+      "due_date_status": "present",
+      "geographic_scope": "district",
+      "is_centroid": true,
+      "supervisor_district": 6,
+      "neighborhood": "Treasure Island",
+      "address_status": "not_captured",
+      "district_status": "present",
+      "source_url": "https://sf.gov/news-mayor-lurie-breaks-ground-on-300-treatment-and-transitional-housing-beds-to-support-people-in-recovery",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-009",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2026-11-09",
+      "entity": "SF Mayor's Office and SF Recreation and Park Department",
+      "pillar": "Sports & Recreation",
+      "record_type": "project_or_opening",
+      "statement_preview": "The project is expected to break ground in late 2026 and be completed in 2028.",
+      "promised_date": "2026-11-09",
+      "promise_date_precision": "day",
+      "due_date": "2028-12-31",
+      "due_date_status": "present",
+      "geographic_scope": "district",
+      "is_centroid": true,
+      "supervisor_district": 3,
+      "neighborhood": "Financial District",
+      "address_status": "not_captured",
+      "district_status": "present",
+      "source_url": "https://sf.gov/news-mayor-lurie-announces-100-million-gift-to-san-francisco-parks-from-brian-chesky-largest-ever-single-donor-gift-to-city",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-010",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2026-11-09",
+      "entity": "SF Mayor's Office and SF Recreation and Park Department",
+      "pillar": "Sports & Recreation",
+      "record_type": "project_or_opening",
+      "statement_preview": "Construction is expected to begin in late 2027, with the renovated park opening in 2029.",
+      "promised_date": "2026-11-09",
+      "promise_date_precision": "day",
+      "due_date": "2029-12-31",
+      "due_date_status": "present",
+      "geographic_scope": "district",
+      "is_centroid": true,
+      "supervisor_district": 10,
+      "neighborhood": "Potrero Hill",
+      "address_status": "not_captured",
+      "district_status": "present",
+      "source_url": "https://sf.gov/news-mayor-lurie-announces-100-million-gift-to-san-francisco-parks-from-brian-chesky-largest-ever-single-donor-gift-to-city",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": true,
+      "dual_review_agreed": true,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-011",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2026-08-05",
+      "entity": "San Francisco Arts Commission",
+      "pillar": "Arts, Music & Nightlife",
+      "record_type": "project_or_opening",
+      "statement_preview": "Artwork is scheduled for installation in spring 2027 with full project completion that summer.",
+      "promised_date": "2026-08-05",
+      "promise_date_precision": "day",
+      "due_date": "2027-09-30",
+      "due_date_status": "present",
+      "geographic_scope": "district",
+      "is_centroid": true,
+      "supervisor_district": 6,
+      "neighborhood": "SoMa",
+      "address_status": "not_captured",
+      "district_status": "present",
+      "source_url": "https://sf.gov/news-san-francisco-arts-commission-approves-final-designs-for-new-art-corridor-on-minna-and-natoma-streets",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
+      "candidate_id": "DISC-20261122-012",
+      "source_batch": "keenable_discovery_sweep",
+      "discovery_channel": "keenable_temporal_search",
+      "encounter_date": "2026-10-20",
+      "entity": "SF Mayor's Office",
+      "pillar": "Housing & Neighborhoods",
+      "record_type": "project_or_opening",
+      "statement_preview": "Groundbreaking on the senior homes is anticipated in the first half of 2027, with the new co-op to follow.",
+      "promised_date": "2026-10-20",
+      "promise_date_precision": "day",
+      "due_date": "2027-06-30",
+      "due_date_status": "present",
+      "geographic_scope": "district",
+      "is_centroid": true,
+      "supervisor_district": 5,
+      "neighborhood": "Western Addition",
+      "address_status": "not_captured",
+      "district_status": "present",
+      "source_url": "https://sf.gov/news-mayor-lurie-moves-to-bring-nearly-2400-new-homes-to-western-addition-following-years-of-community-advocacy",
+      "source_tier": "TIER1_GOV",
+      "media_image_url": null,
+      "media_caption": null,
+      "qualification_status": "qualified",
+      "rejection_reason": null,
+      "dual_review_sample": false,
+      "dual_review_agreed": null,
+      "outcome_blind_verified": true,
+      "missingness_note": "Screened strictly without outcome fields."
+    },
+    {
       "candidate_id": "P32",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5447,13 +5985,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P33",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5477,13 +6015,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P34",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5507,13 +6045,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P45",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5537,13 +6075,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P46",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5567,13 +6105,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P47",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5597,13 +6135,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P48",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5627,13 +6165,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P49",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5657,13 +6195,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P50",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5687,13 +6225,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P51",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5717,13 +6255,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P52",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5747,13 +6285,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P53",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5777,13 +6315,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P54",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5807,13 +6345,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P55",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5837,13 +6375,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P56",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5867,13 +6405,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P69",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5897,13 +6435,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P70",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5927,13 +6465,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P71",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5957,13 +6495,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P72",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -5987,13 +6525,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P73",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6017,13 +6555,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P74",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6047,13 +6585,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P75",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6077,13 +6615,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P76",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6107,13 +6645,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P77",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6137,13 +6675,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P78",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6167,13 +6705,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P79",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6197,13 +6735,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "P97",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6227,13 +6765,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S10",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6257,13 +6795,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S11",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6287,13 +6825,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S12",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6317,13 +6855,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S13",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6347,13 +6885,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S14",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6377,13 +6915,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S4",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6407,13 +6945,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S5",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6437,13 +6975,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S6",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6467,13 +7005,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S7",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6497,13 +7035,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S8",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6527,13 +7065,13 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     },
     {
       "candidate_id": "S9",
       "source_batch": "pending_seed_queue",
       "discovery_channel": "initial_seed_register",
-      "encounter_date": "2026-11-14",
+      "encounter_date": "2026-11-22",
       "entity": "Pending Seed Record",
       "pillar": "Civic Life",
       "record_type": "promise",
@@ -6557,7 +7095,7 @@
       "dual_review_sample": false,
       "dual_review_agreed": null,
       "outcome_blind_verified": true,
-      "missingness_note": "Awaiting source CSV/Archil DB mount to hydrate seed text for intake triage."
+      "missingness_note": "Awaiting source CSV/local database to hydrate seed text for intake triage."
     }
   ]
 }
