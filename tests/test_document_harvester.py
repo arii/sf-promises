@@ -29,10 +29,6 @@ MEETING_DETAIL = "https://sfgov.legistar.com/MeetingDetail.aspx?ID=1462992&GUID=
 MEETING_DETAIL_ESCAPED = MEETING_DETAIL.replace("&", "&amp;")
 
 
-def transcript_bytes():
-    return harvester  # placeholder replaced below
-
-
 def one_page_pdf(text):
     from tests.test_pdf import multi_page_pdf
     return multi_page_pdf([text])

@@ -258,14 +258,6 @@ def _pages_text(pages: list[dict]) -> str:
     return "\f".join(page["text"] for page in pages)
 
 
-def _extraction_factory(fork_extraction: Callable[[], tuple] | None = None):
-    """Resolve injected or fork-backed extraction callables."""
-    if fork_extraction is None:
-        from src.pdf import extract_archived_pdf, inspect_archived_pdf  # noqa: F401
-        return None
-    return fork_extraction()
-
-
 async def _extract_document(
     *,
     url: str,

@@ -218,15 +218,3 @@ def check_geography_and_entity(neighborhood: str, entity_name: str, quote: str) 
     if neighborhood == "Treasure Island" and "parkmerced" in quote.lower():
         errors.append("Geographic mismatch: Quote is about Parkmerced, not Treasure Island.")
     return errors
-
-
-def check_tiered_evidence(sources: list[dict]) -> list[str]:
-    """Gate 4: Tiered Evidence Rule.
-    A promise cannot be resolved using only TIER3_CANARY sources (Reddit, social media, blogs).
-    Requires at least one corroborating TIER1_GOV or TIER2_NEWS document.
-    """
-    tiers = {s.get("source_tier") or s.get("tier") for s in sources}
-    if tiers == {"TIER3_CANARY"} or (tiers and not tiers.intersection({"TIER1_GOV", "TIER2_NEWS"})):
-        return ["Tier 3 canary signal requires corroborating TIER1_GOV or TIER2_NEWS source."]
-    return []
-
