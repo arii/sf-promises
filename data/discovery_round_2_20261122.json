@@ -1,0 +1,486 @@
+{
+  "round_id": "discovery-round-2-20261122",
+  "as_of": "2026-11-22",
+  "builds_on": "discovery-flooding-20261122 (data/discovery_round_20261122.json)",
+  "method": "Keenable search (src.keenable.RetryingKeenable, src.discovery.search_window / discover_timeline) produced leads only. Each cited page was fetched in full with src.discovery.fetch_and_archive (bytes saved, SHA-256), then checked with src.evidence.screen_saved_source (allowlisted host, tier, saved bytes, verbatim quote). Fetched bytes live in the local workspace (/projects/sandbox/disc-tmp/ws/sources), not in the repo; only hashes are committed.",
+  "keenable_queries": {
+    "flooding_window_2026-10-01_2026-11-30": [
+      "San Francisco storm flooding business owners compensation relief Lurie",
+      "San Francisco flooding SFPUC storm response will repair drains commitment",
+      "Public Works storm drain catch basin cleaning San Francisco will",
+      "SFMTA flooding storm Muni restore service underpass flooded repair",
+      "San Francisco supervisors hearing flooding storm response legislation",
+      "Lurie announces flood relief small business loan grants storm",
+      "SFPUC announces sewer flooding investigation report due",
+      "San Francisco Public Works clean catch basins ahead of storms 2026",
+      "San Francisco Great Highway sea level rise storm damage repair",
+      "San Francisco Mission Creek Islais Creek flooding project schedule"
+    ],
+    "all_pillars_window_2026-06-01_2026-11-30": [
+      "Mayor Lurie announces will open by 2027 San Francisco",
+      "SFMTA project construction complete 2027 San Francisco announces",
+      "San Francisco Recreation and Park playground renovation expected to open 2027",
+      "San Francisco library branch renovation reopen 2027",
+      "SFPUC project construction begin 2027 San Francisco",
+      "San Francisco Public Works street improvement project completion 2027",
+      "San Francisco affordable housing groundbreaking 2027 Mayor's Office of Housing",
+      "San Francisco small business grant program launch 2027 OEWD",
+      "San Francisco Arts Commission public art installation 2027",
+      "San Francisco Port waterfront project open 2027",
+      "San Francisco public safety police staffing goal 2027 Lurie",
+      "San Francisco shelter beds open by 2027 HSH",
+      "San Francisco Planning Commission approves plan expected 2027 construction",
+      "San Francisco Muni new service launch January 2027",
+      "San Francisco permit reform deadline 2027 Lurie legislation",
+      "San Francisco Treasure Island Hunters Point project completion 2027",
+      "San Francisco street safety Vision Zero project install by 2027",
+      "San Francisco Chase Center Mission Bay event neighborhood commitment 2027",
+      "San Francisco Golden Gate Park Great Highway opening 2027",
+      "San Francisco BART Caltrain Salesforce Transit Center Portal funding schedule 2027"
+    ],
+    "stormwater_seawall_window_2026-01-01_2026-11-30": [
+      "SFPUC Sunset Boulevard green infrastructure stormwater construction completion",
+      "SFPUC Islais Creek Bayview flood resilience project completion",
+      "SFPUC Mission Creek Mission Bay stormwater flood project schedule",
+      "SFPUC Floodwater Management Grant Program expansion San Francisco",
+      "San Francisco Embarcadero Seawall flood protection construction begin",
+      "Public Works adopt-a-drain catch basin program expansion San Francisco",
+      "SF Public Works new street sweeping gutter cleaning citywide program Lurie",
+      "San Francisco Ocean Beach Great Highway Sunset Dunes drainage construction schedule",
+      "SFMTA Muni Metro flooding Embarcadero station Duboce water monitors reroute commitment",
+      "San Francisco Board of Supervisors resolution flooding hearing request report SFPUC 90 days",
+      "SFPUC Commission approves sewer capacity project 2027 construction",
+      "San Francisco El Nino preparedness plan Lurie 2027 completion tree pruning flood barriers permanent",
+      "Lurie flood barriers permanent Embarcadero waterfront Port plan 2027",
+      "San Francisco Department of Emergency Management El Nino after-action report",
+      "Supervisor Fielder Mission flooding businesses relief fund",
+      "Supervisor Sherrill Marina flooding Muni commitment",
+      "Supervisor Chan Sunset flooding storm drain request SFPUC"
+    ],
+    "education_safety_health_window_2026-05-01_2026-11-30": [
+      "SFUSD school facilities project completion 2027 San Francisco",
+      "San Francisco Public Library new branch construction opening 2027",
+      "San Francisco Rec and Park pool renovation reopen 2027 Mayor Lurie",
+      "SFMTA Van Ness Geary Better Neighborhoods Taraval construction complete 2027",
+      "San Francisco Public Works Civic Center Market Street improvements completion 2027",
+      "San Francisco nightlife entertainment zone permits Lurie 2027 launch",
+      "San Francisco Office of Small Business Legacy Business program new 2027 launch",
+      "SFDPH behavioral health treatment beds open 2027 San Francisco",
+      "San Francisco Fire Department new fire station construction complete 2027",
+      "SFPD recruits academy hiring goal 2027 staffing San Francisco",
+      "San Francisco Sheriff jail closure deadline 2027",
+      "San Francisco homeless encampments shelter waitlist zero goal 2027 HSH Breaking the Cycle",
+      "San Francisco Treasure Island ferry service launch 2027",
+      "San Francisco Moscone Center Salesforce Transit Center Downtown Rail Extension schedule 2027",
+      "San Francisco Planning Family Zoning plan implementation deadline 2027 housing permits",
+      "SF Environment composting zero waste Recology 2027 San Francisco commitment",
+      "San Francisco Port Pier 70 Mission Rock Warriors Chase Center commitment completion 2027",
+      "San Francisco workforce job training program launch 2027 OEWD",
+      "SFMTA Muni Forward bus lanes install 2027 San Francisco project",
+      "San Francisco Golden Gate Park Stow Lake Kezar Presidio improvement open 2027"
+    ],
+    "outcome_timeline_jobs": "discover_timeline(origin/delivery/survival) for SEISMIC-02, CLIMATE-02, DISC-20261112-001, DISC-20261112-002, DISC-20261122-002, -005, -009, BIKE-01, CLIMATE-01, DISC-20261112-010, as_of 2026-11-22"
+  },
+  "candidates": [
+    {
+      "candidate_id": "DISC-20261122-013",
+      "url": "https://www.sf.gov/news-mayor-lurie-celebrates-state-funding-to-deliver-more-than-60-affordable-homes-for-veterans-in-san-francisco",
+      "requested_url": "https://sf.gov/news-mayor-lurie-celebrates-state-funding-to-deliver-more-than-60-affordable-homes-for-veterans-in-san-francisco",
+      "published_at": "2026-11-10T00:00:00Z",
+      "fetched_at": "2026-11-22T23:38:10.975718+00:00",
+      "sha256": "4e353ee53a4f5f4b5d76a1a2b52a8e04377ff59e7a32e2a0cee5002353736567",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "Construction is slated to begin in early 2027.",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-014",
+      "url": "https://www.sf.gov/news-mayor-lurie-signs-legislation-advancing-145-million-grant-for-powell-street-renovation-to-accelerate-san-franciscos-economic-comeback",
+      "requested_url": "https://sf.gov/news-mayor-lurie-signs-legislation-advancing-145-million-grant-for-powell-street-renovation-to-accelerate-san-franciscos-economic-comeback",
+      "published_at": "2026-06-10T00:00:00Z",
+      "fetched_at": "2026-11-22T23:38:11.305404+00:00",
+      "sha256": "296bbf7d93a636d9587e1a2b77e664c2ffb96ca5146fdc1565336791ede758fa",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "Construction is anticipated to start by fall 2026, with substantial completion expected in 2027.",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-016",
+      "url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
+      "requested_url": "https://sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
+      "published_at": "2026-07-28T00:00:00Z",
+      "fetched_at": "2026-11-22T23:38:11.461158+00:00",
+      "sha256": "f9befe1d8b838e9d59f2767e8f9556c0f5e3f0fab3cc2a3db070e156a7e0cae3",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "The city's housing lottery for Artists Hub on Market is anticipated to launch in early 2027",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-017",
+      "url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-09-24-sfusd-selects-launch-site-new-mandarin-immersion-tk-8-school",
+      "requested_url": "https://sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-09-24-sfusd-selects-launch-site-new-mandarin-immersion-tk-8-school",
+      "published_at": "2026-09-24T00:00:00Z",
+      "fetched_at": "2026-11-22T23:40:43.760227+00:00",
+      "sha256": "647b1ab58359c4fe872d78541e86b43ae8fff258e4c7133b201afaa4c3cf67d0",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "The new school is scheduled to open in Fall 2027 at the temporary location before growing into a full TK\u20138 program.",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-018",
+      "url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-09-24-sfusd-selects-launch-site-new-mandarin-immersion-tk-8-school",
+      "requested_url": "https://sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-09-24-sfusd-selects-launch-site-new-mandarin-immersion-tk-8-school",
+      "published_at": "2026-09-24T00:00:00Z",
+      "fetched_at": "2026-11-22T23:40:43.760227+00:00",
+      "sha256": "647b1ab58359c4fe872d78541e86b43ae8fff258e4c7133b201afaa4c3cf67d0",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "SFUSD expects to announce the permanent location in January 2027",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-019",
+      "url": "https://www.sf.gov/news-mayor-lurie-launches-sweeping-effort-to-redo-all-city-homelessness-contracts-with-focus-on-outcomes-accountability-for-results",
+      "requested_url": "https://sf.gov/news-mayor-lurie-launches-sweeping-effort-to-redo-all-city-homelessness-contracts-with-focus-on-outcomes-accountability-for-results",
+      "published_at": "2026-08-31T00:00:00Z",
+      "fetched_at": "2026-11-22T23:40:51.447430+00:00",
+      "sha256": "dbce3a4b8f92f2adf6f9a3f8ad83a447c0fd71f6fe0fd40d7ae8af643b941b7b",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "Between now and May 2029, the San Francisco Department of Homelessness and Supportive Housing (HSH) will run a competitive process to re-award its full portfolio of homelessness services and housing contracts",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-020",
+      "url": "https://www.sfexaminer.com/news/transit/sfmta-upgrading-system-that-enforces-transit-lane-violations/article_adc4e78b-5aca-4f0c-98b9-1dbf5a10b0a3.html",
+      "requested_url": "https://sfexaminer.com/news/transit/sfmta-upgrading-system-that-enforces-transit-lane-violations/article_adc4e78b-5aca-4f0c-98b9-1dbf5a10b0a3.html",
+      "published_at": "2026-11-19T12:00:00Z",
+      "fetched_at": "2026-11-22T23:40:52.434298+00:00",
+      "sha256": "ebdecd3622697dcc8f07597fa994437191d0c99d0eab75980c7e57997e331559",
+      "source_tier": "TIER2_NEWS",
+      "verbatim_quote": "The SFMTA will aim to begin testing the new system on two buses by March of next year.",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-021",
+      "url": "https://media.api.sf.gov/documents/2018_Seawall_Bond_GOBOC_Annual_Report_-_2025_3.pdf",
+      "requested_url": "https://media.api.sf.gov/documents/2018_Seawall_Bond_GOBOC_Annual_Report_-_2025_3.pdf",
+      "published_at": "2026-04-08T17:04:24Z",
+      "fetched_at": "2026-11-22T23:39:59.509453+00:00",
+      "sha256": "f738e2b30dc6c209b851b8a428ba95417219052fc5f00d9d563d01378f41a822",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "the Port \nand USACE continue working to complete the Flood Study and a Recommended Plan by end of \n2026",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-022",
+      "url": "https://abc7news.com/post/san-francisco-installs-flood-barriers-popular-waterfront-ahead-el-nino-winter-storms/20031520/",
+      "requested_url": "https://abc7news.com/post/san-francisco-installs-flood-barriers-popular-waterfront-ahead-el-nino-winter-storms/20031520",
+      "published_at": "2026-11-11T03:53:00Z",
+      "fetched_at": "2026-11-22T23:40:00.635312+00:00",
+      "sha256": "d506aca9f1d6cae749a543d31c53a4f0c6987fd1b8763cd014b5cad1ca8cdbf7",
+      "source_tier": "TIER2_NEWS",
+      "verbatim_quote": "The barriers are expected to remain in place through April",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-023",
+      "url": "https://www.sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+      "requested_url": "https://sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+      "published_at": "2026-03-26T20:01:32Z",
+      "fetched_at": "2026-11-22T23:41:44.946094+00:00",
+      "sha256": "f7f3f7334326e91c61f78d4a3885335e550e107654eee6f179a5b6c2b36a2261",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "A Notice to Proceed (NTP) is planned for early 2027.",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-024",
+      "url": "https://www.sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+      "requested_url": "https://sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+      "published_at": "2026-03-26T20:01:32Z",
+      "fetched_at": "2026-11-22T23:41:44.946094+00:00",
+      "sha256": "f7f3f7334326e91c61f78d4a3885335e550e107654eee6f179a5b6c2b36a2261",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "The new Auxiliary Sewer must be commissioned and operational by February 2031.",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-025",
+      "url": "https://www.sfpuc.gov/sites/default/files/documents/Ocean%20Beach%20Climate%20Change%20Adaptation%20Project%20Fact%20Sheet%20October%202025.pdf",
+      "requested_url": "https://sfpuc.gov/sites/default/files/documents/Ocean%20Beach%20Climate%20Change%20Adaptation%20Project%20Fact%20Sheet%20October%202025.pdf",
+      "published_at": "2025-10-22T19:39:41Z",
+      "fetched_at": "2026-11-22T23:41:56.527730+00:00",
+      "sha256": "e2d1583e5b83a42fff6f2ea261dd9b081bfa5fafead37a05649bc869f0b59592",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "We anticipate construction to start in \nlate 2027.",
+      "gate_failures": [],
+      "quote_verbatim": true
+    },
+    {
+      "candidate_id": "DISC-20261122-026",
+      "url": "https://www.sf.gov/news-mayor-lurie-signs-legislation-bringing-new-investment-downtown-accelerating-downtowns-comeback",
+      "requested_url": "https://sf.gov/news-mayor-lurie-signs-legislation-bringing-new-investment-downtown-accelerating-downtowns-comeback",
+      "published_at": "2026-07-23T00:00:00Z",
+      "fetched_at": "2026-11-22T23:40:44.555599+00:00",
+      "sha256": "5bcc8cfd90b23499f868c9d85d76a4ada1136af4265ae897ee03b3f89f65aaf0",
+      "source_tier": "TIER1_GOV",
+      "verbatim_quote": "Beginning in Fiscal Year 2028\u201329, a dedicated assessment will generate $2.5 million annually for programming and maintenance at Embarcadero Plaza",
+      "gate_failures": [],
+      "quote_verbatim": true
+    }
+  ],
+  "outcome_leads_unverified": [
+    {
+      "candidate_id": "DISC-20261122-002",
+      "note": "Lower Alemany: the 2025-10-16 fact sheet and 2025-10 webinar said construction start Summer 2026. The SFPUC bid-opportunity notice (2026-03-26, official) says re-advertisement planned April 2026, Notice to Proceed planned early 2027, and the auxiliary sewer must be operational by February 2031 under a negotiated Clean-up and Abatement Order. No construction-start confirmation found. Lead only, no verdict.",
+      "sources": [
+        {
+          "url": "https://sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+          "sha256": "f7f3f7334326e91c61f78d4a3885335e550e107654eee6f179a5b6c2b36a2261"
+        },
+        {
+          "url": "https://sfpuc.gov/sites/default/files/documents/CommunityWebinarOct23-LowerAlemany.pdf",
+          "sha256": "45db49754051"
+        }
+      ],
+      "unfetched_leads": [
+        "https://sfpuc.gov/sites/default/files/documents/WWE-CIP-Q4-FY25-26.pdf (2026-07-29, Keenable returned truncated, cannot be archived)"
+      ]
+    },
+    {
+      "candidate_id": "DISC-20261122-001",
+      "note": "Folsom: still no official SFPUC document stating 2030. The SFPUC Wastewater Enterprise quarterly CIP reports (Q1-Q4 FY25-26) are the likely official source but Keenable returns them truncated, so fetch_and_archive refuses them. Mission Local (2026-11-20, sha b3bdb7c2...) remains the only source for the 2030 date.",
+      "sources": [
+        {
+          "url": "https://missionlocal.org/2026/11/san-francisco-a-disheveled-craziness-mission-restaurants-get-a-taste-of-super-el-nino",
+          "sha256": "b3bdb7c2805ffec5bf034a0fd09ca7c44024ac00770be9597511a7e87bcab299"
+        }
+      ]
+    },
+    {
+      "candidate_id": "CLIMATE-02",
+      "note": "Ocean Beach adaptation: SFPUC fact sheet (2025-10-22) estimates construction late 2027 to early 2031; The Frisc (2026-09-02) says the project is now planned to finish in 2033 and had originally hoped to finish by end of 2027; sfguide.co (not allowlisted) reports a push to 2029. Conflicting dates, lead only.",
+      "sources": [
+        {
+          "url": "https://thefrisc.com/ocean-beach-plan-to-replace-an-eroding-stretch-of-great-highway-is-delayed-again",
+          "sha256": "e15ea59496d8c3bbe77a69e933e54ead94b8164b50815af220796dee8161e067"
+        },
+        {
+          "url": "https://sfpuc.gov/sites/default/files/documents/Ocean%20Beach%20Climate%20Change%20Adaptation%20Project%20Fact%20Sheet%20October%202025.pdf",
+          "sha256": "e2d1583e5b83a42fff6f2ea261dd9b081bfa5fafead37a05649bc869f0b59592"
+        }
+      ]
+    },
+    {
+      "candidate_id": "SEISMIC-02",
+      "note": "Embarcadero Seawall Program: Seawall Bond GOBOC report (2026-04-08, official, fetched) describes ongoing early projects and a Recommended Plan due end of 2026 (see DISC-20261122-021). Delivery of the 2024 target is not stated in the fetched pages. Many sfport.com PDFs surfaced but are not allowlisted.",
+      "sources": [
+        {
+          "url": "https://media.api.sf.gov/documents/2018_Seawall_Bond_GOBOC_Annual_Report_-_2025_3.pdf",
+          "sha256": "f738e2b30dc6c209b851b8a428ba95417219052fc5f00d9d563d01378f41a822"
+        }
+      ]
+    },
+    {
+      "candidate_id": "DISC-20261112-001",
+      "note": "ASE cameras: search found sf.gov 2025-08-04 (new phase of speed camera program), sf.gov 2026-04-29 (80% decline in speeding after one year), KQED 2025-05-14 (just over half operational), SF Examiner 2026-05-05. Not fetched, so unverified leads.",
+      "sources": [
+        {
+          "url": "https://sf.gov/news-mayor-lurie-takes-major-step-to-improve-public-safety-kicks-off-new-phase-of-first-in-the-state"
+        },
+        {
+          "url": "https://kqed.org/news/12039914/just-over-half-sfs-speed-cameras-operational-whats-with-slowdown"
+        }
+      ]
+    },
+    {
+      "candidate_id": "DISC-20261112-002",
+      "note": "SFPD staffing: Police Commission staffing analysis (2025-10-20, media.api.sf.gov), SFPD hiring press release (2025-10-15, sanfranciscopolice.org not allowlisted), Chronicle 2026-03-22 hiring surge, sf.gov 2025-07-07 'Rebuilding the Ranks' item. Not fetched.",
+      "sources": [
+        {
+          "url": "https://media.api.sf.gov/documents/PoliceCommission111925-_Report_2025_SFPD_Staffing_Analysis_vFinal.pdf"
+        },
+        {
+          "url": "https://sfchronicle.com/sf/article/san-francisco-police-officer-recruit-22085556.php"
+        }
+      ]
+    },
+    {
+      "candidate_id": "DISC-20261112-010",
+      "note": "Shelter beds: HBTB Year 2 progress report (2025-11-21), Mission Local 2026-05-21, SF Standard 2026-09-02 (tiny cabin community empty), Chronicle 2026-04-12. Not fetched.",
+      "sources": [
+        {
+          "url": "https://media.api.sf.gov/documents/HBTB_Year_2_Progress_Report_FINAL_11.21.25.pdf"
+        },
+        {
+          "url": "https://missionlocal.org/2026/05/sf-lurie-shelter-beds"
+        }
+      ]
+    },
+    {
+      "candidate_id": "DISC-20261122-005",
+      "note": "Seacliff pump stations: no allowlisted post-2026-09-10 source found. SFPUC news page (sha 9ac29cb0...) and contracting list (2026-10-28) are the latest official items. Neighborhood blogs surfaced are not allowlisted and were not used.",
+      "sources": [
+        {
+          "url": "https://sfpuc.gov/about-us/news/pumped-upgrades-sea-cliff-sewer-improvements",
+          "sha256": "9ac29cb002f7530afe939a3730b2d8f6318449b1967ce226363ed69f2dc98df7"
+        }
+      ]
+    },
+    {
+      "candidate_id": "DISC-20261122-009",
+      "note": "Chesky gift: only launch coverage so far (sf.gov, ABC7, KRON4, Axios 2026-11-09/10). No outcome evidence yet.",
+      "sources": []
+    },
+    {
+      "candidate_id": "BIKE-01, CLIMATE-01",
+      "note": "Timeline search returned only 2019-2021 documents and unrelated results; nothing usable as delivery evidence in the allowlist.",
+      "sources": []
+    },
+    {
+      "candidate_id": "parking-enforcement-pause",
+      "note": "SFMTA spokesperson (Chronicle 2026-11-22, sha fe88e92e...) and SF Standard (sha b0faaaed...) confirm meters and time limits not enforced Mon-Wed Nov 23-25 while street sweeping and safety violations stay enforced. Recheck after 2026-11-25.",
+      "sources": [
+        {
+          "url": "https://sfchronicle.com/sf/article/parking-tickets-suspended-storm-22543822.php",
+          "sha256": "fe88e92e08688f9d7d302b3bfa14def2fd5c6610e04a5ab892fb7c68a8c71dc5"
+        }
+      ]
+    }
+  ],
+  "rejected_or_deferred_leads": [
+    {
+      "lead": "Lurie on compensation for flooded businesses: working with the Board and will 'go back and see what is doable' (Mission Local 2026-11-20); 'exploring opening up grant funding' (SFGate 2026-11-22)",
+      "reason": "no measurable target or date; recheck for a legislated grant or fund",
+      "url": "https://sfgate.com/bayarea/article/sf-mission-creek-flooding-22542085.php"
+    },
+    {
+      "lead": "Supervisor Sherrill says SFMTA committed to water-height monitors and rerouting buses in flood-prone areas (ABC7 live updates 2026-11-22)",
+      "reason": "no deadline; second-hand statement of an SFMTA commitment, find an SFMTA or Board source",
+      "url": "https://abc7news.com/live-updates/20045464/entry/20060333"
+    },
+    {
+      "lead": "Lurie parking enforcement pause Nov 23-25, 2026",
+      "reason": "deadline horizon under 60 days; recheck after 2026-11-25",
+      "url": "https://sfstandard.com/2026/11/22/sf-parking-meters-not-enforced-storm-king-tides-thanksgiving"
+    },
+    {
+      "lead": "Emergency declaration (2026-10-23): sandbags, flood barriers, 'will continue preparing'",
+      "reason": "response actions with no dated deliverable beyond the storm season; flood barrier removal date captured separately as DISC-20261122-022",
+      "url": "https://sf.gov/news-mayor-lurie-declares-local-emergency-to-strengthen-san-franciscos-el-nino-preparedness"
+    },
+    {
+      "lead": "SFPUC statement that storm 'exceeded the capacity of the system'; $15 billion cost to be resilient to a 100-year storm (ABC7 2026-11-21)",
+      "reason": "statement of fact and cost estimate, not a commitment",
+      "url": "https://abc7news.com/post/historic-san-francisco-storm-exposes-cracks-citys-aging-infrastructure/20061685"
+    },
+    {
+      "lead": "SFPUC Floodwater Management Grant up to $100,000 (sf.gov 2026-10-23, SF Standard 2026-11-22)",
+      "reason": "existing program with no dated deliverable",
+      "url": "https://sfstandard.com/2026/11/22/san-francisco-sewage-backup-flooding-check-valve-grant"
+    },
+    {
+      "lead": "Port Seawall report: maintenance facility predesign 'expected to be completed in Fall 2026'",
+      "reason": "study deliverable, under 60 days from this round",
+      "url": "https://media.api.sf.gov/documents/2018_Seawall_Bond_GOBOC_Annual_Report_-_2025_3.pdf"
+    },
+    {
+      "lead": "Nordstrom Rack downtown store opening fall 2027 (ABC7 2026-10-15)",
+      "reason": "private retailer opening date, not a city commitment",
+      "url": "https://abc7news.com/amp/post/nordstrom-rack-returning-san-francisco-new-downtown-union-square-store-opening-fall-2027-mayor-daniel-lurie-announces/19"
+    },
+    {
+      "lead": "Tourism projected at 25 million visitors in 2027 (sf.gov 2026-08-27)",
+      "reason": "forecast, not a commitment",
+      "url": "https://sf.gov/news-mayor-lurie-announces-san-francisco-on-track-to-break-tourism-record-again-in-2027"
+    },
+    {
+      "lead": "All 2026 storefront grant recipients 'expected to be open by 2027' (sf.gov 2026-06-23)",
+      "reason": "ambiguous deadline ('by 2027' could mean start or end of 2027)",
+      "url": "https://sf.gov/news-office-of-economic-and-workforce-development-awards-over-3-million-to-help-small-businesses-open-in-vacant-storefronts"
+    },
+    {
+      "lead": "Data center zoning moratorium extended to September 2027 for staff study (SF Standard 2026-11-18)",
+      "reason": "enacted policy, not a stated deliverable; staff study date not stated by an official source",
+      "url": "https://sfstandard.com/2026/11/17/data-center-moratorium-september-2027"
+    },
+    {
+      "lead": "Grand Jury responses: jail inspections by February 1, 2027 (Sheriff's Department Oversight Board)",
+      "reason": "speaker attribution unclear in the extracted PDF text",
+      "url": "https://media.api.sf.gov/documents/CGJ_Findings_and_Recommendation_Complete_Responses.pdf"
+    },
+    {
+      "lead": "Firefighters MOU: 3% increase by end of 2029",
+      "reason": "no forward-action wording in the sentence",
+      "url": "https://sf.gov/news-mayor-lurie-signs-legislation-with-firefighters-union-to-support-first-responders-strengthen-public-safety"
+    },
+    {
+      "lead": "Department of Planning and Building unveiled 2026-11-18 as 'delivering on the commitment he made in January'",
+      "reason": "announcement of delivery, no dated future deliverable; candidate origin commitment from January 2026 not yet sourced",
+      "url": "https://sf.gov/news-mayor-lurie-unveils-department-of-planning-and-building-to-build-housing-issue-permits-faster"
+    },
+    {
+      "lead": "Treasure Island behavioral health facility finish June 2028 (SF Examiner 2026-10-20)",
+      "reason": "duplicate of DISC-20261122-008",
+      "url": "https://sfexaminer.com/news/public-health/new-behavioral-health-facility-slated-for-treasure-island/"
+    },
+    {
+      "lead": "38 banked seed IDs (P32-P34, P45-P56, P69-P79, P97, S4-S14)",
+      "reason": "no source text anywhere: data/promises-P13-P112.csv is absent from the repo, git history and the Hugging Face dataset (onasafari/sf-promises has only P01-P86 and SFO-01..04 in commitments). Not fabricated.",
+      "url": null
+    },
+    {
+      "lead": "Artist Housing Certification Program launching early 2027 (sf.gov 2026-07-28)",
+      "reason": "the sentence contains a markdown link, so no full verbatim sentence could be quoted; the same page's housing lottery launch is DISC-20261122-016. Withdrawn after review.",
+      "url": "https://sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street"
+    }
+  ],
+  "proposed_allowlist_additions": [
+    {
+      "domain": "sfport.com",
+      "reason": "official Port of San Francisco (Tier 1); dozens of seawall, flood-study and capital-plan PDFs surfaced and were denied"
+    },
+    {
+      "domain": "sanfranciscopolice.org",
+      "reason": "official SFPD; hiring and staffing releases surfaced as outcome leads"
+    },
+    {
+      "domain": "sfist.com",
+      "reason": "local news; carried the 311 storm-response and other storm items (news tier)"
+    },
+    {
+      "domain": "sfinquirer.com / infraday.com / sfguide.co / localnewsmatters.org",
+      "reason": "surfaced as leads; lower editorial standing, not recommended without review"
+    }
+  ],
+  "pipeline_notes": [
+    "Keenable fetch returns truncated=true for large SFPUC PDFs (Wastewater Enterprise quarterly CIP reports Q1-Q4 FY25-26, FY27-36 Capital Plan, 10-Year Financial Plan, FY2025 Wastewater). fetch_and_archive refuses them, so the best official schedule sources for Folsom and Lower Alemany cannot be archived.",
+    "The 38 banked seeds cannot be hydrated: src/sourcing/pipeline.py reads data/promises-P13-P112.csv or workspace staging, neither exists, and the file is not in git history or the HF dataset.",
+    "src/sourcing/qualification.py _FORWARD_ACTION_RE extended with 'expects to', 'we anticipate' and 'must be commissioned/completed/operational'; three round-2 candidates were rejected as vague_aspiration before this.",
+    "snap_quote returns raw saved bytes, so quotes that cross a markdown link carry the link markup; DISC-20261122-015 and the SFMTA item used a shorter or different plain-text sentence to avoid that.",
+    "seeds/candidates_discovered.json total_count (21) is stale and was left unchanged.",
+    "ABC7 live-update pages are one URL with many entry fragments; entries share content and hash.",
+    "src.v2_discovery and src.v2_keenable named in the keenable-temporal-audit skill still do not exist; src.discovery and src.keenable were used."
+  ],
+  "date_conventions": {
+    "rule": "Same convention as round 1: due dates are period ends.",
+    "early_year": "Mar 31",
+    "fall": "Dec 31 for the season word 'Fall <year>'",
+    "month_only": "last day of month",
+    "fiscal_year_start": "Jul 1 for 'Beginning in Fiscal Year 2028-29'",
+    "year_only": "Dec 31",
+    "january_2027": "2027-01-31",
+    "next_march": "2027-03-31 ('March of next year' in an article dated 2026-11-19)",
+    "through_April": "DISC-20261122-022 'through April' has no year in the source; 2027-04-30 is inferred from the article date (2026-11-11) and the barriers' winter-season purpose."
+  }
+}
