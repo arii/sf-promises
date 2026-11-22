@@ -20,6 +20,13 @@ class TestResponsiveDisplay(unittest.TestCase):
         self.assertIn("window.matchMedia('(max-width: 600px)').matches", js)
         self.assertIn('const W = compact ? 360 : 760;', js)
 
+    def test_mobile_tab_label_does_not_wrap_and_axis_ticks_legible(self):
+        css = Path('docs/styles.css').read_text()
+        block = css[css.index('.tab-nav-btn {'):css.index('.tab-nav-btn.active')]
+        self.assertIn('white-space: nowrap', block)
+        js = Path('docs/app.js').read_text()
+        self.assertIn('font-size="${compact ? 11 : 9}" fill="var(--muted)" font-family="monospace">${t}</text>', js)
+
     def test_exact_address_does_not_repeat_scope(self):
         js = Path('docs/app.js').read_text()
         self.assertIn('scopeRaw.toLowerCase() === geoType.toLowerCase() ? geoType', js)

@@ -79,8 +79,9 @@
 
       <!-- SECTION 1: WHAT IS THIS? (Hero) -->
       <section class="hero-section" id="hero" aria-label="Overview">
-        <h1 class="hero-headline">A sourced record of San Francisco's public promises — kept, broken, and everything between.</h1>
-        <p class="hero-subline">Tracking 54 public commitments across City Hall, SFO Airport, transit, and sports against saved, hashed documents.</p>
+        <h1 class="hero-headline">Did they do what they said they would?</h1>
+        <p class="hero-subline">SF Promises checks public commitments made by San Francisco officials, agencies, businesses, and institutions against saved, hashed source documents, then records whether each was kept.</p>
+        <p class="hero-scope" id="hero-scope"><strong>What counts as a promise:</strong> a specific, attributable public statement that commits a named person or organization to a concrete action or outcome. Vague aspirations and opinions are excluded. This site tracks 54 such commitments across City Hall, SFO Airport, transit, and sports.</p>
         <div class="hero-actions-row">
           <a href="#explore" class="btn btn-primary" id="btn-hero-browse">Browse promises</a>
           <a href="#watch" class="btn btn-secondary" id="btn-hero-watch">How it works</a>
@@ -107,6 +108,17 @@
           <button type="button" class="legend-btn" data-verdict="undecided"><span class="legend-swatch seg-undecided"></span> <span id="legend-text-undecided">2 Undecided (4%)</span></button>
           <button type="button" class="legend-btn" data-verdict="kept_then_reversed"><span class="legend-swatch seg-reversed"></span> <span id="legend-text-reversed">1 Later closed / reversed (2%)</span></button>
         </div>
+        <details class="verdict-legend" id="verdict-legend">
+          <summary>How to read the verdicts</summary>
+          <dl class="verdict-legend-list">
+            <dt>Kept</dt><dd>The documented outcome matches what was promised.</dd>
+            <dt>Broken</dt><dd>Sources show the commitment was not delivered, or was abandoned or missed its deadline.</dd>
+            <dt>In Progress</dt><dd>Work is underway and the deadline has not passed.</dd>
+            <dt>Undecided</dt><dd>Sources are not yet sufficient to judge either way. This is not the same as Broken: nothing documents a failure.</dd>
+            <dt>Reversed</dt><dd>The promise was kept at one point and later undone or closed. The verdict history shows both steps.</dd>
+          </dl>
+          <p class="verdict-legend-note">A verdict describes the outcome as of its date. The history of when a promise was made and checked is shown separately in each record, so a past verdict is never rewritten silently.</p>
+        </details>
         <div class="tally-hero-line font-mono" id="tally-hero-line" style="display: none;">
           <strong id="tally-total">54</strong>
           <strong id="tally-kept">24</strong>
@@ -273,23 +285,23 @@
       <section class="explore-section table-section" id="explore" aria-label="Explore all promises">
         <div class="section-heading-group">
           <h2>Explore all promises</h2>
-          <p class="section-lead">Search and filter all 54 verified commitments and the quarantine registry.</p>
+          <p class="section-lead">Search and filter the 54 published commitments, or switch to the rejected and test records that never reached the registry.</p>
         </div>
 
         <div class="tabs-container" role="tablist" aria-label="Commitments view options">
           <div class="tab-buttons-group">
             <button type="button" class="tab-nav-btn active" id="tab-btn-promises" role="tab" aria-selected="true" aria-controls="promises-table-container">
-              Verified Commitments <span class="tab-badge font-mono" id="tab-count-promises">54</span>
+              Commitment Registry <span class="tab-badge font-mono" id="tab-count-promises">54</span>
             </button>
             <button type="button" class="tab-nav-btn" id="tab-btn-quarantine" role="tab" aria-selected="false" aria-controls="quarantine-table-container">
-              Quarantine Registry <span class="tab-badge font-mono" id="tab-count-quarantine">13</span>
+              Rejected &amp; Test Records <span class="tab-badge font-mono" id="tab-count-quarantine">13</span>
             </button>
           </div>
           <div class="view-mode-switcher" id="view-mode-switcher" role="group" aria-label="Visualization mode">
             <button type="button" class="btn-view-mode active" id="btn-view-table" data-view="table">Table</button>
             <button type="button" class="btn-view-mode" id="btn-view-map" data-view="map">Map &amp; Districts</button>
             <button type="button" class="btn-view-mode" id="btn-view-entities" data-view="entities">Entity Profiles</button>
-            <button type="button" class="btn-view-mode" id="btn-view-audit" data-view="audit">Quality Audit</button>
+            <button type="button" class="btn-view-mode" id="btn-view-audit" data-view="audit">Data Quality</button>
           </div>
         </div>
 
@@ -2267,7 +2279,7 @@
               <div id="audit-pillar-matrix"></div>
             </div>
             <div class="audit-panel-card">
-              <h3>Operational Evidence-Review Queue</h3>
+              <h3>Verification Activity</h3>
               <p class="audit-panel-sub">Click any item to inspect its checks, contradictions, and source hash in the drawer.</p>
               <div id="audit-review-queue-list"></div>
             </div>
@@ -2279,8 +2291,8 @@
               <div id="audit-funnel-bars"></div>
             </div>
             <div class="audit-panel-card">
-              <h3>Quarantine Reason Codes</h3>
-              <p class="audit-panel-sub">Reason-code distribution across the quarantine registry; codes sum exactly to the registry count.</p>
+              <h3>Rejection Reason Codes</h3>
+              <p class="audit-panel-sub">Reason-code distribution across the rejected and test records; codes sum exactly to the record count.</p>
               <div id="audit-reason-bars"></div>
             </div>
           </div>
@@ -2410,6 +2422,14 @@
             <span class="milestone-label-clickable" data-stage="5">Decide</span>
             <span class="milestone-label-clickable" data-stage="6">Publish</span>
           </div>
+          <dl class="stage-explainers" id="stage-explainers">
+            <div><dt>Fetch</dt><dd>Save the original document and record its fingerprint.</dd></div>
+            <div><dt>Extract</dt><dd>Pull the promise, speaker, and date out of the saved text.</dd></div>
+            <div><dt>Gate</dt><dd>Mechanical checks reject quotes, speakers, or files that do not match the source.</dd></div>
+            <div><dt>Argue</dt><dd>Two reviewers make the strongest case for and against the promise being kept.</dd></div>
+            <div><dt>Decide</dt><dd>A rubric turns the evidence into a verdict.</dd></div>
+            <div><dt>Publish</dt><dd>Only records that pass every step appear in the registry.</dd></div>
+          </dl>
         </div>
 
         <!-- 6 Stage Cards in CSS Grid Stack (Zero Layout Shift) -->
@@ -2458,6 +2478,17 @@
       </section>
 
       <!-- SECTION 5: HOW IT'S BUILT -->
+      <section class="methodology-section" id="methodology" aria-label="Methodology and limitations">
+        <div class="section-heading-group">
+          <h2>Methodology and limitations</h2>
+        </div>
+        <ul class="methodology-list">
+          <li><strong>Small, curated sample.</strong> The 54 commitments were selected from sources that could be saved and hashed. They are not a census of every promise made in San Francisco, so the Kept and Broken shares should not be read as a city-wide success rate.</li>
+          <li><strong>Evidence-limited.</strong> A verdict reflects the saved sources available at the time. Missing documentation leads to Undecided, not Broken.</li>
+          <li><strong>Dated.</strong> Each record shows when the promise was made and when its checks last ran. The dataset was last checked on <span id="methodology-last-checked">Nov 14, 2026</span>.</li>
+        </ul>
+      </section>
+
       <section class="how-it-works-section" id="how-it-works" aria-label="How it is built">
         <div class="section-heading-group">
           <h2>How it's built</h2>

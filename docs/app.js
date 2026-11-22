@@ -506,6 +506,24 @@
     renderQuarantineTable();
     setupFeaturedStories();
     renderVisualizations();
+    const lastCheckedEl = document.getElementById('methodology-last-checked');
+    const lastChecked = demoData && demoData.metadata && demoData.metadata.last_checked;
+    if (lastCheckedEl && lastChecked) lastCheckedEl.textContent = lastChecked;
+    openPermalinkDrawer();
+    window.addEventListener('hashchange', openPermalinkDrawer);
+  }
+
+  // Per-record permalink: #promise-P02 opens that record's drawer.
+  function permalinkId() {
+    const m = /^#promise-([A-Za-z0-9_-]+)$/.exec(window.location.hash || '');
+    return m ? m[1] : null;
+  }
+
+  function openPermalinkDrawer() {
+    const pid = permalinkId();
+    if (!pid || !demoData) return;
+    const exists = (demoData.promises || []).some(x => x.promise_id === pid);
+    if (exists) openInspectDrawer(pid);
   }
   // -------------------------------------------------------------------------
   // Replay State Machine (0.5) - Real Commitments, Auto-Play, Zero Layout Shift
@@ -928,7 +946,7 @@
     const compact = window.matchMedia('(max-width: 600px)').matches;
     const W = compact ? 360 : 760;
     const H = compact ? 280 : 250;
-    const pad = { top: 14, right: 12, bottom: 26, left: 34 };
+    const pad = { top: 14, right: 12, bottom: 26, left: compact ? 38 : 34 };
     const innerW = W - pad.left - pad.right;
     const innerH = H - pad.top - pad.bottom;
     const perYear = buckets.map(b => Object.values(b.verdicts).reduce((a, c) => a + c, 0));
@@ -955,7 +973,7 @@
     for (let t = 0; t <= yMax; t += tickStep) {
       const y = (pad.top + innerH - (t / yMax) * innerH).toFixed(1);
       gridSvg += `<line x1="${pad.left}" y1="${y}" x2="${W - pad.right}" y2="${y}" stroke="var(--line-soft)" stroke-width="1" />`;
-      gridSvg += `<text x="${pad.left - 6}" y="${Number(y) + 3}" text-anchor="end" font-size="9" fill="var(--muted)" font-family="monospace">${t}</text>`;
+      gridSvg += `<text x="${pad.left - 6}" y="${Number(y) + 3}" text-anchor="end" font-size="${compact ? 11 : 9}" fill="var(--muted)" font-family="monospace">${t}</text>`;
     }
 
     let axisSvg = '';
@@ -1911,6 +1929,9 @@
     if (!p) return;
 
     lastActiveElement = document.activeElement;
+    if (p.promise_id && permalinkId() !== p.promise_id && window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', `#promise-${p.promise_id}`);
+    }
 
     const backdrop = document.getElementById('inspect-drawer-backdrop');
     const drawer = document.getElementById('inspect-drawer');
@@ -2283,6 +2304,9 @@
     const backdrop = document.getElementById('inspect-drawer-backdrop');
     if (backdrop) backdrop.classList.add('hidden');
     document.body.style.overflow = '';
+    if (permalinkId() && window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
     if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
       lastActiveElement.focus();
     }
@@ -2497,7 +2521,7 @@
       });
     }
 
-    // View mode switcher buttons (Table | Map & Districts | Entity Profiles | Quality Audit)
+    // View mode switcher buttons (Table | Map & Districts | Entity Profiles | Data Quality)
     document.querySelectorAll('.btn-view-mode').forEach(btn => {
       btn.addEventListener('click', () => {
         const view = btn.getAttribute('data-view') || 'table';

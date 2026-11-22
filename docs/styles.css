@@ -1487,6 +1487,19 @@ a:hover {
   padding: 12px 18px;
   cursor: pointer;
   transition: all 0.15s;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .tab-buttons-group {
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .tab-nav-btn {
+    font-size: 0.9rem;
+    padding: 12px 10px;
+  }
 }
 
 .tab-nav-btn.active {
@@ -8028,5 +8041,91 @@ a:hover {
   .viz-bar-row {
     grid-template-columns: 110px 1fr auto;
     gap: 8px;
+  }
+}
+
+/* Hero scope, verdict legend, stage explainers, methodology */
+.hero-scope {
+  max-width: 62ch;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.verdict-legend {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.verdict-legend summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.verdict-legend-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 14px;
+  margin: 10px 0;
+}
+
+.verdict-legend-list dt {
+  font-weight: 700;
+}
+
+.verdict-legend-list dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+.verdict-legend-note {
+  margin: 0;
+  color: var(--muted);
+}
+
+.stage-explainers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px 16px;
+  margin: 14px 0 0;
+  font-size: 0.85rem;
+}
+
+.stage-explainers dt {
+  font-weight: 700;
+}
+
+.stage-explainers dd {
+  margin: 2px 0 0;
+  color: var(--muted);
+}
+
+.methodology-section {
+  margin: 40px auto;
+  max-width: 900px;
+  padding: 0 16px;
+}
+
+.methodology-list {
+  padding-left: 20px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.methodology-list li + li {
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .verdict-legend-list {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .verdict-legend-list dd {
+    margin-bottom: 8px;
   }
 }
