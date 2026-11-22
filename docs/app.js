@@ -2030,7 +2030,7 @@
     const mediaBox = document.getElementById('drawer-media-box');
     const mediaImg = document.getElementById('drawer-media-img');
     const mediaCaption = document.getElementById('drawer-media-caption');
-    const imgUrl = p.media_image_url || p.image_url;
+    const imgUrl = p.media_path || p.media_image_url || p.image_url;
     const mediaFallback = document.getElementById('drawer-media-fallback');
     if (imgUrl && mediaBox && mediaImg) {
       mediaBox.style.display = 'block';
@@ -2050,7 +2050,11 @@
       }
       mediaImg.src = imgUrl;
       mediaImg.alt = p.media_caption || (titleEl ? titleEl.textContent : '') || 'Source media photo';
-      if (mediaCaption) mediaCaption.textContent = p.media_caption || 'Verified source photographic archive';
+      if (mediaCaption) {
+        mediaCaption.textContent = p.media_path
+          ? `Photo: ${p.media_credit || 'Unknown'} / ${p.media_license || 'license unknown'}`
+          : (p.media_caption || 'Verified source photographic archive');
+      }
     } else if (mediaBox) {
       mediaBox.style.display = 'none';
     }
@@ -2337,6 +2341,15 @@
   // the same pattern as the inspect drawer.
   function storyCardMediaHtml(promise) {
     if (!promise) return '';
+    // Self-hosted image (same origin, issues #82/#83): shown by default with a
+    // visible credit/license line; no opt-in button and no third-party request.
+    if (promise.media_path) {
+      const t = promise.title || 'this promise';
+      const alt = promise.media_caption || t;
+      const thumb = promise.media_thumb_path || promise.media_path;
+      const credit = `Photo: ${promise.media_credit || 'Unknown'} / ${promise.media_license || 'license unknown'}`;
+      return `<figure class="story-card-media story-card-media-hosted"><img src="${storyEscapeHtml(promise.media_path)}" srcset="${storyEscapeHtml(thumb)} 320w, ${storyEscapeHtml(promise.media_path)} 800w" sizes="(max-width: 600px) 100vw, 400px" alt="${storyEscapeHtml(alt)}" loading="lazy"><figcaption class="story-card-media-caption font-mono">${storyEscapeHtml(credit)}</figcaption></figure>`;
+    }
     const url = promise.media_image_url || promise.image_url;
     if (!url) return '';
     const caption = promise.media_caption || '';
@@ -2378,6 +2391,8 @@
       tpl.innerHTML = html;
       const media = tpl.content.firstElementChild;
       const btn = media.querySelector('.btn-story-media');
+      const hosted = media.querySelector('img');
+      if (hosted) hosted.addEventListener('error', () => media.remove());
       if (btn) {
         btn.addEventListener('click', () => {
           const loaded = document.createElement('template');
