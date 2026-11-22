@@ -928,7 +928,7 @@
     const compact = window.matchMedia('(max-width: 600px)').matches;
     const W = compact ? 360 : 760;
     const H = compact ? 280 : 250;
-    const pad = { top: 14, right: 12, bottom: 26, left: 34 };
+    const pad = { top: 14, right: 12, bottom: 26, left: compact ? 38 : 34 };
     const innerW = W - pad.left - pad.right;
     const innerH = H - pad.top - pad.bottom;
     const perYear = buckets.map(b => Object.values(b.verdicts).reduce((a, c) => a + c, 0));
@@ -955,7 +955,7 @@
     for (let t = 0; t <= yMax; t += tickStep) {
       const y = (pad.top + innerH - (t / yMax) * innerH).toFixed(1);
       gridSvg += `<line x1="${pad.left}" y1="${y}" x2="${W - pad.right}" y2="${y}" stroke="var(--line-soft)" stroke-width="1" />`;
-      gridSvg += `<text x="${pad.left - 6}" y="${Number(y) + 3}" text-anchor="end" font-size="9" fill="var(--muted)" font-family="monospace">${t}</text>`;
+      gridSvg += `<text x="${pad.left - 6}" y="${Number(y) + 3}" text-anchor="end" font-size="${compact ? 11 : 9}" fill="var(--muted)" font-family="monospace">${t}</text>`;
     }
 
     let axisSvg = '';

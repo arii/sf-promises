@@ -1487,6 +1487,19 @@ a:hover {
   padding: 12px 18px;
   cursor: pointer;
   transition: all 0.15s;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .tab-buttons-group {
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .tab-nav-btn {
+    font-size: 0.9rem;
+    padding: 12px 10px;
+  }
 }
 
 .tab-nav-btn.active {
