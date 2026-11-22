@@ -8153,3 +8153,222 @@ a:hover {
   .view-mode-switcher .btn-view-mode { min-height: 44px; font-size: 0.75rem; }
   .brand { display: inline-flex; align-items: center; min-height: 44px; }
 }
+
+/* ==========================================================================
+   GLANCEABLE REGISTRY (issue #81)
+   Category illustrations, timeline strips, outcome expanders, the card
+   layout (phones, and the desktop Cards view) and the sticky verdict filter.
+   Touch targets stay >= 44px and text >= 12px (UX audit 4328554).
+   ========================================================================== */
+
+/* Thumbnail slot: category illustration tinted with the verdict colour. */
+.cat-thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--line-soft);
+  color: var(--muted);
+  overflow: hidden;
+}
+.cat-thumb svg { width: 24px; height: 24px; }
+.cat-thumb-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.cat-thumb.v-kept { background: var(--kept-bg); color: var(--kept); border-color: var(--kept-border); }
+.cat-thumb.v-broken { background: var(--broken-bg); color: var(--broken); border-color: var(--broken-border); }
+.cat-thumb.v-in_progress { background: var(--blue-soft); color: var(--blue); }
+.cat-thumb.v-kept_then_reversed { background: rgba(234, 88, 12, 0.15); color: #fdba74; border-color: rgba(234, 88, 12, 0.4); }
+.cat-thumb-lg { width: 100%; height: 112px; border-radius: 12px; }
+.cat-thumb-lg svg { width: 52px; height: 52px; }
+.drawer-media-illustration { margin-bottom: 8px; }
+.drawer-media-illustration[hidden],
+.drawer-media-header[hidden],
+.drawer-media-caption[hidden] { display: none; }
+
+.story-card-top .cat-thumb { margin-right: 2px; }
+.story-card-top .story-entity { flex: 1 1 auto; min-width: 0; align-self: center; }
+
+/* Row parts shared by the table and the card layout. */
+.row-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+.table-quote-cell .table-quote-text,
+.table-quote-cell .table-outcome-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.table-quote-cell .table-outcome-block { margin-top: 6px; }
+.row-timeline-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 3px; }
+.row-timeline-strip .viz-phase-chip { font-size: 0.75rem; line-height: 1.35; padding: 1px 5px; }
+.row-timeline-strip .viz-phase-arrow { font-size: 0.75rem; }
+.viz-phase-chip.pending { background: transparent; }
+.row-actions { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.btn-row-outcome {
+  display: none;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px 0 0;
+  background: transparent;
+  border: 0;
+  color: var(--blue);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-row-outcome:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* Desktop table: thumbnail above the speaker, strip stacked in the Dates cell. */
+.table-entity-cell > .cat-thumb { width: 40px; height: 40px; margin-bottom: 6px; }
+.table-timeline-cell .viz-phase-arrow { display: none; }
+.table-timeline-cell .row-timeline-strip { flex-direction: column; align-items: flex-start; }
+
+/* Card layout: phones always, desktop when the Cards view is chosen. */
+.data-table-container.cards-layout {
+  background: transparent;
+  border: none;
+  overflow: visible;
+}
+.cards-layout .data-table,
+.cards-layout .data-table thead,
+.cards-layout .data-table tbody,
+.cards-layout .data-table td {
+  display: block;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  box-sizing: border-box;
+}
+.cards-layout .data-table thead { display: none; }
+.cards-layout .data-table tbody tr.promise-row {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas:
+    "speaker verdict"
+    "quote quote"
+    "timeline timeline" !important;
+  row-gap: 4px;
+  column-gap: 10px;
+  align-content: start;
+  width: 100% !important;
+  margin: 0 0 8px;
+  padding: 8px 12px 0;
+  box-sizing: border-box;
+}
+.cards-layout .data-table tbody tr.promise-row.hidden-page-row { display: none !important; }
+.cards-layout .data-table tbody tr.promise-row td { padding: 0 !important; border: 0 !important; }
+.cards-layout td.table-entity-cell {
+  grid-area: speaker !important;
+  display: grid !important;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: 10px;
+  align-content: center;
+}
+.cards-layout td.table-entity-cell > .cat-thumb { grid-column: 1; grid-row: 1 / span 3; width: 44px; height: 44px; margin: 0; align-self: center; }
+.cards-layout td.table-entity-cell > :not(.cat-thumb) { grid-column: 2; min-width: 0; }
+.cards-layout .table-entity-name,
+.cards-layout .table-role-tag {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cards-layout .entity-geo-tag { display: none; }
+.cards-layout tr.outcome-open .entity-geo-tag { display: block; }
+.cards-layout td.table-verdict-cell { grid-area: verdict !important; justify-self: end; align-self: start; }
+.cards-layout td.table-quote-cell { grid-area: quote !important; display: block !important; }
+.cards-layout .row-title { margin: 0 0 2px; display: -webkit-box; -webkit-line-clamp: 1; line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.cards-layout .table-quote-cell .table-quote-text { font-size: 0.86rem; line-height: 1.35; }
+.cards-layout .table-quote-cell .table-outcome-block { display: none; }
+.cards-layout tr.outcome-open .table-quote-cell .table-outcome-block { display: block; }
+.cards-layout tr.outcome-open .table-quote-cell .table-outcome-text { display: block; -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; }
+.cards-layout td.table-timeline-cell {
+  grid-area: timeline !important;
+  display: block !important;
+  border-top: 0 !important;
+  margin: 0 !important;
+}
+.cards-layout .table-timeline-cell .viz-phase-arrow { display: inline; }
+.cards-layout .table-timeline-cell .row-timeline-strip { flex-direction: row; }
+.cards-layout .btn-row-outcome { display: inline-flex; }
+.cards-layout .row-actions .table-card-action { display: inline-flex !important; margin-left: auto; }
+
+/* Desktop Cards view: same card component in a 3-column grid. */
+.cards-grid .data-table tbody {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+.cards-grid .data-table tbody tr.promise-row { margin: 0; padding: 12px 14px 0; }
+.cards-grid .row-title { -webkit-line-clamp: 2; line-clamp: 2; }
+@media (max-width: 1100px) {
+  .cards-grid .data-table tbody { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  #btn-view-grid { display: none; }
+  /* Pin the verdict chip row under the sticky header while the registry scrolls. */
+  .explore-primary-controls { display: contents; }
+  .explore-primary-controls .search-input-wrapper { margin-bottom: 8px; }
+  .explore-primary-controls .btn-more-filters { margin: 8px 0 4px; }
+  .segmented-verdict-control {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    position: sticky;
+    top: 56px;
+    z-index: 90;
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--bg);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .segmented-verdict-control::-webkit-scrollbar { display: none; }
+  .btn-seg-verdict { flex: 0 0 auto; min-height: 44px; }
+}
+
+/* overflow-x: hidden on both html and body made body a scroll container, so
+   position: sticky (header, verdict filter row) never pinned. clip keeps the
+   horizontal-overflow guard without creating a scroll container. */
+body { overflow-x: clip; }
+
+/* Min-font and touch-target floors for the glanceable rows and featured cards. */
+.data-table tbody tr.promise-row .table-role-tag,
+.data-table tbody tr.promise-row .entity-geo-tag,
+.data-table tbody tr.promise-row .table-outcome-kicker,
+.data-table tbody tr.promise-row td.table-timeline-cell .table-card-action,
+.data-table tbody tr.promise-row .table-card-action { font-size: max(0.75rem, 12px); }
+.btn-story-media,
+.btn-story-evidence { min-height: 44px; }
+
+/* Card layout: chips, expander and Inspect share one wrapping line box, so a
+   four-step (reversed) strip spends its second line on the expander row. */
+.cards-layout td.table-timeline-cell {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 3px;
+}
+.cards-layout .table-timeline-cell .row-timeline-strip,
+.cards-layout .table-timeline-cell .row-actions { display: contents; }
+.cards-layout .table-timeline-cell .viz-phase-chip,
+.cards-layout .table-timeline-cell .viz-phase-arrow { margin-bottom: 0; }
+.cards-layout .table-timeline-cell .btn-row-outcome { flex: 0 0 auto; }
+.cards-layout .table-timeline-cell .table-card-action { margin-left: auto; }
+
+/* Grid items stretch to their area; a percentage width inside an auto track
+   resolves against the wrong box on desktop. */
+#promises-table-container.cards-layout .data-table tbody tr.promise-row > td { width: auto !important; }
+.table-quote-cell blockquote.table-quote-text { margin: 0; }

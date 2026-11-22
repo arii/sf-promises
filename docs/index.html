@@ -81,7 +81,6 @@
       <section class="hero-section" id="hero" aria-label="Overview">
         <h1 class="hero-headline">Did they do what they said they would?</h1>
         <p class="hero-subline">SF Promises checks public commitments made by San Francisco officials, agencies, businesses, and institutions against saved, hashed source documents, then records whether each was kept.</p>
-        <p class="hero-scope" id="hero-scope"><strong>What counts as a promise:</strong> a specific, attributable public statement that commits a named person or organization to a concrete action or outcome. Vague aspirations and opinions are excluded. This site tracks 54 such commitments across City Hall, SFO Airport, transit, and sports.</p>
         <div class="hero-actions-row">
           <a href="#explore" class="btn btn-primary" id="btn-hero-browse">Browse promises</a>
           <a href="#watch" class="btn btn-secondary" id="btn-hero-watch">How it works</a>
@@ -110,6 +109,7 @@
         </div>
         <details class="verdict-legend" id="verdict-legend">
           <summary>How to read the verdicts</summary>
+          <p class="hero-scope" id="hero-scope"><strong>What counts as a promise:</strong> a specific, attributable public statement that commits a named person or organization to a concrete action or outcome. Vague aspirations and opinions are excluded. This site tracks 54 such commitments across City Hall, SFO Airport, transit, and sports.</p>
           <dl class="verdict-legend-list">
             <dt>Kept</dt><dd>The documented outcome matches what was promised.</dd>
             <dt>Broken</dt><dd>Sources show the commitment was not delivered, or was abandoned or missed its deadline.</dd>
@@ -299,6 +299,7 @@
           </div>
           <div class="view-mode-switcher" id="view-mode-switcher" role="group" aria-label="Visualization mode">
             <button type="button" class="btn-view-mode active" id="btn-view-table" data-view="table">Table</button>
+            <button type="button" class="btn-view-mode" id="btn-view-grid" data-view="grid">Cards</button>
             <button type="button" class="btn-view-mode" id="btn-view-map" data-view="map">Map &amp; Districts</button>
             <button type="button" class="btn-view-mode" id="btn-view-entities" data-view="entities">Entity Profiles</button>
             <button type="button" class="btn-view-mode" id="btn-view-audit" data-view="audit">Data Quality</button>
@@ -2660,6 +2661,7 @@
           </div>
           <!-- Source Media / Image if available -->
           <div class="drawer-media-box" id="drawer-media-box" style="display: none;">
+            <div class="drawer-media-illustration" id="drawer-media-illustration" hidden></div>
             <div class="drawer-media-header font-mono">SOURCE PHOTO ARCHIVE</div>
             <img id="drawer-media-img" src="" alt="Source media" class="drawer-media-img" loading="lazy" />
             <div class="drawer-media-fallback font-mono" id="drawer-media-fallback" hidden>&#9888; Media unavailable — the archived source photo could not be loaded.</div>
