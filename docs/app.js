@@ -513,6 +513,8 @@
       if (first) currentRunType = first;
     }
     setupReplayScenarios();
+    // isAutoPlaying starts true (button reads "Pause"), so the timer must actually start.
+    scheduleNextAutoStage();
     setupEventListeners();
     enhanceRegistryRows();
     syncCardsLayout();

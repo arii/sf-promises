@@ -8477,3 +8477,55 @@ body { overflow-x: clip; }
     min-width: 44px;
   }
 }
+
+/* Pagination and back-to-top buttons: center the label vertically inside the
+   44px touch target instead of letting it sit at the top. */
+.btn-pagination-primary,
+.btn-pagination-tertiary,
+.btn-back-to-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+.btn-back-to-top { padding-top: 0; padding-bottom: 0; }
+
+/* Technical & Audit Specifications: give the accordion the same card
+   treatment and spacing as the "What this can't tell you" accordion. */
+.credits-accordion {
+  margin-top: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.credits-summary {
+  padding: 14px 20px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+  font-weight: 600;
+  user-select: none;
+  list-style: none;
+}
+.credits-summary:hover { color: var(--ink); }
+.credits-summary::-webkit-details-marker { display: none; }
+.credits-summary::before {
+  content: '▸';
+  transition: transform 0.2s ease;
+}
+.credits-accordion[open] .credits-summary::before { transform: rotate(90deg); }
+.credits-body {
+  padding: 18px 20px 20px;
+  border-top: 1px solid var(--line-soft);
+}
+@media (max-width: 768px) {
+  .credits-accordion { margin-top: 12px !important; }
+  .credits-summary { padding: 12px 16px; }
+  .credits-body { padding: 14px 16px 16px; }
+}
