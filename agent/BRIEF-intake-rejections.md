@@ -114,6 +114,31 @@ Secondary causes:
 **Fix order:** H4 first (date resolution), then H3 (in progress for future
 deadlines), then target quality for leads.
 
+## Result of experiment 4a: date resolution on (2026-11-23)
+
+The same 48 leads were rerun with `SF_PROMISES_DATE_RESOLUTION=1` in
+`/mnt/archil/workspace/v2-baseline-dates/shard-{0..3}/`. Still **0 published**,
+but the date failures fell from 26 to 3. The candidates now pass origin
+and fail at the next gates:
+
+| Final reason | Flag off | Flag on |
+| --- | --- | --- |
+| `INVALID_PROMISE_DATE_LATER_THAN_SOURCE` | 26 | 3 |
+| `NO_VERIFIABLE_DEADLINE` | 6 | **24** |
+| `INSUFFICIENT_OUTCOME_EVIDENCE` | 1 | **10** |
+| `NO_VERIFIABLE_ORIGIN` | 9 | 5 |
+| `INVALID_SOURCE_PUBLICATION_DATE` | 5 | 5 |
+| `INVALID_ORIGIN_EVIDENCE` | 1 | 1 |
+
+Next blockers:
+1. **Deadline.** Many published records are commitments with no stated
+   deadline, or a dated one-off event (an opening day, a sell-out, a pledge,
+   "starting today"). v2 requires a deadline before it looks at outcomes.
+2. **Outcome evidence.** Outcome sources are often unrelated (another city,
+   another program). Both a delivery and a survival sentence are required.
+   This is a retrieval problem as much as a rule problem. The Keenable
+   features in the next section apply here.
+
 ## Hypotheses to test
 
 - **H1. The audit is stricter than the standard that produced the published
