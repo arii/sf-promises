@@ -1489,7 +1489,7 @@
     clearTimeout(mapResizeTimer);
     mapResizeTimer = setTimeout(() => {
       const wrap = document.getElementById('sf-svg-map-wrap');
-      if (!lastMapList || !wrap || activeViewMode !== 'map') return;
+      if (!lastMapList || !wrap || activeViewMode !== 'map' || wrap.classList.contains('hidden')) return;
       if (Math.abs(wrap.clientWidth - lastMapWidth) <= 40) return;
       const pid = focusedMapPromiseId(wrap);
       const drawerOpen = inspectDrawerOpen();
@@ -1500,148 +1500,575 @@
     }, 150);
   });
 
+  // -------------------------------------------------------------------------
+  // Street basemap (issue #44). Self-hosted MapLibre + Protomaps tiles, loaded
+  // only when the Map & Districts view is first opened. Every asset is served
+  // from docs/map/; nothing is requested from a third-party host. The SVG map
+  // above stays the keyboard-accessible alternative ("Simple map").
+  // -------------------------------------------------------------------------
+  const STREET_MAP_ASSETS = {
+    css: 'map/vendor/maplibre-gl.css',
+    maplibre: 'map/vendor/maplibre-gl.js',
+    pmtiles: 'map/vendor/pmtiles.js',
+    basemaps: 'map/vendor/basemaps.js',
+    tiles: 'map/sf-z14.pmtiles',
+    sprite: 'map/sprites/light',
+    fonts: 'map/fonts/'
+  };
+  // Glyph ranges on disk: 0-255, 256-511 and 8192-8447 for these three stacks.
+  const STREET_MAP_FONTS = ['Noto Sans Regular', 'Noto Sans Medium', 'Noto Sans Italic'];
+  // Tile extent of sf-z14.pmtiles (SF incl. SFO): [west, south, east, north].
+  const STREET_MAP_TILE_BOUNDS = [-122.53, 37.60, -122.35, 37.84];
+  const STREET_MAP_MAX_BOUNDS = [[-122.60, 37.56], [-122.28, 37.88]];
+  const STREET_MAP_FIT_BOUNDS = [[-122.52, 37.605], [-122.355, 37.835]];
+  const STREET_MAP_OSM_ATTRIBUTION = '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">&copy; OpenStreetMap contributors</a>';
+  const STREET_MAP_CREDITS = [
+    '<a href="https://protomaps.com" target="_blank" rel="noopener">Protomaps</a>',
+    '<a href="https://maplibre.org" target="_blank" rel="noopener">MapLibre</a>'
+  ];
+  const MAP_MODE_KEY = 'sfp-map-mode';
+
+  let streetMap = null;            // maplibregl.Map once created
+  let streetMapLoading = null;     // Promise while libraries/style load
+  let streetMapFailure = '';       // reason the street map is unavailable
+  let streetMapPendingList = null; // latest list to plot once the map is ready
+  let mapModeBound = false;
+  let clusterListOrigin = 'svg';   // which map opened the cluster list
+
+  function storedMapMode() {
+    try { return window.localStorage.getItem(MAP_MODE_KEY); } catch (e) { return null; }
+  }
+
+  function storeMapMode(mode) {
+    try { window.localStorage.setItem(MAP_MODE_KEY, mode); } catch (e) { /* private mode */ }
+  }
+
+  function webglAvailable() {
+    try {
+      const c = document.createElement('canvas');
+      return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function streetMapActive() {
+    if (streetMapFailure) return false;
+    if (!webglAvailable()) {
+      streetMapFailure = 'WebGL is not available in this browser';
+      return false;
+    }
+    return storedMapMode() !== 'simple';
+  }
+
+  function syncMapModeUi(useStreet) {
+    const btnStreet = document.getElementById('btn-map-mode-street');
+    const btnSimple = document.getElementById('btn-map-mode-simple');
+    const note = document.getElementById('map-mode-note');
+    if (btnStreet) {
+      btnStreet.setAttribute('aria-pressed', useStreet ? 'true' : 'false');
+      btnStreet.disabled = !!streetMapFailure;
+    }
+    if (btnSimple) btnSimple.setAttribute('aria-pressed', useStreet ? 'false' : 'true');
+    if (note) {
+      note.textContent = streetMapFailure
+        ? `Street map unavailable (${streetMapFailure}); showing the simple map. The simple map is keyboard accessible: every marker is a button.`
+        : (useStreet
+          ? 'Street map: drag or use arrow keys to pan. Switch to the simple map for keyboard access to each marker.'
+          : 'The simple map is keyboard accessible: every marker is a button.');
+    }
+    if (mapModeBound) return;
+    mapModeBound = true;
+    [btnStreet, btnSimple].forEach(btn => {
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const mode = btn.getAttribute('data-map-mode');
+        if (mode === 'street' && streetMapFailure) return;
+        storeMapMode(mode);
+        const card = document.getElementById('map-selected-card');
+        if (card) card.classList.add('hidden');
+        openClusterIds = null;
+        renderMapAndDistrictsView(lastMapList);
+        btn.focus();
+      });
+    });
+  }
+
+  function loadMapScript(src) {
+    return new Promise((resolve, reject) => {
+      const el = document.createElement('script');
+      el.src = src;
+      el.async = false; // keep execution order: maplibre before its plugins
+      el.onload = () => resolve();
+      el.onerror = () => reject(new Error(`could not load ${src}`));
+      document.head.appendChild(el);
+    });
+  }
+
+  function loadMapStylesheet(href) {
+    return new Promise((resolve, reject) => {
+      const el = document.createElement('link');
+      el.rel = 'stylesheet';
+      el.href = href;
+      el.onload = () => resolve();
+      el.onerror = () => reject(new Error(`could not load ${href}`));
+      document.head.appendChild(el);
+    });
+  }
+
+  function loadStreetMapLibraries() {
+    if (window.maplibregl && window.pmtiles && window.basemaps) return Promise.resolve();
+    return Promise.all([
+      loadMapStylesheet(STREET_MAP_ASSETS.css),
+      loadMapScript(STREET_MAP_ASSETS.maplibre),
+      loadMapScript(STREET_MAP_ASSETS.pmtiles),
+      loadMapScript(STREET_MAP_ASSETS.basemaps)
+    ]).then(() => {
+      if (!window.maplibregl || !window.pmtiles || !window.basemaps) throw new Error('map libraries did not initialise');
+    });
+  }
+
+  // Resolve CSS custom properties (var(--verdict-progress)) to concrete colours
+  // so WebGL paint properties get the same palette as the SVG map and legend.
+  function resolveCssColor(value) {
+    const m = /^var\((--[\w-]+)\)$/.exec(String(value || '').trim());
+    if (!m) return value || '#94A3B8';
+    const v = getComputedStyle(document.documentElement).getPropertyValue(m[1]).trim();
+    return v || '#94A3B8';
+  }
+
+  // Use only the glyph stacks shipped in docs/map/fonts (no Devanagari stack).
+  function restrictMapFonts(value) {
+    if (typeof value === 'string') {
+      return /^Noto Sans/.test(value) && STREET_MAP_FONTS.indexOf(value) < 0 ? STREET_MAP_FONTS[0] : value;
+    }
+    if (Array.isArray(value)) return value.map(restrictMapFonts);
+    return value;
+  }
+
+  function inStreetMapTiles(lat, lon) {
+    const [w, sth, e, n] = STREET_MAP_TILE_BOUNDS;
+    return lon >= w && lon <= e && lat >= sth && lat <= n;
+  }
+
+  function streetMapGeoJson(list) {
+    const features = [];
+    const regional = [];
+    (list || []).forEach(p => {
+      const lat = Number(p.latitude);
+      const lon = Number(p.longitude);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+      if (!inStreetMapTiles(lat, lon)) { regional.push(p); return; }
+      const v = (p.verdict || 'undecided').toLowerCase();
+      features.push({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: [lon, lat] },
+        properties: {
+          pid: p.promise_id || '',
+          color: resolveCssColor(VERDICT_COLORS[v] || '#94A3B8'),
+          centroid: p.is_centroid !== false
+        }
+      });
+    });
+    return { data: { type: 'FeatureCollection', features }, regional };
+  }
+
+  function hideStreetMap() {
+    const wrap = document.getElementById('street-map-wrap');
+    const regional = document.getElementById('street-map-regional');
+    if (wrap) wrap.classList.add('hidden');
+    if (regional) regional.classList.add('hidden');
+  }
+
+  function renderStreetRegional(items) {
+    const el = document.getElementById('street-map-regional');
+    if (!el) return;
+    if (!items.length) { el.classList.add('hidden'); el.innerHTML = ''; return; }
+    el.classList.remove('hidden');
+    el.innerHTML = `
+      <div class="map-regional-strip font-mono">
+        <span class="regional-strip-label">OUTSIDE THE STREET MAP / REGIONAL DISPLAY CENTROIDS (${items.length}):</span>
+        ${items.map(p => `<button type="button" class="btn-regional-pin" data-promise-id="${escapeHtml(p.promise_id)}">${escapeHtml(p.promise_id)} · ${escapeHtml(p.entity)}</button>`).join('')}
+      </div>`;
+    el.querySelectorAll('[data-promise-id]').forEach(btn => {
+      btn.addEventListener('click', () => openInspectDrawer(btn.getAttribute('data-promise-id')));
+    });
+  }
+
+  function streetMapFallback(err) {
+    streetMapFailure = 'the map library failed to load';
+    streetMapLoading = null;
+    console.warn('Street map unavailable, using the simple map:', err && err.message ? err.message : err);
+    if (streetMap) { try { streetMap.remove(); } catch (e) { /* ignore */ } streetMap = null; }
+    if (activeViewMode === 'map' && lastMapList) renderMapAndDistrictsView(lastMapList);
+  }
+
+  function renderStreetMap(list) {
+    const wrap = document.getElementById('street-map-wrap');
+    const container = document.getElementById('street-map');
+    if (!wrap || !container) return;
+    wrap.classList.remove('hidden');
+    const { data, regional } = streetMapGeoJson(list);
+    renderStreetRegional(regional);
+    streetMapPendingList = data;
+    if (streetMap) {
+      streetMap.resize();
+      const src = streetMap.getSource('promises');
+      if (src) src.setData(data);
+      return;
+    }
+    if (streetMapLoading) return;
+    streetMapLoading = loadStreetMapLibraries()
+      .then(() => createStreetMap(container))
+      .catch(streetMapFallback);
+  }
+
+  function createStreetMap(container) {
+    const maplibregl = window.maplibregl;
+    if (!createStreetMap.protocol) {
+      createStreetMap.protocol = new window.pmtiles.Protocol();
+      maplibregl.addProtocol('pmtiles', createStreetMap.protocol.tile);
+    }
+    const page = window.location.href;
+    const tilesUrl = new URL(STREET_MAP_ASSETS.tiles, page).href;
+    const layers = window.basemaps.layers('protomaps', window.basemaps.namedFlavor('light'), { lang: 'en' })
+      .map(layer => (layer.layout && layer.layout['text-font'])
+        ? Object.assign({}, layer, { layout: Object.assign({}, layer.layout, { 'text-font': restrictMapFonts(layer.layout['text-font']) }) })
+        : layer);
+    const isMobile = !!(window.matchMedia && window.matchMedia('(max-width: 720px), (pointer: coarse)').matches);
+    const map = new maplibregl.Map({
+      container,
+      style: {
+        version: 8,
+        glyphs: new URL(STREET_MAP_ASSETS.fonts, page).href + '{fontstack}/{range}.pbf',
+        sprite: new URL(STREET_MAP_ASSETS.sprite, page).href,
+        sources: {
+          protomaps: { type: 'vector', url: `pmtiles://${tilesUrl}`, attribution: STREET_MAP_OSM_ATTRIBUTION }
+        },
+        layers
+      },
+      bounds: STREET_MAP_FIT_BOUNDS,
+      fitBoundsOptions: { padding: 12 },
+      maxBounds: STREET_MAP_MAX_BOUNDS,
+      minZoom: 9,
+      maxZoom: 16,
+      attributionControl: false,
+      cooperativeGestures: true,
+      dragRotate: false,
+      pitchWithRotate: false,
+      touchPitch: false
+    });
+    map.touchZoomRotate.disableRotation();
+    map.keyboard.disableRotation();
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+    map.addControl(new maplibregl.AttributionControl({ compact: isMobile, customAttribution: STREET_MAP_CREDITS }), 'bottom-right');
+    map.getCanvas().setAttribute('aria-label', 'Street map of San Francisco commitments, coloured by verdict. Arrow keys pan and plus or minus zoom; markers are pointer-only here. Use the Simple map button for keyboard access to each marker.');
+    streetMap = map;
+    window.SFPMap.streetMap = () => streetMap; // read-only handle for browser checks
+
+    map.on('error', (e) => {
+      const msg = e && e.error && e.error.message ? e.error.message : String(e && e.error || 'map error');
+      console.warn('Street map:', msg);
+    });
+
+    // The light sprite lacks a few POI icons the style names (e.g. "townhall");
+    // draw nothing for them instead of logging a warning per tile.
+    map.on('styleimagemissing', (e) => {
+      if (!map.hasImage(e.id)) map.addImage(e.id, { width: 1, height: 1, data: new Uint8Array(4) });
+    });
+
+    map.on('load', () => {
+      streetMapLoading = null;
+      map.addSource('promises', {
+        type: 'geojson',
+        data: streetMapPendingList || { type: 'FeatureCollection', features: [] },
+        cluster: true,
+        clusterRadius: 36,
+        clusterMaxZoom: 15
+      });
+      const single = ['!', ['has', 'point_count']];
+      map.addLayer({
+        id: 'promise-clusters', type: 'circle', source: 'promises', filter: ['has', 'point_count'],
+        paint: {
+          'circle-color': '#1E3A8A',
+          'circle-radius': ['step', ['get', 'point_count'], 13, 5, 16, 15, 20],
+          'circle-stroke-color': '#93C5FD',
+          'circle-stroke-width': 2
+        }
+      });
+      map.addLayer({
+        id: 'promise-cluster-count', type: 'symbol', source: 'promises', filter: ['has', 'point_count'],
+        layout: {
+          'text-field': ['get', 'point_count_abbreviated'],
+          'text-font': ['Noto Sans Medium'],
+          'text-size': 12,
+          'text-allow-overlap': true
+        },
+        paint: { 'text-color': '#F8FAFC' }
+      });
+      // Display centroids: a ring around a smaller, fainter dot (as in the SVG map).
+      map.addLayer({
+        id: 'promise-centroid-ring', type: 'circle', source: 'promises',
+        filter: ['all', single, ['==', ['get', 'centroid'], true]],
+        paint: {
+          'circle-radius': 10,
+          'circle-color': '#FFFFFF',
+          'circle-opacity': 0.35,
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-width': 1.6,
+          'circle-stroke-opacity': 0.9
+        }
+      });
+      map.addLayer({
+        id: 'promise-points', type: 'circle', source: 'promises', filter: single,
+        paint: {
+          'circle-radius': ['case', ['get', 'centroid'], 5, 7],
+          'circle-color': ['get', 'color'],
+          'circle-opacity': ['case', ['get', 'centroid'], 0.75, 0.96],
+          'circle-stroke-color': '#0B1120',
+          'circle-stroke-width': 1.5
+        }
+      });
+      container.setAttribute('data-map-ready', 'true');
+    });
+
+    // Hit-test a touch-sized box (44px on phones) rather than the exact dot.
+    function featuresNear(point) {
+      const r = mapHitDiameterPx(isMobile) / 2;
+      return map.queryRenderedFeatures([[point.x - r, point.y - r], [point.x + r, point.y + r]],
+        { layers: ['promise-clusters', 'promise-points'] });
+    }
+
+    map.on('mousemove', (e) => {
+      if (!map.getLayer('promise-points')) return;
+      map.getCanvas().style.cursor = featuresNear(e.point).length ? 'pointer' : '';
+    });
+
+    map.on('click', (e) => {
+      if (!map.getLayer('promise-points')) return;
+      const hits = featuresNear(e.point);
+      if (!hits.length) return;
+      const dist = f => {
+        const p = map.project(f.geometry.coordinates);
+        return Math.hypot(p.x - e.point.x, p.y - e.point.y);
+      };
+      hits.sort((a, b) => dist(a) - dist(b));
+      const nearest = hits[0];
+      if (nearest.properties.cluster) {
+        openStreetCluster(map, nearest);
+        return;
+      }
+      // Stacked points (same or near-identical coordinates) open the list.
+      const singles = hits.filter(f => !f.properties.cluster && dist(f) <= dist(nearest) + 2);
+      const ids = Array.from(new Set(singles.map(f => f.properties.pid)));
+      map.getCanvas().focus();
+      if (ids.length > 1) showStreetClusterList(ids);
+      else openInspectDrawer(ids[0]);
+    });
+  }
+
+  async function openStreetCluster(map, feature) {
+    const src = map.getSource('promises');
+    const clusterId = feature.properties.cluster_id;
+    try {
+      const [zoom, leaves] = await Promise.all([
+        src.getClusterExpansionZoom(clusterId),
+        src.getClusterLeaves(clusterId, 1000, 0)
+      ]);
+      const first = leaves[0] && leaves[0].geometry.coordinates;
+      const sameSpot = first && leaves.every(l => l.geometry.coordinates[0] === first[0] && l.geometry.coordinates[1] === first[1]);
+      if (sameSpot || zoom > map.getMaxZoom()) {
+        map.getCanvas().focus();
+        showStreetClusterList(leaves.map(l => l.properties.pid));
+        return;
+      }
+      map.easeTo({ center: feature.geometry.coordinates, zoom });
+    } catch (err) {
+      console.warn('Street map cluster:', err && err.message ? err.message : err);
+    }
+  }
+
+  function showStreetClusterList(ids) {
+    const card = document.getElementById('map-selected-card');
+    const members = ids.map(id => (demoData && demoData.promises || []).find(item => item.promise_id === id)).filter(Boolean);
+    showMapClusterList(card, members, 'street');
+  }
+
+  // Shared cluster list (SVG and street map): lists members, each opens the drawer.
+  function showMapClusterList(card, members, origin) {
+    if (!card || !members.length) return;
+    clusterListOrigin = origin;
+    openClusterIds = members.map(m => m.promise_id);
+    openMapCluster(card, `
+      <div class="map-selected-title" id="map-cluster-title">${members.length} commitments in this area</div>
+      <ul class="map-cluster-list">
+        ${members.map(m => `<li><button type="button" class="btn-map-cluster-item" data-inspect-id="${escapeHtml(m.promise_id)}"><span class="verdict-chip ${(m.verdict || '').toLowerCase()}">${formatVerdictLabel(m.verdict)}</span> <span>${escapeHtml(m.promise_id)} · ${escapeHtml(m.entity)}</span></button></li>`).join('')}
+      </ul>
+      <button type="button" class="btn-map-cluster-close">Close list (Esc)</button>
+    `);
+    card.querySelectorAll('.btn-map-cluster-item').forEach(btn => {
+      btn.addEventListener('click', () => openInspectDrawer(btn.getAttribute('data-inspect-id')));
+    });
+    const closeBtn = card.querySelector('.btn-map-cluster-close');
+    if (closeBtn) closeBtn.addEventListener('click', closeActiveMapClusterList);
+  }
+
+  // Hide the cluster list; focus returns to the SVG marker or the street map canvas.
+  function closeActiveMapClusterList() {
+    const card = document.getElementById('map-selected-card');
+    if (!card) return;
+    if (clusterListOrigin === 'street' && streetMap) {
+      card.classList.add('hidden');
+      streetMap.getCanvas().focus();
+    } else {
+      closeMapCluster(card, document.getElementById('sf-svg-map-wrap'), openClusterIds);
+    }
+    openClusterIds = null;
+    clusterListOrigin = 'svg';
+  }
+
   function renderMapAndDistrictsView(list) {
     const mapWrap = document.getElementById('sf-svg-map-wrap');
     const selectedCard = document.getElementById('map-selected-card');
     const districtBars = document.getElementById('district-bars-list');
     if (!mapWrap || !districtBars) return;
 
-    const minLat = 37.704;
-    const maxLat = 37.836;
-    const minLon = -122.516;
-    const maxLon = -122.354;
-    const W = 560;
-    const H = 430;
-
-    function projectSF(lat, lon) {
-      const x = ((lon - minLon) / (maxLon - minLon)) * (W - 60) + 30;
-      const y = ((maxLat - lat) / (maxLat - minLat)) * (H - 70) + 28;
-      return { x: Math.max(24, Math.min(W - 24, x)), y: Math.max(24, Math.min(H - 36, y)) };
-    }
-
-    function projectSFO(lat, lon) {
-      const x = ((lon - (-122.405)) / (-122.365 - (-122.405))) * 116 + 426;
-      const y = ((37.638 - lat) / (37.638 - 37.605)) * 78 + 332;
-      return { x: Math.max(428, Math.min(540, x)), y: Math.max(336, Math.min(408, y)) };
-    }
-
-    const verdictColor = VERDICT_COLORS;
-
-    const sfOutlinePath = 'M 55,298 L 62,210 L 66,142 L 88,92 L 154,68 L 238,68 L 315,76 L 372,110 L 398,176 L 408,248 L 392,302 L 320,312 L 222,312 L 125,308 Z';
-    const tiPath = 'M 412,56 L 434,54 L 438,84 L 414,88 Z';
-    const ggpPath = 'M 68,178 L 166,174 L 166,192 L 68,196 Z';
-
-    const pins = [];
-    const regionalItems = [];
-    (list || []).forEach(p => {
-      const lat = Number(p.latitude);
-      const lon = Number(p.longitude);
-      if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
-      const inSFO = lat >= 37.59 && lat <= 37.65 && lon >= -122.42 && lon <= -122.35;
-      const inSF = lat >= minLat && lat <= maxLat && lon >= minLon && lon <= maxLon;
-      if (!inSF && !inSFO) {
-        regionalItems.push(p);
-        return;
-      }
-      const pt = inSFO ? projectSFO(lat, lon) : projectSF(lat, lon);
-      pins.push({ p, x: pt.x, y: pt.y, inSFO });
-    });
-
     lastMapList = list;
-    const isMobile = !!(window.matchMedia && window.matchMedia('(max-width: 720px), (pointer: coarse)').matches);
-    lastMapWidth = mapWrap.clientWidth;
-    const scale = (mapWrap.clientWidth || W) / W;
-    const hitDiameter = mapHitDiameterPx(isMobile) / scale;
-    const clusters = clusterPins(pins, hitDiameter);
-    openClusterIds = openClusterIds && selectedCard && !selectedCard.classList.contains('hidden') ? openClusterIds : null;
-
-    const markersSvg = clusters.map(cluster => {
-      const hit = `<circle class="map-pin-hit" cx="${cluster.x.toFixed(1)}" cy="${cluster.y.toFixed(1)}" r="${(hitDiameter / 2).toFixed(1)}" fill="transparent" />`;
-      if (cluster.items.length > 1) {
-        const ids = cluster.items.map(i => i.p.promise_id).join(',');
-        const n = cluster.items.length;
-        const label = escapeHtml(`${n} commitments in this area. Select to list them.`);
-        return `
-        <g class="map-cluster-node" data-cluster-ids="${escapeHtml(ids)}" tabindex="0" role="button" aria-label="${label}" style="cursor:pointer;">
-          ${hit}
-          <circle cx="${cluster.x.toFixed(1)}" cy="${cluster.y.toFixed(1)}" r="13" fill="#1E3A8A" stroke="#93C5FD" stroke-width="1.8" />
-          <text x="${cluster.x.toFixed(1)}" y="${(cluster.y + 4).toFixed(1)}" text-anchor="middle" fill="#F8FAFC" font-size="12" font-weight="700" font-family="monospace" pointer-events="none">${n}</text>
-        </g>`;
-      }
-      const { p, x, y } = cluster.items[0];
-      const v = (p.verdict || 'undecided').toLowerCase();
-      const color = verdictColor[v] || '#94A3B8';
-      const isCentroid = p.is_centroid !== false;
-      const pid = escapeHtml(p.promise_id || '');
-      const title = escapeHtml(`${p.entity}: ${p.neighborhood || 'San Francisco'}`);
-      return `
-        <g class="map-pin-node" data-promise-id="${pid}" tabindex="0" role="button" aria-label="${title}" style="cursor:pointer;">
-          ${hit}
-          ${isCentroid ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9.5" fill="none" stroke="${color}" stroke-width="1.4" stroke-dasharray="2.5 2" opacity="0.78"/>` : ''}
-          <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${isCentroid ? '4.8' : '6.5'}" fill="${color}" fill-opacity="${isCentroid ? '0.68' : '0.96'}" stroke="#0B1120" stroke-width="1.5">
-            <title>${title} (${isCentroid ? 'Display Centroid' : 'Exact Address'})</title>
-          </circle>
-        </g>
-      `;
-    }).join('');
-
-    const regionalHtml = regionalItems.length > 0 ? `
-      <div class="map-regional-strip font-mono">
-        <span class="regional-strip-label">REGIONAL / STATEWIDE DISPLAY CENTROIDS (${regionalItems.length}):</span>
-        ${regionalItems.map(p => `<button type="button" class="btn-regional-pin" data-promise-id="${escapeHtml(p.promise_id)}">${escapeHtml(p.promise_id)} · ${escapeHtml(p.entity)}</button>`).join('')}
-      </div>
-    ` : '';
-
-    mapWrap.innerHTML = `
-      ${mapSvgOpenTag(W, H)}
-        <g aria-hidden="true">
-        <rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="#0B1324" />
-        <path d="${sfOutlinePath}" fill="#131E36" stroke="#2D3E5E" stroke-width="1.5" />
-        <path d="${tiPath}" fill="#172542" stroke="#364B73" stroke-width="1.2" />
-        <path d="${ggpPath}" fill="#12302B" stroke="#1E4D42" stroke-width="1" />
-        <text x="115" y="189" fill="#64748B" font-size="9" font-family="monospace">GOLDEN GATE PARK</text>
-        <text x="275" y="138" fill="#64748B" font-size="9" font-family="monospace">TENDERLOIN / SOMA</text>
-        <text x="225" y="232" fill="#64748B" font-size="9" font-family="monospace">MISSION</text>
-        <text x="415" y="47" fill="#64748B" font-size="8.5" font-family="monospace">TREASURE ISL.</text>
-        <rect x="422" y="322" width="124" height="94" rx="6" fill="#0F192E" stroke="#334155" stroke-width="1" />
-        <text x="430" y="335" fill="#94A3B8" font-size="8.5" font-family="monospace">SFO INSET (AIRPORT)</text>
-        </g>
-        ${markersSvg}
-      </svg>
-      ${regionalHtml}
-    `;
-
     if (selectedCard) selectedCard.setAttribute('aria-live', 'polite');
-    bindMapMarkers(mapWrap, {
-      // A single marker opens the record drawer directly (issue #44).
-      openPromise: (pid, node) => {
-        if (node && node.focus) node.focus();
-        openInspectDrawer(pid);
-      },
-      openCluster: (ids, node) => {
-        const members = ids.map(id => (demoData && demoData.promises || []).find(item => item.promise_id === id)).filter(Boolean);
-        if (!selectedCard || !members.length) return;
-        openClusterIds = members.map(m => m.promise_id);
-        openMapCluster(selectedCard, `
-          <div class="map-selected-title" id="map-cluster-title">${members.length} commitments in this area</div>
-          <ul class="map-cluster-list">
-            ${members.map(m => `<li><button type="button" class="btn-map-cluster-item" data-inspect-id="${escapeHtml(m.promise_id)}"><span class="verdict-chip ${(m.verdict || '').toLowerCase()}">${formatVerdictLabel(m.verdict)}</span> <span>${escapeHtml(m.promise_id)} · ${escapeHtml(m.entity)}</span></button></li>`).join('')}
-          </ul>
-          <button type="button" class="btn-map-cluster-close">Close list (Esc)</button>
-        `);
-        selectedCard.querySelectorAll('.btn-map-cluster-item').forEach(btn => {
-          btn.addEventListener('click', () => openInspectDrawer(btn.getAttribute('data-inspect-id')));
-        });
-        const closeBtn = selectedCard.querySelector('.btn-map-cluster-close');
-        if (closeBtn) closeBtn.addEventListener('click', () => closeMapCluster(selectedCard, mapWrap, openClusterIds));
-      }
-    });
     if (selectedCard && mapCardEscBound !== selectedCard) {
       mapCardEscBound = selectedCard;
       selectedCard.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && openClusterIds && !inspectDrawerOpen()) {
           e.preventDefault();
-          closeMapCluster(selectedCard, document.getElementById('sf-svg-map-wrap') || mapWrap, openClusterIds);
+          closeActiveMapClusterList();
+        }
+      });
+    }
+    const useStreet = streetMapActive();
+    syncMapModeUi(useStreet);
+    if (useStreet) {
+      mapWrap.classList.add('hidden');
+      renderStreetMap(list);
+    } else {
+      mapWrap.classList.remove('hidden');
+      hideStreetMap();
+      renderSvgMap();
+    }
+
+    function renderSvgMap() {
+      const minLat = 37.704;
+      const maxLat = 37.836;
+      const minLon = -122.516;
+      const maxLon = -122.354;
+      const W = 560;
+      const H = 430;
+
+      function projectSF(lat, lon) {
+        const x = ((lon - minLon) / (maxLon - minLon)) * (W - 60) + 30;
+        const y = ((maxLat - lat) / (maxLat - minLat)) * (H - 70) + 28;
+        return { x: Math.max(24, Math.min(W - 24, x)), y: Math.max(24, Math.min(H - 36, y)) };
+      }
+
+      function projectSFO(lat, lon) {
+        const x = ((lon - (-122.405)) / (-122.365 - (-122.405))) * 116 + 426;
+        const y = ((37.638 - lat) / (37.638 - 37.605)) * 78 + 332;
+        return { x: Math.max(428, Math.min(540, x)), y: Math.max(336, Math.min(408, y)) };
+      }
+
+      const verdictColor = VERDICT_COLORS;
+
+      const sfOutlinePath = 'M 55,298 L 62,210 L 66,142 L 88,92 L 154,68 L 238,68 L 315,76 L 372,110 L 398,176 L 408,248 L 392,302 L 320,312 L 222,312 L 125,308 Z';
+      const tiPath = 'M 412,56 L 434,54 L 438,84 L 414,88 Z';
+      const ggpPath = 'M 68,178 L 166,174 L 166,192 L 68,196 Z';
+
+      const pins = [];
+      const regionalItems = [];
+      (list || []).forEach(p => {
+        const lat = Number(p.latitude);
+        const lon = Number(p.longitude);
+        if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+        const inSFO = lat >= 37.59 && lat <= 37.65 && lon >= -122.42 && lon <= -122.35;
+        const inSF = lat >= minLat && lat <= maxLat && lon >= minLon && lon <= maxLon;
+        if (!inSF && !inSFO) {
+          regionalItems.push(p);
+          return;
+        }
+        const pt = inSFO ? projectSFO(lat, lon) : projectSF(lat, lon);
+        pins.push({ p, x: pt.x, y: pt.y, inSFO });
+      });
+
+      const isMobile = !!(window.matchMedia && window.matchMedia('(max-width: 720px), (pointer: coarse)').matches);
+      lastMapWidth = mapWrap.clientWidth;
+      const scale = (mapWrap.clientWidth || W) / W;
+      const hitDiameter = mapHitDiameterPx(isMobile) / scale;
+      const clusters = clusterPins(pins, hitDiameter);
+      openClusterIds = openClusterIds && selectedCard && !selectedCard.classList.contains('hidden') ? openClusterIds : null;
+
+      const markersSvg = clusters.map(cluster => {
+        const hit = `<circle class="map-pin-hit" cx="${cluster.x.toFixed(1)}" cy="${cluster.y.toFixed(1)}" r="${(hitDiameter / 2).toFixed(1)}" fill="transparent" />`;
+        if (cluster.items.length > 1) {
+          const ids = cluster.items.map(i => i.p.promise_id).join(',');
+          const n = cluster.items.length;
+          const label = escapeHtml(`${n} commitments in this area. Select to list them.`);
+          return `
+          <g class="map-cluster-node" data-cluster-ids="${escapeHtml(ids)}" tabindex="0" role="button" aria-label="${label}" style="cursor:pointer;">
+            ${hit}
+            <circle cx="${cluster.x.toFixed(1)}" cy="${cluster.y.toFixed(1)}" r="13" fill="#1E3A8A" stroke="#93C5FD" stroke-width="1.8" />
+            <text x="${cluster.x.toFixed(1)}" y="${(cluster.y + 4).toFixed(1)}" text-anchor="middle" fill="#F8FAFC" font-size="12" font-weight="700" font-family="monospace" pointer-events="none">${n}</text>
+          </g>`;
+        }
+        const { p, x, y } = cluster.items[0];
+        const v = (p.verdict || 'undecided').toLowerCase();
+        const color = verdictColor[v] || '#94A3B8';
+        const isCentroid = p.is_centroid !== false;
+        const pid = escapeHtml(p.promise_id || '');
+        const title = escapeHtml(`${p.entity}: ${p.neighborhood || 'San Francisco'}`);
+        return `
+          <g class="map-pin-node" data-promise-id="${pid}" tabindex="0" role="button" aria-label="${title}" style="cursor:pointer;">
+            ${hit}
+            ${isCentroid ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9.5" fill="none" stroke="${color}" stroke-width="1.4" stroke-dasharray="2.5 2" opacity="0.78"/>` : ''}
+            <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${isCentroid ? '4.8' : '6.5'}" fill="${color}" fill-opacity="${isCentroid ? '0.68' : '0.96'}" stroke="#0B1120" stroke-width="1.5">
+              <title>${title} (${isCentroid ? 'Display Centroid' : 'Exact Address'})</title>
+            </circle>
+          </g>
+        `;
+      }).join('');
+
+      const regionalHtml = regionalItems.length > 0 ? `
+        <div class="map-regional-strip font-mono">
+          <span class="regional-strip-label">REGIONAL / STATEWIDE DISPLAY CENTROIDS (${regionalItems.length}):</span>
+          ${regionalItems.map(p => `<button type="button" class="btn-regional-pin" data-promise-id="${escapeHtml(p.promise_id)}">${escapeHtml(p.promise_id)} · ${escapeHtml(p.entity)}</button>`).join('')}
+        </div>
+      ` : '';
+
+      mapWrap.innerHTML = `
+        ${mapSvgOpenTag(W, H)}
+          <g aria-hidden="true">
+          <rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="#0B1324" />
+          <path d="${sfOutlinePath}" fill="#131E36" stroke="#2D3E5E" stroke-width="1.5" />
+          <path d="${tiPath}" fill="#172542" stroke="#364B73" stroke-width="1.2" />
+          <path d="${ggpPath}" fill="#12302B" stroke="#1E4D42" stroke-width="1" />
+          <text x="115" y="189" fill="#64748B" font-size="9" font-family="monospace">GOLDEN GATE PARK</text>
+          <text x="275" y="138" fill="#64748B" font-size="9" font-family="monospace">TENDERLOIN / SOMA</text>
+          <text x="225" y="232" fill="#64748B" font-size="9" font-family="monospace">MISSION</text>
+          <text x="415" y="47" fill="#64748B" font-size="8.5" font-family="monospace">TREASURE ISL.</text>
+          <rect x="422" y="322" width="124" height="94" rx="6" fill="#0F192E" stroke="#334155" stroke-width="1" />
+          <text x="430" y="335" fill="#94A3B8" font-size="8.5" font-family="monospace">SFO INSET (AIRPORT)</text>
+          </g>
+          ${markersSvg}
+        </svg>
+        ${regionalHtml}
+      `;
+
+      bindMapMarkers(mapWrap, {
+        // A single marker opens the record drawer directly (issue #44).
+        openPromise: (pid, node) => {
+          if (node && node.focus) node.focus();
+          openInspectDrawer(pid);
+        },
+        openCluster: (ids) => {
+          const members = ids.map(id => (demoData && demoData.promises || []).find(item => item.promise_id === id)).filter(Boolean);
+          showMapClusterList(selectedCard, members, 'svg');
         }
       });
     }

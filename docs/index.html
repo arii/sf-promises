@@ -18,7 +18,7 @@
   <meta name="twitter:description" content="A sourced record of 54 San Francisco public commitments, each checked against primary sources and marked kept, in progress, broken or undecided.">
   <meta name="twitter:image" content="https://arii.github.io/assets/research/sf-promises/verdict-board.webp">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=cf4dbae5">
+  <link rel="stylesheet" href="styles.css?v=basemap-44">
   <link rel="stylesheet" href="display-consistency.css?v=ui-consistency">
 </head>
 <body>
@@ -2224,6 +2224,17 @@
                   <span class="legend-item"><span class="pin-ring"></span>Display Centroid</span>
                 </div>
               </div>
+              <div class="map-mode-bar">
+                <div class="map-mode-toggle" role="group" aria-label="Map style">
+                  <button type="button" class="btn-map-mode" id="btn-map-mode-street" data-map-mode="street" aria-pressed="false" aria-describedby="map-mode-note">Street map</button>
+                  <button type="button" class="btn-map-mode" id="btn-map-mode-simple" data-map-mode="simple" aria-pressed="true" aria-describedby="map-mode-note">Simple map</button>
+                </div>
+                <p class="map-mode-note" id="map-mode-note">The simple map is keyboard accessible: every marker is a button.</p>
+              </div>
+              <div class="street-map-wrap hidden" id="street-map-wrap">
+                <div class="street-map" id="street-map"></div>
+              </div>
+              <div class="street-map-regional hidden" id="street-map-regional"></div>
               <div class="sf-svg-canvas-wrap" id="sf-svg-map-wrap"></div>
               <div class="map-selected-card hidden" id="map-selected-card"></div>
             </div>
@@ -2723,6 +2734,6 @@
 
   <!-- Scripts -->
   <script src="data.js?v=cf4dbae5"></script>
-  <script src="app.js?v=cf4dbae5"></script>
+  <script src="app.js?v=basemap-44"></script>
 </body>
 </html>

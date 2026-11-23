@@ -213,3 +213,26 @@
 - Avatars: `docs/app.js` loads same-origin `media/manifest.json` and maps entity names, so avatars show without regenerating `docs/data.json` (no database touched). Credit links the licence for CC BY / CC BY-SA, 0.75rem.
 - Manifest/media: `logo` flag and `restrictions` recorded (Giants: `trademarked`, from the review's Commons check; the other logos carry `logo: true` and were not re-queried). Logo credit shows "Logo is a trademark of its owner". `check_approved` rejects a license that differs from `suggested_license`.
 - Open: re-run `scripts/fetch_media.py stage-entities` when network is allowed to fill `restrictions` for all entries; regenerate `docs/data.json` with the export when the production database may be used.
+
+## 2026-11-23 · #44 street basemap (branch feat/basemap-44)
+
+- **Map & Districts street map:** self-hosted MapLibre GL JS 5.24.1 + pmtiles 4.5.0 +
+  @protomaps/basemaps 5.7.2 ("light" flavor) reading `docs/map/sf-z14.pmtiles` (Protomaps build
+  20261123, SF + SFO, z0–14, © OpenStreetMap contributors, ODbL). Assets and licenses are listed in
+  `docs/map/README.md` (7.47 MB in total). `index.html` does not reference them: `app.js` inserts the
+  `<script>`/`<link>` tags the first time the Map view opens.
+- Records are a clustered GeoJSON source coloured with `VERDICT_COLORS`. Display centroids get a ring,
+  as on the SVG map. A tap opens the record drawer. A cluster zooms in, or lists its records when they
+  share one coordinate (14 records sit at 37.7749,-122.4194). Hit box 44px on phones. Cooperative
+  gestures, max zoom 16, padded max bounds. Labels use only the three shipped Noto Sans stacks.
+- "Street map" / "Simple map" toggle, remembered in `localStorage` (`sfp-map-mode`). The SVG map stays
+  the keyboard-accessible option and is used automatically without WebGL or if MapLibre fails to load.
+- PMTiles needs HTTP Range: GitHub Pages serves it, `python3 -m http.server` does not (use a
+  Range-capable server for local previews).
+- Checked in headless Chrome at 390 and 1280 px: zero third-party requests, zero 4xx/5xx, zero JS
+  errors. Touch: one finger scrolls the page, two fingers pan, pinch zooms. Fallbacks checked by blocking
+  maplibre-gl.js and by stubbing WebGL.
+- Also: the "Watch one promise get checked" walkthrough now starts its timer on load (it showed
+  "Pause" but never advanced). Pagination and back-to-top labels are vertically centred, and the
+  "Technical & Audit Specifications" accordion is styled like the limits accordion.
+- Not done (other #44 items, out of scope): story-card images, hero pipeline teaser, inline timelines.
