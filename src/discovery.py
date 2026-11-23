@@ -159,7 +159,10 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
                 try:
                     saved[url] = await fetch_and_archive(client, url, root, promise_id, capture=capture)
                 except KeenableAPIError as exc:
-                    if exc.status_code not in (404, 410):
+                    # Per-URL outcomes: gone (404/410) or Keenable fetched a
+                    # different page than requested (422). Others are provider
+                    # failures and propagate.
+                    if exc.status_code not in (404, 410, 422):
                         raise
                     saved[url] = f"http_{exc.status_code}"
                 except KeenableConnectionError:

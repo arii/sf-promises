@@ -154,3 +154,31 @@
   (`quick_check` ok, 126 source hashes, 39 baseline FK violations).
 - Live counts after cleanup: promises 62, verdicts 87, quarantined 0,
   sources 115, test_cases 113, test_results 144.
+
+## 2026-11-23: First v2 audit of qualified discovery candidates
+
+- New v2 database on the Archil disk: `/mnt/archil/workspace/v2/promises.db`
+  (sources in `v2/sources/`, agent lane in `v2/agent-lane/`). The legacy
+  `promises.db` and the published `docs/data.json` are unchanged.
+- Queue: `seeds/discovery_targets.json` (45 qualified register candidates with
+  day-precision dates; built by `scripts/build_discovery_queue.py`). Ran
+  `python -m src.run_live --db /mnt/archil/workspace/v2/promises.db --queue
+  seeds/discovery_targets.json --candidate-batch ...` on the 12 candidates
+  whose deadlines have passed plus one pilot (DISC-20261122-013). Lane
+  requests were answered by coding agents (extraction, advocates, and a
+  skeptical second reader for verify_origin / verify_evidence).
+- Result: 0 published, 12 quarantined (9 NO_VERIFIABLE_ORIGIN,
+  2 INSUFFICIENT_OUTCOME_EVIDENCE, 1 AMBIGUOUS_EVIDENCE). Not yet run:
+  ARTS-02, ARTS-03, TECH-01, DISC-20261122-002 and the 30 future-deadline or
+  undated candidates.
+- Why so few pass: (1) the "outside the box" register entries are
+  paraphrases; archived sources rarely contain a sentence with the same
+  deliverable and an explicit commitment date; (2) news pages often lack a
+  dateline the verifier accepts ("on Tuesday"); (3) promises with future
+  deadlines cannot be published by v2 because it requires delivery and
+  survival evidence; (4) segmenting splits some sentences (ordinance text,
+  strikethrough artifacts), and outcome segments can be bare fragments.
+- Robustness fixes made during the run: Keenable 502/503/504 and connection
+  errors retry (30 s, 3 tries); a URL still unreachable, or a 422 "different
+  page" fetch, is recorded as blocked instead of crashing the batch;
+  `SF_PROMISES_LANE_TIMEOUT` raises the lane wait for agent-answered runs.
