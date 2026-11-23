@@ -241,12 +241,6 @@ def test_cli_dry_run_requires_durability_cycle():
     assert "--dry-run requires --durability-cycle" in result.stderr
 
 
-def _verdict_count(database):
-    conn = sqlite3.connect(database)
-    try:
-        return conn.execute("SELECT COUNT(*) FROM verdicts").fetchone()[0]
-
-
 def _fingerprint(database):
     conn = sqlite3.connect(database)
     try:
@@ -254,6 +248,42 @@ def _fingerprint(database):
             conn.execute("PRAGMA journal_mode").fetchone()[0],
             sorted(conn.execute("SELECT name, sql FROM sqlite_master").fetchall()),
         )
+    finally:
+        conn.close()
+
+
+def test_durability_dry_run_leaves_populated_database_untouched(live_db):
+    before_bytes = Path(live_db).read_bytes()
+    before = _fingerprint(live_db)
+
+    result = durability_cycle(
+        live_db, completion=FakeCompletion("SHUTTERED_OR_CLOSED"), dry_run=True
+    )
+
+    assert result["transitions"][0]["new_status"] == "KEPT_THEN_REVERSED"
+    assert _fingerprint(live_db) == before
+    assert "change_log" not in {name for name, _ in before[1]}
+    assert Path(live_db).read_bytes() == before_bytes
+
+
+def test_durability_dry_run_leaves_empty_database_untouched(tmp_path):
+    database = initialize_database(tmp_path / "empty.db")
+    before_bytes = Path(database).read_bytes()
+    before = _fingerprint(database)
+
+    result = durability_cycle(database, dry_run=True, evaluator_fn=lambda p, v: (v, "n/a"))
+
+    assert result["total_due_checked"] == 0
+    assert result["status_changes_count"] == 0
+    assert _fingerprint(database) == before
+    assert Path(database).read_bytes() == before_bytes
+    assert not Path(str(database) + "-wal").exists()
+
+
+def _verdict_count(database):
+    conn = sqlite3.connect(database)
+    try:
+        return conn.execute("SELECT COUNT(*) FROM verdicts").fetchone()[0]
     finally:
         conn.close()
 
@@ -337,31 +367,3 @@ def test_verified_reversal_after_confirmation_still_appends_verdict(live_db):
                               completion=FakeCompletion("SHUTTERED_OR_CLOSED"))
     assert result["status_changes_count"] == 1
     assert _verdict_count(live_db) == 2
-
-
-def test_durability_dry_run_leaves_populated_database_untouched(live_db):
-    before_bytes = Path(live_db).read_bytes()
-    before = _fingerprint(live_db)
-
-    result = durability_cycle(
-        live_db, completion=FakeCompletion("SHUTTERED_OR_CLOSED"), dry_run=True
-    )
-
-    assert result["transitions"][0]["new_status"] == "KEPT_THEN_REVERSED"
-    assert _fingerprint(live_db) == before
-    assert "change_log" not in {name for name, _ in before[1]}
-    assert Path(live_db).read_bytes() == before_bytes
-
-
-def test_durability_dry_run_leaves_empty_database_untouched(tmp_path):
-    database = initialize_database(tmp_path / "empty.db")
-    before_bytes = Path(database).read_bytes()
-    before = _fingerprint(database)
-
-    result = durability_cycle(database, dry_run=True, evaluator_fn=lambda p, v: (v, "n/a"))
-
-    assert result["total_due_checked"] == 0
-    assert result["status_changes_count"] == 0
-    assert _fingerprint(database) == before
-    assert Path(database).read_bytes() == before_bytes
-    assert not Path(str(database) + "-wal").exists()
