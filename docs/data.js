@@ -3,16 +3,16 @@ window.__DEMO_DATA__ = {
   "metadata": {
     "title": "SF Promises",
     "city": "San Francisco",
-    "last_checked": "Nov 14, 2026",
-    "last_updated": "Nov 14, 2026",
+    "last_checked": "Nov 23, 2026",
+    "last_updated": "Nov 23, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
-    "commit_sha": "cbff51c57ee82607b403ee4bf69a6521bccc57ed",
+    "commit_sha": "cf4dbae5ac9df4c7f61a59934ce9e9e883efaff7",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-14T10:57:08Z"
+    "exported_at": "2026-11-23T17:35:36Z"
   },
   "database_status": {
-    "commit_sha": "cbff51c57ee82607b403ee4bf69a6521bccc57ed",
+    "commit_sha": "cf4dbae5ac9df4c7f61a59934ce9e9e883efaff7",
     "tracked_count": 54,
     "seed_promises_count": 12,
     "total_db_promises": 62,
@@ -3791,7 +3791,7 @@ window.__DEMO_DATA__ = {
     "id_reconciliation": "54 published \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
-    "acceptance_status_label": "Acceptance verified on commit cbff51c (separated processes, not Firecracker)",
+    "acceptance_status_label": "Acceptance verified by harness run F-20261111-045601 on 2026-11-11 (separated processes, not Firecracker)",
     "counts": {
       "kept": 24,
       "broken": 17,
@@ -3801,7 +3801,8 @@ window.__DEMO_DATA__ = {
     },
     "integration_run": {
       "run_id": "F-20261111-045601",
-      "commit_sha": "cbff51c57ee82607b403ee4bf69a6521bccc57ed",
+      "commit_sha": null,
+      "run_at": "2026-11-11T04:56:24.469855+00:00",
       "total_tests": 36,
       "passed": 33,
       "failed": 0,
@@ -3820,8 +3821,8 @@ window.__DEMO_DATA__ = {
     "sandbox_isolation_label": "Bounded local processes; not a VM or filesystem/network security boundary",
     "discrepancies": [
       "DB holds 62 promises (12 seeds + 50 Tier-2 banked, scale paused by user decision) with 87 verdicts and 124 evidence rows; every file hash re-verified.",
-      "Latest harness run F-20261111-045601 on cbff51c: 33 pass / 0 fail / 3 blocked-extended.",
-      "Historical acceptance on commit cbff51c: loop, per-row hash, change log, N-catches, demo. Local worker processes are not a VM security boundary.",
+      "Latest harness run F-20261111-045601 (2026-11-11): 33 pass / 0 fail / 3 blocked-extended.",
+      "Local worker processes are not a VM or filesystem/network security boundary.",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
     ],
@@ -3833,25 +3834,25 @@ window.__DEMO_DATA__ = {
       "stages": [
         {
           "stage": "leads_encountered",
-          "count": 63,
+          "count": 87,
           "universe": "intake_register"
         },
         {
           "stage": "sources_archived",
-          "count": 122,
+          "count": 115,
           "universe": "database"
         },
         {
           "stage": "qualified",
-          "count": 24,
+          "count": 48,
           "universe": "intake_register",
-          "conversion_from_previous": 0.381
+          "conversion_from_previous": 0.552
         },
         {
           "stage": "screened",
           "count": 62,
           "universe": "database",
-          "conversion_from_previous": 0.508
+          "conversion_from_previous": 0.539
         },
         {
           "stage": "published",
@@ -3861,18 +3862,18 @@ window.__DEMO_DATA__ = {
         },
         {
           "stage": "quarantined",
-          "count": 1,
+          "count": 0,
           "universe": "database",
-          "conversion_from_previous": 0.016
+          "conversion_from_previous": 0.0
         }
       ],
       "stage_counts": {
-        "leads_encountered": 63,
-        "sources_archived": 122,
-        "qualified": 24,
+        "leads_encountered": 87,
+        "sources_archived": 115,
+        "qualified": 48,
         "screened": 62,
         "published": 54,
-        "quarantined": 1
+        "quarantined": 0
       },
       "windows": [
         {
@@ -3913,6 +3914,182 @@ window.__DEMO_DATA__ = {
               "conversion_from_previous": 1.0
             }
           ]
+        },
+        {
+          "window": "intake-20261115",
+          "round_ids": [
+            "r6-intake-bos_transcript",
+            "r6-intake-budget",
+            "r6-intake-ballot",
+            "r6-intake-campaign_query"
+          ],
+          "stage_counts": {
+            "raw": 102,
+            "allowlisted": 36,
+            "archived": 12,
+            "leads": 12,
+            "gate": 12
+          },
+          "stages": [
+            {
+              "stage": "raw",
+              "count": 102
+            },
+            {
+              "stage": "allowlisted",
+              "count": 36,
+              "conversion_from_previous": 0.353
+            },
+            {
+              "stage": "archived",
+              "count": 12,
+              "conversion_from_previous": 0.333
+            },
+            {
+              "stage": "leads",
+              "count": 12,
+              "conversion_from_previous": 1.0
+            },
+            {
+              "stage": "gate",
+              "count": 12,
+              "conversion_from_previous": 1.0
+            }
+          ],
+          "lanes": {
+            "ballot": {
+              "stage_counts": {
+                "raw": 0,
+                "allowlisted": 0,
+                "archived": 0,
+                "leads": 0,
+                "gate": 0
+              },
+              "stages": [
+                {
+                  "stage": "raw",
+                  "count": 0
+                },
+                {
+                  "stage": "allowlisted",
+                  "count": 0
+                },
+                {
+                  "stage": "archived",
+                  "count": 0
+                },
+                {
+                  "stage": "leads",
+                  "count": 0
+                },
+                {
+                  "stage": "gate",
+                  "count": 0
+                }
+              ]
+            },
+            "bos_transcript": {
+              "stage_counts": {
+                "raw": 70,
+                "allowlisted": 4,
+                "archived": 4,
+                "leads": 4,
+                "gate": 4
+              },
+              "stages": [
+                {
+                  "stage": "raw",
+                  "count": 70
+                },
+                {
+                  "stage": "allowlisted",
+                  "count": 4,
+                  "conversion_from_previous": 0.057
+                },
+                {
+                  "stage": "archived",
+                  "count": 4,
+                  "conversion_from_previous": 1.0
+                },
+                {
+                  "stage": "leads",
+                  "count": 4,
+                  "conversion_from_previous": 1.0
+                },
+                {
+                  "stage": "gate",
+                  "count": 4,
+                  "conversion_from_previous": 1.0
+                }
+              ]
+            },
+            "budget": {
+              "stage_counts": {
+                "raw": 0,
+                "allowlisted": 0,
+                "archived": 0,
+                "leads": 0,
+                "gate": 0
+              },
+              "stages": [
+                {
+                  "stage": "raw",
+                  "count": 0
+                },
+                {
+                  "stage": "allowlisted",
+                  "count": 0
+                },
+                {
+                  "stage": "archived",
+                  "count": 0
+                },
+                {
+                  "stage": "leads",
+                  "count": 0
+                },
+                {
+                  "stage": "gate",
+                  "count": 0
+                }
+              ]
+            },
+            "campaign_query": {
+              "stage_counts": {
+                "raw": 32,
+                "allowlisted": 32,
+                "archived": 8,
+                "leads": 8,
+                "gate": 8
+              },
+              "stages": [
+                {
+                  "stage": "raw",
+                  "count": 32
+                },
+                {
+                  "stage": "allowlisted",
+                  "count": 32,
+                  "conversion_from_previous": 1.0
+                },
+                {
+                  "stage": "archived",
+                  "count": 8,
+                  "conversion_from_previous": 0.25
+                },
+                {
+                  "stage": "leads",
+                  "count": 8,
+                  "conversion_from_previous": 1.0
+                },
+                {
+                  "stage": "gate",
+                  "count": 8,
+                  "conversion_from_previous": 1.0
+                }
+              ]
+            }
+          }
         },
         {
           "window": "rolling-183d",
@@ -3965,14 +4142,13 @@ window.__DEMO_DATA__ = {
         "authenticity_domain": 1,
         "authenticity_hash": 1,
         "authenticity_speaker": 1,
-        "relevance_gate": 1,
-        "relevance_low": 1,
+        "relevance_low": 2,
         "verdict_rubric": 1
       }
     },
     "denials": {
-      "total_denials": 834,
-      "distinct_domains": 367,
+      "total_denials": 852,
+      "distinct_domains": 374,
       "by_domain": {
         "48hills.org": {
           "count": 2,
@@ -5279,6 +5455,15 @@ window.__DEMO_DATA__ = {
             "unlisted": 1
           }
         },
+        "infraday.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
         "instagram.com": {
           "count": 5,
           "reasons": {
@@ -5298,6 +5483,15 @@ window.__DEMO_DATA__ = {
           }
         },
         "isthefoodgood.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "jacobs.com": {
           "count": 1,
           "reasons": {
             "domain_not_allowlisted": 1
@@ -5375,7 +5569,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 9
           },
           "source_types": {
-            "unlisted": 9
+            "news": 9
           }
         },
         "labs.songkick.com": {
@@ -6032,7 +6226,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 10
           },
           "source_types": {
-            "unlisted": 10
+            "neighborhood_press": 10
           }
         },
         "ridgelaneneighborssf.org": {
@@ -6117,12 +6311,12 @@ window.__DEMO_DATA__ = {
           }
         },
         "sanfranciscopolice.org": {
-          "count": 1,
+          "count": 2,
           "reasons": {
-            "domain_not_allowlisted": 1
+            "domain_not_allowlisted": 2
           },
           "source_types": {
-            "unlisted": 1
+            "unlisted": 2
           }
         },
         "sanfranciscopost.com": {
@@ -6194,7 +6388,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 5
           },
           "source_types": {
-            "unlisted": 5
+            "news": 5
           }
         },
         "sf.funcheap.com": {
@@ -6287,6 +6481,15 @@ window.__DEMO_DATA__ = {
             "news": 1
           }
         },
+        "sfcontroller.org": {
+          "count": 1,
+          "reasons": {
+            "http_202": 1
+          },
+          "source_types": {
+            "official_government": 1
+          }
+        },
         "sfcta.org": {
           "count": 13,
           "reasons": {
@@ -6323,6 +6526,15 @@ window.__DEMO_DATA__ = {
             "unlisted": 3
           }
         },
+        "sfelections.sfgov.org": {
+          "count": 1,
+          "reasons": {
+            "http_202": 1
+          },
+          "source_types": {
+            "official_government": 1
+          }
+        },
         "sffilm.org": {
           "count": 1,
           "reasons": {
@@ -6342,21 +6554,22 @@ window.__DEMO_DATA__ = {
           }
         },
         "sfgov.legistar.com": {
-          "count": 12,
+          "count": 16,
           "reasons": {
-            "domain_not_allowlisted": 12
+            "domain_not_allowlisted": 12,
+            "unsupported_source_format": 4
           },
           "source_types": {
-            "unlisted": 12
+            "official_government": 16
           }
         },
         "sfguide.co": {
-          "count": 2,
+          "count": 3,
           "reasons": {
-            "domain_not_allowlisted": 2
+            "domain_not_allowlisted": 3
           },
           "source_types": {
-            "unlisted": 2
+            "unlisted": 3
           }
         },
         "sfheritage.org": {
@@ -6387,21 +6600,21 @@ window.__DEMO_DATA__ = {
           }
         },
         "sfinquirer.com": {
-          "count": 2,
+          "count": 3,
           "reasons": {
-            "domain_not_allowlisted": 2
+            "domain_not_allowlisted": 3
           },
           "source_types": {
-            "unlisted": 2
+            "unlisted": 3
           }
         },
         "sfist.com": {
-          "count": 8,
+          "count": 9,
           "reasons": {
-            "domain_not_allowlisted": 8
+            "domain_not_allowlisted": 9
           },
           "source_types": {
-            "unlisted": 8
+            "unlisted": 9
           }
         },
         "sflcv.org": {
@@ -6449,13 +6662,22 @@ window.__DEMO_DATA__ = {
             "unlisted": 11
           }
         },
-        "sfpublicpress.org": {
+        "sfport.com": {
           "count": 3,
           "reasons": {
             "domain_not_allowlisted": 3
           },
           "source_types": {
             "unlisted": 3
+          }
+        },
+        "sfpublicpress.org": {
+          "count": 3,
+          "reasons": {
+            "domain_not_allowlisted": 3
+          },
+          "source_types": {
+            "news": 3
           }
         },
         "sfpublicworks.org": {
@@ -6474,6 +6696,15 @@ window.__DEMO_DATA__ = {
           },
           "source_types": {
             "unlisted": 6
+          }
+        },
+        "sfseacliff.california58.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
           }
         },
         "sftimes.com": {
@@ -6603,6 +6834,15 @@ window.__DEMO_DATA__ = {
           }
         },
         "static1.squarespace.com": {
+          "count": 1,
+          "reasons": {
+            "domain_not_allowlisted": 1
+          },
+          "source_types": {
+            "unlisted": 1
+          }
+        },
+        "stormwater.com": {
           "count": 1,
           "reasons": {
             "domain_not_allowlisted": 1
@@ -6765,12 +7005,12 @@ window.__DEMO_DATA__ = {
           }
         },
         "thesanfrancisco.org": {
-          "count": 7,
+          "count": 8,
           "reasons": {
-            "domain_not_allowlisted": 7
+            "domain_not_allowlisted": 8
           },
           "source_types": {
-            "unlisted": 7
+            "unlisted": 8
           }
         },
         "thesunreporter.com": {
@@ -7013,7 +7253,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 2
           },
           "source_types": {
-            "unlisted": 2
+            "community_press": 2
           }
         },
         "wunderground.com": {
@@ -7220,7 +7460,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 8
           },
           "source_types": {
-            "unlisted": 8
+            "community_press": 8
           }
         },
         "www.xtreet.com": {
@@ -7703,6 +7943,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-commitment-opening-247-police-friendly-stabilization-center-to-provide-urgent-care-for-people-in-crisis",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/daniel-lurie-160.webp",
+      "entity_image_credit": "Daniel Lurie / Public domain",
       "source_tier": "Official"
     },
     {
@@ -7975,6 +8217,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://missionlocal.org/2025/07/mayor-lurie-deserves-credit-for-dropping-1500-shelter-bed-campaign-pledge-but-also-grief/",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/daniel-lurie-160.webp",
+      "entity_image_credit": "Daniel Lurie / Public domain",
       "source_tier": "News"
     },
     {
@@ -8132,6 +8376,9 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-reopen-runway-28l-ahead-schedule-friday-june-21st",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
+      "entity_image_path": "media/entities/san-francisco-international-airport-sfo-160.webp",
+      "entity_image_credit": "San Francisco International Airport / Public domain",
+      "entity_image_note": "Logo is a trademark of its owner",
       "source_tier": "Official"
     },
     {
@@ -8288,6 +8535,9 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.flysfo.com/about/media/press-releases/sfo-celebrates-completion-harvey-milk-terminal-1",
       "entity_promise_count": 2,
       "entity_sample_warning": true,
+      "entity_image_path": "media/entities/san-francisco-international-airport-sfo-160.webp",
+      "entity_image_credit": "San Francisco International Airport / Public domain",
+      "entity_image_note": "Logo is a trademark of its owner",
       "source_tier": "Official"
     },
     {
@@ -8517,6 +8767,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sf.streetsblog.org/2022/04/26/hurrah-for-j-f-k-promenade-forever",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/london-breed-160.webp",
+      "entity_image_credit": "City of San Francisco / Public domain",
       "source_tier": "News"
     },
     {
@@ -10056,6 +10308,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://edition.pagesuite.com/tribune/article_popover.aspx?guid=4996c790-cac8-49aa-8783-9c015e1acea1",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/daniel-lurie-160.webp",
+      "entity_image_credit": "Daniel Lurie / Public domain",
       "source_tier": "News"
     },
     {
@@ -10300,6 +10554,9 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://techcrunch.com/2025/11/18/zoox-to-begin-offering-robotaxi-rides-to-public-in-san-francisco/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
+      "entity_image_path": "media/entities/zoox-160.webp",
+      "entity_image_credit": "Zoox, Inc. / Public domain",
+      "entity_image_note": "Logo is a trademark of its owner",
       "source_tier": "News"
     },
     {
@@ -10539,6 +10796,9 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://waymo.com/blog/2022/03/taking-our-next-step-in-city-by-bay/",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
+      "entity_image_path": "media/entities/waymo-160.webp",
+      "entity_image_credit": "Waymo / Public domain",
+      "entity_image_note": "Logo is a trademark of its owner",
       "source_tier": "News"
     },
     {
@@ -11046,6 +11306,9 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/s-f-giants-brass-celebrates-opening-mission-rock-18161986.php",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
+      "entity_image_path": "media/entities/san-francisco-giants-160.webp",
+      "entity_image_credit": "San Francisco Giants / Public domain",
+      "entity_image_note": "Logo is a trademark of its owner",
       "source_tier": "News"
     },
     {
@@ -11272,6 +11535,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://citypln-m-extnl.sfgov.org/Commissions/CPC/4_10_2025/Commission%20Packet/2021-005878CWP.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/london-breed-160.webp",
+      "entity_image_credit": "City of San Francisco / Public domain",
       "source_tier": "Official"
     },
     {
@@ -11519,6 +11784,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfmta.com/tl/media/45938/download?inline",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
+      "entity_image_path": "media/entities/city-and-county-of-san-francisco-160.webp",
+      "entity_image_credit": "City and County of San Francisco / Public domain",
       "source_tier": "Official"
     },
     {
@@ -11763,6 +12030,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfchronicle.com/sf/article/homeless-housing-sro-breed-17767837.php",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/london-breed-160.webp",
+      "entity_image_credit": "City of San Francisco / Public domain",
       "source_tier": "News"
     },
     {
@@ -11989,6 +12258,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.dhcs.ca.gov/wp-content/uploads/2025/10/San-Francisco-PY4-Annual-Narrative.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/london-breed-160.webp",
+      "entity_image_credit": "City of San Francisco / Public domain",
       "source_tier": "News"
     },
     {
@@ -12138,6 +12409,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.influencewatch.org/person/daniel-lurie/",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/daniel-lurie-160.webp",
+      "entity_image_credit": "Daniel Lurie / Public domain",
       "source_tier": "News"
     },
     {
@@ -12866,6 +13139,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://costa-hawkins.com/wp-content/uploads/2026/09/A172067.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
+      "entity_image_path": "media/entities/dean-preston-160.webp",
+      "entity_image_credit": "DPStaff / Public domain",
       "source_tier": "News"
     },
     {
@@ -13314,6 +13589,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2020-02-19/gov-newsom-once-again-takes-on-homelessness-this-time-statewide",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/gavin-newsom-160.webp",
+      "entity_image_credit": "Office of the Lieutenant Governor of California / Public domain",
       "source_tier": "News"
     },
     {
@@ -13540,6 +13817,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://sfplanning.org/sf-family-zoning-plan",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/daniel-lurie-160.webp",
+      "entity_image_credit": "Daniel Lurie / Public domain",
       "source_tier": "News"
     },
     {
@@ -13760,6 +14039,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--san-francisco-receives-new-state-homekey-awards-733-million-support-purchase-and-operations",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/london-breed-160.webp",
+      "entity_image_credit": "City of San Francisco / Public domain",
       "source_tier": "Official"
     },
     {
@@ -14479,6 +14760,9 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sfpuc.gov/sites/default/files/documents/WSIP-Quarterly-Report-FY2025-2026-Q4.pdf",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
+      "entity_image_path": "media/entities/san-francisco-public-utilities-commission-sfpuc-160.webp",
+      "entity_image_credit": "San Francisco Public Utilities Commission / Public domain",
+      "entity_image_note": "Logo is a trademark of its owner",
       "source_tier": "News"
     },
     {
@@ -15672,6 +15956,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://src.senate.ca.gov/governor-gavin-newsoms-top-15-worst-flip-flops-and-fails",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/gavin-newsom-160.webp",
+      "entity_image_credit": "Office of the Lieutenant Governor of California / Public domain",
       "source_tier": "News"
     },
     {
@@ -15910,6 +16196,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.khsu.org/regional-interests/2019-08-02/timeline-the-frustrating-political-history-of-homelessness-in-san-francisco",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/gavin-newsom-160.webp",
+      "entity_image_credit": "Office of the Lieutenant Governor of California / Public domain",
       "source_tier": "News"
     },
     {
@@ -16380,6 +16668,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_admin/0-0-0-67712",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/london-breed-160.webp",
+      "entity_image_credit": "City of San Francisco / Public domain",
       "source_tier": "News"
     },
     {
@@ -16612,6 +16902,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://en.wikipedia.org/wiki/Healthy_San_Francisco",
       "entity_promise_count": 4,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/gavin-newsom-160.webp",
+      "entity_image_credit": "Office of the Lieutenant Governor of California / Public domain",
       "source_tier": "Reference"
     },
     {
@@ -17052,6 +17344,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/mayor-lurie-launches-sfpd-hospitality-task-force-major-new-effort-to-strengthen-public-safety-drive-economic-comeback",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/daniel-lurie-160.webp",
+      "entity_image_credit": "Daniel Lurie / Public domain",
       "source_tier": "Official"
     },
     {
@@ -17279,6 +17573,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news--department-public-health-opens-70-new-behavioral-health-beds-part-expansion-treat-people",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/london-breed-160.webp",
+      "entity_image_credit": "City of San Francisco / Public domain",
       "source_tier": "Official"
     },
     {
@@ -17536,6 +17832,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://api.sf.gov/documents/12808/DPH_MHSF_Implementation_Report_2023.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/london-breed-160.webp",
+      "entity_image_credit": "City of San Francisco / Public domain",
       "source_tier": "Official"
     },
     {
@@ -17684,6 +17982,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://hsh.archive.sf.gov/wp-content/uploads/2020/01/1000-Shelter-Bed-Press-Conference.pdf",
       "entity_promise_count": 9,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/london-breed-160.webp",
+      "entity_image_credit": "City of San Francisco / Public domain",
       "source_tier": "Official"
     },
     {
@@ -17941,6 +18241,9 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/PGE-Outlines-Actions-Its-Taking-to-Keep-Customers-and-Communities-Safe-During-2020-Wildfire-Season/default.aspx?print=1",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/pacific-gas-electric-pg-e-160.webp",
+      "entity_image_credit": "Pacific Gas and Electric Company / Public domain",
+      "entity_image_note": "Logo is a trademark of its owner",
       "source_tier": "News"
     },
     {
@@ -18186,6 +18489,9 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://docs.cpuc.ca.gov/PublishedDocs/Efile/G000/M373/K419/373419331.PDF",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/pacific-gas-electric-pg-e-160.webp",
+      "entity_image_credit": "Pacific Gas and Electric Company / Public domain",
+      "entity_image_note": "Logo is a trademark of its owner",
       "source_tier": "News"
     },
     {
@@ -18419,6 +18725,9 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://investor.pgecorp.com/news-events/press-releases/press-release-details/2020/Electric-Vehicle-Drivers-Apply-for-800-Clean-Fuel-Rebate-Before-End-of-Year/default.aspx",
       "entity_promise_count": 3,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/pacific-gas-electric-pg-e-160.webp",
+      "entity_image_credit": "Pacific Gas and Electric Company / Public domain",
+      "entity_image_note": "Logo is a trademark of its owner",
       "source_tier": "News"
     },
     {
@@ -18885,6 +19194,8 @@ window.__DEMO_DATA__ = {
       "source_archived_url": "https://web.archive.org/web/*/https://www.sf.gov/news-mayor-lurie-delivers-on-key-pieces-of-permitsf-announces-legislation-with-major-reforms-to-cut-red-tape-drive-economic-recovery",
       "entity_promise_count": 7,
       "entity_sample_warning": false,
+      "entity_image_path": "media/entities/daniel-lurie-160.webp",
+      "entity_image_credit": "Daniel Lurie / Public domain",
       "source_tier": "Official"
     },
     {
@@ -20073,21 +20384,34 @@ window.__DEMO_DATA__ = {
     {
       "quarantine_id": "Q-P68",
       "promise_id": "P68",
-      "stage": null,
-      "reason": "relevance_low",
-      "reason_codes": [
-        "relevance_gate"
-      ],
-      "quarantined_at": "2026-11-11T04:36:42Z",
-      "source_file_path": "848553de6293dc9ebe825e72451d6e692ca42c9c7439cb706a6a62e193ee5105.md",
-      "source_hash": "848553de6293dc9ebe825e72451d6e692ca42c9c7439cb706a6a62e193ee5105",
-      "title": "P68",
+      "type_badge": "Rejected candidate",
+      "title": "[Bay Area - PayPal Park, San Jose, not SF proper] Bay FC will play their first home game at PayPal Park on Saturday, March 30, against the Houston Dash",
       "planted_claim": null,
+      "claim": "Bay FC will play their first home game at PayPal Park on Saturday, March 30, against the Houston Dash",
+      "original_text": null,
+      "altered_text": null,
+      "change_diff": "Non-SF municipal venue (San Jose)",
       "check_type": "relevance_gate",
-      "failing_check": "Relevance Gate 2.5 (code-only)",
-      "relevance": {},
-      "agent": "relevance_gate",
-      "destination": "Held back. Never published."
+      "failing_check": "Relevance score too low (non-SF jurisdiction)",
+      "failing_check_code": "relevance_low",
+      "reason": "Event occurs at PayPal Park in San Jose, CA, outside San Francisco municipal jurisdiction and civic accountability scope.",
+      "relevance": {
+        "score": 2.5,
+        "real": 1.0,
+        "measurable": 1.0,
+        "sf": 0.0,
+        "interesting": 0.5
+      },
+      "agent": "Screening Arbitrator",
+      "quarantined_at": "2026-11-10T14:55:00Z",
+      "quarantined_date": "Nov 10, 2026",
+      "destination": "Held back. Never published.",
+      "source_hash": "848553de6293dc9ebe825e72451d6e692ca42c9c7439cb706a6a62e193ee5105",
+      "source_file_path": "848553de6293dc9ebe825e72451d6e692ca42c9c7439cb706a6a62e193ee5105.md",
+      "source_url": "https://www.bayfc.com/news/bay-fc-home-opener-march-30",
+      "reason_codes": [
+        "relevance_low"
+      ]
     }
   ]
 };
