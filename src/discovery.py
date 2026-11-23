@@ -6,7 +6,7 @@ import re
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from keenable import KeenableAPIError
+from keenable import KeenableAPIError, KeenableConnectionError
 
 from src.evidence import is_allowlisted_url
 from src.sources import archive_source
@@ -162,6 +162,11 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
                     if exc.status_code not in (404, 410):
                         raise
                     saved[url] = f"http_{exc.status_code}"
+                except KeenableConnectionError:
+                    # Still unreachable after the client's bounded retries: record
+                    # the URL as blocked so the seed ends FETCH_INCOMPLETE instead
+                    # of crashing the whole batch.
+                    saved[url] = "fetch_connection_error"
                 except ValueError as exc:
                     saved[url] = str(exc)
             if isinstance(saved[url], dict):

@@ -16,7 +16,7 @@ import httpx
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 
 from src.advocates import stage_advocate
-from src.agent_lane import AgentLane
+from src.agent_lane import DEFAULT_TIMEOUT_SECONDS, AgentLane
 from src.candidate_sandbox import WorkerAuditError, audit_in_sandbox
 from src.database import APPLICATION_ID, SCHEMA_VERSION, initialize_database
 from src.discovery import discover_and_archive, fetch_and_archive, pool_outcome_sources
@@ -99,7 +99,8 @@ def build_completion(client, keys, *, lane_root):
     MODEL_PROVIDER selects it."""
     provider = model_provider()
     if provider == "agent":
-        return AgentLane(lane_root).completion
+        timeout = float(os.environ.get("SF_PROMISES_LANE_TIMEOUT") or DEFAULT_TIMEOUT_SECONDS)
+        return AgentLane(lane_root, timeout_seconds=timeout).completion
     if provider in ("openrouter", "nebius"):
         spend_ledger = NebiusSpendLedger(Path(lane_root).parent / "nebius-spend.db")
 

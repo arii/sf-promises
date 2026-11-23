@@ -6,7 +6,7 @@ from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
 
-from keenable import KeenableAPIError
+from keenable import KeenableAPIError, KeenableConnectionError
 
 from src.discovery import (
     discover_and_archive, discover_timeline, fetch_and_archive, pool_outcome_sources, search_window,
@@ -79,6 +79,34 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual([item["url"] for item in origin["sources"]], [fallback])
         self.assertEqual(origin["blocked"], [{"url": original, "reason": "http_404"}])
         self.assertEqual([item["url"] for item in result["outcome_sources"]], [outcome])
+
+    async def test_unreachable_url_is_blocked_not_raised(self):
+        original = "https://sf.gov/slow-page"
+        fallback = "https://sf.gov/original-announcement"
+
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[SimpleNamespace(url=fallback)])
+
+            async def fetch(self, url):
+                if url == original:
+                    raise KeenableConnectionError("could not reach the Keenable API: ReadTimeout('')")
+                return SimpleNamespace(
+                    url=url, content="Archived statement", published_at="2024-01-02",
+                    raw={"truncated": False},
+                )
+
+        with tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "source_url": original, "entity": "Library",
+                           "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+
+        origin = result["phases"]["origin"]
+        self.assertEqual([item["url"] for item in origin["sources"]], [fallback])
+        self.assertEqual(origin["blocked"], [{"url": original, "reason": "fetch_connection_error"}])
 
     async def test_provider_fetch_error_propagates(self):
         class Client:
