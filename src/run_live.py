@@ -204,7 +204,9 @@ def durability_evaluator(conn, root, completion):
         deadline = date.fromisoformat(deadlines[promise_id][:10])
         new_verdict = decide_verdict(deadline, date.today(), delivery, survival, facts_verified=True)
         if new_verdict is None or new_verdict == verdict:
-            return current_verdict, f"Durability recheck: survival re-confirmed ({survival}); verdict retained."
+            return (current_verdict,
+                    f"Durability recheck: survival re-confirmed ({survival}); verdict retained.",
+                    True)
         return new_verdict, (
             f"Durability recheck: survival re-evaluated to {survival} "
             f"from {len(quotes)} verified archived source(s)."

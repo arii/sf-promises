@@ -29,10 +29,49 @@ CHANGE_LOG_DDL = """
 """
 
 
+# Append-only record of successful durability confirmations that left the
+# verdict unchanged. Kept apart from verdicts/change_log so verdict history
+# only ever contains real transitions.
+CONFIRMATIONS_DDL = """
+    CREATE TABLE IF NOT EXISTS durability_confirmations (
+        confirmation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        promise_id TEXT NOT NULL,
+        confirmed_on TEXT NOT NULL,
+        verdict TEXT NOT NULL,
+        reason TEXT NOT NULL,
+        recorded_at TEXT NOT NULL
+    )
+"""
+
+
 def ensure_change_log(conn: sqlite3.Connection) -> None:
     """Create the append-only change_log table when it is missing."""
     conn.execute(CHANGE_LOG_DDL)
     conn.commit()
+
+
+def ensure_confirmations(conn: sqlite3.Connection) -> None:
+    """Create the durability_confirmations table when it is missing."""
+    conn.execute(CONFIRMATIONS_DDL)
+    conn.commit()
+
+
+def _latest_confirmations(conn: sqlite3.Connection) -> Dict[tuple, date]:
+    """Latest confirmation date per (promise_id, verdict); empty before first use."""
+    if not conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='durability_confirmations'"
+    ).fetchone():
+        return {}
+    latest = {}
+    for pid, verdict, confirmed_on in conn.execute(
+        "SELECT promise_id, verdict, MAX(confirmed_on) FROM durability_confirmations "
+        "GROUP BY promise_id, verdict"
+    ):
+        try:
+            latest[(pid, verdict)] = date.fromisoformat(confirmed_on)
+        except (TypeError, ValueError):
+            continue
+    return latest
 
 
 def find_due_rechecks(
@@ -61,6 +100,7 @@ def find_due_rechecks(
         ) v ON p.promise_id = v.promise_id AND v.rn = 1
     """).fetchall()
 
+    confirmations = _latest_confirmations(conn)
     due = []
     for r in rows:
         pid, status, text, due_date_val, verd, decided_at, reason = r
@@ -75,7 +115,13 @@ def find_due_rechecks(
         # The live schema stores uppercase verdicts ('KEPT'); the scheduling
         # windows are keyed on the lowercase vocabulary.
         verdict_key = verd.lower() if isinstance(verd, str) else verd
-        next_check = compute_next_check_at(verdict_key, decided_date)
+        # A confirmation of the current verdict restarts the cadence from the
+        # confirmation date; one recorded against an older verdict does not.
+        confirmed_date = confirmations.get((pid, verd))
+        base_date = decided_date
+        if confirmed_date and (base_date is None or confirmed_date > base_date):
+            base_date = confirmed_date
+        next_check = compute_next_check_at(verdict_key, base_date)
         if next_check and next_check <= check_date:
             due.append({
                 "promise_id": pid,
@@ -128,6 +174,7 @@ def run_durability_cycle(
     due_items = find_due_rechecks(conn, check_date)
     transitions = []
     errors = []
+    confirmations_recorded = 0
 
     for item in due_items:
         pid = item["promise_id"]
@@ -135,9 +182,15 @@ def run_durability_cycle(
 
         new_v = current_v
         new_reason = "Durability check: Survival confirmed across official registries."
+        confirmed = False
         if evaluator_fn:
             try:
-                new_v, new_reason = evaluator_fn(pid, current_v)
+                outcome = evaluator_fn(pid, current_v)
+                # Evaluators return (verdict, reason), optionally followed by
+                # a flag that is True only when survival was actually verified.
+                # Two-item results never count as a confirmation.
+                new_v, new_reason = outcome[0], outcome[1]
+                confirmed = len(outcome) > 2 and outcome[2] is True
             except Exception as exc:
                 errors.append({"promise_id": pid,
                                "error": f"{type(exc).__name__}: {exc}"})
@@ -163,12 +216,23 @@ def run_durability_cycle(
                 )
                 _record_recheck_verification(conn, pid, record)
                 transitions.append(record)
+        elif confirmed and not dry_run:
+            ensure_confirmations(conn)
+            conn.execute(
+                "INSERT INTO durability_confirmations (promise_id, confirmed_on, verdict, "
+                "reason, recorded_at) VALUES (?, ?, ?, ?, ?)",
+                (pid, check_date.isoformat(), current_v, new_reason,
+                 datetime.now(timezone.utc).isoformat()),
+            )
+            conn.commit()
+            confirmations_recorded += 1
 
     return {
         "cycle_date": check_date.isoformat(),
         "dry_run": dry_run,
         "total_due_checked": len(due_items),
         "status_changes_count": len(transitions),
+        "confirmations_recorded": confirmations_recorded,
         "transitions": transitions,
         "errors": errors
     }

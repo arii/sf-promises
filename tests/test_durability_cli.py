@@ -236,3 +236,92 @@ def test_cli_dry_run_requires_durability_cycle():
     )
     assert result.returncode == 2
     assert "--dry-run requires --durability-cycle" in result.stderr
+
+
+def _verdict_count(database):
+    conn = sqlite3.connect(database)
+    try:
+        return conn.execute("SELECT COUNT(*) FROM verdicts").fetchone()[0]
+    finally:
+        conn.close()
+
+
+def test_confirmed_unchanged_recheck_is_skipped_until_day_90(live_db):
+    from datetime import date
+
+    completion = FakeCompletion("ACTIVE_OPERATIONAL")
+    first = durability_cycle(live_db, as_of=date(2026, 10, 1), completion=completion)
+    assert first["total_due_checked"] == 1
+    assert first["confirmations_recorded"] == 1
+    calls_after_first = len(completion.calls)
+    assert calls_after_first > 0
+
+    # Separate invocation the next day: not due, no model calls.
+    second = durability_cycle(live_db, as_of=date(2026, 10, 2), completion=completion)
+    assert second["total_due_checked"] == 0
+    assert len(completion.calls) == calls_after_first
+
+    day_89 = durability_cycle(live_db, as_of=date(2026, 12, 29), completion=completion)
+    assert day_89["total_due_checked"] == 0
+
+    day_90 = durability_cycle(live_db, as_of=date(2026, 12, 30), completion=completion)
+    assert day_90["total_due_checked"] == 1
+    assert day_90["confirmations_recorded"] == 1
+    assert _verdict_count(live_db) == 1  # history untouched
+
+
+@pytest.mark.parametrize("completion_args,evaluator", [
+    (("SHUTTERED_OR_CLOSED", "ACTIVE_OPERATIONAL"), None),  # advocate disagreement
+    (None, "error"),
+    (None, "two_tuple"),
+])
+def test_unconfirmed_rechecks_do_not_advance_schedule(live_db, completion_args, evaluator):
+    from datetime import date
+
+    kwargs = {}
+    if completion_args:
+        kwargs["completion"] = FakeCompletion(*completion_args)
+    elif evaluator == "error":
+        def kwargs_eval(pid, verdict):
+            raise ValueError("lane timeout")
+        kwargs["evaluator_fn"] = kwargs_eval
+    else:
+        kwargs["evaluator_fn"] = lambda pid, verdict: (verdict, "no verified evidence")
+
+    result = durability_cycle(live_db, as_of=date(2026, 10, 1), **kwargs)
+    assert result["confirmations_recorded"] == 0
+    again = durability_cycle(live_db, as_of=date(2026, 10, 2), **kwargs)
+    assert again["total_due_checked"] == 1
+
+
+def test_missing_evidence_does_not_advance_schedule(live_db):
+    from datetime import date
+
+    path = next((Path(live_db).parent / "sources" / "P36").glob("*.txt"))
+    path.write_text("tampered", encoding="utf-8")
+    durability_cycle(live_db, as_of=date(2026, 10, 1),
+                     completion=FakeCompletion("ACTIVE_OPERATIONAL"))
+    again = durability_cycle(live_db, as_of=date(2026, 10, 2),
+                             completion=FakeCompletion("ACTIVE_OPERATIONAL"))
+    assert again["total_due_checked"] == 1
+
+
+def test_dry_run_does_not_advance_schedule(live_db):
+    from datetime import date
+
+    durability_cycle(live_db, as_of=date(2026, 10, 1), dry_run=True,
+                     completion=FakeCompletion("ACTIVE_OPERATIONAL"))
+    again = durability_cycle(live_db, as_of=date(2026, 10, 2),
+                             completion=FakeCompletion("ACTIVE_OPERATIONAL"))
+    assert again["total_due_checked"] == 1
+
+
+def test_verified_reversal_after_confirmation_still_appends_verdict(live_db):
+    from datetime import date
+
+    durability_cycle(live_db, as_of=date(2026, 10, 1),
+                     completion=FakeCompletion("ACTIVE_OPERATIONAL"))
+    result = durability_cycle(live_db, as_of=date(2026, 12, 30),
+                              completion=FakeCompletion("SHUTTERED_OR_CLOSED"))
+    assert result["status_changes_count"] == 1
+    assert _verdict_count(live_db) == 2
