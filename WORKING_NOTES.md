@@ -154,3 +154,23 @@
   (`quick_check` ok, 126 source hashes, 39 baseline FK violations).
 - Live counts after cleanup: promises 62, verdicts 87, quarantined 0,
   sources 115, test_cases 113, test_results 144.
+
+## 2026-11-23 · Issues #44 / #83 / #82 (branch feat/issues-44-83)
+
+- **#83 entity images:** 11 entities have a self-hosted 160px avatar in
+  `docs/media/entities/` (Commons only, exact titles in `config/media_entities.json`,
+  licenses from `extmetadata`: PD/CC0/CC BY/CC BY-SA only, sha1 checked against the
+  Commons API, sha256 of the original recorded in `docs/media/manifest.json`).
+  Skipped for lack of a clearly correct official portrait or logo: SFMTA (Commons has only
+  the Muni worm and old Muni logos, not the SFMTA mark), Port of San Francisco and Golden State
+  Valkyries (game/venue photos only), Ed Lee (no official portrait), Joe Lacob (tiny image).
+  Commons tags the logos public domain (simple shapes/text), but they remain trademarks.
+- **Not done: `docs/data.json` refresh.** `entity_image_path` and `entity_image_credit` come from
+  `docs/export_data.py`, which needs the database. data.json was not hand-edited, so avatars
+  appear on the page only after the next reviewed export.
+- **#44 map:** kept the self-hosted SVG (no third-party tiles, per #82). Added marker
+  clustering, tap-to-open drawer and 44px touch targets on mobile. Not done: MapLibre or any
+  real basemap, story-card images, the hero pipeline teaser, inline timelines.
+- **#82 not done on purpose:** licenses of sf.gov, flysfo.com, sfmta.com and sfrecpark.org images
+  are unconfirmed, so P02, SFO-01, SFO-02, P21 and P41 keep the opt-in hotlink. Press images
+  (P04-P07, P10, P83) are never rehosted.

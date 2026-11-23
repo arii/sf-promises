@@ -1357,6 +1357,50 @@
     syncVerdictControl();
   }
 
+  /* SFPMAP_PURE_START */
+  // Marker clustering for the self-hosted SVG map (issue #44). Pins closer than
+  // minDist (SVG units) are merged so every marker or cluster keeps a hit area of
+  // at least the requested diameter. Pure: no DOM access.
+  function clusterPins(pins, minDist) {
+    const clusters = [];
+    const sorted = pins.slice().sort((a, b) => String(a.p.promise_id).localeCompare(String(b.p.promise_id)));
+    sorted.forEach(pin => {
+      let home = null;
+      for (const c of clusters) {
+        if (c.inSFO === !!pin.inSFO && Math.hypot(c.x - pin.x, c.y - pin.y) < minDist) { home = c; break; }
+      }
+      if (!home) {
+        clusters.push({ x: pin.x, y: pin.y, inSFO: !!pin.inSFO, items: [pin] });
+        return;
+      }
+      home.items.push(pin);
+      home.x = home.items.reduce((sum, i) => sum + i.x, 0) / home.items.length;
+      home.y = home.items.reduce((sum, i) => sum + i.y, 0) / home.items.length;
+    });
+    return clusters;
+  }
+
+  // Touch target diameter in CSS px: 44 on phones and coarse pointers (WCAG 2.5.5 / Apple HIG), 28 otherwise.
+  function mapHitDiameterPx(isMobile) {
+    return isMobile ? 44 : 28;
+  }
+  /* SFPMAP_PURE_END */
+  window.SFPMap = { clusterPins, mapHitDiameterPx };
+
+  let lastMapList = null;
+  let lastMapMobile = null;
+  let lastMapWidth = 0;
+  let mapResizeTimer = null;
+  // Cluster radius depends on rendered width, so re-cluster when the map is resized.
+  window.addEventListener('resize', () => {
+    clearTimeout(mapResizeTimer);
+    mapResizeTimer = setTimeout(() => {
+      const wrap = document.getElementById('sf-svg-map-wrap');
+      if (!lastMapList || !wrap || activeViewMode !== 'map') return;
+      if (Math.abs(wrap.clientWidth - lastMapWidth) > 40) renderMapAndDistrictsView(lastMapList);
+    }, 150);
+  });
+
   function renderMapAndDistrictsView(list) {
     const mapWrap = document.getElementById('sf-svg-map-wrap');
     const selectedCard = document.getElementById('map-selected-card');
@@ -1404,7 +1448,28 @@
       pins.push({ p, x: pt.x, y: pt.y, inSFO });
     });
 
-    const markersSvg = pins.map(({ p, x, y }) => {
+    lastMapList = list;
+    const isMobile = !!(window.matchMedia && window.matchMedia('(max-width: 720px), (pointer: coarse)').matches);
+    lastMapMobile = isMobile;
+    lastMapWidth = mapWrap.clientWidth;
+    const scale = (mapWrap.clientWidth || W) / W;
+    const hitDiameter = mapHitDiameterPx(isMobile) / scale;
+    const clusters = clusterPins(pins, hitDiameter);
+
+    const markersSvg = clusters.map(cluster => {
+      const hit = `<circle class="map-pin-hit" cx="${cluster.x.toFixed(1)}" cy="${cluster.y.toFixed(1)}" r="${(hitDiameter / 2).toFixed(1)}" fill="transparent" />`;
+      if (cluster.items.length > 1) {
+        const ids = cluster.items.map(i => i.p.promise_id).join(',');
+        const n = cluster.items.length;
+        const label = escapeHtml(`${n} commitments in this area. Select to list them.`);
+        return `
+        <g class="map-cluster-node" data-cluster-ids="${escapeHtml(ids)}" tabindex="0" role="button" aria-label="${label}" style="cursor:pointer;">
+          ${hit}
+          <circle cx="${cluster.x.toFixed(1)}" cy="${cluster.y.toFixed(1)}" r="13" fill="#1E3A8A" stroke="#93C5FD" stroke-width="1.8" />
+          <text x="${cluster.x.toFixed(1)}" y="${(cluster.y + 4).toFixed(1)}" text-anchor="middle" fill="#F8FAFC" font-size="12" font-weight="700" font-family="monospace" pointer-events="none">${n}</text>
+        </g>`;
+      }
+      const { p, x, y } = cluster.items[0];
       const v = (p.verdict || 'undecided').toLowerCase();
       const color = verdictColor[v] || '#94A3B8';
       const isCentroid = p.is_centroid !== false;
@@ -1412,6 +1477,7 @@
       const title = escapeHtml(`${p.entity}: ${p.neighborhood || 'San Francisco'}`);
       return `
         <g class="map-pin-node" data-promise-id="${pid}" tabindex="0" role="button" aria-label="${title}" style="cursor:pointer;">
+          ${hit}
           ${isCentroid ? `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="9.5" fill="none" stroke="${color}" stroke-width="1.4" stroke-dasharray="2.5 2" opacity="0.78"/>` : ''}
           <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${isCentroid ? '4.8' : '6.5'}" fill="${color}" fill-opacity="${isCentroid ? '0.68' : '0.96'}" stroke="#0B1120" stroke-width="1.5">
             <title>${title} (${isCentroid ? 'Display Centroid' : 'Exact Address'})</title>
@@ -1463,6 +1529,36 @@
         if (inspBtn) {
           inspBtn.addEventListener('click', () => openInspectDrawer(p.promise_id));
         }
+        // Tap or Enter on a marker opens the record drawer directly (issue #44).
+        openInspectDrawer(p.promise_id);
+      };
+      node.addEventListener('click', handler);
+      node.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handler();
+        }
+      });
+    });
+
+    if (selectedCard) selectedCard.setAttribute('aria-live', 'polite');
+    mapWrap.querySelectorAll('[data-cluster-ids]').forEach(node => {
+      const handler = () => {
+        const ids = (node.getAttribute('data-cluster-ids') || '').split(',');
+        const members = ids.map(id => (demoData && demoData.promises || []).find(item => item.promise_id === id)).filter(Boolean);
+        if (!selectedCard || !members.length) return;
+        selectedCard.classList.remove('hidden');
+        selectedCard.innerHTML = `
+          <div class="map-selected-title">${members.length} commitments in this area</div>
+          <ul class="map-cluster-list">
+            ${members.map(m => `<li><button type="button" class="btn-map-cluster-item" data-inspect-id="${escapeHtml(m.promise_id)}"><span class="verdict-chip ${(m.verdict || '').toLowerCase()}">${formatVerdictLabel(m.verdict)}</span> <span>${escapeHtml(m.promise_id)} · ${escapeHtml(m.entity)}</span></button></li>`).join('')}
+          </ul>
+        `;
+        selectedCard.querySelectorAll('.btn-map-cluster-item').forEach(btn => {
+          btn.addEventListener('click', () => openInspectDrawer(btn.getAttribute('data-inspect-id')));
+        });
+        const first = selectedCard.querySelector('.btn-map-cluster-item');
+        if (first && first.scrollIntoView) first.scrollIntoView({ block: 'nearest' });
       };
       node.addEventListener('click', handler);
       node.addEventListener('keydown', (e) => {
