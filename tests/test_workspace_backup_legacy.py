@@ -124,7 +124,9 @@ def test_legacy_baseline_detects_changed_text_after_nul(legacy_workspace, tmp_pa
 def test_legacy_baseline_detects_changed_real_key(legacy_workspace, tmp_path):
     before, after = 1.000000000000001, 1.000000000000002
     with sqlite3.connect(legacy_workspace / "promises.db") as db:
-        assert db.execute("SELECT hex(?) = hex(?)", (before, after)).fetchone()[0] == 1
+        # SQLite float-to-text precision varies by version. The regression is
+        # about distinct stored REAL keys, not whether hex() rounds them alike.
+        assert db.execute("SELECT ? != ?", (before, after)).fetchone()[0] == 1
         db.executescript("""
             CREATE TABLE real_parents (key REAL PRIMARY KEY);
             CREATE TABLE real_refs (key REAL REFERENCES real_parents(key));
