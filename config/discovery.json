@@ -2,5 +2,12 @@
   "rolling_days": 183,
   "added_reason": "OD-20 H1: configurable rolling discovery horizon. Research (art_h1eHBvZp) found a six-month window yielded ~15% more gate-reaching leads than 12 months under Keenable's 25-result cap, so the prior decade-wide planner string is replaced by a 183-day window with dates computed at run time.",
   "added_by": "parent-decision-od20",
-  "added_at": "2026-11-14"
+  "added_at": "2026-11-14",
+  "search_max_results": 25,
+  "fetch_max_chars": 400000,
+  "objectives": {
+    "origin": "The original public announcement or statement in which the named San Francisco person or agency made this commitment, ideally an official or first-party source.",
+    "delivery": "An official or reputable source reporting whether this specific San Francisco commitment was delivered, completed or opened, and when.",
+    "survival": "A recent official or reputable source on the current status of this specific San Francisco project or program."
+  }
 }

@@ -8,6 +8,7 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
 
+from keenable_stubs import fetch_response
 from src.extract import Candidate
 from src.run_live import URLS, run
 
@@ -49,12 +50,10 @@ class OfflineLivePilotTests(unittest.IsolatedAsyncioTestCase):
             async def __aexit__(self, *_):
                 return None
 
-            async def fetch(self, url):
+            async def fetch(self, url, **_options):
                 phase = next(key for key, value in URLS.items() if value == url)
-                return SimpleNamespace(
-                    url=url, content=content[phase], published_at=dates[phase],
-                    raw={"truncated": False},
-                )
+                return fetch_response(
+                    url=url, content=content[phase], published_at=dates[phase])
 
         async def extract(_client, api_key, models, **kwargs):
             self.assertEqual(api_key, "openrouter-test-key")

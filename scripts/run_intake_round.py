@@ -26,6 +26,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
 from src.discovery import fetch_and_archive
+from src.discovery_config import search_options
 from src.evidence import screen_saved_source
 from src.keenable import RetryingKeenable
 from src.lane_leads import build_lane_leads
@@ -163,7 +164,7 @@ async def campaign_lane(client, run_id):
     for spec in queries:
         results = await client.search(
             spec.query_text, site=spec.target_domains[0] if spec.target_domains else None,
-            max_results=8,
+            **search_options(max_results=8),
         )
         rows = list(results.results)
         raw += len(rows)

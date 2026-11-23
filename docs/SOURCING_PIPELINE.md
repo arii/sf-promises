@@ -99,3 +99,9 @@ The database distinguishes between the total evidence ledger and promise-level v
   1. Promises with 0 linked evidence records (requires primary source harvest).
   2. Promises with 1+ failed checks or warnings.
   3. Promises with unresolved contradictory evidence.
+
+## Keenable 0.3 search and fetch options
+
+Searches ask for 25 results (`search_max_results` in `config/discovery.json`) and send a per-phase `objective` (origin, delivery, survival) so ranking favors the right kind of page. Hosts listed in `config/exclude_domains.json` (social and aggregator sites) are left out. `disable_cards=True` is always set, because card URLs are temporary and would break provenance.
+Fetches ask for `max_chars` 400000 (`fetch_max_chars`) so long agendas and PDFs are not rejected as truncated. A page that is still truncated is not archived. A per-page `error` in a fetch response counts as a blocked URL, like a 404.
+Each archived manifest also records `acquired_at` (when Keenable indexed the page, from the search result, or null) and `retrieval` (`indexed`, or `live` if `max_age_hours=0` was used). The SDK's own retries are off (`max_retries=0`); `src/keenable.py` keeps the only retry policy.

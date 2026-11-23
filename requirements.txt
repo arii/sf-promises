@@ -1,7 +1,4 @@
-# Pin: keenable 0.1.4+ changed retry semantics (retries on missing/excessive
-# Retry-After instead of raising, and skips the Retry-After sleep), which
-# breaks tests/test_keenable_retry.py's contract.
-keenable==0.1.3
+keenable==0.3.0
 langgraph
 langgraph-checkpoint-sqlite
 pydantic>=2

@@ -1,0 +1,23 @@
+{
+  "added_reason": "Search results from social, aggregator and user-generated hosts are never primary evidence for a civic commitment; excluding them leaves room for official and reputable sources within the result cap.",
+  "added_by": "keenable-0.3-upgrade",
+  "added_at": "2026-11-24",
+  "domains": [
+    "reddit.com",
+    "facebook.com",
+    "x.com",
+    "twitter.com",
+    "instagram.com",
+    "tiktok.com",
+    "youtube.com",
+    "pinterest.com",
+    "linkedin.com",
+    "quora.com",
+    "medium.com",
+    "yelp.com",
+    "tripadvisor.com",
+    "msn.com",
+    "yahoo.com",
+    "news.google.com"
+  ]
+}

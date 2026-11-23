@@ -14,10 +14,12 @@ from types import SimpleNamespace
 
 import pytest
 
+from keenable_stubs import fetch_response
 from src.allowlist import load_allowlist
 from src.discovery import fetch_and_archive
 from src.sources import (
     FETCH_METADATA_FIELDS,
+    RETRIEVAL_METADATA_FIELDS,
     WAYBACK_METADATA_FIELDS,
     is_fetch_metadata,
 )
@@ -31,13 +33,8 @@ from src.wayback import capture_permitted, save_page_now
 
 
 class Client:
-    async def fetch(self, url):
-        return SimpleNamespace(
-            content="Actual source",
-            raw={"truncated": False},
-            published_at="2026-01-01",
-            url=url,
-        )
+    async def fetch(self, url, **_options):
+        return fetch_response(url, "Actual source", "2026-01-01")
 
 
 @pytest.fixture(name="planner_specs")
@@ -104,6 +101,7 @@ def test_fetch_manifest_matches_the_canonical_shape():
         assert is_fetch_metadata(record)
         assert frozenset(record) == (
             frozenset(FETCH_METADATA_FIELDS) | frozenset(WAYBACK_METADATA_FIELDS)
+            | frozenset(RETRIEVAL_METADATA_FIELDS)
         )
 
 
@@ -156,9 +154,9 @@ class CaptureTests(unittest.IsolatedAsyncioTestCase):
         class CountingClient(Client):
             calls = 0
 
-            async def fetch(self, url):
+            async def fetch(self, url, **_options):
                 self.calls += 1
-                return await super().fetch(url)
+                return await super().fetch(url, **_options)
 
         canary_urls = [
             "https://www.reddit.com/r/sanfrancisco",

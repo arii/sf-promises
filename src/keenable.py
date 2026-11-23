@@ -40,7 +40,10 @@ class RetryingKeenable:
             event_hooks={"response": [self._capture_retry_after]},
         )
         self._client = AsyncKeenable(api_key=api_key, client=self._http,
-                                     client_source="SF Promises")
+                                     client_source="SF Promises",
+                                     # keenable 0.3 retries internally by default; the
+                                     # wrapper's bounded policy below is the only retry.
+                                     max_retries=0)
 
     async def _capture_retry_after(self, response):
         self._retry_after.set(response.headers.get("Retry-After") if response.status_code == 429 else None)

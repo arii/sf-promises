@@ -8,6 +8,7 @@ from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
 
+from keenable_stubs import fetch_response
 from src.discovery import fetch_and_archive
 from src.database import initialize_database
 from src.evidence import record_preliminary_evidence
@@ -29,11 +30,9 @@ class ExtractionLoadTests(unittest.IsolatedAsyncioTestCase):
         self.db.executescript(Path("src/schema.sql").read_text())
 
         class Client:
-            async def fetch(self, url):
-                return SimpleNamespace(
-                    url=url, content="We will build a library.", published_at="2024-01-02",
-                    raw={"truncated": False},
-                )
+            async def fetch(self, url, **_options):
+                return fetch_response(
+                    url=url, content="We will build a library.", published_at="2024-01-02")
 
         self.source = await fetch_and_archive(Client(), "https://sf.gov/example", self.root, "P1")
         self.response = json.dumps({"candidates": [{
