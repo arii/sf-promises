@@ -16,7 +16,7 @@ python3 src/relevance.py
 ```
 
 The SQLite database and archived evidence live under `SF_PROMISES_WORKSPACE`
-(default `~/.local/share/sf-promises`). The integration harness operates on
+(default `/mnt/archil/workspace`, the mounted Archil disk; see README "Workspace setup"). The integration harness operates on
 that database:
 
 ```bash

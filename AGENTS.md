@@ -16,7 +16,7 @@ Read `README.md`, then your lane brief in `agent/lanes/`. Dispatch needs only:
 - `tests/test_checks.py` — 11/11 passing, keep green (`pytest`)
 - `mocks/` — P02/P05 fixtures for advocates and demo
 - `WORKING_NOTES.md` — collaboration log · `QUESTIONS.md` — blockers/questions
-- `SF_PROMISES_WORKSPACE` (default `~/.local/share/sf-promises`) — `promises.db`, `sources/`, `staging/`
+- `SF_PROMISES_WORKSPACE` (default `/mnt/archil/workspace`, the shared Archil disk; mount it per README "Workspace setup") — `promises.db`, `sources/`, `staging/`
 
 ## Rules
 
@@ -92,7 +92,7 @@ For extraction, pass the Pydantic bundle schema as a function tool named
 it against the same Pydantic schema. Source quotes must still match saved
 bytes exactly.
 
-## Local backup and restore
+## Backup and restore
 
 Quiesce all database and source writers first; SQLite backup alone cannot make
 a changing source tree application-consistent. Choose new destination paths:

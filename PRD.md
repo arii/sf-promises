@@ -36,8 +36,10 @@ for lane progress and acceptance checks.
 
 ## Storage and execution
 
-- The working database and archived sources live on an Archil-mounted
-  filesystem. Fetching saves sources; extraction reads saved material without
+- The working database and archived sources live on the shared Archil disk
+  (free plan), mounted at `/mnt/archil` on every machine that works on the
+  data; the workspace is `/mnt/archil/workspace`. Setup steps are in the
+  README ("Workspace setup"). Fetching saves sources; extraction reads saved material without
   database writes; a separate load step writes `promises_pending`. Only the
   Verdict lane publishes to `promises`, `verdicts`, `verifications`, and
   `quarantined`.

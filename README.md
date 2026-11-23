@@ -18,12 +18,14 @@ It starts with a promise made in public, finds the official source, and re-check
 
 **Demo:** the 24/7 crisis center at 822 Geary Street, promised by Mayor Daniel Lurie, opened April 28, 2025, verdict kept. And 1,500 shelter beds in six months, verdict broken.
 
-**Built with:** bounded local worker processes, native SQLite, Keenable search and fetch, Nebius and Meta models for extraction only, and a static demo page on GitHub Pages.
+**Built with:** an Archil disk (free tier) for the shared database and saved sources, bounded worker processes, native SQLite, Keenable search and fetch, Nebius and Meta models for extraction only, and a static demo page on GitHub Pages.
 
 Track SF public promises with sourced verdicts: fetch official sources, extract
 verbatim promises, run kept/broken advocates plus a deterministic arbitrator,
 and present verified outcomes. The working SQLite database and archived sources
-live in a configurable local workspace; no Archil account, mount, or package is required.
+live on a shared Archil disk that every machine mounts at `/mnt/archil` (see
+[Workspace setup](#workspace-setup)). Work reads and writes the disk directly;
+nothing is copied to a machine-local database.
 
 The current product requirements are in [PRD.md](PRD.md). The original
 `Archil Hackathon Nov 10 - SF Promises Export/` contains historical plans and
@@ -70,8 +72,9 @@ Don't commit personal installs or downloaded copies to this public repo.
 | "Work on Demo Page" | `agent/lanes/lane-e-demo.md` | Static page from DB export |
 | "Work on Tests" | `agent/lanes/lane-f-tests.md` | Harness, P01–P12, planted N01–N12 |
 
-Set `SF_PROMISES_WORKSPACE` to the local workspace (default `~/.local/share/sf-promises`).
-Initialize a fresh database only for new work; do not replace the historical archive with an empty database.
+Mount the Archil disk and set `SF_PROMISES_WORKSPACE=/mnt/archil/workspace`
+first ([Workspace setup](#workspace-setup)). Initialize a fresh database only
+for new work; do not replace the shared archive with an empty database.
 
 ## Shared rules (all lanes)
 
@@ -96,7 +99,7 @@ Initialize a fresh database only for new work; do not replace the historical arc
 
 ## Key paths
 
-- Workspace: `SF_PROMISES_WORKSPACE`, default `~/.local/share/sf-promises`
+- Workspace: `SF_PROMISES_WORKSPACE=/mnt/archil/workspace` (the mounted Archil disk)
 - DB: `<workspace>/promises.db` (new-work schema: `src/schema.sql`)
 - Source files and manifests: `<workspace>/sources/`; staging: `<workspace>/staging/`
 - Intake reports: `<workspace>/runs/intake-round/results.json`
@@ -109,14 +112,46 @@ The extended CSV is currently used by the validation harness; do not remove it
 until its inputs and independent test expectations have been migrated and
 verified. Keep `mocks/` for deterministic offline tests.
 
-## Local workers and staged exports
+## Workspace setup
 
-Install Python dependencies with `pip install -r requirements.txt`. PDF parsing
-also needs `pdfplumber` (included). Commands run from the repository root:
+**Decision (2026-11-23):** the shared database and saved sources live on the
+Archil disk `promises` (`ARCHIL_DISK_ID` in `.env`), on Archil's free plan.
+The workspace is about 4 MB against the plan's 10 GB disk limit. Only
+Archil storage is used: no Archil sandboxes or serverless execution. Any
+machine with `.env` mounts the disk and works on it in place. The public
+Hugging Face dataset stays as a published copy (see below); it is not the
+working store.
+
+One-time setup per machine (Linux with FUSE; macOS uses macFUSE):
 
 ```bash
-export SF_PROMISES_WORKSPACE="$HOME/.local/share/sf-promises"
-mkdir -p "$SF_PROMISES_WORKSPACE"
+curl -s https://archil.com/install | sh       # installs the archil client
+set -a; source .env; set +a                   # provides ARCHIL_MOUNT_TOKEN, ARCHIL_DISK_ID
+sudo mkdir -p /mnt/archil
+sudo --preserve-env=ARCHIL_MOUNT_TOKEN archil mount "$ARCHIL_DISK_ID" /mnt/archil \
+  --region "$ARCHIL_REGION" --shared
+export SF_PROMISES_WORKSPACE=/mnt/archil/workspace
+ls "$SF_PROMISES_WORKSPACE"                   # promises.db  sources/  staging/
+```
+
+Unmount with `sudo archil unmount /mnt/archil` (not `umount`). Add
+`--read-only` when you only need to read. Inside Docker, the container needs
+`devices: [/dev/fuse]`, `cap_add: [SYS_ADMIN]` and
+`security_opt: [apparmor:unconfined]`.
+
+`--shared` lets several machines mount at once. SQLite still needs **one
+writer at a time**: only the Verdict lane writes `promises`/`verdicts`/
+`verifications`/`quarantined`, and only one person runs a writing pipeline at
+a time. Everyone else reads or mounts `--read-only`.
+
+## Workers and staged exports
+
+Install Python dependencies with `pip install -r requirements.txt`. PDF parsing
+also needs `pdfplumber` (included). Commands run from the repository root
+with the disk mounted:
+
+```bash
+export SF_PROMISES_WORKSPACE=/mnt/archil/workspace
 python3 -m src.database "$SF_PROMISES_WORKSPACE/promises.db" # new work only
 python3 -m src.run_live --candidate-batch P01
 python3 -m src.run_live --durability-cycle --dry-run
@@ -132,8 +167,9 @@ Keys live in a git-ignored `.env` at the repository root. `.env.example` lists
 every variable with what reads it; copy it and fill in values. Load it without
 printing secrets: `set -a; source .env; set +a`. Intake reads the Keenable key
 as `SECRET_KEENABLE_API_KEY`, so set both Keenable names to the same value.
-`HF_TOKEN` is used only by `scripts/upload_to_huggingface.py`. The `ARCHIL_*`
-values are historical: current code does not use them.
+`ARCHIL_MOUNT_TOKEN`, `ARCHIL_DISK_ID` and `ARCHIL_REGION` mount the shared
+disk; `ARCHIL_API_KEY` is for the `disk` CLI and Archil's API. `HF_TOKEN` is
+used only by `scripts/upload_to_huggingface.py`.
 Model calls use the agent lane by default; provider credentials remain in the
 coordinator only. Candidate and PDF workers receive only public job inputs and
 an allowlisted environment, with timeout/output bounds, process-group cleanup
@@ -197,10 +233,12 @@ python3 -m src.export --database /path/to/v2.sqlite --sources /path/to/sources -
 
 Open `docs/index.html` to inspect its tallies, filters, and pipeline visualization.
 
-## Local backup and restore
+## Backup and restore
 
 Quiesce all database and source writers first; SQLite backup alone cannot make
-a changing source tree application-consistent. Choose new destination paths:
+a changing source tree application-consistent. The source is the mounted
+workspace; choose new destination paths (another directory on the disk or a
+second copy off Archil):
 
 ```bash
 python3 -m scripts.workspace_backup backup --destination /path/to/backup-UTC-COMMIT
