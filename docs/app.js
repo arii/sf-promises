@@ -474,6 +474,18 @@
     if (statusEl) statusEl.hidden = state !== 'loading';
   }
 
+  // Same-origin avatar manifest (issue #83). Optional: any failure leaves avatars off.
+  let entityMedia = new Map();
+  async function loadEntityMedia() {
+    try {
+      const res = await fetch('media/manifest.json');
+      if (!res.ok) return;
+      entityMedia = window.SFPDrawer.entityMediaFromManifest(await res.json());
+    } catch (err) {
+      console.warn('media manifest unavailable', err);
+    }
+  }
+
   async function init() {
     if (window.__DEMO_DATA__) {
       demoData = window.__DEMO_DATA__;
@@ -493,6 +505,7 @@
       }
     }
     setDataLoadState('loaded');
+    await loadEntityMedia();
 
     SCENARIOS = buildScenarios(demoData && demoData.promises);
     if (!SCENARIOS[currentRunType]) {
@@ -1358,25 +1371,29 @@
   }
 
   /* SFPMAP_PURE_START */
-  // Marker clustering for the self-hosted SVG map (issue #44). Pins closer than
-  // minDist (SVG units) are merged so every marker or cluster keeps a hit area of
-  // at least the requested diameter. Pure: no DOM access.
+  // Marker clustering for the self-hosted SVG map (issue #44). Clusters whose
+  // centres are closer than minDist (SVG units) are merged, closest pair first,
+  // and the scan repeats until no pair is left, so hit circles of diameter
+  // minDist never overlap. City and SFO-inset pins stay separate. Pure: no DOM.
   function clusterPins(pins, minDist) {
-    const clusters = [];
-    const sorted = pins.slice().sort((a, b) => String(a.p.promise_id).localeCompare(String(b.p.promise_id)));
-    sorted.forEach(pin => {
-      let home = null;
-      for (const c of clusters) {
-        if (c.inSFO === !!pin.inSFO && Math.hypot(c.x - pin.x, c.y - pin.y) < minDist) { home = c; break; }
+    const byId = (a, b) => String(a.p.promise_id).localeCompare(String(b.p.promise_id));
+    let clusters = pins.slice().sort(byId).map(pin => ({ x: pin.x, y: pin.y, inSFO: !!pin.inSFO, items: [pin] }));
+    for (;;) {
+      let bi = -1, bj = -1, best = Infinity;
+      for (let i = 0; i < clusters.length; i++) {
+        for (let j = i + 1; j < clusters.length; j++) {
+          if (clusters[i].inSFO !== clusters[j].inSFO) continue;
+          const d = Math.hypot(clusters[i].x - clusters[j].x, clusters[i].y - clusters[j].y);
+          if (d < minDist && d < best) { best = d; bi = i; bj = j; }
+        }
       }
-      if (!home) {
-        clusters.push({ x: pin.x, y: pin.y, inSFO: !!pin.inSFO, items: [pin] });
-        return;
-      }
-      home.items.push(pin);
-      home.x = home.items.reduce((sum, i) => sum + i.x, 0) / home.items.length;
-      home.y = home.items.reduce((sum, i) => sum + i.y, 0) / home.items.length;
-    });
+      if (bi < 0) break;
+      const home = clusters[bi];
+      home.items = home.items.concat(clusters[bj].items).sort(byId);
+      home.x = home.items.reduce((sum, it) => sum + it.x, 0) / home.items.length;
+      home.y = home.items.reduce((sum, it) => sum + it.y, 0) / home.items.length;
+      clusters.splice(bj, 1);
+    }
     return clusters;
   }
 
@@ -1384,20 +1401,100 @@
   function mapHitDiameterPx(isMobile) {
     return isMobile ? 44 : 28;
   }
+
+  // The SVG is a labelled group, not role="img": img makes its children
+  // presentational and would hide the focusable marker buttons.
+  function mapSvgOpenTag(W, H) {
+    return `<svg class="sf-svg-map" viewBox="0 0 ${W} ${H}" role="group" aria-label="San Francisco commitment coordinates map. Markers are buttons.">`;
+  }
+
+  function mapActivationKey(e) {
+    return !!e && (e.key === 'Enter' || e.key === ' ');
+  }
+
+  // Wire click and Enter/Space on markers. actions.openPromise(pid, node) and
+  // actions.openCluster(ids, node) do the work.
+  function bindMapMarkers(root, actions) {
+    root.querySelectorAll('[data-promise-id]').forEach(node => {
+      const run = () => actions.openPromise(node.getAttribute('data-promise-id'), node);
+      node.addEventListener('click', run);
+      node.addEventListener('keydown', e => { if (mapActivationKey(e)) { e.preventDefault(); run(); } });
+    });
+    root.querySelectorAll('[data-cluster-ids]').forEach(node => {
+      const run = () => actions.openCluster((node.getAttribute('data-cluster-ids') || '').split(',').filter(Boolean), node);
+      node.addEventListener('click', run);
+      node.addEventListener('keydown', e => { if (mapActivationKey(e)) { e.preventDefault(); run(); } });
+    });
+  }
+
+  // Marker (single or cluster) that stands for promise id pid, or null.
+  function findMapMarker(root, pid) {
+    const nodes = Array.from(root.querySelectorAll('[data-promise-id],[data-cluster-ids]'));
+    for (const n of nodes) {
+      if (n.getAttribute('data-promise-id') === pid) return n;
+      const ids = n.getAttribute('data-cluster-ids');
+      if (ids && ids.split(',').indexOf(pid) >= 0) return n;
+    }
+    return null;
+  }
+
+  // Show a cluster list in the card and move focus into it.
+  function openMapCluster(card, html) {
+    card.classList.remove('hidden');
+    card.innerHTML = html;
+    const first = card.querySelector('.btn-map-cluster-item');
+    if (first) first.focus();
+    return !!first;
+  }
+
+  // Hide the cluster list and return focus to the marker that opened it.
+  function closeMapCluster(card, root, ids) {
+    card.classList.add('hidden');
+    const marker = ids && ids.length ? findMapMarker(root, ids[0]) : null;
+    if (marker) marker.focus();
+    return !!marker;
+  }
   /* SFPMAP_PURE_END */
-  window.SFPMap = { clusterPins, mapHitDiameterPx };
+  window.SFPMap = { clusterPins, mapHitDiameterPx, mapSvgOpenTag, bindMapMarkers, findMapMarker, openMapCluster, closeMapCluster };
 
   let lastMapList = null;
-  let lastMapMobile = null;
   let lastMapWidth = 0;
   let mapResizeTimer = null;
+  let openClusterIds = null;
+  let mapCardEscBound = null;
+
+  function inspectDrawerOpen() {
+    const backdrop = document.getElementById('inspect-drawer-backdrop');
+    return !!(backdrop && !backdrop.classList.contains('hidden'));
+  }
+
+  // Promise id behind the marker that has focus (or opened the drawer), so a
+  // re-render can put focus back on the equivalent new marker.
+  function focusedMapPromiseId(wrap) {
+    const candidates = [document.activeElement];
+    if (inspectDrawerOpen()) candidates.push(lastActiveElement);
+    for (const el of candidates) {
+      const m = el && el.closest && el.closest('[data-promise-id],[data-cluster-ids]');
+      if (m && wrap.contains(m)) {
+        return m.getAttribute('data-promise-id') || (m.getAttribute('data-cluster-ids') || '').split(',')[0];
+      }
+    }
+    return null;
+  }
+
   // Cluster radius depends on rendered width, so re-cluster when the map is resized.
   window.addEventListener('resize', () => {
     clearTimeout(mapResizeTimer);
     mapResizeTimer = setTimeout(() => {
       const wrap = document.getElementById('sf-svg-map-wrap');
       if (!lastMapList || !wrap || activeViewMode !== 'map') return;
-      if (Math.abs(wrap.clientWidth - lastMapWidth) > 40) renderMapAndDistrictsView(lastMapList);
+      if (Math.abs(wrap.clientWidth - lastMapWidth) <= 40) return;
+      const pid = focusedMapPromiseId(wrap);
+      const drawerOpen = inspectDrawerOpen();
+      renderMapAndDistrictsView(lastMapList);
+      const marker = pid ? window.SFPMap.findMapMarker(wrap, pid) : null;
+      if (!marker) return;
+      if (drawerOpen) lastActiveElement = marker; else marker.focus();
     }, 150);
   });
 
@@ -1450,11 +1547,11 @@
 
     lastMapList = list;
     const isMobile = !!(window.matchMedia && window.matchMedia('(max-width: 720px), (pointer: coarse)').matches);
-    lastMapMobile = isMobile;
     lastMapWidth = mapWrap.clientWidth;
     const scale = (mapWrap.clientWidth || W) / W;
     const hitDiameter = mapHitDiameterPx(isMobile) / scale;
     const clusters = clusterPins(pins, hitDiameter);
+    openClusterIds = openClusterIds && selectedCard && !selectedCard.classList.contains('hidden') ? openClusterIds : null;
 
     const markersSvg = clusters.map(cluster => {
       const hit = `<circle class="map-pin-hit" cx="${cluster.x.toFixed(1)}" cy="${cluster.y.toFixed(1)}" r="${(hitDiameter / 2).toFixed(1)}" fill="transparent" />`;
@@ -1494,7 +1591,8 @@
     ` : '';
 
     mapWrap.innerHTML = `
-      <svg class="sf-svg-map" viewBox="0 0 ${W} ${H}" role="img" aria-label="San Francisco commitment coordinates map">
+      ${mapSvgOpenTag(W, H)}
+        <g aria-hidden="true">
         <rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="#0B1324" />
         <path d="${sfOutlinePath}" fill="#131E36" stroke="#2D3E5E" stroke-width="1.5" />
         <path d="${tiPath}" fill="#172542" stroke="#364B73" stroke-width="1.2" />
@@ -1505,69 +1603,46 @@
         <text x="415" y="47" fill="#64748B" font-size="8.5" font-family="monospace">TREASURE ISL.</text>
         <rect x="422" y="322" width="124" height="94" rx="6" fill="#0F192E" stroke="#334155" stroke-width="1" />
         <text x="430" y="335" fill="#94A3B8" font-size="8.5" font-family="monospace">SFO INSET (AIRPORT)</text>
+        </g>
         ${markersSvg}
       </svg>
       ${regionalHtml}
     `;
 
-    mapWrap.querySelectorAll('[data-promise-id]').forEach(node => {
-      const handler = () => {
-        const pid = node.getAttribute('data-promise-id');
-        const p = (demoData && demoData.promises || []).find(item => item.promise_id === pid);
-        if (!p || !selectedCard) return;
-        selectedCard.classList.remove('hidden');
-        selectedCard.innerHTML = `
-          <div class="map-selected-top">
-            <span class="verdict-chip ${(p.verdict || '').toLowerCase()}">${formatVerdictLabel(p.verdict)}</span>
-            <span class="font-mono" style="font-size:0.76rem;color:var(--muted);">${escapeHtml(p.promise_id)} · ${p.is_centroid === false ? 'Exact Street Location' : 'Display Centroid'} (${escapeHtml((p.geographic_scope || 'citywide').replace('_', ' '))})</span>
-          </div>
-          <div class="map-selected-title">${escapeHtml(p.entity)} — ${escapeHtml(p.neighborhood || 'San Francisco')}</div>
-          <p class="map-selected-outcome">${escapeHtml(p.factual_outcome || p.promise_text || '')}</p>
-          <button type="button" class="btn-map-inspect" data-inspect-id="${escapeHtml(p.promise_id)}">Inspect full commitment &rarr;</button>
-        `;
-        const inspBtn = selectedCard.querySelector('.btn-map-inspect');
-        if (inspBtn) {
-          inspBtn.addEventListener('click', () => openInspectDrawer(p.promise_id));
-        }
-        // Tap or Enter on a marker opens the record drawer directly (issue #44).
-        openInspectDrawer(p.promise_id);
-      };
-      node.addEventListener('click', handler);
-      node.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handler();
-        }
-      });
-    });
-
     if (selectedCard) selectedCard.setAttribute('aria-live', 'polite');
-    mapWrap.querySelectorAll('[data-cluster-ids]').forEach(node => {
-      const handler = () => {
-        const ids = (node.getAttribute('data-cluster-ids') || '').split(',');
+    bindMapMarkers(mapWrap, {
+      // A single marker opens the record drawer directly (issue #44).
+      openPromise: (pid, node) => {
+        if (node && node.focus) node.focus();
+        openInspectDrawer(pid);
+      },
+      openCluster: (ids, node) => {
         const members = ids.map(id => (demoData && demoData.promises || []).find(item => item.promise_id === id)).filter(Boolean);
         if (!selectedCard || !members.length) return;
-        selectedCard.classList.remove('hidden');
-        selectedCard.innerHTML = `
-          <div class="map-selected-title">${members.length} commitments in this area</div>
+        openClusterIds = members.map(m => m.promise_id);
+        openMapCluster(selectedCard, `
+          <div class="map-selected-title" id="map-cluster-title">${members.length} commitments in this area</div>
           <ul class="map-cluster-list">
             ${members.map(m => `<li><button type="button" class="btn-map-cluster-item" data-inspect-id="${escapeHtml(m.promise_id)}"><span class="verdict-chip ${(m.verdict || '').toLowerCase()}">${formatVerdictLabel(m.verdict)}</span> <span>${escapeHtml(m.promise_id)} · ${escapeHtml(m.entity)}</span></button></li>`).join('')}
           </ul>
-        `;
+          <button type="button" class="btn-map-cluster-close">Close list (Esc)</button>
+        `);
         selectedCard.querySelectorAll('.btn-map-cluster-item').forEach(btn => {
           btn.addEventListener('click', () => openInspectDrawer(btn.getAttribute('data-inspect-id')));
         });
-        const first = selectedCard.querySelector('.btn-map-cluster-item');
-        if (first && first.scrollIntoView) first.scrollIntoView({ block: 'nearest' });
-      };
-      node.addEventListener('click', handler);
-      node.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        const closeBtn = selectedCard.querySelector('.btn-map-cluster-close');
+        if (closeBtn) closeBtn.addEventListener('click', () => closeMapCluster(selectedCard, mapWrap, openClusterIds));
+      }
+    });
+    if (selectedCard && mapCardEscBound !== selectedCard) {
+      mapCardEscBound = selectedCard;
+      selectedCard.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && openClusterIds && !inspectDrawerOpen()) {
           e.preventDefault();
-          handler();
+          closeMapCluster(selectedCard, document.getElementById('sf-svg-map-wrap') || mapWrap, openClusterIds);
         }
       });
-    });
+    }
 
     const districtCounts = {};
     for (let i = 1; i <= 11; i++) districtCounts[`D${i}`] = 0;
@@ -1626,8 +1701,20 @@
           undecided: 0,
           items: [],
           entityImagePath: p.entity_image_path || '',
-          entityImageCredit: p.entity_image_credit || ''
+          entityImageCredit: p.entity_image_credit || '',
+          entityImageLicenseUrl: p.entity_image_license_url || '',
+          entityImageNote: p.entity_image_note || ''
         });
+        const g0 = groups.get(name);
+        if (!g0.entityImagePath) {
+          const m = window.SFPDrawer.entityMediaFor(entityMedia, name);
+          if (m) {
+            g0.entityImagePath = m.path;
+            g0.entityImageCredit = m.credit;
+            g0.entityImageLicenseUrl = m.licenseUrl;
+            g0.entityImageNote = m.note;
+          }
+        }
       }
       const g = groups.get(name);
       g.items.push(p);
@@ -2028,13 +2115,50 @@
   function entityAvatarHtml(g) {
     const src = g && g.entityImagePath;
     if (typeof src !== 'string' || !src || /^[a-z][a-z0-9+.-]*:|^\/|\.\.|\\/i.test(src)) return '';
-    const credit = g.entityImageCredit
-      ? `<span class="entity-avatar-credit font-mono">${drawerEscapeHtml(g.entityImageCredit)}</span>` : '';
+    const parts = [];
+    if (g.entityImageCredit) parts.push(drawerEscapeHtml(g.entityImageCredit));
+    const url = g.entityImageLicenseUrl;
+    // Link only to an https licence text (CC BY / CC BY-SA need one); navigation, never fetched by the page.
+    if (typeof url === 'string' && /^https:\/\//i.test(url)) {
+      parts.push(`<a href="${drawerEscapeHtml(url)}" target="_blank" rel="noopener noreferrer">licence</a>`);
+    }
+    if (g.entityImageNote) parts.push(drawerEscapeHtml(g.entityImageNote));
+    const credit = parts.length
+      ? `<span class="entity-avatar-credit font-mono">${parts.join(' · ')}</span>` : '';
     return `<span class="entity-avatar"><img class="entity-avatar-img" src="${drawerEscapeHtml(src)}" alt="" width="40" height="40" loading="lazy">${credit}</span>`;
+  }
+
+  // Entity name key shared by the media manifest lookup and its test.
+  function entityNameKey(name) {
+    return String(name == null ? '' : name).normalize('NFKC').trim().replace(/\s+/g, ' ').toLowerCase();
+  }
+
+  const TRADEMARK_NOTE = 'Logo is a trademark of its owner';
+
+  // docs/media/manifest.json -> Map(entityNameKey -> avatar fields). Used when an
+  // exported record lacks entity_image_path, so avatars show without a data.json export.
+  function entityMediaFromManifest(manifest) {
+    const map = new Map();
+    ((manifest && manifest.entities) || []).forEach(e => {
+      if (!e || !e.entity_name || typeof e.path !== 'string' || !e.path) return;
+      const isCcBy = /^cc[ -]by/i.test(String(e.license || ''));
+      map.set(entityNameKey(e.entity_name), {
+        path: 'media/' + e.path,
+        credit: `${e.credit || ''} / ${e.license || ''}`.replace(/^ \/ | \/ $/g, ''),
+        licenseUrl: isCcBy ? (e.license_url || '') : '',
+        note: (e.logo || /trademark/i.test(String(e.restrictions || ''))) ? TRADEMARK_NOTE : ''
+      });
+    });
+    return map;
+  }
+
+  function entityMediaFor(map, name) {
+    return (map && map.get(entityNameKey(name))) || null;
   }
 
   const SFPDrawer = {
     verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth, entityAvatarHtml,
+    entityNameKey, entityMediaFromManifest, entityMediaFor,
     drawerCheckOutcomes, drawerChecksSummary
   };
   window.SFPDrawer = SFPDrawer;

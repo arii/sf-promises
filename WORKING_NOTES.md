@@ -174,3 +174,10 @@
 - **#82 not done on purpose:** licenses of sf.gov, flysfo.com, sfmta.com and sfrecpark.org images
   are unconfirmed, so P02, SFO-01, SFO-02, P21 and P41 keep the opt-in hotlink. Press images
   (P04-P07, P10, P83) are never rehosted.
+
+## 2026-11-23: review fixes for #44 / #83 (feat/issues-44-83)
+
+- Map: SVG is `role="group"` (static layers `aria-hidden`); clustering merges closest pair until stable (no overlapping hit circles, checked on real data at 5 widths); cluster open focuses the list, Escape or "Close list" returns focus to the marker; single tap opens the drawer only; resize re-render restores focus. `lastMapMobile` removed.
+- Avatars: `docs/app.js` loads same-origin `media/manifest.json` and maps entity names, so avatars show without regenerating `docs/data.json` (no database touched). Credit links the licence for CC BY / CC BY-SA, 0.75rem.
+- Manifest/media: `logo` flag and `restrictions` recorded (Giants: `trademarked`, from the review's Commons check; the other logos carry `logo: true` and were not re-queried). Logo credit shows "Logo is a trademark of its owner". `check_approved` rejects a license that differs from `suggested_license`.
+- Open: re-run `scripts/fetch_media.py stage-entities` when network is allowed to fill `restrictions` for all entries; regenerate `docs/data.json` with the export when the production database may be used.

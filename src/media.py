@@ -44,6 +44,7 @@ NEVER_REHOST_HOSTS = (
 # Public domain, CC0, CC BY and CC BY-SA only. NC/ND variants do not match.
 OPEN_LICENSE = re.compile(r"^(public domain|pd([ -]|$)|cc0|cc[ -]by(-sa)?[ -]\d)", re.I)
 USER_AGENT = "sf-promises-media/1.0 (https://github.com/arii/sf-promises; accountability tracker, contact via repo issues)"
+TRADEMARK_NOTE = "Logo is a trademark of its owner"
 ENTITY_CONFIG = REPO_ROOT / "config" / "media_entities.json"
 
 
@@ -254,6 +255,7 @@ def commons_file_info(client, title: str) -> dict | None:
             "credit": _strip_tags((meta.get("Artist") or {}).get("value", "")) or "Unknown author",
             "license": license_name,
             "license_url": _strip_tags((meta.get("LicenseUrl") or {}).get("value", "")),
+            "restrictions": _strip_tags((meta.get("Restrictions") or {}).get("value", "")),
         }
     return None
 
@@ -292,9 +294,10 @@ def stage_curated_entity_candidates(config: dict, client, names=None) -> list[di
             "kind": "entity", "entity_name": name, "image_url": render_url,
             "original_url": hit["original_url"], "source_page": hit["source_page"],
             "sha256": sha256_hex(data), "commons_sha1": hit["sha1"],
-            "fit": spec.get("fit", "cover"), "license_guess": "CC",
+            "fit": spec.get("fit", "cover"), "logo": bool(spec.get("logo")), "license_guess": "CC",
             "suggested_license": hit["license"], "suggested_license_url": hit["license_url"],
-            "suggested_credit": hit["credit"], "status": "pending", "fetched_at": now_iso(),
+            "suggested_credit": hit["credit"], "restrictions": hit["restrictions"],
+            "status": "pending", "fetched_at": now_iso(),
         })
     return out
 
@@ -327,6 +330,11 @@ def check_approved(c: dict) -> None:
     for field in ("license", "license_url", "credit", "image_url"):
         if not str(c.get(field) or "").strip():
             raise MediaError(f"{ident}: approved candidate has empty {field}")
+    suggested = str(c.get("suggested_license") or "").strip()
+    if c.get("kind") == "entity" and not suggested:
+        raise MediaError(f"{ident}: staged candidate has no suggested_license to verify against")
+    if suggested and str(c["license"]).strip().casefold() != suggested.casefold():
+        raise MediaError(f"{ident}: license {c['license']!r} does not match suggested_license {suggested!r}")
     if c.get("kind") == "promise" and is_never_rehost(c.get("promise_id"), c["image_url"]):
         raise MediaError(f"{ident}: source must not be rehosted")
     if c.get("kind") == "entity" and not OPEN_LICENSE.match(c["license"]):
@@ -424,6 +432,7 @@ def apply_candidates(candidates, client, media_dir: Path = MEDIA_DIR) -> list[st
             manifest["entities"].append({
                 "entity_name": name, "path": rel, "original_url": original, "sha256": digest,
                 "credit": c["credit"], "license": c["license"], "license_url": c["license_url"],
+                "restrictions": str(c.get("restrictions") or "").strip(), "logo": bool(c.get("logo")),
                 "fetched_at": c.get("fetched_at") or now_iso(),
             })
             written.append(rel)
@@ -453,3 +462,7 @@ def apply_manifest_fields(promises, manifest: dict | None = None) -> None:
         if ent:
             p["entity_image_path"] = f"media/{ent['path']}"
             p["entity_image_credit"] = f"{ent['credit']} / {ent['license']}"
+            if re.match(r"cc[ -]by", ent.get("license", ""), re.I):
+                p["entity_image_license_url"] = ent.get("license_url", "")
+            if ent.get("logo") or "trademark" in str(ent.get("restrictions", "")).lower():
+                p["entity_image_note"] = TRADEMARK_NOTE

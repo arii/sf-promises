@@ -124,7 +124,7 @@ def test_entity_lookup_requires_open_license_and_stays_pending():
 def test_entity_apply_and_export_fields(tmp_path):
     cand = {"kind": "entity", "entity_name": "Daniel Lurie", "image_url": "https://upload.wikimedia.org/x/a.png",
             "status": "approved", "license": "CC BY-SA 4.0", "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
-            "credit": "Jane Doe"}
+            "suggested_license": "CC BY-SA 4.0", "credit": "Jane Doe"}
     media.apply_candidates([cand], _client(), tmp_path)
     manifest = media.load_manifest(tmp_path / "manifest.json")
     assert (tmp_path / "entities" / "daniel-lurie-160.webp").exists()
@@ -132,6 +132,8 @@ def test_entity_apply_and_export_fields(tmp_path):
     media.apply_manifest_fields(promises, manifest)
     assert promises[0]["entity_image_path"] == "media/entities/daniel-lurie-160.webp"
     assert promises[0]["entity_image_credit"] == "Jane Doe / CC BY-SA 4.0"
+    assert promises[0]["entity_image_license_url"] == "https://creativecommons.org/licenses/by-sa/4.0"
+    assert "entity_image_note" not in promises[0]
     assert "entity_image_path" not in promises[1] and "media_path" not in promises[1]
 
 
@@ -217,7 +219,7 @@ def test_curated_svg_renders_from_thumbnail_but_hashes_original(tmp_path):
     client, _ = _commons_info_client(mime="image/svg+xml")
     c = media.stage_curated_entity_candidates({"Daniel Lurie": {"title": "File:A.svg", "fit": "contain"}}, client)[0]
     assert c["image_url"].endswith("320px-A.png") and c["original_url"].endswith("/A.png")
-    c.update(status="approved", license="Public domain", license_url="https://commons.wikimedia.org/wiki/File:A.svg", credit="X")
+    c.update(status="approved", license="CC BY-SA 4.0", license_url="https://commons.wikimedia.org/wiki/File:A.svg", credit="X")
     media.apply_candidates([c], client, tmp_path)
     entry = media.load_manifest(tmp_path / "manifest.json")["entities"][0]
     assert entry["sha256"] == media.sha256_hex(IMG) and entry["original_url"] == c["original_url"]
@@ -239,3 +241,50 @@ def test_every_manifest_entity_image_exists_with_license_and_matches_config():
         assert e["original_url"].startswith("https://upload.wikimedia.org/")
         assert e["entity_name"] in config and e["entity_name"] in names
     assert media.media_dir_bytes(ROOT / "docs" / "media") < 2 * 1024 * 1024
+
+
+def _approved_entity(**kw):
+    c = {"kind": "entity", "entity_name": "Daniel Lurie", "image_url": "https://upload.wikimedia.org/x/a.png",
+         "status": "approved", "license": "CC BY-SA 4.0", "suggested_license": "CC BY-SA 4.0",
+         "license_url": "https://creativecommons.org/licenses/by-sa/4.0", "credit": "Jane Doe"}
+    c.update(kw)
+    return c
+
+
+@pytest.mark.parametrize("change", [
+    {"license": "CC BY 4.0"},          # open, but not what Commons reported
+    {"license": "Public domain"},
+    {"suggested_license": ""},         # entity candidates must carry the staged value
+])
+def test_apply_rejects_license_differing_from_suggested(tmp_path, change):
+    with pytest.raises(media.MediaError):
+        media.apply_candidates([_approved_entity(**change)], _client(), tmp_path)
+    assert not (tmp_path / "manifest.json").exists()
+
+
+def test_apply_accepts_matching_license_ignoring_case(tmp_path):
+    media.apply_candidates([_approved_entity(license="cc by-sa 4.0")], _client(), tmp_path)
+    assert (tmp_path / "manifest.json").exists()
+
+
+def test_restrictions_staged_and_recorded_with_logo_note(tmp_path):
+    def handler(request: httpx.Request):
+        if request.url.host == "commons.wikimedia.org":
+            return httpx.Response(200, json={"query": {"pages": {"9": {"imageinfo": [{
+                "url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/L.png",
+                "descriptionurl": "https://commons.wikimedia.org/wiki/File:L.png",
+                "sha1": hashlib_sha1(IMG), "mime": "image/png", "size": len(IMG),
+                "extmetadata": {"LicenseShortName": {"value": "Public domain"}, "Artist": {"value": "Owner"},
+                                "LicenseUrl": {"value": ""}, "Restrictions": {"value": "trademarked"}}}]}}}})
+        return httpx.Response(200, content=IMG)
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    c = media.stage_curated_entity_candidates({"Co": {"title": "File:L.png", "fit": "contain", "logo": True}}, client)[0]
+    assert c["restrictions"] == "trademarked" and c["logo"] is True
+    c.update(status="approved", license="Public domain", license_url="https://commons.wikimedia.org/wiki/File:L.png", credit="Owner")
+    media.apply_candidates([c], client, tmp_path)
+    entry = media.load_manifest(tmp_path / "manifest.json")["entities"][0]
+    assert entry["restrictions"] == "trademarked" and entry["logo"] is True
+    promises = [{"promise_id": "P01", "entity_canonical_name": "Co"}]
+    media.apply_manifest_fields(promises, {"images": [], "entities": [entry]})
+    assert promises[0]["entity_image_note"] == media.TRADEMARK_NOTE
+    assert "entity_image_license_url" not in promises[0]  # public domain: no licence-text link

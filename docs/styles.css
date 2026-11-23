@@ -7472,6 +7472,18 @@ a:hover {
   display: none;
 }
 
+.btn-map-cluster-close {
+  margin-top: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
 .map-selected-top {
   display: flex;
   flex-wrap: wrap;
@@ -7599,7 +7611,12 @@ a:hover {
   align-items: center;
   gap: 2px;
   flex: none;
-  max-width: 72px;
+  max-width: 104px;
+}
+
+.entity-avatar-credit a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .entity-avatar-img {
@@ -7611,7 +7628,7 @@ a:hover {
 }
 
 .entity-avatar-credit {
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   line-height: 1.2;
   color: var(--muted);
   text-align: center;
