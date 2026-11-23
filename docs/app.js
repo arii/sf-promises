@@ -1528,7 +1528,9 @@
           broken: 0,
           inProgress: 0,
           undecided: 0,
-          items: []
+          items: [],
+          entityImagePath: p.entity_image_path || '',
+          entityImageCredit: p.entity_image_credit || ''
         });
       }
       const g = groups.get(name);
@@ -1559,7 +1561,8 @@
       return `
         <div class="entity-profile-card">
           <div class="entity-card-top">
-            <div>
+            ${window.SFPDrawer.entityAvatarHtml(g)}
+            <div class="entity-card-title">
               <h4 class="entity-card-name">${escapeHtml(g.name)}</h4>
               <span class="entity-card-cat font-mono">${escapeHtml(catLabel)}</span>
             </div>
@@ -1923,8 +1926,19 @@
     return { kind: 'pass', failures: 0, passed, unrecorded: 0 };
   }
 
+  // Entity avatar (issue #83): same-origin relative path from the media
+  // manifest, shown with a visible credit. '' when the export carries no entity
+  // image or the path is not a plain relative one, so the card is unchanged.
+  function entityAvatarHtml(g) {
+    const src = g && g.entityImagePath;
+    if (typeof src !== 'string' || !src || /^[a-z][a-z0-9+.-]*:|^\/|\.\.|\\/i.test(src)) return '';
+    const credit = g.entityImageCredit
+      ? `<span class="entity-avatar-credit font-mono">${drawerEscapeHtml(g.entityImageCredit)}</span>` : '';
+    return `<span class="entity-avatar"><img class="entity-avatar-img" src="${drawerEscapeHtml(src)}" alt="" width="40" height="40" loading="lazy">${credit}</span>`;
+  }
+
   const SFPDrawer = {
-    verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth,
+    verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth, entityAvatarHtml,
     drawerCheckOutcomes, drawerChecksSummary
   };
   window.SFPDrawer = SFPDrawer;
@@ -2466,11 +2480,14 @@
   // Self-hosted media written by the media pipeline (record.media_path). A
   // plain relative path only: no scheme, no host, no parent segments. Absent
   // on most records, in which case the illustration is the whole thumbnail.
-  function localMediaPath(p) {
-    const m = p && p.media_path;
+  function safeLocalPath(m) {
     if (typeof m !== 'string' || !m) return '';
     if (/^[a-z][a-z0-9+.-]*:|^\/|\.\.|\\/i.test(m)) return '';
     return m;
+  }
+
+  function localMediaPath(p) {
+    return safeLocalPath(p && p.media_path);
   }
 
   // Category illustration tinted with the verdict colour. Always built, so a
@@ -2488,6 +2505,10 @@
   document.addEventListener('error', (e) => {
     const t = e.target;
     if (t && t.classList && t.classList.contains('cat-thumb-img')) t.remove();
+    if (t && t.classList && t.classList.contains('entity-avatar-img')) {
+      const box = t.closest('.entity-avatar');
+      if (box) box.remove();
+    }
   }, true);
 
   function timelineStripHtml(p) {

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="SF Promises Social Card">
+  <rect width="1200" height="630" fill="#0f1a26"/>
+  <rect x="28" y="28" width="1144" height="574" rx="24" fill="#142231" stroke="#2b3e55" stroke-width="2"/>
+  <rect x="72" y="72" width="112" height="112" rx="24" fill="#0f1a26" stroke="#10b981" stroke-width="6"/>
+  <text x="128" y="138" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-weight="800" font-size="52" fill="#f8fafc">SF</text>
+  <text x="208" y="106" font-family="ui-monospace, monospace" font-weight="700" font-size="20" fill="#38bdf8">SAN FRANCISCO CIVIC ACCOUNTABILITY</text>
+  <text x="208" y="166" font-family="ui-sans-serif, system-ui, sans-serif" font-weight="800" font-size="52" fill="#f8fafc">SF Promises</text>
+  <text x="72" y="268" font-family="ui-sans-serif, system-ui, sans-serif" font-weight="800" font-size="52" fill="#f8fafc">A sourced record of what San Francisco's</text>
+  <text x="72" y="332" font-family="ui-sans-serif, system-ui, sans-serif" font-weight="800" font-size="52" fill="#10b981">leaders promised, and what happened.</text>
+  <text x="72" y="398" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26" fill="#a3b3c6">Tracking 54 commitments across City Hall, SFO Airport, transit, &amp; sports</text>
+  <rect x="72" y="444" width="489" height="28" fill="#10b981"/>
+  <rect x="561" y="444" width="195" height="28" fill="#f59e0b"/>
+  <rect x="756" y="444" width="333" height="28" fill="#ef4444"/>
+  <rect x="1089" y="444" width="39" height="28" fill="#94a3b8"/>
+  <text x="72" y="512" font-family="ui-monospace, monospace" font-weight="700" font-size="22" fill="#f8fafc">25 KEPT (46%)  ·  10 IN PROGRESS (19%)  ·  17 BROKEN (31%)  ·  2 UNDECIDED (4%)</text>
+  <text x="72" y="576" font-family="ui-monospace, monospace" font-size="20" fill="#a3b3c6">Sourced to saved, SHA-256 hashed primary records  |  arii.github.io/sf-promises</text>
+</svg>
