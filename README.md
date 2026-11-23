@@ -148,6 +148,19 @@ writer at a time**: only the Verdict lane writes `promises`/`verdicts`/
 `verifications`/`quarantined`, and only one person runs a writing pipeline at
 a time. Everyone else reads or mounts `--read-only`.
 
+On a `--shared` mount, a writer must hold Archil delegations before writing
+the database; otherwise SQLite fails at commit with "disk I/O error" (it
+cannot delete its journal). Take them before a writing run and release them
+after:
+
+```bash
+archil checkout /mnt/archil/workspace
+archil checkout /mnt/archil/workspace/promises.db
+# ... writing pipeline ...
+archil checkin /mnt/archil/workspace/promises.db
+archil checkin /mnt/archil/workspace
+```
+
 ## Workers and staged exports
 
 Install Python dependencies with `pip install -r requirements.txt`. PDF parsing

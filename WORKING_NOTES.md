@@ -127,3 +127,30 @@
 - **Verification**:
   - `.venv/bin/pyflakes src/` cleanly returns 0 warnings/errors.
   - **236/236 tests passing green** in `.venv/bin/pytest tests/`.
+
+## 2026-11-23: Archil workspace mounted; shared promises.db cleanup
+
+- Mounted the Archil disk at `/mnt/archil` on host s5 with
+  `scripts/mount_archil.sh` (`--shared`). Git `961dc2f`, clean tree.
+- Pre-change backup: `/mnt/archil/backups/backup-20261123T113801Z-961dc2f`
+  (`quick_check` ok, 126 source hashes verified, 52 baseline FK violations).
+- Deleted leftover `promises.db.pre-e1b.bak` (older legacy copy, 62 promises
+  / 85 verdicts) and `promises_v2.db` (+`-shm`, empty `-wal`; v2 schema,
+  2 pending rows). Copies with SHA-256 sums:
+  `/home/ari/backups/sf-promises-leftovers-20261123/` on s5.
+- `promises.db` FK cleanup (approved by the owner): deleted 13 rows whose
+  `promise_id` has no `promises` row: 7 `sources` (P97 x2, P68, S4 x4),
+  4 `relevance_checks` (P68), 1 `change_log` (P68), 1 `quarantined` (P68).
+  Kept 39 `test_cases` rows for unpublished promises (P32–P34, P45–P56,
+  P68–P79, P97, S4–S14) because 12 `test_results` rows reference them; they
+  are the recorded legacy baseline. Script: `/home/ari/backups/fk_cleanup_20261123.py`.
+- First commit attempt failed with "disk I/O error" and left a hot journal:
+  on a `--shared` mount SQLite needs a delegation on the workspace
+  directory to delete its journal. Rolled back automatically on reopen
+  (verified on a copy first). Before writing `promises.db`, run
+  `archil checkout /mnt/archil/workspace` and
+  `archil checkout /mnt/archil/workspace/promises.db`.
+- Post-change backup: `/mnt/archil/backups/backup-20261123T114325Z-961dc2f-post-fk`
+  (`quick_check` ok, 126 source hashes, 39 baseline FK violations).
+- Live counts after cleanup: promises 62, verdicts 87, quarantined 0,
+  sources 115, test_cases 113, test_results 144.
