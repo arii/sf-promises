@@ -32,7 +32,7 @@ MAX_FETCH_BYTES = 8 * 1024 * 1024
 FETCH_TIMEOUT = 20.0
 
 # Commons is reviewed for this job only; config/allowlist.json is not edited.
-EXTRA_FETCH_HOSTS = frozenset({"commons.wikimedia.org", "upload.wikimedia.org"})
+EXTRA_FETCH_HOSTS = frozenset({"commons.wikimedia.org", "upload.wikimedia.org", "thumb.wikimedia.org"})
 GOV_HOSTS = frozenset({"sf.gov", "flysfo.com", "sfmta.com", "sfrecpark.org"})
 # Issue #82: these keep the opt-in hotlink and are never rehosted.
 NEVER_REHOST_IDS = frozenset({"P05", "P04", "P10", "P06", "P07", "P83"})
@@ -41,7 +41,10 @@ NEVER_REHOST_HOSTS = (
     "latimes.com", "brightspotcdn.com", "gettyimages.com", "hdnux.com",
     "sfchronicle.com",
 )
-OPEN_LICENSE = re.compile(r"^(cc[ -]|creative commons|public domain|pd[ -]|cc0)", re.I)
+# Public domain, CC0, CC BY and CC BY-SA only. NC/ND variants do not match.
+OPEN_LICENSE = re.compile(r"^(public domain|pd([ -]|$)|cc0|cc[ -]by(-sa)?[ -]\d)", re.I)
+USER_AGENT = "sf-promises-media/1.0 (https://github.com/arii/sf-promises; accountability tracker, contact via repo issues)"
+ENTITY_CONFIG = REPO_ROOT / "config" / "media_entities.json"
 
 
 class MediaError(Exception):
@@ -216,6 +219,86 @@ def commons_lookup(client, entity_name: str) -> dict | None:
     return None
 
 
+def _no_query(url: str) -> str:
+    """Drop the utm_* tracking query Commons appends to upload URLs."""
+    return url.split("?", 1)[0]
+
+
+def commons_file_info(client, title: str) -> dict | None:
+    """Commons imageinfo for one exact file title; None unless its license is open.
+
+    Uses prop=imageinfo with iiprop=url|extmetadata|sha1. `thumb_url` is a 320px
+    render (needed for SVG, which Pillow cannot read).
+    """
+    params = {
+        "action": "query", "format": "json", "titles": title, "prop": "imageinfo",
+        "iiprop": "url|extmetadata|sha1|mime|size", "iiurlwidth": "320",
+    }
+    response = client.get(COMMONS_API, params=params, timeout=FETCH_TIMEOUT)
+    if response.status_code != 200:
+        raise MediaError(f"commons lookup failed ({response.status_code})")
+    for page in ((response.json().get("query") or {}).get("pages") or {}).values():
+        info = (page.get("imageinfo") or [None])[0]
+        if not info:
+            continue
+        meta = info.get("extmetadata") or {}
+        license_name = _strip_tags((meta.get("LicenseShortName") or {}).get("value", ""))
+        url = _no_query(info.get("url") or "")
+        if not url or not OPEN_LICENSE.match(license_name) or not host_allowed(url):
+            return None
+        return {
+            "original_url": url, "thumb_url": _no_query(info.get("thumburl") or ""),
+            "sha1": info.get("sha1") or "", "mime": info.get("mime") or "",
+            "size": info.get("size") or 0,
+            "source_page": info.get("descriptionurl", ""),
+            "credit": _strip_tags((meta.get("Artist") or {}).get("value", "")) or "Unknown author",
+            "license": license_name,
+            "license_url": _strip_tags((meta.get("LicenseUrl") or {}).get("value", "")),
+        }
+    return None
+
+
+def load_entity_config(path: Path = ENTITY_CONFIG) -> dict:
+    """entity_canonical_name -> {"title": "File:...", "fit": "cover"|"contain"}; curated, exact titles."""
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+
+
+def stage_curated_entity_candidates(config: dict, client, names=None) -> list[dict]:
+    """Pending candidates for curated Commons file titles (no fuzzy search).
+
+    Downloads the original once and checks it against the Commons sha1, then
+    records the SHA-256 of that original. SVG and other non-raster originals are
+    rendered from the 320px Commons thumbnail (`image_url`); `original_url`
+    always names the Commons original. Never auto-approves.
+    """
+    out = []
+    for name, spec in sorted(config.items()):
+        if names is not None and name not in names:
+            continue
+        try:
+            hit = commons_file_info(client, spec["title"])
+            if not hit or not (0 < hit["size"] <= MAX_FETCH_BYTES):
+                continue
+            data = fetch_bytes(client, hit["original_url"])
+        except MediaError:
+            continue
+        if hit["sha1"] and hashlib.sha1(data).hexdigest() != hit["sha1"]:
+            continue
+        raster = hit["mime"] in ("image/jpeg", "image/png", "image/webp")
+        render_url = hit["original_url"] if raster else hit["thumb_url"]
+        if not render_url:
+            continue
+        out.append({
+            "kind": "entity", "entity_name": name, "image_url": render_url,
+            "original_url": hit["original_url"], "source_page": hit["source_page"],
+            "sha256": sha256_hex(data), "commons_sha1": hit["sha1"],
+            "fit": spec.get("fit", "cover"), "license_guess": "CC",
+            "suggested_license": hit["license"], "suggested_license_url": hit["license_url"],
+            "suggested_credit": hit["credit"], "status": "pending", "fetched_at": now_iso(),
+        })
+    return out
+
+
 def stage_entity_candidates(entity_names, client) -> list[dict]:
     out = []
     for name in entity_names:
@@ -262,6 +345,26 @@ def resize_webp(data: bytes, width: int) -> bytes:
     return buf.getvalue()
 
 
+def square_webp(data: bytes, size: int = 160, fit: str = "cover") -> bytes:
+    """Square avatar. cover: crop from the top (portraits). contain: logo on white with margin."""
+    from PIL import Image
+
+    img = Image.open(io.BytesIO(data)).convert("RGBA")
+    if fit == "contain":
+        inner = round(size * 0.84)
+        img.thumbnail((inner, inner), Image.LANCZOS)
+        canvas = Image.new("RGBA", (size, size), (255, 255, 255, 255))
+        canvas.alpha_composite(img, ((size - img.width) // 2, (size - img.height) // 2))
+        img = canvas
+    else:
+        side = min(img.width, img.height)
+        left = (img.width - side) // 2
+        img = img.crop((left, 0, left + side, side)).resize((size, size), Image.LANCZOS)
+    buf = io.BytesIO()
+    img.convert("RGB").save(buf, "WEBP", quality=80, method=6)
+    return buf.getvalue()
+
+
 def load_manifest(path: Path = MANIFEST_PATH) -> dict:
     if not path.exists():
         return {"images": [], "entities": []}
@@ -290,6 +393,12 @@ def apply_candidates(candidates, client, media_dir: Path = MEDIA_DIR) -> list[st
         check_approved(c)
         data = fetch_bytes(client, c["image_url"])
         digest = sha256_hex(data)
+        original = c.get("original_url") or c["image_url"]
+        if original != c["image_url"]:
+            # Rendered from a thumbnail (e.g. SVG): the recorded hash is the original's.
+            if not host_allowed(original):
+                raise MediaError(f"{c.get('entity_name')}: original host not allowlisted")
+            digest = sha256_hex(fetch_bytes(client, original))
         if c.get("sha256") and c["sha256"] != digest:
             raise MediaError(f"{c.get('promise_id') or c.get('entity_name')}: sha256 changed since staging")
         if c["kind"] == "promise":
@@ -310,10 +419,10 @@ def apply_candidates(candidates, client, media_dir: Path = MEDIA_DIR) -> list[st
             slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
             rel = f"entities/{slug}-160.webp"
             (media_dir / "entities").mkdir(parents=True, exist_ok=True)
-            (media_dir / rel).write_bytes(resize_webp(data, 160))
+            (media_dir / rel).write_bytes(square_webp(data, 160, c.get("fit", "cover")))
             manifest["entities"] = [e for e in manifest["entities"] if e["entity_name"] != name]
             manifest["entities"].append({
-                "entity_name": name, "path": rel, "original_url": c["image_url"], "sha256": digest,
+                "entity_name": name, "path": rel, "original_url": original, "sha256": digest,
                 "credit": c["credit"], "license": c["license"], "license_url": c["license_url"],
                 "fetched_at": c.get("fetched_at") or now_iso(),
             })
