@@ -52,7 +52,31 @@ console.log(JSON.stringify({
     run_id: 'RUN_abcd1234', checked_at: '2026-11-14T09:35:18Z'
   }),
   provenanceEmpty: SFPDrawer.checkProvenanceHtml({ check: 'accuracy_quote', passed: true }),
-  provenanceMissing: SFPDrawer.checkProvenanceHtml(undefined)
+  provenanceMissing: SFPDrawer.checkProvenanceHtml(undefined),
+  sfo01: (() => {
+    const p = data.promises.find(x => x.promise_id === 'SFO-01');
+    const o = SFPDrawer.drawerCheckOutcomes(p);
+    return { outcomes: o, summary: SFPDrawer.drawerChecksSummary(o, p) };
+  })(),
+  allPass: (() => {
+    const p = { checks: ['authenticity_domain', 'authenticity_hash', 'accuracy_quote',
+      'authenticity_speaker', 'accuracy_date', 'verdict_rubric'].map(c => ({ check: c, passed: true })),
+      relevance: { score: 7 } };
+    const o = SFPDrawer.drawerCheckOutcomes(p);
+    return { outcomes: o, summary: SFPDrawer.drawerChecksSummary(o, p) };
+  })(),
+  explicitFail: (() => {
+    const p = { checks: [{ check: 'accuracy_quote', passed: false, reason: 'quote not found' }],
+      relevance: { score: 7 } };
+    const o = SFPDrawer.drawerCheckOutcomes(p);
+    return { outcomes: o, summary: SFPDrawer.drawerChecksSummary(o, p) };
+  })(),
+  noRelevance: (() => {
+    const p = { checks: [] };
+    const o = SFPDrawer.drawerCheckOutcomes(p);
+    return { outcomes: o, summary: SFPDrawer.drawerChecksSummary(o, p) };
+  })(),
+  lowRelevance: SFPDrawer.drawerCheckOutcomes({ checks: [], relevance: { score: 3 } }).relevance_gate
 }));
 """
 
@@ -117,6 +141,42 @@ class TestDrawerTimeline(unittest.TestCase):
     def test_provenance_empty_when_export_has_none(self):
         self.assertEqual(self.out["provenanceEmpty"], "")
         self.assertEqual(self.out["provenanceMissing"], "")
+
+
+class TestDrawerChecks(unittest.TestCase):
+    def setUp(self):
+        self.out = run_harness()
+
+    def test_sfo01_speaker_check_is_not_recorded(self):
+        sfo = self.out["sfo01"]
+        self.assertEqual(sfo["outcomes"]["authenticity_speaker"]["status"], "unrecorded")
+        for check in ("authenticity_domain", "authenticity_hash", "accuracy_quote",
+                      "accuracy_date", "verdict_rubric"):
+            self.assertEqual(sfo["outcomes"][check]["status"], "pass", check)
+        self.assertEqual(sfo["summary"]["kind"], "partial")
+        self.assertEqual(sfo["summary"]["unrecorded"], 1)
+        self.assertEqual(sfo["summary"]["passed"], 6)
+
+    def test_all_seven_recorded_passes_show_all_pass(self):
+        self.assertEqual(self.out["allPass"]["summary"]["kind"], "pass")
+        self.assertEqual(self.out["allPass"]["summary"]["passed"], 7)
+
+    def test_explicit_failure_stays_a_failure_with_reason(self):
+        fail = self.out["explicitFail"]
+        self.assertEqual(fail["outcomes"]["accuracy_quote"]["status"], "fail")
+        self.assertEqual(fail["outcomes"]["accuracy_quote"]["reason"], "quote not found")
+        self.assertEqual(fail["summary"]["kind"], "fail")
+        self.assertEqual(fail["summary"]["failures"], 1)
+
+    def test_missing_relevance_is_not_a_pass(self):
+        self.assertEqual(self.out["noRelevance"]["outcomes"]["relevance_gate"]["status"], "unrecorded")
+        self.assertNotEqual(self.out["noRelevance"]["summary"]["kind"], "pass")
+        self.assertEqual(self.out["lowRelevance"]["status"], "fail")
+
+    def test_drawer_has_no_default_relevance_or_pass_assumption(self):
+        src = APP_JS.read_text()
+        self.assertNotIn("{ score: 8, real: 2", src)
+        self.assertIn("NOT RECORDED", src)
 
 
 if __name__ == "__main__":

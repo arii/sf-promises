@@ -204,7 +204,9 @@ def durability_evaluator(conn, root, completion):
         deadline = date.fromisoformat(deadlines[promise_id][:10])
         new_verdict = decide_verdict(deadline, date.today(), delivery, survival, facts_verified=True)
         if new_verdict is None or new_verdict == verdict:
-            return current_verdict, f"Durability recheck: survival re-confirmed ({survival}); verdict retained."
+            return (current_verdict,
+                    f"Durability recheck: survival re-confirmed ({survival}); verdict retained.",
+                    True)
         return new_verdict, (
             f"Durability recheck: survival re-evaluated to {survival} "
             f"from {len(quotes)} verified archived source(s)."
@@ -222,7 +224,12 @@ def durability_cycle(database, *, as_of=None, evaluator_fn=None, completion=None
             f"{database} does not exist; restore a validated local workspace and retry"
         )
     try:
-        conn = sqlite3.connect(database)
+        if dry_run:
+            # A preview must leave the file byte-for-byte alone: read-only
+            # connection, no journal-mode change, no table creation.
+            conn = sqlite3.connect(f"{database.resolve().as_uri()}?mode=ro", uri=True)
+        else:
+            conn = sqlite3.connect(database)
     except sqlite3.Error as exc:
         raise DurabilityCycleError(f"{database} could not be opened: {exc}") from exc
     conn.row_factory = sqlite3.Row
@@ -235,8 +242,9 @@ def durability_cycle(database, *, as_of=None, evaluator_fn=None, completion=None
         if application_id != APPLICATION_ID or user_version != SCHEMA_VERSION:
             raise DurabilityCycleError(f"{database} is not a supported SF Promises database")
         conn.execute("PRAGMA foreign_keys=ON")
-        conn.execute("PRAGMA journal_mode=WAL")
-        ensure_change_log(conn)
+        if not dry_run:
+            conn.execute("PRAGMA journal_mode=WAL")
+            ensure_change_log(conn)
         if evaluator_fn is None:
             if model_provider() != "agent":
                 raise DurabilityCycleError(
@@ -682,7 +690,9 @@ def main():
     parser.add_argument("--durability-cycle", action="store_true",
                         help="Run one on-demand durability re-check cycle against --db")
     parser.add_argument("--dry-run", action="store_true",
-                        help="With --durability-cycle, report proposed transitions without writing")
+                        help="With --durability-cycle, report proposed transitions without writing to the "
+                             "database (opened read-only). Evaluation may still enqueue model "
+                             "requests on the agent lane")
     args = parser.parse_args()
     if args.durability_cycle:
         if any((args.seed_id, args.discover_only, args.extract_pending, args.run_id,

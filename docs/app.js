@@ -1880,7 +1880,53 @@
     return `<div class="drawer-check-provenance font-mono">${drawerEscapeHtml(bits.join(' · '))}</div>`;
   }
 
-  const SFPDrawer = { verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth };
+  // Outcome of each named check, derived only from what the export records:
+  // 'pass' / 'fail' from a recorded result row (or recorded relevance scores),
+  // 'unrecorded' when nothing was exported. A missing row is never a pass.
+  const DRAWER_CHECK_IDS = [
+    'authenticity_domain', 'authenticity_hash', 'accuracy_quote', 'authenticity_speaker',
+    'accuracy_date', 'verdict_rubric', 'relevance_gate'
+  ];
+
+  function drawerCheckOutcomes(p) {
+    const rows = {};
+    (Array.isArray(p && p.checks) ? p.checks : []).forEach(c => { if (c && c.check) rows[c.check] = c; });
+    const flagged = new Set(Array.isArray(p && p.failed_check_names) ? p.failed_check_names : []);
+    const rel = p && p.relevance;
+    const relRecorded = !!rel && typeof rel.score === 'number' && isFinite(rel.score);
+    const out = {};
+    DRAWER_CHECK_IDS.forEach(id => {
+      const row = rows[id];
+      if (row) {
+        out[id] = { status: row.passed === true ? 'pass' : 'fail', reason: row.reason || '' };
+      } else if (id === 'relevance_gate' && relRecorded) {
+        out[id] = { status: rel.score >= 5 ? 'pass' : 'fail', reason: '' };
+      } else if (flagged.has(id)) {
+        out[id] = { status: 'fail', reason: '' };
+      } else {
+        out[id] = { status: 'unrecorded', reason: '' };
+      }
+    });
+    return out;
+  }
+
+  function drawerChecksSummary(outcomes, p) {
+    const ids = Object.keys(outcomes);
+    const count = s => ids.filter(id => outcomes[id].status === s).length;
+    const passed = count('pass');
+    const unrecorded = count('unrecorded');
+    const failures = Math.max(count('fail'), (p && p.failed_check_count) || 0);
+    if (failures > 0 || (p && p.all_checks_passed === false)) {
+      return { kind: 'fail', failures, passed, unrecorded };
+    }
+    if (unrecorded > 0) return { kind: 'partial', failures: 0, passed, unrecorded };
+    return { kind: 'pass', failures: 0, passed, unrecorded: 0 };
+  }
+
+  const SFPDrawer = {
+    verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth,
+    drawerCheckOutcomes, drawerChecksSummary
+  };
   window.SFPDrawer = SFPDrawer;
   /* SFPDRAWER_PURE_END */
 
@@ -2170,8 +2216,11 @@
       domainDesc = `Domain verified on approved domain whitelist (${domain}).`;
     }
 
-    const rel = p.relevance || { score: 8, real: 2, measurable: 2, sf: 2, interesting: 2 };
-    const relScore = (rel.score !== undefined) ? rel.score : 8;
+    // Relevance is shown only when the export records it; no default score.
+    const rel = p.relevance || {};
+    const relRecorded = typeof rel.score === 'number' && isFinite(rel.score);
+    const relScore = relRecorded ? rel.score : null;
+    const outcomes = window.SFPDrawer.drawerCheckOutcomes(p);
 
     const rawChecks = p.checks || [];
     const checkMap = {};
@@ -2186,11 +2235,9 @@
       { id: 'authenticity_speaker', title: 'Speaker & Role Call Verification', defaultDesc: isCorporate ? 'Corporate entity attribution verified against corporate registry.' : 'Municipal speaker attribution verified against public roster.' },
       { id: 'accuracy_date', title: 'Temporal Window & Horizon Bounds', defaultDesc: 'Said, due, and outcome dates conform to strict temporal order.' },
       { id: 'verdict_rubric', title: 'Deterministic Rubric Application', defaultDesc: 'Binary decision logic evaluates passing claims directly to verdict.' },
-      { id: 'relevance_gate', title: 'Relevance Gate Score >= 5.0', defaultDesc: `Scored ${relScore}/8 for public impact and measurable outcomes.` }
+      { id: 'relevance_gate', title: 'Relevance Gate Score >= 5.0', defaultDesc: relRecorded ? `Scored ${relScore}/8 for public impact and measurable outcomes.` : '' }
     ];
 
-    let failedCheckCount = 0;
-    const failedNameSet = new Set(Array.isArray(p.failed_check_names) ? p.failed_check_names : []);
     // Per-review provenance (model/reviewer/run) indexed by check id; only
     // rows the export carries provenance for render a provenance line.
     const verifByCheck = {};
@@ -2199,49 +2246,35 @@
     });
     const provFor = id => (window.SFPDrawer ? window.SFPDrawer.checkProvenanceHtml(verifByCheck[id]) : '');
     const resolvedChecks = checkDefinitions.map(def => {
-      if (def.id === 'relevance_gate') {
-        const pass = relScore >= 5;
-        if (!pass) failedCheckCount++;
-        return {
-          title: def.title,
-          pass,
-          desc: def.defaultDesc,
-          provenance: provFor(def.id)
-        };
+      const o = outcomes[def.id];
+      let desc;
+      if (o.status === 'unrecorded') {
+        desc = 'Not recorded in this snapshot.';
+      } else if (o.reason) {
+        desc = o.reason;
+      } else if (def.id === 'relevance_gate') {
+        desc = def.defaultDesc;
+      } else {
+        desc = o.status === 'pass' ? 'Check passed.' : 'Verification check failed.';
       }
-      const item = checkMap[def.id];
-      if (item) {
-        const pass = item.passed === true;
-        if (!pass) failedCheckCount++;
-        return {
-          title: def.title,
-          pass,
-          desc: item.reason || (pass ? 'Check passed.' : 'Verification check failed or unrecorded.'),
-          provenance: provFor(def.id)
-        };
-      }
-      const flaggedMissing = failedNameSet.has(def.id);
-      if (flaggedMissing) failedCheckCount++;
-      return {
-        title: def.title,
-        pass: !flaggedMissing,
-        desc: flaggedMissing ? 'Verification check failed or unrecorded.' : def.defaultDesc,
-        provenance: provFor(def.id)
-      };
+      return { title: def.title, status: o.status, desc, provenance: provFor(def.id) };
     });
 
     if (checksList) {
+      const sum = window.SFPDrawer.drawerChecksSummary(outcomes, p);
       let bannerHtml = '';
-      const reportedFailures = Math.max(failedCheckCount, p.failed_check_count || 0);
-      if (reportedFailures > 0 || p.all_checks_passed === false) {
-        bannerHtml = `<div class="checks-summary-banner fail font-mono">&#9888; ${reportedFailures} Verification Exception${reportedFailures > 1 ? 's' : ''} Flagged (${Math.max(0, 7 - reportedFailures)}/7 passed)</div>`;
+      if (sum.kind === 'fail') {
+        bannerHtml = `<div class="checks-summary-banner fail font-mono">&#9888; ${sum.failures} Verification Exception${sum.failures > 1 ? 's' : ''} Flagged (${sum.passed}/7 passed)</div>`;
+      } else if (sum.kind === 'partial') {
+        bannerHtml = `<div class="checks-summary-banner unrecorded font-mono">${sum.passed} of 7 Checks Recorded as Passed &middot; ${sum.unrecorded} Not Recorded</div>`;
       } else {
         bannerHtml = `<div class="checks-summary-banner pass font-mono">&#10003; All 7 Deterministic Checks Passed (${relScore}/8 Relevance)</div>`;
       }
+      const badgeText = { pass: 'PASS', fail: 'FAIL', unrecorded: 'NOT RECORDED' };
 
       checksList.innerHTML = bannerHtml + resolvedChecks.map(c => `
         <div class="drawer-check-row">
-          <span class="drawer-check-badge ${c.pass ? 'pass' : 'fail'} font-mono">${c.pass ? 'PASS' : 'FAIL'}</span>
+          <span class="drawer-check-badge ${c.status} font-mono">${badgeText[c.status]}</span>
           <div class="drawer-check-desc">
             <strong>${escapeHtml(c.title)}</strong>
             <div style="font-size: 0.76rem; color: var(--muted); margin-top: 2px;">${escapeHtml(c.desc)}</div>
@@ -2257,11 +2290,12 @@
     const rSf = document.getElementById('drawer-rel-sf');
     const rInt = document.getElementById('drawer-rel-int');
 
-    if (rTot) rTot.textContent = `${relScore} / 8`;
-    if (rReal) rReal.textContent = `${rel.real || 2} / 2`;
-    if (rMeas) rMeas.textContent = `${rel.measurable || 2} / 2`;
-    if (rSf) rSf.textContent = `${rel.sf || 2} / 2`;
-    if (rInt) rInt.textContent = `${rel.interesting || 2} / 2`;
+    const relCell = v => (typeof v === 'number' && isFinite(v)) ? `${v} / 2` : 'Not recorded';
+    if (rTot) rTot.textContent = relRecorded ? `${relScore} / 8` : 'Not recorded';
+    if (rReal) rReal.textContent = relCell(rel.real);
+    if (rMeas) rMeas.textContent = relCell(rel.measurable);
+    if (rSf) rSf.textContent = relCell(rel.sf);
+    if (rInt) rInt.textContent = relCell(rel.interesting);
 
     const changelogEl = document.getElementById('drawer-changelog-entry');
     const copyReceiptBtn = document.getElementById('btn-copy-receipt');

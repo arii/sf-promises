@@ -2179,6 +2179,11 @@ def main():
             source = docs / name
             if source.is_file():
                 shutil.copyfile(source, OUTPUT_DIR / name)
+        # styles.css references fonts/ by relative URL; bundle them so the
+        # staged preview does not depend on the repository checkout.
+        fonts = docs / "fonts"
+        if fonts.is_dir():
+            shutil.copytree(fonts, OUTPUT_DIR / "fonts", dirs_exist_ok=True)
         payload = json.loads(Path(OUT_JSON).read_text())
         pre_render_index_html(payload["promises"], payload["quarantined"],
                               payload["database_status"]["counts"],

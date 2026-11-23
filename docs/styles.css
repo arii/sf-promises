@@ -7015,6 +7015,12 @@ a:hover {
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
+.checks-summary-banner.unrecorded {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--muted);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
 .contradiction-adjudication-box {
   background: rgba(245, 158, 11, 0.08);
   border: 1px solid rgba(245, 158, 11, 0.3);
@@ -7065,6 +7071,11 @@ a:hover {
 .drawer-check-badge.fail {
   background: rgba(239, 68, 68, 0.2);
   color: #F87171;
+}
+
+.drawer-check-badge.unrecorded {
+  background: rgba(148, 163, 184, 0.2);
+  color: var(--muted);
 }
 
 .drawer-check-desc {
