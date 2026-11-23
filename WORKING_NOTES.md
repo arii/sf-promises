@@ -182,3 +182,30 @@
   errors retry (30 s, 3 tries); a URL still unreachable, or a 422 "different
   page" fetch, is recorded as blocked instead of crashing the batch;
   `SF_PROMISES_LANE_TIMEOUT` raises the lane wait for agent-answered runs.
+
+## 2026-11-23 · Issues #44 / #83 / #82 (branch feat/issues-44-83)
+
+- **#83 entity images:** 11 entities have a self-hosted 160px avatar in
+  `docs/media/entities/` (Commons only, exact titles in `config/media_entities.json`,
+  licenses from `extmetadata`: PD/CC0/CC BY/CC BY-SA only, sha1 checked against the
+  Commons API, sha256 of the original recorded in `docs/media/manifest.json`).
+  Skipped for lack of a clearly correct official portrait or logo: SFMTA (Commons has only
+  the Muni worm and old Muni logos, not the SFMTA mark), Port of San Francisco and Golden State
+  Valkyries (game/venue photos only), Ed Lee (no official portrait), Joe Lacob (tiny image).
+  Commons tags the logos public domain (simple shapes/text), but they remain trademarks.
+- **Not done: `docs/data.json` refresh.** `entity_image_path` and `entity_image_credit` come from
+  `docs/export_data.py`, which needs the database. data.json was not hand-edited, so avatars
+  appear on the page only after the next reviewed export.
+- **#44 map:** kept the self-hosted SVG (no third-party tiles, per #82). Added marker
+  clustering, tap-to-open drawer and 44px touch targets on mobile. Not done: MapLibre or any
+  real basemap, story-card images, the hero pipeline teaser, inline timelines.
+- **#82 not done on purpose:** licenses of sf.gov, flysfo.com, sfmta.com and sfrecpark.org images
+  are unconfirmed, so P02, SFO-01, SFO-02, P21 and P41 keep the opt-in hotlink. Press images
+  (P04-P07, P10, P83) are never rehosted.
+
+## 2026-11-23: review fixes for #44 / #83 (feat/issues-44-83)
+
+- Map: SVG is `role="group"` (static layers `aria-hidden`); clustering merges closest pair until stable (no overlapping hit circles, checked on real data at 5 widths); cluster open focuses the list, Escape or "Close list" returns focus to the marker; single tap opens the drawer only; resize re-render restores focus. `lastMapMobile` removed.
+- Avatars: `docs/app.js` loads same-origin `media/manifest.json` and maps entity names, so avatars show without regenerating `docs/data.json` (no database touched). Credit links the licence for CC BY / CC BY-SA, 0.75rem.
+- Manifest/media: `logo` flag and `restrictions` recorded (Giants: `trademarked`, from the review's Commons check; the other logos carry `logo: true` and were not re-queried). Logo credit shows "Logo is a trademark of its owner". `check_approved` rejects a license that differs from `suggested_license`.
+- Open: re-run `scripts/fetch_media.py stage-entities` when network is allowed to fill `restrictions` for all entries; regenerate `docs/data.json` with the export when the production database may be used.

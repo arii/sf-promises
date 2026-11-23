@@ -1,7 +1,7 @@
 """Stage and apply presentation-only media (issues #82, #83).
 
     python3 -m scripts.fetch_media stage-promises   # og:image/twitter:image from saved sources
-    python3 -m scripts.fetch_media stage-entities   # Wikimedia Commons lookup per entity
+    python3 -m scripts.fetch_media stage-entities   # curated Wikimedia Commons files per entity
     python3 -m scripts.fetch_media apply            # approved candidates -> docs/media + manifest
 
 `stage-*` only write `<workspace>/staging/media_candidates.json` (status
@@ -30,7 +30,7 @@ def _candidates_path() -> Path:
 
 
 def _client():
-    return httpx.Client(headers={"User-Agent": "sf-promises-media/1.0 (research; no rehost of press images)"})
+    return httpx.Client(headers={"User-Agent": media.USER_AGENT})
 
 
 def main(argv=None) -> int:
@@ -47,8 +47,9 @@ def main(argv=None) -> int:
                 media.write_candidates(path, keep + found)
                 print(f"staged {len(found)} promise image candidates -> {path}")
             elif args.command == "stage-entities":
-                names = sorted({p["entity_canonical_name"] for p in exported if p.get("entity_canonical_name")})
-                found = media.stage_entity_candidates(names, client)
+                # Curated exact Commons titles (config/media_entities.json); no fuzzy search.
+                names = {p["entity_canonical_name"] for p in exported if p.get("entity_canonical_name")}
+                found = media.stage_curated_entity_candidates(media.load_entity_config(), client, names)
                 keep = [c for c in media.load_candidates(path) if c.get("kind") != "entity"]
                 media.write_candidates(path, keep + found)
                 print(f"staged {len(found)} entity image candidates -> {path}")

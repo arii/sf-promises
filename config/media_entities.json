@@ -1,0 +1,13 @@
+{
+  "Daniel Lurie": {"title": "File:Daniel Lurie Mayoral Photo.jpg", "fit": "cover"},
+  "London Breed": {"title": "File:Mayor London Breed official portrait 2019.jpg", "fit": "cover"},
+  "Gavin Newsom": {"title": "File:Gavin Newsom official photo.jpg", "fit": "cover"},
+  "Dean Preston": {"title": "File:Supervisor Dean Preston.jpg", "fit": "cover"},
+  "San Francisco International Airport (SFO)": {"title": "File:SFO San Francisco International Airport Logo.svg", "fit": "contain", "logo": true},
+  "San Francisco Public Utilities Commission (SFPUC)": {"title": "File:San Francisco Public Utilities Commission logo.svg", "fit": "contain", "logo": true},
+  "City and County of San Francisco": {"title": "File:Seal of San Francisco.svg", "fit": "contain"},
+  "Waymo": {"title": "File:Waymo logo.svg", "fit": "contain", "logo": true},
+  "Zoox": {"title": "File:Zoox logo.svg", "fit": "contain", "logo": true},
+  "Pacific Gas & Electric (PG&E)": {"title": "File:Pacific Gas and Electric Company (logo).svg", "fit": "contain", "logo": true},
+  "San Francisco Giants": {"title": "File:San Francisco Giants logo.png", "fit": "contain", "logo": true}
+}
