@@ -1543,13 +1543,21 @@
     try { window.localStorage.setItem(MAP_MODE_KEY, mode); } catch (e) { /* private mode */ }
   }
 
+  // Probe once: every getContext call creates a WebGL context and browsers
+  // cap how many may be alive, so repeated probes could evict the map's own.
+  let webglProbe = null;
   function webglAvailable() {
+    if (webglProbe !== null) return webglProbe;
     try {
       const c = document.createElement('canvas');
-      return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')));
+      const gl = window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl'));
+      webglProbe = !!gl;
+      const lose = gl && gl.getExtension && gl.getExtension('WEBGL_lose_context');
+      if (lose) lose.loseContext();
     } catch (e) {
-      return false;
+      webglProbe = false;
     }
+    return webglProbe;
   }
 
   function streetMapActive() {
@@ -1696,7 +1704,7 @@
   }
 
   function streetMapFallback(err) {
-    streetMapFailure = 'the map library failed to load';
+    streetMapFailure = 'the map could not be started';
     streetMapLoading = null;
     console.warn('Street map unavailable, using the simple map:', err && err.message ? err.message : err);
     if (streetMap) { try { streetMap.remove(); } catch (e) { /* ignore */ } streetMap = null; }

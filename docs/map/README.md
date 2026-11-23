@@ -49,5 +49,5 @@ glyph request.
 
 ## Size
 
-7,471,957 bytes (about 7.5 MB, 7.1 MiB) in total, measured with `du -sb docs/map`. Adding zoom levels, a larger extent
+7,471,993 bytes (about 7.5 MB, 7.1 MiB) in total, measured with `du -sb docs/map`. Adding zoom levels, a larger extent
 or more glyph ranges raises that, so check the size in review first.
