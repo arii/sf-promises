@@ -12,7 +12,7 @@ Every commitment is verified against cryptographically archived primary sources 
 
 ### Core Architecture Highlights
 - **Deterministic Arbitration:** 7 rigorous checks executed strictly in Python code (`src/checks.py`, `src/arbitrator.py`).
-- **Sandboxed Agent Isolation:** Advocate agents (Kept and Broken) run in isolated workspaces with strictly partitioned staging files (`staging/kept_<id>.json`, `staging/broken_<id>.json`), mathematically prevented from cross-contaminating evidence.
+- **Separated Agent Processes:** Advocate agents (Kept and Broken) run as separate local processes (not VMs) with strictly partitioned staging files (`staging/kept_<id>.json`, `staging/broken_<id>.json`), mathematically prevented from cross-contaminating evidence.
 - **Keenable 3-Phase Temporal Discovery:** Origin ($T_0$), Delivery ($T_1$), and Survival ($T_{now}$) searches ensure claims reflect full lifecycle durability rather than unverified announcement press releases.
 - **Editorial Promise Explorer:** High-craft user interface featuring ranked editorial cards, compact directory table view, instant search, and complete cryptographic inspect modals.
 

@@ -27,7 +27,7 @@ from tests.test_export import _load_exporter_module, _make_history_fixture_db
 
 def test_workspace_defaults_and_override(monkeypatch, tmp_path):
     monkeypatch.delenv("SF_PROMISES_WORKSPACE", raising=False)
-    assert workspace() == Path.home() / ".local/share/sf-promises"
+    assert workspace() == Path("/mnt/archil/workspace")
     monkeypatch.setenv("SF_PROMISES_WORKSPACE", str(tmp_path))
     assert database_path() == tmp_path / "promises.db"
 

@@ -9,8 +9,8 @@ under the round root — the rows a committed data PR appends to
 data/window_funnel_rounds.json and data/denied_leads.json.
 
 Usage: SF_PROMISES_WORKSPACE=<dir> python3 scripts/run_intake_round.py
-Requires SECRET_KEENABLE_API_KEY in the
-environment.
+Requires KEENABLE_API_KEY in the environment (SECRET_KEENABLE_API_KEY, the
+name used by the retired Archil sandbox, is still accepted).
 """
 
 import asyncio
@@ -240,7 +240,10 @@ async def main():
     fetcher = RawByteFetcher()
 
     rows, all_denials, lead_totals = [], [], {}
-    async with RetryingKeenable(api_key=os.environ["SECRET_KEENABLE_API_KEY"]) as kclient:
+    api_key = os.environ.get("KEENABLE_API_KEY") or os.environ.get("SECRET_KEENABLE_API_KEY")
+    if not api_key:
+        sys.exit("run_intake_round: KEENABLE_API_KEY is not set (source .env)")
+    async with RetryingKeenable(api_key=api_key) as kclient:
         for key, channel in (
             ("bos_transcripts", "bos_transcript"),
             ("budget_documents", "budget"),
