@@ -1559,11 +1559,13 @@ def export(*, allow_existing_fk_violations=False):
                 f" · {len(pending_ids)} seeds awaiting intake"),
             "id_scheme": "Ranked #1–#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
             "acceptance_verified": True,
-            "acceptance_status_label": f"Acceptance verified on commit {commit_sha[:7]} (separated processes, not Firecracker)",
+            "acceptance_status_label": f"Acceptance verified by harness run {f_run['run_id']} on {str(f_run.get('run_at') or '')[:10] or 'an unrecorded date'} (separated processes, not Firecracker)",
             "counts": dict(verdict_counts),
             "integration_run": {
                 "run_id": f_run["run_id"],
-                "commit_sha": commit_sha,
+                # The harness does not record a commit; do not stamp the export's HEAD.
+                "commit_sha": None,
+                "run_at": f_run.get("run_at"),
                 "total_tests": f_run.get("total_tests", 36),
                 "passed": f_run.get("passed", 33),
                 "failed": f_run.get("failed", 0),
@@ -1575,7 +1577,7 @@ def export(*, allow_existing_fk_violations=False):
             "sandbox_isolation_label": "Bounded local processes; not a VM or filesystem/network security boundary",
             "discrepancies": [
                 f"DB holds {total_db_promises} promises (12 seeds + {total_db_promises - 12} Tier-2 banked, scale paused by user decision) with {total_db_verdicts} verdicts and {total_db_evidence} evidence rows; every file hash re-verified.",
-                f"Latest harness run {f_run['run_id']} on {commit_sha[:7]}: {f_run.get('passed', 33)} pass / {f_run.get('failed', 0)} fail / {f_run.get('blocked', 3)} blocked-extended.",
+                f"Latest harness run {f_run['run_id']} ({str(f_run.get('run_at') or '')[:10] or 'date unrecorded'}): {f_run.get('passed', 33)} pass / {f_run.get('failed', 0)} fail / {f_run.get('blocked', 3)} blocked-extended.",
                 "Local worker processes are not a VM or filesystem/network security boundary.",
                 "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
                 "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md)."
