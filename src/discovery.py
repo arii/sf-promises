@@ -6,7 +6,7 @@ import re
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from keenable import KeenableAPIError
+from keenable import KeenableAPIError, KeenableConnectionError
 
 from src.evidence import is_allowlisted_url
 from src.sources import archive_source
@@ -159,9 +159,19 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
                 try:
                     saved[url] = await fetch_and_archive(client, url, root, promise_id, capture=capture)
                 except KeenableAPIError as exc:
-                    if exc.status_code not in (404, 410):
+                    # Per-URL outcomes: gone (404/410) or Keenable fetched a
+                    # different page than requested (422 with that message).
+                    # Anything else is a provider or request failure and propagates.
+                    wrong_page = (exc.status_code == 422
+                                  and "different page" in str(exc).lower())
+                    if exc.status_code not in (404, 410) and not wrong_page:
                         raise
-                    saved[url] = f"http_{exc.status_code}"
+                    saved[url] = "http_422_wrong_page" if wrong_page else f"http_{exc.status_code}"
+                except KeenableConnectionError:
+                    # Still unreachable after the client's bounded retries: record
+                    # the URL as blocked so the seed ends FETCH_INCOMPLETE instead
+                    # of crashing the whole batch.
+                    saved[url] = "fetch_connection_error"
                 except ValueError as exc:
                     saved[url] = str(exc)
             if isinstance(saved[url], dict):

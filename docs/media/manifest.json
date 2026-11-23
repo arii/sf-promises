@@ -1,4 +1,122 @@
 {
-  "entities": [],
+  "entities": [
+    {
+      "credit": "City and County of San Francisco",
+      "entity_name": "City and County of San Francisco",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Seal_of_San_Francisco.svg",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/9/91/Seal_of_San_Francisco.svg",
+      "path": "entities/city-and-county-of-san-francisco-160.webp",
+      "sha256": "19543ebad996d0887abc237146107a4d69b2048099fc4ae3938e43642961c909"
+    },
+    {
+      "credit": "Daniel Lurie",
+      "entity_name": "Daniel Lurie",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Daniel_Lurie_Mayoral_Photo.jpg",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Daniel_Lurie_Mayoral_Photo.jpg",
+      "path": "entities/daniel-lurie-160.webp",
+      "sha256": "c9a751dee3ee73e50ea15e0c478895994102f04df0f6e6c97b8d7296470d296d"
+    },
+    {
+      "credit": "DPStaff",
+      "entity_name": "Dean Preston",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Supervisor_Dean_Preston.jpg",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Supervisor_Dean_Preston.jpg",
+      "path": "entities/dean-preston-160.webp",
+      "sha256": "b81edba372d0012915f11b692bd41eb2aa6080ea17ec4e520d3d13517370645f"
+    },
+    {
+      "credit": "Office of the Lieutenant Governor of California",
+      "entity_name": "Gavin Newsom",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Gavin_Newsom_official_photo.jpg",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/2/20/Gavin_Newsom_official_photo.jpg",
+      "path": "entities/gavin-newsom-160.webp",
+      "sha256": "68dce5d8a2829614f030cb71744d8e789b4a9f223eb502efe774ca627cadfc03"
+    },
+    {
+      "credit": "City of San Francisco",
+      "entity_name": "London Breed",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Mayor_London_Breed_official_portrait_2019.jpg",
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Mayor_London_Breed_official_portrait_2019.jpg",
+      "path": "entities/london-breed-160.webp",
+      "sha256": "82d3469ec181bfadd78db738d7edeb99fc8f887f54fce6f8aa811cf4c42323c4"
+    },
+    {
+      "credit": "Pacific Gas and Electric Company",
+      "entity_name": "Pacific Gas & Electric (PG&E)",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Pacific_Gas_and_Electric_Company_(logo).svg",
+      "logo": true,
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Pacific_Gas_and_Electric_Company_%28logo%29.svg",
+      "path": "entities/pacific-gas-electric-pg-e-160.webp",
+      "sha256": "8a5c1463ffe80fbfb26c00049870fc3d8a6848aa908dc7ef9ea6100852aae3e8"
+    },
+    {
+      "credit": "San Francisco Giants",
+      "entity_name": "San Francisco Giants",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:San_Francisco_Giants_logo.png",
+      "logo": true,
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/6/68/San_Francisco_Giants_logo.png",
+      "path": "entities/san-francisco-giants-160.webp",
+      "restrictions": "trademarked",
+      "sha256": "a75d6ac43492bbbd3a41ba75b18c85199a5c08703148a56842c823bd2b0bd9ef"
+    },
+    {
+      "credit": "San Francisco International Airport",
+      "entity_name": "San Francisco International Airport (SFO)",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:SFO_San_Francisco_International_Airport_Logo.svg",
+      "logo": true,
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/SFO_San_Francisco_International_Airport_Logo.svg",
+      "path": "entities/san-francisco-international-airport-sfo-160.webp",
+      "sha256": "e7e33a6e8cc8b433cc9dadcdd614a1145e5423333792b6b7348d1b7f51c0f559"
+    },
+    {
+      "credit": "San Francisco Public Utilities Commission",
+      "entity_name": "San Francisco Public Utilities Commission (SFPUC)",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:San_Francisco_Public_Utilities_Commission_logo.svg",
+      "logo": true,
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/5/56/San_Francisco_Public_Utilities_Commission_logo.svg",
+      "path": "entities/san-francisco-public-utilities-commission-sfpuc-160.webp",
+      "sha256": "8559836105b8a624aaf2dca2429704e2ee93d033c5dce1e44f5cf92e27f6966e"
+    },
+    {
+      "credit": "Waymo",
+      "entity_name": "Waymo",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Waymo_logo.svg",
+      "logo": true,
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Waymo_logo.svg",
+      "path": "entities/waymo-160.webp",
+      "sha256": "f535b8594f214e27eb03cef084dc4db1cb7ceb9487cbe24c2ac7e0cf086f58fb"
+    },
+    {
+      "credit": "Zoox, Inc.",
+      "entity_name": "Zoox",
+      "fetched_at": "2026-11-23T15:47:51Z",
+      "license": "Public domain",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Zoox_logo.svg",
+      "logo": true,
+      "original_url": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Zoox_logo.svg",
+      "path": "entities/zoox-160.webp",
+      "sha256": "cb2804ecf9eb7e9b1890f646ba606e5f19c64b61adff36244004fc0b0c466063"
+    }
+  ],
   "images": []
 }

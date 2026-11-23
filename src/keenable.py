@@ -6,7 +6,12 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 
 import httpx
-from keenable import AsyncKeenable, KeenableRateLimitError
+from keenable import AsyncKeenable, KeenableAPIError, KeenableConnectionError, KeenableRateLimitError
+
+# Transient gateway errors and connection failures (e.g. read timeouts);
+# Keenable's 502 page says to retry in 30 seconds.
+TRANSIENT_STATUSES = frozenset({502, 503, 504})
+TRANSIENT_DELAY_SECONDS = 30
 
 
 def _retry_delay(header):
@@ -52,6 +57,14 @@ class RetryingKeenable:
                     if attempt == 2 or delay is None or delay > 30:
                         raise
                     await self._sleep(delay)
+                except KeenableAPIError as error:
+                    if attempt == 2 or error.status_code not in TRANSIENT_STATUSES:
+                        raise
+                    await self._sleep(TRANSIENT_DELAY_SECONDS)
+                except KeenableConnectionError:
+                    if attempt == 2:
+                        raise
+                    await self._sleep(TRANSIENT_DELAY_SECONDS)
         finally:
             self._retry_after.reset(token)
 
