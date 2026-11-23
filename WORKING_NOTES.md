@@ -163,14 +163,15 @@
 - Queue: `seeds/discovery_targets.json` (45 qualified register candidates with
   day-precision dates; built by `scripts/build_discovery_queue.py`). Ran
   `python -m src.run_live --db /mnt/archil/workspace/v2/promises.db --queue
-  seeds/discovery_targets.json --candidate-batch ...` on the 12 candidates
-  whose deadlines have passed plus one pilot (DISC-20261122-013). Lane
+  seeds/discovery_targets.json --candidate-batch ...` on 11 of the 15
+  candidates whose deadlines have passed, plus one future-deadline pilot
+  (DISC-20261122-013): 12 candidates in total. Lane
   requests were answered by coding agents (extraction, advocates, and a
   skeptical second reader for verify_origin / verify_evidence).
 - Result: 0 published, 12 quarantined (9 NO_VERIFIABLE_ORIGIN,
-  2 INSUFFICIENT_OUTCOME_EVIDENCE, 1 AMBIGUOUS_EVIDENCE). Not yet run:
-  ARTS-02, ARTS-03, TECH-01, DISC-20261122-002 and the 30 future-deadline or
-  undated candidates.
+  2 INSUFFICIENT_OUTCOME_EVIDENCE, 1 AMBIGUOUS_EVIDENCE). Not yet run (33):
+  the past-deadline ARTS-02, ARTS-03, TECH-01 and DISC-20261122-002, 23 more
+  future-deadline candidates, and 6 with no deadline (45 = 12 + 33).
 - Why so few pass: (1) the "outside the box" register entries are
   paraphrases; archived sources rarely contain a sentence with the same
   deliverable and an explicit commitment date; (2) news pages often lack a
@@ -179,8 +180,11 @@
   survival evidence; (4) segmenting splits some sentences (ordinance text,
   strikethrough artifacts), and outcome segments can be bare fragments.
 - Robustness fixes made during the run: Keenable 502/503/504 and connection
-  errors retry (30 s, 3 tries); a URL still unreachable, or a 422 "different
-  page" fetch, is recorded as blocked instead of crashing the batch;
+  errors retry (30 s, 3 tries). A URL still unreachable after that is
+  recorded as blocked and the seed ends `blocked`
+  (SOURCE_FETCH_TRANSIENT_FAILURE, retryable) instead of being audited, so an
+  outage is never recorded as a quarantine. A 422 "different page" fetch is a
+  permanent per-URL block like 404/410;
   `SF_PROMISES_LANE_TIMEOUT` raises the lane wait for agent-answered runs.
 
 ## 2026-11-23 · Issues #44 / #83 / #82 (branch feat/issues-44-83)

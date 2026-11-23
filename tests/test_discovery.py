@@ -107,7 +107,24 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
 
         origin = result["phases"]["origin"]
         self.assertEqual([item["url"] for item in origin["sources"]], [fallback])
-        self.assertEqual(origin["blocked"], [{"url": original, "reason": "http_422"}])
+        self.assertEqual(origin["blocked"], [{"url": original, "reason": "http_422_wrong_page"}])
+
+    async def test_other_422_propagates(self):
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[])
+
+            async def fetch(self, url):
+                raise KeenableAPIError("Invalid request parameter", status_code=422)
+
+        with tempfile.TemporaryDirectory() as root:
+            with self.assertRaises(KeenableAPIError):
+                await discover_and_archive(
+                    Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                               "source_url": "https://sf.gov/a", "entity": "Library",
+                               "promise_text": "Open a library branch"},
+                    root=Path(root), as_of=date(2025, 1, 1),
+                )
 
     async def test_unreachable_url_is_blocked_not_raised(self):
         original = "https://sf.gov/slow-page"

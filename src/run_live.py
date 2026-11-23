@@ -93,14 +93,27 @@ def model_provider():
     return os.environ.get("MODEL_PROVIDER", "agent").strip().lower()
 
 
+def lane_timeout():
+    """Agent-lane wait in seconds: SF_PROMISES_LANE_TIMEOUT (positive number) or the default."""
+    raw = os.environ.get("SF_PROMISES_LANE_TIMEOUT")
+    if not raw:
+        return DEFAULT_TIMEOUT_SECONDS
+    try:
+        value = float(raw)
+    except ValueError:
+        raise ValueError("SF_PROMISES_LANE_TIMEOUT must be a number of seconds") from None
+    if not value > 0 or value == float("inf"):
+        raise ValueError("SF_PROMISES_LANE_TIMEOUT must be a positive, finite number of seconds")
+    return value
+
+
 def build_completion(client, keys, *, lane_root):
     """Completion callable for pipeline stages: the agent lane by default,
     or the OpenRouter/Nebius provider path behind the same interface when
     MODEL_PROVIDER selects it."""
     provider = model_provider()
     if provider == "agent":
-        timeout = float(os.environ.get("SF_PROMISES_LANE_TIMEOUT") or DEFAULT_TIMEOUT_SECONDS)
-        return AgentLane(lane_root, timeout_seconds=timeout).completion
+        return AgentLane(lane_root, timeout_seconds=lane_timeout()).completion
     if provider in ("openrouter", "nebius"):
         spend_ledger = NebiusSpendLedger(Path(lane_root).parent / "nebius-spend.db")
 
@@ -589,6 +602,19 @@ async def extract_pending(database, seed_id, run_id):
         conn.close()
 
 
+TRANSIENT_FETCH_REASONS = frozenset({"fetch_connection_error"})
+
+
+def transient_fetch_failure(phases):
+    """True when any phase lost a URL to a transient fetch failure.
+
+    Such a seed is reported blocked (retryable) rather than audited, so a
+    provider outage is never recorded as an evidence finding (quarantine).
+    """
+    return any(entry.get("reason") in TRANSIENT_FETCH_REASONS
+               for phase in phases.values() for entry in phase.get("blocked", []))
+
+
 async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined=False):
     """Run candidate audits sequentially; provider failures propagate as blocked."""
     leads = load_queue()
@@ -660,7 +686,10 @@ async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined
                         item = research["results"][0]
                         phases = item["phases"]
                         searched_twice = True
-                    if (not phases["origin"]["sources"] and phases["origin"]["blocked"]):
+                    if transient_fetch_failure(phases):
+                        result = {"promise_id": pid, "status": "blocked",
+                                  "reason": "SOURCE_FETCH_TRANSIENT_FAILURE"}
+                    elif (not phases["origin"]["sources"] and phases["origin"]["blocked"]):
                         result = {"promise_id": pid, "status": "blocked",
                                   "reason": "ORIGIN_SOURCE_FETCH_INCOMPLETE"}
                     elif (not (phases["delivery"]["sources"] or phases["survival"]["sources"])
@@ -673,7 +702,10 @@ async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined
                             research = await discover_run(database, pid, None)
                             item = research["results"][0]
                             phases = item["phases"]
-                            if ((not phases["origin"]["sources"] and phases["origin"]["blocked"])
+                            if transient_fetch_failure(phases):
+                                result = {"promise_id": pid, "status": "blocked",
+                                          "reason": "SOURCE_FETCH_TRANSIENT_FAILURE"}
+                            elif ((not phases["origin"]["sources"] and phases["origin"]["blocked"])
                                     or (not (phases["delivery"]["sources"] or phases["survival"]["sources"])
                                         and (phases["delivery"]["blocked"] or phases["survival"]["blocked"]))):
                                 result = {"promise_id": pid, "status": "blocked",
