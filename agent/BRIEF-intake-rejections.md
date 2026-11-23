@@ -80,6 +80,40 @@ Any one failure quarantines the candidate. There is no partial or
   cities (DC, Jersey Village, TX) for short quotes. This is fixed by
   URL-slug keywords, but retrieval quality is still unmeasured.
 
+## Result of experiment 1: recall baseline (2026-11-23)
+
+**H1 is confirmed.** The v2 audit rejected **all 48** runnable canonical leads,
+which are promises the site already publishes. It ran in 4 shards under
+`/mnt/archil/workspace/v2-baseline/shard-{0..3}/`. The other 14 of the 62 leads
+(P13–P41 etc.) have no day-precision `promised_date`, so discovery cannot run
+them at all.
+
+| Final reason | Count |
+| --- | --- |
+| `INVALID_PROMISE_DATE_LATER_THAN_SOURCE` | 26 |
+| `NO_VERIFIABLE_ORIGIN` | 9 |
+| `NO_VERIFIABLE_DEADLINE` | 6 |
+| `INVALID_SOURCE_PUBLICATION_DATE` | 5 |
+| `INSUFFICIENT_OUTCOME_EVIDENCE` | 1 |
+| `INVALID_ORIGIN_EVIDENCE` | 1 |
+
+According to the lane workers' per-promise notes, the dominant cause is the
+promise date. The matching sentence was found, but the source states the
+date only relatively ("on Tuesday", "today", "last year") or not at all. The
+rules forbid using the source's publication date, so every retry returns
+null. Many `NO_VERIFIABLE_ORIGIN` and `INVALID_SOURCE_PUBLICATION_DATE`
+results end the same way after the retry.
+
+Secondary causes:
+- Commitments with no deadline (S1, S2, P81) fail `NO_VERIFIABLE_DEADLINE`.
+- Future deadlines fail at outcome (P40).
+- Off-topic origin sources are retrieved (KQED, civil-rights slide decks).
+- Fragment segments.
+- Some leads restate past events rather than commitments (P04, P29).
+
+**Fix order:** H4 first (date resolution), then H3 (in progress for future
+deadlines), then target quality for leads.
+
 ## Hypotheses to test
 
 - **H1. The audit is stricter than the standard that produced the published
