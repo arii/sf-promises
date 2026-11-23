@@ -96,10 +96,7 @@ tiles conflict with #82's no-third-party-requests rule; needs a decision).
    Do not modify the database without the user's approval.
 2. Leftover files on the disk (`promises.db.pre-e1b.bak`, `promises_v2.db*`):
    identify what they are; ask before deleting anything.
-3. `.env` has `KEENABLE_API_KEY` but not `SECRET_KEENABLE_API_KEY`, which
-   `scripts/run_intake_round.py` reads. Intake fails until the second name
-   is added with the same value.
-4. Merge #96 and #95, close #94 (see above).
+3. Merge #96 and #95, close #94 (see above).
 
 ## Rules that still apply
 

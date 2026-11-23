@@ -42,8 +42,8 @@ not proof of current results.
 
 ### Optional agent skills
 
-The SF Promises-specific `archil-vm-swarm` and `keenable-temporal-audit`
-skills ship with this repo. No external skills are required to develop, test,
+The SF Promises-specific `keenable-temporal-audit` skill ships with this repo
+(`.agents/skills/`). No external skills are required to develop, test,
 or deploy SF Promises.
 
 Install generic skills only when needed, directly from their upstream sources.
@@ -134,6 +134,10 @@ export SF_PROMISES_WORKSPACE=/mnt/archil/workspace
 ls "$SF_PROMISES_WORKSPACE"                   # promises.db  sources/  staging/
 ```
 
+`scripts/mount_archil.sh [--read-only]` runs these steps and is safe to re-run.
+`archil mount` runs as root; a sudoers rule for `/usr/bin/archil` makes it
+passwordless (see `QUESTIONS.md`, item 5).
+
 Unmount with `sudo archil unmount /mnt/archil` (not `umount`). Add
 `--read-only` when you only need to read. Inside Docker, the container needs
 `devices: [/dev/fuse]`, `cap_add: [SYS_ADMIN]` and
@@ -159,14 +163,13 @@ python3 scripts/run_intake_round.py
 python3 docs/export_data.py --output-dir "$SF_PROMISES_WORKSPACE/staging/exports/review"
 ```
 
-Intake needs `SECRET_KEENABLE_API_KEY`; discovery needs `KEENABLE_API_KEY`.
+Intake and discovery need `KEENABLE_API_KEY`.
 
 ### Credentials
 
 Keys live in a git-ignored `.env` at the repository root. `.env.example` lists
 every variable with what reads it; copy it and fill in values. Load it without
-printing secrets: `set -a; source .env; set +a`. Intake reads the Keenable key
-as `SECRET_KEENABLE_API_KEY`, so set both Keenable names to the same value.
+printing secrets: `set -a; source .env; set +a`.
 `ARCHIL_MOUNT_TOKEN`, `ARCHIL_DISK_ID` and `ARCHIL_REGION` mount the shared
 disk; `ARCHIL_API_KEY` is for the `disk` CLI and Archil's API. `HF_TOKEN` is
 used only by `scripts/upload_to_huggingface.py`.

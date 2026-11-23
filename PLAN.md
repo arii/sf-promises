@@ -1,3 +1,11 @@
+> **Status (2026-11-23): superseded in part.** The current architecture is
+> in [PRD.md](PRD.md) and README "Workspace setup". Storage is the shared
+> Archil **disk** mounted at `/mnt/archil` (free plan). Archil sandboxes,
+> `sandbox.fork()`, VM swarms and serverless execution are **not used**; worker
+> steps run as bounded local processes (not VMs). Read the sandbox and VM
+> sections below as historical design notes. The `archil-vm-swarm` skill
+> referenced below is not in this repository.
+
 You will review this document and then create a file called PROGRESS_REPORT.md which will have -[ ] check boxes that you will mark -[x] after each task is completed.  You will review this document to create the list of steps you need to hav einthe progress report and you will have verificiation steps to make sure it is complete.  
 
 

@@ -130,9 +130,10 @@ When evidence presents contradictory outcomes (e.g., government announces 1,000 
 
 ---
 
-### 2.6 Archil Parallel Execution Model
+### 2.6 Parallel Execution Model
 
-Verification tasks execute across disposable **Archil worker sandboxes** forked from the stopped `sf-promises-golden` template:
+Verification tasks run as bounded local worker processes on any machine that has the shared Archil disk mounted at `/mnt/archil` (README "Workspace setup"). No Archil sandboxes or VMs are used:
 - Concurrency bounded via an `asyncio.Semaphore` (typically 1 to 3 parallel workers).
 - Each worker verifies one candidate lead: downloads raw bytes, validates allowlisted origin, matches SHA-256 digest, checks exact verbatim substring, runs advocate evaluation, and returns a structured decision.
-- Workers are stopped and permanently deleted immediately upon task completion, ensuring zero state pollution.
+- Workers hold no database write access. Results go to staging files under the workspace, and only the Verdict lane writes `promises`/`verdicts`/`verifications`/`quarantined` (one writer at a time).
+- Local processes are not a filesystem or network security boundary.

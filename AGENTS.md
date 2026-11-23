@@ -13,7 +13,7 @@ Read `README.md`, then your lane brief in `agent/lanes/`. Dispatch needs only:
   `03-validation-and-tests.md`, `05-sources-and-seed-promises.md`,
   `10-event-runbook.md` = status checkboxes, `data/`, `src/` reference code)
 - `src/` — `schema.sql`, `checks.py`, `arbitrator.py` (Verdict lane owns)
-- `tests/test_checks.py` — 11/11 passing, keep green (`pytest`)
+- `tests/` — full suite (622 passing on 2026-11-23), keep green (`python3 -m pytest`)
 - `mocks/` — P02/P05 fixtures for advocates and demo
 - `WORKING_NOTES.md` — collaboration log · `QUESTIONS.md` — blockers/questions
 - `SF_PROMISES_WORKSPACE` (default `/mnt/archil/workspace`, the shared Archil disk; mount it per README "Workspace setup") — `promises.db`, `sources/`, `staging/`

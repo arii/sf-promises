@@ -1,5 +1,7 @@
 # SF Promises — how it works, and four verdicts worth arguing about
 
+> **Note (2026-11-23):** this write-up describes the Nov 10 hackathon run, which used Archil sandboxes. The project now uses only the shared Archil disk and local worker processes; see PRD.md and README.
+
 How the pipeline turns a public commitment into a sourced verdict, plus four
 real cases from `promises.db` where both advocates had something to say —
 including the Whole Foods store that opened on time and closed a year later.
