@@ -76,6 +76,10 @@ console.log(JSON.stringify({
     const o = SFPDrawer.drawerCheckOutcomes(p);
     return { outcomes: o, summary: SFPDrawer.drawerChecksSummary(o, p) };
   })(),
+  avatar: SFPDrawer.entityAvatarHtml({ entityImagePath: 'media/entities/mayor-160.webp', entityImageCredit: 'A <b>Author</b> / CC BY 4.0' }),
+  avatarNone: SFPDrawer.entityAvatarHtml({ entityImagePath: '' }),
+  avatarRemote: SFPDrawer.entityAvatarHtml({ entityImagePath: 'https://evil.example/x.png' }),
+  avatarTraversal: SFPDrawer.entityAvatarHtml({ entityImagePath: '../x.png' }),
   lowRelevance: SFPDrawer.drawerCheckOutcomes({ checks: [], relevance: { score: 3 } }).relevance_gate
 }));
 """
@@ -172,6 +176,16 @@ class TestDrawerChecks(unittest.TestCase):
         self.assertEqual(self.out["noRelevance"]["outcomes"]["relevance_gate"]["status"], "unrecorded")
         self.assertNotEqual(self.out["noRelevance"]["summary"]["kind"], "pass")
         self.assertEqual(self.out["lowRelevance"]["status"], "fail")
+
+    def test_entity_avatar_renders_same_origin_image_with_credit(self):
+        html = self.out["avatar"]
+        self.assertIn('src="media/entities/mayor-160.webp"', html)
+        self.assertIn("CC BY 4.0", html)
+        self.assertNotIn("<b>", html)  # credit is escaped
+
+    def test_entity_avatar_absent_or_unsafe_path_renders_nothing(self):
+        for key in ("avatarNone", "avatarRemote", "avatarTraversal"):
+            self.assertEqual(self.out[key], "", key)
 
     def test_drawer_has_no_default_relevance_or_pass_assumption(self):
         src = APP_JS.read_text()

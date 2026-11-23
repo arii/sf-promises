@@ -7588,6 +7588,36 @@ a:hover {
   gap: 8px;
 }
 
+.entity-card-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.entity-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+  max-width: 72px;
+}
+
+.entity-avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.entity-avatar-credit {
+  font-size: 0.6rem;
+  line-height: 1.2;
+  color: var(--muted);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
 .entity-card-name {
   margin: 0 0 2px;
   font-size: 0.96rem;

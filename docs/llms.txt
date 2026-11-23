@@ -1,0 +1,23 @@
+# SF Promises
+
+> Sourced civic accountability ledger tracking 54 San Francisco public commitments across City Hall, SFO Airport, transit, housing, environment, and local institutions against saved, SHA-256 hashed primary documents.
+
+- Live Explorer: https://arii.github.io/sf-promises/
+- Deep-link Search URL: https://arii.github.io/sf-promises/?q={search_term}
+- Canonical JSON Dataset: https://arii.github.io/sf-promises/data.json
+- Hugging Face Multi-Config Dataset: https://huggingface.co/datasets/onasafari/sf-promises
+- Source Code & Pipeline: https://github.com/arii/sf-promises
+
+## Current Dataset Summary (v2.1.0)
+- **Total Published Commitments**: 54 (`25 Kept`, `10 In Progress`, `17 Broken`, `2 Undecided`)
+- **Quarantine Registry**: 13 blocked records (`12` planted mutation tests, `1` rejected candidate)
+- **Outcome-Blind Intake Register**: 63 candidates across 10 SF pillars and 11 supervisor districts (`24 qualified`, `38 needs_review`, `1 rejected`)
+- **Verification Transparency**: `47 / 54` commitments pass all deterministic checks; `7` commitments (`P82`, `P83`, `P17`, `P61`, `P37`, `P57`, `P58`) remain published with explicit exception flags (`22` failed/unrecorded checks).
+- **Evidence Model**: `124` SQLite evidence rows = `99` verdict-cited claims + `11` background context + `8` intake screening + `6` duplicate/superseded records.
+- **Geographic Precision**: `12` exact street-address pins (`is_centroid=false`) vs. `42` display centroids (`is_centroid=true`).
+
+## Key Direct Anchors
+- Top Featured Stories: https://arii.github.io/sf-promises/#stories
+- Filterable Commitments & Map/Entities/Audit Views: https://arii.github.io/sf-promises/#explore
+- Interactive 6-Stage Verification Walkthrough: https://arii.github.io/sf-promises/#watch
+- Architecture & Methodology Limits: https://arii.github.io/sf-promises/#how-it-works

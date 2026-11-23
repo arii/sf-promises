@@ -1,0 +1,27 @@
+{
+  "name": "SF Promises \u2014 San Francisco Public Commitments",
+  "short_name": "SF Promises",
+  "description": "A sourced civic accountability record of 54 public commitments across San Francisco City Hall, SFO Airport, transit, housing, and sports.",
+  "start_url": "/sf-promises/",
+  "scope": "/sf-promises/",
+  "display": "standalone",
+  "theme_color": "#0f1a26",
+  "background_color": "#0f1a26",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
