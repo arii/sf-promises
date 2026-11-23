@@ -130,6 +130,21 @@ def build_snapshot(conn, *, source_root, as_of):
                 )
                 if item["quote_verified"] != 1 or failures:
                     raise ValueError(f"Unverified evidence for {pid}")
+            basis = [
+                row for row in _rows(
+                    conn, "SELECT * FROM verifications WHERE promise_id = ? "
+                    "AND check_type = 'promise_date_basis' ORDER BY verification_id", (pid,),
+                )
+                if _utc_datetime(row["checked_at"]) <= as_of
+            ]
+            if basis:
+                try:
+                    detail = json.loads(basis[-1]["reason"])
+                    promise["promise_date_basis"] = detail["basis"]
+                    promise["promise_date_derived"] = detail["basis"] != "stated"
+                    promise["promise_date_note"] = detail["note"]
+                except (TypeError, KeyError, ValueError):
+                    raise ValueError(f"Invalid promise date basis for {pid}") from None
             promise.update({
                 "verdict": verdict["verdict"],
                 "verdict_reason": verdict["reason"],

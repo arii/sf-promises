@@ -80,6 +80,65 @@ Any one failure quarantines the candidate. There is no partial or
   cities (DC, Jersey Village, TX) for short quotes. This is fixed by
   URL-slug keywords, but retrieval quality is still unmeasured.
 
+## Result of experiment 1: recall baseline (2026-11-23)
+
+**H1 is confirmed.** The v2 audit rejected **all 48** runnable canonical leads,
+which are promises the site already publishes. It ran in 4 shards under
+`/mnt/archil/workspace/v2-baseline/shard-{0..3}/`. The other 14 of the 62 leads
+(P13–P41 etc.) have no day-precision `promised_date`, so discovery cannot run
+them at all.
+
+| Final reason | Count |
+| --- | --- |
+| `INVALID_PROMISE_DATE_LATER_THAN_SOURCE` | 26 |
+| `NO_VERIFIABLE_ORIGIN` | 9 |
+| `NO_VERIFIABLE_DEADLINE` | 6 |
+| `INVALID_SOURCE_PUBLICATION_DATE` | 5 |
+| `INSUFFICIENT_OUTCOME_EVIDENCE` | 1 |
+| `INVALID_ORIGIN_EVIDENCE` | 1 |
+
+According to the lane workers' per-promise notes, the dominant cause is the
+promise date. The matching sentence was found, but the source states the
+date only relatively ("on Tuesday", "today", "last year") or not at all. The
+rules forbid using the source's publication date, so every retry returns
+null. Many `NO_VERIFIABLE_ORIGIN` and `INVALID_SOURCE_PUBLICATION_DATE`
+results end the same way after the retry.
+
+Secondary causes:
+- Commitments with no deadline (S1, S2, P81) fail `NO_VERIFIABLE_DEADLINE`.
+- Future deadlines fail at outcome (P40).
+- Off-topic origin sources are retrieved (KQED, civil-rights slide decks).
+- Fragment segments.
+- Some leads restate past events rather than commitments (P04, P29).
+
+**Fix order:** H4 first (date resolution), then H3 (in progress for future
+deadlines), then target quality for leads.
+
+## Result of experiment 4a: date resolution on (2026-11-23)
+
+The same 48 leads were rerun with `SF_PROMISES_DATE_RESOLUTION=1` in
+`/mnt/archil/workspace/v2-baseline-dates/shard-{0..3}/`. Still **0 published**,
+but the date failures fell from 26 to 3. The candidates now pass origin
+and fail at the next gates:
+
+| Final reason | Flag off | Flag on |
+| --- | --- | --- |
+| `INVALID_PROMISE_DATE_LATER_THAN_SOURCE` | 26 | 3 |
+| `NO_VERIFIABLE_DEADLINE` | 6 | **24** |
+| `INSUFFICIENT_OUTCOME_EVIDENCE` | 1 | **10** |
+| `NO_VERIFIABLE_ORIGIN` | 9 | 5 |
+| `INVALID_SOURCE_PUBLICATION_DATE` | 5 | 5 |
+| `INVALID_ORIGIN_EVIDENCE` | 1 | 1 |
+
+Next blockers:
+1. **Deadline.** Many published records are commitments with no stated
+   deadline, or a dated one-off event (an opening day, a sell-out, a pledge,
+   "starting today"). v2 requires a deadline before it looks at outcomes.
+2. **Outcome evidence.** Outcome sources are often unrelated (another city,
+   another program). Both a delivery and a survival sentence are required.
+   This is a retrieval problem as much as a rule problem. The Keenable
+   features in the next section apply here.
+
 ## Hypotheses to test
 
 - **H1. The audit is stricter than the standard that produced the published
@@ -96,6 +155,21 @@ Any one failure quarantines the candidate. There is no partial or
   commitment sentence is in the page's own body, such as a press release or
   news article with a dateline or a `published_at`. The current rule
   rejects this.
+
+  **Date resolution (flag).** Implemented in `src/date_resolution.py`, off by
+  default; set `SF_PROMISES_DATE_RESOLUTION=1` to enable. When the model
+  returns a null `promised_date` and the source has a valid publication date,
+  the date is filled in this order: **stated** (an explicit full date in the
+  quote sentence, the two sentences before it, or a dateline in the first five
+  sentences), then **relative** ("today", "yesterday", "on Tuesday", "last
+  Tuesday", resolved against the publication date), then **publication** (the
+  publication date itself, an upper bound). A date is never later than the
+  publication date. Vague phrases such as "last year" or "recently" are not
+  resolved to a day. Derived dates are labelled to the verifiers and in the
+  export (`promise_date_basis`). The quote must still be verbatim and both
+  verifiers must still accept the date. The basis is stored as a
+  `promise_date_basis` row in `verifications`. Not yet measured: rerun
+  experiment 1 with the flag on.
 - **H5. Better segmenting** (keep whole sentences; drop headings and
   fragments as outcome candidates) removes most `AMBIGUOUS_EVIDENCE` and
   `INSUFFICIENT_OUTCOME_EVIDENCE` results that are caused by fragments.

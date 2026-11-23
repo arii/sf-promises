@@ -22,6 +22,14 @@ for lane progress and acceptance checks.
 - Extract the commitment verbatim, attributing its speaker and date from the
   source. Record a deadline or page number when supported; do not invent them.
   Dates inferred from explicit durations must be identified as derived.
+  Date resolution is off unless `SF_PROMISES_DATE_RESOLUTION=1`. When on and
+  the model returns no commitment date, the date is taken in this order:
+  stated (an explicit full date near the quote or in a dateline), then relative
+  ("today", "yesterday", "on Tuesday", "last Tuesday", resolved against the
+  source publication date), then the publication date itself. It is never
+  later than the publication date. Relative and publication dates are labelled
+  derived (`promise_date_basis`) and must not be shown as explicitly stated.
+  The verbatim quote and both verifiers are still required.
 - Apply the deterministic relevance gate once: a candidate needs a total score
   of at least 5/8 **and** `real_promise >= 1`. Quarantine failures; do not
   count them as published promises.
