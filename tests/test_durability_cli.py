@@ -141,7 +141,10 @@ def test_durability_cycle_dry_run_writes_nothing(live_db):
 
     conn = sqlite3.connect(live_db)
     assert conn.execute("SELECT COUNT(*) FROM verdicts").fetchone()[0] == 1
-    assert conn.execute("SELECT COUNT(*) FROM change_log").fetchone()[0] == 0
+    # A preview must not even create the change_log table.
+    assert conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE name='change_log'"
+    ).fetchone() is None
     assert conn.execute(
         "SELECT COUNT(*) FROM verifications WHERE check_type='durability_recheck'"
     ).fetchone()[0] == 0
@@ -236,3 +239,42 @@ def test_cli_dry_run_requires_durability_cycle():
     )
     assert result.returncode == 2
     assert "--dry-run requires --durability-cycle" in result.stderr
+
+
+def _fingerprint(database):
+    conn = sqlite3.connect(database)
+    try:
+        return (
+            conn.execute("PRAGMA journal_mode").fetchone()[0],
+            sorted(conn.execute("SELECT name, sql FROM sqlite_master").fetchall()),
+        )
+    finally:
+        conn.close()
+
+
+def test_durability_dry_run_leaves_populated_database_untouched(live_db):
+    before_bytes = Path(live_db).read_bytes()
+    before = _fingerprint(live_db)
+
+    result = durability_cycle(
+        live_db, completion=FakeCompletion("SHUTTERED_OR_CLOSED"), dry_run=True
+    )
+
+    assert result["transitions"][0]["new_status"] == "KEPT_THEN_REVERSED"
+    assert _fingerprint(live_db) == before
+    assert "change_log" not in {name for name, _ in before[1]}
+    assert Path(live_db).read_bytes() == before_bytes
+
+
+def test_durability_dry_run_leaves_empty_database_untouched(tmp_path):
+    database = initialize_database(tmp_path / "empty.db")
+    before_bytes = Path(database).read_bytes()
+    before = _fingerprint(database)
+
+    result = durability_cycle(database, dry_run=True, evaluator_fn=lambda p, v: (v, "n/a"))
+
+    assert result["total_due_checked"] == 0
+    assert result["status_changes_count"] == 0
+    assert _fingerprint(database) == before
+    assert Path(database).read_bytes() == before_bytes
+    assert not Path(str(database) + "-wal").exists()
