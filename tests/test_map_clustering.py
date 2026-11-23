@@ -2,7 +2,8 @@
 
 Runs the pure block of docs/app.js (SFPMAP_PURE_START .. SFPMAP_PURE_END) in node,
 with a minimal fake DOM for the interaction functions. No new npm dependencies.
-The map stays the self-hosted SVG (no third-party tiles, per issue #82).
+The SVG map stays as the keyboard-accessible "Simple map"; the optional street
+basemap is self-hosted (tests/test_street_basemap.py), so no third-party tiles (#82).
 """
 import json
 import subprocess
@@ -195,6 +196,10 @@ def test_dead_state_removed_and_single_tap_does_not_fill_card():
 
 
 def test_map_stays_self_hosted_no_third_party_tiles():
-    html = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
-    for token in ("maplibre", "openstreetmap", "tile.", "leaflet", "mapbox"):
-        assert token not in (APP + html).lower(), token
+    # The street basemap (#44) is lazy-loaded from docs/map/; index.html never
+    # references a map library, and app.js links OpenStreetMap only for attribution.
+    html = (ROOT / "docs" / "index.html").read_text(encoding="utf-8").lower()
+    for token in ("maplibre", "pmtiles", "openstreetmap", "tile.", "leaflet", "mapbox"):
+        assert token not in html, token
+    for token in ("leaflet", "mapbox", "tile.openstreetmap", "://tiles.", "api.protomaps"):
+        assert token not in APP.lower(), token
