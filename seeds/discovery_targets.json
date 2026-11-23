@@ -1,0 +1,470 @@
+{
+  "generated_from": "data/intake_candidate_register.json",
+  "register_sha256": "96d7caadfb66b6d7f0bfd3cbfbbe9bd644dcdc4835c18e1020b397f4c3147aa9",
+  "leads": [
+    {
+      "promise_id": "SEISMIC-01",
+      "promise_text": "All wood-frame residential buildings of three or more stories containing five or more dwelling units with a soft-story condition must complete mandatory seismic retrofits across Tiers 1 through 4 by September 15, 2021.",
+      "entity": "SF Dept of Building Inspection (SF DBI)",
+      "promised_date": "2013-04-18",
+      "due_date": "2021-09-15",
+      "source_id": null,
+      "source_url": "https://sf.gov/mandatory-soft-story-program",
+      "keywords": "San Francisco mandatory soft story program"
+    },
+    {
+      "promise_id": "SEISMIC-02",
+      "promise_text": "The Embarcadero Seawall Program will invest $425 million under Proposition A to begin initial seismic and flood resilience retrofits along the 3-mile historic seawall by 2024.",
+      "entity": "Port of San Francisco",
+      "promised_date": "2018-11-06",
+      "due_date": "2024-12-31",
+      "source_id": null,
+      "source_url": "https://sfport.com/seawall",
+      "keywords": "San Francisco seawall Embarcadero Program invest million Proposition"
+    },
+    {
+      "promise_id": "CLIMATE-01",
+      "promise_text": "Beginning June 1, 2021, all new residential and commercial building construction permit applications in San Francisco must be all-electric, prohibiting natural gas piping.",
+      "entity": "City and County of San Francisco",
+      "promised_date": "2020-11-10",
+      "due_date": "2021-06-01",
+      "source_id": null,
+      "source_url": "https://sfenvironment.org/policy/all-electric-new-construction",
+      "keywords": "San Francisco policy all electric construction"
+    },
+    {
+      "promise_id": "CLIMATE-02",
+      "promise_text": "Construct a 3,000-foot buried low-profile seawall south of Sloat Boulevard and permanently close and re-route the Great Highway away from eroding coastal bluffs by 2025.",
+      "entity": "SFPUC & SF Public Works",
+      "promised_date": "2021-03-15",
+      "due_date": "2025-12-31",
+      "source_id": null,
+      "source_url": "https://sfpuc.org/ocean-beach-project",
+      "keywords": "San Francisco ocean beach project"
+    },
+    {
+      "promise_id": "LEADER-01",
+      "promise_text": "Salesforce and the Benioffs commit $100 million in annual $10M+ grants to San Francisco public middle schools and high schools to fund computer science, teacher stipends, and STEM education.",
+      "entity": "Marc Benioff",
+      "promised_date": "2013-09-10",
+      "due_date": "2023-09-01",
+      "source_id": null,
+      "source_url": "https://www.salesforce.com/news/press-releases/2021/09/21/salesforce-education-grants-2021/",
+      "keywords": "San Francisco salesforce education grants"
+    },
+    {
+      "promise_id": "LEADER-02",
+      "promise_text": "Cruise will operate a commercial, 24/7 driverless robotaxi service carrying paying passengers across all 47 square miles of San Francisco by the end of 2023.",
+      "entity": "Kyle Vogt",
+      "promised_date": "2023-01-25",
+      "due_date": "2023-12-31",
+      "source_id": null,
+      "source_url": "https://sfchronicle.com/tech/article/cruise-robotaxi-sf-expansion-17793740.php",
+      "keywords": "San Francisco tech cruise robotaxi expansion"
+    },
+    {
+      "promise_id": "LEADER-03",
+      "promise_text": "Under the Mid-Market Community Benefits Agreement, Square commits to local hiring preferences, direct vendor procurement from Tenderloin businesses, and $500,000 in annual grants to Mid-Market nonprofits.",
+      "entity": "Jack Dorsey",
+      "promised_date": "2012-09-18",
+      "due_date": "2019-12-31",
+      "source_id": null,
+      "source_url": "https://sfgov.org/cityadministrator/cba-annual-reports",
+      "keywords": "San Francisco cityadministrator cba annual reports"
+    },
+    {
+      "promise_id": "RETAIL-01",
+      "promise_text": "The Union Square Alliance will re-open Stockton Street as a pedestrianized Winter Walk holiday plaza in December 2023 and maintain dedicated 24/7 hospitality and safety ambassadors.",
+      "entity": "Union Square Alliance",
+      "promised_date": "2023-10-12",
+      "due_date": "2023-12-15",
+      "source_id": null,
+      "source_url": "https://unionsquarealliance.com/winter-walk-2023",
+      "keywords": "San Francisco winter walk Union Square Alliance re-open"
+    },
+    {
+      "promise_id": "RETAIL-02",
+      "promise_text": "Westfield will anchor and operate the 1.5 million-square-foot San Francisco Centre mall under its 50-year lease agreement through 2056.",
+      "entity": "Westfield / Unibail-Rodamco-Westfield",
+      "promised_date": "2006-09-28",
+      "due_date": "2056-09-28",
+      "source_id": null,
+      "source_url": "https://sfchronicle.com/sf/article/westfield-mall-sf-give-up-18147614.php",
+      "keywords": "San Francisco westfield mall give"
+    },
+    {
+      "promise_id": "BIKE-01",
+      "promise_text": "San Francisco commits to constructing at least 20 miles of physically protected bike lanes across the city transit network within two years.",
+      "entity": "San Francisco Bicycle Coalition & SFMTA",
+      "promised_date": "2019-05-20",
+      "due_date": "2021-12-31",
+      "source_id": null,
+      "source_url": "https://sfbike.org/news/20-miles-protected-bike-lanes-milestone/",
+      "keywords": "San Francisco miles protected bike lanes milestone"
+    },
+    {
+      "promise_id": "BIKE-02",
+      "promise_text": "SFMTA will evaluate a 12-month pilot of a center-running protected bike lane on Valencia Street between 15th and 23rd Streets to assess cyclist volume and business impacts.",
+      "entity": "SFMTA",
+      "promised_date": "2023-04-15",
+      "due_date": "2024-06-30",
+      "source_id": null,
+      "source_url": "https://sfmta.com/projects/valencia-bikeway-improvements",
+      "keywords": "San Francisco projects valencia bikeway improvements"
+    },
+    {
+      "promise_id": "ARTS-01",
+      "promise_text": "Another Planet Entertainment commits to hosting free annual downtown concerts in Civic Center Plaza and Union Square as part of our extended Golden Gate Park post-Outside Lands licensing agreement.",
+      "entity": "Another Planet Entertainment",
+      "promised_date": "2023-09-12",
+      "due_date": "2024-08-31",
+      "source_id": null,
+      "source_url": "https://sf.gov/news/mayor-breed-announces-historic-downtown-free-concerts",
+      "keywords": "San Francisco breed historic downtown free concerts"
+    },
+    {
+      "promise_id": "ARTS-02",
+      "promise_text": "Another Planet Entertainment will invest $15 million to seismically retrofit and restore the historic 1922 Castro Theatre, preserving the organ, ceiling, and proscenium, reopening for its centennial in 2025.",
+      "entity": "Another Planet Entertainment",
+      "promised_date": "2022-01-19",
+      "due_date": "2025-12-31",
+      "source_id": null,
+      "source_url": "https://sfchronicle.com/entertainment/article/castro-theatre-restoration-plans-ape-17088921.php",
+      "keywords": "San Francisco entertainment castro theatre restoration plans ape"
+    },
+    {
+      "promise_id": "ARTS-03",
+      "promise_text": "The Stern Grove Festival will complete $20 million in flood repairs to the concert meadow and maintain admission 100% free to all San Franciscans for the summer concert season.",
+      "entity": "Stern Grove Festival Association",
+      "promised_date": "2021-10-05",
+      "due_date": "2022-06-12",
+      "source_id": null,
+      "source_url": "https://sfchronicle.com/culture/article/stern-grove-festival-free-summer-concerts-17188203.php",
+      "keywords": "San Francisco culture stern grove festival free summer"
+    },
+    {
+      "promise_id": "TECH-01",
+      "promise_text": "Google will provide $600,000 in funding and network equipment to deliver free high-speed public Wi-Fi along the entire 3-mile stretch of Market Street from Castro to the Embarcadero.",
+      "entity": "City of San Francisco & Google",
+      "promised_date": "2013-10-01",
+      "due_date": "2014-06-30",
+      "source_id": null,
+      "source_url": "https://sfgov.org/news/mayor-lee-announces-free-public-wifi-market-street",
+      "keywords": "San Francisco lee free public wifi market street"
+    },
+    {
+      "promise_id": "DISC-20261112-001",
+      "promise_text": "Under the approved legislation, the San Francisco Municipal Transportation Authority (SFMTA) will procure design, construction, operation, maintenance, and related services through one, best-value selected contractor for the implementation ",
+      "entity": "Mayor's Office",
+      "promised_date": "2024-04-02",
+      "due_date": null,
+      "source_id": null,
+      "source_url": "https://sf.gov/news/mayor-breeds-legislation-streamline-deployment-automated-speed-enforcement-cameras-approved",
+      "keywords": "San Francisco breeds legislation streamline deployment automated speed"
+    },
+    {
+      "promise_id": "DISC-20261112-002",
+      "promise_text": "**San Francisco, CA** – Today Mayor London N. Breed released proposed public safety investments in her upcoming two-year budget for Fiscal Years 2024-2025 and 2025-2026. Mayor Breed’s budget will invest in building on the\n\nThis budget funds",
+      "entity": "Mayor's Office",
+      "promised_date": "2024-05-30",
+      "due_date": null,
+      "source_id": null,
+      "source_url": "https://sf.gov/news/mayor-london-breed-proposes-budget-expands-public-safety-investments",
+      "keywords": "San Francisco london breed proposes budget expands public"
+    },
+    {
+      "promise_id": "DISC-20261112-005",
+      "promise_text": "All entities that provide electric power to end-use consumers in the state are required to comply\nwith the California Renewable Portfolio Standard (RPS). The RPS establishes the minimum amount\nof renewable generation a load serving entity m",
+      "entity": "SFPUC",
+      "promised_date": "2022-01-20",
+      "due_date": null,
+      "source_id": null,
+      "source_url": "https://cleanpowersf.org/s/CleanPowerSFBusinessPracticePolicies_14July2020_260316.pdf",
+      "keywords": "San Francisco CleanPowerSFBusinessPracticePolicies 14July2020 entities provide electric power"
+    },
+    {
+      "promise_id": "DISC-20261112-006",
+      "promise_text": "**SAN FRANCISCO** – For the first time in its history, [CleanPowerSF](https://urldefense.com/v3/__https:/t.e2ma.net/click/zxergg/jpdgbvie/fm00ip__;!!NCYPjq8!4L3qSBAHlGQCwQv5MiL4AFpWksTNUAyVutywcD8gUSni355kqNocFeQlzR0Fmz8xOOKFo7DWgOrb3n6M5Ph",
+      "entity": "SFPUC",
+      "promised_date": "2025-02-07",
+      "due_date": null,
+      "source_id": null,
+      "source_url": "https://cleanpowersf.org/news/cleanpowersf-provides-100-renewable-electricity-to-san-francisco-customers-two-years-early",
+      "keywords": "San Francisco cleanpowersf provides renewable electricity customers two"
+    },
+    {
+      "promise_id": "DISC-20261112-007",
+      "promise_text": "During his first month in office, Mayor Daniel Lurie achieved something remarkable: He received [near-unanimous approval](https://missionlocal.org/2025/02/mayor-luries-fentanyl-ordinance-passes-s-f-board-of-supervisors/) from San Francisco’",
+      "entity": "Daniel Lurie",
+      "promised_date": "2025-04-15",
+      "due_date": null,
+      "source_id": null,
+      "source_url": "https://missionlocal.org/2025/04/how-mayor-daniel-lurie-made-it-morning-again-in-san-francisco",
+      "keywords": "San Francisco how daniel lurie made morning again"
+    },
+    {
+      "promise_id": "DISC-20261112-010",
+      "promise_text": "System Expansion Targets: Shelter\nShelter Beds\nBetween July 2023 and June 2028,\nthe goal is to add 1,075 new\nshelter beds.\nIn FY 2023-24, HSH added\n498 new shelter beds\n11\n\nHome by the Bay: Year 1 Progress Report\nHomelessness Oversight Comm",
+      "entity": "Housing & Homelessness",
+      "promised_date": "2024-10-16",
+      "due_date": null,
+      "source_id": null,
+      "source_url": "https://sf.gov/documents/33166/Home_by_the_Bay_-_Year_1_Progress__Presentation.pdf",
+      "keywords": "San Francisco Home Bay Year Progress Presentation"
+    },
+    {
+      "promise_id": "DISC-20261122-001",
+      "promise_text": "Project \ncompletion is anticipated in 2028.",
+      "entity": "SFPUC",
+      "promised_date": "2025-06-12",
+      "due_date": "2028-12-31",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/SSIP_%20FASIP_factsheet_2025-06-_v21_DH.pdf",
+      "keywords": "San Francisco SSIP FASIP factsheet v21"
+    },
+    {
+      "promise_id": "DISC-20261122-002",
+      "promise_text": "Pending SFPUC \nCommission approvals, construction is anticipated to start in Summer \n2026 with an expected duration of 4 years.",
+      "entity": "SFPUC",
+      "promised_date": "2025-10-16",
+      "due_date": "2026-09-30",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/SSIP_LowerAlemanyArea_FactSheet_2025-10-16_v20_DH.pdf",
+      "keywords": "San Francisco SSIP LowerAlemanyArea FactSheet v20"
+    },
+    {
+      "promise_id": "DISC-20261122-003",
+      "promise_text": "Design is expected to begin in 2026, with construction planned to start in March 2028.",
+      "entity": "SFPUC",
+      "promised_date": "2026-09-25",
+      "due_date": "2028-03-31",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/about-us/news/epa-awards-sfpuc-5-million-san-francisco-stormwater-projects",
+      "keywords": "San Francisco epa awards sfpuc million stormwater projects"
+    },
+    {
+      "promise_id": "DISC-20261122-004",
+      "promise_text": "San Francisco has a long term goal of capturing 1 billion gallons of stormwater each year by 2050 and is on track to meet that target.",
+      "entity": "SFPUC",
+      "promised_date": "2026-09-25",
+      "due_date": "2050-12-31",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/about-us/news/epa-awards-sfpuc-5-million-san-francisco-stormwater-projects",
+      "keywords": "San Francisco epa awards sfpuc million stormwater projects"
+    },
+    {
+      "promise_id": "DISC-20261122-005",
+      "promise_text": "Both Seacliff 1 & 2 pump station facilities are approaching completed construction status, with both locations anticipated to be finished with the sewer upgrades in the area in late 2026.",
+      "entity": "SFPUC",
+      "promised_date": "2026-09-10",
+      "due_date": "2026-12-31",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/about-us/news/pumped-upgrades-sea-cliff-sewer-improvements",
+      "keywords": "San Francisco pumped upgrades sea cliff sewer improvements"
+    },
+    {
+      "promise_id": "DISC-20261122-007",
+      "promise_text": "Starting January 30, 2027, riders will see changes across the system: more frequent service on busy routes, easier rides downtown, more room on crowded trips, and more reliable schedules.",
+      "entity": "SFMTA",
+      "promised_date": "2026-11-16",
+      "due_date": "2027-01-30",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-celebrates-expansion-of-muni-service-following-success-of-transit-funding-measures",
+      "keywords": "San Francisco lurie expansion muni service following success"
+    },
+    {
+      "promise_id": "DISC-20261122-008",
+      "promise_text": "Mercy Housing is leading development of the six-story, 68,000-square-foot building at Trade Winds Avenue and Macky Road, which is expected to be completed in late 2028.",
+      "entity": "SF Mayor's Office (SF Department of Public Health)",
+      "promised_date": "2026-11-12",
+      "due_date": "2028-12-31",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-300-treatment-and-transitional-housing-beds-to-support-people-in-recovery",
+      "keywords": "San Francisco lurie breaks ground treatment transitional housing"
+    },
+    {
+      "promise_id": "DISC-20261122-009",
+      "promise_text": "The project is expected to break ground in late 2026 and be completed in 2028.",
+      "entity": "SF Mayor's Office and SF Recreation and Park Department",
+      "promised_date": "2026-11-09",
+      "due_date": "2028-12-31",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-announces-100-million-gift-to-san-francisco-parks-from-brian-chesky-largest-ever-single-donor-gift-to-city",
+      "keywords": "San Francisco lurie million gift parks brian chesky"
+    },
+    {
+      "promise_id": "DISC-20261122-010",
+      "promise_text": "Construction is expected to begin in late 2027, with the renovated park opening in 2029.",
+      "entity": "SF Mayor's Office and SF Recreation and Park Department",
+      "promised_date": "2026-11-09",
+      "due_date": "2029-12-31",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-announces-100-million-gift-to-san-francisco-parks-from-brian-chesky-largest-ever-single-donor-gift-to-city",
+      "keywords": "San Francisco lurie million gift parks brian chesky"
+    },
+    {
+      "promise_id": "DISC-20261122-011",
+      "promise_text": "Artwork is scheduled for installation in spring 2027 with full project completion that summer.",
+      "entity": "San Francisco Arts Commission",
+      "promised_date": "2026-08-05",
+      "due_date": "2027-09-30",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-san-francisco-arts-commission-approves-final-designs-for-new-art-corridor-on-minna-and-natoma-streets",
+      "keywords": "San Francisco arts commission approves final designs art"
+    },
+    {
+      "promise_id": "DISC-20261122-012",
+      "promise_text": "Groundbreaking on the senior homes is anticipated in the first half of 2027, with the new co-op to follow.",
+      "entity": "SF Mayor's Office",
+      "promised_date": "2026-10-20",
+      "due_date": "2027-06-30",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-moves-to-bring-nearly-2400-new-homes-to-western-addition-following-years-of-community-advocacy",
+      "keywords": "San Francisco lurie moves bring nearly homes western"
+    },
+    {
+      "promise_id": "DISC-20261122-013",
+      "promise_text": "Construction is slated to begin in early 2027.",
+      "entity": "Mayor's Office",
+      "promised_date": "2026-11-10",
+      "due_date": "2027-03-31",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-celebrates-state-funding-to-deliver-more-than-60-affordable-homes-for-veterans-in-san-francisco",
+      "keywords": "San Francisco lurie state funding deliver affordable homes"
+    },
+    {
+      "promise_id": "DISC-20261122-014",
+      "promise_text": "Construction is anticipated to start by fall 2026, with substantial completion expected in 2027.",
+      "entity": "Mayor's Office",
+      "promised_date": "2026-06-10",
+      "due_date": "2027-12-31",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-signs-legislation-advancing-145-million-grant-for-powell-street-renovation-to-accelerate-san-franciscos-economic-comeback",
+      "keywords": "San Francisco lurie signs legislation advancing million grant"
+    },
+    {
+      "promise_id": "DISC-20261122-016",
+      "promise_text": "The city's housing lottery for Artists Hub on Market is anticipated to launch in early 2027",
+      "entity": "Mayor's Office",
+      "promised_date": "2026-07-28",
+      "due_date": "2027-03-31",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
+      "keywords": "San Francisco lurie breaks ground affordable artist housing"
+    },
+    {
+      "promise_id": "DISC-20261122-017",
+      "promise_text": "The new school is scheduled to open in Fall 2027 at the temporary location before growing into a full TK–8 program.",
+      "entity": "San Francisco Unified School District",
+      "promised_date": "2026-09-24",
+      "due_date": "2027-12-31",
+      "source_id": null,
+      "source_url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-09-24-sfusd-selects-launch-site-new-mandarin-immersion-tk-8-school",
+      "keywords": "San Francisco sfusd selects launch site mandarin immersion"
+    },
+    {
+      "promise_id": "DISC-20261122-018",
+      "promise_text": "SFUSD expects to announce the permanent location in January 2027",
+      "entity": "San Francisco Unified School District",
+      "promised_date": "2026-09-24",
+      "due_date": "2027-01-31",
+      "source_id": null,
+      "source_url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-09-24-sfusd-selects-launch-site-new-mandarin-immersion-tk-8-school",
+      "keywords": "San Francisco sfusd selects launch site mandarin immersion"
+    },
+    {
+      "promise_id": "DISC-20261122-019",
+      "promise_text": "Between now and May 2029, the San Francisco Department of Homelessness and Supportive Housing (HSH) will run a competitive process to re-award its full portfolio of homelessness services and housing contracts",
+      "entity": "Department of Homelessness and Supportive Housing",
+      "promised_date": "2026-08-31",
+      "due_date": "2029-05-31",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-launches-sweeping-effort-to-redo-all-city-homelessness-contracts-with-focus-on-outcomes-accountability-for-results",
+      "keywords": "San Francisco lurie sweeping effort redo all city"
+    },
+    {
+      "promise_id": "DISC-20261122-020",
+      "promise_text": "The SFMTA will aim to begin testing the new system on two buses by March of next year.",
+      "entity": "SFMTA",
+      "promised_date": "2026-11-19",
+      "due_date": "2027-03-31",
+      "source_id": null,
+      "source_url": "https://www.sfexaminer.com/news/transit/sfmta-upgrading-system-that-enforces-transit-lane-violations/article_adc4e78b-5aca-4f0c-98b9-1dbf5a10b0a3.html",
+      "keywords": "San Francisco transit sfmta upgrading system enforces lane"
+    },
+    {
+      "promise_id": "DISC-20261122-021",
+      "promise_text": "the Port \nand USACE continue working to complete the Flood Study and a Recommended Plan by end of \n2026",
+      "entity": "Port of San Francisco",
+      "promised_date": "2026-04-08",
+      "due_date": "2026-12-31",
+      "source_id": null,
+      "source_url": "https://media.api.sf.gov/documents/2018_Seawall_Bond_GOBOC_Annual_Report_-_2025_3.pdf",
+      "keywords": "San Francisco Seawall Bond GOBOC Annual Report"
+    },
+    {
+      "promise_id": "DISC-20261122-022",
+      "promise_text": "The barriers are expected to remain in place through April",
+      "entity": "Port of San Francisco",
+      "promised_date": "2026-11-11",
+      "due_date": "2027-04-30",
+      "source_id": null,
+      "source_url": "https://abc7news.com/post/san-francisco-installs-flood-barriers-popular-waterfront-ahead-el-nino-winter-storms/20031520/",
+      "keywords": "San Francisco post installs flood barriers popular waterfront"
+    },
+    {
+      "promise_id": "DISC-20261122-023",
+      "promise_text": "A Notice to Proceed (NTP) is planned for early 2027.",
+      "entity": "SFPUC",
+      "promised_date": "2026-03-26",
+      "due_date": "2027-03-31",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+      "keywords": "San Francisco Lower Alemany Stormwater Improvements Project Bid"
+    },
+    {
+      "promise_id": "DISC-20261122-024",
+      "promise_text": "The new Auxiliary Sewer must be commissioned and operational by February 2031.",
+      "entity": "SFPUC",
+      "promised_date": "2026-03-26",
+      "due_date": "2031-02-28",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+      "keywords": "San Francisco Lower Alemany Stormwater Improvements Project Bid"
+    },
+    {
+      "promise_id": "DISC-20261122-025",
+      "promise_text": "We anticipate construction to start in \nlate 2027.",
+      "entity": "SFPUC",
+      "promised_date": "2025-10-22",
+      "due_date": "2027-12-31",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/Ocean%20Beach%20Climate%20Change%20Adaptation%20Project%20Fact%20Sheet%20October%202025.pdf",
+      "keywords": "San Francisco Ocean Beach Climate Change Adaptation Project"
+    },
+    {
+      "promise_id": "DISC-20261122-026",
+      "promise_text": "Beginning in Fiscal Year 2028–29, a dedicated assessment will generate $2.5 million annually for programming and maintenance at Embarcadero Plaza",
+      "entity": "Mayor's Office",
+      "promised_date": "2026-07-23",
+      "due_date": "2028-07-01",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-signs-legislation-bringing-new-investment-downtown-accelerating-downtowns-comeback",
+      "keywords": "San Francisco lurie signs legislation bringing investment downtown"
+    }
+  ],
+  "skipped": [
+    {
+      "promise_id": "DISC-20261112-003",
+      "reason": "promised_date not day-precision"
+    },
+    {
+      "promise_id": "DISC-20261112-004",
+      "reason": "promised_date not day-precision"
+    },
+    {
+      "promise_id": "DISC-20261112-009",
+      "reason": "promised_date not day-precision"
+    }
+  ]
+}

@@ -50,6 +50,18 @@ URLS = {
 }
 
 
+DEFAULT_QUEUE = Path("seeds/canonical_targets.json")
+
+
+def queue_path():
+    """Lead queue for audits: SF_PROMISES_QUEUE (set by --queue) or the canonical seeds."""
+    return Path(os.environ.get("SF_PROMISES_QUEUE") or DEFAULT_QUEUE)
+
+
+def load_queue():
+    return json.loads(queue_path().read_text(encoding="utf-8"))["leads"]
+
+
 def credentials():
     result = {}
     path = Path(".env")
@@ -305,7 +317,7 @@ async def advocate(complete, role, delivery, survival):
 async def run(database, seed_id):
     if seed_id != "P36":
         raise ValueError("This pilot supports only the checked-in P36 seed")
-    seed = next(item for item in json.loads(Path("seeds/canonical_targets.json").read_text())["leads"]
+    seed = next(item for item in load_queue()
                 if item["promise_id"] == seed_id)
     keys = credentials()
     root = database.parent / "sources"
@@ -473,7 +485,7 @@ async def run(database, seed_id):
 
 
 async def discover_run(database, seed_id, run_id):
-    leads = json.loads(Path("seeds/canonical_targets.json").read_text())["leads"]
+    leads = load_queue()
     matches = [lead for lead in leads if lead["promise_id"] == seed_id]
     if len(matches) != 1:
         raise ValueError("Seed not found or duplicated")
@@ -514,7 +526,7 @@ async def discover_run(database, seed_id, run_id):
 async def extract_pending(database, seed_id, run_id):
     if not run_id:
         raise ValueError("An existing discovery run ID is required")
-    leads = json.loads(Path("seeds/canonical_targets.json").read_text())["leads"]
+    leads = load_queue()
     lead = next((item for item in leads if item["promise_id"] == seed_id), None)
     if lead is None:
         raise ValueError("Seed not found")
@@ -578,7 +590,7 @@ async def extract_pending(database, seed_id, run_id):
 
 async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined=False):
     """Run candidate audits sequentially; provider failures propagate as blocked."""
-    leads = json.loads(Path("seeds/canonical_targets.json").read_text())["leads"]
+    leads = load_queue()
     by_id = {lead["promise_id"]: lead for lead in leads}
     if len(by_id) != len(leads) or any(pid not in by_id for pid in seed_ids):
         raise ValueError("A requested seed is missing or duplicated in the queue")
@@ -678,6 +690,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seed-id")
     parser.add_argument("--db", default=database_path(), type=Path)
+    parser.add_argument("--queue", type=Path,
+                        help="Lead queue JSON with a 'leads' list (default seeds/canonical_targets.json)")
     parser.add_argument("--discover-only", action="store_true")
     parser.add_argument("--extract-pending", action="store_true")
     parser.add_argument("--run-id", help="Resume a discovery run using its thread ID")
@@ -694,6 +708,8 @@ def main():
                              "database (opened read-only). Evaluation may still enqueue model "
                              "requests on the agent lane")
     args = parser.parse_args()
+    if args.queue:
+        os.environ["SF_PROMISES_QUEUE"] = str(args.queue)
     if args.durability_cycle:
         if any((args.seed_id, args.discover_only, args.extract_pending, args.run_id,
                 args.candidate_batch, args.resume, args.retry_quarantined)):
@@ -711,7 +727,7 @@ def main():
             parser.error("Candidate batch cannot be combined with single-seed options")
         if args.candidate_batch == ["all"]:
             ids = [lead["promise_id"] for lead in
-                   json.loads(Path("seeds/canonical_targets.json").read_text())["leads"]]
+                   load_queue()]
         else:
             ids = args.candidate_batch
         resumes = {}
