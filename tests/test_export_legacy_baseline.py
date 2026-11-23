@@ -1,7 +1,9 @@
 import json
+import re
 import sqlite3
 import subprocess
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -89,3 +91,26 @@ def test_export_opt_in_allows_zero_violations(tmp_path):
     _make_history_fixture_db(database)
     (tmp_path / "sources").mkdir()
     assert _load_exporter_module().validate_database(database, allow_existing_fk_violations=True) == "legacy"
+
+
+def test_staged_export_bundles_fonts_referenced_by_css(tmp_path):
+    root = tmp_path / "ws"
+    root.mkdir()
+    database = root / "promises.db"
+    _make_history_fixture_db(database)
+    before = database.read_bytes()
+    output = tmp_path / "export"
+    result = subprocess.run(
+        [sys.executable, "docs/export_data.py", "--db", str(database), "--output-dir", str(output)],
+        capture_output=True, text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    css = (output / "styles.css").read_text()
+    urls = re.findall(r"url\(['\"]?(fonts/[^'\")]+)['\"]?\)", css)
+    assert urls
+    repo_docs = Path(__file__).resolve().parents[1] / "docs"
+    for url in urls:
+        staged = output / url
+        assert staged.is_file(), url
+        assert staged.read_bytes() == (repo_docs / url).read_bytes(), url
+    assert database.read_bytes() == before
