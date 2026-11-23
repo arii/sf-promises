@@ -125,6 +125,15 @@ python3 docs/export_data.py --output-dir "$SF_PROMISES_WORKSPACE/staging/exports
 ```
 
 Intake needs `SECRET_KEENABLE_API_KEY`; discovery needs `KEENABLE_API_KEY`.
+
+### Credentials
+
+Keys live in a git-ignored `.env` at the repository root. `.env.example` lists
+every variable with what reads it; copy it and fill in values. Load it without
+printing secrets: `set -a; source .env; set +a`. Intake reads the Keenable key
+as `SECRET_KEENABLE_API_KEY`, so set both Keenable names to the same value.
+`HF_TOKEN` is used only by `scripts/upload_to_huggingface.py`. The `ARCHIL_*`
+values are historical: current code does not use them.
 Model calls use the agent lane by default; provider credentials remain in the
 coordinator only. Candidate and PDF workers receive only public job inputs and
 an allowlisted environment, with timeout/output bounds, process-group cleanup
