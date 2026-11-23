@@ -96,6 +96,21 @@ Any one failure quarantines the candidate. There is no partial or
   commitment sentence is in the page's own body, such as a press release or
   news article with a dateline or a `published_at`. The current rule
   rejects this.
+
+  **Date resolution (flag).** Implemented in `src/date_resolution.py`, off by
+  default; set `SF_PROMISES_DATE_RESOLUTION=1` to enable. When the model
+  returns a null `promised_date` and the source has a valid publication date,
+  the date is filled in this order: **stated** (an explicit full date in the
+  quote sentence, the two sentences before it, or a dateline in the first five
+  sentences), then **relative** ("today", "yesterday", "on Tuesday", "last
+  Tuesday", resolved against the publication date), then **publication** (the
+  publication date itself, an upper bound). A date is never later than the
+  publication date. Vague phrases such as "last year" or "recently" are not
+  resolved to a day. Derived dates are labelled to the verifiers and in the
+  export (`promise_date_basis`). The quote must still be verbatim and both
+  verifiers must still accept the date. The basis is stored as a
+  `promise_date_basis` row in `verifications`. Not yet measured: rerun
+  experiment 1 with the flag on.
 - **H5. Better segmenting** (keep whole sentences; drop headings and
   fragments as outcome candidates) removes most `AMBIGUOUS_EVIDENCE` and
   `INSUFFICIENT_OUTCOME_EVIDENCE` results that are caused by fragments.

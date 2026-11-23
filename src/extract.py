@@ -8,6 +8,9 @@ import re
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from src.date_resolution import (
+    DateResolution, date_resolution_enabled, resolve_promise_date_detail,
+)
 from src.evidence import is_allowlisted_url
 from src.model import ModelResponseError, free_completion, nebius_completion
 from src.sources import is_verbatim_quote, load_archived_text, snap_quote
@@ -149,10 +152,39 @@ def parse_extraction(*, root, promise_id, path, digest, response, published=None
     return bundle.candidates
 
 
+def _resolve_missing_dates(candidates, segments, published):
+    """Fill null promised_date values; keep model dates, labelled "stated"."""
+    resolutions = []
+    for candidate in candidates:
+        if candidate.promised_date is not None:
+            resolutions.append(DateResolution(candidate.promised_date, "stated"))
+            continue
+        matches = [i for i, segment in enumerate(segments) if segment == candidate.promise_text]
+        if not matches:
+            matches = [i for i, segment in enumerate(segments)
+                       if candidate.promise_text in segment or segment in candidate.promise_text]
+        resolution = resolve_promise_date_detail(
+            segments, matches[0] if matches else None, published,
+        )
+        if resolution is not None:
+            candidate.promised_date = resolution.date
+            if candidate.deadline is None:
+                candidate.deadline = deadline_from_quote(
+                    candidate.promise_text, published=published, promised=resolution.date,
+                )
+        resolutions.append(resolution)
+    return resolutions
+
+
 async def extract_with_model(client, api_key, models, *, root, promise_id,
                              path, digest, source_url, provider="openrouter", target=None,
-                             completion=None, published=None):
-    """Extract from a public archived source; caller must verify URL provenance."""
+                             completion=None, published=None, date_resolutions=None):
+    """Extract from a public archived source; caller must verify URL provenance.
+
+    With SF_PROMISES_DATE_RESOLUTION=1 a null promised_date is filled by the
+    deterministic resolver in src.date_resolution. When `date_resolutions` is a
+    list it receives one DateResolution (or None) per returned candidate.
+    """
     if not is_allowlisted_url(source_url):
         raise ValueError("Source URL is not allowlisted")
     text = load_archived_text(root, promise_id, path, digest)
@@ -265,6 +297,10 @@ async def extract_with_model(client, api_key, models, *, root, promise_id,
             except ModelResponseError:
                 if response_attempt:
                     raise
+        if date_resolution_enabled() and published is not None:
+            resolutions = _resolve_missing_dates(candidates, segments, published)
+            if date_resolutions is not None:
+                date_resolutions[:] = resolutions
         if published is None or all(
             candidate.promised_date is not None and candidate.promised_date <= published
             for candidate in candidates
