@@ -19,8 +19,10 @@ from src.model import ModelResponseError, response_model_id
 from src.quarantine import quarantine_candidate
 from src.relevance import record_relevance
 from src.screening import screen_pending_origin
+from src.sentences import sentence_span
 from src.sources import load_archived_metadata, load_archived_text
 from src.taxonomy import screen_taxonomy
+from src.temporal import deadline_from_quote
 from src.lifecycle_rubric import decide_verdict
 from src.outcome_rules import (
     NOT_CHECKED_NOTE, check_schema_supports_outcome_rules, decide_outcome,
@@ -147,6 +149,38 @@ def _selected(selection, material):
     return source, segments[selection.segment_id]
 
 
+def _widen_quote(text, segment):
+    """The full sentence(s) around a fragment segment, as an exact substring of `text`.
+
+    Returns `segment` unchanged when it already is a complete sentence, when it
+    is not found, or when the sentence is over the cap.
+    """
+    span = sentence_span(text, segment)
+    if span is None:
+        return segment
+    return text[span[0]:span[1]]
+
+
+def _selected_wide(selection, material, root, promise_id):
+    """Like `_selected`, with the segment widened to its full sentence(s)."""
+    picked = _selected(selection, material)
+    if picked is None:
+        return None
+    source, segment = picked
+    text = load_archived_text(root, promise_id, source["path"], source["sha256"])
+    return source, _widen_quote(text, segment)
+
+
+def _selected_args(selection, material, root, promise_id):
+    """Flag-off stand-in with `_selected_wide`'s signature."""
+    return _selected(selection, material)
+
+
+def _flat(text):
+    """Whitespace-collapsed text for prompts; evidence keeps the raw quote."""
+    return " ".join(text.split())
+
+
 def _quarantine(conn, lead, slug, reason):
     quarantine_candidate(
         conn, lead["promise_id"], slug, "candidate", [reason],
@@ -155,6 +189,16 @@ def _quarantine(conn, lead, slug, reason):
     return {"promise_id": lead["promise_id"], "status": "quarantined", "reason": reason}
 
 
+_NOT_STATED_ADVOCATE = (
+    " Use the neighborhood 'Not stated' when the commitment is for a specific site "
+    "or project but the sources name no neighborhood; do not guess one."
+)
+_NOT_STATED_VERIFIER = (
+    " Location: the neighborhood 'Not stated' is correct when the origin source "
+    "names no neighborhood for this project; accept it for entity_and_location "
+    "when the entity is correct and the source indeed names none. Return false "
+    "if the source does name a neighborhood."
+)
 _ORIGIN_NO_INFER = "Do not infer the commitment date from the publication date. "
 _EVIDENCE_NO_INFER = ("promise_date must be explicitly supported by the origin text, not "
                       "inferred from a publication date. ")
@@ -228,6 +272,17 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
             retry_origins.add(origin["sha256"])
         for position, candidate in enumerate(candidates):
             resolution = resolutions[position] if position < len(resolutions) else None
+            if rules_on:
+                whole = _widen_quote(
+                    load_archived_text(root, pid, origin["path"], origin["sha256"]),
+                    candidate.promise_text,
+                )
+                if whole != candidate.promise_text:
+                    candidate.promise_text = whole
+                    if candidate.deadline is None and candidate.promised_date is not None:
+                        candidate.deadline = deadline_from_quote(
+                            whole, published=published, promised=candidate.promised_date,
+                        )
             pending_ids = load_extraction(
                 conn, root=root, promise_id=pid, canonical_slug=slug,
                 source=origin, response=CandidateBundle(candidates=[candidate]).model_dump_json(),
@@ -257,6 +312,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 last_reason = "INVALID_PROMISE_DATE_LATER_THAN_SOURCE"
                 continue
             origin_text = load_archived_text(root, pid, origin["path"], origin["sha256"])
+            shown_promise = _flat(candidate.promise_text) if rules_on else candidate.promise_text
             origin_review, origin_model_id = await _structured(
                 complete, "verify_origin", OriginReview,
                 "You are an independent evidence verifier, not the extractor. "
@@ -270,7 +326,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 "Return false if the duration is anchored to a different event, "
                 "or for any ambiguity.",
                 f"Origin source published {published}:\n{origin_text[:5000]}\n"
-                f"Proposed commitment: {candidate.promise_text}\n"
+                f"Proposed commitment: {shown_promise}\n"
                 + _date_line(candidate, resolution, published),
             )
             if not origin_review.promise_date:
@@ -300,7 +356,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 for i, (source, segments) in enumerate(material)
             )
             prompt = (
-                f"Commitment: {candidate.promise_text}\n"
+                f"Commitment: {shown_promise}\n"
                 f"{_date_line(candidate, resolution, published)}\n"
                 f"As of: {as_of}\nArchived outcome sources:\n{numbered or 'none'}"
             )
@@ -313,14 +369,19 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                     "numbered sources. Select exact source and segment indexes for "
                     "delivery and survival, or null when unsupported. Do not infer "
                     "completion, timeliness, continued operation, or closure. Supply "
-                    "the organization responsible and supported SF classification.",
+                    "the organization responsible and supported SF classification."
+                    + (_NOT_STATED_ADVOCATE if rules_on else ""),
                     prompt,
                 )
                 assessments.append(assessment)
                 advocate_model_ids.append(model_id)
             kept, broken = assessments
-            delivery = _selected(kept.delivery, material)
-            survival = _selected(kept.survival, material)
+            if rules_on:
+                delivery = _selected_wide(kept.delivery, material, root, pid)
+                survival = _selected_wide(kept.survival, material, root, pid)
+            else:
+                delivery = _selected(kept.delivery, material)
+                survival = _selected(kept.survival, material)
             if rules_on:
                 # A state only counts when its own selected sentence supports it.
                 states = [(
@@ -342,7 +403,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
             if screen_taxonomy(
                 entity_name=kept.entity_name, entity_type=kept.entity_type,
                 sector=kept.sector, neighborhood=kept.neighborhood,
-                quote=candidate.promise_text,
+                quote=candidate.promise_text, allow_not_stated=rules_on,
             ):
                 last_reason = "INVALID_TAXONOMY"
                 continue
@@ -374,10 +435,11 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                    "the outcome and its timing; survival must establish the current "
                    "state. When the deadline is 'none stated', the deadline field is "
                    "not used. Reject ambiguity, unstated dates, or mismatched "
-                   "projects. Do not use the discovery target as evidence."),
+                   "projects. Do not use the discovery target as evidence."
+                   + _NOT_STATED_VERIFIER),
                 f"Origin source published {published}:\n{origin_text[:5000]}\n"
                 f"Assessment as of: {as_of}\n"
-                f"Proposed commitment: {candidate.promise_text}\n"
+                f"Proposed commitment: {shown_promise}\n"
                 f"{_date_line(candidate, resolution, published)}\n"
                 f"Classification: {kept.entity_name}, {kept.entity_type}, "
                 f"{kept.sector}, {kept.neighborhood}\n"
@@ -386,7 +448,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                    f"published {_published(survival[0])}: {survival[1]}"
                    if not rules_on else
                    "".join(f"{label} {state}, published {_published(picked[0])}: "
-                           f"{picked[1]}\n" for label, state, picked, phase in (
+                           f"{_flat(picked[1])}\n" for label, state, picked, phase in (
                                ("Delivery", delivery_state, delivery, "DELIVERY"),
                                ("Survival", survival_state, survival, "SURVIVAL"),
                            ) if phase in relied)
@@ -467,8 +529,10 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
             for role, assessment in zip(("kept", "broken"), assessments):
                 selected = []
                 for phase, picked, state in (
-                    ("DELIVERY", _selected(assessment.delivery, material), assessment.initial_delivery),
-                    ("SURVIVAL", _selected(assessment.survival, material), assessment.current_survival),
+                    ("DELIVERY", (_selected_wide if rules_on else _selected_args)(
+                        assessment.delivery, material, root, pid), assessment.initial_delivery),
+                    ("SURVIVAL", (_selected_wide if rules_on else _selected_args)(
+                        assessment.survival, material, root, pid), assessment.current_survival),
                 ):
                     positive = state in ("DELIVERED_ON_TIME", "ACTIVE_OPERATIONAL")
                     if picked and phase in relied and ((role == "kept" and positive) or (role == "broken" and not positive)):

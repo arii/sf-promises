@@ -24,12 +24,18 @@ LOCATIONS = frozenset({
     "Oceanview/Merced/Ingleside", "Outer Mission", "Outer Richmond", "Pacific Heights",
     "Portola", "Potrero Hill", "Presidio Heights", "Russian Hill", "Seacliff",
     "Sunset/Parkside", "Visitacion Valley", "West of Twin Peaks", "Western Addition",
+    # Site-specific project whose source names no neighborhood. Never plotted.
+    "Not stated",
 })
+NOT_STATED = "Not stated"
 
 
 def screen_taxonomy(*, entity_name, entity_type, sector, neighborhood, quote,
-                    has_verified_sf_link=False):
-    """Return failed checks; entity and location still require source review."""
+                    has_verified_sf_link=False, allow_not_stated=False):
+    """Return failed checks; entity and location still require source review.
+
+    "Not stated" is a valid location only with `allow_not_stated`: the
+    candidate audit under SF_PROMISES_OUTCOME_RULES=1 and the site merge."""
     failures = []
     if not isinstance(entity_name, str) or not entity_name.strip():
         failures.append("entity_missing")
@@ -40,6 +46,8 @@ def screen_taxonomy(*, entity_name, entity_type, sector, neighborhood, quote,
     if not isinstance(sector, str) or sector not in SECTORS:
         failures.append("sector_invalid")
     if not isinstance(neighborhood, str) or neighborhood not in LOCATIONS:
+        failures.append("neighborhood_invalid")
+    elif neighborhood == NOT_STATED and not allow_not_stated:
         failures.append("neighborhood_invalid")
     elif neighborhood == "Regional / Northern California" and has_verified_sf_link is not True:
         failures.append("regional_sf_link_unverified")

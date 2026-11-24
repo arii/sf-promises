@@ -496,7 +496,7 @@ def test_display_sentence_missing_or_too_long():
 def test_centroids_cover_every_neighborhood_label():
     from src.geo_centroids import LOCATION_CENTROIDS
     from src.taxonomy import LOCATIONS
-    assert set(LOCATIONS) - set(LOCATION_CENTROIDS) == {"Regional / Northern California"}
+    assert set(LOCATIONS) - set(LOCATION_CENTROIDS) == {"Regional / Northern California", "Not stated"}
     for lat, lon in LOCATION_CENTROIDS.values():
         assert 37.70 <= lat <= 37.83 and -122.52 <= lon <= -122.35
 

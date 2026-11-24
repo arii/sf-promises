@@ -9,6 +9,11 @@ Rule, in priority order, never later than the source publication date:
 3. "publication": nothing better; the publication date is the day the
    commitment was reported, and an upper bound for when it was made.
 
+With SF_PROMISES_OUTCOME_RULES=1 and the saved text, two more places are tried
+before "publication": the paragraph that holds the quote, then the article lede
+(the first paragraph of at least 15 words). Each gives an explicit date
+("stated") or one relative day term such as "voted on Tuesday" ("relative").
+
 Vague phrases ("last year", "recently", "earlier this month", "this week")
 are not resolved to a day. They fall through to "publication".
 Dates are plain `datetime.date` values, so no time zone is involved.
@@ -195,17 +200,65 @@ def _relative(segments, quote_index, published):
     return None
 
 
-def resolve_promise_date_detail(segments, quote_index, published):
-    """Return a DateResolution, or None when published is missing or invalid."""
+_LEDE_WORDS = 15
+
+
+def _wider_scopes_enabled():
+    return os.environ.get("SF_PROMISES_OUTCOME_RULES") == "1"
+
+
+def _paragraphs(text):
+    return [part for part in re.split(r"\n\s*\n", text) if part.strip()]
+
+
+def _in_paragraph(paragraph, published):
+    """One explicit date, else one relative day term, in a paragraph; else None."""
+    explicit = {}
+    for _, value, phrase in _dates_in(paragraph, published):
+        explicit[value] = phrase
+    if len(explicit) == 1:
+        ((value, phrase),) = explicit.items()
+        return DateResolution(value, "stated", phrase)
+    if explicit:
+        return None  # two different dates: ambiguous
+    found = _relative_in(paragraph, published)
+    if len(found) == 1:
+        ((value, phrase),) = found.items()
+        return DateResolution(value, "relative", phrase)
+    return None
+
+
+def _wider(text, quote, published):
+    """Date terms in the quote's paragraph, then in the lede."""
+    paragraphs = _paragraphs(text)
+    containing = next((p for p in paragraphs if quote in p), None)
+    if containing is not None:
+        found = _in_paragraph(containing, published)
+        if found:
+            return found
+    lede = next((p for p in paragraphs if len(p.split()) >= _LEDE_WORDS), None)
+    if lede is not None and lede is not containing:
+        return _in_paragraph(lede, published)
+    return None
+
+
+def resolve_promise_date_detail(segments, quote_index, published, *, text=None, quote=None):
+    """Return a DateResolution, or None when published is missing or invalid.
+
+    `text` and `quote` (the saved source and the quoted passage) enable the
+    paragraph and lede lookup when SF_PROMISES_OUTCOME_RULES=1.
+    """
     if not _is_date(published):
         return None
     if not isinstance(segments, (list, tuple)) or not all(isinstance(s, str) for s in segments):
         segments = []
     if not (quote_index is None or (type(quote_index) is int and 0 <= quote_index < len(segments))):
         quote_index = None
-    result = (_stated(segments, quote_index, published)
-              or _relative(segments, quote_index, published)
-              or DateResolution(published, "publication"))
+    result = _stated(segments, quote_index, published) or _relative(segments, quote_index, published)
+    if (result is None and isinstance(text, str) and isinstance(quote, str) and quote
+            and _wider_scopes_enabled()):
+        result = _wider(text, quote, published)
+    result = result or DateResolution(published, "publication")
     if result.date > published:  # defensive: never after publication
         return None
     return result
