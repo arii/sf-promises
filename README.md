@@ -178,6 +178,15 @@ python3 docs/export_data.py --output-dir "$SF_PROMISES_WORKSPACE/staging/exports
 
 Intake and discovery need `KEENABLE_API_KEY`.
 
+To add promises published by the v2 pipeline to a staged export, pass
+`--v2-db PATH` (repeatable; sources default to `PATH`'s parent `sources/`, or
+give `--v2-sources DIR` once per `--v2-db`). After the legacy export is staged,
+each v2 database is opened read-only and validated, every cited source is
+re-hashed and every quote re-found in the saved text, and failing records are
+reported and never published. Added records carry `pipeline: "v2"`; duplicates
+are skipped; counts and `database_status.v2_merge` say how many came from v2.
+Only the staging directory is written.
+
 ### Credentials
 
 Keys live in a git-ignored `.env` at the repository root. `.env.example` lists
