@@ -2593,10 +2593,26 @@
     return (map && map.get(entityNameKey(name))) || null;
   }
 
+  // One short line for the basis of a v2 verdict decided under the outcome
+  // rules (record.outcome_basis); '' when the record carries none.
+  function outcomeBasisText(p) {
+    const b = p && p.outcome_basis;
+    if (!b || typeof b !== 'object') return '';
+    const parts = [];
+    if (b.open_ended) parts.push('Open-ended commitment');
+    else if (Array.isArray(b.rules) && b.rules.includes('R2')) parts.push('One-off dated commitment');
+    const reason = String(b.reason || '').trim();
+    if (b.status_not_checked) parts.push('current status not checked');
+    else if (reason) parts.push(reason);
+    if (!parts.length) return '';
+    const line = parts.join(' \u00b7 ');
+    return line.charAt(0).toUpperCase() + line.slice(1);
+  }
+
   const SFPDrawer = {
     verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth, entityAvatarHtml,
     entityNameKey, entityMediaFromManifest, entityMediaFor,
-    drawerCheckOutcomes, drawerChecksSummary
+    drawerCheckOutcomes, drawerChecksSummary, outcomeBasisText
   };
   window.SFPDrawer = SFPDrawer;
   /* SFPDRAWER_PURE_END */
@@ -2685,6 +2701,11 @@
     if (spkVal) spkVal.textContent = isCorporate ? `${p.entity} (Corporate / Commercial Entity)` : `${p.entity} (${p.role || 'Public Official'})`;
     const saidDateFormatted = formatPrecisionDate(p.promised_date, p.promise_date_precision);
     if (saidVal) saidVal.textContent = saidDateFormatted + (p.promise_date_precision && p.promise_date_precision !== 'day' ? ` (${p.promise_date_precision})` : '');
+    if (saidVal && p.promise_date_derived === true) {
+      // v2 records whose commitment date was derived, not stated, say so.
+      saidVal.textContent += ' (derived)';
+      saidVal.title = p.promised_date_note || 'Derived from the source, not stated in it';
+    }
     const dueStatusLabels = {
       not_applicable: 'No deadline (not applicable)',
       not_yet_known: 'Pending (not yet known)',
@@ -2762,6 +2783,12 @@
     const decidedAtEl = document.getElementById('drawer-decided-at');
 
     if (plainReasonEl) plainReasonEl.textContent = p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id);
+    const basisEl = document.getElementById('drawer-outcome-basis');
+    if (basisEl) {
+      const basisText = window.SFPDrawer.outcomeBasisText(p);
+      basisEl.textContent = basisText;
+      basisEl.hidden = !basisText;
+    }
     if (decidedAtEl) decidedAtEl.textContent = p.decided_at ? p.decided_at.split('T')[0] : (p.opened_date || 'Nov 10, 2026');
 
     // Part 3: Advocates

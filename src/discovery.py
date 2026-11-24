@@ -8,13 +8,26 @@ from pathlib import Path
 
 from keenable import KeenableAPIError, KeenableConnectionError
 
+from src.discovery_config import load_discovery_config, search_options
 from src.evidence import is_allowlisted_url
 from src.sources import archive_source
 
 
-async def search_window(client, query: str, after: str, before: str):
+class PageBlocked(ValueError):
+    """Keenable answered 200 but reported an error for this one URL."""
+
+
+# Per-page statuses that mean "try again later", not "this page is unavailable".
+TRANSIENT_PAGE_STATUSES = frozenset({429, 500, 502, 503, 504})
+
+
+class PageTransientError(KeenableConnectionError):
+    """Keenable answered 200 but reported a transient error for this one URL."""
+
+
+async def search_window(client, query: str, after: str, before: str, phase: str | None = None):
     results = await client.search(
-        query, published_after=after, published_before=before, max_results=8
+        query, published_after=after, published_before=before, **search_options(phase)
     )
     return results.results
 
@@ -54,19 +67,39 @@ async def discover_timeline(client, topic, *, promised, deadline, delivered, as_
     )
     results = {}
     for phase, query, after, before in phases:
-        results[phase] = await search_window(client, query, after.isoformat(), before.isoformat())
+        results[phase] = await search_window(client, query, after.isoformat(), before.isoformat(), phase)
     return results
 
 
 async def fetch_and_archive(
-    client, url: str, root: Path, promise_id: str, *, capture=None
+    client, url: str, root: Path, promise_id: str, *, capture=None,
+    acquired_at: str | None = None, max_age_hours: float | None = None,
 ) -> dict:
     if not is_allowlisted_url(url):
         raise ValueError("Source URL is not allowlisted")
-    page = await client.fetch(url)
+    options = {"max_chars": load_discovery_config().fetch_max_chars}
+    if max_age_hours is not None:
+        options["max_age_hours"] = max_age_hours
+    response = await client.fetch(url, **options)
+    if not getattr(response, "results", None):
+        raise PageBlocked("fetch_no_result")
+    page = response.results[0]
+    error = getattr(page, "error", None)
+    if error is not None:
+        # Per-page errors arrive with HTTP 200; treat like a 404/410 block.
+        status = getattr(error, "status", 0) or 0
+        text = f"{getattr(error, 'error', '')} {getattr(error, 'message', '')}".lower()
+        if status in TRANSIENT_PAGE_STATUSES:
+            # A provider-side hiccup, not a property of the page: surface it like
+            # a connection failure so run_live blocks the seed as retryable
+            # instead of recording a permanent http_5xx block.
+            raise PageTransientError(f"fetch_connection_error:{status}")
+        if status == 422 and "different page" in text:
+            raise PageBlocked("http_422_wrong_page")
+        raise PageBlocked(f"http_{status}" if status else "fetch_error_unknown")
     if not is_allowlisted_url(page.url):
         raise ValueError("Fetched source URL is not allowlisted")
-    if page.raw.get("truncated") is not False or not page.content:
+    if page.truncated is not False or not page.content:
         raise ValueError("Source is empty or completeness is unknown")
     if page.published_at is not None and not isinstance(page.published_at, str):
         raise ValueError("Source publication metadata is invalid")
@@ -87,6 +120,8 @@ async def fetch_and_archive(
         "url": page.url,
         "requested_url": url,
         "published_at": page.published_at,
+        "acquired_at": acquired_at,
+        "retrieval": "live" if max_age_hours == 0 else "indexed",
         "fetched_at": datetime.now(timezone.utc).isoformat(),
         "wayback_capture_url": capture_url,
         "wayback_capture_error": capture_error,
@@ -140,6 +175,9 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
     )
     saved = {}
     phases = {}
+    attempts_allowed = load_discovery_config().fetch_attempts_per_phase
+    acquired = {getattr(e, "url", None): getattr(e, "acquired_at", None)
+                for entries in results.values() for e in entries}
     for phase, entries in results.items():
         urls = [getattr(entry, "url", None) for entry in entries]
         if phase == "origin":
@@ -148,6 +186,8 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
         blocked = []
         denied = []
         seen = set()
+        attempts = 0
+        budget_exhausted = False
         for url in urls:
             if not isinstance(url, str) or not url or url in seen:
                 continue
@@ -156,8 +196,16 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
                 denied.append({"url": url, "reason": "source_url_not_allowlisted"})
                 continue
             if url not in saved:
+                if attempts >= attempts_allowed:
+                    # Per-candidate cap: blocked attempts count, so a run of
+                    # dead links cannot trigger dozens of fetches per phase.
+                    budget_exhausted = True
+                    break
+                attempts += 1
                 try:
-                    saved[url] = await fetch_and_archive(client, url, root, promise_id, capture=capture)
+                    saved[url] = await fetch_and_archive(
+                        client, url, root, promise_id, capture=capture,
+                        acquired_at=acquired.get(url))
                 except KeenableAPIError as exc:
                     # Per-URL outcomes: gone (404/410) or Keenable fetched a
                     # different page than requested (422 with that message).
@@ -183,5 +231,7 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
         phases[phase] = {
             "leads_found": len(entries), "sources": sources, "blocked": blocked, "denied": denied,
         }
+        if budget_exhausted:
+            phases[phase]["fetch_budget_exhausted"] = True
     return {"promise_id": promise_id, "phases": phases,
             "outcome_sources": pool_outcome_sources(phases, promised=promised, as_of=as_of)}

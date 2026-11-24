@@ -41,6 +41,7 @@ from src.relevance import record_relevance
 from src.screening import screen_pending_origin
 from src.taxonomy import screen_taxonomy
 from src.lifecycle_rubric import decide_verdict
+from src.outcome_rules import check_schema_supports_outcome_rules, outcome_rules_enabled
 from src.workspace import database_path
 
 URLS = {
@@ -227,6 +228,9 @@ def durability_evaluator(conn, root, completion):
         survival = asyncio.run(classify_survival(completion, quotes))
         if survival not in ("SHUTTERED_OR_CLOSED", "REVOKED_OR_HALTED", "ACTIVE_OPERATIONAL"):
             return current_verdict, "Durability recheck: advocates did not agree on survival; verdict retained."
+        if deadlines[promise_id] is None:
+            return (current_verdict,
+                    "Durability recheck: open-ended commitment has no deadline; verdict retained.")
         deadline = date.fromisoformat(deadlines[promise_id][:10])
         new_verdict = decide_verdict(deadline, date.today(), delivery, survival, facts_verified=True)
         if new_verdict is None or new_verdict == verdict:
@@ -635,6 +639,10 @@ async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined
         if (conn.execute("PRAGMA application_id").fetchone()[0] != APPLICATION_ID
                 or conn.execute("PRAGMA user_version").fetchone()[0] != SCHEMA_VERSION):
             raise ValueError("Not a supported database")
+        if outcome_rules_enabled():
+            # Fail before any discovery, fetch or model spend: an older schema
+            # rejects open-ended and undecided records at the final insert.
+            check_schema_supports_outcome_rules(conn)
         conn.execute("PRAGMA foreign_keys=ON")
         conn.execute("PRAGMA journal_mode=WAL")
         results = []

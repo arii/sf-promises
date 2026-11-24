@@ -26,6 +26,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
+from src.discovery_config import search_options
 from src.evidence import is_allowlisted_url, _primary_host
 from src.keenable import RetryingKeenable
 
@@ -58,7 +59,7 @@ async def discover_candidate_leads(keenable_key: str, query: str, limit: int = 5
     """Search allowlisted civic feeds for commitment language."""
     client = RetryingKeenable(api_key=keenable_key)
     try:
-        response = await client.search(query, max_results=limit)
+        response = await client.search(query, **search_options(max_results=limit))
         results = getattr(response, "results", []) or []
         vetted_leads = []
         for r in results:

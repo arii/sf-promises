@@ -215,3 +215,74 @@ def resolve_promise_date(segments, quote_index, published):
     """Return (date, basis), or (None, None) when published is missing or invalid."""
     result = resolve_promise_date_detail(segments, quote_index, published)
     return (result.date, result.basis) if result else (None, None)
+
+
+# --- deadline dates stated in a quote (used by outcome rule R2) ---------------
+
+_MONTH_DAY = re.compile(rf"\b({_MONTH})\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?\b(?!\s*,?\s*\d{{4}})", re.I)
+_TOMORROW = re.compile(r"\btomorrow\b", re.I)
+_NEXT_WEEKDAY = re.compile(rf"\bnext\s+{_WEEKDAY}\b", re.I)
+
+
+def _weekday_on_or_after(published, weekday, strict):
+    delta = (weekday - published.weekday()) % 7
+    if strict and delta == 0:
+        delta = 7
+    return published + timedelta(days=delta)
+
+
+def quote_deadline_dates(quote, published):
+    """Return the set of dates a quote itself states as a point in time.
+
+    Covers explicit full dates (any position, including after "by"), a month and
+    day without a year (the next such day on or after `published`), today /
+    tonight / tomorrow, and weekday names resolved forward from `published`
+    ("Friday", "this Friday", "on Friday" = first such day on or after
+    `published`; "next Friday" = first such day after it). Nothing is inferred
+    when `published` is not a date.
+    """
+    if not isinstance(quote, str) or not _is_date(published):
+        return set()
+    found = set()
+    for pattern, kind in _DATE_PATTERNS:
+        for match in pattern.finditer(quote):
+            try:
+                if kind == "mdy":
+                    value = date(int(match.group(3)), _MONTHS[match.group(1)[:3].lower()],
+                                 int(match.group(2)))
+                elif kind == "dmy":
+                    value = date(int(match.group(3)), _MONTHS[match.group(2)[:3].lower()],
+                                 int(match.group(1)))
+                elif kind == "iso":
+                    value = date(*(int(part) for part in match.groups()))
+                else:
+                    month, day, year = (int(part) for part in match.groups())
+                    value = date(year, month, day)
+            except ValueError:
+                continue
+            found.add(value)
+    for match in _MONTH_DAY.finditer(quote):
+        month, day = _MONTHS[match.group(1)[:3].lower()], int(match.group(2))
+        for year in (published.year, published.year + 1):
+            try:
+                value = date(year, month, day)
+            except ValueError:
+                continue
+            if value >= published:
+                found.add(value)
+                break
+    if _TODAY.search(quote):
+        found.add(published)
+    if _TOMORROW.search(quote):
+        found.add(published + timedelta(days=1))
+    next_spans = []
+    for match in _NEXT_WEEKDAY.finditer(quote):
+        found.add(_weekday_on_or_after(
+            published, _WEEKDAYS.index(match.group(1).lower()), strict=True))
+        next_spans.append(match.span())
+    for match in _BARE_WEEKDAY.finditer(quote):
+        if any(lo <= match.start() < hi for lo, hi in next_spans):
+            continue
+        found.add(_weekday_on_or_after(
+            published, _WEEKDAYS.index(match.group(1).lower()), strict=False))
+    return found

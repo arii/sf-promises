@@ -10,6 +10,7 @@ import sqlite3
 from types import SimpleNamespace
 from unittest.mock import patch
 
+from keenable_stubs import fetch_response
 from src.discovery import fetch_and_archive
 from src.run_live import candidate_batch
 from src.workspace import database_path
@@ -57,10 +58,9 @@ async def complete(messages, *, tool_choice, **kwargs):
 
 async def research(database, pid, run_id=None):
     class Fetch:
-        async def fetch(self, url):
+        async def fetch(self, url, **_options):
             text, published = DOCUMENTS[url]
-            return SimpleNamespace(url=url, content=text, published_at=published,
-                                   raw={"truncated": False})
+            return fetch_response(url=url, content=text, published_at=published)
 
     sources = [await fetch_and_archive(Fetch(), url, database.parent / "sources", pid)
                for url in DOCUMENTS]

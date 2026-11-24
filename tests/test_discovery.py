@@ -8,8 +8,10 @@ from types import SimpleNamespace
 
 from keenable import KeenableAPIError, KeenableConnectionError
 
+from keenable_stubs import fetch_response
 from src.discovery import (
-    discover_and_archive, discover_timeline, fetch_and_archive, pool_outcome_sources, search_window,
+    PageTransientError, discover_and_archive, discover_timeline, fetch_and_archive,
+    pool_outcome_sources, search_window,
 )
 from src.sources import load_archived_text
 
@@ -29,11 +31,10 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
                 urls = [denied, *incomplete, another, original] if "pledged" in query else []
                 return SimpleNamespace(results=[SimpleNamespace(url=url) for url in urls])
 
-            async def fetch(self, url):
+            async def fetch(self, url, **options):
                 self.fetched.append(url)
-                return SimpleNamespace(url=url, content="Archived statement",
-                                       published_at="2024-01-01",
-                                       raw={"truncated": url in incomplete})
+                return fetch_response(url, "Archived statement", "2024-01-01",
+                                      truncated=url in incomplete)
 
         client = Client()
         with tempfile.TemporaryDirectory() as root:
@@ -59,13 +60,10 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
                 url = fallback if "pledged" in query else outcome
                 return SimpleNamespace(results=[SimpleNamespace(url=url)])
 
-            async def fetch(self, url):
+            async def fetch(self, url, **options):
                 if url == original:
                     raise KeenableAPIError("Page not found", status_code=404)
-                return SimpleNamespace(
-                    url=url, content="Archived statement", published_at="2024-01-02",
-                    raw={"truncated": False},
-                )
+                return fetch_response(url, "Archived statement", "2024-01-02")
 
         with tempfile.TemporaryDirectory() as root:
             result = await discover_and_archive(
@@ -88,14 +86,11 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
             async def search(self, query, **kwargs):
                 return SimpleNamespace(results=[SimpleNamespace(url=fallback)])
 
-            async def fetch(self, url):
+            async def fetch(self, url, **options):
                 if url == original:
                     raise KeenableAPIError(
                         "The fetch returned a different page, not the requested one", status_code=422)
-                return SimpleNamespace(
-                    url=url, content="Archived statement", published_at="2024-01-02",
-                    raw={"truncated": False},
-                )
+                return fetch_response(url, "Archived statement", "2024-01-02")
 
         with tempfile.TemporaryDirectory() as root:
             result = await discover_and_archive(
@@ -114,7 +109,7 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
             async def search(self, query, **kwargs):
                 return SimpleNamespace(results=[])
 
-            async def fetch(self, url):
+            async def fetch(self, url, **options):
                 raise KeenableAPIError("Invalid request parameter", status_code=422)
 
         with tempfile.TemporaryDirectory() as root:
@@ -134,13 +129,10 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
             async def search(self, query, **kwargs):
                 return SimpleNamespace(results=[SimpleNamespace(url=fallback)])
 
-            async def fetch(self, url):
+            async def fetch(self, url, **options):
                 if url == original:
                     raise KeenableConnectionError("could not reach the Keenable API: ReadTimeout('')")
-                return SimpleNamespace(
-                    url=url, content="Archived statement", published_at="2024-01-02",
-                    raw={"truncated": False},
-                )
+                return fetch_response(url, "Archived statement", "2024-01-02")
 
         with tempfile.TemporaryDirectory() as root:
             result = await discover_and_archive(
@@ -159,7 +151,7 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
             async def search(self, query, **kwargs):
                 return SimpleNamespace(results=[])
 
-            async def fetch(self, url):
+            async def fetch(self, url, **options):
                 raise KeenableAPIError("Fetch service unavailable", status_code)
 
         with tempfile.TemporaryDirectory() as root:
@@ -203,14 +195,13 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result, ["lead"])
         self.assertEqual(client.args[1]["published_before"], "2020-02-01")
         self.assertEqual(client.args[1]["published_after"], "2020-01-01")
-        self.assertEqual(client.args[1]["max_results"], 8)
+        self.assertEqual(client.args[1]["max_results"], 25)
 
     async def test_archive_full_response_but_not_truncated_page(self):
         class Client:
-            async def fetch(self, url):
-                return SimpleNamespace(content="Actual source", raw={"truncated": self.truncated},
-                                       published_at="2020-01-01",
-                                       url=getattr(self, "final_url", url))
+            async def fetch(self, url, **options):
+                return fetch_response(getattr(self, "final_url", url), "Actual source",
+                                      "2020-01-01", truncated=self.truncated)
 
         client = Client()
         with tempfile.TemporaryDirectory() as root:
@@ -234,10 +225,9 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
         class Client:
             calls = 0
 
-            async def fetch(self, url):
+            async def fetch(self, url, **options):
                 self.calls += 1
-                return SimpleNamespace(content="Actual source", raw={"truncated": False},
-                                       published_at=None, url="https://evil.example/x")
+                return fetch_response("https://evil.example/x", "Actual source")
 
         client = Client()
         with tempfile.TemporaryDirectory() as root:
@@ -288,6 +278,278 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
         )
         self.assertEqual(client.calls[1]["published_before"], "2024-04-01")
         self.assertEqual(client.calls[2]["published_after"], "2024-01-01")
+
+    async def test_search_passes_phase_options_from_config(self):
+        from src.discovery_config import load_discovery_config, load_exclude_domains
+
+        config = load_discovery_config()
+        excluded = list(load_exclude_domains())
+        self.assertIn("reddit.com", excluded)
+
+        class Client:
+            def __init__(self):
+                self.calls = []
+
+            async def search(self, query, **kwargs):
+                self.calls.append(kwargs)
+                return SimpleNamespace(results=[])
+
+        client = Client()
+        await discover_timeline(
+            client, "library", promised=date(2024, 1, 1),
+            deadline=None, delivered=None, as_of=date(2024, 4, 1),
+        )
+        self.assertEqual(len(client.calls), 3)
+        for phase, kwargs in zip(("origin", "delivery", "survival"), client.calls):
+            self.assertEqual(kwargs["max_results"], config.search_max_results)
+            self.assertEqual(kwargs["max_results"], 25)
+            self.assertIs(kwargs["disable_cards"], True)
+            self.assertEqual(kwargs["exclude_domains"], excluded)
+            self.assertEqual(kwargs["objective"], config.objective(phase))
+            self.assertTrue(kwargs["objective"])
+        self.assertEqual(len({kwargs["objective"] for kwargs in client.calls}), 3)
+
+    async def test_search_options_follow_a_custom_config(self):
+        from src.discovery_config import search_options
+
+        with tempfile.TemporaryDirectory() as root:
+            cfg = Path(root) / "d.json"
+            cfg.write_text(json.dumps({
+                "rolling_days": 10, "added_reason": "r", "added_by": "t", "added_at": "x",
+                "search_max_results": 7, "objectives": {"origin": "custom origin"},
+            }))
+            ex = Path(root) / "e.json"
+            ex.write_text(json.dumps({"domains": ["example.org"]}))
+            options = search_options("origin", path=str(cfg), exclude_path=str(ex))
+        self.assertEqual(options, {"max_results": 7, "disable_cards": True,
+                                   "exclude_domains": ["example.org"],
+                                   "objective": "custom origin"})
+
+    async def test_fetch_passes_max_chars_and_records_retrieval(self):
+        from src.discovery_config import load_discovery_config
+
+        class Client:
+            async def fetch(self, url, **options):
+                self.options = options
+                return fetch_response(url, "Agenda text", "2024-01-01")
+
+        client = Client()
+        with tempfile.TemporaryDirectory() as root:
+            source = await fetch_and_archive(
+                client, "https://sf.gov/agenda", Path(root), "P01",
+                acquired_at="2024-01-05T00:00:00Z")
+            self.assertEqual(client.options, {"max_chars": 400000})
+            self.assertEqual(client.options["max_chars"],
+                             load_discovery_config().fetch_max_chars)
+            record = json.loads(Path(source["metadata_path"]).read_bytes())
+            self.assertEqual(record["acquired_at"], "2024-01-05T00:00:00Z")
+            self.assertEqual(record["retrieval"], "indexed")
+            live = await fetch_and_archive(
+                client, "https://sf.gov/agenda", Path(root), "P01", max_age_hours=0)
+            self.assertEqual(client.options["max_age_hours"], 0)
+            record = json.loads(Path(live["metadata_path"]).read_bytes())
+            self.assertIsNone(record["acquired_at"])
+            self.assertEqual(record["retrieval"], "live")
+
+    async def test_per_page_error_is_a_blocked_url_not_a_crash(self):
+        bad = "https://sf.gov/gone"
+        wrong = "https://sf.gov/redirected"
+        good = "https://sf.gov/original-announcement"
+
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[SimpleNamespace(url=good)])
+
+            async def fetch(self, url, **options):
+                if url == bad:
+                    return fetch_response(url, "", error={"status": 404, "error": "not found"})
+                if url == wrong:
+                    return fetch_response(url, "", error={
+                        "status": 422, "error": "The fetch returned a different page"})
+                return fetch_response(url, "Archived statement", "2024-01-02")
+
+        for url, reason in ((bad, "http_404"), (wrong, "http_422_wrong_page")):
+            with tempfile.TemporaryDirectory() as root:
+                result = await discover_and_archive(
+                    Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                               "source_url": url, "entity": "Library",
+                               "promise_text": "Open a library branch"},
+                    root=Path(root), as_of=date(2025, 1, 1),
+                )
+            origin = result["phases"]["origin"]
+            self.assertEqual(origin["blocked"], [{"url": url, "reason": reason}])
+            self.assertEqual([item["url"] for item in origin["sources"]], [good])
+
+    async def test_transient_page_errors_are_retryable_connection_failures(self):
+        from src.run_live import transient_fetch_failure
+        original = "https://sf.gov/flaky"
+        good = "https://sf.gov/original-announcement"
+
+        class Client:
+            def __init__(self, status):
+                self.status = status
+
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[SimpleNamespace(url=good)])
+
+            async def fetch(self, url, **options):
+                if url == original:
+                    return fetch_response(url, "", error={"status": self.status, "error": "oops"})
+                return fetch_response(url, "Archived statement", "2024-01-02")
+
+        for status in (429, 500, 502, 503, 504):
+            with tempfile.TemporaryDirectory() as root:
+                with self.assertRaises(PageTransientError) as raised:
+                    await fetch_and_archive(Client(status), original, Path(root), "P01")
+                self.assertIsInstance(raised.exception, KeenableConnectionError)
+                result = await discover_and_archive(
+                    Client(status), {"promise_id": "P01", "promised_date": "2024-01-01",
+                                     "source_url": original, "entity": "Library",
+                                     "promise_text": "Open a library branch"},
+                    root=Path(root), as_of=date(2025, 1, 1),
+                )
+            origin = result["phases"]["origin"]
+            self.assertEqual(origin["blocked"],
+                             [{"url": original, "reason": "fetch_connection_error"}], status)
+            self.assertEqual([item["url"] for item in origin["sources"]], [good])
+            # run_live blocks the seed as retryable instead of auditing it.
+            self.assertTrue(transient_fetch_failure(result["phases"]), status)
+
+    async def test_permanent_page_errors_stay_permanent_blocks(self):
+        from src.run_live import transient_fetch_failure
+        gone = "https://sf.gov/gone"
+
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[])
+
+            async def fetch(self, url, **options):
+                return fetch_response(url, "", error={"status": 403, "error": "forbidden"})
+
+        with tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "source_url": gone, "entity": "Library",
+                           "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+        self.assertEqual(result["phases"]["origin"]["blocked"],
+                         [{"url": gone, "reason": "http_403"}])
+        self.assertFalse(transient_fetch_failure(result["phases"]))
+
+    async def test_fetch_attempts_per_phase_are_capped_and_blocked_attempts_count(self):
+        fetched = []
+        searches = []
+
+        class Client:
+            async def search(self, query, **kwargs):
+                searches.append(query)
+                phase = len(searches)
+                return SimpleNamespace(results=[
+                    SimpleNamespace(url=f"https://sf.gov/p{phase}/{n}") for n in range(25)])
+
+            async def fetch(self, url, **options):
+                fetched.append(url)
+                return fetch_response(url, "", error={"status": 404, "error": "not found"})
+
+        with tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "entity": "Library", "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+        self.assertEqual(len(fetched), 24)  # 8 per phase, three phases, not 75
+        for phase in result["phases"].values():
+            self.assertEqual(len(phase["blocked"]), 8)
+            self.assertEqual(phase["sources"], [])
+            self.assertTrue(phase["fetch_budget_exhausted"])
+
+    async def test_cap_is_configurable_and_does_not_apply_below_it(self):
+        import dataclasses
+        from unittest import mock
+        import src.discovery as discovery
+        fetched = []
+
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[
+                    SimpleNamespace(url=f"https://sf.gov/{abs(hash(query))}/{n}") for n in range(25)])
+
+            async def fetch(self, url, **options):
+                fetched.append(url)
+                if url.endswith("/1"):
+                    return fetch_response(url, "Archived statement", "2024-01-02")
+                return fetch_response(url, "", error={"status": 404, "error": "not found"})
+
+        config = dataclasses.replace(
+            discovery.load_discovery_config(), fetch_attempts_per_phase=3)
+        with mock.patch.object(discovery, "load_discovery_config", lambda *a: config), \
+                tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "entity": "Library", "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+        self.assertEqual(len(fetched), 9)
+        for phase in result["phases"].values():
+            self.assertEqual(len(phase["blocked"]) + len(phase["sources"]), 3)
+        # One good source among few attempts: no exhaustion flag when under the cap.
+        config = dataclasses.replace(config, fetch_attempts_per_phase=25)
+        fetched.clear()
+        with mock.patch.object(discovery, "load_discovery_config", lambda *a: config), \
+                tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "entity": "Library", "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+        self.assertTrue(all("fetch_budget_exhausted" not in p for p in result["phases"].values()))
+
+    def test_fetch_attempts_config_default_and_validation(self):
+        import json as _json
+        from src.discovery_config import load_discovery_config
+        self.assertEqual(load_discovery_config().fetch_attempts_per_phase, 8)
+        raw = _json.loads(Path("config/discovery.json").read_text())
+        self.assertEqual(raw["fetch_attempts_per_phase"], 8)
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root) / "discovery.json"
+            for bad in (0, -1, True, "8"):
+                path.write_text(_json.dumps({**raw, "fetch_attempts_per_phase": bad}))
+                with self.assertRaises(ValueError):
+                    load_discovery_config(str(path))
+            path.write_text(_json.dumps({k: v for k, v in raw.items()
+                                         if k != "fetch_attempts_per_phase"}))
+            self.assertEqual(load_discovery_config(str(path)).fetch_attempts_per_phase, 8)
+
+    async def test_empty_fetch_batch_is_blocked(self):
+        class Client:
+            async def fetch(self, url, **options):
+                return SimpleNamespace(results=[])
+
+        with tempfile.TemporaryDirectory() as root:
+            with self.assertRaises(ValueError):
+                await fetch_and_archive(Client(), "https://sf.gov/x", Path(root), "P01")
+
+    async def test_search_acquired_at_reaches_the_manifest(self):
+        url = "https://sf.gov/original-announcement"
+
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[SimpleNamespace(
+                    url=url, acquired_at="2024-02-02T00:00:00Z")])
+
+            async def fetch(self, url, **options):
+                return fetch_response(url, "Archived statement", "2024-01-02")
+
+        with tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "source_url": url, "entity": "Library",
+                           "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+        self.assertEqual(result["phases"]["origin"]["sources"][0]["acquired_at"],
+                         "2024-02-02T00:00:00Z")
 
 
 if __name__ == "__main__":

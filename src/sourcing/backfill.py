@@ -24,6 +24,7 @@ from src.sourcing.dedupe import (
     build_dedupe_index,
     dedupe_verdict,
 )
+from src.discovery_config import search_options
 from src.sourcing.planner import SearchPlanner
 
 MIN_SWEEP_MONTHS = 12
@@ -128,7 +129,7 @@ async def run_backfill_sweep(
             spec.query_text,
             published_after=window.split("..")[0],
             published_before=window.split("..")[1],
-            max_results=max_results,
+            **search_options(max_results=max_results),
         )
         for result in results.results if hasattr(results, "results") else results:
             lead = _lead_from_result(result, spec)

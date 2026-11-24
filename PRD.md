@@ -30,6 +30,80 @@ for lane progress and acceptance checks.
   later than the publication date. Relative and publication dates are labelled
   derived (`promise_date_basis`) and must not be shown as explicitly stated.
   The verbatim quote and both verifiers are still required.
+- Outcome rules are off unless `SF_PROMISES_OUTCOME_RULES=1`; with the flag off
+  the audit is unchanged. When on, a candidate still needs a verified verbatim
+  origin quote, the relevance gate, the taxonomy check, and a stated promise
+  date. Then:
+  - R1: a verified origin with no deadline is open-ended, not quarantined; the
+    deadline is stored as null.
+  - R2: `promise_horizon_short` is ignored only when the origin quote itself
+    states the deadline: an explicit date in the quote (a month and day without
+    a year is the next such day on or after publication), or a weekday or
+    relative day term ("Friday", "next Tuesday", "tomorrow", "today") resolved
+    by `src/date_resolution.py` against the source publication date, equal to
+    the deadline. Any other short horizon ("within 30 days", an unstated date)
+    still fails, and so does a deadline before the promised date.
+  - R3: a deadline after the as-of date with no contrary evidence is
+    `in_progress`, with no delivery or survival sentence required. Contrary
+    evidence is a selected sentence establishing not delivered or
+    revoked/halted, and follows the existing rubric.
+  - R4: a selected delivery sentence with survival unknown gives `kept` for
+    on-time delivery, and `delayed_or_partial` for late or partial delivery,
+    with the note "current status not checked". Shuttered or revoked need their
+    own selected survival sentence.
+  - R5: deadline passed or none, and no selected delivery or contrary
+    sentence: `undecided` (published), not quarantined.
+  - R6: the semantic verifier only has to confirm fields the verdict relies on.
+    `in_progress` and `undecided` need action, promise date, entity and
+    location, and the deadline if there is one. `kept` and `delayed_or_partial`
+    also need a verified delivery sentence; `broken` needs a verified
+    contrary sentence and a passed deadline.
+  - `broken` also needs the contrary source to be published on or after the
+    deadline. A source published before the deadline (or undated) cannot show
+    the deadline was missed, so its sentence is set aside and the other rules
+    decide: `undecided` for a passed deadline, with the reason noting the early
+    source.
+  - R7: every published verdict writes an `outcome_basis` verification row with
+    the rules used, whether the commitment is open-ended, and the reason
+    ("no outcome evidence found", "deadline in the future").
+  - Exports read the rule set from the database, not the environment: the
+    candidate snapshot (`src/export.py`) and the site merge
+    (`src/site_merge.py`) waive the R1/R2 origin date failures only when the
+    promise's `outcome_basis` row names that rule. A flagged database exports
+    with the flag unset; a database without `outcome_basis` rows (flag off)
+    still rejects open-ended and short-horizon records.
+  - Schema: `src/schema.sql` allows a NULL `promises.date_deadline` and an
+    `UNDECIDED` verdict so flagged runs can publish. With the flag off,
+    `src/candidate.py` enforces the old constraints in code at the publish
+    step (`require_flag_off_strictness`): a NULL deadline or an `UNDECIDED`
+    verdict raises before anything is written. With the flag on, the audit and
+    `run_live --candidate-batch` first check `sqlite_master` and stop with a
+    clear message if the database was created with the older schema
+    (`NOT NULL` deadline, no `UNDECIDED`); create a new database for flagged
+    runs.
+  - Gold gate rebaseline: `data/gold_gate_expectations.json` records the
+    SHA-256 of `src/lifecycle_rubric.py`. On this branch it moved from
+    `e2c3b525…e118` to `b5da20fd…2696`. The only change behind it is the
+    `decide_verdict` None-deadline handling: the signature allows
+    `deadline: date | None`; `future` is false and a new `no_deadline` flag is
+    true when the deadline is None; with no deadline, `NOT_DELIVERED` is never
+    `broken`, `DELIVERED_LATE` is never `delayed_or_partial` or
+    `kept_then_reversed`; and the docstring explains this. Every branch with a
+    non-None deadline is unchanged (`tests/test_outcome_rules.py`
+    `test_decide_verdict_with_deadline_is_unchanged` and
+    `test_exhaustive_safety_of_rubric`). Any other edit to the file must
+    rebaseline the hash with its own review.
+- The site merge (`docs/export_data.py --v2-db`) publishes a v2 record only
+  when its evidence supports the verdict: a verified DELIVERY row dated after
+  the promise for `kept` and `delayed_or_partial`, DELIVERY and SURVIVAL rows
+  for `kept_then_reversed`, a contrary DELIVERY row for `broken`, and a passed
+  `independent_verifier` row confirming action, promise date, entity and
+  location, the deadline when there is one, and each phase the verdict needs.
+  `all_checks_passed`, `failed_check_names` and `has_contradictory_evidence`
+  are computed from those rows. Open-ended records show "No fixed deadline"
+  (`due_date` null, `due_date_status` `not_applicable`), and the record carries
+  `outcome_basis` (rules, open-ended, reason, relied-on phases, and whether
+  current status was not checked), shown as one line in the record drawer.
 - Apply the deterministic relevance gate once: a candidate needs a total score
   of at least 5/8 **and** `real_promise >= 1`. Quarantine failures; do not
   count them as published promises.

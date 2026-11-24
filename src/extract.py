@@ -4,6 +4,7 @@ import calendar
 from datetime import date
 from difflib import SequenceMatcher
 import json
+import os
 import re
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -12,11 +13,20 @@ from src.date_resolution import (
     DateResolution, date_resolution_enabled, resolve_promise_date_detail,
 )
 from src.evidence import is_allowlisted_url
+from src.outcome_rules import outcome_rules_enabled
 from src.model import ModelResponseError, free_completion, nebius_completion
 from src.sources import is_verbatim_quote, load_archived_text, snap_quote
 from src.temporal import deadline_from_quote
 
 EXTRACTION_TOOL_NAME = "record_promise_evidence"
+LONG_DOCS_FLAG = "SF_PROMISES_LONG_DOCS"
+SEGMENT_WINDOW = 10000  # characters of source text shown to the model
+_CHUNK_CHARS = 1200
+_STOPWORDS = frozenset({
+    "will", "with", "that", "this", "from", "have", "been", "they", "their", "about",
+    "also", "under", "would", "which", "were", "city", "county",
+    "san", "francisco", "said", "plan", "open",
+})
 
 
 class Candidate(BaseModel):
@@ -60,12 +70,67 @@ class InvalidPromiseDate(ValueError):
     pass
 
 
-def _source_segments(text):
+def long_docs_enabled():
+    """Relevance-based segment selection: SF_PROMISES_LONG_DOCS=1 or the outcome rules."""
+    return os.environ.get(LONG_DOCS_FLAG) == "1" or outcome_rules_enabled()
+
+
+def _target_terms(target):
+    return {word for word in re.findall(r"[a-z0-9]{4,}", (target or "").casefold())
+            if word not in _STOPWORDS}
+
+
+def _all_segments(text):
     return [
         match.group().strip()
-        for match in re.finditer(r"[^\n.!?]+(?:[.!?]+(?=\s|$)|(?=\n|$))", text[:10000])
+        for match in re.finditer(r"[^\n.!?]+(?:[.!?]+(?=\s|$)|(?=\n|$))", text)
         if match.group().strip()
     ]
+
+
+def _source_segments(text, target=None, rank=False):
+    """Sentences the model may quote; every one is an exact substring of `text`.
+
+    Default: sentences of the first 10,000 characters. With long-document
+    selection on (SF_PROMISES_LONG_DOCS=1 or the outcome rules), a `target` and
+    a text longer than that window, sentences are grouped into chunks and the
+    chunks sharing the most words with the target are kept, in document order,
+    up to the same 10,000-character budget. The first chunk (title, dateline)
+    is always kept. With `rank`, sentences are returned most relevant first.
+    """
+    if not (long_docs_enabled() and len(text) > SEGMENT_WINDOW and _target_terms(target)):
+        return _all_segments(text[:SEGMENT_WINDOW])
+    terms = _target_terms(target)
+    segments = _all_segments(text)
+
+    def score(segment):
+        return len(terms & set(re.findall(r"[a-z0-9]{4,}", segment.casefold())))
+
+    chunks, current, size = [], [], 0
+    for segment in segments:
+        if current and size + len(segment) > _CHUNK_CHARS:
+            chunks.append(current)
+            current, size = [], 0
+        current.append(segment)
+        size += len(segment) + 1
+    if current:
+        chunks.append(current)
+    scored = [(len(terms & set(re.findall(r"[a-z0-9]{4,}", " ".join(c).casefold()))), i)
+              for i, c in enumerate(chunks)]
+    order = [0] + [i for _, i in sorted(
+        ((sc, i) for sc, i in scored if i and sc), key=lambda item: (-item[0], item[1]))]
+    order += [i for i in range(1, len(chunks)) if i not in order]  # fill, in document order
+    chosen, used = set(), 0
+    for i in order:
+        length = sum(len(segment) + 1 for segment in chunks[i])
+        if used + length > SEGMENT_WINDOW and chosen:
+            continue
+        chosen.add(i)
+        used += length
+    picked = [segment for i in sorted(chosen) for segment in chunks[i]]
+    if rank:
+        return sorted(picked, key=lambda segment: -score(segment))
+    return picked
 
 
 def _materialize_quotes(response, text, segments):
@@ -178,7 +243,8 @@ def _resolve_missing_dates(candidates, segments, published):
 
 async def extract_with_model(client, api_key, models, *, root, promise_id,
                              path, digest, source_url, provider="openrouter", target=None,
-                             completion=None, published=None, date_resolutions=None):
+                             completion=None, published=None, date_resolutions=None,
+                             entity=None):
     """Extract from a public archived source; caller must verify URL provenance.
 
     With SF_PROMISES_DATE_RESOLUTION=1 a null promised_date is filled by the
@@ -195,7 +261,7 @@ async def extract_with_model(client, api_key, models, *, root, promise_id,
     segments = []
     numbered_lines = []
     size = 0
-    for segment in _source_segments(text):
+    for segment in _source_segments(text, target=f"{entity or ''} {target or ''}"):
         line = f"[{len(segments)}] {segment}"
         if size + len(line) + 1 > 12000:
             break
@@ -217,6 +283,10 @@ async def extract_with_model(client, api_key, models, *, root, promise_id,
             "deadline stated as a number of years from the commitment, use "
             "December 31 of the resulting year. If a discovery target is supplied, "
             "extract only matching commitments."
+            + (" If the commitment states no deadline, return null for deadline; "
+               "never invent one. For a one-off event on a stated date (an opening "
+               "day or a game date), the deadline is that date."
+               if outcome_rules_enabled() else "")
         )},
         {"role": "user", "content": (
             f"Promise ID: {promise_id}\n"

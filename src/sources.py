@@ -100,9 +100,15 @@ FETCH_METADATA_FIELDS = (
     "path", "sha256", "url", "requested_url", "published_at", "fetched_at",
 )
 WAYBACK_METADATA_FIELDS = ("wayback_capture_url", "wayback_capture_error")
+# keenable 0.3 adds when Keenable indexed the page and how it was retrieved
+# ("indexed" or "live" for max_age_hours=0). Older manifests stay valid.
+RETRIEVAL_METADATA_FIELDS = ("acquired_at", "retrieval")
 _FETCH_METADATA_SHAPES = (
     frozenset(FETCH_METADATA_FIELDS),
     frozenset(FETCH_METADATA_FIELDS) | frozenset(WAYBACK_METADATA_FIELDS),
+    frozenset(FETCH_METADATA_FIELDS) | frozenset(RETRIEVAL_METADATA_FIELDS),
+    frozenset(FETCH_METADATA_FIELDS) | frozenset(WAYBACK_METADATA_FIELDS)
+    | frozenset(RETRIEVAL_METADATA_FIELDS),
 )
 
 

@@ -8,6 +8,7 @@ import sqlite3
 from datetime import date
 from types import SimpleNamespace
 
+from keenable_stubs import fetch_response
 from src.candidate import audit_candidate
 from src.database import initialize_database
 from src.discovery import fetch_and_archive
@@ -66,11 +67,10 @@ async def _verification_rows_persist_lane_model_id(tmp_path):
     }
 
     class Search:
-        async def fetch(self, url):
+        async def fetch(self, url, **_options):
             text, published = documents[url]
-            return SimpleNamespace(
-                url=url, content=text, published_at=published, raw={"truncated": False},
-            )
+            return fetch_response(
+                url=url, content=text, published_at=published)
 
     sources = [await fetch_and_archive(Search(), url, root, "P99") for url in documents]
     research = {"phases": {

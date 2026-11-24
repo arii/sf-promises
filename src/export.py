@@ -11,11 +11,23 @@ import sqlite3
 import tempfile
 
 from src.evidence import screen_saved_source
+from src.outcome_rules import recorded_origin_date_failures, recorded_outcome_rules
 from src.relevance import evaluate_relevance
 from src.sources import is_verbatim_quote
 from src.taxonomy import screen_taxonomy
 from src.temporal import check_origin_dates, screen_forward_looking
 from src.workspace import database_path
+
+
+def _origin_date_failures(promised, published, deadline, *, quote, recorded):
+    """Origin date failures; R1/R2 are waived only for rules the database recorded.
+
+    `recorded` comes from the promise's `outcome_basis` verification row, so the
+    result does not depend on the environment the export runs in.
+    """
+    return recorded_origin_date_failures(
+        check_origin_dates(promised, published, deadline), promised, deadline,
+        quote=quote, published=published, recorded=recorded)
 
 
 def _utc_datetime(value):
@@ -108,13 +120,34 @@ def build_snapshot(conn, *, source_root, as_of):
             ]
             promised = _date(promise["date_promised"])
             deadline = _date(promise["date_deadline"])
+            if deadline is None and promise["date_deadline"] is not None:
+                raise ValueError(f"Invalid deadline for {pid}")
             if promised is None or promised > as_of.date():
                 raise ValueError(f"Invalid promise date for {pid}")
+            outcome_basis = [
+                row for row in _rows(
+                    conn, "SELECT * FROM verifications WHERE promise_id = ? "
+                    "AND check_type = 'outcome_basis' ORDER BY verification_id", (pid,),
+                )
+                if _utc_datetime(row["checked_at"]) <= as_of
+            ]
+            if outcome_basis:
+                try:
+                    promise["outcome_basis"] = json.loads(outcome_basis[-1]["reason"])
+                except (TypeError, ValueError):
+                    raise ValueError(f"Invalid outcome basis for {pid}") from None
+            try:
+                recorded = recorded_outcome_rules(outcome_basis)
+            except (TypeError, KeyError, ValueError):
+                raise ValueError(f"Invalid outcome basis for {pid}") from None
             if not any(
                 item["phase"] == "ORIGIN"
                 and is_verbatim_quote(promise["promise_text"], item["verbatim_quote"])
                 and not screen_forward_looking(promise["promise_text"])
-                and not check_origin_dates(promised, _date(item["published_date"]), deadline)
+                and _date(item["published_date"]) is not None
+                and not _origin_date_failures(
+                    promised, _date(item["published_date"]), deadline,
+                    quote=promise["promise_text"], recorded=recorded)
                 and _date(item["published_date"]) <= as_of.date()
                 for item in evidence
             ):

@@ -19,6 +19,7 @@ from pathlib import Path
 from src.discovery_config import (
     load_discovery_config,
     rolling_window_end,
+    search_options,
     rolling_window_start,
 )
 from src.evidence import is_allowlisted_url
@@ -62,7 +63,7 @@ async def search_keenable(query: str, after: str | None = None, before: str | No
 
     window_after, window_before = resolve_search_window(after, before)
     client = RetryingKeenable(api_key=api_key)
-    kwargs = {"max_results": limit, "published_after": window_after, "published_before": window_before}
+    kwargs = {**search_options(max_results=limit), "published_after": window_after, "published_before": window_before}
 
     print(f"Searching Keenable for: {query!r} (after={window_after}, before={window_before}, limit={limit})...")
     try:

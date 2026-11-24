@@ -8,6 +8,7 @@ from types import SimpleNamespace
 
 import pytest
 
+from keenable_stubs import fetch_response
 from src.candidate import audit_candidate
 from src.database import initialize_database
 from src.date_resolution import (
@@ -211,10 +212,9 @@ async def _run_audit(tmp_path, origin_text):
     }
 
     class Search:
-        async def fetch(self, url):
+        async def fetch(self, url, **_options):
             text, published = documents[url]
-            return SimpleNamespace(url=url, content=text, published_at=published,
-                                   raw={"truncated": False})
+            return fetch_response(url=url, content=text, published_at=published)
 
     sources = [await fetch_and_archive(Search(), url, root, "P99") for url in documents]
     research = {"phases": {
