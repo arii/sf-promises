@@ -201,7 +201,8 @@ def _load_promise(conn, promise, source_root, today):
         published = _date(item["published_date"])
         if published is None or published > today:
             return None, "evidence_date_invalid"
-        rebased.append({**item, "_file": path.name, "_published": published})
+        rebased.append({**item, "_file": path.name, "_published": published,
+                        "_saved_path": str(path)})
 
     origin = next((
         item for item in rebased
@@ -364,8 +365,88 @@ def _outcome_basis_field(detail, open_ended):
     }
 
 
+_ABBREVIATIONS = frozenset({
+    "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec",
+    "st", "ave", "blvd", "dr", "mr", "mrs", "ms", "no", "inc", "co", "corp", "jr", "sr",
+    "u.s", "e.g", "i.e", "vs", "approx",
+})
+_SENTENCE_CAP = 420
+
+
+def _is_sentence_end(text, i):
+    """True when text[i] ends a sentence: .!? followed by whitespace or end,
+    and not an abbreviation or a single initial."""
+    if text[i] not in ".!?":
+        return False
+    if i + 1 < len(text) and not text[i + 1].isspace():
+        return False
+    if text[i] == ".":
+        j = i
+        while j > 0 and (text[j - 1].isalpha() or text[j - 1] == "."):
+            j -= 1
+        word = text[j:i].lower()
+        if word in _ABBREVIATIONS or len(word) == 1:
+            return False
+    return True
+
+
+def _is_line_break_boundary(text, i):
+    """A single newline at i starts a new unit (heading or list line ending,
+    next line capitalized) rather than wrapping a sentence."""
+    if text[i] != "\n":
+        return False
+    nxt = text[i + 1:i + 2]
+    prev = text[:i].rstrip(" \t")[-1:]
+    return bool(nxt) and nxt.isupper() and prev not in (",", ";", ":", "-", "")
+
+
+def display_sentence(text, quote):
+    """The complete sentence(s) of saved ``text`` that contain ``quote``,
+    whitespace-collapsed, for display. Returns None if the quote is not found
+    or the sentence would exceed the cap. The evidence quote is unchanged;
+    this only widens the displayed text to sentence boundaries in the same
+    saved bytes (PDF line wrapping often cuts a segment mid-sentence)."""
+    start = text.find(quote)
+    if start < 0:
+        return None
+    end = start + len(quote)
+    left = start
+    while left > 0:
+        if text[left - 2:left] == "\n\n" or _is_sentence_end(text, left - 1) \
+                or _is_line_break_boundary(text, left - 1):
+            break
+        left -= 1
+    right = end
+    if not (quote.rstrip()[-1:] in ".!?" and _is_sentence_end(text, start + len(quote.rstrip()) - 1)):
+        while right < len(text):
+            if text[right:right + 2] == "\n\n":
+                break
+            if _is_sentence_end(text, right):
+                right += 1
+                break
+            right += 1
+    span = " ".join(text[left:right].split())
+    if not span or len(span) > _SENTENCE_CAP:
+        return None
+    return span
+
+
+def _display_text(item):
+    origin = item["origin"]
+    quote = origin["verbatim_quote"]
+    try:
+        text = Path(origin["_saved_path"]).read_text(encoding="utf-8")
+    except (KeyError, OSError, UnicodeDecodeError):
+        return item["promise"]["promise_text"], False
+    sentence = display_sentence(text, quote)
+    if not sentence or sentence == " ".join(quote.split()):
+        return item["promise"]["promise_text"], False
+    return sentence, True
+
+
 def build_record(item, *, promise_id, rank, entity_count):
     promise, origin = item["promise"], item["origin"]
+    display_text, expanded = _display_text(item)
     verdict = VERDICT_MAP[item["latest"]["verdict"]]
     canonical = ENTITY_CATEGORY[promise["entity_type"]]
     neighborhood = promise["neighborhood"]
@@ -423,7 +504,8 @@ def build_record(item, *, promise_id, rank, entity_count):
         "promise_id": promise_id,
         "pipeline": "v2",
         "v2_promise_id": promise["promise_id"],
-        "promise_text": promise["promise_text"],
+        "promise_text": display_text,
+        "promise_text_expanded": expanded,
         "entity": promise["entity_name"],
         "role": None,
         "entity_type": canonical,

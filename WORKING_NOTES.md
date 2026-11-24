@@ -236,3 +236,26 @@
   "Pause" but never advanced). Pagination and back-to-top labels are vertically centred, and the
   "Technical & Audit Specifications" accordion is styled like the limits accordion.
 - Not done (other #44 items, out of scope): story-card images, hero pipeline teaser, inline timelines.
+
+## 2026-11-23: First new promises from the v2 pipeline (54 -> 69)
+
+- Ran the 45 queued discovery candidates (`seeds/discovery_targets.json`)
+  with `SF_PROMISES_OUTCOME_RULES=1 SF_PROMISES_DATE_RESOLUTION=1
+  SF_PROMISES_LONG_DOCS=1`, Keenable 0.3.0, in 4 shards
+  (`/mnt/archil/workspace/v2-run2/shard-{0..3}/promises.db`). Subagents
+  answered the agent lane.
+- Result: 15 published (14 in progress, 1 undecided) and 27 quarantined (8 no
+  verifiable origin, 7 ambiguous evidence, 5 promise date, 3 invalid
+  taxonomy, 2 insufficient outcome evidence, 1 invalid origin evidence, 1 no
+  deadline). 3 candidates were blocked (worker check).
+- Merged into the site with `docs/export_data.py --v2-db` (×4) on the
+  verified post-cleanup legacy backup. 15 added, 0 duplicates, 0 rejected.
+  The existing 54 records are unchanged.
+- Fixed: fragment quotes from line-wrapped PDFs now display as the full
+  sentence from the same saved bytes (`promise_text_expanded`). The evidence
+  quote is unchanged. The "All (N)" filter and the "N commitments" sample
+  note now update with the count.
+- Next gains: the neighborhood list lacks Mission, Sea Cliff, Potrero Hill,
+  Nob Hill, Outer Mission and others, so honest location answers fail the
+  location check. This caused most of the 7 AMBIGUOUS_EVIDENCE and the 3
+  INVALID_TAXONOMY results.
