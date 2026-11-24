@@ -2056,6 +2056,11 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
                       + verdict + r'"[^>]*>)[^<]*(</button>)',
                       lambda m: f'{m[1]}{label} ({count}){m[2]}', html)
 
+    html = re.sub(r'(<button[^>]+class="btn-seg-verdict[^"\n]*"[^>]+data-verdict="all"[^>]*>)[^<]*(</button>)',
+                  lambda m: f'{m[1]}All ({total}){m[2]}', html)
+    html = re.sub(r'(<strong>Small, curated sample\.</strong> The )\d+( commitments)',
+                  lambda m: f'{m[1]}{total}{m[2]}', html)
+
     # Update tally numbers in hero & bar
     html = re.sub(r'(<strong id="tally-total">)[^<]*(</strong>)', rf'\g<1>{len(promises)}\g<2>', html)
     html = re.sub(r'(<strong id="tally-kept">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("kept", 0)}\g<2>', html)

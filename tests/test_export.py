@@ -194,23 +194,34 @@ class SnapshotHistoryAssertions(unittest.TestCase):
         promises = data.get("promises", [])
         self.assertGreater(len(promises), 0)
         history_bytes = 0
+        v2_history_bytes = 0
         for p in promises:
             self.assertIn("verdict_history", p)
             self.assertIn("verification_history", p)
             vh = p["verdict_history"]
             self.assertGreaterEqual(len(vh), 1)
             self.assertEqual(vh[-1]["verdict"], p["verdict"])
-            history_bytes += len(json.dumps(vh)) + len(json.dumps(p["verification_history"]))
+            size = len(json.dumps(vh)) + len(json.dumps(p["verification_history"]))
+            if p.get("pipeline") == "v2":
+                v2_history_bytes += size
+            else:
+                history_bytes += size
+        v2_count = sum(1 for p in promises if p.get("pipeline") == "v2")
         # The history adds little: the whole corpus's history must stay a
         # small fraction of the snapshot rather than growing unchecked.
         # Calibrated on the first DB-backed export: 76 verdict rows plus one
         # verification row per (promise, check) type — the offline snapshot
         # this pin replaced carried synthesized histories and none of the
         # per-check provenance.
+        # The 60000 bound is calibrated on the 54 legacy records; each
+        # v2 record carries one verdict row and one row per check type and
+        # gets a per-record allowance (about 1.2 KB measured, 2 KB allowed).
         self.assertLess(history_bytes, 60000)
+        self.assertLess(v2_history_bytes, 2000 * max(v2_count, 1))
         # Flat-or-smaller target: the full snapshot stays well under the
-        # pre-history baseline plus a small history allowance.
-        self.assertLess(docs_json.stat().st_size, 700000)
+        # pre-history baseline plus a small history allowance. 700000 covers
+        # the 54 legacy records; each v2 record adds about 6 KB (8 KB allowed).
+        self.assertLess(docs_json.stat().st_size, 700000 + 8000 * v2_count)
 
 
 class CandidateExportTests(unittest.TestCase):

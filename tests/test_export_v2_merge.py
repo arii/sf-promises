@@ -456,3 +456,36 @@ def test_outcome_basis_is_carried_into_the_record(base, tmp_path):
 def test_record_without_outcome_basis_has_no_field(base, tmp_path):
     payload, _ = merged(base, tmp_path, {"pid": "P901"})
     assert "outcome_basis" not in payload["promises"][-1]
+
+
+# Display text widens a fragment quote to its sentence in the same saved bytes.
+import pytest as _pytest
+from src.site_merge import display_sentence as _display_sentence
+
+
+@_pytest.mark.parametrize("text, quote, expected", [
+    ("officials.\n\nInstallation is expected to be completed around Nov. 21, with the barriers "
+     "remaining in place through April 2027.\n\nThe temporary",
+     "21, with the barriers remaining in place through April 2027.",
+     "Installation is expected to be completed around Nov. 21, with the barriers remaining in "
+     "place through April 2027."),
+    ("Targets: Shelter\nShelter Beds\nBetween July 2023 and June 2028,\nthe goal is to add 1,075 new\n"
+     "shelter beds.\nIn FY 2023-24",
+     "the goal is to add 1,075 new",
+     "Between July 2023 and June 2028, the goal is to add 1,075 new shelter beds."),
+    ("the coast. We anticipate construction to start in \nlate 2027.\n\nOcean Beach",
+     "We anticipate construction to start in",
+     "We anticipate construction to start in late 2027."),
+    ("Mayor said. Construction is slated to begin in early 2027. Every veteran",
+     "Construction is slated to begin in early 2027.",
+     "Construction is slated to begin in early 2027."),
+])
+def test_display_sentence_widens_fragments(text, quote, expected):
+    assert _display_sentence(text, quote) == expected
+    assert quote.split()[0] in expected
+
+
+def test_display_sentence_missing_or_too_long():
+    assert _display_sentence("Nothing here.", "absent quote") is None
+    long_text = "word " * 200 + "the quote " + "word " * 200
+    assert _display_sentence(long_text, "the quote") is None

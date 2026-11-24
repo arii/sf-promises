@@ -105,6 +105,13 @@ class TestDemoVisualizations(unittest.TestCase):
     def test_verdict_counts_reconcile_with_totals(self):
         counts = self.py_verdicts()
         self.assertEqual(sum(counts.values()), len(self.promises))
+        # The benchmark below is the 54 legacy records; v2 records are checked
+        # separately so they cannot silently shift it.
+        legacy = Counter(
+            p["verdict"] for p in self.promises if p.get("pipeline") != "v2")
+        v2 = Counter(p["verdict"] for p in self.promises if p.get("pipeline") == "v2")
+        self.assertEqual(legacy + v2, Counter(counts))
+        counts = legacy
         # README's last-known benchmark numbers; P83 moved to
         # kept_then_reversed in the E1b reopen.
         self.assertEqual(counts.get("kept"), 24)
@@ -155,7 +162,10 @@ class TestDemoVisualizations(unittest.TestCase):
         # the funnel's published stage is exactly the exported promise count
         published = (self.database_status.get("funnel") or {}).get("stage_counts", {}).get("published")
         if published is not None:
-            self.assertEqual(published, len(self.promises))
+            # The funnel counts the legacy database only; v2 promises merged
+            # by src/site_merge.py are reported in database_status.v2_merge.
+            v2_added = (self.database_status.get("v2_merge") or {}).get("added", 0)
+            self.assertEqual(published + v2_added, len(self.promises))
 
     def test_window_funnel_panel_matches_export(self):
         js_windows = run_pure_fn("windowFunnelStages", "databaseStatus")
