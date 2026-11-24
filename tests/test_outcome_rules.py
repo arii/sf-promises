@@ -17,8 +17,9 @@ from src.discovery import fetch_and_archive
 from src.export import build_snapshot
 from src.lifecycle_rubric import decide_verdict
 from src.outcome_rules import (
-    FLAG, NOT_CHECKED_NOTE, decide_outcome, origin_date_failures, outcome_rules_enabled,
-    relied_phases,
+    FLAG, NOT_CHECKED_NOTE, STALE_CONTRARY_NOTE, OutcomeRulesSchemaError,
+    check_schema_supports_outcome_rules, decide_outcome, origin_date_failures,
+    outcome_rules_enabled, relied_phases, require_flag_off_strictness,
 )
 
 AS_OF = date(2026, 11, 11)
@@ -64,20 +65,71 @@ def test_decide_verdict_with_deadline_is_unchanged():
     assert decide_verdict(FUTURE, AS_OF, "UNKNOWN", "UNKNOWN", True) is None
 
 
+ONE_OFF_QUOTE = "On March 5, 2024, San Francisco will open 3 new neighborhood clinics."
+
+
 def test_r1_r2_screening_filter():
     promised = date(2024, 3, 1)
+    published = date(2024, 3, 1)
     assert origin_date_failures(["deadline_missing"], promised, None) == ([], ["R1"])
     one_off = date(2024, 3, 5)
-    assert origin_date_failures(["promise_horizon_short"], promised, one_off) == ([], ["R2"])
+    # R2 now needs the origin quote to state the deadline itself.
+    assert origin_date_failures(
+        ["promise_horizon_short"], promised, one_off,
+        quote=ONE_OFF_QUOTE, published=published) == ([], ["R2"])
     # Same day is a one-off event too.
-    assert origin_date_failures(["promise_horizon_short"], promised, promised) == ([], ["R2"])
+    assert origin_date_failures(
+        ["promise_horizon_short"], promised, promised,
+        quote="Today San Francisco will open 3 clinics.", published=published) == ([], ["R2"])
     # A deadline before the promise is a real failure.
     before = date(2024, 2, 1)
-    assert origin_date_failures(["promise_horizon_short"], promised, before) == (
+    assert origin_date_failures(
+        ["promise_horizon_short"], promised, before,
+        quote="On February 1, 2024 San Francisco will open clinics.", published=published) == (
         ["promise_horizon_short"], [])
     # Every other failure is kept.
     others = ["promise_date_missing", "origin_publication_late", "origin_predates_promise"]
     assert origin_date_failures(others + ["deadline_missing"], None, None) == (others, ["R1"])
+
+
+@pytest.mark.parametrize("quote", [
+    "San Francisco will open 3 new neighborhood clinics.",             # no date at all
+    "San Francisco will open 3 new neighborhood clinics within 30 days.",  # duration only
+    "On March 9, 2024, San Francisco will open 3 new neighborhood clinics.",  # other date
+    "On March 5, 2025, San Francisco will open 3 new neighborhood clinics.",  # other year
+    "Soon, in 2024, San Francisco will open 3 new neighborhood clinics.",
+])
+def test_r2_does_not_apply_when_the_quote_does_not_state_the_deadline(quote):
+    promised = published = date(2024, 3, 1)
+    assert origin_date_failures(
+        ["promise_horizon_short"], promised, date(2024, 3, 5),
+        quote=quote, published=published) == (["promise_horizon_short"], [])
+    # No quote or publication date supplied: nothing is waived.
+    assert origin_date_failures(
+        ["promise_horizon_short"], promised, date(2024, 3, 5)) == (["promise_horizon_short"], [])
+
+
+@pytest.mark.parametrize("quote,published,deadline", [
+    ("San Francisco will open 3 clinics on March 5, 2024.", "2024-03-01", "2024-03-05"),
+    ("San Francisco will open 3 clinics on 2024-03-05.", "2024-03-01", "2024-03-05"),
+    ("San Francisco will open 3 clinics on March 5.", "2024-03-01", "2024-03-05"),
+    ("San Francisco will open 3 clinics on Friday.", "2024-03-01", "2024-03-01"),    # published is a Friday
+    ("San Francisco will open 3 clinics this Sunday.", "2024-03-01", "2024-03-03"),
+    ("San Francisco will open 3 clinics next Tuesday.", "2024-03-01", "2024-03-05"),
+    ("San Francisco will open 3 clinics tomorrow.", "2024-03-01", "2024-03-02"),
+    ("San Francisco opens 3 clinics today.", "2024-03-01", "2024-03-01"),
+])
+def test_r2_resolves_weekday_and_relative_terms_against_publication(quote, published, deadline):
+    published, deadline = date.fromisoformat(published), date.fromisoformat(deadline)
+    promised = published
+    assert origin_date_failures(
+        ["promise_horizon_short"], promised, deadline, quote=quote, published=published,
+    ) == ([], ["R2"])
+    # The same words do not waive a different deadline.
+    other = date.fromordinal(deadline.toordinal() + 3)
+    assert origin_date_failures(
+        ["promise_horizon_short"], promised, other, quote=quote, published=published,
+    ) == (["promise_horizon_short"], [])
 
 
 def test_r3_future_deadline_is_in_progress_without_delivery_or_survival():
@@ -130,12 +182,28 @@ def test_r5_unknown_outcome_is_undecided():
     assert decide_outcome(None, AS_OF, "PENDING_FUTURE_DEADLINE", "UNKNOWN", True) is None
 
 
-def test_contrary_evidence_after_deadline_is_broken():
-    assert decide_outcome(PAST, AS_OF, "NOT_DELIVERED", "NOT_YET_OPEN", True)[0] == "BROKEN"
-    assert decide_outcome(PAST, AS_OF, "NOT_DELIVERED", "UNKNOWN", True) == (
+def test_decide_outcome_broken_needs_a_contrary_source_on_or_after_the_deadline():
+    after = dict(delivery_published=date(2025, 6, 1))
+    assert decide_outcome(PAST, AS_OF, "NOT_DELIVERED", "NOT_YET_OPEN", True, **after)[0] == "BROKEN"
+    assert decide_outcome(PAST, AS_OF, "NOT_DELIVERED", "UNKNOWN", True, **after) == (
         "BROKEN", "CONTRARY", "deadline passed and the outcome source says not delivered")
-    assert decide_outcome(None, AS_OF, "NOT_DELIVERED", "UNKNOWN", True) is None
-    assert decide_outcome(PAST, AS_OF, "UNKNOWN", "REVOKED_OR_HALTED", True) is None
+    # Published on the deadline itself still counts.
+    assert decide_outcome(PAST, AS_OF, "NOT_DELIVERED", "UNKNOWN", True,
+                          delivery_published=PAST)[0] == "BROKEN"
+    assert decide_outcome(None, AS_OF, "NOT_DELIVERED", "UNKNOWN", True, **after) is None
+    assert decide_outcome(PAST, AS_OF, "UNKNOWN", "REVOKED_OR_HALTED", True, **after) is None
+
+
+@pytest.mark.parametrize("survival", ["UNKNOWN", "NOT_YET_OPEN"])
+@pytest.mark.parametrize("published", [None, date(2024, 12, 30), date(2024, 1, 1)])
+def test_broken_is_not_issued_from_an_early_or_undated_contrary_source(survival, published):
+    verdict, rule, reason = decide_outcome(
+        PAST, AS_OF, "NOT_DELIVERED", survival, True, delivery_published=published)
+    assert (verdict, rule) == ("UNDECIDED", "R5")
+    assert reason.endswith(STALE_CONTRARY_NOTE)
+    # With a future deadline the contrary sentence was never enough (unchanged).
+    assert decide_outcome(FUTURE, AS_OF, "NOT_DELIVERED", survival, True,
+                          delivery_published=published) is None
 
 
 def test_unverified_facts_decide_nothing():
@@ -158,6 +226,9 @@ def test_exhaustive_safety_of_rubric(deadline):
     kept_ok = ("DELIVERED_ON_TIME",)
     for delivery, survival in itertools.product(DELIVERY_STATES, SURVIVAL_STATES):
         result = decide_outcome(deadline, AS_OF, delivery, survival, True)
+        assert result is None or result[0] != "BROKEN"  # never without a dated source
+        result = decide_outcome(deadline, AS_OF, delivery, survival, True,
+                                delivery_published=AS_OF)
         if result is None:
             continue
         verdict, rule, reason = result
@@ -456,14 +527,236 @@ def test_snapshot_exports_open_ended_undecided(tmp_path, rules_on):
     conn.close()
 
 
-def test_snapshot_rejects_open_ended_when_flag_off(tmp_path, monkeypatch):
+def test_flagged_database_exports_with_the_flag_unset(tmp_path, monkeypatch):
+    """The exporter reads the rule set from the database, not the environment."""
     monkeypatch.setenv(FLAG, "1")
     conn, root, _result, _ = run(tmp_path, **OPEN_ENDED)
     monkeypatch.delenv(FLAG)
-    with pytest.raises(ValueError, match="Missing valid origin evidence"):
-        build_snapshot(conn, source_root=root,
-                       as_of=datetime(2030, 1, 1, tzinfo=timezone.utc))
+    snapshot = build_snapshot(conn, source_root=root,
+                              as_of=datetime(2030, 1, 1, tzinfo=timezone.utc))
+    assert snapshot["tallies"] == {"UNDECIDED": 1}
+    assert snapshot["promises"][0]["outcome_basis"]["rules"] == ["R1", "R5"]
     conn.close()
+
+
+def test_flag_off_database_still_rejects_open_ended_even_with_the_flag_set(tmp_path, monkeypatch):
+    """No outcome_basis row means no rule was recorded, so R1 cannot be waived.
+
+    Replaces the old flag-off premise (flagged DB + unset env rejects): the
+    decision now follows the rows in the database, so a database without an
+    outcome_basis row is the flag-off case, whatever the environment says.
+    """
+    monkeypatch.setenv(FLAG, "1")
+    conn, root, _result, _ = run(tmp_path, **OPEN_ENDED)
+    conn.execute("DELETE FROM verifications WHERE check_type = 'outcome_basis'")
+    conn.commit()
+    for value in ("1", None):
+        if value is None:
+            monkeypatch.delenv(FLAG)
+        with pytest.raises(ValueError, match="Missing valid origin evidence"):
+            build_snapshot(conn, source_root=root,
+                           as_of=datetime(2030, 1, 1, tzinfo=timezone.utc))
+    conn.close()
+
+
+def test_snapshot_rejects_a_rule_the_database_did_not_record(tmp_path, monkeypatch):
+    monkeypatch.setenv(FLAG, "1")
+    conn, root, _result, _ = run(tmp_path, **ONE_OFF)
+    monkeypatch.delenv(FLAG)
+    assert "R2" in basis(conn)["rules"]
+    as_of = datetime(2030, 1, 1, tzinfo=timezone.utc)
+    assert build_snapshot(conn, source_root=root, as_of=as_of)["promises"]
+    row = conn.execute("SELECT verification_id, reason FROM verifications "
+                       "WHERE check_type='outcome_basis'").fetchone()
+    conn.execute("UPDATE verifications SET reason=? WHERE verification_id=?",
+                 (json.dumps({**json.loads(row[1]), "rules": ["R3"]}), row[0]))
+    conn.commit()
+    with pytest.raises(ValueError, match="Missing valid origin evidence"):
+        build_snapshot(conn, source_root=root, as_of=as_of)
+    conn.close()
+
+
+# --- R2 is bounded to a deadline the origin quote states ----------------------
+
+def test_short_horizon_with_the_deadline_in_the_quote_is_published(tmp_path, rules_on):
+    conn, _root, result, _ = run(tmp_path, **ONE_OFF)
+    assert result["status"] == "published"
+    assert "R2" in basis(conn)["rules"]
+    conn.close()
+
+
+def test_short_horizon_without_the_deadline_in_the_quote_stays_quarantined(tmp_path, rules_on):
+    undated = dict(ONE_OFF, origin_text="San Francisco will open 3 new neighborhood clinics.")
+    conn, _root, result, _ = run(tmp_path, **undated)
+    assert result == {"promise_id": "P99", "status": "quarantined",
+                      "reason": "NO_VERIFIABLE_DEADLINE"}
+    assert conn.execute("SELECT count(*) FROM promises").fetchone() == (0,)
+    conn.close()
+
+
+# --- BROKEN needs a contrary source dated on or after the deadline ------------
+
+@pytest.mark.parametrize("published", ["2024-06-01", "2024-12-30"])
+def test_contrary_source_before_the_deadline_is_not_broken(tmp_path, rules_on, published):
+    conn, _root, result, _ = run(
+        tmp_path, **PAST_DEADLINE,
+        outcome=[("The San Francisco neighborhood clinics have not opened.", published)],
+        assessment={"initial_delivery": "NOT_DELIVERED",
+                    "delivery": {"source_index": 0, "segment_id": 0}},
+        review={"delivery": True},
+    )
+    assert result["verdict"] == "UNDECIDED"
+    detail = basis(conn)
+    assert detail["rules"] == ["R5"] and STALE_CONTRARY_NOTE in detail["reason"]
+    assert detail["relied_on"] == []
+    assert [r[0] for r in conn.execute(
+        "SELECT phase FROM evidence_ledger WHERE phase != 'ORIGIN'")] == []
+    conn.close()
+
+
+def test_contrary_source_on_the_deadline_day_is_broken(tmp_path, rules_on):
+    conn, _root, result, _ = run(
+        tmp_path, **PAST_DEADLINE,
+        outcome=[("The San Francisco neighborhood clinics have not opened.", "2024-12-31")],
+        assessment={"initial_delivery": "NOT_DELIVERED",
+                    "delivery": {"source_index": 0, "segment_id": 0}},
+        review={"delivery": True},
+    )
+    assert result["verdict"] == "BROKEN"
+    conn.close()
+
+
+# --- schema preflight (item 2) and flag-off strictness (item 8) -----------------
+
+def old_schema_database(path):
+    """A database as created before the outcome rules: NOT NULL deadline, no UNDECIDED."""
+    from src.database import APPLICATION_ID, SCHEMA_VERSION
+    from pathlib import Path
+    schema = (Path(__file__).resolve().parents[1] / "src" / "schema.sql").read_text()
+    schema = schema.replace("date_deadline TEXT,", "date_deadline TEXT NOT NULL,")
+    schema = schema.replace("'DELAYED_OR_PARTIAL', 'BROKEN', 'IN_PROGRESS', 'UNDECIDED')",
+                            "'DELAYED_OR_PARTIAL', 'BROKEN', 'IN_PROGRESS')")
+    assert "NOT NULL," in schema and "'UNDECIDED'" not in schema
+    conn = sqlite3.connect(path)
+    conn.executescript(schema)
+    conn.execute(f"PRAGMA application_id = {APPLICATION_ID}")
+    conn.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
+    conn.commit()
+    return conn
+
+
+def test_preflight_accepts_the_current_schema(tmp_path):
+    database = tmp_path / "new.db"
+    initialize_database(database)
+    with sqlite3.connect(database) as conn:
+        check_schema_supports_outcome_rules(conn)
+
+
+def test_preflight_rejects_an_old_schema_with_a_clear_message(tmp_path):
+    conn = old_schema_database(tmp_path / "old.db")
+    with pytest.raises(OutcomeRulesSchemaError) as raised:
+        check_schema_supports_outcome_rules(conn)
+    message = str(raised.value)
+    assert FLAG in message and "date_deadline must allow NULL" in message
+    assert "'UNDECIDED'" in message
+    conn.close()
+
+
+def test_preflight_names_only_the_missing_capability(tmp_path):
+    conn = old_schema_database(tmp_path / "old.db")
+    conn.execute("DROP TABLE promises")
+    conn.execute("CREATE TABLE promises (promise_id TEXT PRIMARY KEY, date_deadline TEXT)")
+    with pytest.raises(OutcomeRulesSchemaError) as raised:
+        check_schema_supports_outcome_rules(conn)
+    assert "date_deadline" not in str(raised.value)
+    assert "verdicts.verdict must allow 'UNDECIDED'" in str(raised.value)
+    conn.close()
+
+
+def test_audit_fails_fast_on_an_old_schema_before_any_write(tmp_path, rules_on):
+    database = tmp_path / "candidate.db"
+    conn = old_schema_database(database)
+    conn.close()
+
+    async def go():
+        import src.candidate as candidate
+        conn = sqlite3.connect(database)
+        with pytest.raises(OutcomeRulesSchemaError):
+            await candidate.audit_candidate(
+                conn, root=tmp_path / "sources", staging_root=tmp_path / "staging",
+                lead={"promise_id": "P99", "promise_text": "x"},
+                research={"phases": {}}, complete=None, as_of=AS_OF)
+        for table in ("evidence_ledger", "relevance_assessments", "promises", "quarantined"):
+            assert conn.execute(f"SELECT count(*) FROM {table}").fetchone() == (0,)
+        conn.close()
+    asyncio.run(go())
+
+
+def test_old_schema_is_not_checked_when_the_flag_is_off(tmp_path, rules_off):
+    from src.candidate import audit_candidate
+    database = tmp_path / "candidate.db"
+    conn = old_schema_database(database)
+    conn.execute("PRAGMA foreign_keys=ON")
+    result = asyncio.run(audit_candidate(
+        conn, root=tmp_path / "sources", staging_root=tmp_path / "staging",
+        lead={"promise_id": "P99", "promise_text": "x"},
+        research={"phases": {"origin": {"sources": []}}}, complete=None, as_of=AS_OF))
+    assert result["reason"] == "NO_VERIFIABLE_ORIGIN"  # reached the audit, no preflight error
+    conn.close()
+
+
+def test_candidate_batch_fails_fast_on_an_old_schema(tmp_path, monkeypatch):
+    from src.run_live import candidate_batch
+    database = tmp_path / "candidates.db"
+    old_schema_database(database).close()
+    monkeypatch.setenv(FLAG, "1")
+    monkeypatch.setattr("src.run_live.credentials", lambda: {
+        "OPENROUTER_API_KEY": "test", "KEENABLE_API_KEY": "test"})
+
+    async def discover(*_args):
+        raise AssertionError("discovery must not start")
+
+    monkeypatch.setattr("src.run_live.discover_run", discover)
+    with pytest.raises(OutcomeRulesSchemaError, match="date_deadline must allow NULL"):
+        asyncio.run(candidate_batch(database, ["P01"]))
+
+
+def test_flag_off_publish_rejects_null_deadline_and_undecided(monkeypatch):
+    monkeypatch.delenv(FLAG, raising=False)
+    require_flag_off_strictness(date(2025, 1, 1), "KEPT")
+    with pytest.raises(ValueError, match="NULL deadline"):
+        require_flag_off_strictness(None, "KEPT")
+    with pytest.raises(ValueError, match="UNDECIDED"):
+        require_flag_off_strictness(date(2025, 1, 1), "UNDECIDED")
+    monkeypatch.setenv(FLAG, "1")
+    require_flag_off_strictness(None, "UNDECIDED")
+
+
+def test_flag_off_audit_cannot_publish_undecided_or_null_deadline(tmp_path, rules_off, monkeypatch):
+    """The permissive schema no longer backstops the flag; the publish step does."""
+    monkeypatch.setattr("src.candidate.decide_verdict", lambda *a, **k: "UNDECIDED")
+    with pytest.raises(ValueError, match="UNDECIDED"):
+        run(tmp_path, **PAST_DEADLINE,
+            outcome=[("The San Francisco neighborhood clinics opened in 2024.", "2024-12-01"),
+                     ("The San Francisco neighborhood clinics remain open in 2026.", "2026-01-01")],
+            assessment={"initial_delivery": "DELIVERED_ON_TIME",
+                        "current_survival": "ACTIVE_OPERATIONAL",
+                        "delivery": {"source_index": 0, "segment_id": 0},
+                        "survival": {"source_index": 1, "segment_id": 0}},
+            review={"delivery": True, "survival": True})
+    database = tmp_path / "candidate.db"
+    with sqlite3.connect(database) as conn:
+        for table in ("promises", "verdicts", "evidence_ledger"):
+            assert conn.execute(f"SELECT count(*) FROM {table}").fetchone() == (0,)
+
+
+def test_current_schema_stays_permissive_for_flagged_runs(tmp_path):
+    database = tmp_path / "new.db"
+    initialize_database(database)
+    sql = dict(sqlite3.connect(database).execute(
+        "SELECT name, sql FROM sqlite_master WHERE name IN ('promises','verdicts')"))
+    assert "NOT NULL" not in sql["promises"].split("date_deadline")[1].split(",")[0]
+    assert "'UNDECIDED'" in sql["verdicts"]
 
 
 # --- flag off: unchanged quarantine reasons ---------------------------------

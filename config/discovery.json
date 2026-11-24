@@ -5,6 +5,7 @@
   "added_at": "2026-11-14",
   "search_max_results": 25,
   "fetch_max_chars": 400000,
+  "fetch_attempts_per_phase": 8,
   "objectives": {
     "origin": "The original public announcement or statement in which the named San Francisco person or agency made this commitment, ideally an official or first-party source.",
     "delivery": "An official or reputable source reporting whether this specific San Francisco commitment was delivered, completed or opened, and when.",

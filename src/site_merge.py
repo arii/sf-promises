@@ -16,10 +16,22 @@ import sqlite3
 
 from src.database import APPLICATION_ID, SCHEMA_VERSION
 from src.evidence import screen_saved_source
+from src.outcome_rules import (
+    NOT_CHECKED_NOTE, recorded_origin_date_failures, recorded_outcome_rules,
+)
 from src.relevance import evaluate_relevance
 from src.sources import is_verbatim_quote
 from src.taxonomy import screen_taxonomy
 from src.temporal import check_origin_dates, screen_forward_looking
+
+# Evidence phases (beyond ORIGIN) a verdict needs: a delivery sentence for the kept
+# family, a delivery plus a survival sentence for a reversal, and the contrary
+# (not delivered) delivery sentence for broken. IN_PROGRESS and UNDECIDED need none.
+REQUIRED_PHASES = {
+    "KEPT": ("DELIVERY",), "DELAYED_OR_PARTIAL": ("DELIVERY",),
+    "KEPT_THEN_REVERSED": ("DELIVERY", "SURVIVAL"), "BROKEN": ("DELIVERY",),
+}
+VERIFIER_FIELDS = ("action", "promise_date", "entity_and_location")
 
 VERDICT_MAP = {
     "KEPT": "kept",
@@ -153,8 +165,20 @@ def _load_promise(conn, promise, source_root, today):
 
     promised = _date(promise["date_promised"])
     deadline = _date(promise["date_deadline"])
-    if promised is None or deadline is None or promised > today:
+    if promise["date_deadline"] is not None and deadline is None:
         return None, "promise_date_invalid"
+    if promised is None or promised > today:
+        return None, "promise_date_invalid"
+
+    verifications = _rows(
+        conn, "SELECT * FROM verifications WHERE promise_id = ? ORDER BY verification_id", (pid,))
+    try:
+        recorded = recorded_outcome_rules(
+            [v for v in verifications if v["check_type"] == "outcome_basis"])
+        outcome_basis = next((json.loads(v["reason"]) for v in reversed(verifications)
+                              if v["check_type"] == "outcome_basis"), None)
+    except (ValueError, KeyError, TypeError):
+        return None, "outcome_basis_invalid"
 
     evidence = _rows(
         conn, "SELECT * FROM evidence_ledger WHERE promise_id = ? ORDER BY evidence_id", (pid,))
@@ -184,7 +208,9 @@ def _load_promise(conn, promise, source_root, today):
         if item["phase"] == "ORIGIN"
         and is_verbatim_quote(promise["promise_text"], item["verbatim_quote"])
         and not screen_forward_looking(promise["promise_text"])
-        and not check_origin_dates(promised, item["_published"], deadline)
+        and not recorded_origin_date_failures(
+            check_origin_dates(promised, item["_published"], deadline), promised, deadline,
+            quote=promise["promise_text"], published=item["_published"], recorded=recorded)
     ), None)
     if origin is None:
         return None, "origin_evidence_missing"
@@ -200,13 +226,40 @@ def _load_promise(conn, promise, source_root, today):
         except (ValueError, KeyError, TypeError):
             return None, "promise_date_basis_invalid"
 
-    verifications = _rows(
-        conn, "SELECT * FROM verifications WHERE promise_id = ? ORDER BY verification_id", (pid,))
+    problem = _verdict_support_problem(latest["verdict"], rebased, verifications, promised, deadline)
+    if problem:
+        return None, problem
     return {
         "promise": promise, "verdicts": ordered, "latest": latest, "relevance": relevance,
         "evidence": rebased, "origin": origin, "basis": basis,
         "verifications": verifications, "promised": promised, "deadline": deadline,
+        "outcome_basis": outcome_basis,
     }, None
+
+
+def _verdict_support_problem(verdict, evidence, verifications, promised, deadline):
+    """Return a rejection reason unless the evidence and verifier rows support the verdict."""
+    phases = {e["phase"] for e in evidence
+              if e["phase"] != "ORIGIN" and e["_published"] > promised}
+    for phase in REQUIRED_PHASES.get(verdict, ()):
+        if phase not in phases:
+            return ("verdict_unsupported:no_contrary_evidence" if verdict == "BROKEN"
+                    else f"verdict_unsupported:no_{phase.lower()}_evidence")
+    verifier = next((v for v in reversed(verifications)
+                     if v["check_type"] == "independent_verifier"), None)
+    if verifier is None or verifier["passed"] != 1:
+        return "verdict_unsupported:no_passed_independent_verifier"
+    try:
+        review = json.loads(verifier["reason"])
+    except (TypeError, ValueError):
+        return "verdict_unsupported:verifier_unreadable"
+    needed = list(VERIFIER_FIELDS)
+    if deadline is not None:
+        needed.append("deadline")
+    needed += [phase.lower() for phase in REQUIRED_PHASES.get(verdict, ())]
+    if not isinstance(review, dict) or any(review.get(name) is not True for name in needed):
+        return "verdict_unsupported:verifier_did_not_confirm"
+    return None
 
 
 def load_v2_promises(db_path, source_root, *, today=None):
@@ -296,6 +349,21 @@ def _reason_text(reason, verdict):
     return reason[0].upper() + reason[1:]
 
 
+def _outcome_basis_field(detail, open_ended):
+    """Site-facing outcome basis, or None for a record the flag-off audit published."""
+    if not isinstance(detail, dict):
+        return None
+    reason = detail.get("reason")
+    return {
+        "rules": list(detail.get("rules") or []),
+        "outcome_rule": detail.get("outcome_rule"),
+        "open_ended": bool(detail.get("open_ended", open_ended)),
+        "reason": reason,
+        "relied_on": list(detail.get("relied_on") or []),
+        "status_not_checked": reason == NOT_CHECKED_NOTE,
+    }
+
+
 def build_record(item, *, promise_id, rank, entity_count):
     promise, origin = item["promise"], item["origin"]
     verdict = VERDICT_MAP[item["latest"]["verdict"]]
@@ -305,6 +373,10 @@ def build_record(item, *, promise_id, rank, entity_count):
              else "regional" if neighborhood.startswith("Regional") else "neighborhood")
     promised, deadline = promise["date_promised"], promise["date_deadline"]
     basis = item["basis"]
+    # Missing deadline follows the legacy export's convention: null date, status
+    # and precision "not_applicable", display "No fixed deadline".
+    open_ended = deadline is None
+    outcome_basis = _outcome_basis_field(item["outcome_basis"], open_ended)
 
     history = [{"verdict": VERDICT_MAP[v["verdict"]], "decided_at": v["decided_at"],
                 "reason": v["reason"]} for v in item["verdicts"]]
@@ -319,7 +391,15 @@ def build_record(item, *, promise_id, rank, entity_count):
             entry["model_id"] = row["model_id"]
         verification_history.append(entry)
 
-    # Results of the checks this merge itself just ran against the saved bytes.
+    phases = {e["phase"] for e in item["evidence"]}
+    verifier = next((r for r in reversed(item["verifications"])
+                     if r["check_type"] == "independent_verifier"), None)
+    required = REQUIRED_PHASES.get(item["latest"]["verdict"], ())
+    contradictory = bool(
+        item["latest"]["verdict"] in ("BROKEN", "KEPT_THEN_REVERSED")
+        and phases & {"DELIVERY", "SURVIVAL"})
+    # Results of the checks this merge itself just ran against the saved bytes
+    # and the database's own rows.
     checks = [
         {"check": "authenticity_domain", "passed": True,
          "reason": "Source domain and tier re-screened at export."},
@@ -329,7 +409,15 @@ def build_record(item, *, promise_id, rank, entity_count):
          "reason": "Every cited quote found verbatim in the saved source text at export."},
         {"check": "accuracy_date", "passed": True,
          "reason": "Origin publication date is consistent with the promise date and deadline."},
+        {"check": "verdict_evidence",
+         "passed": all(phase in phases for phase in required),
+         "reason": ("Evidence phases required by the verdict are present: "
+                    + (", ".join(required) if required else "none beyond the origin") + ".")},
+        {"check": "independent_verifier",
+         "passed": bool(verifier is not None and verifier["passed"] == 1),
+         "reason": "A passed independent verifier row is recorded for this promise."},
     ]
+    failed = [c["check"] for c in checks if not c["passed"]]
 
     record = {
         "promise_id": promise_id,
@@ -354,11 +442,12 @@ def build_record(item, *, promise_id, rank, entity_count):
         "deadline_date": deadline,
         "completion_date": None,
         "promise_date_precision": "day",
-        "due_date_precision": "day",
+        "due_date_precision": "not_applicable" if open_ended else "day",
         "completion_date_precision": "not_recorded",
         "promised_date_display": _format_date(promised) or "Not recorded",
-        "due_date_display": _format_date(deadline) or "Not recorded",
-        "due_date_status": "present",
+        "due_date_display": ("No fixed deadline" if open_ended
+                             else _format_date(deadline) or "Not recorded"),
+        "due_date_status": "not_applicable" if open_ended else "present",
         "completion_date_status": (
             "not_yet_known" if verdict in ("in_progress", "undecided")
             else "not_applicable" if verdict == "broken" else "not_captured"),
@@ -388,9 +477,9 @@ def build_record(item, *, promise_id, rank, entity_count):
         },
         "advocate_bundles": {},
         "checks": checks,
-        "all_checks_passed": True,
-        "failed_check_count": 0,
-        "failed_check_names": [],
+        "all_checks_passed": not failed,
+        "failed_check_count": len(failed),
+        "failed_check_names": failed,
         "verdict_history": history,
         "verification_history": verification_history,
         "evidence": [{
@@ -398,7 +487,7 @@ def build_record(item, *, promise_id, rank, entity_count):
             "published_date": e["published_date"], "source_hash": e["content_sha256"],
             "source_file_path": e["_file"], "quote": e["verbatim_quote"],
         } for e in item["evidence"]],
-        "has_contradictory_evidence": False,
+        "has_contradictory_evidence": contradictory,
         "verdict_supporting_evidence_count": None,
         "verdict_contradicting_evidence_count": None,
         "record_type": "promise",
@@ -410,6 +499,8 @@ def build_record(item, *, promise_id, rank, entity_count):
         "entity_promise_count": entity_count,
         "entity_sample_warning": entity_count < 3,
     }
+    if outcome_basis is not None:
+        record["outcome_basis"] = outcome_basis
     if basis is not None:
         record["promise_date_basis"] = basis["basis"]
         record["promise_date_derived"] = basis["basis"] != "stated"

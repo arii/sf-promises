@@ -28,6 +28,7 @@ class DiscoveryConfig:
     added_at: str
     search_max_results: int = 25
     fetch_max_chars: int = 400000
+    fetch_attempts_per_phase: int = 8
     objectives: tuple = ()  # ((phase, objective), ...)
 
     def objective(self, phase: str | None) -> str | None:
@@ -56,7 +57,7 @@ def load_discovery_config(path: str = "") -> DiscoveryConfig:
         if not isinstance(raw[field], str) or not raw[field].strip():
             raise ValueError(f"discovery config: field '{field}' must be a non-empty string")
     defaults = DiscoveryConfig(rolling_days, "", "", "")
-    for field in ("search_max_results", "fetch_max_chars"):
+    for field in ("search_max_results", "fetch_max_chars", "fetch_attempts_per_phase"):
         value = raw.get(field, getattr(defaults, field))
         if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
             raise ValueError(f"discovery config: field '{field}' must be a positive integer")
@@ -70,6 +71,7 @@ def load_discovery_config(path: str = "") -> DiscoveryConfig:
     return DiscoveryConfig(
         search_max_results=raw.get("search_max_results", 25),
         fetch_max_chars=raw.get("fetch_max_chars", 400000),
+        fetch_attempts_per_phase=raw.get("fetch_attempts_per_phase", 8),
         objectives=tuple(sorted(objectives.items())),
         rolling_days=rolling_days,
         added_reason=raw["added_reason"],

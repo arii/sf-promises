@@ -10,7 +10,8 @@ from keenable import KeenableAPIError, KeenableConnectionError
 
 from keenable_stubs import fetch_response
 from src.discovery import (
-    discover_and_archive, discover_timeline, fetch_and_archive, pool_outcome_sources, search_window,
+    PageTransientError, discover_and_archive, discover_timeline, fetch_and_archive,
+    pool_outcome_sources, search_window,
 )
 from src.sources import load_archived_text
 
@@ -378,6 +379,147 @@ class DiscoveryTests(unittest.IsolatedAsyncioTestCase):
             origin = result["phases"]["origin"]
             self.assertEqual(origin["blocked"], [{"url": url, "reason": reason}])
             self.assertEqual([item["url"] for item in origin["sources"]], [good])
+
+    async def test_transient_page_errors_are_retryable_connection_failures(self):
+        from src.run_live import transient_fetch_failure
+        original = "https://sf.gov/flaky"
+        good = "https://sf.gov/original-announcement"
+
+        class Client:
+            def __init__(self, status):
+                self.status = status
+
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[SimpleNamespace(url=good)])
+
+            async def fetch(self, url, **options):
+                if url == original:
+                    return fetch_response(url, "", error={"status": self.status, "error": "oops"})
+                return fetch_response(url, "Archived statement", "2024-01-02")
+
+        for status in (429, 500, 502, 503, 504):
+            with tempfile.TemporaryDirectory() as root:
+                with self.assertRaises(PageTransientError) as raised:
+                    await fetch_and_archive(Client(status), original, Path(root), "P01")
+                self.assertIsInstance(raised.exception, KeenableConnectionError)
+                result = await discover_and_archive(
+                    Client(status), {"promise_id": "P01", "promised_date": "2024-01-01",
+                                     "source_url": original, "entity": "Library",
+                                     "promise_text": "Open a library branch"},
+                    root=Path(root), as_of=date(2025, 1, 1),
+                )
+            origin = result["phases"]["origin"]
+            self.assertEqual(origin["blocked"],
+                             [{"url": original, "reason": "fetch_connection_error"}], status)
+            self.assertEqual([item["url"] for item in origin["sources"]], [good])
+            # run_live blocks the seed as retryable instead of auditing it.
+            self.assertTrue(transient_fetch_failure(result["phases"]), status)
+
+    async def test_permanent_page_errors_stay_permanent_blocks(self):
+        from src.run_live import transient_fetch_failure
+        gone = "https://sf.gov/gone"
+
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[])
+
+            async def fetch(self, url, **options):
+                return fetch_response(url, "", error={"status": 403, "error": "forbidden"})
+
+        with tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "source_url": gone, "entity": "Library",
+                           "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+        self.assertEqual(result["phases"]["origin"]["blocked"],
+                         [{"url": gone, "reason": "http_403"}])
+        self.assertFalse(transient_fetch_failure(result["phases"]))
+
+    async def test_fetch_attempts_per_phase_are_capped_and_blocked_attempts_count(self):
+        fetched = []
+        searches = []
+
+        class Client:
+            async def search(self, query, **kwargs):
+                searches.append(query)
+                phase = len(searches)
+                return SimpleNamespace(results=[
+                    SimpleNamespace(url=f"https://sf.gov/p{phase}/{n}") for n in range(25)])
+
+            async def fetch(self, url, **options):
+                fetched.append(url)
+                return fetch_response(url, "", error={"status": 404, "error": "not found"})
+
+        with tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "entity": "Library", "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+        self.assertEqual(len(fetched), 24)  # 8 per phase, three phases, not 75
+        for phase in result["phases"].values():
+            self.assertEqual(len(phase["blocked"]), 8)
+            self.assertEqual(phase["sources"], [])
+            self.assertTrue(phase["fetch_budget_exhausted"])
+
+    async def test_cap_is_configurable_and_does_not_apply_below_it(self):
+        import dataclasses
+        from unittest import mock
+        import src.discovery as discovery
+        fetched = []
+
+        class Client:
+            async def search(self, query, **kwargs):
+                return SimpleNamespace(results=[
+                    SimpleNamespace(url=f"https://sf.gov/{abs(hash(query))}/{n}") for n in range(25)])
+
+            async def fetch(self, url, **options):
+                fetched.append(url)
+                if url.endswith("/1"):
+                    return fetch_response(url, "Archived statement", "2024-01-02")
+                return fetch_response(url, "", error={"status": 404, "error": "not found"})
+
+        config = dataclasses.replace(
+            discovery.load_discovery_config(), fetch_attempts_per_phase=3)
+        with mock.patch.object(discovery, "load_discovery_config", lambda *a: config), \
+                tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "entity": "Library", "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+        self.assertEqual(len(fetched), 9)
+        for phase in result["phases"].values():
+            self.assertEqual(len(phase["blocked"]) + len(phase["sources"]), 3)
+        # One good source among few attempts: no exhaustion flag when under the cap.
+        config = dataclasses.replace(config, fetch_attempts_per_phase=25)
+        fetched.clear()
+        with mock.patch.object(discovery, "load_discovery_config", lambda *a: config), \
+                tempfile.TemporaryDirectory() as root:
+            result = await discover_and_archive(
+                Client(), {"promise_id": "P01", "promised_date": "2024-01-01",
+                           "entity": "Library", "promise_text": "Open a library branch"},
+                root=Path(root), as_of=date(2025, 1, 1),
+            )
+        self.assertTrue(all("fetch_budget_exhausted" not in p for p in result["phases"].values()))
+
+    def test_fetch_attempts_config_default_and_validation(self):
+        import json as _json
+        from src.discovery_config import load_discovery_config
+        self.assertEqual(load_discovery_config().fetch_attempts_per_phase, 8)
+        raw = _json.loads(Path("config/discovery.json").read_text())
+        self.assertEqual(raw["fetch_attempts_per_phase"], 8)
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root) / "discovery.json"
+            for bad in (0, -1, True, "8"):
+                path.write_text(_json.dumps({**raw, "fetch_attempts_per_phase": bad}))
+                with self.assertRaises(ValueError):
+                    load_discovery_config(str(path))
+            path.write_text(_json.dumps({k: v for k, v in raw.items()
+                                         if k != "fetch_attempts_per_phase"}))
+            self.assertEqual(load_discovery_config(str(path)).fetch_attempts_per_phase, 8)
 
     async def test_empty_fetch_batch_is_blocked(self):
         class Client:

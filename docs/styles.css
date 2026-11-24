@@ -6839,6 +6839,12 @@ a:hover {
   font-weight: 500;
 }
 
+.drawer-outcome-basis {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+
 .drawer-outcome-quote-box {
   background: rgba(0, 0, 0, 0.25);
   border-left: 3px solid var(--line-soft);

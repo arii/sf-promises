@@ -23,8 +23,9 @@ from src.sources import load_archived_metadata, load_archived_text
 from src.taxonomy import screen_taxonomy
 from src.lifecycle_rubric import decide_verdict
 from src.outcome_rules import (
-    NOT_CHECKED_NOTE, decide_outcome, origin_date_failures, outcome_rules_enabled,
-    relied_phases,
+    NOT_CHECKED_NOTE, check_schema_supports_outcome_rules, decide_outcome,
+    origin_date_failures, outcome_rules_enabled, relied_phases,
+    require_flag_off_strictness,
 )
 
 
@@ -114,14 +115,14 @@ def _tier(source):
     return "TIER1_GOV" if _primary_host(source["url"]) else "TIER2_NEWS"
 
 
-def _outcome_material(root, promise_id, sources):
+def _outcome_material(root, promise_id, sources, target=None):
     material = []
     budget = 8500
     for source in sources[:6]:
         text = load_archived_text(root, promise_id, source["path"], source["sha256"])
         segments = []
         size = 0
-        for segment in _source_segments(text):
+        for segment in _source_segments(text, target=target, rank=True):
             if len(segment) > 1400:
                 continue
             if size + len(segment) > min(1400, budget):
@@ -178,6 +179,8 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                           search_exhausted=True, retry_quarantined=False, worker_gate=None):
     """Audit one seed. Provider errors propagate and are never classified as evidence."""
     pid = lead["promise_id"]
+    if outcome_rules_enabled():
+        check_schema_supports_outcome_rules(conn)
     prior = conn.execute("SELECT verdict FROM verdicts WHERE promise_id=? "
                          "ORDER BY verdict_id DESC LIMIT 1", (pid,)).fetchone()
     if prior:
@@ -216,7 +219,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 None, None, [], root=root, promise_id=pid, path=origin["path"],
                 digest=origin["sha256"], source_url=origin["url"],
                 target=lead["promise_text"], completion=complete, published=published,
-                **extra,
+                entity=lead.get("entity"), **extra,
             )
         except InvalidPromiseDate:
             last_reason = "INVALID_PROMISE_DATE_LATER_THAN_SOURCE"
@@ -240,6 +243,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 # R1/R2: src/screening.py is frozen, so filter its date failures here.
                 screening_failures, screening_rules = origin_date_failures(
                     screening["failures"], candidate.promised_date, candidate.deadline,
+                    quote=candidate.promise_text, published=published,
                 )
                 screening = {**screening, "failures": screening_failures}
             if screening["failures"]:
@@ -283,7 +287,10 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
             outcome_sources = pool_outcome_sources(
                 research["phases"], promised=candidate.promised_date, as_of=as_of,
             )
-            material = _outcome_material(root, pid, outcome_sources)
+            material = _outcome_material(
+                root, pid, outcome_sources,
+                target=" ".join(filter(None, (lead.get("entity"), candidate.promise_text))),
+            )
             if not material and not rules_on:
                 last_reason = "INSUFFICIENT_OUTCOME_EVIDENCE"
                 continue
@@ -343,6 +350,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
             if rules_on:
                 outcome = decide_outcome(
                     candidate.deadline, as_of, delivery_state, survival_state, True,
+                    delivery_published=_published(delivery[0]) if delivery else None,
                 )
                 if outcome is None:
                     last_reason = "INSUFFICIENT_OUTCOME_EVIDENCE"
@@ -416,6 +424,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                     continue
                 evidence = [("ORIGIN", origin, candidate.promise_text),
                             ("DELIVERY", *delivery), ("SURVIVAL", *survival)]
+            require_flag_off_strictness(candidate.deadline, verdict)
             if worker_gate is not None:
                 await worker_gate(
                     [(source, quote) for _, source, quote in evidence],
@@ -472,6 +481,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 )
             conn.execute("BEGIN IMMEDIATE")
             try:
+                require_flag_off_strictness(candidate.deadline, verdict)
                 for phase, source, quote in evidence:
                     metadata = load_archived_metadata(
                         root, pid, source["metadata_path"], source["metadata_sha256"],

@@ -19,8 +19,20 @@ TEXT = "Mayor Example said: We will build a library on Mission Street by 2025."
 PROMISE = "We will build a library on Mission Street by 2025."
 
 
+DELIVERY_TEXT = "The Mission Street library opened to the public on June 3, 2024."
+VERIFIED = {"action": True, "promise_date": True, "deadline": True, "delivery": False,
+            "survival": False, "entity_and_location": True, "explanation": "Verified."}
+
+
 def make_v2(directory, promises, *, source_text=TEXT):
-    """Build a tiny v2 database; each spec is a dict overriding the defaults."""
+    """Build a tiny v2 database; each spec is a dict overriding the defaults.
+
+    Spec keys: pid, text, quote, url, source_text, verdict, basis (date basis),
+    deadline (default 2025-01-01, None for open-ended), extra (list of
+    (phase, text, published) evidence rows), verifier (dict of review fields to
+    override, or False for no verifier row), verifier_passed, outcome_basis
+    (dict or None).
+    """
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
     db_path = initialize_database(directory / "promises.db")
@@ -36,14 +48,35 @@ def make_v2(directory, promises, *, source_text=TEXT):
         db.execute("INSERT INTO candidates VALUES (?, ?)", (pid, f"slug-{pid.lower()}"))
         db.execute(
             "INSERT INTO promises VALUES (?, 'City Library Dept', 'City Agency', "
-            "'Parks & Recreation', 'Citywide', ?, '2024-01-01', '2025-01-01', "
-            "'2024-01-02T00:00:00+00:00')", (pid, text))
+            "'Parks & Recreation', 'Citywide', ?, '2024-01-01', ?, "
+            "'2024-01-02T00:00:00+00:00')",
+            (pid, text, spec["deadline"] if "deadline" in spec else "2025-01-01"))
         db.execute(
             "INSERT INTO evidence_ledger (promise_id, phase, source_tier, url, "
             "local_source_path, content_sha256, verbatim_quote, quote_verified, "
             "verification_record_json, published_date, ingested_at) "
             "VALUES (?, 'ORIGIN', 'TIER1_GOV', ?, ?, ?, ?, 1, '{}', '2024-01-02', "
             "'2024-01-02T00:00:00+00:00')", (pid, url, saved["path"], saved["sha256"], quote))
+        for number, (phase, extra_text, published) in enumerate(spec.get("extra", [])):
+            extra_saved = archive_source(sources, pid, extra_text.encode(), ".md")
+            db.execute(
+                "INSERT INTO evidence_ledger (promise_id, phase, source_tier, url, "
+                "local_source_path, content_sha256, verbatim_quote, quote_verified, "
+                "verification_record_json, published_date, ingested_at) "
+                "VALUES (?, ?, 'TIER1_GOV', ?, ?, ?, ?, 1, '{}', ?, '2024-06-01T00:00:00+00:00')",
+                (pid, phase, f"https://www.sf.gov/news/{pid.lower()}-{phase.lower()}-{number}",
+                 extra_saved["path"], extra_saved["sha256"], extra_text, published))
+        if spec.get("verifier") is not False:
+            review = {**VERIFIED, **spec.get("verifier", {})}
+            db.execute(
+                "INSERT INTO verifications (promise_id, check_type, passed, reason, checked_at, "
+                "model_id) VALUES (?, 'independent_verifier', ?, ?, '2024-06-01T00:00:00+00:00', "
+                "'model-x')", (pid, int(spec.get("verifier_passed", True)), json.dumps(review)))
+        if spec.get("outcome_basis"):
+            db.execute(
+                "INSERT INTO verifications (promise_id, check_type, passed, reason, checked_at) "
+                "VALUES (?, 'outcome_basis', 1, ?, '2024-06-01T00:00:00+00:00')",
+                (pid, json.dumps(spec["outcome_basis"])))
         db.execute(
             "INSERT INTO verdicts (promise_id, verdict, reason, decided_at) VALUES (?, ?, ?, ?)",
             (pid, spec.get("verdict", "IN_PROGRESS"), "construction underway",
@@ -114,7 +147,9 @@ def test_existing_records_unchanged_and_counts_updated(base, tmp_path):
         "text": "We will build a clinic on Valencia Street by 2025.",
         "quote": "Mayor Example said: We will build a clinic on Valencia Street by 2025.",
         "url": "https://www.sf.gov/news/v2-clinic", "source_text":
-        "Mayor Example said: We will build a clinic on Valencia Street by 2025."}])
+        "Mayor Example said: We will build a clinic on Valencia Street by 2025.",
+        "extra": [("DELIVERY", DELIVERY_TEXT, "2024-06-03")],
+        "verifier": {"delivery": True}}])
     payload, report = run_merge(base, db, src)
     n = len(base["promises"])
     assert payload["promises"][:n] == base["promises"]
@@ -252,3 +287,172 @@ def test_cli_merges_v2_after_legacy_export(tmp_path):
         capture_output=True, text=True, cwd=ROOT)
     assert bad.returncode != 0
     assert not (tmp_path / "out2" / "data.json").exists()
+
+
+# --- verdict must be supported by evidence and verifier rows -----------------
+
+def merged(base, tmp_path, spec):
+    db, src = make_v2(tmp_path / "v2", [spec])
+    return run_merge(base, db, src)
+
+
+def rejected_reason(report):
+    assert report["added"] == []
+    return report["rejected"][0]["reason"]
+
+
+DELIVERY = ("DELIVERY", DELIVERY_TEXT, "2024-06-03")
+SURVIVAL = ("SURVIVAL", "The Mission Street library closed permanently in 2025.", "2025-03-01")
+
+
+@pytest.mark.parametrize("verdict,extra,reason", [
+    ("KEPT", [], "verdict_unsupported:no_delivery_evidence"),
+    ("DELAYED_OR_PARTIAL", [], "verdict_unsupported:no_delivery_evidence"),
+    ("KEPT_THEN_REVERSED", [], "verdict_unsupported:no_delivery_evidence"),
+    ("KEPT_THEN_REVERSED", [DELIVERY], "verdict_unsupported:no_survival_evidence"),
+    ("BROKEN", [], "verdict_unsupported:no_contrary_evidence"),
+    # An outcome row dated before the promise cannot be delivery evidence.
+    ("KEPT", [("DELIVERY", DELIVERY_TEXT, "2023-06-03")], "verdict_unsupported:no_delivery_evidence"),
+])
+def test_verdict_without_matching_evidence_is_rejected(base, tmp_path, verdict, extra, reason):
+    _, report = merged(base, tmp_path, {
+        "pid": "P901", "verdict": verdict, "extra": extra,
+        "verifier": {"delivery": True, "survival": True}})
+    assert rejected_reason(report) == reason
+
+
+def test_origin_only_in_progress_and_undecided_are_accepted(base, tmp_path):
+    for verdict in ("IN_PROGRESS", "UNDECIDED"):
+        payload, report = merged(base, tmp_path / verdict, {"pid": "P901", "verdict": verdict})
+        record = payload["promises"][-1]
+        assert report["added"] and record["verdict"] == verdict.lower()
+        assert record["all_checks_passed"] is True and record["failed_check_names"] == []
+        assert record["has_contradictory_evidence"] is False
+
+
+@pytest.mark.parametrize("spec,reason", [
+    ({"verifier": False}, "no_passed_independent_verifier"),
+    ({"verifier_passed": False}, "no_passed_independent_verifier"),
+    ({"verifier": {"action": False}}, "verifier_did_not_confirm"),
+    ({"verifier": {"deadline": False}}, "verifier_did_not_confirm"),
+    ({"verdict": "KEPT", "extra": [DELIVERY], "verifier": {"delivery": False}},
+     "verifier_did_not_confirm"),
+])
+def test_independent_verifier_must_have_passed_and_confirmed(base, tmp_path, spec, reason):
+    _, report = merged(base, tmp_path, {"pid": "P901", **spec})
+    assert rejected_reason(report) == f"verdict_unsupported:{reason}"
+
+
+def test_kept_with_delivery_evidence_computes_checks_from_data(base, tmp_path):
+    payload, report = merged(base, tmp_path, {
+        "pid": "P901", "verdict": "KEPT", "extra": [DELIVERY], "verifier": {"delivery": True}})
+    record = payload["promises"][-1]
+    assert report["added"] and record["verdict"] == "kept"
+    checks = {c["check"]: c["passed"] for c in record["checks"]}
+    assert checks["verdict_evidence"] is True and checks["independent_verifier"] is True
+    assert record["all_checks_passed"] is True and record["failed_check_count"] == 0
+    assert record["has_contradictory_evidence"] is False
+    assert [e["phase"] for e in record["evidence"]] == ["ORIGIN", "DELIVERY"]
+
+
+def test_broken_and_reversed_records_are_marked_contradictory(base, tmp_path):
+    payload, _ = merged(base, tmp_path / "a", {
+        "pid": "P901", "verdict": "BROKEN", "extra": [DELIVERY], "verifier": {"delivery": True}})
+    assert payload["promises"][-1]["has_contradictory_evidence"] is True
+    payload, _ = merged(base, tmp_path / "b", {
+        "pid": "P901", "verdict": "KEPT_THEN_REVERSED", "extra": [DELIVERY, SURVIVAL],
+        "verifier": {"delivery": True, "survival": True}})
+    assert payload["promises"][-1]["has_contradictory_evidence"] is True
+
+
+# --- open-ended and short-horizon records (R1/R2) -----------------------------
+
+OPEN_ENDED_BASIS = {"rules": ["R1", "R5"], "outcome_rule": "R5", "open_ended": True,
+                    "deadline": None, "reason": "no outcome evidence found",
+                    "relied_on": [], "verdict": "UNDECIDED"}
+ONE_OFF_TEXT = "Mayor Example said: The library will open on January 5, 2024."
+ONE_OFF_PROMISE = "The library will open on January 5, 2024."
+
+
+def one_off(**overrides):
+    spec = {"pid": "P901", "text": ONE_OFF_PROMISE, "quote": ONE_OFF_TEXT,
+            "source_text": ONE_OFF_TEXT, "deadline": "2024-01-05", "verdict": "IN_PROGRESS",
+            "outcome_basis": {**OPEN_ENDED_BASIS, "rules": ["R2", "R3"], "open_ended": False,
+                              "outcome_rule": "R3", "deadline": "2024-01-05",
+                              "reason": "deadline in the future", "verdict": "IN_PROGRESS"}}
+    spec.update(overrides)
+    return spec
+
+
+def test_open_ended_record_reaches_the_site_with_null_deadline(base, tmp_path):
+    payload, report = merged(base, tmp_path, {
+        "pid": "P901", "deadline": None, "verdict": "UNDECIDED",
+        "outcome_basis": OPEN_ENDED_BASIS})
+    assert report["added"] == [{"promise_id": "P901", "verdict": "undecided"}]
+    record = payload["promises"][-1]
+    assert record["due_date"] is None and record["deadline_date"] is None
+    assert record["due_date_status"] == "not_applicable"
+    assert record["due_date_precision"] == "not_applicable"
+    assert record["due_date_display"] == "No fixed deadline"
+    assert record["completion_date_status"] == "not_yet_known"
+
+
+def test_null_deadline_without_a_recorded_basis_is_rejected(base, tmp_path):
+    _, report = merged(base, tmp_path, {"pid": "P901", "deadline": None, "verdict": "UNDECIDED"})
+    assert rejected_reason(report) == "origin_evidence_missing"
+    # A basis that does not name R1 does not waive the missing deadline either.
+    _, report = merged(base, tmp_path / "b", {
+        "pid": "P901", "deadline": None, "verdict": "UNDECIDED",
+        "outcome_basis": {**OPEN_ENDED_BASIS, "rules": ["R5"]}})
+    assert rejected_reason(report) == "origin_evidence_missing"
+
+
+def test_short_horizon_with_deadline_in_the_quote_is_accepted_when_recorded(base, tmp_path):
+    payload, report = merged(base, tmp_path, one_off())
+    assert report["added"] == [{"promise_id": "P901", "verdict": "in_progress"}]
+    assert payload["promises"][-1]["due_date"] == "2024-01-05"
+
+
+@pytest.mark.parametrize("overrides", [
+    # deadline not stated by the quote
+    {"text": "The library will open soon.", "quote": "Mayor Example said: The library will open soon.",
+     "source_text": "Mayor Example said: The library will open soon."},
+    # no outcome basis row in the database
+    {"outcome_basis": None},
+    # basis row does not name R2
+    {"outcome_basis": {**OPEN_ENDED_BASIS, "rules": ["R3"], "open_ended": False,
+                       "deadline": "2024-01-05", "verdict": "IN_PROGRESS"}},
+])
+def test_short_horizon_without_quote_or_record_is_rejected(base, tmp_path, overrides):
+    _, report = merged(base, tmp_path, one_off(**overrides))
+    assert rejected_reason(report) == "origin_evidence_missing"
+
+
+def test_invalid_outcome_basis_is_rejected(base, tmp_path):
+    db, src = make_v2(tmp_path / "v2", [{"pid": "P901"}])
+    with sqlite3.connect(db) as conn:
+        conn.execute("INSERT INTO verifications (promise_id, check_type, passed, reason, "
+                     "checked_at) VALUES ('P901', 'outcome_basis', 1, 'not json', "
+                     "'2024-06-02T00:00:00+00:00')")
+    _, report = run_merge(base, db, src)
+    assert rejected_reason(report) == "outcome_basis_invalid"
+
+
+# --- outcome basis reaches the site record -------------------------------------
+
+def test_outcome_basis_is_carried_into_the_record(base, tmp_path):
+    basis = {"rules": ["R4"], "outcome_rule": "R4", "open_ended": True, "deadline": None,
+             "reason": "current status not checked", "relied_on": ["DELIVERY"], "verdict": "KEPT"}
+    payload, report = merged(base, tmp_path, {
+        "pid": "P901", "deadline": None, "verdict": "KEPT", "extra": [DELIVERY],
+        "verifier": {"delivery": True}, "outcome_basis": {**basis, "rules": ["R1", "R4"]}})
+    assert report["added"]
+    assert payload["promises"][-1]["outcome_basis"] == {
+        "rules": ["R1", "R4"], "outcome_rule": "R4", "open_ended": True,
+        "reason": "current status not checked", "relied_on": ["DELIVERY"],
+        "status_not_checked": True}
+
+
+def test_record_without_outcome_basis_has_no_field(base, tmp_path):
+    payload, _ = merged(base, tmp_path, {"pid": "P901"})
+    assert "outcome_basis" not in payload["promises"][-1]

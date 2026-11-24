@@ -17,6 +17,14 @@ class PageBlocked(ValueError):
     """Keenable answered 200 but reported an error for this one URL."""
 
 
+# Per-page statuses that mean "try again later", not "this page is unavailable".
+TRANSIENT_PAGE_STATUSES = frozenset({429, 500, 502, 503, 504})
+
+
+class PageTransientError(KeenableConnectionError):
+    """Keenable answered 200 but reported a transient error for this one URL."""
+
+
 async def search_window(client, query: str, after: str, before: str, phase: str | None = None):
     results = await client.search(
         query, published_after=after, published_before=before, **search_options(phase)
@@ -81,6 +89,11 @@ async def fetch_and_archive(
         # Per-page errors arrive with HTTP 200; treat like a 404/410 block.
         status = getattr(error, "status", 0) or 0
         text = f"{getattr(error, 'error', '')} {getattr(error, 'message', '')}".lower()
+        if status in TRANSIENT_PAGE_STATUSES:
+            # A provider-side hiccup, not a property of the page: surface it like
+            # a connection failure so run_live blocks the seed as retryable
+            # instead of recording a permanent http_5xx block.
+            raise PageTransientError(f"fetch_connection_error:{status}")
         if status == 422 and "different page" in text:
             raise PageBlocked("http_422_wrong_page")
         raise PageBlocked(f"http_{status}" if status else "fetch_error_unknown")
@@ -162,6 +175,7 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
     )
     saved = {}
     phases = {}
+    attempts_allowed = load_discovery_config().fetch_attempts_per_phase
     acquired = {getattr(e, "url", None): getattr(e, "acquired_at", None)
                 for entries in results.values() for e in entries}
     for phase, entries in results.items():
@@ -172,6 +186,8 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
         blocked = []
         denied = []
         seen = set()
+        attempts = 0
+        budget_exhausted = False
         for url in urls:
             if not isinstance(url, str) or not url or url in seen:
                 continue
@@ -180,6 +196,12 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
                 denied.append({"url": url, "reason": "source_url_not_allowlisted"})
                 continue
             if url not in saved:
+                if attempts >= attempts_allowed:
+                    # Per-candidate cap: blocked attempts count, so a run of
+                    # dead links cannot trigger dozens of fetches per phase.
+                    budget_exhausted = True
+                    break
+                attempts += 1
                 try:
                     saved[url] = await fetch_and_archive(
                         client, url, root, promise_id, capture=capture,
@@ -209,5 +231,7 @@ async def discover_and_archive(client, lead, *, root, as_of, capture=None):
         phases[phase] = {
             "leads_found": len(entries), "sources": sources, "blocked": blocked, "denied": denied,
         }
+        if budget_exhausted:
+            phases[phase]["fetch_budget_exhausted"] = True
     return {"promise_id": promise_id, "phases": phases,
             "outcome_sources": pool_outcome_sources(phases, promised=promised, as_of=as_of)}
