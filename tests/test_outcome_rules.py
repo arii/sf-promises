@@ -1,5 +1,6 @@
 """Outcome rules R1-R7 (SF_PROMISES_OUTCOME_RULES): rubric, screening, audit, export."""
 
+from tests.keenable_stubs import fetch_response
 import asyncio
 import itertools
 import json
@@ -206,10 +207,9 @@ async def _audit(tmp_path, *, origin_text, origin_published, promised, deadline,
         documents[f"https://sf.gov/outcome{i}"] = (text, published)
 
     class Search:
-        async def fetch(self, url):
+        async def fetch(self, url, **kwargs):
             text, published = documents[url]
-            return SimpleNamespace(url=url, content=text, published_at=published,
-                                   raw={"truncated": False})
+            return fetch_response(url, text, published)
 
     sources = [await fetch_and_archive(Search(), url, root, "P99") for url in documents]
     research = {"phases": {
