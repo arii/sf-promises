@@ -1,0 +1,165 @@
+{
+  "generated_from": "seeds/discovery_targets.json (re-seeded 2026-11-23: neutral pointers + search keywords for 7 leads whose summaries matched no source)",
+  "leads": [
+    {
+      "promise_id": "LEADER-01",
+      "promise_text": "Salesforce grants to San Francisco Unified School District middle schools for computer science and teachers.",
+      "entity": "Salesforce",
+      "promised_date": "2013-09-10",
+      "due_date": "2023-09-01",
+      "source_id": null,
+      "source_url": "https://www.salesforce.com/news/press-releases/2021/09/21/salesforce-education-grants-2021/",
+      "keywords": "San Francisco Salesforce SFUSD middle schools grant computer science Benioff"
+    },
+    {
+      "promise_id": "RETAIL-02",
+      "promise_text": "Westfield's plans for the Westfield San Francisco Centre mall on Market Street.",
+      "entity": "Westfield / Unibail-Rodamco-Westfield",
+      "promised_date": "2006-09-28",
+      "due_date": "2056-09-28",
+      "source_id": null,
+      "source_url": "https://sfchronicle.com/sf/article/westfield-mall-sf-give-up-18147614.php",
+      "keywords": "San Francisco Westfield San Francisco Centre mall lender Unibail Market Street"
+    },
+    {
+      "promise_id": "ARTS-03",
+      "promise_text": "Stern Grove Festival free summer concerts and meadow improvements.",
+      "entity": "Stern Grove Festival Association",
+      "promised_date": "2021-10-05",
+      "due_date": "2022-06-12",
+      "source_id": null,
+      "source_url": "https://sfchronicle.com/culture/article/stern-grove-festival-free-summer-concerts-17188203.php",
+      "keywords": "San Francisco Stern Grove Festival free summer concerts meadow"
+    },
+    {
+      "promise_id": "LEADER-03",
+      "promise_text": "Mid-Market community benefit agreements under the payroll tax exclusion, including local hiring and spending commitments.",
+      "entity": "Twitter / Square (Mid-Market companies)",
+      "promised_date": "2012-09-18",
+      "due_date": "2019-12-31",
+      "source_id": null,
+      "source_url": "https://sfgov.org/cityadministrator/cba-annual-reports",
+      "keywords": "San Francisco Mid-Market community benefit agreement Twitter payroll tax exclusion Tenderloin"
+    },
+    {
+      "promise_id": "TECH-01",
+      "promise_text": "Google-funded free public Wi-Fi along Market Street.",
+      "entity": "Google / City of San Francisco",
+      "promised_date": "2013-10-01",
+      "due_date": "2014-06-30",
+      "source_id": null,
+      "source_url": "https://sfgov.org/news/mayor-lee-announces-free-public-wifi-market-street",
+      "keywords": "San Francisco Google free WiFi Market Street San Francisco Mayor Lee"
+    },
+    {
+      "promise_id": "DISC-20261122-016",
+      "promise_text": "Housing lottery for the Artists Hub on Market affordable artist housing at 1687 Market Street.",
+      "entity": "Mayor's Office",
+      "promised_date": "2026-07-28",
+      "due_date": "2027-03-31",
+      "source_id": null,
+      "source_url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-100-affordable-artist-housing-project-at-1687-market-street",
+      "keywords": "San Francisco Artists Hub on Market 1687 Market Street housing lottery"
+    },
+    {
+      "promise_id": "CLIMATE-02",
+      "promise_text": "Ocean Beach Climate Change Adaptation Project: Great Highway closure south of Sloat and buried wall.",
+      "entity": "SFPUC & SF Public Works",
+      "promised_date": "2021-03-15",
+      "due_date": "2025-12-31",
+      "source_id": null,
+      "source_url": "https://sfpuc.org/ocean-beach-project",
+      "keywords": "San Francisco Ocean Beach Climate Change Adaptation Project Great Highway Sloat wall SFPUC"
+    },
+    {
+      "promise_id": "DISC-20261122-023",
+      "promise_text": "A Notice to Proceed (NTP) is planned for early 2027.",
+      "entity": "SFPUC",
+      "promised_date": "2026-03-26",
+      "due_date": "2027-03-31",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+      "keywords": "San Francisco Lower Alemany Stormwater Improvements Project Bid"
+    },
+    {
+      "promise_id": "DISC-20261122-002",
+      "promise_text": "Pending SFPUC \nCommission approvals, construction is anticipated to start in Summer \n2026 with an expected duration of 4 years.",
+      "entity": "SFPUC",
+      "promised_date": "2025-10-16",
+      "due_date": "2026-09-30",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/SSIP_LowerAlemanyArea_FactSheet_2025-10-16_v20_DH.pdf",
+      "keywords": "San Francisco SSIP LowerAlemanyArea FactSheet v20"
+    },
+    {
+      "promise_id": "DISC-20261122-024",
+      "promise_text": "The new Auxiliary Sewer must be commissioned and operational by February 2031.",
+      "entity": "SFPUC",
+      "promised_date": "2026-03-26",
+      "due_date": "2031-02-28",
+      "source_id": null,
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+      "keywords": "San Francisco Lower Alemany Stormwater Improvements Project Bid"
+    },
+    {
+      "promise_id": "SEISMIC-01",
+      "promise_text": "All wood-frame residential buildings of three or more stories containing five or more dwelling units with a soft-story condition must complete mandatory seismic retrofits across Tiers 1 through 4 by September 15, 2021.",
+      "entity": "SF Dept of Building Inspection (SF DBI)",
+      "promised_date": "2013-04-18",
+      "due_date": "2021-09-15",
+      "source_id": null,
+      "source_url": "https://sf.gov/mandatory-soft-story-program",
+      "keywords": "San Francisco mandatory soft story program"
+    },
+    {
+      "promise_id": "SEISMIC-02",
+      "promise_text": "The Embarcadero Seawall Program will invest $425 million under Proposition A to begin initial seismic and flood resilience retrofits along the 3-mile historic seawall by 2024.",
+      "entity": "Port of San Francisco",
+      "promised_date": "2018-11-06",
+      "due_date": "2024-12-31",
+      "source_id": null,
+      "source_url": "https://sfport.com/seawall",
+      "keywords": "San Francisco seawall Embarcadero Program invest million Proposition"
+    },
+    {
+      "promise_id": "DISC-20261112-001",
+      "promise_text": "Under the approved legislation, the San Francisco Municipal Transportation Authority (SFMTA) will procure design, construction, operation, maintenance, and related services through one, best-value selected contractor for the implementation ",
+      "entity": "Mayor's Office",
+      "promised_date": "2024-04-02",
+      "due_date": null,
+      "source_id": null,
+      "source_url": "https://sf.gov/news/mayor-breeds-legislation-streamline-deployment-automated-speed-enforcement-cameras-approved",
+      "keywords": "San Francisco breeds legislation streamline deployment automated speed"
+    },
+    {
+      "promise_id": "CLIMATE-01",
+      "promise_text": "Beginning June 1, 2021, all new residential and commercial building construction permit applications in San Francisco must be all-electric, prohibiting natural gas piping.",
+      "entity": "City and County of San Francisco",
+      "promised_date": "2020-11-10",
+      "due_date": "2021-06-01",
+      "source_id": null,
+      "source_url": "https://sfenvironment.org/policy/all-electric-new-construction",
+      "keywords": "San Francisco policy all electric construction"
+    },
+    {
+      "promise_id": "BIKE-02",
+      "promise_text": "SFMTA will evaluate a 12-month pilot of a center-running protected bike lane on Valencia Street between 15th and 23rd Streets to assess cyclist volume and business impacts.",
+      "entity": "SFMTA",
+      "promised_date": "2023-04-15",
+      "due_date": "2024-06-30",
+      "source_id": null,
+      "source_url": "https://sfmta.com/projects/valencia-bikeway-improvements",
+      "keywords": "San Francisco projects valencia bikeway improvements"
+    },
+    {
+      "promise_id": "DISC-20261112-006",
+      "promise_text": "**SAN FRANCISCO** – For the first time in its history, [CleanPowerSF](https://urldefense.com/v3/__https:/t.e2ma.net/click/zxergg/jpdgbvie/fm00ip__;!!NCYPjq8!4L3qSBAHlGQCwQv5MiL4AFpWksTNUAyVutywcD8gUSni355kqNocFeQlzR0Fmz8xOOKFo7DWgOrb3n6M5Ph",
+      "entity": "SFPUC",
+      "promised_date": "2025-02-07",
+      "due_date": null,
+      "source_id": null,
+      "source_url": "https://cleanpowersf.org/news/cleanpowersf-provides-100-renewable-electricity-to-san-francisco-customers-two-years-early",
+      "keywords": "San Francisco cleanpowersf provides renewable electricity customers two"
+    }
+  ]
+}

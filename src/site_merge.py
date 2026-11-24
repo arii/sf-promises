@@ -20,8 +20,9 @@ from src.outcome_rules import (
     NOT_CHECKED_NOTE, recorded_origin_date_failures, recorded_outcome_rules,
 )
 from src.relevance import evaluate_relevance
+from src.sentences import display_sentence
 from src.sources import is_verbatim_quote
-from src.taxonomy import screen_taxonomy
+from src.taxonomy import NOT_STATED, screen_taxonomy
 from src.temporal import check_origin_dates, screen_forward_looking
 
 # Evidence phases (beyond ORIGIN) a verdict needs: a delivery sentence for the kept
@@ -146,7 +147,7 @@ def _load_promise(conn, promise, source_root, today):
     if screen_taxonomy(
         entity_name=promise["entity_name"], entity_type=promise["entity_type"],
         sector=promise["sector"], neighborhood=promise["neighborhood"],
-        quote=promise["promise_text"],
+        quote=promise["promise_text"], allow_not_stated=True,
     ):
         return None, "taxonomy_unverified"
 
@@ -407,72 +408,6 @@ def _evidence_summaries(item, contradictory):
     }
 
 
-_ABBREVIATIONS = frozenset({
-    "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec",
-    "st", "ave", "blvd", "dr", "mr", "mrs", "ms", "no", "inc", "co", "corp", "jr", "sr",
-    "u.s", "e.g", "i.e", "vs", "approx",
-})
-_SENTENCE_CAP = 420
-
-
-def _is_sentence_end(text, i):
-    """True when text[i] ends a sentence: .!? followed by whitespace or end,
-    and not an abbreviation or a single initial."""
-    if text[i] not in ".!?":
-        return False
-    if i + 1 < len(text) and not text[i + 1].isspace():
-        return False
-    if text[i] == ".":
-        j = i
-        while j > 0 and (text[j - 1].isalpha() or text[j - 1] == "."):
-            j -= 1
-        word = text[j:i].lower()
-        if word in _ABBREVIATIONS or len(word) == 1:
-            return False
-    return True
-
-
-def _is_line_break_boundary(text, i):
-    """A single newline at i starts a new unit (heading or list line ending,
-    next line capitalized) rather than wrapping a sentence."""
-    if text[i] != "\n":
-        return False
-    nxt = text[i + 1:i + 2]
-    prev = text[:i].rstrip(" \t")[-1:]
-    return bool(nxt) and nxt.isupper() and prev not in (",", ";", ":", "-", "")
-
-
-def display_sentence(text, quote):
-    """The complete sentence(s) of saved ``text`` that contain ``quote``,
-    whitespace-collapsed, for display. Returns None if the quote is not found
-    or the sentence would exceed the cap. The evidence quote is unchanged;
-    this only widens the displayed text to sentence boundaries in the same
-    saved bytes (PDF line wrapping often cuts a segment mid-sentence)."""
-    start = text.find(quote)
-    if start < 0:
-        return None
-    end = start + len(quote)
-    left = start
-    while left > 0:
-        if text[left - 2:left] == "\n\n" or _is_sentence_end(text, left - 1) \
-                or _is_line_break_boundary(text, left - 1):
-            break
-        left -= 1
-    right = end
-    if not (quote.rstrip()[-1:] in ".!?" and _is_sentence_end(text, start + len(quote.rstrip()) - 1)):
-        while right < len(text):
-            if text[right:right + 2] == "\n\n":
-                break
-            if _is_sentence_end(text, right):
-                right += 1
-                break
-            right += 1
-    span = " ".join(text[left:right].split()).lstrip("-*•· ").strip()
-    if not span or len(span) > _SENTENCE_CAP:
-        return None
-    return span
-
-
 def _display_text(item):
     origin = item["origin"]
     quote = origin["verbatim_quote"]
@@ -484,6 +419,9 @@ def _display_text(item):
     if not sentence or sentence == " ".join(quote.split()):
         return item["promise"]["promise_text"], False
     return sentence, True
+
+
+LOCATION_NOT_STATED_DISPLAY = "Location not stated"
 
 
 def _centroid_fields(neighborhood):
@@ -501,7 +439,10 @@ def build_record(item, *, promise_id, rank, entity_count):
     canonical = ENTITY_CATEGORY[promise["entity_type"]]
     category = SECTOR_CATEGORY.get(promise["sector"], promise["sector"])
     neighborhood = promise["neighborhood"]
-    scope = ("citywide" if neighborhood == "Citywide"
+    # "Not stated": the source names no neighborhood. It is shown like a citywide
+    # record (scope "citywide", an allowed value) but is not citywide and has no point.
+    unlocated = neighborhood == NOT_STATED
+    scope = ("citywide" if neighborhood == "Citywide" or unlocated
              else "regional" if neighborhood.startswith("Regional") else "neighborhood")
     promised, deadline = promise["date_promised"], promise["date_deadline"]
     basis = item["basis"]
@@ -570,9 +511,10 @@ def build_record(item, *, promise_id, rank, entity_count):
         "category": category,
         "category_l1": category,
         "pillar": SECTOR_PILLAR[promise["sector"]],
-        "neighborhood": neighborhood,
+        "neighborhood": LOCATION_NOT_STATED_DISPLAY if unlocated else neighborhood,
         "neighborhood_canonical": neighborhood,
         "geographic_scope": scope,
+        **({"location_status": "not_stated"} if unlocated else {}),
         "is_citywide": neighborhood == "Citywide",
         "is_centroid": scope != "exact_address",
         **_centroid_fields(neighborhood),
@@ -592,9 +534,11 @@ def build_record(item, *, promise_id, rank, entity_count):
             "not_yet_known" if verdict in ("in_progress", "undecided")
             else "not_applicable" if verdict == "broken" else "not_captured"),
         "address_full": None,
-        "address_status": "not_applicable" if scope in ("citywide", "regional") else "not_captured",
+        "address_status": ("not_applicable" if scope in ("citywide", "regional") and not unlocated
+                           else "not_captured"),
         "supervisor_district": None,
-        "district_status": "not_applicable" if scope in ("citywide", "regional") else "not_captured",
+        "district_status": ("not_applicable" if scope in ("citywide", "regional") and not unlocated
+                            else "not_captured"),
         "page_number": None,
         "verdict": verdict,
         "verdict_reason": item["latest"]["reason"],

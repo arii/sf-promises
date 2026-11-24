@@ -217,7 +217,7 @@ def parse_extraction(*, root, promise_id, path, digest, response, published=None
     return bundle.candidates
 
 
-def _resolve_missing_dates(candidates, segments, published):
+def _resolve_missing_dates(candidates, segments, published, text=None):
     """Fill null promised_date values; keep model dates, labelled "stated"."""
     resolutions = []
     for candidate in candidates:
@@ -230,6 +230,7 @@ def _resolve_missing_dates(candidates, segments, published):
                        if candidate.promise_text in segment or segment in candidate.promise_text]
         resolution = resolve_promise_date_detail(
             segments, matches[0] if matches else None, published,
+            text=text, quote=candidate.promise_text,
         )
         if resolution is not None:
             candidate.promised_date = resolution.date
@@ -283,6 +284,9 @@ async def extract_with_model(client, api_key, models, *, root, promise_id,
             "deadline stated as a number of years from the commitment, use "
             "December 31 of the resulting year. If a discovery target is supplied, "
             "extract only matching commitments."
+            + (" If the source states this project's commitment with different "
+               "details than the target, extract the source's own sentence."
+               if outcome_rules_enabled() else "")
             + (" If the commitment states no deadline, return null for deadline; "
                "never invent one. For a one-off event on a stated date (an opening "
                "day or a game date), the deadline is that date."
@@ -368,7 +372,7 @@ async def extract_with_model(client, api_key, models, *, root, promise_id,
                 if response_attempt:
                     raise
         if date_resolution_enabled() and published is not None:
-            resolutions = _resolve_missing_dates(candidates, segments, published)
+            resolutions = _resolve_missing_dates(candidates, segments, published, text)
             if date_resolutions is not None:
                 date_resolutions[:] = resolutions
         if published is None or all(

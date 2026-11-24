@@ -1665,7 +1665,11 @@
     (list || []).forEach(p => {
       const lat = Number(p.latitude);
       const lon = Number(p.longitude);
-      if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+        // No point to plot; list records whose source names no location.
+        if (p.location_status === 'not_stated') regional.push(p);
+        return;
+      }
       if (!inStreetMapTiles(lat, lon)) { regional.push(p); return; }
       const v = (p.verdict || 'undecided').toLowerCase();
       features.push({
@@ -1695,7 +1699,7 @@
     el.classList.remove('hidden');
     el.innerHTML = `
       <div class="map-regional-strip font-mono">
-        <span class="regional-strip-label">OUTSIDE THE STREET MAP / REGIONAL DISPLAY CENTROIDS (${items.length}):</span>
+        <span class="regional-strip-label">OUTSIDE THE STREET MAP / REGIONAL OR LOCATION NOT STATED (${items.length}):</span>
         ${items.map(p => `<button type="button" class="btn-regional-pin" data-promise-id="${escapeHtml(p.promise_id)}">${escapeHtml(p.promise_id)} · ${escapeHtml(p.entity)}</button>`).join('')}
       </div>`;
     el.querySelectorAll('[data-promise-id]').forEach(btn => {
@@ -1994,7 +1998,10 @@
       (list || []).forEach(p => {
         const lat = Number(p.latitude);
         const lon = Number(p.longitude);
-        if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+        if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+          if (p.location_status === 'not_stated') regionalItems.push(p);
+          return;
+        }
         const inSFO = lat >= 37.59 && lat <= 37.65 && lon >= -122.42 && lon <= -122.35;
         const inSF = lat >= minLat && lat <= maxLat && lon >= minLon && lon <= maxLon;
         if (!inSF && !inSFO) {
@@ -2044,7 +2051,7 @@
 
       const regionalHtml = regionalItems.length > 0 ? `
         <div class="map-regional-strip font-mono">
-          <span class="regional-strip-label">REGIONAL / STATEWIDE DISPLAY CENTROIDS (${regionalItems.length}):</span>
+          <span class="regional-strip-label">REGIONAL / STATEWIDE / LOCATION NOT STATED (${regionalItems.length}):</span>
           ${regionalItems.map(p => `<button type="button" class="btn-regional-pin" data-promise-id="${escapeHtml(p.promise_id)}">${escapeHtml(p.promise_id)} · ${escapeHtml(p.entity)}</button>`).join('')}
         </div>
       ` : '';
@@ -2647,7 +2654,9 @@
     const isCorporate = /visa|pg&e|pacific gas|comcast|waymo|zoox|at&t/i.test(p.entity || '') || /corporate/i.test(p.role || '');
     const scopeRaw = p.geographic_scope ? p.geographic_scope.replace(/_/g, ' ') : 'citywide';
     const geoType = p.is_centroid === false ? 'Exact address' : 'Display centroid';
-    const geoPinLabel = scopeRaw.toLowerCase() === geoType.toLowerCase() ? geoType : `${geoType} (${scopeRaw})`;
+    const locationNotStated = p.location_status === 'not_stated';
+    const geoPinLabel = locationNotStated ? 'Location not stated'
+      : (scopeRaw.toLowerCase() === geoType.toLowerCase() ? geoType : `${geoType} (${scopeRaw})`);
     if (subtitleEl) {
       if (isCorporate) {
         subtitleEl.textContent = `${p.entity} · Corporate Entity · ${geoPinLabel}`;

@@ -280,3 +280,34 @@
   supporting, contradicting and arbitration summaries, quoted from verified
   evidence rows.
 - Site: 78 promises (54 legacy unchanged + 24 v2).
+
+## 2026-11-23: Recovering rejected candidates (78 -> 83)
+
+- Recovery rules (under `SF_PROMISES_OUTCOME_RULES=1`):
+  - Quotes and outcome selections are widened to the full sentence in the
+    saved bytes (`src/sentences.py`).
+  - Promise dates also look for an "on Tuesday" style term in the
+    paragraph and the lede.
+  - A `Not stated` location label (no map point).
+  - The extraction prompt treats the discovery target as a pointer and
+    extracts the source's own sentence when the details differ.
+- `src/sentences.py`: a blank line between PDF-wrapped lines is no longer
+  treated as a paragraph break when the text continues mid-sentence.
+- Re-seeded 7 leads whose summaries matched no source
+  (`seeds/recovery_targets.json`: neutral pointers plus search keywords).
+  Dropped DISC-20261112-007, a Mission Local profile paragraph rather than
+  a promise.
+- Retried 16 candidates and published 5: BIKE-02 kept, CLIMATE-01 undecided,
+  LEADER-01 undecided (the actual $2.7M Salesforce donation, not the "$100M"
+  in our summary), SEISMIC-02 in progress, DISC-20261122-023 in progress.
+- Still rejected (11):
+  - Searches found unrelated pages: ARTS-03, LEADER-03, TECH-01.
+  - Date logic: in RETAIL-02, "opens Thursday" is resolved backwards; a
+    weekday in a forward-looking sentence names the deadline, not the
+    promise date. In DISC-20261112-006 the goal predates the page.
+  - Location: neighborhood labels for the Lower Alemany projects (002, 024)
+    and the Artists Hub (016).
+  - Outcome evidence: SEISMIC-01, DISC-20261112-001.
+  - Correct rejections: CLIMATE-02 (relevance), LEADER-02, RETAIL-01,
+    DISC-20261112-002, DISC-20261112-005.
+- Site: 83 promises (54 legacy unchanged + 29 v2).
