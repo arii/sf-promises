@@ -5,16 +5,16 @@
     "last_checked": "Nov 24, 2026",
     "last_updated": "Nov 24, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
-    "commit_sha": "773be8e418bcea7cc3a788d1c005c3ed8f796276",
+    "commit_sha": "2e5621eff82f6b917a79ce2994d7f3dcf581055f",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-24T08:55:37Z",
-    "v2_promises_added": 24,
+    "exported_at": "2026-11-24T19:58:35Z",
+    "v2_promises_added": 29,
     "legacy_promises": 54
   },
   "database_status": {
-    "commit_sha": "773be8e418bcea7cc3a788d1c005c3ed8f796276",
-    "tracked_count": 78,
+    "commit_sha": "2e5621eff82f6b917a79ce2994d7f3dcf581055f",
+    "tracked_count": 83,
     "seed_promises_count": 12,
     "total_db_promises": 62,
     "total_db_verdicts": 87,
@@ -3789,16 +3789,16 @@
       "S8",
       "S9"
     ],
-    "id_reconciliation": "78 published (24 from v2 pipeline) \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
+    "id_reconciliation": "83 published (29 from v2 pipeline) \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
     "acceptance_status_label": "Acceptance verified by harness run F-20261111-045601 on 2026-11-11 (separated processes, not Firecracker)",
     "counts": {
-      "kept": 24,
+      "kept": 25,
       "broken": 18,
       "kept_then_reversed": 1,
-      "in_progress": 31,
-      "undecided": 4
+      "in_progress": 33,
+      "undecided": 6
     },
     "integration_run": {
       "run_id": "F-20261111-045601",
@@ -3826,7 +3826,7 @@
       "Local worker processes are not a VM or filesystem/network security boundary.",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md).",
-      "24 of 78 published records come from the v2 pipeline; their sources were re-hashed and every quote re-found in saved text at export. Funnel and DB totals count the legacy database only."
+      "29 of 83 published records come from the v2 pipeline; their sources were re-hashed and every quote re-found in saved text at export. Funnel and DB totals count the legacy database only."
     ],
     "discrepancy_files": [
       "QUESTIONS.md",
@@ -7521,14 +7521,15 @@
         }
       }
     },
-    "v2_promises_added": 24,
+    "v2_promises_added": 29,
     "v2_merge": {
       "databases": 4,
-      "added": 24,
+      "added": 29,
       "added_by_verdict": {
         "broken": 1,
-        "in_progress": 21,
-        "undecided": 2
+        "in_progress": 23,
+        "kept": 1,
+        "undecided": 4
       },
       "skipped_duplicates": 0,
       "rejected": 0,
@@ -21579,6 +21580,193 @@
       "promised_date_note": "derived: publication date of the source"
     },
     {
+      "promise_id": "LEADER-01",
+      "pipeline": "v2",
+      "v2_promise_id": "LEADER-01",
+      "promise_text": "SAN FRANCISCO (CBS SF) \u2014 The CEO of Salesforce.com visited a San Francisco school on Monday to highlight a $2.7 million donation by his company to the city's middle schools -- the largest one-time donation in the school district's history, city officials said.",
+      "promise_text_expanded": false,
+      "entity": "Salesforce",
+      "role": null,
+      "entity_type": "corporation",
+      "entity_type_legacy": "Private Corporation",
+      "sector": "Education & Youth",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2013-10-07",
+      "due_date": null,
+      "promise_made_date": "2013-10-07",
+      "deadline_date": null,
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "not_applicable",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 7, 2013",
+      "due_date_display": "No fixed deadline",
+      "due_date_status": "not_applicable",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin announces a $2.7M Salesforce donation to the citys 12 middle schools on Monday 2013-10-07. No deadline is stated, so deadline unused. No delivery or survival sentence supplied. Portola is only the event venue; the donation covers all middle schools, so Citywide fits.",
+      "decided_at": "2026-11-24T19:36:46.912086+00:00",
+      "factual_outcome": "Origin announces a $2.7M Salesforce donation to the citys 12 middle schools on Monday 2013-10-07. No deadline is stated, so deadline unused. No delivery or survival sentence supplied. Portola is only the event venue; the donation covers all middle schools, so Citywide fits.",
+      "source_id": "S64eb7e6696d5",
+      "source_url": "https://www.cbsnews.com/sanfrancisco/news/san-francisco-middle-schools-receive-2-7m-donation-from-salesforce-ceo/",
+      "source_file_path": "64eb7e6696d58102caa99621d344c4e8cf43aea5897904f9edd8c769684116dd.md",
+      "source_hash": "64eb7e6696d58102caa99621d344c4e8cf43aea5897904f9edd8c769684116dd",
+      "source_type": "news_report",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "SAN FRANCISCO (CBS SF) \u2014 The CEO of Salesforce.com visited a San Francisco school on Monday to highlight a $2.7 million donation by his company to the city's middle schools -- the largest one-time donation in the school district's history, city officials said.",
+      "title": "Salesforce Commitment",
+      "document_title": "Salesforce Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-24T19:36:46.912086+00:00",
+          "reason": "Origin announces a $2.7M Salesforce donation to the citys 12 middle schools on Monday 2013-10-07. No deadline is stated, so deadline unused. No delivery or survival sentence supplied. Portola is only the event venue; the donation covers all middle schools, so Citywide fits."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "NO_VERIFIABLE_ORIGIN",
+          "passed": false,
+          "checked_at": "2026-11-24T06:56:56.416914+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T19:36:46.912086+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T19:36:46.912086+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:36:46.912086+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:36:46.912086+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:36:46.912086+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:36:46.912086+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T19:36:47.126769+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER2_NEWS",
+          "url": "https://www.cbsnews.com/sanfrancisco/news/san-francisco-middle-schools-receive-2-7m-donation-from-salesforce-ceo/",
+          "published_date": "2013-10-07T23:18:05Z",
+          "source_hash": "64eb7e6696d58102caa99621d344c4e8cf43aea5897904f9edd8c769684116dd",
+          "source_file_path": "64eb7e6696d58102caa99621d344c4e8cf43aea5897904f9edd8c769684116dd.md",
+          "quote": "SAN FRANCISCO (CBS SF) \u2014 The CEO of Salesforce.com visited a San Francisco school on Monday to highlight a $2.7 million donation by his company to the city's middle schools -- the largest one-time donation in the school district's history, city officials said."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 63,
+      "display_no": 63,
+      "entity_canonical_name": "Salesforce",
+      "entity_category": "corporation",
+      "entity_category_canonical": "corporation",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R1",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": true,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'on Monday' resolved against publication date 2013-10-07"
+    },
+    {
       "promise_id": "DISC-20261122-010",
       "pipeline": "v2",
       "v2_promise_id": "DISC-20261122-010",
@@ -21743,8 +21931,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 63,
-      "display_no": 63,
+      "impact_rank": 64,
+      "display_no": 64,
       "entity_canonical_name": "San Francisco Recreation and Park Department",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -21929,8 +22117,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 64,
-      "display_no": 64,
+      "impact_rank": 65,
+      "display_no": 65,
       "entity_canonical_name": "San Francisco Public Utilities Commission",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -22110,8 +22298,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 65,
-      "display_no": 65,
+      "impact_rank": 66,
+      "display_no": 66,
       "entity_canonical_name": "San Francisco Department of Homelessness and Supportive Housing",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -22291,13 +22479,198 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 66,
-      "display_no": 66,
+      "impact_rank": 67,
+      "display_no": 67,
       "entity_canonical_name": "San Francisco Public Works",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source"
+    },
+    {
+      "promise_id": "DISC-20261122-023",
+      "pipeline": "v2",
+      "v2_promise_id": "DISC-20261122-023",
+      "promise_text": "A Notice to Proceed (NTP) is planned for early 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2026-03-26",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-03-26",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Mar 26, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Schedule says NTP planned for early 2027, normalized to 2027-12-31. Document dated 03/2026. SFPUC is the responsible agency and the source names only the Lower Alemany area, not a listed neighborhood, so Not stated is acceptable. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-24T19:40:33.538453+00:00",
+      "factual_outcome": "Schedule says NTP planned for early 2027, normalized to 2027-12-31. Document dated 03/2026. SFPUC is the responsible agency and the source names only the Lower Alemany area, not a listed neighborhood, so Not stated is acceptable. No delivery or survival sentence supplied.",
+      "source_id": "Sf7f3f7334326",
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+      "source_file_path": "f7f3f7334326e91c61f78d4a3885335e550e107654eee6f179a5b6c2b36a2261.md",
+      "source_hash": "f7f3f7334326e91c61f78d4a3885335e550e107654eee6f179a5b6c2b36a2261",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "A Notice to Proceed (NTP) is planned for early 2027.",
+      "title": "San Francisco Public Utilities Commission Commitment",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-24T19:40:33.538453+00:00",
+          "reason": "Schedule says NTP planned for early 2027, normalized to 2027-12-31. Document dated 03/2026. SFPUC is the responsible agency and the source names only the Lower Alemany area, not a listed neighborhood, so Not stated is acceptable. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "AMBIGUOUS_EVIDENCE",
+          "passed": false,
+          "checked_at": "2026-11-24T07:11:45.085929+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T19:40:33.538453+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T19:40:33.538453+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:40:33.538453+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:40:33.538453+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:40:33.538453+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:40:33.538453+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T19:40:33.788768+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/sites/default/files/documents/Lower%20Alemany%20Stormwater%20Improvements%20Project%20-%20Bid%20Opportunity.pdf",
+          "published_date": "2026-03-26T20:01:32Z",
+          "source_hash": "f7f3f7334326e91c61f78d4a3885335e550e107654eee6f179a5b6c2b36a2261",
+          "source_file_path": "f7f3f7334326e91c61f78d4a3885335e550e107654eee6f179a5b6c2b36a2261.md",
+          "quote": "A Notice to Proceed (NTP) is planned for early 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 68,
+      "display_no": 68,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
       "outcome_basis": {
         "rules": [
           "R3"
@@ -22477,12 +22850,12 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 67,
-      "display_no": 67,
+      "impact_rank": 69,
+      "display_no": 69,
       "entity_canonical_name": "San Francisco Public Utilities Commission",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
-      "entity_promise_count": 3,
+      "entity_promise_count": 4,
       "entity_sample_warning": false,
       "outcome_basis": {
         "rules": [
@@ -22658,8 +23031,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 68,
-      "display_no": 68,
+      "impact_rank": 70,
+      "display_no": 70,
       "entity_canonical_name": "San Francisco Municipal Transportation Agency",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -22678,6 +23051,192 @@
       "promise_date_basis": "relative",
       "promise_date_derived": true,
       "promised_date_note": "derived: 'Thursday' resolved against publication date 2019-05-09"
+    },
+    {
+      "promise_id": "SEISMIC-02",
+      "pipeline": "v2",
+      "v2_promise_id": "SEISMIC-02",
+      "promise_text": "Work planned through 2026 will reduce seismic risk, potentially beginning around the Ferry Building, where some of the oldest sections of the wall are cracking.",
+      "promise_text_expanded": false,
+      "entity": "Port of San Francisco",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "The Embarcadero",
+      "neighborhood_canonical": "The Embarcadero",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7955,
+      "longitude": -122.3937,
+      "promised_date": "2018-11-07",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2018-11-07",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Nov 7, 2018",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin says work planned through 2026 will reduce seismic risk near the Ferry Building on the Embarcadero seawall; 2026-12-31 normalizes the year. Port of San Francisco is the seawall owner named in the program sources. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-24T19:47:41.265475+00:00",
+      "factual_outcome": "Origin says work planned through 2026 will reduce seismic risk near the Ferry Building on the Embarcadero seawall; 2026-12-31 normalizes the year. Port of San Francisco is the seawall owner named in the program sources. No delivery or survival sentence supplied.",
+      "source_id": "S407b59827767",
+      "source_url": "https://www.kqed.org/science/1933956/proposition-a-san-franciscans-want-a-new-seawall-and-vote-to-pay-for-it",
+      "source_file_path": "407b5982776778cd539bf747a602940e3e0d5e5006a678ca8bcff17ee47022b4.md",
+      "source_hash": "407b5982776778cd539bf747a602940e3e0d5e5006a678ca8bcff17ee47022b4",
+      "source_type": "news_report",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "Work planned through 2026 will reduce seismic risk, potentially beginning around the Ferry Building, where some of the oldest sections of the wall are cracking.",
+      "title": "Port of San Francisco Commitment",
+      "document_title": "Port of San Francisco Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-24T19:47:41.265475+00:00",
+          "reason": "Origin says work planned through 2026 will reduce seismic risk near the Ferry Building on the Embarcadero seawall; 2026-12-31 normalizes the year. Port of San Francisco is the seawall owner named in the program sources. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "INSUFFICIENT_OUTCOME_EVIDENCE",
+          "passed": false,
+          "checked_at": "2026-11-24T06:54:04.247856+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T19:47:41.265475+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T19:47:41.265475+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:47:41.265475+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:47:41.265475+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:47:41.265475+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:47:41.265475+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T19:47:41.407033+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER2_NEWS",
+          "url": "https://www.kqed.org/science/1933956/proposition-a-san-franciscans-want-a-new-seawall-and-vote-to-pay-for-it",
+          "published_date": "2018-11-07T06:37:23Z",
+          "source_hash": "407b5982776778cd539bf747a602940e3e0d5e5006a678ca8bcff17ee47022b4",
+          "source_file_path": "407b5982776778cd539bf747a602940e3e0d5e5006a678ca8bcff17ee47022b4.md",
+          "quote": "Work planned through 2026 will reduce seismic risk, potentially beginning around the Ferry Building, where some of the oldest sections of the wall are cracking."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 71,
+      "display_no": 71,
+      "entity_canonical_name": "Port of San Francisco",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source"
     },
     {
       "promise_id": "DISC-20261122-020",
@@ -22844,8 +23403,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 69,
-      "display_no": 69,
+      "impact_rank": 72,
+      "display_no": 72,
       "entity_canonical_name": "SFMTA",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -23025,8 +23584,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 70,
-      "display_no": 70,
+      "impact_rank": 73,
+      "display_no": 73,
       "entity_canonical_name": "San Francisco Municipal Transportation Agency",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -23211,8 +23770,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 71,
-      "display_no": 71,
+      "impact_rank": 74,
+      "display_no": 74,
       "entity_canonical_name": "San Francisco Arts Commission",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -23231,6 +23790,390 @@
       "promise_date_basis": "publication",
       "promise_date_derived": true,
       "promised_date_note": "derived: publication date of the source"
+    },
+    {
+      "promise_id": "BIKE-02",
+      "pipeline": "v2",
+      "v2_promise_id": "BIKE-02",
+      "promise_text": "The 12-month pilot program will see two-way bike lane traffic running down the middle of the road with cars on the sides.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Mission",
+      "neighborhood_canonical": "Mission",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7599,
+      "longitude": -122.4148,
+      "promised_date": "2023-04-04",
+      "due_date": null,
+      "promise_made_date": "2023-04-04",
+      "deadline_date": null,
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "not_applicable",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Apr 4, 2023",
+      "due_date_display": "No fixed deadline",
+      "due_date_status": "not_applicable",
+      "completion_date_status": "not_captured",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "kept",
+      "verdict_reason": "Origin reports the SFMTA board vote on Tuesday (2023-04-04 given publication 2023-04-05) for a 12-month center-running pilot in the Mission District. The cited source states Mid-Valencia pilot construction was completed and the evaluation period started, which establishes delivery of the pilot; no deadline was stated. Survival is not evaluated. (current status not checked)",
+      "decided_at": "2026-11-24T19:49:27.764104+00:00",
+      "factual_outcome": "Origin reports the SFMTA board vote on Tuesday (2023-04-04 given publication 2023-04-05) for a 12-month center-running pilot in the Mission District. The cited source states Mid-Valencia pilot construction was completed and the evaluation period started, which establishes delivery of the pilot; no deadline was stated. Survival is not evaluated. (current status not checked)",
+      "source_id": "S06d59f4f07b5",
+      "source_url": "https://www.ktvu.com/news/sf-approves-new-bike-lanes-in-the-middle-of-valencia-st",
+      "source_file_path": "06d59f4f07b5b2e38c4e5aa78fcf41b921f26af925a88709bae23eee8bfc580a.md",
+      "source_hash": "06d59f4f07b5b2e38c4e5aa78fcf41b921f26af925a88709bae23eee8bfc580a",
+      "source_type": "news_report",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "The 12-month pilot program will see two-way bike lane traffic running down the middle of the road with cars on the sides.",
+      "title": "San Francisco Municipal Transportation Agency Commitment",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: DELIVERY."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-24T19:49:27.764104+00:00",
+          "reason": "Origin reports the SFMTA board vote on Tuesday (2023-04-04 given publication 2023-04-05) for a 12-month center-running pilot in the Mission District. The cited source states Mid-Valencia pilot construction was completed and the evaluation period started, which establishes delivery of the pilot; no deadline was stated. Survival is not evaluated. (current status not checked)"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "INVALID_PROMISE_DATE_LATER_THAN_SOURCE",
+          "passed": false,
+          "checked_at": "2026-11-24T06:56:54.671734+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T19:49:27.764104+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T19:49:27.764104+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:49:27.764104+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:49:27.764104+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:49:27.764104+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:49:27.764104+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T19:49:28.128162+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER2_NEWS",
+          "url": "https://www.ktvu.com/news/sf-approves-new-bike-lanes-in-the-middle-of-valencia-st",
+          "published_date": "2023-04-05T01:50:05Z",
+          "source_hash": "06d59f4f07b5b2e38c4e5aa78fcf41b921f26af925a88709bae23eee8bfc580a",
+          "source_file_path": "06d59f4f07b5b2e38c4e5aa78fcf41b921f26af925a88709bae23eee8bfc580a.md",
+          "quote": "The 12-month pilot program will see two-way bike lane traffic running down the middle of the road with cars on the sides."
+        },
+        {
+          "phase": "DELIVERY",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfmta.com/media/36882/download?inline=",
+          "published_date": "2023-09-27T01:24:48Z",
+          "source_hash": "3c90fd260d386faee98a7726788c306b4e87a2c6ac4d75df9fea2c7a50553db2",
+          "source_file_path": "3c90fd260d386faee98a7726788c306b4e87a2c6ac4d75df9fea2c7a50553db2.md",
+          "quote": "Pilot construction \ncompleted and \nevaluation period \nhas started"
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 3,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 3,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 75,
+      "display_no": 75,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R1",
+          "R4"
+        ],
+        "outcome_rule": "R4",
+        "open_ended": true,
+        "reason": "current status not checked",
+        "relied_on": [
+          "DELIVERY"
+        ],
+        "status_not_checked": true
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'on Tuesday' resolved against publication date 2023-04-05"
+    },
+    {
+      "promise_id": "CLIMATE-01",
+      "pipeline": "v2",
+      "v2_promise_id": "CLIMATE-01",
+      "promise_text": "The Building Official shall not issue permits for construction of any new Mixed-Fuel Buildings that submitted antheir initial application on or after JanuaryJune 1, 2021.",
+      "promise_text_expanded": true,
+      "entity": "San Francisco Board of Supervisors",
+      "role": null,
+      "entity_type": "politician",
+      "entity_type_legacy": "Board of Supervisors",
+      "sector": "Environment & Energy",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2020-11-10",
+      "due_date": "2021-06-01",
+      "promise_made_date": "2020-11-10",
+      "deadline_date": "2021-06-01",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Nov 10, 2020",
+      "due_date_display": "Jun 1, 2021",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin is a Board of Supervisors ordinance (sponsors Mandelman et al.) amended in Board 11/10/2020, barring permits for new Mixed-Fuel Buildings with initial applications on or after June 1, 2021. Date 2020-11-10 and deadline 2021-06-01 are explicit in the text. The rule applies to all new construction, so Citywide is supported.",
+      "decided_at": "2026-11-24T19:45:45.423822+00:00",
+      "factual_outcome": "Origin is a Board of Supervisors ordinance (sponsors Mandelman et al.) amended in Board 11/10/2020, barring permits for new Mixed-Fuel Buildings with initial applications on or after June 1, 2021. Date 2020-11-10 and deadline 2021-06-01 are explicit in the text. The rule applies to all new construction, so Citywide is supported.",
+      "source_id": "Sa80248e98fe5",
+      "source_url": "https://sfbos.archive.sf.gov/sites/default/files/o0237-20.pdf",
+      "source_file_path": "a80248e98fe5df822cd747ebbde7d4d92c40d6b7347c7a55d12896ffa0c45bd3.md",
+      "source_hash": "a80248e98fe5df822cd747ebbde7d4d92c40d6b7347c7a55d12896ffa0c45bd3",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The Building Official shall not issue permits for",
+      "title": "San Francisco Board of Supervisors Commitment",
+      "document_title": "San Francisco Board of Supervisors Commitment",
+      "relevance": {
+        "score": 5,
+        "real": 2,
+        "measurable": 1,
+        "sf": 2,
+        "interesting": 0
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-24T19:45:45.423822+00:00",
+          "reason": "Origin is a Board of Supervisors ordinance (sponsors Mandelman et al.) amended in Board 11/10/2020, barring permits for new Mixed-Fuel Buildings with initial applications on or after June 1, 2021. Date 2020-11-10 and deadline 2021-06-01 are explicit in the text. The rule applies to all new construction, so Citywide is supported."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "INVALID_PROMISE_DATE_LATER_THAN_SOURCE",
+          "passed": false,
+          "checked_at": "2026-11-24T06:53:07.866672+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T19:45:45.423822+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T19:45:45.423822+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:45:45.423822+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T19:45:45.423822+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:45:45.423822+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T19:45:45.423822+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T19:45:45.498226+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfbos.archive.sf.gov/sites/default/files/o0237-20.pdf",
+          "published_date": "2020-11-25T21:35:10Z",
+          "source_hash": "a80248e98fe5df822cd747ebbde7d4d92c40d6b7347c7a55d12896ffa0c45bd3",
+          "source_file_path": "a80248e98fe5df822cd747ebbde7d4d92c40d6b7347c7a55d12896ffa0c45bd3.md",
+          "quote": "The Building Official shall not issue permits for"
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 76,
+      "display_no": 76,
+      "entity_canonical_name": "San Francisco Board of Supervisors",
+      "entity_category": "politician",
+      "entity_category_canonical": "politician",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source"
     },
     {
       "promise_id": "DISC-20261122-008",
@@ -23392,8 +24335,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 72,
-      "display_no": 72,
+      "impact_rank": 77,
+      "display_no": 77,
       "entity_canonical_name": "Mercy Housing",
       "entity_category": "corporation",
       "entity_category_canonical": "corporation",
@@ -23573,8 +24516,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 73,
-      "display_no": 73,
+      "impact_rank": 78,
+      "display_no": 78,
       "entity_canonical_name": "Office of the Mayor / MOHCD (Freedom West 2.0)",
       "entity_category": "politician",
       "entity_category_canonical": "politician",
@@ -23754,12 +24697,12 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 74,
-      "display_no": 74,
+      "impact_rank": 79,
+      "display_no": 79,
       "entity_canonical_name": "San Francisco Public Utilities Commission",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
-      "entity_promise_count": 4,
+      "entity_promise_count": 5,
       "entity_sample_warning": false,
       "outcome_basis": {
         "rules": [
@@ -23935,8 +24878,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 75,
-      "display_no": 75,
+      "impact_rank": 80,
+      "display_no": 80,
       "entity_canonical_name": "San Francisco Unified School District",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -24116,13 +25059,13 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 76,
-      "display_no": 76,
+      "impact_rank": 81,
+      "display_no": 81,
       "entity_canonical_name": "Port of San Francisco",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
-      "entity_promise_count": 2,
-      "entity_sample_warning": true,
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
       "outcome_basis": {
         "rules": [
           "R3"
@@ -24297,12 +25240,12 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 77,
-      "display_no": 77,
+      "impact_rank": 82,
+      "display_no": 82,
       "entity_canonical_name": "San Francisco Public Utilities Commission",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
-      "entity_promise_count": 5,
+      "entity_promise_count": 6,
       "entity_sample_warning": false,
       "outcome_basis": {
         "rules": [
@@ -24483,8 +25426,8 @@
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 78,
-      "display_no": 78,
+      "impact_rank": 83,
+      "display_no": 83,
       "entity_canonical_name": "Another Planet Entertainment",
       "entity_category": "corporation",
       "entity_category_canonical": "corporation",

@@ -280,3 +280,19 @@ def test_site_record_for_not_stated_has_no_point(tmp_path):
 def test_app_js_lists_unlocated_records_outside_the_map():
     js = (ROOT / "docs" / "app.js").read_text()
     assert js.count("location_status === 'not_stated'") >= 3
+
+
+def test_blank_line_wrapped_pdf_sentence_is_joined():
+    from src.sentences import display_sentence
+    text = ("106A.1.17 Mixed-Fuel Buildings. The Building Official shall not issue permits for \n\n"
+            "construction of any new Mixed-Fuel Buildings on or after \n\nJune 1, 2021.  Permits for new "
+            "construction may only be obtained for All-Electric Buildings.")
+    assert display_sentence(text, "The Building Official shall not issue permits for") == (
+        "The Building Official shall not issue permits for construction of any new Mixed-Fuel "
+        "Buildings on or after June 1, 2021.")
+
+
+def test_blank_line_before_capitalized_paragraph_still_breaks():
+    from src.sentences import display_sentence
+    assert display_sentence("Heading\n\nThe Port will open the plaza by 2027.\n\nNext",
+                            "The Port will open the plaza by 2027.") == "The Port will open the plaza by 2027."

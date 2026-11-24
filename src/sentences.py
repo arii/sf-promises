@@ -6,6 +6,8 @@ passes the verbatim-quote check. `display_sentence` is the same span with
 whitespace collapsed, for display.
 """
 
+import re
+
 _ABBREVIATIONS = frozenset({
     "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec",
     "st", "ave", "blvd", "dr", "mr", "mrs", "ms", "no", "inc", "co", "corp", "jr", "sr",
@@ -42,6 +44,25 @@ def _is_line_break_boundary(text, i):
     return bool(nxt) and nxt.isupper() and prev not in (",", ";", ":", "-", "")
 
 
+_MONTH_START = re.compile(
+    r"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s", re.I)
+
+
+def _is_paragraph_break(text, i):
+    """A blank line at text[i:i+2] separates paragraphs, unless it only wraps
+    a sentence (PDF extraction often puts a blank line between wrapped lines):
+    the text before it does not end a sentence and the text after it starts
+    lowercase."""
+    if text[i:i + 2] != "\n\n":
+        return False
+    before = text[:i].rstrip()
+    after = text[i:].lstrip()
+    if before[-1:] and before[-1] not in ".!?:;" and (
+            after[:1].islower() or after[:1].isdigit() or _MONTH_START.match(after)):
+        return False
+    return True
+
+
 def sentence_span(text, quote):
     """(start, end) of the complete sentence(s) of ``text`` containing ``quote``.
 
@@ -56,14 +77,14 @@ def sentence_span(text, quote):
     end = start + len(quote)
     left = start
     while left > 0:
-        if text[left - 2:left] == "\n\n" or _is_sentence_end(text, left - 1) \
+        if _is_paragraph_break(text, left - 2) or _is_sentence_end(text, left - 1) \
                 or _is_line_break_boundary(text, left - 1):
             break
         left -= 1
     right = end
     if not (quote.rstrip()[-1:] in ".!?" and _is_sentence_end(text, start + len(quote.rstrip()) - 1)):
         while right < len(text):
-            if text[right:right + 2] == "\n\n":
+            if _is_paragraph_break(text, right):
                 break
             if _is_sentence_end(text, right):
                 right += 1

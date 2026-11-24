@@ -18,7 +18,7 @@
   <meta name="twitter:description" content="A sourced record of 54 San Francisco public commitments, each checked against primary sources and marked kept, in progress, broken or undecided.">
   <meta name="twitter:image" content="https://arii.github.io/assets/research/sf-promises/verdict-board.webp">
   <title>SF Promises — Sourced Record of San Francisco Public Commitments</title>
-  <link rel="stylesheet" href="styles.css?v=773be8e4">
+  <link rel="stylesheet" href="styles.css?v=2e5621ef">
   <link rel="stylesheet" href="display-consistency.css?v=ui-consistency">
 </head>
 <body>
@@ -94,17 +94,17 @@
           <span class="bar-header-count" id="outcome-dist-verified">54 VERIFIED</span>
         </div>
         <div class="proportional-stacked-bar interactive-bar" id="hero-stacked-bar" role="group" aria-label="Outcome breakdown: tap a segment to filter promises">
-          <button type="button" class="bar-segment seg-kept" id="bar-seg-kept" data-verdict="kept" style="width: 30.8%;" title="Filter Kept (24)" aria-label="Filter Kept (24)"></button>
-          <button type="button" class="bar-segment seg-progress" id="bar-seg-progress" data-verdict="in_progress" style="width: 39.7%;" title="Filter In progress (31)" aria-label="Filter In progress (31)"></button>
-          <button type="button" class="bar-segment seg-broken" id="bar-seg-broken" data-verdict="broken" style="width: 23.1%;" title="Filter Broken (18)" aria-label="Filter Broken (18)"></button>
-          <button type="button" class="bar-segment seg-undecided" id="bar-seg-undecided" data-verdict="undecided" style="width: 5.1%;" title="Filter Undecided (4)" aria-label="Filter Undecided (4)"></button>
-          <button type="button" class="bar-segment seg-reversed" id="bar-seg-reversed" data-verdict="kept_then_reversed" style="width: 1.3%;" title="Filter Later closed / reversed (1)" aria-label="Filter Later closed / reversed (1)"></button>
+          <button type="button" class="bar-segment seg-kept" id="bar-seg-kept" data-verdict="kept" style="width: 30.1%;" title="Filter Kept (25)" aria-label="Filter Kept (25)"></button>
+          <button type="button" class="bar-segment seg-progress" id="bar-seg-progress" data-verdict="in_progress" style="width: 39.8%;" title="Filter In progress (33)" aria-label="Filter In progress (33)"></button>
+          <button type="button" class="bar-segment seg-broken" id="bar-seg-broken" data-verdict="broken" style="width: 21.7%;" title="Filter Broken (18)" aria-label="Filter Broken (18)"></button>
+          <button type="button" class="bar-segment seg-undecided" id="bar-seg-undecided" data-verdict="undecided" style="width: 7.2%;" title="Filter Undecided (6)" aria-label="Filter Undecided (6)"></button>
+          <button type="button" class="bar-segment seg-reversed" id="bar-seg-reversed" data-verdict="kept_then_reversed" style="width: 1.2%;" title="Filter Later closed / reversed (1)" aria-label="Filter Later closed / reversed (1)"></button>
         </div>
         <div class="stacked-legend-grid">
-          <button type="button" class="legend-btn" data-verdict="kept"><span class="legend-swatch seg-kept"></span> <span id="legend-text-kept">24 Kept (31%)</span></button>
-          <button type="button" class="legend-btn" data-verdict="in_progress"><span class="legend-swatch seg-progress"></span> <span id="legend-text-progress">31 In progress (40%)</span></button>
-          <button type="button" class="legend-btn" data-verdict="broken"><span class="legend-swatch seg-broken"></span> <span id="legend-text-broken">18 Broken (23%)</span></button>
-          <button type="button" class="legend-btn" data-verdict="undecided"><span class="legend-swatch seg-undecided"></span> <span id="legend-text-undecided">4 Undecided (5%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="kept"><span class="legend-swatch seg-kept"></span> <span id="legend-text-kept">25 Kept (30%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="in_progress"><span class="legend-swatch seg-progress"></span> <span id="legend-text-progress">33 In progress (40%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="broken"><span class="legend-swatch seg-broken"></span> <span id="legend-text-broken">18 Broken (22%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="undecided"><span class="legend-swatch seg-undecided"></span> <span id="legend-text-undecided">6 Undecided (7%)</span></button>
           <button type="button" class="legend-btn" data-verdict="kept_then_reversed"><span class="legend-swatch seg-reversed"></span> <span id="legend-text-reversed">1 Later closed / reversed (1%)</span></button>
         </div>
         <details class="verdict-legend" id="verdict-legend">
@@ -120,11 +120,11 @@
           <p class="verdict-legend-note">A verdict describes the outcome as of its date. The history of when a promise was made and checked is shown separately in each record, so a past verdict is never rewritten silently.</p>
         </details>
         <div class="tally-hero-line font-mono" id="tally-hero-line" style="display: none;">
-          <strong id="tally-total">78</strong>
-          <strong id="tally-kept">24</strong>
-          <strong id="tally-progress">31</strong>
+          <strong id="tally-total">83</strong>
+          <strong id="tally-kept">25</strong>
+          <strong id="tally-progress">33</strong>
           <strong id="tally-broken">18</strong>
-          <strong id="tally-undecided">4</strong>
+          <strong id="tally-undecided">6</strong>
         </div>
       </section>
 
@@ -291,7 +291,7 @@
         <div class="tabs-container" role="tablist" aria-label="Commitments view options">
           <div class="tab-buttons-group">
             <button type="button" class="tab-nav-btn active" id="tab-btn-promises" role="tab" aria-selected="true" aria-controls="promises-table-container">
-              Commitment Registry <span class="tab-badge font-mono" id="tab-count-promises">78</span>
+              Commitment Registry <span class="tab-badge font-mono" id="tab-count-promises">83</span>
             </button>
             <button type="button" class="tab-nav-btn" id="tab-btn-quarantine" role="tab" aria-selected="false" aria-controls="quarantine-table-container">
               Rejected &amp; Test Records <span class="tab-badge font-mono" id="tab-count-quarantine">13</span>
@@ -314,11 +314,11 @@
           </div>
 
           <div class="segmented-verdict-control" id="segmented-verdict-control" role="group" aria-label="Filter by verdict">
-            <button type="button" class="btn-seg-verdict active" data-verdict="all" aria-pressed="true">All (78)</button>
-            <button type="button" class="btn-seg-verdict" data-verdict="kept" aria-pressed="false">Kept (24)</button>
-            <button type="button" class="btn-seg-verdict" data-verdict="in_progress" aria-pressed="false">In progress (31)</button>
+            <button type="button" class="btn-seg-verdict active" data-verdict="all" aria-pressed="true">All (83)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="kept" aria-pressed="false">Kept (25)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="in_progress" aria-pressed="false">In progress (33)</button>
             <button type="button" class="btn-seg-verdict" data-verdict="broken" aria-pressed="false">Broken (18)</button>
-            <button type="button" class="btn-seg-verdict" data-verdict="undecided" aria-pressed="false">Undecided (4)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="undecided" aria-pressed="false">Undecided (6)</button>
             <button type="button" class="btn-seg-verdict" data-verdict="kept_then_reversed" aria-pressed="false">Later closed / reversed (1)</button>
           </div>
 
@@ -413,7 +413,7 @@
 
         <!-- Status Line -->
         <div class="explore-status-line" id="table-showing-status">
-          <span id="table-showing-text">Showing <strong id="table-showing-count">10</strong> of <span id="table-total-count">78</span> commitments</span>
+          <span id="table-showing-text">Showing <strong id="table-showing-count">10</strong> of <span id="table-total-count">83</span> commitments</span>
           <span class="status-sep" aria-hidden="true">&middot;</span>
           <span id="table-sort-text">Sorted by most significant</span>
           <span class="status-sep" aria-hidden="true">&middot;</span>
@@ -2157,7 +2157,33 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-010" data-promise-id="DISC-20261122-010" tabindex="0" role="button" aria-label="Inspect #63 San Francisco Recreation and Park Department: Construction is expected to begin in late 2027, with the renovated park opening in 2029.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-LEADER-01" data-promise-id="LEADER-01" tabindex="0" role="button" aria-label="Inspect #63 Salesforce: SAN FRANCISCO (CBS SF) — The CEO of Salesforce.com visited a San Francisco school on Monday to highlight a $2.7 million donation by his company to the…">
+                <td class="table-entity-cell">
+                  <div class="entity-headline-row">
+                    <span class="table-entity-name">Salesforce</span>
+                  </div>
+                  <div class="entity-geo-tag font-mono">Citywide</div>
+                </td>
+                <td class="table-quote-cell">
+                  <div class="table-promise-block">
+                    <blockquote class="table-quote-text font-serif">&ldquo;SAN FRANCISCO (CBS SF) — The CEO of Salesforce.com visited a San Francisco school on Monday to highlight a $2.7 million donation by his company to the…&rdquo;</blockquote>
+                  </div>
+                  <div class="table-outcome-block">
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-text">Origin announces a $2.7M Salesforce donation to the citys 12 middle schools on Monday 2013-10-07. No deadline is stated, so deadline unused. No delivery or survival sentence supplied. Portola is only the event venue; the donation covers all middle schools, so Citywide fits.</span>
+                  </div>
+                </td>
+                <td class="table-verdict-cell">
+                  <span class="verdict-chip undecided">Undecided</span>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2013-10-07 (derived)</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">No deadline</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">—</span></div>
+                  <span class="table-card-action">Inspect &rarr;</span>
+                </td>
+              </tr>
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-010" data-promise-id="DISC-20261122-010" tabindex="0" role="button" aria-label="Inspect #64 San Francisco Recreation and Park Department: Construction is expected to begin in late 2027, with the renovated park opening in 2029.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Recreation and Park Department</span>
@@ -2183,7 +2209,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-005" data-promise-id="DISC-20261122-005" tabindex="0" role="button" aria-label="Inspect #64 San Francisco Public Utilities Commission: Both Seacliff 1 &amp; 2 pump station facilities are approaching completed construction status, with both locations anticipated to be finished with the sew…">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-005" data-promise-id="DISC-20261122-005" tabindex="0" role="button" aria-label="Inspect #65 San Francisco Public Utilities Commission: Both Seacliff 1 &amp; 2 pump station facilities are approaching completed construction status, with both locations anticipated to be finished with the sew…">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Public Utilities Commission</span>
@@ -2209,7 +2235,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-019" data-promise-id="DISC-20261122-019" tabindex="0" role="button" aria-label="Inspect #65 San Francisco Department of Homelessness and Supportive Housing: Between now and May 2029, the San Francisco Department of Homelessness and Supportive Housing (HSH) will run a competitive process to re-award its ful…">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-019" data-promise-id="DISC-20261122-019" tabindex="0" role="button" aria-label="Inspect #66 San Francisco Department of Homelessness and Supportive Housing: Between now and May 2029, the San Francisco Department of Homelessness and Supportive Housing (HSH) will run a competitive process to re-award its ful…">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Department of Homelessness and Supportive Housing</span>
@@ -2235,7 +2261,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-014" data-promise-id="DISC-20261122-014" tabindex="0" role="button" aria-label="Inspect #66 San Francisco Public Works: Construction is anticipated to start by fall 2026, with substantial completion expected in 2027.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-014" data-promise-id="DISC-20261122-014" tabindex="0" role="button" aria-label="Inspect #67 San Francisco Public Works: Construction is anticipated to start by fall 2026, with substantial completion expected in 2027.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Public Works</span>
@@ -2261,7 +2287,33 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-001" data-promise-id="DISC-20261122-001" tabindex="0" role="button" aria-label="Inspect #67 San Francisco Public Utilities Commission: Project completion is anticipated in 2028.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-023" data-promise-id="DISC-20261122-023" tabindex="0" role="button" aria-label="Inspect #68 San Francisco Public Utilities Commission: A Notice to Proceed (NTP) is planned for early 2027.">
+                <td class="table-entity-cell">
+                  <div class="entity-headline-row">
+                    <span class="table-entity-name">San Francisco Public Utilities Commission</span>
+                  </div>
+                  <div class="entity-geo-tag font-mono">Location not stated</div>
+                </td>
+                <td class="table-quote-cell">
+                  <div class="table-promise-block">
+                    <blockquote class="table-quote-text font-serif">&ldquo;A Notice to Proceed (NTP) is planned for early 2027.&rdquo;</blockquote>
+                  </div>
+                  <div class="table-outcome-block">
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-text">Schedule says NTP planned for early 2027, normalized to 2027-12-31. Document dated 03/2026. SFPUC is the responsible agency and the source names only the Lower Alemany area, not a listed neighborhood, so Not stated is acceptable. No delivery or survival sentence supplied.</span>
+                  </div>
+                </td>
+                <td class="table-verdict-cell">
+                  <span class="verdict-chip in_progress">In Progress</span>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2026-03-26 (derived)</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">2027-12-31</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">—</span></div>
+                  <span class="table-card-action">Inspect &rarr;</span>
+                </td>
+              </tr>
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-001" data-promise-id="DISC-20261122-001" tabindex="0" role="button" aria-label="Inspect #69 San Francisco Public Utilities Commission: Project completion is anticipated in 2028.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Public Utilities Commission</span>
@@ -2287,7 +2339,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-BIKE-01" data-promise-id="BIKE-01" tabindex="0" role="button" aria-label="Inspect #68 San Francisco Municipal Transportation Agency: Breed is tasking The City’s transit agency to build out 20 miles of protected bike lanes in just two years.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-BIKE-01" data-promise-id="BIKE-01" tabindex="0" role="button" aria-label="Inspect #70 San Francisco Municipal Transportation Agency: Breed is tasking The City’s transit agency to build out 20 miles of protected bike lanes in just two years.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Municipal Transportation Agency</span>
@@ -2313,7 +2365,33 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-020" data-promise-id="DISC-20261122-020" tabindex="0" role="button" aria-label="Inspect #69 SFMTA: The SFMTA will aim to begin testing the new system on two buses by March of next year.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-SEISMIC-02" data-promise-id="SEISMIC-02" tabindex="0" role="button" aria-label="Inspect #71 Port of San Francisco: Work planned through 2026 will reduce seismic risk, potentially beginning around the Ferry Building, where some of the oldest sections of the wall are…">
+                <td class="table-entity-cell">
+                  <div class="entity-headline-row">
+                    <span class="table-entity-name">Port of San Francisco</span>
+                  </div>
+                  <div class="entity-geo-tag font-mono">The Embarcadero</div>
+                </td>
+                <td class="table-quote-cell">
+                  <div class="table-promise-block">
+                    <blockquote class="table-quote-text font-serif">&ldquo;Work planned through 2026 will reduce seismic risk, potentially beginning around the Ferry Building, where some of the oldest sections of the wall are…&rdquo;</blockquote>
+                  </div>
+                  <div class="table-outcome-block">
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-text">Origin says work planned through 2026 will reduce seismic risk near the Ferry Building on the Embarcadero seawall; 2026-12-31 normalizes the year. Port of San Francisco is the seawall owner named in the program sources. No delivery or survival sentence supplied.</span>
+                  </div>
+                </td>
+                <td class="table-verdict-cell">
+                  <span class="verdict-chip in_progress">In Progress</span>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2018-11-07 (derived)</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">2026-12-31</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">—</span></div>
+                  <span class="table-card-action">Inspect &rarr;</span>
+                </td>
+              </tr>
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-020" data-promise-id="DISC-20261122-020" tabindex="0" role="button" aria-label="Inspect #72 SFMTA: The SFMTA will aim to begin testing the new system on two buses by March of next year.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">SFMTA</span>
@@ -2339,7 +2417,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-007" data-promise-id="DISC-20261122-007" tabindex="0" role="button" aria-label="Inspect #70 San Francisco Municipal Transportation Agency: Starting January 30, 2027, riders will see changes across the system: more frequent service on busy routes, easier rides downtown, more room on crowde…">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-007" data-promise-id="DISC-20261122-007" tabindex="0" role="button" aria-label="Inspect #73 San Francisco Municipal Transportation Agency: Starting January 30, 2027, riders will see changes across the system: more frequent service on busy routes, easier rides downtown, more room on crowde…">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Municipal Transportation Agency</span>
@@ -2365,7 +2443,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-011" data-promise-id="DISC-20261122-011" tabindex="0" role="button" aria-label="Inspect #71 San Francisco Arts Commission: Artwork is scheduled for installation in spring 2027 with full project completion that summer.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-011" data-promise-id="DISC-20261122-011" tabindex="0" role="button" aria-label="Inspect #74 San Francisco Arts Commission: Artwork is scheduled for installation in spring 2027 with full project completion that summer.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Arts Commission</span>
@@ -2391,7 +2469,59 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-008" data-promise-id="DISC-20261122-008" tabindex="0" role="button" aria-label="Inspect #72 Mercy Housing: Mercy Housing is leading development of the six-story, 68,000-square-foot building at Trade Winds Avenue and Macky Road, which is expected to be compl…">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-BIKE-02" data-promise-id="BIKE-02" tabindex="0" role="button" aria-label="Inspect #75 San Francisco Municipal Transportation Agency: The 12-month pilot program will see two-way bike lane traffic running down the middle of the road with cars on the sides.">
+                <td class="table-entity-cell">
+                  <div class="entity-headline-row">
+                    <span class="table-entity-name">San Francisco Municipal Transportation Agency</span>
+                  </div>
+                  <div class="entity-geo-tag font-mono">Mission</div>
+                </td>
+                <td class="table-quote-cell">
+                  <div class="table-promise-block">
+                    <blockquote class="table-quote-text font-serif">&ldquo;The 12-month pilot program will see two-way bike lane traffic running down the middle of the road with cars on the sides.&rdquo;</blockquote>
+                  </div>
+                  <div class="table-outcome-block">
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-text">Origin reports the SFMTA board vote on Tuesday for a 12-month center-running pilot in the Mission District. The cited source states Mid-Valencia pilot construction was completed and the evaluation period started, which establishes delivery of the pilot; no deadline was stated. Survival is not evaluated.</span>
+                  </div>
+                </td>
+                <td class="table-verdict-cell">
+                  <span class="verdict-chip kept">Kept</span>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2023-04-04 (derived)</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">No deadline</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">Verified completed</span></div>
+                  <span class="table-card-action">Inspect &rarr;</span>
+                </td>
+              </tr>
+              <tr class="promise-row paged-row hidden-page-row" id="promise-CLIMATE-01" data-promise-id="CLIMATE-01" tabindex="0" role="button" aria-label="Inspect #76 San Francisco Board of Supervisors: The Building Official shall not issue permits for construction of any new Mixed-Fuel Buildings that submitted antheir initial application on or after …">
+                <td class="table-entity-cell">
+                  <div class="entity-headline-row">
+                    <span class="table-entity-name">San Francisco Board of Supervisors</span>
+                  </div>
+                  <div class="entity-geo-tag font-mono">Citywide</div>
+                </td>
+                <td class="table-quote-cell">
+                  <div class="table-promise-block">
+                    <blockquote class="table-quote-text font-serif">&ldquo;The Building Official shall not issue permits for construction of any new Mixed-Fuel Buildings that submitted antheir initial application on or after …&rdquo;</blockquote>
+                  </div>
+                  <div class="table-outcome-block">
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-text">Origin is a Board of Supervisors ordinance amended in Board 11/10/2020, barring permits for new Mixed-Fuel Buildings with initial applications on or after June 1, 2021. Date 2020-11-10 and deadline 2021-06-01 are explicit in the text. The rule applies to all new construction, so Citywide is supported.</span>
+                  </div>
+                </td>
+                <td class="table-verdict-cell">
+                  <span class="verdict-chip undecided">Undecided</span>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2020-11-10 (derived)</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">2021-06-01</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">—</span></div>
+                  <span class="table-card-action">Inspect &rarr;</span>
+                </td>
+              </tr>
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-008" data-promise-id="DISC-20261122-008" tabindex="0" role="button" aria-label="Inspect #77 Mercy Housing: Mercy Housing is leading development of the six-story, 68,000-square-foot building at Trade Winds Avenue and Macky Road, which is expected to be compl…">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Mercy Housing</span>
@@ -2417,7 +2547,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-012" data-promise-id="DISC-20261122-012" tabindex="0" role="button" aria-label="Inspect #73 Office of the Mayor / MOHCD (Freedom West 2.0): Groundbreaking on the senior homes is anticipated in the first half of 2027, with the new co-op to follow.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-012" data-promise-id="DISC-20261122-012" tabindex="0" role="button" aria-label="Inspect #78 Office of the Mayor / MOHCD (Freedom West 2.0): Groundbreaking on the senior homes is anticipated in the first half of 2027, with the new co-op to follow.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Office of the Mayor / MOHCD (Freedom West 2.0)</span>
@@ -2443,7 +2573,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-003" data-promise-id="DISC-20261122-003" tabindex="0" role="button" aria-label="Inspect #74 San Francisco Public Utilities Commission: Design is expected to begin in 2026, with construction planned to start in March 2028.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-003" data-promise-id="DISC-20261122-003" tabindex="0" role="button" aria-label="Inspect #79 San Francisco Public Utilities Commission: Design is expected to begin in 2026, with construction planned to start in March 2028.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Public Utilities Commission</span>
@@ -2469,7 +2599,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-017" data-promise-id="DISC-20261122-017" tabindex="0" role="button" aria-label="Inspect #75 San Francisco Unified School District: The new school is scheduled to open in Fall 2027 at the temporary location before growing into a full TK–8 program.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-017" data-promise-id="DISC-20261122-017" tabindex="0" role="button" aria-label="Inspect #80 San Francisco Unified School District: The new school is scheduled to open in Fall 2027 at the temporary location before growing into a full TK–8 program.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Unified School District</span>
@@ -2495,7 +2625,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-021" data-promise-id="DISC-20261122-021" tabindex="0" role="button" aria-label="Inspect #76 Port of San Francisco: Following robust public engagement and review of public, City agency, resource agency and USACE comments, the Port and USACE continue working to compl…">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-021" data-promise-id="DISC-20261122-021" tabindex="0" role="button" aria-label="Inspect #81 Port of San Francisco: Following robust public engagement and review of public, City agency, resource agency and USACE comments, the Port and USACE continue working to compl…">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Port of San Francisco</span>
@@ -2521,7 +2651,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-025" data-promise-id="DISC-20261122-025" tabindex="0" role="button" aria-label="Inspect #77 San Francisco Public Utilities Commission: We anticipate construction to start in late 2027.">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-DISC-20261122-025" data-promise-id="DISC-20261122-025" tabindex="0" role="button" aria-label="Inspect #82 San Francisco Public Utilities Commission: We anticipate construction to start in late 2027.">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">San Francisco Public Utilities Commission</span>
@@ -2547,7 +2677,7 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
-              <tr class="promise-row paged-row hidden-page-row" id="promise-ARTS-01" data-promise-id="ARTS-01" tabindex="0" role="button" aria-label="Inspect #78 Another Planet Entertainment: Another Planet Entertainment has committed to bringing free outdoor concerts to Downtown San Francisco’s historic plazas, including Civic Center Plaza…">
+              <tr class="promise-row paged-row hidden-page-row" id="promise-ARTS-01" data-promise-id="ARTS-01" tabindex="0" role="button" aria-label="Inspect #83 Another Planet Entertainment: Another Planet Entertainment has committed to bringing free outdoor concerts to Downtown San Francisco’s historic plazas, including Civic Center Plaza…">
                 <td class="table-entity-cell">
                   <div class="entity-headline-row">
                     <span class="table-entity-name">Another Planet Entertainment</span>
@@ -3092,7 +3222,7 @@
           <h2>Methodology and limitations</h2>
         </div>
         <ul class="methodology-list">
-          <li><strong>Small, curated sample.</strong> The 78 commitments were selected from sources that could be saved and hashed. They are not a census of every promise made in San Francisco, so the Kept and Broken shares should not be read as a city-wide success rate.</li>
+          <li><strong>Small, curated sample.</strong> The 83 commitments were selected from sources that could be saved and hashed. They are not a census of every promise made in San Francisco, so the Kept and Broken shares should not be read as a city-wide success rate.</li>
           <li><strong>Evidence-limited.</strong> A verdict reflects the saved sources available at the time. Missing documentation leads to Undecided, not Broken.</li>
           <li><strong>Dated.</strong> Each record shows when the promise was made and when its checks last ran. The dataset was last checked on <span id="methodology-last-checked">Nov 14, 2026</span>.</li>
         </ul>
@@ -3358,7 +3488,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="data.js?v=773be8e4"></script>
-  <script src="app.js?v=773be8e4"></script>
+  <script src="data.js?v=2e5621ef"></script>
+  <script src="app.js?v=2e5621ef"></script>
 </body>
 </html>

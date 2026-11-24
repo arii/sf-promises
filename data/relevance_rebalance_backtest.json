@@ -28,13 +28,13 @@
       "mean_total_after": 7.222
     },
     "service_program": {
-      "n": 76,
-      "pass_before": 61,
-      "pass_after": 61,
-      "pass_rate_before": 0.8026,
-      "pass_rate_after": 0.8026,
-      "mean_total_before": 6.724,
-      "mean_total_after": 6.842
+      "n": 81,
+      "pass_before": 66,
+      "pass_after": 66,
+      "pass_rate_before": 0.8148,
+      "pass_rate_after": 0.8148,
+      "mean_total_before": 6.728,
+      "mean_total_after": 6.852
     }
   },
   "flips_up": [],
