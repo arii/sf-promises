@@ -22,6 +22,10 @@ from src.screening import screen_pending_origin
 from src.sources import load_archived_metadata, load_archived_text
 from src.taxonomy import screen_taxonomy
 from src.lifecycle_rubric import decide_verdict
+from src.outcome_rules import (
+    NOT_CHECKED_NOTE, decide_outcome, origin_date_failures, outcome_rules_enabled,
+    relied_phases,
+)
 
 
 class Selection(BaseModel):
@@ -163,10 +167,11 @@ _DERIVED_DATE_RULE = (
 
 def _date_line(candidate, resolution, published):
     """Commitment-date text for prompts; unchanged unless the date is derived."""
+    deadline = candidate.deadline if candidate.deadline is not None else "none stated"
     if resolution is None or not resolution.derived:
-        return f"Commitment date: {candidate.promised_date}; deadline: {candidate.deadline}"
+        return f"Commitment date: {candidate.promised_date}; deadline: {deadline}"
     return (f"Commitment date: {candidate.promised_date} ({resolution.describe(published)}); "
-            f"deadline: {candidate.deadline}")
+            f"deadline: {deadline}")
 
 
 async def audit_candidate(conn, *, root, staging_root, lead, research, complete, as_of,
@@ -194,6 +199,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
     last_reason = json.loads(prior[0])[0] if prior else "NO_VERIFIABLE_ORIGIN"
     retry_origins = set()
     resolve_dates = date_resolution_enabled()
+    rules_on = outcome_rules_enabled()
     for origin, attempt in ((source, attempt) for source in origins for attempt in range(2)):
         if attempt and origin["sha256"] not in retry_origins:
             continue
@@ -229,6 +235,13 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 conn, root=root, pending_id=pending_id, source_tier=_tier(origin),
                 search_exhausted=False,
             )
+            screening_rules = []
+            if rules_on:
+                # R1/R2: src/screening.py is frozen, so filter its date failures here.
+                screening_failures, screening_rules = origin_date_failures(
+                    screening["failures"], candidate.promised_date, candidate.deadline,
+                )
+                screening = {**screening, "failures": screening_failures}
             if screening["failures"]:
                 last_reason = ("NO_VERIFIABLE_DEADLINE" if any(
                     item in screening["failures"] for item in ("deadline_missing", "promise_horizon_short")
@@ -260,7 +273,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 last_reason = "INVALID_PROMISE_DATE_LATER_THAN_SOURCE"
                 retry_origins.add(origin["sha256"])
                 continue
-            if not origin_review.deadline:
+            if not origin_review.deadline and not (rules_on and candidate.deadline is None):
                 last_reason = "NO_VERIFIABLE_DEADLINE"
                 retry_origins.add(origin["sha256"])
                 continue
@@ -271,7 +284,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 research["phases"], promised=candidate.promised_date, as_of=as_of,
             )
             material = _outcome_material(root, pid, outcome_sources)
-            if not material:
+            if not material and not rules_on:
                 last_reason = "INSUFFICIENT_OUTCOME_EVIDENCE"
                 continue
             numbered = "\n".join(
@@ -282,7 +295,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
             prompt = (
                 f"Commitment: {candidate.promise_text}\n"
                 f"{_date_line(candidate, resolution, published)}\n"
-                f"As of: {as_of}\nArchived outcome sources:\n{numbered}"
+                f"As of: {as_of}\nArchived outcome sources:\n{numbered or 'none'}"
             )
             assessments, advocate_model_ids = [], []
             for role in ("kept", "broken"):
@@ -299,15 +312,26 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 assessments.append(assessment)
                 advocate_model_ids.append(model_id)
             kept, broken = assessments
-            if (kept.initial_delivery != broken.initial_delivery
-                    or kept.current_survival != broken.current_survival):
-                last_reason = "ADVOCATE_DISAGREEMENT"
-                continue
             delivery = _selected(kept.delivery, material)
             survival = _selected(kept.survival, material)
-            if delivery is None or survival is None:
-                last_reason = "INSUFFICIENT_OUTCOME_EVIDENCE"
-                continue
+            if rules_on:
+                # A state only counts when its own selected sentence supports it.
+                states = [(
+                    a.initial_delivery if _selected(a.delivery, material) else "UNKNOWN",
+                    a.current_survival if _selected(a.survival, material) else "UNKNOWN",
+                ) for a in assessments]
+                if states[0] != states[1]:
+                    last_reason = "ADVOCATE_DISAGREEMENT"
+                    continue
+                delivery_state, survival_state = states[0]
+            else:
+                if (kept.initial_delivery != broken.initial_delivery
+                        or kept.current_survival != broken.current_survival):
+                    last_reason = "ADVOCATE_DISAGREEMENT"
+                    continue
+                if delivery is None or survival is None:
+                    last_reason = "INSUFFICIENT_OUTCOME_EVIDENCE"
+                    continue
             if screen_taxonomy(
                 entity_name=kept.entity_name, entity_type=kept.entity_type,
                 sector=kept.sector, neighborhood=kept.neighborhood,
@@ -315,6 +339,15 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
             ):
                 last_reason = "INVALID_TAXONOMY"
                 continue
+            outcome, relied = None, ("DELIVERY", "SURVIVAL")
+            if rules_on:
+                outcome = decide_outcome(
+                    candidate.deadline, as_of, delivery_state, survival_state, True,
+                )
+                if outcome is None:
+                    last_reason = "INSUFFICIENT_OUTCOME_EVIDENCE"
+                    continue
+                relied = relied_phases(outcome[0], delivery_state, survival_state)
             review, review_model_id = await _structured(
                 complete, "verify_evidence", SemanticReview,
                 "You are a separate independent evidence verifier, not an advocate. "
@@ -324,42 +357,72 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                 + "Deadline must be supported by the "
                 "origin; a year-only target or duration in years from the commitment "
                 "may be normalized to December 31, and a month-only target to month-end. "
-                "Delivery must establish the outcome and its timing; survival "
-                "must establish the current state. Reject ambiguity, unstated dates, "
-                "or mismatched projects. Do not use the discovery target as evidence.",
+                + ("Delivery must establish the outcome and its timing; survival "
+                   "must establish the current state. Reject ambiguity, unstated dates, "
+                   "or mismatched projects. Do not use the discovery target as evidence."
+                   if not rules_on else
+                   "Only the delivery and survival sentences supplied are evaluated; "
+                   "return false for a field with no sentence. Delivery must establish "
+                   "the outcome and its timing; survival must establish the current "
+                   "state. When the deadline is 'none stated', the deadline field is "
+                   "not used. Reject ambiguity, unstated dates, or mismatched "
+                   "projects. Do not use the discovery target as evidence."),
                 f"Origin source published {published}:\n{origin_text[:5000]}\n"
                 f"Assessment as of: {as_of}\n"
                 f"Proposed commitment: {candidate.promise_text}\n"
                 f"{_date_line(candidate, resolution, published)}\n"
                 f"Classification: {kept.entity_name}, {kept.entity_type}, "
                 f"{kept.sector}, {kept.neighborhood}\n"
-                f"Delivery {kept.initial_delivery}, published {_published(delivery[0])}: "
-                f"{delivery[1]}\nSurvival {kept.current_survival}, "
-                f"published {_published(survival[0])}: {survival[1]}",
+                + (f"Delivery {kept.initial_delivery}, published {_published(delivery[0])}: "
+                   f"{delivery[1]}\nSurvival {kept.current_survival}, "
+                   f"published {_published(survival[0])}: {survival[1]}"
+                   if not rules_on else
+                   "".join(f"{label} {state}, published {_published(picked[0])}: "
+                           f"{picked[1]}\n" for label, state, picked, phase in (
+                               ("Delivery", delivery_state, delivery, "DELIVERY"),
+                               ("Survival", survival_state, survival, "SURVIVAL"),
+                           ) if phase in relied)
+                   + "Fields to evaluate: action, promise_date, entity_and_location"
+                   + (", deadline" if candidate.deadline is not None else "")
+                   + "".join(f", {phase.lower()}" for phase in relied)),
             )
-            if not all((review.action, review.promise_date, review.deadline, review.delivery,
-                        review.survival, review.entity_and_location)):
+            if rules_on:
+                needed = {"action", "promise_date", "entity_and_location"}
+                needed |= {phase.lower() for phase in relied}
+                if candidate.deadline is not None:
+                    needed.add("deadline")
+                reviewed = all(getattr(review, name) for name in needed)
+            else:
+                reviewed = all((review.action, review.promise_date, review.deadline,
+                                review.delivery, review.survival, review.entity_and_location))
+            if not reviewed:
                 last_reason = ("INVALID_PROMISE_DATE_LATER_THAN_SOURCE"
                                if not review.promise_date else "AMBIGUOUS_EVIDENCE")
                 if not review.promise_date:
                     retry_origins.add(origin["sha256"])
                 continue
-            verdict = decide_verdict(
-                candidate.deadline, as_of, kept.initial_delivery, kept.current_survival,
-                facts_verified=True,
-            )
-            if verdict is None:
-                last_reason = "INSUFFICIENT_OUTCOME_EVIDENCE"
-                continue
-            evidence = [("ORIGIN", origin, candidate.promise_text),
-                        ("DELIVERY", *delivery), ("SURVIVAL", *survival)]
+            if rules_on:
+                verdict = outcome[0]
+                evidence = [("ORIGIN", origin, candidate.promise_text)]
+                evidence += [(phase, *picked) for phase, picked in
+                             (("DELIVERY", delivery), ("SURVIVAL", survival)) if phase in relied]
+            else:
+                verdict = decide_verdict(
+                    candidate.deadline, as_of, kept.initial_delivery, kept.current_survival,
+                    facts_verified=True,
+                )
+                if verdict is None:
+                    last_reason = "INSUFFICIENT_OUTCOME_EVIDENCE"
+                    continue
+                evidence = [("ORIGIN", origin, candidate.promise_text),
+                            ("DELIVERY", *delivery), ("SURVIVAL", *survival)]
             if worker_gate is not None:
                 await worker_gate(
                     [(source, quote) for _, source, quote in evidence],
                     {"quote": candidate.promise_text,
                      "promised": candidate.promised_date.isoformat(),
                      "published": published.isoformat(),
-                     "deadline": candidate.deadline.isoformat()},
+                     "deadline": candidate.deadline.isoformat() if candidate.deadline else None},
                 )
             signals = {
                 "has_verbatim": True,
@@ -398,7 +461,7 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                     ("SURVIVAL", _selected(assessment.survival, material), assessment.current_survival),
                 ):
                     positive = state in ("DELIVERED_ON_TIME", "ACTIVE_OPERATIONAL")
-                    if picked and ((role == "kept" and positive) or (role == "broken" and not positive)):
+                    if picked and phase in relied and ((role == "kept" and positive) or (role == "broken" and not positive)):
                         source, quote = picked
                         selected.append({"statement": state, "phase": phase, "url": source["url"],
                                          "source_tier": _tier(source), "path": source["path"],
@@ -424,11 +487,15 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                     "INSERT INTO promises VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     (pid, kept.entity_name, kept.entity_type, kept.sector, kept.neighborhood,
                      candidate.promise_text, candidate.promised_date.isoformat(),
-                     candidate.deadline.isoformat(), now.isoformat()),
+                     candidate.deadline.isoformat() if candidate.deadline else None,
+                     now.isoformat()),
                 )
                 conn.execute(
                     "INSERT INTO verdicts (promise_id, verdict, reason, decided_at) VALUES (?, ?, ?, ?)",
-                    (pid, verdict, review.explanation, now.isoformat()),
+                    (pid, verdict,
+                     review.explanation + (f" ({NOT_CHECKED_NOTE})"
+                                           if outcome and outcome[2] == NOT_CHECKED_NOTE else ""),
+                     now.isoformat()),
                 )
                 conn.executemany(
                     "INSERT INTO verifications (promise_id, check_type, passed, reason, "
@@ -449,6 +516,21 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                             "published": published.isoformat(),
                             "phrase": resolution.phrase,
                             "note": resolution.describe(published),
+                        }, sort_keys=True), now.isoformat()),
+                    )
+                if rules_on:
+                    conn.execute(
+                        "INSERT INTO verifications (promise_id, check_type, passed, reason, "
+                        "checked_at) VALUES (?, 'outcome_basis', 1, ?, ?)",
+                        (pid, json.dumps({
+                            "rules": screening_rules + (
+                                [outcome[1]] if outcome[1] in ("R3", "R4", "R5") else []),
+                            "outcome_rule": outcome[1],
+                            "open_ended": candidate.deadline is None,
+                            "deadline": candidate.deadline.isoformat() if candidate.deadline else None,
+                            "reason": outcome[2],
+                            "relied_on": list(relied),
+                            "verdict": verdict,
                         }, sort_keys=True), now.isoformat()),
                     )
                 updated = conn.execute(

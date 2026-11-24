@@ -227,6 +227,9 @@ def durability_evaluator(conn, root, completion):
         survival = asyncio.run(classify_survival(completion, quotes))
         if survival not in ("SHUTTERED_OR_CLOSED", "REVOKED_OR_HALTED", "ACTIVE_OPERATIONAL"):
             return current_verdict, "Durability recheck: advocates did not agree on survival; verdict retained."
+        if deadlines[promise_id] is None:
+            return (current_verdict,
+                    "Durability recheck: open-ended commitment has no deadline; verdict retained.")
         deadline = date.fromisoformat(deadlines[promise_id][:10])
         new_verdict = decide_verdict(deadline, date.today(), delivery, survival, facts_verified=True)
         if new_verdict is None or new_verdict == verdict:

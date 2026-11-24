@@ -139,6 +139,22 @@ Next blockers:
    This is a retrieval problem as much as a rule problem. The Keenable
    features in the next section apply here.
 
+## Implemented: outcome rules (`SF_PROMISES_OUTCOME_RULES=1`, off by default)
+
+After experiment 4a the remaining rejections were `NO_VERIFIABLE_DEADLINE` (24)
+and `INSUFFICIENT_OUTCOME_EVIDENCE` (10). The flag adds rules R1-R7 in
+`src/outcome_rules.py` and `src/candidate.py`; the PRD ("Evidence and verdicts")
+has the full rule text. In short: no deadline is open-ended (R1), a deadline on
+or after the promised date is a one-off event (R2), a future deadline is
+`IN_PROGRESS` (R3), a verified delivery sentence alone gives `KEPT` or
+`DELAYED_OR_PARTIAL` marked "current status not checked" (R4), and no outcome
+evidence gives `UNDECIDED` (R5). The semantic verifier only has to confirm the
+fields the verdict uses (R6), and each published verdict writes an
+`outcome_basis` verification row (R7). Not yet measured on the 48 published
+candidates: rerun them with this flag and `SF_PROMISES_DATE_RESOLUTION=1`.
+New databases accept `UNDECIDED` and a null `date_deadline`; existing
+databases need a schema migration first.
+
 ## Hypotheses to test
 
 - **H1. The audit is stricter than the standard that produced the published
