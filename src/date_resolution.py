@@ -53,6 +53,22 @@ _FORWARD_PREFIX = re.compile(
     r"\b(?:next|this|by|before|until|till|through|thru|every|each|following|"
     r"coming|upcoming|than)\s+$", re.I,
 )
+# Forward-looking language governing a weekday: the weekday names the deadline or
+# event, not the day the commitment was made. Only text before the weekday in the
+# same sentence counts, so "voted Tuesday to approve ... which will open" is past.
+_FORWARD_CUE = re.compile(
+    r"\b(?:will|shall|opens?|opening|begins?|beginning|starts?|starting|"
+    r"(?:is|are|was|were)?\s*(?:scheduled|slated|set|expected|planned|due)|"
+    r"plans?\s+to|plan\s+to|to\s+(?:open|begin|start))\b"
+    r"(?:\s+[^\s.!?;]+){0,5}?\s+(?:on\s+)?$", re.I,
+)
+
+
+def _is_forward(prefix):
+    sentence = re.split(r"[.!?;\n]", prefix)[-1]
+    return bool(_FORWARD_CUE.search(sentence))
+
+
 _LAST_WEEKDAY = re.compile(rf"\blast\s+{_WEEKDAY}\b", re.I)
 _BARE_WEEKDAY = re.compile(rf"\b{_WEEKDAY}\b", re.I)
 _TODAY = re.compile(r"\b(?:today|tonight|this\s+(?:morning|afternoon|evening))\b", re.I)
@@ -174,6 +190,8 @@ def _relative_in(text, published):
         if any(lo <= match.start() < hi for lo, hi in last_spans):
             continue
         if _FORWARD_PREFIX.search(text[:match.start()]):
+            continue
+        if _is_forward(text[:match.start()]):
             continue
         weekday = _WEEKDAYS.index(match.group(1).lower())
         phrase = match.group(0)
