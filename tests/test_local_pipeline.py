@@ -154,9 +154,11 @@ def test_candidate_batch_publish_quarantine_resume_and_staged_export(tmp_path, m
     assert document["snapshot_kind"] == "candidate_not_published"
     assert document["tallies"] == {"KEPT": 1}
     diff = reconcile(document, json.loads(baseline))
-    assert diff["staged_count"] == 1 and diff["baseline_count"] == 54
+    baseline_count = len(json.loads(baseline)["promises"])
+    assert baseline_count >= 54  # 54 legacy records plus any merged v2 records
+    assert diff["staged_count"] == 1 and diff["baseline_count"] == baseline_count
     assert diff["added_ids"] == []
-    assert len(diff["missing_ids"]) == 53
+    assert len(diff["missing_ids"]) == baseline_count - 1
     assert Path("docs/data.json").read_bytes() == baseline
 
 

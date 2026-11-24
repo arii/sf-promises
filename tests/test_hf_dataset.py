@@ -29,9 +29,15 @@ def test_hf_validate_only_staging_and_splits(tmp_path):
     assert "path: data/quarantined/train.csv" in readme_text
     assert "path: data/intake_ledger/train.csv" in readme_text
 
+    # commitments follows docs/data.json (54 legacy + merged v2 records);
+    # standardized_16col follows data/sf_promises_master.csv.
+    n_promises = len(json.loads((ROOT / "docs" / "data.json").read_text(encoding="utf-8"))["promises"])
+    assert n_promises >= 54
+    with (ROOT / "data" / "sf_promises_master.csv").open("r", encoding="utf-8", newline="") as f:
+        n_master = sum(1 for _ in csv.reader(f)) - 1
     expected_splits = {
-        "data/commitments/train.csv": (54, 73),
-        "data/standardized_16col/train.csv": (54, 16),
+        "data/commitments/train.csv": (n_promises, 73),
+        "data/standardized_16col/train.csv": (n_master, 16),
         "data/quarantined/train.csv": (13, 10),
         "data/intake_ledger/train.csv": (87, 23),
     }

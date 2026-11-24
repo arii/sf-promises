@@ -67,6 +67,16 @@ SECTOR_PILLAR = {
     "Governance & Finance": "Civic Life",
 }
 
+# The site's category buckets (docs/export_data.py SF_CATEGORY_MAP). A v2 sector
+# that the legacy export already renders under another name is folded into that
+# bucket; sectors without a legacy equivalent keep their own name.
+SECTOR_CATEGORY = {
+    "Energy & Infrastructure": "Environment & Energy",
+    "Governance & Finance": "Civic Governance",
+    "Homelessness & Behavioral Health": "Civic Governance",
+    "Housing & Land Use": "Housing & Neighborhoods",
+}
+
 TIER_SOURCE_TYPE = {"TIER1_GOV": "official_record", "TIER2_NEWS": "news_report"}
 
 
@@ -449,6 +459,7 @@ def build_record(item, *, promise_id, rank, entity_count):
     display_text, expanded = _display_text(item)
     verdict = VERDICT_MAP[item["latest"]["verdict"]]
     canonical = ENTITY_CATEGORY[promise["entity_type"]]
+    category = SECTOR_CATEGORY.get(promise["sector"], promise["sector"])
     neighborhood = promise["neighborhood"]
     scope = ("citywide" if neighborhood == "Citywide"
              else "regional" if neighborhood.startswith("Regional") else "neighborhood")
@@ -479,6 +490,11 @@ def build_record(item, *, promise_id, rank, entity_count):
     contradictory = bool(
         item["latest"]["verdict"] in ("BROKEN", "KEPT_THEN_REVERSED")
         and phases & {"DELIVERY", "SURVIVAL"})
+    # The origin source always supports the promise; cited outcome evidence
+    # counts for the verdict unless the verdict is a contradiction.
+    refuting = (sum(e["phase"] in ("DELIVERY", "SURVIVAL") for e in item["evidence"])
+                if contradictory else 0)
+    supporting = 1 + len(item["evidence"]) - refuting
     # Results of the checks this merge itself just ran against the saved bytes
     # and the database's own rows.
     checks = [
@@ -510,8 +526,9 @@ def build_record(item, *, promise_id, rank, entity_count):
         "role": None,
         "entity_type": canonical,
         "entity_type_legacy": promise["entity_type"],
-        "category": promise["sector"],
-        "category_l1": promise["sector"],
+        "sector": promise["sector"],
+        "category": category,
+        "category_l1": category,
         "pillar": SECTOR_PILLAR[promise["sector"]],
         "neighborhood": neighborhood,
         "neighborhood_canonical": neighborhood,
@@ -570,8 +587,10 @@ def build_record(item, *, promise_id, rank, entity_count):
             "source_file_path": e["_file"], "quote": e["verbatim_quote"],
         } for e in item["evidence"]],
         "has_contradictory_evidence": contradictory,
-        "verdict_supporting_evidence_count": None,
-        "verdict_contradicting_evidence_count": None,
+        "verdict_supporting_evidence_count": supporting,
+        "verdict_contradicting_evidence_count": refuting,
+        "affirming_evidence_count": supporting,
+        "refuting_evidence_count": refuting,
         "record_type": "promise",
         "impact_rank": rank,
         "display_no": rank,

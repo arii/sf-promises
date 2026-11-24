@@ -27,12 +27,14 @@ class TestUICounts(unittest.TestCase):
             self.verdict_counts[v] = self.verdict_counts.get(v, 0) + 1
 
     def test_data_length_matches_contract(self):
-        """Contract: exactly 54 verified commitments and 13 quarantined items."""
-        self.assertEqual(self.total_promises, 54, f"Expected 54 promises, got {self.total_promises}")
+        """Contract: 54 legacy commitments plus the v2 records, and 13 quarantined items."""
+        v2 = sum(1 for p in self.promises if p.get("pipeline") == "v2")
+        self.assertEqual(self.total_promises - v2, 54, f"Expected 54 legacy promises, got {self.total_promises - v2}")
+        self.assertEqual(v2, self.data["database_status"]["v2_merge"]["added"])
         self.assertEqual(self.total_quarantined, 13, f"Expected 13 quarantined items, got {self.total_quarantined}")
         self.assertEqual(
             sum(self.verdict_counts.values()),
-            54,
+            self.total_promises,
             "Sum of verdict counts must equal total promises"
         )
 

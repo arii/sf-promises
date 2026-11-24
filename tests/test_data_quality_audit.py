@@ -17,7 +17,12 @@ def test_core_dataset_counts():
     data = _load_data()
     promises = data["promises"]
     quarantined = data["quarantined"]
-    assert len(promises) == 54
+    legacy = [p for p in promises if p.get("pipeline") != "v2"]
+    v2 = [p for p in promises if p.get("pipeline") == "v2"]
+    # 54 legacy records plus the v2-pipeline records merged by src/site_merge.py.
+    assert len(legacy) == 54
+    assert len(promises) == 54 + len(v2)
+    assert data["database_status"]["v2_merge"]["added"] == len(v2)
     # 13 quarantined rows: 12 planted test cases plus the DB-derived P68 row.
     assert len(quarantined) == 13
 
@@ -60,6 +65,7 @@ def test_fix2_evidence_reconciliation():
     assert total_parts == 124
 
     for p in promises:
+        assert isinstance(p["verdict_supporting_evidence_count"], int)
         assert p["verdict_supporting_evidence_count"] >= 1, (
             f"{p['promise_id']} has zero verdict_supporting_evidence_count"
         )
@@ -70,6 +76,12 @@ def test_fix2_evidence_reconciliation():
 def test_fix3_verification_exceptions_exposed():
     data = _load_data()
     promises = data["promises"]
+    # v2 records run their own checks at merge time and must all be recorded;
+    # the legacy invariants below are pinned on the 54 legacy records.
+    for p in promises:
+        assert isinstance(p.get("all_checks_passed"), bool), p["promise_id"]
+    assert all(p["all_checks_passed"] for p in promises if p.get("pipeline") == "v2")
+    promises = [p for p in promises if p.get("pipeline") != "v2"]
     passing = [p for p in promises if p.get("all_checks_passed") is True]
     failing = [p for p in promises if p.get("all_checks_passed") is False]
 
@@ -105,7 +117,10 @@ def test_fix5_canonical_entity_classification():
         "cultural_organization",
     }
     canonical_entities = set()
+    legacy_entities = set()
     for p in promises:
+        if p.get("pipeline") != "v2":
+            legacy_entities.add(p["entity_canonical_name"])
         canonical_entities.add(p["entity_canonical_name"])
         assert p.get("entity_category_canonical") in allowed_cats
         assert "entity_type_legacy" in p
@@ -113,7 +128,8 @@ def test_fix5_canonical_entity_classification():
         assert isinstance(cnt, int) and cnt >= 1
         assert p.get("entity_sample_warning") == (cnt < 3)
 
-    assert len(canonical_entities) == 31
+    assert len(legacy_entities) == 31
+    assert legacy_entities <= canonical_entities
 
 
 def test_fix6_geographic_scope_and_p64_treasure_island():
@@ -128,6 +144,8 @@ def test_fix6_geographic_scope_and_p64_treasure_island():
         scope = p.get("geographic_scope")
         assert scope in allowed_scopes
         assert p.get("is_centroid") == (scope != "exact_address")
+        if p.get("pipeline") == "v2":
+            continue  # the pinned 12/42 split covers the 54 legacy records
         if p["is_centroid"]:
             centroid_count += 1
         else:
