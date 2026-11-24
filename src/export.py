@@ -11,11 +11,19 @@ import sqlite3
 import tempfile
 
 from src.evidence import screen_saved_source
+from src.outcome_rules import origin_date_failures, outcome_rules_enabled
 from src.relevance import evaluate_relevance
 from src.sources import is_verbatim_quote
 from src.taxonomy import screen_taxonomy
 from src.temporal import check_origin_dates, screen_forward_looking
 from src.workspace import database_path
+
+
+def _origin_date_failures(promised, published, deadline):
+    failures = check_origin_dates(promised, published, deadline)
+    if outcome_rules_enabled():
+        failures, _rules = origin_date_failures(failures, promised, deadline)
+    return failures
 
 
 def _utc_datetime(value):
@@ -108,13 +116,15 @@ def build_snapshot(conn, *, source_root, as_of):
             ]
             promised = _date(promise["date_promised"])
             deadline = _date(promise["date_deadline"])
+            if deadline is None and promise["date_deadline"] is not None:
+                raise ValueError(f"Invalid deadline for {pid}")
             if promised is None or promised > as_of.date():
                 raise ValueError(f"Invalid promise date for {pid}")
             if not any(
                 item["phase"] == "ORIGIN"
                 and is_verbatim_quote(promise["promise_text"], item["verbatim_quote"])
                 and not screen_forward_looking(promise["promise_text"])
-                and not check_origin_dates(promised, _date(item["published_date"]), deadline)
+                and not _origin_date_failures(promised, _date(item["published_date"]), deadline)
                 and _date(item["published_date"]) <= as_of.date()
                 for item in evidence
             ):
@@ -145,6 +155,18 @@ def build_snapshot(conn, *, source_root, as_of):
                     promise["promise_date_note"] = detail["note"]
                 except (TypeError, KeyError, ValueError):
                     raise ValueError(f"Invalid promise date basis for {pid}") from None
+            outcome_basis = [
+                row for row in _rows(
+                    conn, "SELECT * FROM verifications WHERE promise_id = ? "
+                    "AND check_type = 'outcome_basis' ORDER BY verification_id", (pid,),
+                )
+                if _utc_datetime(row["checked_at"]) <= as_of
+            ]
+            if outcome_basis:
+                try:
+                    promise["outcome_basis"] = json.loads(outcome_basis[-1]["reason"])
+                except (TypeError, ValueError):
+                    raise ValueError(f"Invalid outcome basis for {pid}") from None
             promise.update({
                 "verdict": verdict["verdict"],
                 "verdict_reason": verdict["reason"],

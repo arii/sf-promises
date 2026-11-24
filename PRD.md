@@ -30,6 +30,33 @@ for lane progress and acceptance checks.
   later than the publication date. Relative and publication dates are labelled
   derived (`promise_date_basis`) and must not be shown as explicitly stated.
   The verbatim quote and both verifiers are still required.
+- Outcome rules are off unless `SF_PROMISES_OUTCOME_RULES=1`; with the flag off
+  the audit is unchanged. When on, a candidate still needs a verified verbatim
+  origin quote, the relevance gate, the taxonomy check, and a stated promise
+  date. Then:
+  - R1: a verified origin with no deadline is open-ended, not quarantined; the
+    deadline is stored as null.
+  - R2: `promise_horizon_short` is ignored when the deadline is on or after the
+    promised date (a one-off dated event). A deadline before the promised date
+    still fails.
+  - R3: a deadline after the as-of date with no contrary evidence is
+    `in_progress`, with no delivery or survival sentence required. Contrary
+    evidence is a selected sentence establishing not delivered or
+    revoked/halted, and follows the existing rubric.
+  - R4: a selected delivery sentence with survival unknown gives `kept` for
+    on-time delivery, and `delayed_or_partial` for late or partial delivery,
+    with the note "current status not checked". Shuttered or revoked need their
+    own selected survival sentence.
+  - R5: deadline passed or none, and no selected delivery or contrary
+    sentence: `undecided` (published), not quarantined.
+  - R6: the semantic verifier only has to confirm fields the verdict relies on.
+    `in_progress` and `undecided` need action, promise date, entity and
+    location, and the deadline if there is one. `kept` and `delayed_or_partial`
+    also need a verified delivery sentence; `broken` needs a verified
+    contrary sentence and a passed deadline.
+  - R7: every published verdict writes an `outcome_basis` verification row with
+    the rules used, whether the commitment is open-ended, and the reason
+    ("no outcome evidence found", "deadline in the future").
 - Apply the deterministic relevance gate once: a candidate needs a total score
   of at least 5/8 **and** `real_promise >= 1`. Quarantine failures; do not
   count them as published promises.

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS promises (
     neighborhood TEXT NOT NULL,
     promise_text TEXT NOT NULL,
     date_promised TEXT NOT NULL,
-    date_deadline TEXT NOT NULL,
+    date_deadline TEXT,  -- NULL: open-ended commitment (SF_PROMISES_OUTCOME_RULES)
     created_at TEXT NOT NULL
 );
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS verdicts (
     verdict_id INTEGER PRIMARY KEY,
     promise_id TEXT NOT NULL REFERENCES promises(promise_id),
     verdict TEXT NOT NULL CHECK (verdict IN
-        ('KEPT', 'KEPT_THEN_REVERSED', 'DELAYED_OR_PARTIAL', 'BROKEN', 'IN_PROGRESS')),
+        ('KEPT', 'KEPT_THEN_REVERSED', 'DELAYED_OR_PARTIAL', 'BROKEN', 'IN_PROGRESS', 'UNDECIDED')),
     reason TEXT NOT NULL,
     decided_at TEXT NOT NULL
 );

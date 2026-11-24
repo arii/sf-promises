@@ -12,6 +12,7 @@ from src.date_resolution import (
     DateResolution, date_resolution_enabled, resolve_promise_date_detail,
 )
 from src.evidence import is_allowlisted_url
+from src.outcome_rules import outcome_rules_enabled
 from src.model import ModelResponseError, free_completion, nebius_completion
 from src.sources import is_verbatim_quote, load_archived_text, snap_quote
 from src.temporal import deadline_from_quote
@@ -217,6 +218,10 @@ async def extract_with_model(client, api_key, models, *, root, promise_id,
             "deadline stated as a number of years from the commitment, use "
             "December 31 of the resulting year. If a discovery target is supplied, "
             "extract only matching commitments."
+            + (" If the commitment states no deadline, return null for deadline; "
+               "never invent one. For a one-off event on a stated date (an opening "
+               "day or a game date), the deadline is that date."
+               if outcome_rules_enabled() else "")
         )},
         {"role": "user", "content": (
             f"Promise ID: {promise_id}\n"
