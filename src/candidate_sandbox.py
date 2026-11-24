@@ -36,7 +36,7 @@ async def audit_in_sandbox(conn, *, root, lead, research, **kwargs):
             files["request.json"] = json.dumps({"sources": sources, "origin": origin}).encode()
             output = await run_worker("src.candidate_worker", files=files, timeout=60)
             if not isinstance(output, dict) or output != {"failures": []}:
-                raise ValueError("Worker source or temporal checks failed")
+                raise ValueError(f"Worker source or temporal checks failed: {output!r}"[:500])
         except (ValueError, OSError, KeyError, TypeError) as exc:
             raise WorkerAuditError("Worker source or provenance checks failed") from exc
 

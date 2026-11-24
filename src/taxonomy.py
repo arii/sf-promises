@@ -8,6 +8,7 @@ SECTORS = frozenset({
     "Housing & Land Use", "Transit & Streets", "Homelessness & Behavioral Health",
     "Public Safety & Justice", "Energy & Infrastructure", "Environment & Energy", "Autonomous Vehicles",
     "Parks & Recreation", "Sports, Culture & Retail", "Governance & Finance",
+    "Education & Youth",
 })
 LOCATIONS = frozenset({
     "Citywide", "Mid-Market & Civic Center", "Tenderloin", "SoMa",
@@ -16,6 +17,13 @@ LOCATIONS = frozenset({
     "The Embarcadero", "Union Square & Financial District", "Twin Peaks",
     "Haight-Ashbury", "Presidio & Doyle Drive", "Bayview-Hunters Point",
     "Regional / Northern California",
+    # SF Planning analysis neighborhoods not covered by the labels above.
+    "Bernal Heights", "Castro/Upper Market", "Excelsior", "Glen Park", "Hayes Valley",
+    "Inner Richmond", "Inner Sunset", "Japantown", "Lakeshore", "Lincoln Park",
+    "Lone Mountain/USF", "Marina", "McLaren Park", "Mission", "Nob Hill", "Noe Valley",
+    "Oceanview/Merced/Ingleside", "Outer Mission", "Outer Richmond", "Pacific Heights",
+    "Portola", "Potrero Hill", "Presidio Heights", "Russian Hill", "Seacliff",
+    "Sunset/Parkside", "Visitacion Valley", "West of Twin Peaks", "Western Addition",
 })
 
 

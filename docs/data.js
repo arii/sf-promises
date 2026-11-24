@@ -6,16 +6,16 @@ window.__DEMO_DATA__ = {
     "last_checked": "Nov 24, 2026",
     "last_updated": "Nov 24, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
-    "commit_sha": "279b32fb4063a172ad29fd963faa58647fbd2b1d",
+    "commit_sha": "773be8e418bcea7cc3a788d1c005c3ed8f796276",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-24T07:30:16Z",
-    "v2_promises_added": 15,
+    "exported_at": "2026-11-24T08:55:37Z",
+    "v2_promises_added": 24,
     "legacy_promises": 54
   },
   "database_status": {
-    "commit_sha": "279b32fb4063a172ad29fd963faa58647fbd2b1d",
-    "tracked_count": 69,
+    "commit_sha": "773be8e418bcea7cc3a788d1c005c3ed8f796276",
+    "tracked_count": 78,
     "seed_promises_count": 12,
     "total_db_promises": 62,
     "total_db_verdicts": 87,
@@ -3790,16 +3790,16 @@ window.__DEMO_DATA__ = {
       "S8",
       "S9"
     ],
-    "id_reconciliation": "69 published (15 from v2 pipeline) \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
+    "id_reconciliation": "78 published (24 from v2 pipeline) \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
     "acceptance_status_label": "Acceptance verified by harness run F-20261111-045601 on 2026-11-11 (separated processes, not Firecracker)",
     "counts": {
       "kept": 24,
-      "broken": 17,
+      "broken": 18,
       "kept_then_reversed": 1,
-      "in_progress": 24,
-      "undecided": 3
+      "in_progress": 31,
+      "undecided": 4
     },
     "integration_run": {
       "run_id": "F-20261111-045601",
@@ -3827,7 +3827,7 @@ window.__DEMO_DATA__ = {
       "Local worker processes are not a VM or filesystem/network security boundary.",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md).",
-      "15 of 69 published records come from the v2 pipeline; their sources were re-hashed and every quote re-found in saved text at export. Funnel and DB totals count the legacy database only."
+      "24 of 78 published records come from the v2 pipeline; their sources were re-hashed and every quote re-found in saved text at export. Funnel and DB totals count the legacy database only."
     ],
     "discrepancy_files": [
       "QUESTIONS.md",
@@ -7522,13 +7522,14 @@ window.__DEMO_DATA__ = {
         }
       }
     },
-    "v2_promises_added": 15,
+    "v2_promises_added": 24,
     "v2_merge": {
       "databases": 4,
-      "added": 15,
+      "added": 24,
       "added_by_verdict": {
-        "in_progress": 14,
-        "undecided": 1
+        "broken": 1,
+        "in_progress": 21,
+        "undecided": 2
       },
       "skipped_duplicates": 0,
       "rejected": 0,
@@ -20126,6 +20127,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "neighborhood",
       "is_citywide": false,
       "is_centroid": true,
+      "latitude": 37.7955,
+      "longitude": -122.3937,
       "promised_date": "2026-11-15",
       "due_date": "2027-04-30",
       "promise_made_date": "2026-11-15",
@@ -20287,6 +20290,192 @@ window.__DEMO_DATA__ = {
       "promised_date_note": "derived: publication date of the source"
     },
     {
+      "promise_id": "DISC-20261122-013",
+      "pipeline": "v2",
+      "v2_promise_id": "DISC-20261122-013",
+      "promise_text": "Construction is slated to begin in early 2027.",
+      "promise_text_expanded": false,
+      "entity": "Swords to Plowshares",
+      "role": null,
+      "entity_type": "corporation",
+      "entity_type_legacy": "Developer",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Nob Hill",
+      "neighborhood_canonical": "Nob Hill",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.793,
+      "longitude": -122.4161,
+      "promised_date": "2026-11-10",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-11-10",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Nov 10, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Release dated November 10, 2026 says construction is slated to begin in early 2027 (normalized to 2027-12-31). Swords to Plowshares will transform 629 Post Street, in Nob Hill per the release. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-24T08:33:03.235929+00:00",
+      "factual_outcome": "Release dated November 10, 2026 says construction is slated to begin in early 2027 (normalized to 2027-12-31). Swords to Plowshares will transform 629 Post Street, in Nob Hill per the release. No delivery or survival sentence supplied.",
+      "source_id": "S4e353ee53a4f",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-celebrates-state-funding-to-deliver-more-than-60-affordable-homes-for-veterans-in-san-francisco",
+      "source_file_path": "4e353ee53a4f5f4b5d76a1a2b52a8e04377ff59e7a32e2a0cee5002353736567.md",
+      "source_hash": "4e353ee53a4f5f4b5d76a1a2b52a8e04377ff59e7a32e2a0cee5002353736567",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Construction is slated to begin in early 2027.",
+      "title": "Swords to Plowshares Commitment",
+      "document_title": "Swords to Plowshares Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-24T08:33:03.235929+00:00",
+          "reason": "Release dated November 10, 2026 says construction is slated to begin in early 2027 (normalized to 2027-12-31). Swords to Plowshares will transform 629 Post Street, in Nob Hill per the release. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "AMBIGUOUS_EVIDENCE",
+          "passed": false,
+          "checked_at": "2026-11-24T07:10:10.875543+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T08:33:03.235929+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T08:33:03.235929+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:33:03.235929+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:33:03.235929+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:33:03.235929+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:33:03.235929+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T08:33:03.453264+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-celebrates-state-funding-to-deliver-more-than-60-affordable-homes-for-veterans-in-san-francisco",
+          "published_date": "2026-11-10T00:00:00Z",
+          "source_hash": "4e353ee53a4f5f4b5d76a1a2b52a8e04377ff59e7a32e2a0cee5002353736567",
+          "source_file_path": "4e353ee53a4f5f4b5d76a1a2b52a8e04377ff59e7a32e2a0cee5002353736567.md",
+          "quote": "Construction is slated to begin in early 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 56,
+      "display_no": 56,
+      "entity_canonical_name": "Swords to Plowshares",
+      "entity_category": "corporation",
+      "entity_category_canonical": "corporation",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source"
+    },
+    {
       "promise_id": "DISC-20261122-009",
       "pipeline": "v2",
       "v2_promise_id": "DISC-20261122-009",
@@ -20305,6 +20494,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "neighborhood",
       "is_citywide": false,
       "is_centroid": true,
+      "latitude": 37.7955,
+      "longitude": -122.3937,
       "promised_date": "2026-11-09",
       "due_date": "2028-12-31",
       "promise_made_date": "2026-11-09",
@@ -20444,8 +20635,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 56,
-      "display_no": 56,
+      "impact_rank": 57,
+      "display_no": 57,
       "entity_canonical_name": "Recreation and Park Department",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -20484,6 +20675,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2026-09-25",
       "due_date": "2050-12-31",
       "promise_made_date": "2026-09-25",
@@ -20623,8 +20816,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 57,
-      "display_no": 57,
+      "impact_rank": 58,
+      "display_no": 58,
       "entity_canonical_name": "San Francisco Public Utilities Commission",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -20663,6 +20856,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2026-09-24",
       "due_date": "2027-01-31",
       "promise_made_date": "2026-09-24",
@@ -20802,8 +20997,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 58,
-      "display_no": 58,
+      "impact_rank": 59,
+      "display_no": 59,
       "entity_canonical_name": "San Francisco Unified School District",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -20816,6 +21011,188 @@ window.__DEMO_DATA__ = {
         "outcome_rule": "R3",
         "open_ended": false,
         "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source"
+    },
+    {
+      "promise_id": "DISC-20261122-026",
+      "pipeline": "v2",
+      "v2_promise_id": "DISC-20261122-026",
+      "promise_text": "Beginning in Fiscal Year 2028\u201329, a dedicated assessment will generate $2.5 million annually for programming and maintenance at Embarcadero Plaza, supplementing existing San Francisco Recreation and Parks funding.",
+      "promise_text_expanded": true,
+      "entity": "Office of the Mayor",
+      "role": null,
+      "entity_type": "politician",
+      "entity_type_legacy": "Mayor / Executive",
+      "sector": "Parks & Recreation",
+      "category": "Parks & Recreation",
+      "category_l1": "Parks & Recreation",
+      "pillar": "Sports & Recreation",
+      "neighborhood": "The Embarcadero",
+      "neighborhood_canonical": "The Embarcadero",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7955,
+      "longitude": -122.3937,
+      "promised_date": "2026-07-23",
+      "due_date": null,
+      "promise_made_date": "2026-07-23",
+      "deadline_date": null,
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "not_applicable",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jul 23, 2026",
+      "due_date_display": "No fixed deadline",
+      "due_date_status": "not_applicable",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Release dated July 23, 2026 signed by the Mayor says a dedicated assessment will generate $2.5 million annually for Embarcadero Plaza programming and maintenance starting FY2028-29. Embarcadero Plaza is on the Embarcadero. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-24T08:34:21.766518+00:00",
+      "factual_outcome": "Release dated July 23, 2026 signed by the Mayor says a dedicated assessment will generate $2.5 million annually for Embarcadero Plaza programming and maintenance starting FY2028-29. Embarcadero Plaza is on the Embarcadero. No delivery or survival sentence supplied.",
+      "source_id": "Sc3f79823f528",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-signs-legislation-bringing-new-investment-downtown-accelerating-downtowns-comeback",
+      "source_file_path": "c3f79823f528676c4681f1867e5060267431abcc38edbd6fba0e2da1450ef181.md",
+      "source_hash": "c3f79823f528676c4681f1867e5060267431abcc38edbd6fba0e2da1450ef181",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "5 million annually for programming and maintenance at Embarcadero Plaza, supplementing existing San Francisco Recreation and Parks funding.",
+      "title": "Office of the Mayor Commitment",
+      "document_title": "Office of the Mayor Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-24T08:34:21.766518+00:00",
+          "reason": "Release dated July 23, 2026 signed by the Mayor says a dedicated assessment will generate $2.5 million annually for Embarcadero Plaza programming and maintenance starting FY2028-29. Embarcadero Plaza is on the Embarcadero. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T08:34:21.766518+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T08:34:21.766518+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:34:21.766518+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:34:21.766518+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:34:21.766518+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:34:21.766518+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T08:34:21.843211+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-signs-legislation-bringing-new-investment-downtown-accelerating-downtowns-comeback",
+          "published_date": "2026-07-23T00:00:00Z",
+          "source_hash": "c3f79823f528676c4681f1867e5060267431abcc38edbd6fba0e2da1450ef181",
+          "source_file_path": "c3f79823f528676c4681f1867e5060267431abcc38edbd6fba0e2da1450ef181.md",
+          "quote": "5 million annually for programming and maintenance at Embarcadero Plaza, supplementing existing San Francisco Recreation and Parks funding."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 60,
+      "display_no": 60,
+      "entity_canonical_name": "Office of the Mayor",
+      "entity_category": "politician",
+      "entity_category_canonical": "politician",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R1",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": true,
+        "reason": "no outcome evidence found",
         "relied_on": [],
         "status_not_checked": false
       },
@@ -20842,6 +21219,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2024-10-10",
       "due_date": "2028-06-30",
       "promise_made_date": "2024-10-10",
@@ -20981,8 +21360,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 59,
-      "display_no": 59,
+      "impact_rank": 61,
+      "display_no": 61,
       "entity_canonical_name": "Department of Homelessness and Supportive Housing",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -21003,6 +21382,576 @@ window.__DEMO_DATA__ = {
       "promised_date_note": "stated in the source"
     },
     {
+      "promise_id": "ARTS-02",
+      "pipeline": "v2",
+      "v2_promise_id": "ARTS-02",
+      "promise_text": "A grand reopening for the theater is scheduled for 2023.",
+      "promise_text_expanded": false,
+      "entity": "Another Planet Entertainment",
+      "role": null,
+      "entity_type": "corporation",
+      "entity_type_legacy": "Private Corporation",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Castro/Upper Market",
+      "neighborhood_canonical": "Castro/Upper Market",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7609,
+      "longitude": -122.435,
+      "promised_date": "2022-01-19",
+      "due_date": "2023-12-31",
+      "promise_made_date": "2022-01-19",
+      "deadline_date": "2023-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jan 19, 2022",
+      "due_date_display": "Dec 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_applicable",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "broken",
+      "verdict_reason": "Origin says a grand reopening is scheduled for 2023 (deadline 2023-12-31). The delivery sentence says the theatre closed in Feb 2024 and will reopen in Feb 2026, so the reopening came after the 2023 deadline. No survival sentence supplied. Another Planet Entertainment manages the Castro Theatre.",
+      "decided_at": "2026-11-24T08:50:53.799558+00:00",
+      "factual_outcome": "Origin says a grand reopening is scheduled for 2023 (deadline 2023-12-31). The delivery sentence says the theatre closed in Feb 2024 and will reopen in Feb 2026, so the reopening came after the 2023 deadline. No survival sentence supplied. Another Planet Entertainment manages the Castro Theatre.",
+      "source_id": "S91251e99cbfb",
+      "source_url": "https://www.kqed.org/arts/13908311/castro-theatre-to-become-live-music-and-events-venue-after-renovation",
+      "source_file_path": "91251e99cbfb4b0bfa734ace1961315cc9aa9f0b15df2838d061a2f6c36a7cdc.md",
+      "source_hash": "91251e99cbfb4b0bfa734ace1961315cc9aa9f0b15df2838d061a2f6c36a7cdc",
+      "source_type": "news_report",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "A grand reopening for the theater is scheduled for 2023.",
+      "title": "Another Planet Entertainment Commitment",
+      "document_title": "Another Planet Entertainment Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: DELIVERY."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-24T08:50:53.799558+00:00",
+          "reason": "Origin says a grand reopening is scheduled for 2023 (deadline 2023-12-31). The delivery sentence says the theatre closed in Feb 2024 and will reopen in Feb 2026, so the reopening came after the 2023 deadline. No survival sentence supplied. Another Planet Entertainment manages the Castro Theatre."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "INVALID_TAXONOMY",
+          "passed": false,
+          "checked_at": "2026-11-24T07:02:25.478873+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:53.799558+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:53.799558+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:53.799558+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:53.799558+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:53.799558+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:53.799558+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:54.019161+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER2_NEWS",
+          "url": "https://www.kqed.org/arts/13908311/castro-theatre-to-become-live-music-and-events-venue-after-renovation",
+          "published_date": "2022-01-19T17:46:49Z",
+          "source_hash": "91251e99cbfb4b0bfa734ace1961315cc9aa9f0b15df2838d061a2f6c36a7cdc",
+          "source_file_path": "91251e99cbfb4b0bfa734ace1961315cc9aa9f0b15df2838d061a2f6c36a7cdc.md",
+          "quote": "A grand reopening for the theater is scheduled for 2023."
+        },
+        {
+          "phase": "DELIVERY",
+          "source_tier": "TIER2_NEWS",
+          "url": "https://www.cbsnews.com/sanfrancisco/news/san-franciscos-castro-theatre-to-reopen-february-2026/",
+          "published_date": "2025-09-29T06:11:18Z",
+          "source_hash": "ba7efd8ccbcbffd3d9b8ed0479d15ca2a51e324f483c1e4030e08598c452fe84",
+          "source_file_path": "ba7efd8ccbcbffd3d9b8ed0479d15ca2a51e324f483c1e4030e08598c452fe84.md",
+          "quote": "The theatre, which closed back in February of 2024, will reopen in February of 2026 with a bit of a different look."
+        }
+      ],
+      "has_contradictory_evidence": true,
+      "supporting_evidence_summary": "The theatre, which closed back in February of 2024, will reopen in February of 2026 with a bit of a different look.",
+      "contradicting_evidence_summary": "The original commitment: A grand reopening for the theater is scheduled for 2023.",
+      "arbitration_rule_explanation": "The deadline passed and a source published on or after the deadline reports the commitment was not delivered. deadline passed and the outcome source says not delivered",
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 1,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 1,
+      "record_type": "promise",
+      "impact_rank": 62,
+      "display_no": 62,
+      "entity_canonical_name": "Another Planet Entertainment",
+      "entity_category": "corporation",
+      "entity_category_canonical": "corporation",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [],
+        "outcome_rule": "CONTRARY",
+        "open_ended": false,
+        "reason": "deadline passed and the outcome source says not delivered",
+        "relied_on": [
+          "DELIVERY"
+        ],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source"
+    },
+    {
+      "promise_id": "DISC-20261122-010",
+      "pipeline": "v2",
+      "v2_promise_id": "DISC-20261122-010",
+      "promise_text": "Construction is expected to begin in late 2027, with the renovated park opening in 2029.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Recreation and Park Department",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Parks & Recreation",
+      "category": "Parks & Recreation",
+      "category_l1": "Parks & Recreation",
+      "pillar": "Sports & Recreation",
+      "neighborhood": "Potrero Hill",
+      "neighborhood_canonical": "Potrero Hill",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7587,
+      "longitude": -122.401,
+      "promised_date": "2026-11-09",
+      "due_date": "2029-12-31",
+      "promise_made_date": "2026-11-09",
+      "deadline_date": "2029-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Nov 9, 2026",
+      "due_date_display": "Dec 31, 2029",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Dated Nov 9, 2026 mayor release says Jackson Playground (Potrero Hill) construction expected late 2027, opening 2029 (2029-12-31). RPD is the responsible agency. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-24T08:31:50.797009+00:00",
+      "factual_outcome": "Dated Nov 9, 2026 mayor release says Jackson Playground (Potrero Hill) construction expected late 2027, opening 2029 (2029-12-31). RPD is the responsible agency. No delivery or survival sentence supplied.",
+      "source_id": "Sc369ac832abf",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-announces-100-million-gift-to-san-francisco-parks-from-brian-chesky-largest-ever-single-donor-gift-to-city",
+      "source_file_path": "c369ac832abf0c8b1a9ec4abffa76dd19fa41ced589a7f7ce431833bbeee255c.md",
+      "source_hash": "c369ac832abf0c8b1a9ec4abffa76dd19fa41ced589a7f7ce431833bbeee255c",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Construction is expected to begin in late 2027, with the renovated park opening in 2029.",
+      "title": "San Francisco Recreation and Park Department Commitment",
+      "document_title": "San Francisco Recreation and Park Department Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-24T08:31:50.797009+00:00",
+          "reason": "Dated Nov 9, 2026 mayor release says Jackson Playground (Potrero Hill) construction expected late 2027, opening 2029 (2029-12-31). RPD is the responsible agency. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "AMBIGUOUS_EVIDENCE",
+          "passed": false,
+          "checked_at": "2026-11-24T07:08:02.631903+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T08:31:50.797009+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T08:31:50.797009+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:31:50.797009+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:31:50.797009+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:31:50.797009+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:31:50.797009+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T08:31:50.943153+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-announces-100-million-gift-to-san-francisco-parks-from-brian-chesky-largest-ever-single-donor-gift-to-city",
+          "published_date": "2026-11-09T00:00:00Z",
+          "source_hash": "c369ac832abf0c8b1a9ec4abffa76dd19fa41ced589a7f7ce431833bbeee255c",
+          "source_file_path": "c369ac832abf0c8b1a9ec4abffa76dd19fa41ced589a7f7ce431833bbeee255c.md",
+          "quote": "Construction is expected to begin in late 2027, with the renovated park opening in 2029."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 63,
+      "display_no": 63,
+      "entity_canonical_name": "San Francisco Recreation and Park Department",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source"
+    },
+    {
+      "promise_id": "DISC-20261122-005",
+      "pipeline": "v2",
+      "v2_promise_id": "DISC-20261122-005",
+      "promise_text": "Both Seacliff 1 & 2 pump station facilities are approaching completed construction status, with both locations anticipated to be finished with the sewer upgrades in the area in late 2026.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Seacliff",
+      "neighborhood_canonical": "Seacliff",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7873,
+      "longitude": -122.4892,
+      "promised_date": "2026-09-10",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2026-09-10",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 10, 2026",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin says both Seacliff pump stations are anticipated finished in late 2026 (2026-12-31). SFPUC launched the projects; Sea Cliff neighborhood maps to Seacliff. Derived date matches publication 2026-09-10. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-24T08:30:21.422128+00:00",
+      "factual_outcome": "Origin says both Seacliff pump stations are anticipated finished in late 2026 (2026-12-31). SFPUC launched the projects; Sea Cliff neighborhood maps to Seacliff. Derived date matches publication 2026-09-10. No delivery or survival sentence supplied.",
+      "source_id": "S9ac29cb002f7",
+      "source_url": "https://www.sfpuc.gov/about-us/news/pumped-upgrades-sea-cliff-sewer-improvements",
+      "source_file_path": "9ac29cb002f7530afe939a3730b2d8f6318449b1967ce226363ed69f2dc98df7.md",
+      "source_hash": "9ac29cb002f7530afe939a3730b2d8f6318449b1967ce226363ed69f2dc98df7",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "Both Seacliff 1 & 2 pump station facilities are approaching completed construction status, with both locations anticipated to be finished with the sewer upgrades in the area in late 2026.",
+      "title": "San Francisco Public Utilities Commission Commitment",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-24T08:30:21.422128+00:00",
+          "reason": "Origin says both Seacliff pump stations are anticipated finished in late 2026 (2026-12-31). SFPUC launched the projects; Sea Cliff neighborhood maps to Seacliff. Derived date matches publication 2026-09-10. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "AMBIGUOUS_EVIDENCE",
+          "passed": false,
+          "checked_at": "2026-11-24T07:05:08.231465+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T08:30:21.422128+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T08:30:21.422128+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:30:21.422128+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:30:21.422128+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:30:21.422128+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:30:21.422128+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T08:30:21.567712+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/about-us/news/pumped-upgrades-sea-cliff-sewer-improvements",
+          "published_date": "2026-09-10T12:00:00Z",
+          "source_hash": "9ac29cb002f7530afe939a3730b2d8f6318449b1967ce226363ed69f2dc98df7",
+          "source_file_path": "9ac29cb002f7530afe939a3730b2d8f6318449b1967ce226363ed69f2dc98df7.md",
+          "quote": "Both Seacliff 1 & 2 pump station facilities are approaching completed construction status, with both locations anticipated to be finished with the sewer upgrades in the area in late 2026."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 64,
+      "display_no": 64,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source"
+    },
+    {
       "promise_id": "DISC-20261122-019",
       "pipeline": "v2",
       "v2_promise_id": "DISC-20261122-019",
@@ -21021,6 +21970,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2026-08-31",
       "due_date": "2029-05-31",
       "promise_made_date": "2026-08-31",
@@ -21160,8 +22111,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 60,
-      "display_no": 60,
+      "impact_rank": 65,
+      "display_no": 65,
       "entity_canonical_name": "San Francisco Department of Homelessness and Supportive Housing",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -21200,6 +22151,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "neighborhood",
       "is_citywide": false,
       "is_centroid": true,
+      "latitude": 37.7915,
+      "longitude": -122.401,
       "promised_date": "2026-06-10",
       "due_date": "2027-12-31",
       "promise_made_date": "2026-06-10",
@@ -21339,13 +22292,199 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 61,
-      "display_no": 61,
+      "impact_rank": 66,
+      "display_no": 66,
       "entity_canonical_name": "San Francisco Public Works",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
       "entity_promise_count": 1,
       "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source"
+    },
+    {
+      "promise_id": "DISC-20261122-001",
+      "pipeline": "v2",
+      "v2_promise_id": "DISC-20261122-001",
+      "promise_text": "Project completion is anticipated in 2028.",
+      "promise_text_expanded": true,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Mission",
+      "neighborhood_canonical": "Mission",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7599,
+      "longitude": -122.4148,
+      "promised_date": "2025-06-12",
+      "due_date": "2028-12-31",
+      "promise_made_date": "2025-06-12",
+      "deadline_date": "2028-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 12, 2025",
+      "due_date_display": "Dec 31, 2028",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin states project completion is anticipated in 2028 (normalized 2028-12-31); SFPUC operates the project; Inner Mission neighborhood maps to Mission. Publication date 2025-06-12 supports the derived date. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-24T08:29:24.442916+00:00",
+      "factual_outcome": "Origin states project completion is anticipated in 2028 (normalized 2028-12-31); SFPUC operates the project; Inner Mission neighborhood maps to Mission. Publication date 2025-06-12 supports the derived date. No delivery or survival sentence supplied.",
+      "source_id": "Sc3ab3bf30a3d",
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/SSIP_%20FASIP_factsheet_2025-06-_v21_DH.pdf",
+      "source_file_path": "c3ab3bf30a3d055cba1a129d518f75723cc72645e1d51e1e2941156282e3e20a.md",
+      "source_hash": "c3ab3bf30a3d055cba1a129d518f75723cc72645e1d51e1e2941156282e3e20a",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "completion is anticipated in 2028.",
+      "title": "San Francisco Public Utilities Commission Commitment",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-24T08:29:24.442916+00:00",
+          "reason": "Origin states project completion is anticipated in 2028 (normalized 2028-12-31); SFPUC operates the project; Inner Mission neighborhood maps to Mission. Publication date 2025-06-12 supports the derived date. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "AMBIGUOUS_EVIDENCE",
+          "passed": false,
+          "checked_at": "2026-11-24T07:02:58.704969+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T08:29:24.442916+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T08:29:24.442916+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:29:24.442916+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:29:24.442916+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:29:24.442916+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:29:24.442916+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T08:29:24.590651+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/sites/default/files/documents/SSIP_%20FASIP_factsheet_2025-06-_v21_DH.pdf",
+          "published_date": "2025-06-12T18:31:55Z",
+          "source_hash": "c3ab3bf30a3d055cba1a129d518f75723cc72645e1d51e1e2941156282e3e20a",
+          "source_file_path": "c3ab3bf30a3d055cba1a129d518f75723cc72645e1d51e1e2941156282e3e20a.md",
+          "quote": "completion is anticipated in 2028."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 67,
+      "display_no": 67,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
       "outcome_basis": {
         "rules": [
           "R3"
@@ -21379,6 +22518,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2019-05-09",
       "due_date": "2021-12-31",
       "promise_made_date": "2019-05-09",
@@ -21518,8 +22659,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 62,
-      "display_no": 62,
+      "impact_rank": 68,
+      "display_no": 68,
       "entity_canonical_name": "San Francisco Municipal Transportation Agency",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -21540,6 +22681,192 @@ window.__DEMO_DATA__ = {
       "promised_date_note": "derived: 'Thursday' resolved against publication date 2019-05-09"
     },
     {
+      "promise_id": "DISC-20261122-020",
+      "pipeline": "v2",
+      "v2_promise_id": "DISC-20261122-020",
+      "promise_text": "The SFMTA will aim to begin testing the new system on two buses by March of next year.",
+      "promise_text_expanded": false,
+      "entity": "SFMTA",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-11-19",
+      "due_date": "2027-03-31",
+      "promise_made_date": "2026-11-19",
+      "deadline_date": "2027-03-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Nov 19, 2026",
+      "due_date_display": "Mar 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin published 2026-11-19 says SFMTA will aim to begin testing on two buses by March of next year (2027-03-31). SFMTA is a City Agency running transit enforcement on unspecified citywide routes. No delivery or survival sentence supplied; deadline is in the future.",
+      "decided_at": "2026-11-24T08:39:49.972996+00:00",
+      "factual_outcome": "Origin published 2026-11-19 says SFMTA will aim to begin testing on two buses by March of next year (2027-03-31). SFMTA is a City Agency running transit enforcement on unspecified citywide routes. No delivery or survival sentence supplied; deadline is in the future.",
+      "source_id": "Sebdecd362269",
+      "source_url": "https://www.sfexaminer.com/news/transit/sfmta-upgrading-system-that-enforces-transit-lane-violations/article_adc4e78b-5aca-4f0c-98b9-1dbf5a10b0a3.html",
+      "source_file_path": "ebdecd3622697dcc8f07597fa994437191d0c99d0eab75980c7e57997e331559.md",
+      "source_hash": "ebdecd3622697dcc8f07597fa994437191d0c99d0eab75980c7e57997e331559",
+      "source_type": "news_report",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "The SFMTA will aim to begin testing the new system on two buses by March of next year.",
+      "title": "SFMTA Commitment",
+      "document_title": "SFMTA Commitment",
+      "relevance": {
+        "score": 6,
+        "real": 2,
+        "measurable": 1,
+        "sf": 2,
+        "interesting": 1
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-24T08:39:49.972996+00:00",
+          "reason": "Origin published 2026-11-19 says SFMTA will aim to begin testing on two buses by March of next year (2027-03-31). SFMTA is a City Agency running transit enforcement on unspecified citywide routes. No delivery or survival sentence supplied; deadline is in the future."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "INVALID_PROMISE_DATE_LATER_THAN_SOURCE",
+          "passed": false,
+          "checked_at": "2026-11-24T07:09:08.471598+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T08:39:49.972996+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T08:39:49.972996+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:39:49.972996+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:39:49.972996+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:39:49.972996+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:39:49.972996+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T08:39:50.123413+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER2_NEWS",
+          "url": "https://www.sfexaminer.com/news/transit/sfmta-upgrading-system-that-enforces-transit-lane-violations/article_adc4e78b-5aca-4f0c-98b9-1dbf5a10b0a3.html",
+          "published_date": "2026-11-19T12:00:00Z",
+          "source_hash": "ebdecd3622697dcc8f07597fa994437191d0c99d0eab75980c7e57997e331559",
+          "source_file_path": "ebdecd3622697dcc8f07597fa994437191d0c99d0eab75980c7e57997e331559.md",
+          "quote": "The SFMTA will aim to begin testing the new system on two buses by March of next year."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 69,
+      "display_no": 69,
+      "entity_canonical_name": "SFMTA",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source"
+    },
+    {
       "promise_id": "DISC-20261122-007",
       "pipeline": "v2",
       "v2_promise_id": "DISC-20261122-007",
@@ -21558,6 +22885,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2026-11-16",
       "due_date": "2027-01-30",
       "promise_made_date": "2026-11-16",
@@ -21697,8 +23026,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 63,
-      "display_no": 63,
+      "impact_rank": 70,
+      "display_no": 70,
       "entity_canonical_name": "San Francisco Municipal Transportation Agency",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -21719,6 +23048,192 @@ window.__DEMO_DATA__ = {
       "promised_date_note": "stated in the source"
     },
     {
+      "promise_id": "DISC-20261122-011",
+      "pipeline": "v2",
+      "v2_promise_id": "DISC-20261122-011",
+      "promise_text": "Artwork is scheduled for installation in spring 2027 with full project completion that summer.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "SoMa",
+      "neighborhood_canonical": "SoMa",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7785,
+      "longitude": -122.4056,
+      "promised_date": "2026-08-05",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-08-05",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Aug 5, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin dated August 5, 2026 states installation in spring 2027 and full completion that summer (2027-12-31). Arts Commission is a City agency; the project is on Minna and Natoma streets in SoMa/Yerba Buena. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-24T08:50:54.256758+00:00",
+      "factual_outcome": "Origin dated August 5, 2026 states installation in spring 2027 and full completion that summer (2027-12-31). Arts Commission is a City agency; the project is on Minna and Natoma streets in SoMa/Yerba Buena. No delivery or survival sentence supplied.",
+      "source_id": "Sd4825858ece6",
+      "source_url": "https://www.sf.gov/news-san-francisco-arts-commission-approves-final-designs-for-new-art-corridor-on-minna-and-natoma-streets",
+      "source_file_path": "d4825858ece6c1eb7a4c9303dfcacceed08fec17d7c724b1b8c6e5c832133460.md",
+      "source_hash": "d4825858ece6c1eb7a4c9303dfcacceed08fec17d7c724b1b8c6e5c832133460",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Artwork is scheduled for installation in spring 2027 with full project completion that summer.",
+      "title": "San Francisco Arts Commission Commitment",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-24T08:50:54.256758+00:00",
+          "reason": "Origin dated August 5, 2026 states installation in spring 2027 and full completion that summer (2027-12-31). Arts Commission is a City agency; the project is on Minna and Natoma streets in SoMa/Yerba Buena. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "INVALID_TAXONOMY",
+          "passed": false,
+          "checked_at": "2026-11-24T07:05:48.130305+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:54.256758+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:54.256758+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:54.256758+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:54.256758+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:54.256758+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:54.256758+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T08:50:54.332903+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-san-francisco-arts-commission-approves-final-designs-for-new-art-corridor-on-minna-and-natoma-streets",
+          "published_date": "2026-08-05T00:00:00Z",
+          "source_hash": "d4825858ece6c1eb7a4c9303dfcacceed08fec17d7c724b1b8c6e5c832133460",
+          "source_file_path": "d4825858ece6c1eb7a4c9303dfcacceed08fec17d7c724b1b8c6e5c832133460.md",
+          "quote": "Artwork is scheduled for installation in spring 2027 with full project completion that summer."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 71,
+      "display_no": 71,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source"
+    },
+    {
       "promise_id": "DISC-20261122-008",
       "pipeline": "v2",
       "v2_promise_id": "DISC-20261122-008",
@@ -21737,6 +23252,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "neighborhood",
       "is_citywide": false,
       "is_centroid": true,
+      "latitude": 37.8235,
+      "longitude": -122.3706,
       "promised_date": "2026-11-12",
       "due_date": "2028-12-31",
       "promise_made_date": "2026-11-12",
@@ -21876,8 +23393,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 64,
-      "display_no": 64,
+      "impact_rank": 72,
+      "display_no": 72,
       "entity_canonical_name": "Mercy Housing",
       "entity_category": "corporation",
       "entity_category_canonical": "corporation",
@@ -21916,6 +23433,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2026-10-20",
       "due_date": "2027-06-30",
       "promise_made_date": "2026-10-20",
@@ -22055,8 +23574,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 65,
-      "display_no": 65,
+      "impact_rank": 73,
+      "display_no": 73,
       "entity_canonical_name": "Office of the Mayor / MOHCD (Freedom West 2.0)",
       "entity_category": "politician",
       "entity_category_canonical": "politician",
@@ -22095,6 +23614,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2026-09-25",
       "due_date": "2028-03-31",
       "promise_made_date": "2026-09-25",
@@ -22234,13 +23755,13 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 66,
-      "display_no": 66,
+      "impact_rank": 74,
+      "display_no": 74,
       "entity_canonical_name": "San Francisco Public Utilities Commission",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
-      "entity_promise_count": 2,
-      "entity_sample_warning": true,
+      "entity_promise_count": 4,
+      "entity_sample_warning": false,
       "outcome_basis": {
         "rules": [
           "R3"
@@ -22274,6 +23795,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2026-09-24",
       "due_date": "2027-12-31",
       "promise_made_date": "2026-09-24",
@@ -22413,8 +23936,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 67,
-      "display_no": 67,
+      "impact_rank": 75,
+      "display_no": 75,
       "entity_canonical_name": "San Francisco Unified School District",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -22453,6 +23976,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "neighborhood",
       "is_citywide": false,
       "is_centroid": true,
+      "latitude": 37.7955,
+      "longitude": -122.3937,
       "promised_date": "2026-04-08",
       "due_date": "2026-12-31",
       "promise_made_date": "2026-04-08",
@@ -22592,8 +24117,8 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 68,
-      "display_no": 68,
+      "impact_rank": 76,
+      "display_no": 76,
       "entity_canonical_name": "Port of San Francisco",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
@@ -22632,6 +24157,8 @@ window.__DEMO_DATA__ = {
       "geographic_scope": "citywide",
       "is_citywide": true,
       "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
       "promised_date": "2025-10-22",
       "due_date": "2027-12-31",
       "promise_made_date": "2025-10-22",
@@ -22771,13 +24298,199 @@ window.__DEMO_DATA__ = {
       "affirming_evidence_count": 2,
       "refuting_evidence_count": 0,
       "record_type": "promise",
-      "impact_rank": 69,
-      "display_no": 69,
+      "impact_rank": 77,
+      "display_no": 77,
       "entity_canonical_name": "San Francisco Public Utilities Commission",
       "entity_category": "city_department",
       "entity_category_canonical": "city_department",
-      "entity_promise_count": 3,
+      "entity_promise_count": 5,
       "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source"
+    },
+    {
+      "promise_id": "ARTS-01",
+      "pipeline": "v2",
+      "v2_promise_id": "ARTS-01",
+      "promise_text": "Another Planet Entertainment has committed to bringing free outdoor concerts to Downtown San Francisco\u2019s historic plazas, including Civic Center Plaza, Union Square, and Embarcadero Plaza annually for three years starting in 2024.",
+      "promise_text_expanded": true,
+      "entity": "Another Planet Entertainment",
+      "role": null,
+      "entity_type": "corporation",
+      "entity_type_legacy": "Private Corporation",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-09-04",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2023-09-04",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 4, 2023",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin says Another Planet has committed to free outdoor concerts at Civic Center Plaza, Union Square and Embarcadero Plaza annually for three years starting in 2024 (ends 2026-12-31). Another Planet is a private company. Sites are several downtown plazas, so Citywide is a multi-site fallback label. No delivery or survival sentence evaluated.",
+      "decided_at": "2026-11-24T08:51:22.195710+00:00",
+      "factual_outcome": "Origin says Another Planet has committed to free outdoor concerts at Civic Center Plaza, Union Square and Embarcadero Plaza annually for three years starting in 2024 (ends 2026-12-31). Another Planet is a private company. Sites are several downtown plazas, so Citywide is a multi-site fallback label. No delivery or survival sentence evaluated.",
+      "source_id": "S6d262e974d2c",
+      "source_url": "https://www.sf.gov/news--mayor-breed-announces-partnership-renowned-chef-tyler-florence-open-two-new-union-square-cafes",
+      "source_file_path": "6d262e974d2c522cbf36618cc982655030c80d03a6cbe136191c0dcb4f5ee999.md",
+      "source_hash": "6d262e974d2c522cbf36618cc982655030c80d03a6cbe136191c0dcb4f5ee999",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "- Another Planet Entertainment has committed to bringing free outdoor concerts to Downtown San Francisco\u2019s historic plazas, including Civic Center Plaza, Union Square, and Embarcadero Plaza annually for three years starting in 2024.",
+      "title": "Another Planet Entertainment Commitment",
+      "document_title": "Another Planet Entertainment Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-24T08:51:22.195710+00:00",
+          "reason": "Origin says Another Planet has committed to free outdoor concerts at Civic Center Plaza, Union Square and Embarcadero Plaza annually for three years starting in 2024 (ends 2026-12-31). Another Planet is a private company. Sites are several downtown plazas, so Citywide is a multi-site fallback label. No delivery or survival sentence evaluated."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "INVALID_TAXONOMY",
+          "passed": false,
+          "checked_at": "2026-11-24T06:56:58.696191+00:00"
+        },
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-24T08:51:22.195710+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-24T08:51:22.195710+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:51:22.195710+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-24T08:51:22.195710+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:51:22.195710+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-24T08:51:22.195710+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-24T08:51:22.341380+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--mayor-breed-announces-partnership-renowned-chef-tyler-florence-open-two-new-union-square-cafes",
+          "published_date": "2023-09-04T00:00:00Z",
+          "source_hash": "6d262e974d2c522cbf36618cc982655030c80d03a6cbe136191c0dcb4f5ee999",
+          "source_file_path": "6d262e974d2c522cbf36618cc982655030c80d03a6cbe136191c0dcb4f5ee999.md",
+          "quote": "- Another Planet Entertainment has committed to bringing free outdoor concerts to Downtown San Francisco\u2019s historic plazas, including Civic Center Plaza, Union Square, and Embarcadero Plaza annually for three years starting in 2024."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 78,
+      "display_no": 78,
+      "entity_canonical_name": "Another Planet Entertainment",
+      "entity_category": "corporation",
+      "entity_category_canonical": "corporation",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
       "outcome_basis": {
         "rules": [
           "R3"

@@ -259,3 +259,24 @@
   Nob Hill, Outer Mission and others, so honest location answers fail the
   location check. This caused most of the 7 AMBIGUOUS_EVIDENCE and the 3
   INVALID_TAXONOMY results.
+
+## 2026-11-23: Retry with SF neighborhoods (69 -> 78)
+
+- Added 29 SF Planning analysis neighborhoods and an `Education & Youth`
+  sector to `src/taxonomy.py`. `src/geo_centroids.py` holds the display
+  centroids, so v2 records now appear on the map (is_centroid, never an
+  address).
+- Fixed the bounded worker: it crashed on open-ended (null deadline) origins,
+  and it did not apply the audit's R1/R2 waivers. This blocked 3 candidates.
+  Blocked results now carry the worker's failure detail.
+- Retried 18 quarantined or blocked candidates in the run-2 shards with fresh
+  lane answers. The lane helper had been replaying old answers from its
+  memory, so the memory files were cleared first. Added 9 promises (7 in
+  progress, 1 undecided, 1 broken: Castro Theatre, which missed its 2023
+  reopening date per a 2024 source). Three were quarantined only because a
+  worker wrote "Culture & Retail" for the sector "Sports, Culture & Retail".
+  The guide now lists each label on its own line.
+- v2 records with contradictory evidence now carry the site's
+  supporting, contradicting and arbitration summaries, quoted from verified
+  evidence rows.
+- Site: 78 promises (54 legacy unchanged + 24 v2).

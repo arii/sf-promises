@@ -665,9 +665,10 @@ async def candidate_batch(database, seed_ids, *, resumes=None, retry_quarantined
                 except ModelResponseError:
                     return {"promise_id": lead["promise_id"], "status": "blocked",
                             "reason": "INVALID_MODEL_RESPONSE"}
-                except WorkerAuditError:
+                except WorkerAuditError as error:
+                    cause = error.__cause__ or error
                     return {"promise_id": lead["promise_id"], "status": "blocked",
-                            "reason": "WORKER_CHECK_FAILED"}
+                            "reason": "WORKER_CHECK_FAILED", "detail": str(cause)[:500]}
 
             for pid in seed_ids:
                 existing = conn.execute(

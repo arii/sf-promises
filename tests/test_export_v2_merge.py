@@ -129,8 +129,10 @@ def test_v2_record_is_added_with_mapped_fields(base, tmp_path):
     assert record["verdict_reason"] == "construction underway"
     assert record["verdict_history"][-1]["verdict"] == "in_progress"
     assert any(v["check"] == "promise_date_basis" for v in record["verification_history"])
-    # honest missingness, no invented geography
-    assert "latitude" not in record and record["address_full"] is None
+    # honest missingness: a citywide record gets the citywide display centroid
+    # (is_centroid, never an address), not invented claim geography
+    assert (record["latitude"], record["longitude"]) == (37.7749, -122.4194)
+    assert record["is_centroid"] is True and record["address_full"] is None
     assert record["address_status"] == "not_applicable"
     assert record["completion_date_status"] == "not_yet_known"
     assert record["advocate_bundles"] == {}
@@ -489,3 +491,31 @@ def test_display_sentence_missing_or_too_long():
     assert _display_sentence("Nothing here.", "absent quote") is None
     long_text = "word " * 200 + "the quote " + "word " * 200
     assert _display_sentence(long_text, "the quote") is None
+
+
+def test_centroids_cover_every_neighborhood_label():
+    from src.geo_centroids import LOCATION_CENTROIDS
+    from src.taxonomy import LOCATIONS
+    assert set(LOCATIONS) - set(LOCATION_CENTROIDS) == {"Regional / Northern California"}
+    for lat, lon in LOCATION_CENTROIDS.values():
+        assert 37.70 <= lat <= 37.83 and -122.52 <= lon <= -122.35
+
+
+def test_regional_record_gets_no_map_point():
+    from src.site_merge import _centroid_fields
+    assert _centroid_fields("Regional / Northern California") == {}
+    assert _centroid_fields("Mission") == {"latitude": 37.7599, "longitude": -122.4148}
+
+
+def test_contradictory_v2_record_gets_inspectable_summaries():
+    from src.site_merge import _evidence_summaries
+    item = {"latest": {"verdict": "BROKEN"},
+            "origin": {"verbatim_quote": "The plaza will reopen in 2023."},
+            "evidence": [{"phase": "ORIGIN", "verbatim_quote": "The plaza will reopen in 2023."},
+                         {"phase": "DELIVERY", "verbatim_quote": "The plaza remains closed in 2025."}],
+            "outcome_basis": {"reason": "deadline passed"}}
+    out = _evidence_summaries(item, True)
+    assert out["supporting_evidence_summary"] == "The plaza remains closed in 2025."
+    assert out["contradicting_evidence_summary"].endswith("The plaza will reopen in 2023.")
+    assert "deadline passed" in out["arbitration_rule_explanation"]
+    assert _evidence_summaries(item, False) == {}
