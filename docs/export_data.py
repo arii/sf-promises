@@ -22,6 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.workspace_backup import verify as verify_workspace
 from src.database import APPLICATION_ID, SCHEMA_VERSION
 from src.export import write_candidate_snapshot
+from src.site_merge import V2DatabaseError, format_report, merge_v2, validate_v2_database
 from src.workspace import database_path, workspace
 
 DB_PATH = os.environ.get("PROMISES_DB", str(database_path()))
@@ -2146,6 +2147,36 @@ def validate_database(path, *, allow_existing_fk_violations=False):
         return "legacy"
 
 
+def apply_v2_merge(output_dir, v2_sources):
+    """Add v2-published promises to the staged export in ``output_dir``.
+
+    ``v2_sources`` is a list of (database path, sources dir). Reads and
+    rewrites only data.json, data.js and index.html inside the staging
+    directory; v2 databases and source trees are opened read-only.
+    """
+    global OUTPUT_DIR, OUT_JSON, OUT_JS
+    output_dir = Path(output_dir).resolve()
+    docs = Path(__file__).resolve().parent
+    if output_dir == docs or docs in output_dir.parents:
+        raise ValueError("Stage exports outside the live docs directory")
+    OUTPUT_DIR = output_dir
+    OUT_JSON, OUT_JS = str(output_dir / "data.json"), str(output_dir / "data.js")
+    payload = json.loads(Path(OUT_JSON).read_text(encoding="utf-8"))
+    report = merge_v2(payload, v2_sources)
+    with open(OUT_JSON, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+    with open(OUT_JS, "w", encoding="utf-8") as f:
+        f.write("/* SF Promises - Dynamic SQLite Export */\n")
+        f.write("window.__DEMO_DATA__ = ")
+        json.dump(payload, f, indent=2)
+        f.write(";\n")
+    pre_render_index_html(payload["promises"], payload["quarantined"],
+                          payload["database_status"]["counts"],
+                          payload["metadata"]["commit_sha"][:8])
+    print(format_report(report))
+    return report
+
+
 def main():
     global DB_PATH, STAGING_DIR, OUT_JSON, OUT_JS, OUTPUT_DIR
     parser = argparse.ArgumentParser(description="Stage a validated database-backed export")
@@ -2156,12 +2187,34 @@ def main():
         "--allow-existing-fk-violations", action="store_true",
         help="Accept only the FK baseline recorded by workspace_backup in the database workspace",
     )
+    parser.add_argument(
+        "--v2-db", action="append", default=[], type=Path, metavar="PATH",
+        help="Repeatable. Merge promises published in this v2 database into the staged export "
+             "(read-only; sources dir defaults to PATH's parent/sources)",
+    )
+    parser.add_argument(
+        "--v2-sources", action="append", default=[], type=Path, metavar="DIR",
+        help="Sources dir for the matching --v2-db (same order); give one per --v2-db or none",
+    )
     args = parser.parse_args()
+    if args.v2_sources and len(args.v2_sources) != len(args.v2_db):
+        parser.error("--v2-sources must be given once per --v2-db, or not at all")
+    v2_sources = [
+        (db, args.v2_sources[i] if args.v2_sources else db.resolve().parent / "sources")
+        for i, db in enumerate(args.v2_db)
+    ]
     kind = validate_database(args.db, allow_existing_fk_violations=args.allow_existing_fk_violations)
     OUTPUT_DIR = args.output_dir.resolve()
     docs = Path(__file__).resolve().parent
     if OUTPUT_DIR == docs or docs in OUTPUT_DIR.parents:
         parser.error("Stage exports outside the live docs directory")
+    if v2_sources and kind == "current":
+        parser.error("--v2-db merges into a legacy export, not a v2 review snapshot")
+    for db, _ in v2_sources:
+        try:
+            validate_v2_database(db)
+        except V2DatabaseError as exc:
+            parser.error(str(exc))
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     DB_PATH = str(args.db.resolve())
     STAGING_DIR = os.environ.get("STAGING_DIR", str(args.db.resolve().parent / "staging"))
@@ -2190,6 +2243,8 @@ def main():
         pre_render_index_html(payload["promises"], payload["quarantined"],
                               payload["database_status"]["counts"],
                               payload["metadata"]["commit_sha"][:8])
+        if v2_sources:
+            apply_v2_merge(OUTPUT_DIR, v2_sources)
 
 
 if __name__ == "__main__":

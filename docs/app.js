@@ -2685,6 +2685,11 @@
     if (spkVal) spkVal.textContent = isCorporate ? `${p.entity} (Corporate / Commercial Entity)` : `${p.entity} (${p.role || 'Public Official'})`;
     const saidDateFormatted = formatPrecisionDate(p.promised_date, p.promise_date_precision);
     if (saidVal) saidVal.textContent = saidDateFormatted + (p.promise_date_precision && p.promise_date_precision !== 'day' ? ` (${p.promise_date_precision})` : '');
+    if (saidVal && p.promise_date_derived === true) {
+      // v2 records whose commitment date was derived, not stated, say so.
+      saidVal.textContent += ' (derived)';
+      saidVal.title = p.promised_date_note || 'Derived from the source, not stated in it';
+    }
     const dueStatusLabels = {
       not_applicable: 'No deadline (not applicable)',
       not_yet_known: 'Pending (not yet known)',
