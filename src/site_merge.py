@@ -65,6 +65,7 @@ SECTOR_PILLAR = {
     "Parks & Recreation": "Sports & Recreation",
     "Sports, Culture & Retail": "Culture & Social Life",
     "Governance & Finance": "Civic Life",
+    "Education & Youth": "Civic Life",
 }
 
 # The site's category buckets (docs/export_data.py SF_CATEGORY_MAP). A v2 sector
@@ -75,6 +76,7 @@ SECTOR_CATEGORY = {
     "Governance & Finance": "Civic Governance",
     "Homelessness & Behavioral Health": "Civic Governance",
     "Housing & Land Use": "Housing & Neighborhoods",
+    "Education & Youth": "Civic Governance",
 }
 
 TIER_SOURCE_TYPE = {"TIER1_GOV": "official_record", "TIER2_NEWS": "news_report"}
@@ -375,6 +377,36 @@ def _outcome_basis_field(detail, open_ended):
     }
 
 
+_RULE_EXPLANATIONS = {
+    "BROKEN": ("The deadline passed and a source published on or after the deadline "
+               "reports the commitment was not delivered."),
+    "KEPT_THEN_REVERSED": ("A source shows the commitment was delivered, and a later "
+                           "source shows it was closed, halted or revoked."),
+}
+
+
+def _evidence_summaries(item, contradictory):
+    """Inspectable summaries for a record whose outcome evidence contradicts the
+    promise (the site requires them on every has_contradictory_evidence record).
+    Quotes come from the verified evidence rows; nothing is paraphrased."""
+    if not contradictory:
+        return {}
+    verdict = item["latest"]["verdict"]
+    outcome = [e for e in item["evidence"] if e["phase"] in ("DELIVERY", "SURVIVAL")]
+    supporting = " ".join(" ".join(e["verbatim_quote"].split()) for e in outcome)
+    origin = " ".join(item["origin"]["verbatim_quote"].split())
+    reason = (item.get("outcome_basis") or {}).get("reason") if isinstance(
+        item.get("outcome_basis"), dict) else None
+    explanation = _RULE_EXPLANATIONS.get(verdict, "")
+    if reason:
+        explanation = f"{explanation} {reason}".strip()
+    return {
+        "supporting_evidence_summary": supporting or None,
+        "contradicting_evidence_summary": f"The original commitment: {origin}",
+        "arbitration_rule_explanation": explanation or None,
+    }
+
+
 _ABBREVIATIONS = frozenset({
     "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec",
     "st", "ave", "blvd", "dr", "mr", "mrs", "ms", "no", "inc", "co", "corp", "jr", "sr",
@@ -435,7 +467,7 @@ def display_sentence(text, quote):
                 right += 1
                 break
             right += 1
-    span = " ".join(text[left:right].split())
+    span = " ".join(text[left:right].split()).lstrip("-*•· ").strip()
     if not span or len(span) > _SENTENCE_CAP:
         return None
     return span
@@ -452,6 +484,14 @@ def _display_text(item):
     if not sentence or sentence == " ".join(quote.split()):
         return item["promise"]["promise_text"], False
     return sentence, True
+
+
+def _centroid_fields(neighborhood):
+    """Display centroid for a neighborhood-level record (never a claim site).
+    Regional and unknown locations get no point, so the map does not plot them."""
+    from src.geo_centroids import LOCATION_CENTROIDS
+    point = LOCATION_CENTROIDS.get(neighborhood)
+    return {"latitude": point[0], "longitude": point[1]} if point else {}
 
 
 def build_record(item, *, promise_id, rank, entity_count):
@@ -535,6 +575,7 @@ def build_record(item, *, promise_id, rank, entity_count):
         "geographic_scope": scope,
         "is_citywide": neighborhood == "Citywide",
         "is_centroid": scope != "exact_address",
+        **_centroid_fields(neighborhood),
         "promised_date": promised,
         "due_date": deadline,
         "promise_made_date": promised,
@@ -587,6 +628,7 @@ def build_record(item, *, promise_id, rank, entity_count):
             "source_file_path": e["_file"], "quote": e["verbatim_quote"],
         } for e in item["evidence"]],
         "has_contradictory_evidence": contradictory,
+        **_evidence_summaries(item, contradictory),
         "verdict_supporting_evidence_count": supporting,
         "verdict_contradicting_evidence_count": refuting,
         "affirming_evidence_count": supporting,

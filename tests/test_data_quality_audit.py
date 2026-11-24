@@ -99,7 +99,9 @@ def test_fix4_contradictory_evidence_inspectable():
     data = _load_data()
     promises = data["promises"]
     contra = [p for p in promises if p.get("has_contradictory_evidence") is True]
-    assert len(contra) == 21
+    # 21 is the legacy benchmark; v2 records may add more, and every one must
+    # still be inspectable below.
+    assert len([p for p in contra if p.get("pipeline") != "v2"]) == 21
     for p in contra:
         assert p.get("supporting_evidence_summary"), f"{p['promise_id']} missing supporting summary"
         assert p.get("contradicting_evidence_summary"), f"{p['promise_id']} missing contradicting summary"

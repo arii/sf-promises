@@ -431,7 +431,8 @@ async def audit_candidate(conn, *, root, staging_root, lead, research, complete,
                     {"quote": candidate.promise_text,
                      "promised": candidate.promised_date.isoformat(),
                      "published": published.isoformat(),
-                     "deadline": candidate.deadline.isoformat() if candidate.deadline else None},
+                     "deadline": candidate.deadline.isoformat() if candidate.deadline else None,
+                     "outcome_rules": outcome_rules_enabled()},
                 )
             signals = {
                 "has_verbatim": True,

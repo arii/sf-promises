@@ -811,3 +811,31 @@ def test_mutations_and_gold_hold_with_flags(monkeypatch, rules, dates):
             monkeypatch.setenv(name, value)
     test_adversarial_mutations_false_accept_rate()
     test_gold_set_agreement()
+
+
+# The bounded worker re-checks origin dates; it must accept open-ended (R1)
+# and quoted short-horizon (R2) origins only when the audit's flag was on.
+def _worker_request(deadline, quote, rules):
+    return {"sources": [], "origin": {
+        "quote": quote, "promised": "2026-03-02", "published": "2026-03-02",
+        "deadline": deadline, "outcome_rules": rules}}
+
+
+def test_worker_accepts_open_ended_origin_under_flag(tmp_path):
+    from src.candidate_worker import check_request
+    request = _worker_request(None, "The city will expand shelter beds.", True)
+    assert check_request(request, tmp_path) == {"failures": []}
+
+
+def test_worker_rejects_open_ended_origin_without_flag(tmp_path):
+    from src.candidate_worker import check_request
+    request = _worker_request(None, "The city will expand shelter beds.", False)
+    assert "deadline_missing" in check_request(request, tmp_path)["failures"]
+
+
+def test_worker_waives_short_horizon_only_for_quoted_deadline(tmp_path):
+    from src.candidate_worker import check_request
+    quoted = _worker_request("2026-03-10", "The store will open on March 10, 2026.", True)
+    assert check_request(quoted, tmp_path) == {"failures": []}
+    unquoted = _worker_request("2026-03-10", "The store will open soon.", True)
+    assert "promise_horizon_short" in check_request(unquoted, tmp_path)["failures"]
