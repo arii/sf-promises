@@ -432,6 +432,22 @@ def _centroid_fields(neighborhood):
     return {"latitude": point[0], "longitude": point[1]} if point else {}
 
 
+EDITORIAL_PATH = Path(__file__).resolve().parents[1] / "config" / "v2_editorial.json"
+
+
+def load_editorial(path=EDITORIAL_PATH):
+    """Reviewed titles and exclusions for v2 records; empty when the file is absent.
+    Titles are labels only: they never replace the verbatim quote or evidence."""
+    try:
+        data = json.loads(Path(path).read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return {"titles": {}, "exclude": {}}
+    titles = {k: v for k, v in data.get("titles", {}).items()
+              if isinstance(v, str) and 0 < len(v.strip()) <= 70}
+    exclude = {k: v for k, v in data.get("exclude", {}).items() if isinstance(v, str)}
+    return {"titles": titles, "exclude": exclude}
+
+
 def build_record(item, *, promise_id, rank, entity_count):
     promise, origin = item["promise"], item["origin"]
     display_text, expanded = _display_text(item)
@@ -606,14 +622,20 @@ def merge_v2(payload, sources):
     used_ids = {p["promise_id"] for p in promises}
     by_url, texts = _existing_index(promises)
     entity_counts = Counter(p.get("entity_canonical_name") or p.get("entity") for p in promises)
-    report = {"added": [], "duplicates": [], "rejected": [], "databases": len(sources)}
+    report = {"added": [], "duplicates": [], "rejected": [], "excluded": [],
+              "databases": len(sources)}
+    editorial = load_editorial()
 
     for number, (db_path, source_root) in enumerate(sources, start=1):
         loaded, rejected = load_v2_promises(db_path, source_root)
         report["rejected"] += [{**r, "database": number} for r in rejected]
         for item in loaded:
-            reason = _find_duplicate(item, by_url, texts)
             v2_id = item["promise"]["promise_id"]
+            if v2_id in editorial["exclude"]:
+                report["excluded"].append({"promise_id": v2_id, "database": number,
+                                           "reason": editorial["exclude"][v2_id]})
+                continue
+            reason = _find_duplicate(item, by_url, texts)
             if reason:
                 report["duplicates"].append(
                     {"promise_id": v2_id, "reason": reason, "database": number})
@@ -632,6 +654,10 @@ def merge_v2(payload, sources):
             record = build_record(
                 item, promise_id=promise_id, rank=len(promises) + 1,
                 entity_count=entity_counts[entity])
+            title = editorial["titles"].get(v2_id)
+            if title:
+                record["title"] = title
+                record["title_source"] = "editorial"
             used_ids.add(promise_id)
             promises.append(record)
             quotes = [record["promise_text"], record["verbatim_quote"]]
@@ -652,6 +678,7 @@ def merge_v2(payload, sources):
     status["v2_merge"] = {
         "databases": len(sources), "added": added, "added_by_verdict": by_verdict,
         "skipped_duplicates": len(report["duplicates"]), "rejected": len(report["rejected"]),
+        "excluded_editorial": len(report["excluded"]),
         "legacy_promises": existing_before,
         "funnel_scope": "Funnel and DB totals count the legacy database only.",
     }
@@ -673,9 +700,12 @@ def format_report(report):
     lines = [f"v2 merge: added {len(report['added'])}"
              + (f" {report['added_by_verdict']}" if report["added"] else "")
              + f", skipped duplicates {len(report['duplicates'])}"
-             + f", rejected {len(report['rejected'])}"]
+             + f", rejected {len(report['rejected'])}"
+             + f", excluded (editorial) {len(report.get('excluded', []))}"]
     for dup in report["duplicates"]:
         lines.append(f"  duplicate {dup['promise_id']} (db {dup['database']}): {dup['reason']}")
     for rej in report["rejected"]:
         lines.append(f"  rejected {rej['promise_id']} (db {rej['database']}): {rej['reason']}")
+    for exc in report.get("excluded", []):
+        lines.append(f"  excluded {exc['promise_id']} (db {exc['database']}): {exc['reason']}")
     return "\n".join(lines)

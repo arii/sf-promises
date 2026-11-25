@@ -373,8 +373,13 @@ class QueueTests(unittest.TestCase):
             self.assertEqual(json.loads(out.read_text())["leads"][0]["promise_id"], "R3-abc1234567-1")
 
     def test_lead_ids_never_collide_with_existing(self):
+        # This round's own record and queue never count as existing. Round-3
+        # promises already PUBLISHED on the site do, so they are not re-queued.
+        import json
         existing = dr.load_existing()
-        self.assertFalse({i for i in existing["ids"] if i.startswith("R3-")})
+        published = {p["promise_id"] for p in json.loads(
+            (dr.REPO_ROOT / "docs" / "data.json").read_text(encoding="utf-8"))["promises"]}
+        self.assertFalse({i for i in existing["ids"] if i.startswith("R3-")} - published)
 
 
 class CliTests(unittest.TestCase):
@@ -415,3 +420,23 @@ class _Ctx:
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_own_round_record_does_not_block_its_queue(tmp_path):
+    import json
+    from scripts import discovery_round as dr
+    (tmp_path / "data").mkdir()
+    (tmp_path / "seeds").mkdir()
+    (tmp_path / "docs").mkdir()
+    (tmp_path / "docs" / "data.json").write_text(json.dumps({"promises": []}))
+    quote = "The Port will open the new plaza to the public by December 2027."
+    record = {"candidates": [{"candidate_id": "R3-abc-1", "verbatim_quote": quote}]}
+    (tmp_path / "data" / "discovery_round_3_20990101.json").write_text(json.dumps(record))
+    existing = dr.load_existing(tmp_path)
+    assert "R3-abc-1" not in existing["ids"]
+    reviewed = {"candidates": [{"candidate_id": "R3-abc-1", "decision": "accept",
+                                "verbatim_quote": quote, "url": "https://sf.gov/news-plaza",
+                                "published_at": "2026-05-01T00:00:00Z", "actor": "Port of San Francisco",
+                                "deadline_guess": "2027-12-31"}]}
+    queue = dr.build_queue(reviewed, existing)
+    assert [lead["promise_id"] for lead in queue["leads"]] == ["R3-abc-1"]

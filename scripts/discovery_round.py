@@ -54,6 +54,12 @@ SEED_FILES = ("seeds/discovery_targets.json", "seeds/recovery_targets.json",
 ROUND_GLOB = "data/discovery_round*.json"
 
 
+def _own_round(identifier):
+    """This round's own candidates and queue entries are not 'existing' data:
+    otherwise every candidate collides with its own round record."""
+    return isinstance(identifier, str) and identifier.startswith(f"{ID_PREFIX}-")
+
+
 # --------------------------------------------------------------------------- config
 
 def load_config(path: Path = CONFIG_PATH) -> dict:
@@ -295,6 +301,8 @@ def load_existing(root: Path = REPO_ROOT) -> dict:
         path = root / name
         if path.exists():
             for lead in json.loads(path.read_text(encoding="utf-8")).get("leads", []):
+                if _own_round(lead.get("promise_id")):
+                    continue
                 texts.append(lead.get("promise_text"))
                 if lead.get("source_url"):
                     urls.add(canonical_url(lead["source_url"]))
@@ -305,7 +313,7 @@ def load_existing(root: Path = REPO_ROOT) -> dict:
         except (OSError, ValueError, AttributeError):
             continue
         for item in candidates:
-            if isinstance(item, dict):
+            if isinstance(item, dict) and not _own_round(item.get("candidate_id")):
                 texts.append(item.get("verbatim_quote"))
                 ids.add(item.get("candidate_id"))
     return {"texts": [t for t in map(normalize, texts) if t], "urls": urls,

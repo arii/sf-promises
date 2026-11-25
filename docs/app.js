@@ -145,7 +145,7 @@
   // exported snapshot.
   // -------------------------------------------------------------------------
   /* SFPVIZ_PURE_START */
-  const VERDICT_ORDER = ['kept', 'in_progress', 'broken', 'stalled', 'undecided', 'kept_then_reversed'];
+  const VERDICT_ORDER = ['kept', 'delayed_or_partial', 'in_progress', 'broken', 'stalled', 'undecided', 'kept_then_reversed'];
 
   function normalizeVerdict(value) {
     return String(value || 'undecided').toLowerCase().replace(/[\s-]+/g, '_');
@@ -887,6 +887,7 @@
     broken: '#EF4444',
     stalled: '#C084FC',
     kept_then_reversed: '#F97316',
+    delayed_or_partial: '#F59E0B',
     undecided: 'var(--verdict-undecided)'
   };
 
@@ -3053,7 +3054,7 @@
     }[ch]));
   }
 
-  // Media block for one featured-story card: an opt-in button, never an
+  // Media block for one featured-story card: the photo inline, never an
   // automatic request. '' when the export carries no image for the record,
   // so imageless cards keep their text-only layout. The export URL and
   // caption travel in escaped data-* attributes; the wiring turns them into
@@ -3074,19 +3075,20 @@
     }
     const url = promise.media_image_url || promise.image_url;
     if (!url) return '';
-    const caption = promise.media_caption || '';
-    const title = promise.title || 'this promise';
-    return `<div class="story-card-media" data-img-url="${storyEscapeHtml(url)}" data-img-caption="${storyEscapeHtml(caption)}" data-img-title="${storyEscapeHtml(title)}"><button type="button" class="btn-story-media" aria-label="Show source photo for ${storyEscapeHtml(title)}">Show source photo</button></div>`;
+    // Shown inline (owner decision 2026-11-25): no tap-to-load step.
+    // No URL means no block at all; a URL that fails to load removes the block
+    // (see setupFeaturedStories), so there is never an empty frame.
+    return `<figure class="story-card-media">${storyCardMediaLoadedHtml(url, promise.media_caption || '', promise.title || 'this promise')}</figure>`;
   }
 
-  // Loaded state, built only after the reader taps the opt-in button: the
-  // photo plus its exported caption line (when the export records one).
+  // Photo markup: the photo plus its exported caption line (when the export
+  // records one).
   function storyCardMediaLoadedHtml(url, caption, title) {
     const alt = caption || title || 'Source media photo';
     const capHtml = caption
-      ? `<div class="story-card-media-caption font-mono">${storyEscapeHtml(caption)}</div>`
+      ? `<figcaption class="story-card-media-caption font-mono">${storyEscapeHtml(caption)}</figcaption>`
       : '';
-    return `<img src="${storyEscapeHtml(url)}" alt="${storyEscapeHtml(alt)}" loading="lazy">${capHtml}`;
+    return `<img src="${storyEscapeHtml(url)}" alt="${storyEscapeHtml(alt)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">${capHtml}`;
   }
 
   const SFPStory = { storyCardMediaHtml, storyCardMediaLoadedHtml };
@@ -3098,12 +3100,9 @@
   // -------------------------------------------------------------------------
   function setupFeaturedStories() {
     // Surface the export's source media on cards whose record carries an
-    // image (issue #44), opt-in only: each card gets a "Show source photo"
-    // button, and the remote image loads only when the reader taps it, so
-    // simply viewing or scrolling the page issues no new third-party
-    // requests. Imageless records keep the text-only card, and a hotlinked
-    // image that fails after activation removes its block, never showing
-    // the browser's broken-image glyph.
+    // image (issue #44) inline: no tap needed. Imageless records keep the
+    // text-only card with no empty space, and an image that fails to load
+    // removes its block, never showing the browser's broken-image glyph.
     document.querySelectorAll('.story-card[data-story-pid]').forEach(card => {
       const pid = card.getAttribute('data-story-pid');
       const record = demoData && (demoData.promises || []).find(x => x.promise_id === pid);
@@ -3113,21 +3112,11 @@
       const tpl = document.createElement('template');
       tpl.innerHTML = html;
       const media = tpl.content.firstElementChild;
-      const btn = media.querySelector('.btn-story-media');
-      const hosted = media.querySelector('img');
-      if (hosted) hosted.addEventListener('error', () => media.remove());
-      if (btn) {
-        btn.addEventListener('click', () => {
-          const loaded = document.createElement('template');
-          loaded.innerHTML = SFPStory.storyCardMediaLoadedHtml(
-            media.getAttribute('data-img-url') || '',
-            media.getAttribute('data-img-caption') || '',
-            media.getAttribute('data-img-title') || ''
-          );
-          const img = loaded.content.querySelector('img');
-          if (img) img.addEventListener('error', () => media.remove());
-          media.replaceChildren(...loaded.content.childNodes);
-        });
+      const img = media.querySelector('img');
+      if (img) {
+        img.addEventListener('error', () => media.remove());
+        // A cached broken image may already have failed before the listener.
+        if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) media.remove();
       }
       const top = card.querySelector('.story-card-top');
       if (top && top.nextSibling) {
@@ -3277,7 +3266,7 @@
   if (phoneQuery && phoneQuery.addEventListener) phoneQuery.addEventListener('change', syncCardsLayout);
 
   // Thumbnail slot on a featured card: the category illustration sits beside
-  // the entity name. The opt-in photo button below it is unchanged.
+  // the entity name. The inline photo below it is unchanged.
   function addStoryThumb(card, record) {
     if (card.querySelector('.cat-thumb')) return;
     const top = card.querySelector('.story-card-top');

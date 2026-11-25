@@ -2036,6 +2036,7 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     # Keep every visible count and filter on the same latest-verdict snapshot.
     summary = [
         ("kept", "kept", "Kept"),
+        ("delayed_or_partial", "delayed", "Delivered late / partial"),
         ("in_progress", "progress", "In progress"),
         ("broken", "broken", "Broken"),
         ("undecided", "undecided", "Undecided"),

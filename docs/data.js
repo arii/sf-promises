@@ -3,19 +3,19 @@ window.__DEMO_DATA__ = {
   "metadata": {
     "title": "SF Promises",
     "city": "San Francisco",
-    "last_checked": "Nov 24, 2026",
-    "last_updated": "Nov 24, 2026",
+    "last_checked": "Nov 25, 2026",
+    "last_updated": "Nov 25, 2026",
     "github_repo": "https://github.com/arii/sf-promises",
-    "commit_sha": "2e5621eff82f6b917a79ce2994d7f3dcf581055f",
+    "commit_sha": "7f5323f2f9ce2fb675aa8fcb43f376bf763105c5",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-24T19:58:35Z",
-    "v2_promises_added": 29,
+    "exported_at": "2026-11-25T02:25:01Z",
+    "v2_promises_added": 127,
     "legacy_promises": 54
   },
   "database_status": {
-    "commit_sha": "2e5621eff82f6b917a79ce2994d7f3dcf581055f",
-    "tracked_count": 83,
+    "commit_sha": "7f5323f2f9ce2fb675aa8fcb43f376bf763105c5",
+    "tracked_count": 181,
     "seed_promises_count": 12,
     "total_db_promises": 62,
     "total_db_verdicts": 87,
@@ -3790,16 +3790,17 @@ window.__DEMO_DATA__ = {
       "S8",
       "S9"
     ],
-    "id_reconciliation": "83 published (29 from v2 pipeline) \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
+    "id_reconciliation": "181 published (127 from v2 pipeline) \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
     "acceptance_status_label": "Acceptance verified by harness run F-20261111-045601 on 2026-11-11 (separated processes, not Firecracker)",
     "counts": {
-      "kept": 25,
-      "broken": 18,
+      "kept": 27,
+      "broken": 19,
       "kept_then_reversed": 1,
-      "in_progress": 33,
-      "undecided": 6
+      "in_progress": 74,
+      "undecided": 56,
+      "delayed_or_partial": 4
     },
     "integration_run": {
       "run_id": "F-20261111-045601",
@@ -3827,7 +3828,7 @@ window.__DEMO_DATA__ = {
       "Local worker processes are not a VM or filesystem/network security boundary.",
       "Earlier demo revisions hardcoded tally counts instead of querying live SQLite counts; current counts render from this export.",
       "Staging references (sources/test_cases/quarantined to promises) dangle pre-verdict by design; arbitrator publishes FK ON (decided, see QUESTIONS.md).",
-      "29 of 83 published records come from the v2 pipeline; their sources were re-hashed and every quote re-found in saved text at export. Funnel and DB totals count the legacy database only."
+      "127 of 181 published records come from the v2 pipeline; their sources were re-hashed and every quote re-found in saved text at export. Funnel and DB totals count the legacy database only."
     ],
     "discrepancy_files": [
       "QUESTIONS.md",
@@ -6319,7 +6320,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 2
           },
           "source_types": {
-            "unlisted": 2
+            "official_government": 2
           }
         },
         "sanfranciscopost.com": {
@@ -6662,7 +6663,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 11
           },
           "source_types": {
-            "unlisted": 11
+            "official_government": 11
           }
         },
         "sfport.com": {
@@ -6671,7 +6672,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 3
           },
           "source_types": {
-            "unlisted": 3
+            "official_government": 3
           }
         },
         "sfpublicpress.org": {
@@ -6689,7 +6690,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 6
           },
           "source_types": {
-            "unlisted": 6
+            "official_government": 6
           }
         },
         "sfrecpark.org": {
@@ -6698,7 +6699,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 6
           },
           "source_types": {
-            "unlisted": 6
+            "official_government": 6
           }
         },
         "sfseacliff.california58.com": {
@@ -7274,7 +7275,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 1
           },
           "source_types": {
-            "unlisted": 1
+            "primary_source": 1
           }
         },
         "www.carescout.com": {
@@ -7391,7 +7392,7 @@ window.__DEMO_DATA__ = {
             "domain_not_allowlisted": 1
           },
           "source_types": {
-            "unlisted": 1
+            "official_government": 1
           }
         },
         "www.soundofhope.org": {
@@ -7522,18 +7523,20 @@ window.__DEMO_DATA__ = {
         }
       }
     },
-    "v2_promises_added": 29,
+    "v2_promises_added": 127,
     "v2_merge": {
-      "databases": 4,
-      "added": 29,
+      "databases": 12,
+      "added": 127,
       "added_by_verdict": {
-        "broken": 1,
-        "in_progress": 23,
-        "kept": 1,
-        "undecided": 4
+        "broken": 2,
+        "delayed_or_partial": 4,
+        "in_progress": 64,
+        "kept": 3,
+        "undecided": 54
       },
       "skipped_duplicates": 0,
       "rejected": 0,
+      "excluded_editorial": 4,
       "legacy_promises": 54,
       "funnel_scope": "Funnel and DB totals count the legacy database only."
     }
@@ -20159,7 +20162,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "21, with the barriers remaining in place through April 2027.",
-      "title": "Port of San Francisco Commitment",
+      "title": "Port temporary flood barriers on Embarcadero and piers",
       "document_title": "Port of San Francisco Commitment",
       "relevance": {
         "score": 8,
@@ -20288,7 +20291,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-013",
@@ -20340,7 +20344,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "Construction is slated to begin in early 2027.",
-      "title": "Swords to Plowshares Commitment",
+      "title": "629 Post Street veterans supportive housing",
       "document_title": "Swords to Plowshares Commitment",
       "relevance": {
         "score": 8,
@@ -20474,7 +20478,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-009",
@@ -20526,7 +20531,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "The project is expected to break ground in late 2026 and be completed in 2028.",
-      "title": "Recreation and Park Department Commitment",
+      "title": "Embarcadero Plaza and Sue Bierman Park waterfront park",
       "document_title": "Recreation and Park Department Commitment",
       "relevance": {
         "score": 8,
@@ -20655,7 +20660,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-004",
@@ -20707,7 +20713,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "San Francisco has a long term goal of capturing 1 billion gallons of stormwater each year by 2050 and is on track to meet that target.",
-      "title": "San Francisco Public Utilities Commission Commitment",
+      "title": "San Francisco 1 billion gallon stormwater capture goal",
       "document_title": "San Francisco Public Utilities Commission Commitment",
       "relevance": {
         "score": 8,
@@ -20836,7 +20842,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-018",
@@ -20888,7 +20895,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "SFUSD expects to announce the permanent location in January 2027, with the school expected to move to its permanent campus in Fall 2028.",
-      "title": "San Francisco Unified School District Commitment",
+      "title": "Mandarin immersion TK\u20138 school permanent campus",
       "document_title": "San Francisco Unified School District Commitment",
       "relevance": {
         "score": 8,
@@ -21017,7 +21024,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-026",
@@ -21069,7 +21077,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "5 million annually for programming and maintenance at Embarcadero Plaza, supplementing existing San Francisco Recreation and Parks funding.",
-      "title": "Office of the Mayor Commitment",
+      "title": "Downtown district assessment for Embarcadero Plaza programming",
       "document_title": "Office of the Mayor Commitment",
       "relevance": {
         "score": 8,
@@ -21199,7 +21207,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261112-010",
@@ -21251,7 +21260,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "the goal is to add 1,075 new",
-      "title": "Department of Homelessness and Supportive Housing Commitment",
+      "title": "Home by the Bay 1,075 new shelter beds",
       "document_title": "Department of Homelessness and Supportive Housing Commitment",
       "relevance": {
         "score": 7,
@@ -21380,7 +21389,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "ARTS-02",
@@ -21432,7 +21442,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "A grand reopening for the theater is scheduled for 2023.",
-      "title": "Another Planet Entertainment Commitment",
+      "title": "Castro Theatre renovation and reopening",
       "document_title": "Another Planet Entertainment Commitment",
       "relevance": {
         "score": 7,
@@ -21578,7 +21588,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "LEADER-01",
@@ -21630,7 +21641,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "SAN FRANCISCO (CBS SF) \u2014 The CEO of Salesforce.com visited a San Francisco school on Monday to highlight a $2.7 million donation by his company to the city's middle schools -- the largest one-time donation in the school district's history, city officials said.",
-      "title": "Salesforce Commitment",
+      "title": "Salesforce donation to San Francisco middle schools",
       "document_title": "Salesforce Commitment",
       "relevance": {
         "score": 7,
@@ -21765,7 +21776,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "relative",
       "promise_date_derived": true,
-      "promised_date_note": "derived: 'on Monday' resolved against publication date 2013-10-07"
+      "promised_date_note": "derived: 'on Monday' resolved against publication date 2013-10-07",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-010",
@@ -21817,7 +21829,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "Construction is expected to begin in late 2027, with the renovated park opening in 2029.",
-      "title": "San Francisco Recreation and Park Department Commitment",
+      "title": "Jackson Playground renovation",
       "document_title": "San Francisco Recreation and Park Department Commitment",
       "relevance": {
         "score": 8,
@@ -21951,7 +21963,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-005",
@@ -22003,7 +22016,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "Both Seacliff 1 & 2 pump station facilities are approaching completed construction status, with both locations anticipated to be finished with the sewer upgrades in the area in late 2026.",
-      "title": "San Francisco Public Utilities Commission Commitment",
+      "title": "Seacliff 1 and 2 pump station sewer upgrades",
       "document_title": "San Francisco Public Utilities Commission Commitment",
       "relevance": {
         "score": 8,
@@ -22137,7 +22150,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-019",
@@ -22189,7 +22203,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "Between now and May 2029, the San Francisco Department of Homelessness and Supportive Housing (HSH) will run a competitive process to re-award its full portfolio of homelessness services and housing contracts, employing outcomes-based contracting to ensure that the city and its service providers are effectively serving clients and supporting all San Franciscans.",
-      "title": "San Francisco Department of Homelessness and Supportive Housing Commitment",
+      "title": "HSH homelessness services contracts re-award",
       "document_title": "San Francisco Department of Homelessness and Supportive Housing Commitment",
       "relevance": {
         "score": 8,
@@ -22318,7 +22332,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-014",
@@ -22370,7 +22385,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "Construction is anticipated to start by fall 2026, with substantial completion expected in 2027.",
-      "title": "San Francisco Public Works Commitment",
+      "title": "Powell Street renovation",
       "document_title": "San Francisco Public Works Commitment",
       "relevance": {
         "score": 8,
@@ -22499,7 +22514,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-023",
@@ -22550,7 +22566,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "A Notice to Proceed (NTP) is planned for early 2027.",
-      "title": "San Francisco Public Utilities Commission Commitment",
+      "title": "Lower Alemany stormwater tunnel notice to proceed",
       "document_title": "San Francisco Public Utilities Commission Commitment",
       "relevance": {
         "score": 8,
@@ -22684,7 +22700,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-001",
@@ -22736,7 +22753,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "completion is anticipated in 2028.",
-      "title": "San Francisco Public Utilities Commission Commitment",
+      "title": "Folsom Area Stormwater Improvement Project",
       "document_title": "San Francisco Public Utilities Commission Commitment",
       "relevance": {
         "score": 8,
@@ -22870,7 +22887,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "BIKE-01",
@@ -22922,7 +22940,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "Breed is tasking The City\u2019s transit agency to build out 20 miles of protected bike lanes in just two years.",
-      "title": "San Francisco Municipal Transportation Agency Commitment",
+      "title": "20 miles of protected bike lanes in two years",
       "document_title": "San Francisco Municipal Transportation Agency Commitment",
       "relevance": {
         "score": 8,
@@ -23051,7 +23069,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "relative",
       "promise_date_derived": true,
-      "promised_date_note": "derived: 'Thursday' resolved against publication date 2019-05-09"
+      "promised_date_note": "derived: 'Thursday' resolved against publication date 2019-05-09",
+      "title_source": "editorial"
     },
     {
       "promise_id": "SEISMIC-02",
@@ -23103,7 +23122,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "Work planned through 2026 will reduce seismic risk, potentially beginning around the Ferry Building, where some of the oldest sections of the wall are cracking.",
-      "title": "Port of San Francisco Commitment",
+      "title": "Port seawall earthquake safety work",
       "document_title": "Port of San Francisco Commitment",
       "relevance": {
         "score": 7,
@@ -23237,7 +23256,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-020",
@@ -23289,7 +23309,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "The SFMTA will aim to begin testing the new system on two buses by March of next year.",
-      "title": "SFMTA Commitment",
+      "title": "SFMTA transit-lane camera enforcement on buses",
       "document_title": "SFMTA Commitment",
       "relevance": {
         "score": 6,
@@ -23423,7 +23443,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-007",
@@ -23475,7 +23496,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "Starting January 30, 2027, riders will see changes across the system: more frequent service on busy routes, easier rides downtown, more room on crowded trips, and more reliable schedules.",
-      "title": "San Francisco Municipal Transportation Agency Commitment",
+      "title": "Muni service expansion starting January 2027",
       "document_title": "San Francisco Municipal Transportation Agency Commitment",
       "relevance": {
         "score": 8,
@@ -23604,7 +23625,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-011",
@@ -23656,7 +23678,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "Artwork is scheduled for installation in spring 2027 with full project completion that summer.",
-      "title": "San Francisco Arts Commission Commitment",
+      "title": "Minna and Natoma streets art corridor",
       "document_title": "San Francisco Arts Commission Commitment",
       "relevance": {
         "score": 8,
@@ -23790,7 +23812,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "BIKE-02",
@@ -23842,7 +23865,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "The 12-month pilot program will see two-way bike lane traffic running down the middle of the road with cars on the sides.",
-      "title": "San Francisco Municipal Transportation Agency Commitment",
+      "title": "Valencia Street center-running bikeway pilot",
       "document_title": "San Francisco Municipal Transportation Agency Commitment",
       "relevance": {
         "score": 7,
@@ -23988,7 +24011,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "relative",
       "promise_date_derived": true,
-      "promised_date_note": "derived: 'on Tuesday' resolved against publication date 2023-04-05"
+      "promised_date_note": "derived: 'on Tuesday' resolved against publication date 2023-04-05",
+      "title_source": "editorial"
     },
     {
       "promise_id": "CLIMATE-01",
@@ -24040,7 +24064,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "The Building Official shall not issue permits for",
-      "title": "San Francisco Board of Supervisors Commitment",
+      "title": "No permits for new mixed-fuel buildings",
       "document_title": "San Francisco Board of Supervisors Commitment",
       "relevance": {
         "score": 5,
@@ -24174,7 +24198,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-008",
@@ -24226,7 +24251,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "Mercy Housing is leading development of the six-story, 68,000-square-foot building at Trade Winds Avenue and Macky Road, which is expected to be completed in late 2028.",
-      "title": "Mercy Housing Commitment",
+      "title": "Trade Winds Avenue recovery housing building",
       "document_title": "Mercy Housing Commitment",
       "relevance": {
         "score": 8,
@@ -24355,7 +24380,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-012",
@@ -24407,7 +24433,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "Groundbreaking on the senior homes is anticipated in the first half of 2027, with the new co-op to follow.",
-      "title": "Office of the Mayor / MOHCD (Freedom West 2.0) Commitment",
+      "title": "Freedom West 2.0 senior homes",
       "document_title": "Office of the Mayor / MOHCD (Freedom West 2.0) Commitment",
       "relevance": {
         "score": 8,
@@ -24536,7 +24562,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-003",
@@ -24588,7 +24615,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "Design is expected to begin in 2026, with construction planned to start in March 2028.",
-      "title": "San Francisco Public Utilities Commission Commitment",
+      "title": "Islais Creek watershed green stormwater project",
       "document_title": "San Francisco Public Utilities Commission Commitment",
       "relevance": {
         "score": 8,
@@ -24717,7 +24744,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-017",
@@ -24769,7 +24797,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "The new school is scheduled to open in Fall 2027 at the temporary location before growing into a full TK\u20138 program.",
-      "title": "San Francisco Unified School District Commitment",
+      "title": "Mandarin immersion TK\u20138 school opening at Noe Street",
       "document_title": "San Francisco Unified School District Commitment",
       "relevance": {
         "score": 8,
@@ -24898,7 +24926,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "stated",
       "promise_date_derived": false,
-      "promised_date_note": "stated in the source"
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-021",
@@ -24950,7 +24979,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "and USACE continue working to complete the Flood Study and a Recommended Plan by end of",
-      "title": "Port of San Francisco Commitment",
+      "title": "Port and Army Corps flood study and recommended plan",
       "document_title": "Port of San Francisco Commitment",
       "relevance": {
         "score": 6,
@@ -25079,7 +25108,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "DISC-20261122-025",
@@ -25131,7 +25161,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "News",
       "fetched_at": null,
       "verbatim_quote": "We anticipate construction to start in",
-      "title": "San Francisco Public Utilities Commission Commitment",
+      "title": "Ocean Beach climate change adaptation project construction",
       "document_title": "San Francisco Public Utilities Commission Commitment",
       "relevance": {
         "score": 5,
@@ -25260,7 +25290,8 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     },
     {
       "promise_id": "ARTS-01",
@@ -25312,7 +25343,7 @@ window.__DEMO_DATA__ = {
       "source_tier": "Official",
       "fetched_at": null,
       "verbatim_quote": "- Another Planet Entertainment has committed to bringing free outdoor concerts to Downtown San Francisco\u2019s historic plazas, including Civic Center Plaza, Union Square, and Embarcadero Plaza annually for three years starting in 2024.",
-      "title": "Another Planet Entertainment Commitment",
+      "title": "Free outdoor concerts at downtown plazas",
       "document_title": "Another Planet Entertainment Commitment",
       "relevance": {
         "score": 7,
@@ -25446,7 +25477,17906 @@ window.__DEMO_DATA__ = {
       },
       "promise_date_basis": "publication",
       "promise_date_derived": true,
-      "promised_date_note": "derived: publication date of the source"
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-14bbf17e5a-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-14bbf17e5a-1",
+      "promise_text": "[**Excavating Uranus, A Psalm for Nyota Uhura**](https://www.sf.gov/excavating-uranus-a-psalm-for-nyota-uhura) opens on **October 8, 2026**, at the SFAC Main Gallery in the War Memorial Veterans Building and will be on view through January 30, 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2026-09-10",
+      "due_date": "2026-10-08",
+      "promise_made_date": "2026-09-10",
+      "deadline_date": "2026-10-08",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 10, 2026",
+      "due_date_display": "Oct 8, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Arts Commission press release dated September 10, 2026 states the exhibition opens October 8, 2026 at the SFAC Main Gallery. It gives a street address but names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:29:43.091854+00:00",
+      "factual_outcome": "Arts Commission press release dated September 10, 2026 states the exhibition opens October 8, 2026 at the SFAC Main Gallery. It gives a street address but names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "source_id": "S61bfbd683ff6",
+      "source_url": "https://www.sf.gov/excavating-uranus-a-psalm-for-nyota-uhura-press-release",
+      "source_file_path": "61bfbd683ff6683be6c534393169a335b3573d5494e687705725625a0ccb7c3b.md",
+      "source_hash": "61bfbd683ff6683be6c534393169a335b3573d5494e687705725625a0ccb7c3b",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "[**Excavating Uranus, A Psalm for Nyota Uhura**](https://www.sf.gov/excavating-uranus-a-psalm-for-nyota-uhura) opens on **October 8, 2026**, at the SFAC Main Gallery in the War Memorial Veterans Building and will be on view through January 30, 2027.",
+      "title": "Excavating Uranus exhibition at SFAC Main Gallery",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:29:43.091854+00:00",
+          "reason": "Arts Commission press release dated September 10, 2026 states the exhibition opens October 8, 2026 at the SFAC Main Gallery. It gives a street address but names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.091854+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.091854+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.091854+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.091854+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.091854+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.091854+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.166611+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/excavating-uranus-a-psalm-for-nyota-uhura-press-release",
+          "published_date": "2026-09-10T00:00:00Z",
+          "source_hash": "61bfbd683ff6683be6c534393169a335b3573d5494e687705725625a0ccb7c3b",
+          "source_file_path": "61bfbd683ff6683be6c534393169a335b3573d5494e687705725625a0ccb7c3b.md",
+          "quote": "[**Excavating Uranus, A Psalm for Nyota Uhura**](https://www.sf.gov/excavating-uranus-a-psalm-for-nyota-uhura) opens on **October 8, 2026**, at the SFAC Main Gallery in the War Memorial Veterans Building and will be on view through January 30, 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 84,
+      "display_no": 84,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R2",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-80df2c5c6d-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-80df2c5c6d-1",
+      "promise_text": "He\nalso announced that the strategic planning process will resume with\ncommunity engagement and is expected to be completed by spring 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-07-06",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-07-06",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jul 6, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Arts Commission minutes record the Executive Director announcing the strategic plan is expected to be completed by spring 2027. The entity is the Arts Commission and the scope is citywide. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:27:00.128680+00:00",
+      "factual_outcome": "Arts Commission minutes record the Executive Director announcing the strategic plan is expected to be completed by spring 2027. The entity is the Arts Commission and the scope is citywide. No delivery or survival sentence supplied.",
+      "source_id": "Sd8268f3c6c78",
+      "source_url": "https://media.api.sf.gov/documents/August_3_2026_Draft_minutes_-_Full_Commission.pdf",
+      "source_file_path": "d8268f3c6c782a19ea4f74d975fc8ea116e5dfe74575f6bc633fd4a1801b123b.md",
+      "source_hash": "d8268f3c6c782a19ea4f74d975fc8ea116e5dfe74575f6bc633fd4a1801b123b",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "He\nalso announced that the strategic planning process will resume with\ncommunity engagement and is expected to be completed by spring 2027.",
+      "title": "Arts Commission strategic plan",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:27:00.128680+00:00",
+          "reason": "Arts Commission minutes record the Executive Director announcing the strategic plan is expected to be completed by spring 2027. The entity is the Arts Commission and the scope is citywide. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:00.128680+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:00.128680+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:00.128680+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:00.128680+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:00.128680+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:00.128680+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:00.342954+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/August_3_2026_Draft_minutes_-_Full_Commission.pdf",
+          "published_date": "2026-08-05T16:48:36Z",
+          "source_hash": "d8268f3c6c782a19ea4f74d975fc8ea116e5dfe74575f6bc633fd4a1801b123b",
+          "source_file_path": "d8268f3c6c782a19ea4f74d975fc8ea116e5dfe74575f6bc633fd4a1801b123b.md",
+          "quote": "He\nalso announced that the strategic planning process will resume with\ncommunity engagement and is expected to be completed by spring 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 85,
+      "display_no": 85,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-a58ebf362c-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-a58ebf362c-2",
+      "promise_text": "As a result, one behavioral health clinic, Southeast Mission Geriatrics, will\nclose on Aug. 28, 2026.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Department of Public Health",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2026-06-15",
+      "due_date": "2026-08-28",
+      "promise_made_date": "2026-06-15",
+      "deadline_date": "2026-08-28",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 15, 2026",
+      "due_date_display": "Aug 28, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "DPH deck states the Southeast Mission Geriatrics clinic will close on Aug. 28, 2026. DPH is the entity; the origin names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:33:00.295088+00:00",
+      "factual_outcome": "DPH deck states the Southeast Mission Geriatrics clinic will close on Aug. 28, 2026. DPH is the entity; the origin names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "source_id": "S07c319f6dad4",
+      "source_url": "https://media.api.sf.gov/documents/061826_BHC_Directors_Update_9V5zgT2.cleaned.pdf",
+      "source_file_path": "07c319f6dad46e6f5e2bf387104db1f34fffef40c204e411538fd178503d591d.md",
+      "source_hash": "07c319f6dad46e6f5e2bf387104db1f34fffef40c204e411538fd178503d591d",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "As a result, one behavioral health clinic, Southeast Mission Geriatrics, will\nclose on Aug. 28, 2026.",
+      "title": "Southeast Mission Geriatrics clinic closure",
+      "document_title": "San Francisco Department of Public Health Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:33:00.295088+00:00",
+          "reason": "DPH deck states the Southeast Mission Geriatrics clinic will close on Aug. 28, 2026. DPH is the entity; the origin names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:00.295088+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:00.295088+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:00.295088+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:00.295088+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:00.295088+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:00.295088+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:00.440107+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/061826_BHC_Directors_Update_9V5zgT2.cleaned.pdf",
+          "published_date": "2026-06-15T16:43:42Z",
+          "source_hash": "07c319f6dad46e6f5e2bf387104db1f34fffef40c204e411538fd178503d591d",
+          "source_file_path": "07c319f6dad46e6f5e2bf387104db1f34fffef40c204e411538fd178503d591d.md",
+          "quote": "As a result, one behavioral health clinic, Southeast Mission Geriatrics, will\nclose on Aug. 28, 2026."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 86,
+      "display_no": 86,
+      "entity_canonical_name": "San Francisco Department of Public Health",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-05dabc4d47-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-05dabc4d47-1",
+      "promise_text": "Renovations expected to begin in early 2027 and be complete \nby late 2028",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Department of Public Health",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2026-02-25",
+      "due_date": "2028-12-31",
+      "promise_made_date": "2026-02-25",
+      "deadline_date": "2028-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Feb 25, 2026",
+      "due_date_display": "Dec 31, 2028",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "The origin slide lists renovations at 1660 Mission Street expected to begin in early 2027 and finish by late 2028, under SFDPH. The source gives a street address but names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:25:51.482429+00:00",
+      "factual_outcome": "The origin slide lists renovations at 1660 Mission Street expected to begin in early 2027 and finish by late 2028, under SFDPH. The source gives a street address but names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "source_id": "S870e3b19afa2",
+      "source_url": "https://media.api.sf.gov/documents/DPH_OCOH_Budget_Presentation_-_Feb_2026.pdf",
+      "source_file_path": "870e3b19afa2fea59afcf7c50c0a3a45e19bc22d18253798e3bf385b29288820.md",
+      "source_hash": "870e3b19afa2fea59afcf7c50c0a3a45e19bc22d18253798e3bf385b29288820",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Renovations expected to begin in early 2027 and be complete \nby late 2028",
+      "title": "1660 Mission Street behavioral health renovation",
+      "document_title": "San Francisco Department of Public Health Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:25:51.482429+00:00",
+          "reason": "The origin slide lists renovations at 1660 Mission Street expected to begin in early 2027 and finish by late 2028, under SFDPH. The source gives a street address but names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:51.482429+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:51.482429+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:51.482429+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:51.482429+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:51.482429+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:51.482429+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:51.714762+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/DPH_OCOH_Budget_Presentation_-_Feb_2026.pdf",
+          "published_date": "2026-02-25T23:20:37Z",
+          "source_hash": "870e3b19afa2fea59afcf7c50c0a3a45e19bc22d18253798e3bf385b29288820",
+          "source_file_path": "870e3b19afa2fea59afcf7c50c0a3a45e19bc22d18253798e3bf385b29288820.md",
+          "quote": "Renovations expected to begin in early 2027 and be complete \nby late 2028"
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 87,
+      "display_no": 87,
+      "entity_canonical_name": "San Francisco Department of Public Health",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-0f5abc086d-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-0f5abc086d-1",
+      "promise_text": "San Francisco has a target of facilitating 32,800 additional homes affordable at lower incomes by 2031.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Planning Department",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2025-12-22",
+      "due_date": "2031-12-31",
+      "promise_made_date": "2025-12-22",
+      "deadline_date": "2031-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Dec 22, 2025",
+      "due_date_display": "Dec 31, 2031",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "The origin states a target by 2031, led by SF Planning with MOHCD, and the target is citywide. Publication date 2025-12-22 supports the derived date. No delivery or survival sentence was supplied, so those are false.",
+      "decided_at": "2026-11-25T01:12:58.650050+00:00",
+      "factual_outcome": "The origin states a target by 2031, led by SF Planning with MOHCD, and the target is citywide. Publication date 2025-12-22 supports the derived date. No delivery or survival sentence was supplied, so those are false.",
+      "source_id": "S244a92b02ca0",
+      "source_url": "https://sfplanning.org/sites/default/files/documents/citywide/AHSAS-final-report-2025.pdf",
+      "source_file_path": "244a92b02ca0a50f082243ac2efa77fb70345e4d5db65740e3006f7089ecfc39.md",
+      "source_hash": "244a92b02ca0a50f082243ac2efa77fb70345e4d5db65740e3006f7089ecfc39",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "San Francisco has a target of facilitating 32,800 additional homes affordable at lower incomes by 2031.",
+      "title": "32,800 affordable homes target by 2031",
+      "document_title": "San Francisco Planning Department Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:12:58.650050+00:00",
+          "reason": "The origin states a target by 2031, led by SF Planning with MOHCD, and the target is citywide. Publication date 2025-12-22 supports the derived date. No delivery or survival sentence was supplied, so those are false."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:58.650050+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:58.650050+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:58.650050+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:58.650050+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:58.650050+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:58.650050+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:58.938905+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfplanning.org/sites/default/files/documents/citywide/AHSAS-final-report-2025.pdf",
+          "published_date": "2025-12-22T19:01:54Z",
+          "source_hash": "244a92b02ca0a50f082243ac2efa77fb70345e4d5db65740e3006f7089ecfc39",
+          "source_file_path": "244a92b02ca0a50f082243ac2efa77fb70345e4d5db65740e3006f7089ecfc39.md",
+          "quote": "San Francisco has a target of facilitating 32,800 additional homes affordable at lower incomes by 2031."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 88,
+      "display_no": 88,
+      "entity_canonical_name": "San Francisco Planning Department",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-702dcfdd28-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-702dcfdd28-1",
+      "promise_text": "The AirTrain station currently serving Terminal 3 will close until the new facility opens in 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco International Airport",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2025-10-30",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2025-10-30",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 30, 2025",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "SFO release dated October 30, 2025 states the Terminal 3 AirTrain station will close until the new facility opens in 2027. SFO is the entity and the source names no neighborhood. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:20:26.992931+00:00",
+      "factual_outcome": "SFO release dated October 30, 2025 states the Terminal 3 AirTrain station will close until the new facility opens in 2027. SFO is the entity and the source names no neighborhood. No delivery or survival sentence supplied.",
+      "source_id": "S795fc9f3b478",
+      "source_url": "https://www.flysfo.com/about/media/press-releases/sfo-outlines-changes-coming-next-phase-terminal-3-west-project",
+      "source_file_path": "795fc9f3b478597b057de1e3258af549bcce99b6dc0306433b69ac953dbc73bd.md",
+      "source_hash": "795fc9f3b478597b057de1e3258af549bcce99b6dc0306433b69ac953dbc73bd",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The AirTrain station currently serving Terminal 3 will close until the new facility opens in 2027.",
+      "title": "SFO Terminal 3 AirTrain station",
+      "document_title": "San Francisco International Airport Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:20:26.992931+00:00",
+          "reason": "SFO release dated October 30, 2025 states the Terminal 3 AirTrain station will close until the new facility opens in 2027. SFO is the entity and the source names no neighborhood. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:26.992931+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:26.992931+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:26.992931+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:26.992931+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:26.992931+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:26.992931+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:27.319509+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.flysfo.com/about/media/press-releases/sfo-outlines-changes-coming-next-phase-terminal-3-west-project",
+          "published_date": "2025-10-30T17:26:39Z",
+          "source_hash": "795fc9f3b478597b057de1e3258af549bcce99b6dc0306433b69ac953dbc73bd",
+          "source_file_path": "795fc9f3b478597b057de1e3258af549bcce99b6dc0306433b69ac953dbc73bd.md",
+          "quote": "The AirTrain station currently serving Terminal 3 will close until the new facility opens in 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 89,
+      "display_no": 89,
+      "entity_canonical_name": "San Francisco International Airport",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-18c0bf60c9-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-18c0bf60c9-1",
+      "promise_text": "SFMTA, Port of San Francisco, and San Francisco Department of Public Works are \nworking on concurrent 65% level design, environmental review, and public engagement \nphases to solidify the project scope and advance towards a construction start target of fall \n2026.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "The Embarcadero",
+      "neighborhood_canonical": "The Embarcadero",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7955,
+      "longitude": -122.3937,
+      "promised_date": "2025-07-03",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2025-07-03",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jul 3, 2025",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin memo dated July 3, 2025 sets a construction start target of fall 2026 for the Central Embarcadero Safety Project, led by SFMTA on The Embarcadero. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:17:06.187315+00:00",
+      "factual_outcome": "Origin memo dated July 3, 2025 sets a construction start target of fall 2026 for the Central Embarcadero Safety Project, led by SFMTA on The Embarcadero. No delivery or survival sentence supplied.",
+      "source_id": "Scebba5146bdb",
+      "source_url": "https://www.sfmta.com/tl/media/42993/download?inline=",
+      "source_file_path": "cebba5146bdbc0163c8aad5c24435fe0e49f2bbd4ddd034dc257ffcf362ba8fa.md",
+      "source_hash": "cebba5146bdbc0163c8aad5c24435fe0e49f2bbd4ddd034dc257ffcf362ba8fa",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "SFMTA, Port of San Francisco, and San Francisco Department of Public Works are \nworking on concurrent 65% level design, environmental review, and public engagement \nphases to solidify the project scope and advance towards a construction start target of fall \n2026.",
+      "title": "Central Embarcadero Safety Project construction start",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:17:06.187315+00:00",
+          "reason": "Origin memo dated July 3, 2025 sets a construction start target of fall 2026 for the Central Embarcadero Safety Project, led by SFMTA on The Embarcadero. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:06.187315+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:06.187315+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:06.187315+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:06.187315+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:06.187315+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:06.187315+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:06.402958+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfmta.com/tl/media/42993/download?inline=",
+          "published_date": "2025-07-03T19:12:03Z",
+          "source_hash": "cebba5146bdbc0163c8aad5c24435fe0e49f2bbd4ddd034dc257ffcf362ba8fa",
+          "source_file_path": "cebba5146bdbc0163c8aad5c24435fe0e49f2bbd4ddd034dc257ffcf362ba8fa.md",
+          "quote": "SFMTA, Port of San Francisco, and San Francisco Department of Public Works are \nworking on concurrent 65% level design, environmental review, and public engagement \nphases to solidify the project scope and advance towards a construction start target of fall \n2026."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 90,
+      "display_no": 90,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 4,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-840e04bcff-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-840e04bcff-2",
+      "promise_text": "Starting in FY25-26, DSP will complete a shelter expansion project that will\nadd an additional 61 beds bringing the total shelter capacity to 152 beds.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Department of Homelessness and Supportive Housing",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2025-02-20",
+      "due_date": "2025-10-31",
+      "promise_made_date": "2025-02-20",
+      "deadline_date": "2025-10-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Feb 20, 2025",
+      "due_date_display": "Oct 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "HSH memo states the Dolores Shelter Program will complete a 61-bed expansion starting FY25-26 and expects completion in October 2025. HSH is the entity; the memo gives a street address but no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:31:54.271909+00:00",
+      "factual_outcome": "HSH memo states the Dolores Shelter Program will complete a 61-bed expansion starting FY25-26 and expects completion in October 2025. HSH is the entity; the memo gives a street address but no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "source_id": "Sa088284dfa8e",
+      "source_url": "https://media.api.sf.gov/documents/Agenda_Item_11C_Mission_Action.pdf",
+      "source_file_path": "a088284dfa8e6b240105b539601fb0d2a571a6aa1bf7465b97ee1aabfd3fce05.md",
+      "source_hash": "a088284dfa8e6b240105b539601fb0d2a571a6aa1bf7465b97ee1aabfd3fce05",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Starting in FY25-26, DSP will complete a shelter expansion project that will\nadd an additional 61 beds bringing the total shelter capacity to 152 beds.",
+      "title": "Mission Action shelter expansion by 61 beds",
+      "document_title": "San Francisco Department of Homelessness and Supportive Housing Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:31:54.271909+00:00",
+          "reason": "HSH memo states the Dolores Shelter Program will complete a 61-bed expansion starting FY25-26 and expects completion in October 2025. HSH is the entity; the memo gives a street address but no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:54.271909+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:54.271909+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:54.271909+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:54.271909+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:54.271909+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:54.271909+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:54.449578+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/Agenda_Item_11C_Mission_Action.pdf",
+          "published_date": "2025-02-20T22:30:58Z",
+          "source_hash": "a088284dfa8e6b240105b539601fb0d2a571a6aa1bf7465b97ee1aabfd3fce05",
+          "source_file_path": "a088284dfa8e6b240105b539601fb0d2a571a6aa1bf7465b97ee1aabfd3fce05.md",
+          "quote": "Starting in FY25-26, DSP will complete a shelter expansion project that will\nadd an additional 61 beds bringing the total shelter capacity to 152 beds."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 91,
+      "display_no": 91,
+      "entity_canonical_name": "San Francisco Department of Homelessness and Supportive Housing",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-b98644b031-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-b98644b031-1",
+      "promise_text": "In\nadvance of street changes anticipated to\nbe installed in Spring 2025, light-touch\npedestrian safety treatments on Beach Street\nbetween Jones Street and The Embarcadero\nwere completed this month.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2024-12-17",
+      "due_date": "2025-12-31",
+      "promise_made_date": "2024-12-17",
+      "deadline_date": "2025-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Dec 17, 2024",
+      "due_date_display": "Dec 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "SFMTA December 2024 update says Beach Street changes are anticipated for Spring 2025. SFMTA is the entity. The source names only street limits (Jones Street to The Embarcadero) and no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:34:03.847790+00:00",
+      "factual_outcome": "SFMTA December 2024 update says Beach Street changes are anticipated for Spring 2025. SFMTA is the entity. The source names only street limits (Jones Street to The Embarcadero) and no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "source_id": "Sdfe49b44115b",
+      "source_url": "https://www.sfmta.com/media/39451/download?inline=",
+      "source_file_path": "dfe49b44115b46966908b190c7602b505ccc074f48fe26ac91bde90d11a5fb50.md",
+      "source_hash": "dfe49b44115b46966908b190c7602b505ccc074f48fe26ac91bde90d11a5fb50",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "In\nadvance of street changes anticipated to\nbe installed in Spring 2025, light-touch\npedestrian safety treatments on Beach Street\nbetween Jones Street and The Embarcadero\nwere completed this month.",
+      "title": "Beach Street quick-build safety treatments",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:34:03.847790+00:00",
+          "reason": "SFMTA December 2024 update says Beach Street changes are anticipated for Spring 2025. SFMTA is the entity. The source names only street limits (Jones Street to The Embarcadero) and no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:03.847790+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:03.847790+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:03.847790+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:03.847790+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:03.847790+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:03.847790+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:04.274163+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfmta.com/media/39451/download?inline=",
+          "published_date": "2025-01-07T20:57:53Z",
+          "source_hash": "dfe49b44115b46966908b190c7602b505ccc074f48fe26ac91bde90d11a5fb50",
+          "source_file_path": "dfe49b44115b46966908b190c7602b505ccc074f48fe26ac91bde90d11a5fb50.md",
+          "quote": "In\nadvance of street changes anticipated to\nbe installed in Spring 2025, light-touch\npedestrian safety treatments on Beach Street\nbetween Jones Street and The Embarcadero\nwere completed this month."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 92,
+      "display_no": 92,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 5,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-c545693b2e-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-c545693b2e-1",
+      "promise_text": "The project will be installed for a period of one\nyear commencing on July 1, 2023 through July 1, 2024.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2023-06-05",
+      "due_date": "2024-07-01",
+      "promise_made_date": "2023-06-05",
+      "deadline_date": "2024-07-01",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 5, 2023",
+      "due_date_display": "Jul 1, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Arts Commission minutes of June 5, 2023 approve a one-year installation from July 1, 2023 through July 1, 2024, adjacent to the Main Library Fulton Street facade. The source names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:35:08.455188+00:00",
+      "factual_outcome": "Arts Commission minutes of June 5, 2023 approve a one-year installation from July 1, 2023 through July 1, 2024, adjacent to the Main Library Fulton Street facade. The source names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "source_id": "Sd01061a990db",
+      "source_url": "https://media.api.sf.gov/documents/June_5_2023_Full_Commission_Draft_Meeting_Minutes_SUld8cp.pdf",
+      "source_file_path": "d01061a990dbea2bd6482fddd7d064eeaa03953442e126828c39bc35d1138ce8.md",
+      "source_hash": "d01061a990dbea2bd6482fddd7d064eeaa03953442e126828c39bc35d1138ce8",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The project will be installed for a period of one\nyear commencing on July 1, 2023 through July 1, 2024.",
+      "title": "Middleground public art installation at Main Library",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:35:08.455188+00:00",
+          "reason": "Arts Commission minutes of June 5, 2023 approve a one-year installation from July 1, 2023 through July 1, 2024, adjacent to the Main Library Fulton Street facade. The source names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:08.455188+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:08.455188+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:08.455188+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:08.455188+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:08.455188+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:08.455188+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:08.734214+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/June_5_2023_Full_Commission_Draft_Meeting_Minutes_SUld8cp.pdf",
+          "published_date": "2023-06-16T18:10:59Z",
+          "source_hash": "d01061a990dbea2bd6482fddd7d064eeaa03953442e126828c39bc35d1138ce8",
+          "source_file_path": "d01061a990dbea2bd6482fddd7d064eeaa03953442e126828c39bc35d1138ce8.md",
+          "quote": "The project will be installed for a period of one\nyear commencing on July 1, 2023 through July 1, 2024."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 93,
+      "display_no": 93,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 4,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-c11d3c5e88-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-c11d3c5e88-1",
+      "promise_text": "San Francisco will participate in the first cohort of counties implementing CARE Court, \nbeginning October 2023.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Department of Public Health",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-06-01",
+      "due_date": "2023-10-31",
+      "promise_made_date": "2023-06-01",
+      "deadline_date": "2023-10-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 1, 2023",
+      "due_date_display": "Oct 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "DPH memo states San Francisco will participate in the first CARE Court cohort beginning October 2023; the entity is DPH and the scope is citywide. Date derived from the June 2023 budget proposal. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:22:59.376670+00:00",
+      "factual_outcome": "DPH memo states San Francisco will participate in the first CARE Court cohort beginning October 2023; the entity is DPH and the scope is citywide. Date derived from the June 2023 budget proposal. No delivery or survival sentence supplied.",
+      "source_id": "S5ee1d43cf31c",
+      "source_url": "https://media.api.sf.gov/documents/FY_23-25_HC_Memo_Fourth_Meeting_-_6-2-23_.pdf",
+      "source_file_path": "5ee1d43cf31cb162ea2b422aab62b87adb6f5dcf12808e28c3d149c10e7fe3b4.md",
+      "source_hash": "5ee1d43cf31cb162ea2b422aab62b87adb6f5dcf12808e28c3d149c10e7fe3b4",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "San Francisco will participate in the first cohort of counties implementing CARE Court, \nbeginning October 2023.",
+      "title": "CARE Court participation in San Francisco",
+      "document_title": "San Francisco Department of Public Health Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:22:59.376670+00:00",
+          "reason": "DPH memo states San Francisco will participate in the first CARE Court cohort beginning October 2023; the entity is DPH and the scope is citywide. Date derived from the June 2023 budget proposal. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:22:59.376670+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:22:59.376670+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:22:59.376670+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:22:59.376670+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:22:59.376670+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:22:59.376670+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:22:59.661180+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/FY_23-25_HC_Memo_Fourth_Meeting_-_6-2-23_.pdf",
+          "published_date": "2023-06-01T18:52:15Z",
+          "source_hash": "5ee1d43cf31cb162ea2b422aab62b87adb6f5dcf12808e28c3d149c10e7fe3b4",
+          "source_file_path": "5ee1d43cf31cb162ea2b422aab62b87adb6f5dcf12808e28c3d149c10e7fe3b4.md",
+          "quote": "San Francisco will participate in the first cohort of counties implementing CARE Court, \nbeginning October 2023."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 94,
+      "display_no": 94,
+      "entity_canonical_name": "San Francisco Department of Public Health",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-5886a3fafd-3",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-5886a3fafd-3",
+      "promise_text": "This assessment will\nhelp fulfill the Vision Zero Action Strategy commitment to complete Quick-Build\nimprovements on the full High Injury Network by the end of 2024.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-03-07",
+      "due_date": "2024-12-31",
+      "promise_made_date": "2023-03-07",
+      "deadline_date": "2024-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Mar 7, 2023",
+      "due_date_display": "Dec 31, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin restates the commitment to complete Quick-Build improvements on the full High Injury Network by end of 2024. SFMTA runs the program and the network is citywide. Date derived from publication date. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:15:01.139245+00:00",
+      "factual_outcome": "Origin restates the commitment to complete Quick-Build improvements on the full High Injury Network by end of 2024. SFMTA runs the program and the network is citywide. Date derived from publication date. No delivery or survival sentence supplied.",
+      "source_id": "S9b405e98a64f",
+      "source_url": "https://www.sfmta.com/sites/default/files/reports-and-documents/2023/03/vzsf_speed_management_report_03072023.pdf",
+      "source_file_path": "9b405e98a64f74d0f0cab47b1adb4b1a9427e7adae8582d52df8d6ac4560e518.md",
+      "source_hash": "9b405e98a64f74d0f0cab47b1adb4b1a9427e7adae8582d52df8d6ac4560e518",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "This assessment will\nhelp fulfill the Vision Zero Action Strategy commitment to complete Quick-Build\nimprovements on the full High Injury Network by the end of 2024.",
+      "title": "Vision Zero quick-builds on full High Injury Network",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:15:01.139245+00:00",
+          "reason": "Origin restates the commitment to complete Quick-Build improvements on the full High Injury Network by end of 2024. SFMTA runs the program and the network is citywide. Date derived from publication date. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:01.139245+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:01.139245+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:01.139245+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:01.139245+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:01.139245+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:01.139245+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:01.214836+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfmta.com/sites/default/files/reports-and-documents/2023/03/vzsf_speed_management_report_03072023.pdf",
+          "published_date": "2023-03-07T20:11:13Z",
+          "source_hash": "9b405e98a64f74d0f0cab47b1adb4b1a9427e7adae8582d52df8d6ac4560e518",
+          "source_file_path": "9b405e98a64f74d0f0cab47b1adb4b1a9427e7adae8582d52df8d6ac4560e518.md",
+          "quote": "This assessment will\nhelp fulfill the Vision Zero Action Strategy commitment to complete Quick-Build\nimprovements on the full High Injury Network by the end of 2024."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 95,
+      "display_no": 95,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 6,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-ec2da7dadc-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-ec2da7dadc-1",
+      "promise_text": "Western Addition Community Safe Streets Project will begin in Summer 2023 and include traffic signal upgrades and speed management improvements",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Western Addition",
+      "neighborhood_canonical": "Western Addition",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.781,
+      "longitude": -122.433,
+      "promised_date": "2023-02-01",
+      "due_date": "2023-12-31",
+      "promise_made_date": "2023-02-01",
+      "deadline_date": "2023-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Feb 1, 2023",
+      "due_date_display": "Dec 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Press release states the Western Addition Community Safe Streets Project begins in Summer 2023; the project is SFMTA-led and the Western Addition is named. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:36:35.427303+00:00",
+      "factual_outcome": "Press release states the Western Addition Community Safe Streets Project begins in Summer 2023; the project is SFMTA-led and the Western Addition is named. No delivery or survival sentence supplied.",
+      "source_id": "S5fecc457c1b3",
+      "source_url": "https://www.sf.gov/news--sfmta-awarded-176-million-federal-grant-safe-streets-and-roads-western-addition",
+      "source_file_path": "5fecc457c1b34bacb6fd42847c039d573399520658f17cedef7eb0ec06e0d33d.md",
+      "source_hash": "5fecc457c1b34bacb6fd42847c039d573399520658f17cedef7eb0ec06e0d33d",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Western Addition Community Safe Streets Project will begin in Summer 2023 and include traffic signal upgrades and speed management improvements",
+      "title": "Western Addition Community Safe Streets Project",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:36:35.427303+00:00",
+          "reason": "Press release states the Western Addition Community Safe Streets Project begins in Summer 2023; the project is SFMTA-led and the Western Addition is named. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:35.427303+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:35.427303+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:35.427303+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:35.427303+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:35.427303+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:35.427303+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:35.572851+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--sfmta-awarded-176-million-federal-grant-safe-streets-and-roads-western-addition",
+          "published_date": "2023-02-01T00:00:00Z",
+          "source_hash": "5fecc457c1b34bacb6fd42847c039d573399520658f17cedef7eb0ec06e0d33d",
+          "source_file_path": "5fecc457c1b34bacb6fd42847c039d573399520658f17cedef7eb0ec06e0d33d.md",
+          "quote": "Western Addition Community Safe Streets Project will begin in Summer 2023 and include traffic signal upgrades and speed management improvements"
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 96,
+      "display_no": 96,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 7,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-fb147f1532-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-fb147f1532-1",
+      "promise_text": "17th and Folsom neighborhood: The project is expected to begin construction in mid-2023, with completion estimated by 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2022-11-03",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2022-11-03",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Nov 3, 2022",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "SFPUC release dated November 3, 2022 states the 17th and Folsom project is expected to begin construction in mid-2023 and finish by 2027. The source names the 17th and Folsom area but no named neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:28:42.681967+00:00",
+      "factual_outcome": "SFPUC release dated November 3, 2022 states the 17th and Folsom project is expected to begin construction in mid-2023 and finish by 2027. The source names the 17th and Folsom area but no named neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "source_id": "Se5f0382e3c46",
+      "source_url": "https://www.sfpuc.gov/about-us/news/sfpuc-ready-rainy-season",
+      "source_file_path": "e5f0382e3c462656113e598f28014a22854abdd0ba8588ec86cd4dd225cc05b4.md",
+      "source_hash": "e5f0382e3c462656113e598f28014a22854abdd0ba8588ec86cd4dd225cc05b4",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "17th and Folsom neighborhood: The project is expected to begin construction in mid-2023, with completion estimated by 2027.",
+      "title": "17th and Folsom flooding reduction project",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:28:42.681967+00:00",
+          "reason": "SFPUC release dated November 3, 2022 states the 17th and Folsom project is expected to begin construction in mid-2023 and finish by 2027. The source names the 17th and Folsom area but no named neighborhood, so Not stated is accepted. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:42.681967+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:42.681967+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:42.681967+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:42.681967+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:42.681967+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:42.681967+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:43.168328+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/about-us/news/sfpuc-ready-rainy-season",
+          "published_date": "2022-11-04T12:00:00Z",
+          "source_hash": "e5f0382e3c462656113e598f28014a22854abdd0ba8588ec86cd4dd225cc05b4",
+          "source_file_path": "e5f0382e3c462656113e598f28014a22854abdd0ba8588ec86cd4dd225cc05b4.md",
+          "quote": "17th and Folsom neighborhood: The project is expected to begin construction in mid-2023, with completion estimated by 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 97,
+      "display_no": 97,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 7,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-6f487b20c4-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-6f487b20c4-1",
+      "promise_text": "Once the final of five construction and development phases is completed in 2035, nearly 1,700 units will be built at the Potrero HOPE SF site.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Potrero Hill",
+      "neighborhood_canonical": "Potrero Hill",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7587,
+      "longitude": -122.401,
+      "promised_date": "2021-03-11",
+      "due_date": "2035-12-31",
+      "promise_made_date": "2021-03-11",
+      "deadline_date": "2035-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Mar 11, 2021",
+      "due_date_display": "Dec 31, 2035",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin states nearly 1,700 units will be built once the final phase completes in 2035. Date derived from today and publication date 2021-03-11. MOHCD led the approvals and the site is in Potrero Hill. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:14:01.087263+00:00",
+      "factual_outcome": "Origin states nearly 1,700 units will be built once the final phase completes in 2035. Date derived from today and publication date 2021-03-11. MOHCD led the approvals and the site is in Potrero Hill. No delivery or survival sentence supplied.",
+      "source_id": "Sd93e99e1d32d",
+      "source_url": "https://sf.gov/news--city-announces-groundbreaking-critical-infrastructure-potrero-hope-sf-affordable-housing",
+      "source_file_path": "d93e99e1d32dc567d828d0c62d525586bb438fc53526394423c10096464ce4ff.md",
+      "source_hash": "d93e99e1d32dc567d828d0c62d525586bb438fc53526394423c10096464ce4ff",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Once the final of five construction and development phases is completed in 2035, nearly 1,700 units will be built at the Potrero HOPE SF site.",
+      "title": "Potrero HOPE SF build-out",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:14:01.087263+00:00",
+          "reason": "Origin states nearly 1,700 units will be built once the final phase completes in 2035. Date derived from today and publication date 2021-03-11. MOHCD led the approvals and the site is in Potrero Hill. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:01.087263+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:01.087263+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:01.087263+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:01.087263+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:01.087263+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:01.087263+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:01.265028+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sf.gov/news--city-announces-groundbreaking-critical-infrastructure-potrero-hope-sf-affordable-housing",
+          "published_date": "2021-03-11T22:13:37Z",
+          "source_hash": "d93e99e1d32dc567d828d0c62d525586bb438fc53526394423c10096464ce4ff",
+          "source_file_path": "d93e99e1d32dc567d828d0c62d525586bb438fc53526394423c10096464ce4ff.md",
+          "quote": "Once the final of five construction and development phases is completed in 2035, nearly 1,700 units will be built at the Potrero HOPE SF site."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 98,
+      "display_no": 98,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'today' resolved against publication date 2021-03-11",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-4108de94ac-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-4108de94ac-2",
+      "promise_text": "Phases 5 and 6 will start predevelopment in 2022.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2021-03-01",
+      "due_date": "2022-12-31",
+      "promise_made_date": "2021-03-01",
+      "deadline_date": "2022-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Mar 1, 2021",
+      "due_date_display": "Dec 31, 2022",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin (2015 Affordable Housing Bond report, Alice Griffith HOPE SF) states Phases 5 and 6 will start predevelopment in 2022. The housing agency is MOHCD, which runs HOPE SF; the visible text names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:19:08.534223+00:00",
+      "factual_outcome": "Origin (2015 Affordable Housing Bond report, Alice Griffith HOPE SF) states Phases 5 and 6 will start predevelopment in 2022. The housing agency is MOHCD, which runs HOPE SF; the visible text names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "source_id": "Sab97d4654c0f",
+      "source_url": "https://media.api.sf.gov/documents/CGOBOC_2015_Housing_Bond_Report_123120_final_Dec_2020.pdf",
+      "source_file_path": "ab97d4654c0f17c0ce788ac4019419ab73ca70ff096f4e337862c03654bf3dbb.md",
+      "source_hash": "ab97d4654c0f17c0ce788ac4019419ab73ca70ff096f4e337862c03654bf3dbb",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Phases 5 and 6 will start predevelopment in 2022.",
+      "title": "Alice Griffith HOPE SF phases 5 and 6",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:19:08.534223+00:00",
+          "reason": "Origin (2015 Affordable Housing Bond report, Alice Griffith HOPE SF) states Phases 5 and 6 will start predevelopment in 2022. The housing agency is MOHCD, which runs HOPE SF; the visible text names no neighborhood, so Not stated is accepted. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:19:08.534223+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:19:08.534223+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:19:08.534223+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:19:08.534223+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:19:08.534223+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:19:08.534223+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:19:08.757662+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/CGOBOC_2015_Housing_Bond_Report_123120_final_Dec_2020.pdf",
+          "published_date": "2021-03-01T18:52:29Z",
+          "source_hash": "ab97d4654c0f17c0ce788ac4019419ab73ca70ff096f4e337862c03654bf3dbb",
+          "source_file_path": "ab97d4654c0f17c0ce788ac4019419ab73ca70ff096f4e337862c03654bf3dbb.md",
+          "quote": "Phases 5 and 6 will start predevelopment in 2022."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 99,
+      "display_no": 99,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-019959b057-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-019959b057-2",
+      "promise_text": "2025 - 2027 Renovation: AAACC will be renovated from 2025-2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Western Addition",
+      "neighborhood_canonical": "Western Addition",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.781,
+      "longitude": -122.433,
+      "promised_date": "2026-09-01",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-09-01",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 1, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin says AAACC will be renovated from 2025-2027, so the bound is 2027-12-31. The toolkit names the Arts Commission as lead agency at 762 Fulton Street in the Fillmore, which lies in the Western Addition. Date derived from publication. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:29:23.210459+00:00",
+      "factual_outcome": "Origin says AAACC will be renovated from 2025-2027, so the bound is 2027-12-31. The toolkit names the Arts Commission as lead agency at 762 Fulton Street in the Fillmore, which lies in the Western Addition. Date derived from publication. No delivery or survival sentence supplied.",
+      "source_id": "S78fc3fb6deb9",
+      "source_url": "https://sfplanning.org/sites/default/files/documents/community-resource-guide/community-investments-toolkit.pdf",
+      "source_file_path": "78fc3fb6deb9644d8fb8d782f07f6e3d9a265ee308683c16fe8988d20fb33823.md",
+      "source_hash": "78fc3fb6deb9644d8fb8d782f07f6e3d9a265ee308683c16fe8988d20fb33823",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "2025 - 2027 Renovation: AAACC will be renovated from 2025-2027.",
+      "title": "AAACC cultural center renovation",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:29:23.210459+00:00",
+          "reason": "Origin says AAACC will be renovated from 2025-2027, so the bound is 2027-12-31. The toolkit names the Arts Commission as lead agency at 762 Fulton Street in the Fillmore, which lies in the Western Addition. Date derived from publication. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:23.210459+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:23.210459+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:23.210459+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:23.210459+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:23.210459+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:23.210459+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:23.495749+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfplanning.org/sites/default/files/documents/community-resource-guide/community-investments-toolkit.pdf",
+          "published_date": "2026-09-01T22:36:38Z",
+          "source_hash": "78fc3fb6deb9644d8fb8d782f07f6e3d9a265ee308683c16fe8988d20fb33823",
+          "source_file_path": "78fc3fb6deb9644d8fb8d782f07f6e3d9a265ee308683c16fe8988d20fb33823.md",
+          "quote": "2025 - 2027 Renovation: AAACC will be renovated from 2025-2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 100,
+      "display_no": 100,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 5,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-44523cd7c6-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-44523cd7c6-1",
+      "promise_text": "Construction of the TIRI Project will require Treasure Island Road to remain closed to public \ntraffic and the Forest Road Detour to remain in place until the Project\u2019s significant completion \nanticipated to be around December 2027.",
+      "promise_text_expanded": false,
+      "entity": "Treasure Island Development Authority",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Treasure Island",
+      "neighborhood_canonical": "Treasure Island",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.8235,
+      "longitude": -122.3706,
+      "promised_date": "2026-04-02",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-04-02",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Apr 2, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin staff report states the road closure and detour remain until significant completion around December 2027, so the 2027-12-31 bound holds. Date derived from publication. TIDA and Treasure Island are named. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:20:17.592222+00:00",
+      "factual_outcome": "Origin staff report states the road closure and detour remain until significant completion around December 2027, so the 2027-12-31 bound holds. Date derived from publication. TIDA and Treasure Island are named. No delivery or survival sentence supplied.",
+      "source_id": "S24826ac55429",
+      "source_url": "https://media.api.sf.gov/documents/040826_6b_Forest_Road.pdf",
+      "source_file_path": "24826ac554293b4de18c203faa84a62db6ed8af4b4c7644474eeeea04086fbdc.md",
+      "source_hash": "24826ac554293b4de18c203faa84a62db6ed8af4b4c7644474eeeea04086fbdc",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Construction of the TIRI Project will require Treasure Island Road to remain closed to public \ntraffic and the Forest Road Detour to remain in place until the Project\u2019s significant completion \nanticipated to be around December 2027.",
+      "title": "Treasure Island Road closure for TIRI Project",
+      "document_title": "Treasure Island Development Authority Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:20:17.592222+00:00",
+          "reason": "Origin staff report states the road closure and detour remain until significant completion around December 2027, so the 2027-12-31 bound holds. Date derived from publication. TIDA and Treasure Island are named. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:17.592222+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:17.592222+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:17.592222+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:17.592222+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:17.592222+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:17.592222+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:17.736408+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/040826_6b_Forest_Road.pdf",
+          "published_date": "2026-04-02T22:26:29Z",
+          "source_hash": "24826ac554293b4de18c203faa84a62db6ed8af4b4c7644474eeeea04086fbdc",
+          "source_file_path": "24826ac554293b4de18c203faa84a62db6ed8af4b4c7644474eeeea04086fbdc.md",
+          "quote": "Construction of the TIRI Project will require Treasure Island Road to remain closed to public \ntraffic and the Forest Road Detour to remain in place until the Project\u2019s significant completion \nanticipated to be around December 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 101,
+      "display_no": 101,
+      "entity_canonical_name": "Treasure Island Development Authority",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-c8abb46943-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-c8abb46943-1",
+      "promise_text": "To pass these savings on to customers as\nquickly as possible and remain competitive with PG&E\u2019s recent rate and fee changes, a 20-25%\ngeneration rate decrease (depending on customer class) is planned for March 1, 2026, with top-line\nrates expected to remain flat through the end of FY 2026-27.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-02-23",
+      "due_date": "2026-03-01",
+      "promise_made_date": "2026-02-23",
+      "deadline_date": "2026-03-01",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Feb 23, 2026",
+      "due_date_display": "Mar 1, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin states a 20-25% generation rate decrease planned for March 1, 2026, matching the deadline. Derived date 2026-02-23 is consistent with the February 2026 document. SFPUC and citywide scope are supported. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:24:42.467616+00:00",
+      "factual_outcome": "Origin states a 20-25% generation rate decrease planned for March 1, 2026, matching the deadline. Derived date 2026-02-23 is consistent with the February 2026 document. SFPUC and citywide scope are supported. No delivery or survival sentence supplied.",
+      "source_id": "S908f4057241a",
+      "source_url": "https://www.sfpuc.gov/sites/default/files/about-us/policies-reports/FY27-10-Year-Plan-Report.pdf",
+      "source_file_path": "908f4057241a5a7029a1e9c0b4a15fa6e288ba01e0b1f34b4f835c29f5fd16c9.md",
+      "source_hash": "908f4057241a5a7029a1e9c0b4a15fa6e288ba01e0b1f34b4f835c29f5fd16c9",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "To pass these savings on to customers as\nquickly as possible and remain competitive with PG&E\u2019s recent rate and fee changes, a 20-25%\ngeneration rate decrease (depending on customer class) is planned for March 1, 2026, with top-line\nrates expected to remain flat through the end of FY 2026-27.",
+      "title": "SFPUC generation rate decrease for CleanPowerSF",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:24:42.467616+00:00",
+          "reason": "Origin states a 20-25% generation rate decrease planned for March 1, 2026, matching the deadline. Derived date 2026-02-23 is consistent with the February 2026 document. SFPUC and citywide scope are supported. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.467616+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.467616+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.467616+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.467616+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.467616+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.467616+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.873906+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/sites/default/files/about-us/policies-reports/FY27-10-Year-Plan-Report.pdf",
+          "published_date": "2026-02-23T23:32:05Z",
+          "source_hash": "908f4057241a5a7029a1e9c0b4a15fa6e288ba01e0b1f34b4f835c29f5fd16c9",
+          "source_file_path": "908f4057241a5a7029a1e9c0b4a15fa6e288ba01e0b1f34b4f835c29f5fd16c9.md",
+          "quote": "To pass these savings on to customers as\nquickly as possible and remain competitive with PG&E\u2019s recent rate and fee changes, a 20-25%\ngeneration rate decrease (depending on customer class) is planned for March 1, 2026, with top-line\nrates expected to remain flat through the end of FY 2026-27."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 102,
+      "display_no": 102,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 8,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R2",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'today' resolved against publication date 2026-02-23",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-ab3e0d2169-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-ab3e0d2169-1",
+      "promise_text": "The mural will be up for two years, January 2026 \u2013 2028, and will be\nmaintained by local artists, Paint the Void, and Mid-Market Foundation.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Mid-Market & Civic Center",
+      "neighborhood_canonical": "Mid-Market & Civic Center",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7793,
+      "longitude": -122.4167,
+      "promised_date": "2025-12-17",
+      "due_date": "2028-12-31",
+      "promise_made_date": "2025-12-17",
+      "deadline_date": "2028-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Dec 17, 2025",
+      "due_date_display": "Dec 31, 2028",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin dated December 17, 2025 says the mural will be up two years, January 2026 to 2028, so the bound is 2028-12-31. The Arts Commission is the agency and the counterpart mural site is the Orpheum Theatre in Civic Center. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:34:41.685558+00:00",
+      "factual_outcome": "Origin dated December 17, 2025 says the mural will be up two years, January 2026 to 2028, so the bound is 2028-12-31. The Arts Commission is the agency and the counterpart mural site is the Orpheum Theatre in Civic Center. No delivery or survival sentence supplied.",
+      "source_id": "S4b5c150d743c",
+      "source_url": "https://media.api.sf.gov/documents/VAC_Slides_12.17.2025_Final.pdf",
+      "source_file_path": "4b5c150d743ca6ccc6dbb5983c8dc5f16879fe63b2e61aced393831fd787e557.md",
+      "source_hash": "4b5c150d743ca6ccc6dbb5983c8dc5f16879fe63b2e61aced393831fd787e557",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The mural will be up for two years, January 2026 \u2013 2028, and will be\nmaintained by local artists, Paint the Void, and Mid-Market Foundation.",
+      "title": "Orpheum Theater mural by eL Seed",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:34:41.685558+00:00",
+          "reason": "Origin dated December 17, 2025 says the mural will be up two years, January 2026 to 2028, so the bound is 2028-12-31. The Arts Commission is the agency and the counterpart mural site is the Orpheum Theatre in Civic Center. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:41.685558+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:41.685558+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:41.685558+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:41.685558+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:41.685558+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:41.685558+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:34:41.828257+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/VAC_Slides_12.17.2025_Final.pdf",
+          "published_date": "2025-12-17T20:08:58Z",
+          "source_hash": "4b5c150d743ca6ccc6dbb5983c8dc5f16879fe63b2e61aced393831fd787e557",
+          "source_file_path": "4b5c150d743ca6ccc6dbb5983c8dc5f16879fe63b2e61aced393831fd787e557.md",
+          "quote": "The mural will be up for two years, January 2026 \u2013 2028, and will be\nmaintained by local artists, Paint the Void, and Mid-Market Foundation."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 103,
+      "display_no": 103,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 6,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-d25b34d666-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-d25b34d666-1",
+      "promise_text": "The Bay Area women\u2019s professional soccer team, Bay FC, will soon break ground on a training facility on Treasure Island that will open in 2027.",
+      "promise_text_expanded": false,
+      "entity": "Bay FC",
+      "role": null,
+      "entity_type": "sports_team",
+      "entity_type_legacy": "Sports Franchise",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Treasure Island",
+      "neighborhood_canonical": "Treasure Island",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.8235,
+      "longitude": -122.3706,
+      "promised_date": "2025-09-13",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2025-09-13",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 13, 2025",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Release dated September 13, 2025 states Bay FC will soon break ground on a Treasure Island facility opening in 2027, so the 2027-12-31 bound holds. Treasure Island is named. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:13:56.875204+00:00",
+      "factual_outcome": "Release dated September 13, 2025 states Bay FC will soon break ground on a Treasure Island facility opening in 2027, so the 2027-12-31 bound holds. Treasure Island is named. No delivery or survival sentence supplied.",
+      "source_id": "Scdadcca5bcfe",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-cuts-ribbon-at-san-franciscos-newest-park-celebrates-activation-of-another-public-space",
+      "source_file_path": "cdadcca5bcfe3b097101bd6082cc5b86bf98a2278e7acdd5cbe04efec204ae99.md",
+      "source_hash": "cdadcca5bcfe3b097101bd6082cc5b86bf98a2278e7acdd5cbe04efec204ae99",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The Bay Area women\u2019s professional soccer team, Bay FC, will soon break ground on a training facility on Treasure Island that will open in 2027.",
+      "title": "Bay FC Treasure Island training facility",
+      "document_title": "Bay FC Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:13:56.875204+00:00",
+          "reason": "Release dated September 13, 2025 states Bay FC will soon break ground on a Treasure Island facility opening in 2027, so the 2027-12-31 bound holds. Treasure Island is named. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:56.875204+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:56.875204+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:56.875204+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:56.875204+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:56.875204+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:56.875204+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:57.160221+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-cuts-ribbon-at-san-franciscos-newest-park-celebrates-activation-of-another-public-space",
+          "published_date": "2025-09-13T00:00:00Z",
+          "source_hash": "cdadcca5bcfe3b097101bd6082cc5b86bf98a2278e7acdd5cbe04efec204ae99",
+          "source_file_path": "cdadcca5bcfe3b097101bd6082cc5b86bf98a2278e7acdd5cbe04efec204ae99.md",
+          "quote": "The Bay Area women\u2019s professional soccer team, Bay FC, will soon break ground on a training facility on Treasure Island that will open in 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 104,
+      "display_no": 104,
+      "entity_canonical_name": "Bay FC",
+      "entity_category": "sports_team",
+      "entity_category_canonical": "sports_team",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-2143a83728-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-2143a83728-1",
+      "promise_text": "Construction is expected to be completed in early 2027.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Mission",
+      "neighborhood_canonical": "Mission",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7599,
+      "longitude": -122.4148,
+      "promised_date": "2025-04-16",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2025-04-16",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Apr 16, 2025",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Release dated April 16, 2025 says construction is expected to be completed in early 2027, giving 2027-12-31. The project is Casa Adelante at 1515 South Van Ness for Mission families, so Mission is supported. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:30:34.870652+00:00",
+      "factual_outcome": "Release dated April 16, 2025 says construction is expected to be completed in early 2027, giving 2027-12-31. The project is Casa Adelante at 1515 South Van Ness for Mission families, so Mission is supported. No delivery or survival sentence supplied.",
+      "source_id": "S67528f8db9e7",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-new-100-affordable-housing-for-mission-families",
+      "source_file_path": "67528f8db9e7eff3ccb23707496ca4b407a95987b506fb517e586db27c48f491.md",
+      "source_hash": "67528f8db9e7eff3ccb23707496ca4b407a95987b506fb517e586db27c48f491",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Construction is expected to be completed in early 2027.",
+      "title": "1515 South Van Ness affordable housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:30:34.870652+00:00",
+          "reason": "Release dated April 16, 2025 says construction is expected to be completed in early 2027, giving 2027-12-31. The project is Casa Adelante at 1515 South Van Ness for Mission families, so Mission is supported. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:34.870652+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:34.870652+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:34.870652+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:34.870652+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:34.870652+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:34.870652+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:35.088870+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-new-100-affordable-housing-for-mission-families",
+          "published_date": "2025-04-16T00:00:00Z",
+          "source_hash": "67528f8db9e7eff3ccb23707496ca4b407a95987b506fb517e586db27c48f491",
+          "source_file_path": "67528f8db9e7eff3ccb23707496ca4b407a95987b506fb517e586db27c48f491.md",
+          "quote": "Construction is expected to be completed in early 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 105,
+      "display_no": 105,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-c5deecab19-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-c5deecab19-1",
+      "promise_text": "City\u2019s Housing Trust Fund, which will invest $1.5 billion in affordable housing production and housing \nprograms over the next 30 years, as well as local General Fund money to support a wide range of \nservices\u2014in FY21-22, this included $67.4 million in grant funding to community-based organizations.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-05-01",
+      "due_date": "2053-12-31",
+      "promise_made_date": "2023-05-01",
+      "deadline_date": "2053-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 1, 2023",
+      "due_date_display": "Dec 31, 2053",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin says the Housing Trust Fund will invest $1.5 billion over the next 30 years, bounded at 2053-12-31 from the 2023 document. MOHCD administers it and the scope is citywide. Derived date is the publication date. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:36:51.411002+00:00",
+      "factual_outcome": "Origin says the Housing Trust Fund will invest $1.5 billion over the next 30 years, bounded at 2053-12-31 from the 2023 document. MOHCD administers it and the scope is citywide. Derived date is the publication date. No delivery or survival sentence supplied.",
+      "source_id": "S366d81f74cb4",
+      "source_url": "https://www.sf.gov/sites/default/files/2023-05/MOHCD.PAIP_.Initial.letter.050123.pdf",
+      "source_file_path": "366d81f74cb44876c80df91efc6bb20138c8cfa9759dfa45029b936a1d18225d.md",
+      "source_hash": "366d81f74cb44876c80df91efc6bb20138c8cfa9759dfa45029b936a1d18225d",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "City\u2019s Housing Trust Fund, which will invest $1.5 billion in affordable housing production and housing \nprograms over the next 30 years, as well as local General Fund money to support a wide range of \nservices\u2014in FY21-22, this included $67.4 million in grant funding to community-based organizations.",
+      "title": "MOHCD Housing Trust Fund 30-year investment",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:36:51.411002+00:00",
+          "reason": "Origin says the Housing Trust Fund will invest $1.5 billion over the next 30 years, bounded at 2053-12-31 from the 2023 document. MOHCD administers it and the scope is citywide. Derived date is the publication date. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:51.411002+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:51.411002+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:51.411002+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:51.411002+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:51.411002+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:51.411002+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:51.498938+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/sites/default/files/2023-05/MOHCD.PAIP_.Initial.letter.050123.pdf",
+          "published_date": "2023-05-01T22:22:30Z",
+          "source_hash": "366d81f74cb44876c80df91efc6bb20138c8cfa9759dfa45029b936a1d18225d",
+          "source_file_path": "366d81f74cb44876c80df91efc6bb20138c8cfa9759dfa45029b936a1d18225d.md",
+          "quote": "City\u2019s Housing Trust Fund, which will invest $1.5 billion in affordable housing production and housing \nprograms over the next 30 years, as well as local General Fund money to support a wide range of \nservices\u2014in FY21-22, this included $67.4 million in grant funding to community-based organizations."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 106,
+      "display_no": 106,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 4,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-0ae484d1d7-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-0ae484d1d7-2",
+      "promise_text": "It is anticipated that 180 Jones will be move-in ready by late 2023.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Tenderloin",
+      "neighborhood_canonical": "Tenderloin",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7847,
+      "longitude": -122.4141,
+      "promised_date": "2022-06-14",
+      "due_date": "2023-12-31",
+      "promise_made_date": "2022-06-14",
+      "deadline_date": "2023-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 14, 2022",
+      "due_date_display": "Dec 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin states 180 Jones is anticipated to be move-in ready by late 2023 (2023-12-31). The release places it in the Tenderloin and MOHCD is the sponsoring agency. Derived date is the publication date. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:27:08.341418+00:00",
+      "factual_outcome": "Origin states 180 Jones is anticipated to be move-in ready by late 2023 (2023-12-31). The release places it in the Tenderloin and MOHCD is the sponsoring agency. Derived date is the publication date. No delivery or survival sentence supplied.",
+      "source_id": "Sb257bc750b95",
+      "source_url": "https://www.sf.gov/news--city-celebrates-groundbreaking-new-affordable-housing-tenderloin",
+      "source_file_path": "b257bc750b9591f426c6f94478f51999ab41ec6f276eb233584626422783c862.md",
+      "source_hash": "b257bc750b9591f426c6f94478f51999ab41ec6f276eb233584626422783c862",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "It is anticipated that 180 Jones will be move-in ready by late 2023.",
+      "title": "180 Jones Street affordable housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:27:08.341418+00:00",
+          "reason": "Origin states 180 Jones is anticipated to be move-in ready by late 2023 (2023-12-31). The release places it in the Tenderloin and MOHCD is the sponsoring agency. Derived date is the publication date. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:08.341418+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:08.341418+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:08.341418+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:08.341418+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:08.341418+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:08.341418+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:08.484817+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--city-celebrates-groundbreaking-new-affordable-housing-tenderloin",
+          "published_date": "2022-06-14T00:00:00Z",
+          "source_hash": "b257bc750b9591f426c6f94478f51999ab41ec6f276eb233584626422783c862",
+          "source_file_path": "b257bc750b9591f426c6f94478f51999ab41ec6f276eb233584626422783c862.md",
+          "quote": "It is anticipated that 180 Jones will be move-in ready by late 2023."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 107,
+      "display_no": 107,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 5,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-1ebf001f31-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-1ebf001f31-1",
+      "promise_text": "5 Pending changes to federal tax credit regulations, which will be necessary to compete effectively for State funding resources, MOHCD projects that\nthese 2,679 units will be delivered by 2030.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2021-11-01",
+      "due_date": "2030-12-31",
+      "promise_made_date": "2021-11-01",
+      "deadline_date": "2030-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Nov 1, 2021",
+      "due_date_display": "Dec 31, 2030",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "MOHCD projects 2,679 units delivered by 2030, so the action and the 2030-12-31 bound are supported. Publication date of November 2021 supports the derived date. The pipeline is citywide (24 projects), and MOHCD is the named city agency. No delivery or survival sentence was supplied.",
+      "decided_at": "2026-11-25T01:12:59.456252+00:00",
+      "factual_outcome": "MOHCD projects 2,679 units delivered by 2030, so the action and the 2030-12-31 bound are supported. Publication date of November 2021 supports the derived date. The pipeline is citywide (24 projects), and MOHCD is the named city agency. No delivery or survival sentence was supplied.",
+      "source_id": "S8c7f58cd496d",
+      "source_url": "https://sfplanning.org/sites/default/files/resources/2021-11/Jobs-Housing_Fit_Report_2020.pdf",
+      "source_file_path": "8c7f58cd496d336e634e76b336b87834f1674ce845636923b3daa9bc1fd73875.md",
+      "source_hash": "8c7f58cd496d336e634e76b336b87834f1674ce845636923b3daa9bc1fd73875",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "5 Pending changes to federal tax credit regulations, which will be necessary to compete effectively for State funding resources, MOHCD projects that\nthese 2,679 units will be delivered by 2030.",
+      "title": "MOHCD 2,679 affordable units by 2030",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:12:59.456252+00:00",
+          "reason": "MOHCD projects 2,679 units delivered by 2030, so the action and the 2030-12-31 bound are supported. Publication date of November 2021 supports the derived date. The pipeline is citywide (24 projects), and MOHCD is the named city agency. No delivery or survival sentence was supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:59.456252+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:59.456252+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:59.456252+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:59.456252+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:59.456252+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:59.456252+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:59.797008+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfplanning.org/sites/default/files/resources/2021-11/Jobs-Housing_Fit_Report_2020.pdf",
+          "published_date": "2021-11-01T20:20:05Z",
+          "source_hash": "8c7f58cd496d336e634e76b336b87834f1674ce845636923b3daa9bc1fd73875",
+          "source_file_path": "8c7f58cd496d336e634e76b336b87834f1674ce845636923b3daa9bc1fd73875.md",
+          "quote": "5 Pending changes to federal tax credit regulations, which will be necessary to compete effectively for State funding resources, MOHCD projects that\nthese 2,679 units will be delivered by 2030."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 108,
+      "display_no": 108,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 6,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-ef46798be2-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-ef46798be2-1",
+      "promise_text": "The analysis and outreach completed as part of the HAS will inform the update of the Housing Element \nfor 2022.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Planning Department",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2020-03-05",
+      "due_date": "2022-12-31",
+      "promise_made_date": "2020-03-05",
+      "deadline_date": "2022-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Mar 5, 2020",
+      "due_date_display": "Dec 31, 2022",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Memo dated March 5th, 2020 says the HAS analysis and outreach will inform the Housing Element update for 2022, so the bound is 2022-12-31. Planning Department and citywide scope are supported. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:37:46.973427+00:00",
+      "factual_outcome": "Memo dated March 5th, 2020 says the HAS analysis and outreach will inform the Housing Element update for 2022, so the bound is 2022-12-31. Planning Department and citywide scope are supported. No delivery or survival sentence supplied.",
+      "source_id": "S4d2bd7e01496",
+      "source_url": "https://commissions.sfplanning.org/cpcpackets/2016-008561CWP_031220.pdf",
+      "source_file_path": "4d2bd7e01496e1be28d6fa43a48c98761e3866d5916fa4cb77fd280636b0f15c.md",
+      "source_hash": "4d2bd7e01496e1be28d6fa43a48c98761e3866d5916fa4cb77fd280636b0f15c",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "The analysis and outreach completed as part of the HAS will inform the update of the Housing Element \nfor 2022.",
+      "title": "Housing Element update for 2022",
+      "document_title": "San Francisco Planning Department Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:37:46.973427+00:00",
+          "reason": "Memo dated March 5th, 2020 says the HAS analysis and outreach will inform the Housing Element update for 2022, so the bound is 2022-12-31. Planning Department and citywide scope are supported. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:46.973427+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:46.973427+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:46.973427+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:46.973427+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:46.973427+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:46.973427+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:47.185873+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://commissions.sfplanning.org/cpcpackets/2016-008561CWP_031220.pdf",
+          "published_date": "2020-03-05T20:30:03Z",
+          "source_hash": "4d2bd7e01496e1be28d6fa43a48c98761e3866d5916fa4cb77fd280636b0f15c",
+          "source_file_path": "4d2bd7e01496e1be28d6fa43a48c98761e3866d5916fa4cb77fd280636b0f15c.md",
+          "quote": "The analysis and outreach completed as part of the HAS will inform the update of the Housing Element \nfor 2022."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 109,
+      "display_no": 109,
+      "entity_canonical_name": "San Francisco Planning Department",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-dfd61c04a2-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-dfd61c04a2-2",
+      "promise_text": "In addition to the $5 million investment in prevention funding, Mayor Breed will continue the progress being made to open over 300 new shelter beds this year, and an additional 500 beds in 2020.",
+      "promise_text_expanded": false,
+      "entity": "Office of the Mayor",
+      "role": null,
+      "entity_type": "politician",
+      "entity_type_legacy": "Mayor / Executive",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2019-05-16",
+      "due_date": "2020-12-31",
+      "promise_made_date": "2019-05-16",
+      "deadline_date": "2020-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 16, 2019",
+      "due_date_display": "Dec 31, 2020",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin press release says the Mayor will open over 300 shelter beds this year and an additional 500 beds in 2020, so the 2020-12-31 bound holds. Derived date is the publication date of the release. Mayor and citywide scope supported. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:25:46.269435+00:00",
+      "factual_outcome": "Origin press release says the Mayor will open over 300 shelter beds this year and an additional 500 beds in 2020, so the 2020-12-31 bound holds. Derived date is the publication date of the release. Mayor and citywide scope supported. No delivery or survival sentence supplied.",
+      "source_id": "S945ff6a2af2a",
+      "source_url": "https://www.sf.gov/news--5-million-new-homelessness-prevention-funding",
+      "source_file_path": "945ff6a2af2a484fbdd069a7b71a13f9417900f8af61cfaef35d1085d8f1de68.md",
+      "source_hash": "945ff6a2af2a484fbdd069a7b71a13f9417900f8af61cfaef35d1085d8f1de68",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "In addition to the $5 million investment in prevention funding, Mayor Breed will continue the progress being made to open over 300 new shelter beds this year, and an additional 500 beds in 2020.",
+      "title": "New shelter beds in 2019 and 2020",
+      "document_title": "Office of the Mayor Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:25:46.269435+00:00",
+          "reason": "Origin press release says the Mayor will open over 300 shelter beds this year and an additional 500 beds in 2020, so the 2020-12-31 bound holds. Derived date is the publication date of the release. Mayor and citywide scope supported. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:46.269435+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:46.269435+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:46.269435+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:46.269435+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:46.269435+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:46.269435+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:46.485079+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--5-million-new-homelessness-prevention-funding",
+          "published_date": "2019-05-16T00:00:00Z",
+          "source_hash": "945ff6a2af2a484fbdd069a7b71a13f9417900f8af61cfaef35d1085d8f1de68",
+          "source_file_path": "945ff6a2af2a484fbdd069a7b71a13f9417900f8af61cfaef35d1085d8f1de68.md",
+          "quote": "In addition to the $5 million investment in prevention funding, Mayor Breed will continue the progress being made to open over 300 new shelter beds this year, and an additional 500 beds in 2020."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 110,
+      "display_no": 110,
+      "entity_canonical_name": "Office of the Mayor",
+      "entity_category": "politician",
+      "entity_category_canonical": "politician",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-6054cd932b-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-6054cd932b-1",
+      "promise_text": "Transportation Sector Climate Action Strategy, which set an aggressive goal of 80 percent of travel\ndone by sustainable modes by 2030.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2019-01-29",
+      "due_date": "2030-12-31",
+      "promise_made_date": "2019-01-29",
+      "deadline_date": "2030-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jan 29, 2019",
+      "due_date_display": "Dec 31, 2030",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "The 2019 SFMTA report states the goal of 80 percent of travel by sustainable modes by 2030, so the 2030-12-31 bound holds. The date is derived from the publication date. SFMTA is the agency and the goal is citywide. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:14:49.372163+00:00",
+      "factual_outcome": "The 2019 SFMTA report states the goal of 80 percent of travel by sustainable modes by 2030, so the 2030-12-31 bound holds. The date is derived from the publication date. SFMTA is the agency and the goal is citywide. No delivery or survival sentence supplied.",
+      "source_id": "Sdbaf22e4adb5",
+      "source_url": "https://www.sfmta.com/sites/default/files/reports-and-documents/2019/01/a_year_of_movement_fy_2018_sfmta_annual_report_-_accessible_version_final_2.pdf",
+      "source_file_path": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2.md",
+      "source_hash": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Transportation Sector Climate Action Strategy, which set an aggressive goal of 80 percent of travel\ndone by sustainable modes by 2030.",
+      "title": "Transportation Sector Climate Action Strategy 80 percent goal",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:14:49.372163+00:00",
+          "reason": "The 2019 SFMTA report states the goal of 80 percent of travel by sustainable modes by 2030, so the 2030-12-31 bound holds. The date is derived from the publication date. SFMTA is the agency and the goal is citywide. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:49.372163+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:49.372163+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:49.372163+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:49.372163+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:49.372163+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:49.372163+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:49.588212+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfmta.com/sites/default/files/reports-and-documents/2019/01/a_year_of_movement_fy_2018_sfmta_annual_report_-_accessible_version_final_2.pdf",
+          "published_date": "2019-01-29T19:38:44Z",
+          "source_hash": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2",
+          "source_file_path": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2.md",
+          "quote": "Transportation Sector Climate Action Strategy, which set an aggressive goal of 80 percent of travel\ndone by sustainable modes by 2030."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 111,
+      "display_no": 111,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 8,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-f1813062e0-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-f1813062e0-1",
+      "promise_text": "Construction has now begun and will run through 2030.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Potrero Hill",
+      "neighborhood_canonical": "Potrero Hill",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7587,
+      "longitude": -122.401,
+      "promised_date": "2026-10-15",
+      "due_date": "2030-12-31",
+      "promise_made_date": "2026-10-15",
+      "deadline_date": "2030-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 15, 2026",
+      "due_date_display": "Dec 31, 2030",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "SFMTA release of October 15, 2026 says Potrero Yard Modernization construction at 2500 Mariposa Street runs through 2030 (2030-12-31). Address is in Potrero Hill, which is a valid label for the site; SFMTA is the lead agency. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:38:10.071411+00:00",
+      "factual_outcome": "SFMTA release of October 15, 2026 says Potrero Yard Modernization construction at 2500 Mariposa Street runs through 2030 (2030-12-31). Address is in Potrero Hill, which is a valid label for the site; SFMTA is the lead agency. No delivery or survival sentence supplied.",
+      "source_id": "Sa61d7889242d",
+      "source_url": "https://www.sfmta.com/media/50301/download?inline=",
+      "source_file_path": "a61d7889242d1c6522c6985d4c1ef133e91f4160484e4e9a654e3d936f0f25e5.md",
+      "source_hash": "a61d7889242d1c6522c6985d4c1ef133e91f4160484e4e9a654e3d936f0f25e5",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Construction has now begun and will run through 2030.",
+      "title": "Potrero Yard Modernization Project",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:38:10.071411+00:00",
+          "reason": "SFMTA release of October 15, 2026 says Potrero Yard Modernization construction at 2500 Mariposa Street runs through 2030 (2030-12-31). Address is in Potrero Hill, which is a valid label for the site; SFMTA is the lead agency. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:10.071411+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:10.071411+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:10.071411+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:10.071411+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:10.071411+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:10.071411+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:10.590792+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfmta.com/media/50301/download?inline=",
+          "published_date": "2026-10-15T15:17:44Z",
+          "source_hash": "a61d7889242d1c6522c6985d4c1ef133e91f4160484e4e9a654e3d936f0f25e5",
+          "source_file_path": "a61d7889242d1c6522c6985d4c1ef133e91f4160484e4e9a654e3d936f0f25e5.md",
+          "quote": "Construction has now begun and will run through 2030."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 112,
+      "display_no": 112,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 9,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-85a62ca1e1-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-85a62ca1e1-1",
+      "promise_text": "Several grantees have already opened their doors \u2014 including Chicken Fried Palace, a Mission diner, Freshroll, a fast-casual Vietnamese restaurant in SoMa, and Steet Taco, Mexican street food in SoMA \u2014 and all 2026 recipients are expected to be open by 2027.",
+      "promise_text_expanded": false,
+      "entity": "Office of Economic and Workforce Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-06-23",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-06-23",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 23, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "OEWD press release of 2026-06-23 expects all 2026 storefront grant recipients open by 2027 (2027-12-31). Grantees named span Mission, SoMa and Tenderloin, so citywide is acceptable. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:28:34.215695+00:00",
+      "factual_outcome": "OEWD press release of 2026-06-23 expects all 2026 storefront grant recipients open by 2027 (2027-12-31). Grantees named span Mission, SoMa and Tenderloin, so citywide is acceptable. No delivery or survival sentence supplied.",
+      "source_id": "S996885ad50c6",
+      "source_url": "https://www.sf.gov/news-office-of-economic-and-workforce-development-awards-over-3-million-to-help-small-businesses-open-in-vacant-storefronts",
+      "source_file_path": "996885ad50c690f30db49fb1a5b9a42157482b8ea66414113ea6f2775760b3f1.md",
+      "source_hash": "996885ad50c690f30db49fb1a5b9a42157482b8ea66414113ea6f2775760b3f1",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Several grantees have already opened their doors \u2014 including Chicken Fried Palace, a Mission diner, Freshroll, a fast-casual Vietnamese restaurant in SoMa, and Steet Taco, Mexican street food in SoMA \u2014 and all 2026 recipients are expected to be open by 2027.",
+      "title": "Small Business Opportunity Grant storefront openings",
+      "document_title": "Office of Economic and Workforce Development Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:28:34.215695+00:00",
+          "reason": "OEWD press release of 2026-06-23 expects all 2026 storefront grant recipients open by 2027 (2027-12-31). Grantees named span Mission, SoMa and Tenderloin, so citywide is acceptable. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:34.215695+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:34.215695+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:34.215695+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:34.215695+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:34.215695+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:34.215695+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:34.776431+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-office-of-economic-and-workforce-development-awards-over-3-million-to-help-small-businesses-open-in-vacant-storefronts",
+          "published_date": "2026-06-23T00:00:00Z",
+          "source_hash": "996885ad50c690f30db49fb1a5b9a42157482b8ea66414113ea6f2775760b3f1",
+          "source_file_path": "996885ad50c690f30db49fb1a5b9a42157482b8ea66414113ea6f2775760b3f1.md",
+          "quote": "Several grantees have already opened their doors \u2014 including Chicken Fried Palace, a Mission diner, Freshroll, a fast-casual Vietnamese restaurant in SoMa, and Steet Taco, Mexican street food in SoMA \u2014 and all 2026 recipients are expected to be open by 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 113,
+      "display_no": 113,
+      "entity_canonical_name": "Office of Economic and Workforce Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-ab3e0d2169-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-ab3e0d2169-2",
+      "promise_text": "Eight artworks commissioned in 2015 will\ncome into the Civic Art Collection in 2026 at\ncompletion of transfer.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2025-12-17",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2025-12-17",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Dec 17, 2025",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Arts Commission document of 2025-12-17 states eight artworks commissioned in 2015 will enter the Civic Art Collection in 2026 (2026-12-31). Collection is citywide. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:35:04.253669+00:00",
+      "factual_outcome": "Arts Commission document of 2025-12-17 states eight artworks commissioned in 2015 will enter the Civic Art Collection in 2026 (2026-12-31). Collection is citywide. No delivery or survival sentence supplied.",
+      "source_id": "S4b5c150d743c",
+      "source_url": "https://media.api.sf.gov/documents/VAC_Slides_12.17.2025_Final.pdf",
+      "source_file_path": "4b5c150d743ca6ccc6dbb5983c8dc5f16879fe63b2e61aced393831fd787e557.md",
+      "source_hash": "4b5c150d743ca6ccc6dbb5983c8dc5f16879fe63b2e61aced393831fd787e557",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Eight artworks commissioned in 2015 will\ncome into the Civic Art Collection in 2026 at\ncompletion of transfer.",
+      "title": "Eight Bayview Shipyard artworks into Civic Art Collection",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:35:04.253669+00:00",
+          "reason": "Arts Commission document of 2025-12-17 states eight artworks commissioned in 2015 will enter the Civic Art Collection in 2026 (2026-12-31). Collection is citywide. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:04.253669+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:04.253669+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:04.253669+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:04.253669+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:04.253669+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:04.253669+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:35:04.403031+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/VAC_Slides_12.17.2025_Final.pdf",
+          "published_date": "2025-12-17T20:08:58Z",
+          "source_hash": "4b5c150d743ca6ccc6dbb5983c8dc5f16879fe63b2e61aced393831fd787e557",
+          "source_file_path": "4b5c150d743ca6ccc6dbb5983c8dc5f16879fe63b2e61aced393831fd787e557.md",
+          "quote": "Eight artworks commissioned in 2015 will\ncome into the Civic Art Collection in 2026 at\ncompletion of transfer."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 114,
+      "display_no": 114,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 7,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-d25b34d666-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-d25b34d666-2",
+      "promise_text": "Nearly 1,000 homes are now open or under construction on Treasure Island and neighboring Yerba Buena Island with more than 1,200 market-rate and affordable units set to be completed by the end of 2025.",
+      "promise_text_expanded": false,
+      "entity": "Treasure Island Development Authority",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Treasure Island",
+      "neighborhood_canonical": "Treasure Island",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.8235,
+      "longitude": -122.3706,
+      "promised_date": "2025-09-13",
+      "due_date": "2025-12-31",
+      "promise_made_date": "2025-09-13",
+      "deadline_date": "2025-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 13, 2025",
+      "due_date_display": "Dec 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin of 2025-09-13 says more than 1,200 units on Treasure Island and Yerba Buena Island are set to be completed by end of 2025. The release names TIDA as the city agency overseeing the islands; location is Treasure Island. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:16:34.514301+00:00",
+      "factual_outcome": "Origin of 2025-09-13 says more than 1,200 units on Treasure Island and Yerba Buena Island are set to be completed by end of 2025. The release names TIDA as the city agency overseeing the islands; location is Treasure Island. No delivery or survival sentence supplied.",
+      "source_id": "Scdadcca5bcfe",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-cuts-ribbon-at-san-franciscos-newest-park-celebrates-activation-of-another-public-space",
+      "source_file_path": "cdadcca5bcfe3b097101bd6082cc5b86bf98a2278e7acdd5cbe04efec204ae99.md",
+      "source_hash": "cdadcca5bcfe3b097101bd6082cc5b86bf98a2278e7acdd5cbe04efec204ae99",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Nearly 1,000 homes are now open or under construction on Treasure Island and neighboring Yerba Buena Island with more than 1,200 market-rate and affordable units set to be completed by the end of 2025.",
+      "title": "Treasure Island and Yerba Buena Island new homes",
+      "document_title": "Treasure Island Development Authority Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:16:34.514301+00:00",
+          "reason": "Origin of 2025-09-13 says more than 1,200 units on Treasure Island and Yerba Buena Island are set to be completed by end of 2025. The release names TIDA as the city agency overseeing the islands; location is Treasure Island. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:16:34.514301+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:16:34.514301+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:16:34.514301+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:16:34.514301+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:16:34.514301+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:16:34.514301+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:16:34.729594+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-cuts-ribbon-at-san-franciscos-newest-park-celebrates-activation-of-another-public-space",
+          "published_date": "2025-09-13T00:00:00Z",
+          "source_hash": "cdadcca5bcfe3b097101bd6082cc5b86bf98a2278e7acdd5cbe04efec204ae99",
+          "source_file_path": "cdadcca5bcfe3b097101bd6082cc5b86bf98a2278e7acdd5cbe04efec204ae99.md",
+          "quote": "Nearly 1,000 homes are now open or under construction on Treasure Island and neighboring Yerba Buena Island with more than 1,200 market-rate and affordable units set to be completed by the end of 2025."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 115,
+      "display_no": 115,
+      "entity_canonical_name": "Treasure Island Development Authority",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-844ef99b86-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-844ef99b86-1",
+      "promise_text": "Financing Plan, which is expected to be final in Fall 2025.",
+      "promise_text_expanded": false,
+      "entity": "Office of Economic and Workforce Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Governance & Finance",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2025-05-16",
+      "due_date": "2025-12-31",
+      "promise_made_date": "2025-05-16",
+      "deadline_date": "2025-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 16, 2025",
+      "due_date_display": "Dec 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Packet of 2025-05-16 states the Downtown Revitalization Financing District Financing Plan is expected to be final in Fall 2025 (2025-12-31). OEWD provides analytical support. The district is described only as downtown, no specific neighborhood, so Not stated is acceptable. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:33:56.317410+00:00",
+      "factual_outcome": "Packet of 2025-05-16 states the Downtown Revitalization Financing District Financing Plan is expected to be final in Fall 2025 (2025-12-31). OEWD provides analytical support. The district is described only as downtown, no specific neighborhood, so Not stated is acceptable. No delivery or survival sentence supplied.",
+      "source_id": "S3fbe641653c3",
+      "source_url": "https://sfgov.legistar.com/View.ashx?GUID=76B0736E-E6AD-47A1-8642-64C1F7F728A6&ID=14255350&M=F",
+      "source_file_path": "3fbe641653c3e75f716dd0e1c776d59d244204e8a7583d5321221d72fa9340d3.md",
+      "source_hash": "3fbe641653c3e75f716dd0e1c776d59d244204e8a7583d5321221d72fa9340d3",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Financing Plan, which is expected to be final in Fall 2025.",
+      "title": "Financing plan for downtown conversion district",
+      "document_title": "Office of Economic and Workforce Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:33:56.317410+00:00",
+          "reason": "Packet of 2025-05-16 states the Downtown Revitalization Financing District Financing Plan is expected to be final in Fall 2025 (2025-12-31). OEWD provides analytical support. The district is described only as downtown, no specific neighborhood, so Not stated is acceptable. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:56.317410+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:56.317410+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:56.317410+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:56.317410+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:56.317410+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:56.317410+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:56.852336+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfgov.legistar.com/View.ashx?GUID=76B0736E-E6AD-47A1-8642-64C1F7F728A6&ID=14255350&M=F",
+          "published_date": "2025-05-16T19:31:39Z",
+          "source_hash": "3fbe641653c3e75f716dd0e1c776d59d244204e8a7583d5321221d72fa9340d3",
+          "source_file_path": "3fbe641653c3e75f716dd0e1c776d59d244204e8a7583d5321221d72fa9340d3.md",
+          "quote": "Financing Plan, which is expected to be final in Fall 2025."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 116,
+      "display_no": 116,
+      "entity_canonical_name": "Office of Economic and Workforce Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-5594f23205-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-5594f23205-2",
+      "promise_text": "The department has provided a range of supportive policies (see Attachments 5-8), including a draft notice \nfor the Management Dashboard Pilot in the Southern District that is scheduled to go live in the first quarter \nof 2025.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Police Department",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Public Safety & Justice",
+      "category": "Public Safety & Justice",
+      "category_l1": "Public Safety & Justice",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2025-01-06",
+      "due_date": "2025-03-31",
+      "promise_made_date": "2025-01-06",
+      "deadline_date": "2025-03-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jan 6, 2025",
+      "due_date_display": "Mar 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Report of 2025-01-06 says the SFPD Management Dashboard Pilot in the Southern District is scheduled to go live in Q1 2025 (2025-03-31). Department-wide SFPD tool, classified citywide. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:32:31.109668+00:00",
+      "factual_outcome": "Report of 2025-01-06 says the SFPD Management Dashboard Pilot in the Southern District is scheduled to go live in Q1 2025 (2025-03-31). Department-wide SFPD tool, classified citywide. No delivery or survival sentence supplied.",
+      "source_id": "S9dae2f193c85",
+      "source_url": "https://oag.ca.gov/system/files/attachments/press-docs/SFPD%20Collaborative%20Reform%20Initiative%20-%20Final%20Jensen%20Hughes%20Report%20-%202025-01-06.pdf",
+      "source_file_path": "9dae2f193c85887631efce00684a079e0e208830d687300df98d077c8823ec8b.md",
+      "source_hash": "9dae2f193c85887631efce00684a079e0e208830d687300df98d077c8823ec8b",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "The department has provided a range of supportive policies (see Attachments 5-8), including a draft notice \nfor the Management Dashboard Pilot in the Southern District that is scheduled to go live in the first quarter \nof 2025.",
+      "title": "SFPD Management Dashboard pilot in Southern District",
+      "document_title": "San Francisco Police Department Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:32:31.109668+00:00",
+          "reason": "Report of 2025-01-06 says the SFPD Management Dashboard Pilot in the Southern District is scheduled to go live in Q1 2025 (2025-03-31). Department-wide SFPD tool, classified citywide. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:32:31.109668+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:32:31.109668+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:32:31.109668+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:32:31.109668+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:32:31.109668+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:32:31.109668+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:32:31.257231+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://oag.ca.gov/system/files/attachments/press-docs/SFPD%20Collaborative%20Reform%20Initiative%20-%20Final%20Jensen%20Hughes%20Report%20-%202025-01-06.pdf",
+          "published_date": "2025-01-06T16:15:33Z",
+          "source_hash": "9dae2f193c85887631efce00684a079e0e208830d687300df98d077c8823ec8b",
+          "source_file_path": "9dae2f193c85887631efce00684a079e0e208830d687300df98d077c8823ec8b.md",
+          "quote": "The department has provided a range of supportive policies (see Attachments 5-8), including a draft notice \nfor the Management Dashboard Pilot in the Southern District that is scheduled to go live in the first quarter \nof 2025."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 117,
+      "display_no": 117,
+      "entity_canonical_name": "San Francisco Police Department",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-047f5169ee-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-047f5169ee-1",
+      "promise_text": "July 28 \u2013 September 23, 2023\nSFAC Main Gallery, War Memorial Veterans Building\n401 Van Ness Avenue, Suite 126, San Francisco, CA 94102\nWednesday \u2013 Saturday, noon \u2013 5 p.m.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Mid-Market & Civic Center",
+      "neighborhood_canonical": "Mid-Market & Civic Center",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7793,
+      "longitude": -122.4167,
+      "promised_date": "2023-06-29",
+      "due_date": "2023-07-28",
+      "promise_made_date": "2023-06-29",
+      "deadline_date": "2023-07-28",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 29, 2023",
+      "due_date_display": "Jul 28, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Press release of 2023-06-29 schedules the SFAC Main Gallery exhibition from July 28, 2023 at 401 Van Ness in the War Memorial Veterans Building (Civic Center). No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:29:43.924957+00:00",
+      "factual_outcome": "Press release of 2023-06-29 schedules the SFAC Main Gallery exhibition from July 28, 2023 at 401 Van Ness in the War Memorial Veterans Building (Civic Center). No delivery or survival sentence supplied.",
+      "source_id": "S67c3b506c5e0",
+      "source_url": "https://www.sf.gov/news-me-llaman-calle-the-monumental-art-of-juana-alicia-showcases-vibrant-work-of-iconic-local-artist-in-new-sfac-main-gallery-exhibition",
+      "source_file_path": "67c3b506c5e00ea0fb31c2b0b9c999a11473b8e4b198b8ca02f5c5f9f504e271.md",
+      "source_hash": "67c3b506c5e00ea0fb31c2b0b9c999a11473b8e4b198b8ca02f5c5f9f504e271",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "July 28 \u2013 September 23, 2023\nSFAC Main Gallery, War Memorial Veterans Building\n401 Van Ness Avenue, Suite 126, San Francisco, CA 94102\nWednesday \u2013 Saturday, noon \u2013 5 p.m.",
+      "title": "Juana Alicia exhibition at SFAC Main Gallery",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:29:43.924957+00:00",
+          "reason": "Press release of 2023-06-29 schedules the SFAC Main Gallery exhibition from July 28, 2023 at 401 Van Ness in the War Memorial Veterans Building (Civic Center). No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.924957+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.924957+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.924957+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.924957+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.924957+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:43.924957+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:29:44.231095+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-me-llaman-calle-the-monumental-art-of-juana-alicia-showcases-vibrant-work-of-iconic-local-artist-in-new-sfac-main-gallery-exhibition",
+          "published_date": "2023-06-29T00:00:00Z",
+          "source_hash": "67c3b506c5e00ea0fb31c2b0b9c999a11473b8e4b198b8ca02f5c5f9f504e271",
+          "source_file_path": "67c3b506c5e00ea0fb31c2b0b9c999a11473b8e4b198b8ca02f5c5f9f504e271.md",
+          "quote": "July 28 \u2013 September 23, 2023\nSFAC Main Gallery, War Memorial Veterans Building\n401 Van Ness Avenue, Suite 126, San Francisco, CA 94102\nWednesday \u2013 Saturday, noon \u2013 5 p.m."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 118,
+      "display_no": 118,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 8,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R2",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-c5deecab19-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-c5deecab19-2",
+      "promise_text": "An update to the Inclusionary Manual will be produced in early 2024.",
+      "promise_text_expanded": false,
+      "entity": "Mayors Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-05-01",
+      "due_date": "2024-12-31",
+      "promise_made_date": "2023-05-01",
+      "deadline_date": "2024-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 1, 2023",
+      "due_date_display": "Dec 31, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "MOHCD document of 2023-05-01 says an Inclusionary Manual update will be produced in early 2024 (2024-12-31 normalized). Citywide inclusionary housing program. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:36:48.941002+00:00",
+      "factual_outcome": "MOHCD document of 2023-05-01 says an Inclusionary Manual update will be produced in early 2024 (2024-12-31 normalized). Citywide inclusionary housing program. No delivery or survival sentence supplied.",
+      "source_id": "S366d81f74cb4",
+      "source_url": "https://www.sf.gov/sites/default/files/2023-05/MOHCD.PAIP_.Initial.letter.050123.pdf",
+      "source_file_path": "366d81f74cb44876c80df91efc6bb20138c8cfa9759dfa45029b936a1d18225d.md",
+      "source_hash": "366d81f74cb44876c80df91efc6bb20138c8cfa9759dfa45029b936a1d18225d",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "An update to the Inclusionary Manual will be produced in early 2024.",
+      "title": "Inclusionary Manual update",
+      "document_title": "Mayors Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:36:48.941002+00:00",
+          "reason": "MOHCD document of 2023-05-01 says an Inclusionary Manual update will be produced in early 2024 (2024-12-31 normalized). Citywide inclusionary housing program. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:48.941002+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:48.941002+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:48.941002+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:48.941002+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:48.941002+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:48.941002+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:49.400338+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/sites/default/files/2023-05/MOHCD.PAIP_.Initial.letter.050123.pdf",
+          "published_date": "2023-05-01T22:22:30Z",
+          "source_hash": "366d81f74cb44876c80df91efc6bb20138c8cfa9759dfa45029b936a1d18225d",
+          "source_file_path": "366d81f74cb44876c80df91efc6bb20138c8cfa9759dfa45029b936a1d18225d.md",
+          "quote": "An update to the Inclusionary Manual will be produced in early 2024."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 119,
+      "display_no": 119,
+      "entity_canonical_name": "Mayors Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-25e2cc838d-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-25e2cc838d-1",
+      "promise_text": "DPH\u2019s Office of Health Equity will be starting a youth focused career development pipeline \nprogram, and has demonstrated commitment to prioritizing foster youth in FY 22-23.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Department of Public Health",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Education & Youth",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2022-06-16",
+      "due_date": null,
+      "promise_made_date": "2022-06-16",
+      "deadline_date": null,
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "not_applicable",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 16, 2022",
+      "due_date_display": "No fixed deadline",
+      "due_date_status": "not_applicable",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Report of 2022-06-16 says DPH Office of Health Equity will start a youth-focused career pipeline program for foster youth. No target date stated, so deadline none stated is correct. DPH citywide. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:17:38.845690+00:00",
+      "factual_outcome": "Report of 2022-06-16 says DPH Office of Health Equity will start a youth-focused career pipeline program for foster youth. No target date stated, so deadline none stated is correct. DPH citywide. No delivery or survival sentence supplied.",
+      "source_id": "S599a5eba78dc",
+      "source_url": "https://media.api.sf.gov/documents/DR_06-21FINAL.cleaned.pdf",
+      "source_file_path": "599a5eba78dca378f2e51b92afc131da1b3cd81cb1d019b79a09562adad594ff.md",
+      "source_hash": "599a5eba78dca378f2e51b92afc131da1b3cd81cb1d019b79a09562adad594ff",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "DPH\u2019s Office of Health Equity will be starting a youth focused career development pipeline \nprogram, and has demonstrated commitment to prioritizing foster youth in FY 22-23.",
+      "title": "DPH youth career development pipeline program",
+      "document_title": "San Francisco Department of Public Health Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:17:38.845690+00:00",
+          "reason": "Report of 2022-06-16 says DPH Office of Health Equity will start a youth-focused career pipeline program for foster youth. No target date stated, so deadline none stated is correct. DPH citywide. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:38.845690+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:38.845690+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:38.845690+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:38.845690+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:38.845690+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:38.845690+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:17:38.991295+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/DR_06-21FINAL.cleaned.pdf",
+          "published_date": "2022-06-16T20:22:45Z",
+          "source_hash": "599a5eba78dca378f2e51b92afc131da1b3cd81cb1d019b79a09562adad594ff",
+          "source_file_path": "599a5eba78dca378f2e51b92afc131da1b3cd81cb1d019b79a09562adad594ff.md",
+          "quote": "DPH\u2019s Office of Health Equity will be starting a youth focused career development pipeline \nprogram, and has demonstrated commitment to prioritizing foster youth in FY 22-23."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 120,
+      "display_no": 120,
+      "entity_canonical_name": "San Francisco Department of Public Health",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 4,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R1",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": true,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'Today' resolved against publication date 2022-06-16",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-21b44ddd33-3",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-21b44ddd33-3",
+      "promise_text": "10035733 EFWS Studies:\n\u2022 Future fire water demands and seawater supply \nstudies are expected to be completed by June 2021.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2021-01-30",
+      "due_date": "2021-06-30",
+      "promise_made_date": "2021-01-30",
+      "deadline_date": "2021-06-30",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jan 30, 2021",
+      "due_date_display": "Jun 30, 2021",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "SFPUC quarterly report of 2021-01-30 states EFWS studies are expected to be completed by June 2021 (2021-06-30). Emergency firefighting water system is citywide. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:27:03.378593+00:00",
+      "factual_outcome": "SFPUC quarterly report of 2021-01-30 states EFWS studies are expected to be completed by June 2021 (2021-06-30). Emergency firefighting water system is citywide. No delivery or survival sentence supplied.",
+      "source_id": "S50b1cff4be37",
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/Q2FY21_WECIP_Qtrly_Report_4Web.pdf",
+      "source_file_path": "50b1cff4be376a8b8b8dc422f8fb2e79c4d9489bfdb4a90adeee76d956d8ca05.md",
+      "source_hash": "50b1cff4be376a8b8b8dc422f8fb2e79c4d9489bfdb4a90adeee76d956d8ca05",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "10035733 EFWS Studies:\n\u2022 Future fire water demands and seawater supply \nstudies are expected to be completed by June 2021.",
+      "title": "Fire water supply and seawater studies",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:27:03.378593+00:00",
+          "reason": "SFPUC quarterly report of 2021-01-30 states EFWS studies are expected to be completed by June 2021 (2021-06-30). Emergency firefighting water system is citywide. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:03.378593+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:03.378593+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:03.378593+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:03.378593+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:03.378593+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:03.378593+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:03.678856+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/sites/default/files/documents/Q2FY21_WECIP_Qtrly_Report_4Web.pdf",
+          "published_date": "2021-01-30T00:19:28Z",
+          "source_hash": "50b1cff4be376a8b8b8dc422f8fb2e79c4d9489bfdb4a90adeee76d956d8ca05",
+          "source_file_path": "50b1cff4be376a8b8b8dc422f8fb2e79c4d9489bfdb4a90adeee76d956d8ca05.md",
+          "quote": "10035733 EFWS Studies:\n\u2022 Future fire water demands and seawater supply \nstudies are expected to be completed by June 2021."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 121,
+      "display_no": 121,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 9,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-60da3f8b65-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-60da3f8b65-1",
+      "promise_text": "Furthermore, the SFMTA and the Department of Public Health (DPH) will be analyzing and developing policy recommendations on limiting right turns at red lights by Spring 2020.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2019-08-29",
+      "due_date": "2020-12-31",
+      "promise_made_date": "2019-08-29",
+      "deadline_date": "2020-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Aug 29, 2019",
+      "due_date_display": "Dec 31, 2020",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin dated 2019-08-29 states SFMTA and DPH will develop right-turn-on-red policy recommendations by Spring 2020 (year bound 2020-12-31). SFMTA is a responsible entity; citywide intersections policy. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:15:31.633511+00:00",
+      "factual_outcome": "Origin dated 2019-08-29 states SFMTA and DPH will develop right-turn-on-red policy recommendations by Spring 2020 (year bound 2020-12-31). SFMTA is a responsible entity; citywide intersections policy. No delivery or survival sentence supplied.",
+      "source_id": "S52698f59e87a",
+      "source_url": "https://www.sf.gov/news--mayor-london-breed-announces-new-vision-zero-initiatives-improve-safety-intersections",
+      "source_file_path": "52698f59e87a38fb49c3e76ad15fed24b65112f9974ffd1deeb1cd695bc5e957.md",
+      "source_hash": "52698f59e87a38fb49c3e76ad15fed24b65112f9974ffd1deeb1cd695bc5e957",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Furthermore, the SFMTA and the Department of Public Health (DPH) will be analyzing and developing policy recommendations on limiting right turns at red lights by Spring 2020.",
+      "title": "Left-turn traffic calming pilots at eight intersections",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:15:31.633511+00:00",
+          "reason": "Origin dated 2019-08-29 states SFMTA and DPH will develop right-turn-on-red policy recommendations by Spring 2020 (year bound 2020-12-31). SFMTA is a responsible entity; citywide intersections policy. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:31.633511+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:31.633511+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:31.633511+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:31.633511+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:31.633511+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:31.633511+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:31.778805+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--mayor-london-breed-announces-new-vision-zero-initiatives-improve-safety-intersections",
+          "published_date": "2019-08-29T00:00:00Z",
+          "source_hash": "52698f59e87a38fb49c3e76ad15fed24b65112f9974ffd1deeb1cd695bc5e957",
+          "source_file_path": "52698f59e87a38fb49c3e76ad15fed24b65112f9974ffd1deeb1cd695bc5e957.md",
+          "quote": "Furthermore, the SFMTA and the Department of Public Health (DPH) will be analyzing and developing policy recommendations on limiting right turns at red lights by Spring 2020."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 122,
+      "display_no": 122,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 10,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-dfd61c04a2-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-dfd61c04a2-1",
+      "promise_text": "San Francisco will also open 300 new units of supportive housing in 2019, which have already been funded, and there are over 1,000 more units in the pipeline.",
+      "promise_text_expanded": false,
+      "entity": "Office of the Mayor",
+      "role": null,
+      "entity_type": "politician",
+      "entity_type_legacy": "Mayor / Executive",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2019-05-16",
+      "due_date": "2019-12-31",
+      "promise_made_date": "2019-05-16",
+      "deadline_date": "2019-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 16, 2019",
+      "due_date_display": "Dec 31, 2019",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Mayor Breed press release of 2019-05-16 states San Francisco will open 300 new units of supportive housing in 2019 (deadline 2019-12-31). Citywide program from the Mayors office. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:14:28.775294+00:00",
+      "factual_outcome": "Mayor Breed press release of 2019-05-16 states San Francisco will open 300 new units of supportive housing in 2019 (deadline 2019-12-31). Citywide program from the Mayors office. No delivery or survival sentence supplied.",
+      "source_id": "S945ff6a2af2a",
+      "source_url": "https://www.sf.gov/news--5-million-new-homelessness-prevention-funding",
+      "source_file_path": "945ff6a2af2a484fbdd069a7b71a13f9417900f8af61cfaef35d1085d8f1de68.md",
+      "source_hash": "945ff6a2af2a484fbdd069a7b71a13f9417900f8af61cfaef35d1085d8f1de68",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "San Francisco will also open 300 new units of supportive housing in 2019, which have already been funded, and there are over 1,000 more units in the pipeline.",
+      "title": "300 new supportive housing units in 2019",
+      "document_title": "Office of the Mayor Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:14:28.775294+00:00",
+          "reason": "Mayor Breed press release of 2019-05-16 states San Francisco will open 300 new units of supportive housing in 2019 (deadline 2019-12-31). Citywide program from the Mayors office. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:28.775294+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:28.775294+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:28.775294+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:28.775294+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:28.775294+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:28.775294+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:29.132087+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--5-million-new-homelessness-prevention-funding",
+          "published_date": "2019-05-16T00:00:00Z",
+          "source_hash": "945ff6a2af2a484fbdd069a7b71a13f9417900f8af61cfaef35d1085d8f1de68",
+          "source_file_path": "945ff6a2af2a484fbdd069a7b71a13f9417900f8af61cfaef35d1085d8f1de68.md",
+          "quote": "San Francisco will also open 300 new units of supportive housing in 2019, which have already been funded, and there are over 1,000 more units in the pipeline."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 123,
+      "display_no": 123,
+      "entity_canonical_name": "Office of the Mayor",
+      "entity_category": "politician",
+      "entity_category_canonical": "politician",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-47ed170cf3-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-47ed170cf3-1",
+      "promise_text": "Once the final of five construction and development phases is completed in 2029, the Potrero Hill Master Plan will result in between 1,400 and 1,700 units, 65% of which will be affordable.",
+      "promise_text_expanded": false,
+      "entity": "Mayors Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Potrero Hill",
+      "neighborhood_canonical": "Potrero Hill",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7587,
+      "longitude": -122.401,
+      "promised_date": "2019-05-09",
+      "due_date": "2029-12-31",
+      "promise_made_date": "2019-05-09",
+      "deadline_date": "2029-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 9, 2019",
+      "due_date_display": "Dec 31, 2029",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin of 2019-05-09 states the Potrero Hill Master Plan will result in 1,400-1,700 units once the final phase completes in 2029. MOHCD is the city partner; Potrero Hill named. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:18:45.033175+00:00",
+      "factual_outcome": "Origin of 2019-05-09 states the Potrero Hill Master Plan will result in 1,400-1,700 units once the final phase completes in 2029. MOHCD is the city partner; Potrero Hill named. No delivery or survival sentence supplied.",
+      "source_id": "S9e23a0228cb1",
+      "source_url": "https://www.sf.gov/news--opening-1st-potrero-hill-residential-building-under-hope-sf",
+      "source_file_path": "9e23a0228cb1115317f2bc39bcce4a17a36d4825c754d717420186b4c0b99a95.md",
+      "source_hash": "9e23a0228cb1115317f2bc39bcce4a17a36d4825c754d717420186b4c0b99a95",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Once the final of five construction and development phases is completed in 2029, the Potrero Hill Master Plan will result in between 1,400 and 1,700 units, 65% of which will be affordable.",
+      "title": "Potrero Hill Master Plan HOPE SF build-out",
+      "document_title": "Mayors Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:18:45.033175+00:00",
+          "reason": "Origin of 2019-05-09 states the Potrero Hill Master Plan will result in 1,400-1,700 units once the final phase completes in 2029. MOHCD is the city partner; Potrero Hill named. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:45.033175+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:45.033175+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:45.033175+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:45.033175+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:45.033175+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:45.033175+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:45.178584+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--opening-1st-potrero-hill-residential-building-under-hope-sf",
+          "published_date": "2019-05-09T00:00:00Z",
+          "source_hash": "9e23a0228cb1115317f2bc39bcce4a17a36d4825c754d717420186b4c0b99a95",
+          "source_file_path": "9e23a0228cb1115317f2bc39bcce4a17a36d4825c754d717420186b4c0b99a95.md",
+          "quote": "Once the final of five construction and development phases is completed in 2029, the Potrero Hill Master Plan will result in between 1,400 and 1,700 units, 65% of which will be affordable."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 124,
+      "display_no": 124,
+      "entity_canonical_name": "Mayors Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'today' resolved against publication date 2019-05-09",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-ac3e2561ef-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-ac3e2561ef-1",
+      "promise_text": "The construction is expected to begin in February 2027 and be completed in December 2028.",
+      "promise_text_expanded": false,
+      "entity": "Freedom West Senior Partners, L.P.",
+      "role": null,
+      "entity_type": "corporation",
+      "entity_type_legacy": "Developer",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Western Addition",
+      "neighborhood_canonical": "Western Addition",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.781,
+      "longitude": -122.433,
+      "promised_date": "2026-08-27",
+      "due_date": "2028-12-31",
+      "promise_made_date": "2026-08-27",
+      "deadline_date": "2028-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Aug 27, 2026",
+      "due_date_display": "Dec 31, 2028",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Staff report states construction expected to begin February 2027 and be completed December 2028 (2028-12-31), developed by Freedom West Senior Partners, L.P. at 880 McAllister Street. The Western Addition location is named in the October 2026 archived coverage of the same project. Derived date is consistent with the report. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:36:39.125429+00:00",
+      "factual_outcome": "Staff report states construction expected to begin February 2027 and be completed December 2028 (2028-12-31), developed by Freedom West Senior Partners, L.P. at 880 McAllister Street. The Western Addition location is named in the October 2026 archived coverage of the same project. Derived date is consistent with the report. No delivery or survival sentence supplied.",
+      "source_id": "S85353810f810",
+      "source_url": "https://www.treasurer.ca.gov/sites/default/files/ctcac/26-642%20Freedom%20West%20Senior%20%28Staff%20Report%29.pdf",
+      "source_file_path": "85353810f810eddafb6bd61e0069ff903d9e6548340cfe96e2d743aa85740b4e.md",
+      "source_hash": "85353810f810eddafb6bd61e0069ff903d9e6548340cfe96e2d743aa85740b4e",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "The construction is expected to begin in February 2027 and be completed in December 2028.",
+      "title": "Freedom West senior housing construction",
+      "document_title": "Freedom West Senior Partners, L.P. Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:36:39.125429+00:00",
+          "reason": "Staff report states construction expected to begin February 2027 and be completed December 2028 (2028-12-31), developed by Freedom West Senior Partners, L.P. at 880 McAllister Street. The Western Addition location is named in the October 2026 archived coverage of the same project. Derived date is consistent with the report. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:39.125429+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:39.125429+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:39.125429+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:39.125429+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:39.125429+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:39.125429+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:39.413191+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.treasurer.ca.gov/sites/default/files/ctcac/26-642%20Freedom%20West%20Senior%20%28Staff%20Report%29.pdf",
+          "published_date": "2026-08-27T22:02:54Z",
+          "source_hash": "85353810f810eddafb6bd61e0069ff903d9e6548340cfe96e2d743aa85740b4e",
+          "source_file_path": "85353810f810eddafb6bd61e0069ff903d9e6548340cfe96e2d743aa85740b4e.md",
+          "quote": "The construction is expected to begin in February 2027 and be completed in December 2028."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 125,
+      "display_no": 125,
+      "entity_canonical_name": "Freedom West Senior Partners, L.P.",
+      "entity_category": "corporation",
+      "entity_category_canonical": "corporation",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-10411a4f58-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-10411a4f58-1",
+      "promise_text": "He affirmed the City\u2019s commitment to the\nfuture of the site and stated that the Arts Commission, the Mayor\u2019s Office,\nand District 9 Supervisor are working with community partners to plan for\nlong-term stewardship, including a major seismic and life-safety renovation\nanticipated to begin in 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2026-02-02",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-02-02",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Feb 2, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Minutes dated February 2, 2026 report the Arts Commission director saying a seismic renovation of the Mission Cultural Center is anticipated to begin in 2027. Meeting date supports the commitment date and 2027 maps to 2027-12-31. Arts Commission is the responsible agency and no neighborhood is named. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:13:07.381933+00:00",
+      "factual_outcome": "Minutes dated February 2, 2026 report the Arts Commission director saying a seismic renovation of the Mission Cultural Center is anticipated to begin in 2027. Meeting date supports the commitment date and 2027 maps to 2027-12-31. Arts Commission is the responsible agency and no neighborhood is named. No delivery or survival sentence supplied.",
+      "source_id": "S089424f311e7",
+      "source_url": "https://media.api.sf.gov/documents/February_2_2026_Minutes_-_Full_Commission_Meeting.pdf",
+      "source_file_path": "089424f311e7179445e09301836f4b3f58383d9759c8f69208fe59522a263f20.md",
+      "source_hash": "089424f311e7179445e09301836f4b3f58383d9759c8f69208fe59522a263f20",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "He affirmed the City\u2019s commitment to the\nfuture of the site and stated that the Arts Commission, the Mayor\u2019s Office,\nand District 9 Supervisor are working with community partners to plan for\nlong-term stewardship, including a major seismic and life-safety renovation\nanticipated to begin in 2027.",
+      "title": "Mission Cultural Center for Latino Arts renovation",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:13:07.381933+00:00",
+          "reason": "Minutes dated February 2, 2026 report the Arts Commission director saying a seismic renovation of the Mission Cultural Center is anticipated to begin in 2027. Meeting date supports the commitment date and 2027 maps to 2027-12-31. Arts Commission is the responsible agency and no neighborhood is named. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:07.381933+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:07.381933+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:07.381933+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:07.381933+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:07.381933+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:07.381933+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:13:07.818700+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/February_2_2026_Minutes_-_Full_Commission_Meeting.pdf",
+          "published_date": "2026-02-13T22:59:59Z",
+          "source_hash": "089424f311e7179445e09301836f4b3f58383d9759c8f69208fe59522a263f20",
+          "source_file_path": "089424f311e7179445e09301836f4b3f58383d9759c8f69208fe59522a263f20.md",
+          "quote": "He affirmed the City\u2019s commitment to the\nfuture of the site and stated that the Arts Commission, the Mayor\u2019s Office,\nand District 9 Supervisor are working with community partners to plan for\nlong-term stewardship, including a major seismic and life-safety renovation\nanticipated to begin in 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 126,
+      "display_no": 126,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 9,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-325998c424-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-325998c424-1",
+      "promise_text": "The project is expected to be completed in mid-2026.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco International Airport",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2025-12-10",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2025-12-10",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Dec 10, 2025",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Release datelined December 10, 2025 says the SFO International Terminal roof and exterior project is expected to be completed in mid-2026 (2026-12-31). SFO is the responsible agency and no neighborhood is named. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:31:49.071054+00:00",
+      "factual_outcome": "Release datelined December 10, 2025 says the SFO International Terminal roof and exterior project is expected to be completed in mid-2026 (2026-12-31). SFO is the responsible agency and no neighborhood is named. No delivery or survival sentence supplied.",
+      "source_id": "Sfbf1eb9d8a88",
+      "source_url": "https://www.flysfo.com/about/media/press-releases/sfo-celebrates-quarter-century-international-terminal",
+      "source_file_path": "fbf1eb9d8a88c8e813c0a089078bb9c0523a0df04c95f9c2139459c19884bfea.md",
+      "source_hash": "fbf1eb9d8a88c8e813c0a089078bb9c0523a0df04c95f9c2139459c19884bfea",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The project is expected to be completed in mid-2026.",
+      "title": "SFO International Terminal roof and solar project",
+      "document_title": "San Francisco International Airport Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:31:49.071054+00:00",
+          "reason": "Release datelined December 10, 2025 says the SFO International Terminal roof and exterior project is expected to be completed in mid-2026 (2026-12-31). SFO is the responsible agency and no neighborhood is named. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:49.071054+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:49.071054+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:49.071054+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:49.071054+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:49.071054+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:49.071054+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:31:49.363108+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.flysfo.com/about/media/press-releases/sfo-celebrates-quarter-century-international-terminal",
+          "published_date": "2025-12-10T17:00:00Z",
+          "source_hash": "fbf1eb9d8a88c8e813c0a089078bb9c0523a0df04c95f9c2139459c19884bfea",
+          "source_file_path": "fbf1eb9d8a88c8e813c0a089078bb9c0523a0df04c95f9c2139459c19884bfea.md",
+          "quote": "The project is expected to be completed in mid-2026."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 127,
+      "display_no": 127,
+      "entity_canonical_name": "San Francisco International Airport",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-9a9122ddf3-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-9a9122ddf3-1",
+      "promise_text": "Contract Bid and Award Dates\n\u2022 Anticipated to bid Winter 2025\n\u2022 Anticipated to award by early 2026.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2025-10-28",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2025-10-28",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 28, 2025",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Webinar slides of October 23, 2025 state bid anticipated Winter 2025 and award by early 2026 (normalized 2026-12-31). SFPUC responsible, no neighborhood label named. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:28:46.837732+00:00",
+      "factual_outcome": "Webinar slides of October 23, 2025 state bid anticipated Winter 2025 and award by early 2026 (normalized 2026-12-31). SFPUC responsible, no neighborhood label named. No delivery or survival sentence supplied.",
+      "source_id": "S45db49754051",
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/CommunityWebinarOct23-LowerAlemany.pdf",
+      "source_file_path": "45db49754051056b870623917602668aa55c0dc3d0ad05de7c8ba239ff926fbe.md",
+      "source_hash": "45db49754051056b870623917602668aa55c0dc3d0ad05de7c8ba239ff926fbe",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "Contract Bid and Award Dates\n\u2022 Anticipated to bid Winter 2025\n\u2022 Anticipated to award by early 2026.",
+      "title": "Lower Alemany stormwater project bid and award",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:28:46.837732+00:00",
+          "reason": "Webinar slides of October 23, 2025 state bid anticipated Winter 2025 and award by early 2026 (normalized 2026-12-31). SFPUC responsible, no neighborhood label named. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:46.837732+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:46.837732+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:46.837732+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:46.837732+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:46.837732+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:46.837732+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:47.108209+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/sites/default/files/documents/CommunityWebinarOct23-LowerAlemany.pdf",
+          "published_date": "2025-10-28T18:52:10Z",
+          "source_hash": "45db49754051056b870623917602668aa55c0dc3d0ad05de7c8ba239ff926fbe",
+          "source_file_path": "45db49754051056b870623917602668aa55c0dc3d0ad05de7c8ba239ff926fbe.md",
+          "quote": "Contract Bid and Award Dates\n\u2022 Anticipated to bid Winter 2025\n\u2022 Anticipated to award by early 2026."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 128,
+      "display_no": 128,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 10,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-bf72547037-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-bf72547037-1",
+      "promise_text": "Both projects are expected to begin construction in spring 2026 and open in late 2027.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2025-09-22",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2025-09-22",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 22, 2025",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Mayor release published 2025-09-22 states both MOHCD-funded transitional housing projects are expected to begin construction in spring 2026 and open in late 2027 (2027-12-31). No neighborhood is named for the two projects. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:37:44.035982+00:00",
+      "factual_outcome": "Mayor release published 2025-09-22 states both MOHCD-funded transitional housing projects are expected to begin construction in spring 2026 and open in late 2027 (2027-12-31). No neighborhood is named for the two projects. No delivery or survival sentence supplied.",
+      "source_id": "S6027172a3f24",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-awards-30-million-to-expand-transitional-housing-for-supervisors-of-gender-based-violence",
+      "source_file_path": "6027172a3f247de7ab0be2d64d82f1e24d331c1a8048ea7bcd47a91672934133.md",
+      "source_hash": "6027172a3f247de7ab0be2d64d82f1e24d331c1a8048ea7bcd47a91672934133",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Both projects are expected to begin construction in spring 2026 and open in late 2027.",
+      "title": "Gender-based violence transitional housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:37:44.035982+00:00",
+          "reason": "Mayor release published 2025-09-22 states both MOHCD-funded transitional housing projects are expected to begin construction in spring 2026 and open in late 2027 (2027-12-31). No neighborhood is named for the two projects. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:44.035982+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:44.035982+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:44.035982+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:44.035982+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:44.035982+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:44.035982+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:44.182083+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-awards-30-million-to-expand-transitional-housing-for-supervisors-of-gender-based-violence",
+          "published_date": "2025-09-22T00:00:00Z",
+          "source_hash": "6027172a3f247de7ab0be2d64d82f1e24d331c1a8048ea7bcd47a91672934133",
+          "source_file_path": "6027172a3f247de7ab0be2d64d82f1e24d331c1a8048ea7bcd47a91672934133.md",
+          "quote": "Both projects are expected to begin construction in spring 2026 and open in late 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 129,
+      "display_no": 129,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 7,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-c975ff4e6c-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-c975ff4e6c-1",
+      "promise_text": "The Mayor will sign this measure onto the March 2024 ballot, where it would need a simple majority to pass into law.",
+      "promise_text_expanded": false,
+      "entity": "Office of the Mayor",
+      "role": null,
+      "entity_type": "politician",
+      "entity_type_legacy": "Mayor / Executive",
+      "sector": "Public Safety & Justice",
+      "category": "Public Safety & Justice",
+      "category_l1": "Public Safety & Justice",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-10-17",
+      "due_date": "2024-03-31",
+      "promise_made_date": "2023-10-17",
+      "deadline_date": "2024-03-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 17, 2023",
+      "due_date_display": "Mar 31, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_captured",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "kept",
+      "verdict_reason": "Mayor release published 2023-10-17 announces the measure for the March 2024 election. The March 2024 coverage (published 2024-03-06) says Breed placed Prop. E on the ballot, and the measure was voted on Tuesday March 5, so it was on the ballot by the 2024-03-31 bound. No survival sentence supplied. (current status not checked)",
+      "decided_at": "2026-11-25T01:39:09.179276+00:00",
+      "factual_outcome": "Mayor release published 2023-10-17 announces the measure for the March 2024 election. The March 2024 coverage (published 2024-03-06) says Breed placed Prop. E on the ballot, and the measure was voted on Tuesday March 5, so it was on the ballot by the 2024-03-31 bound. No survival sentence supplied. (current status not checked)",
+      "source_id": "Se8e954bd59c4",
+      "source_url": "https://www.sf.gov/news--mayor-london-breed-announces-safer-san-francisco-ballot-measure-support-public-safety",
+      "source_file_path": "e8e954bd59c48e34ae32b9fa1cab132d19fbd8ea0ca3443cff548c0cb0f58875.md",
+      "source_hash": "e8e954bd59c48e34ae32b9fa1cab132d19fbd8ea0ca3443cff548c0cb0f58875",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The Mayor will sign this measure onto the March 2024 ballot, where it would need a simple majority to pass into law.",
+      "title": "Safer San Francisco public safety ballot measure",
+      "document_title": "Office of the Mayor Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: DELIVERY."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-25T01:39:09.179276+00:00",
+          "reason": "Mayor release published 2023-10-17 announces the measure for the March 2024 election. The March 2024 coverage (published 2024-03-06) says Breed placed Prop. E on the ballot, and the measure was voted on Tuesday March 5, so it was on the ballot by the 2024-03-31 bound. No survival sentence supplied. (current status not checked)"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:39:09.179276+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:39:09.179276+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:39:09.179276+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:39:09.179276+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:39:09.179276+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:39:09.179276+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:39:09.603911+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--mayor-london-breed-announces-safer-san-francisco-ballot-measure-support-public-safety",
+          "published_date": "2023-10-17T00:00:00Z",
+          "source_hash": "e8e954bd59c48e34ae32b9fa1cab132d19fbd8ea0ca3443cff548c0cb0f58875",
+          "source_file_path": "e8e954bd59c48e34ae32b9fa1cab132d19fbd8ea0ca3443cff548c0cb0f58875.md",
+          "quote": "The Mayor will sign this measure onto the March 2024 ballot, where it would need a simple majority to pass into law."
+        },
+        {
+          "phase": "DELIVERY",
+          "source_tier": "TIER2_NEWS",
+          "url": "https://www.sfchronicle.com/sf/article/sf-march-election-prop-e-breed-police-ballot-18693892.php",
+          "published_date": "2024-03-06T04:57:47Z",
+          "source_hash": "1183346ccf7267f7bd38402f4132b814877474b0cf0c99e3ac1bfc017812e59e",
+          "source_file_path": "1183346ccf7267f7bd38402f4132b814877474b0cf0c99e3ac1bfc017812e59e.md",
+          "quote": "E on the ballot to give police more tools and put new limits on the Police Commission."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 3,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 3,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 130,
+      "display_no": 130,
+      "entity_canonical_name": "Office of the Mayor",
+      "entity_category": "politician",
+      "entity_category_canonical": "politician",
+      "entity_promise_count": 4,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R4"
+        ],
+        "outcome_rule": "R4",
+        "open_ended": false,
+        "reason": "current status not checked",
+        "relied_on": [
+          "DELIVERY"
+        ],
+        "status_not_checked": true
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-cba5e5617a-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-cba5e5617a-2",
+      "promise_text": "Two affordable projects totaling 185 units (including a total of \nthree manager\u2019s units) in Hunters Point Shipyard Phase 1 are starting construction \nthis May and will be completed in 2025.",
+      "promise_text_expanded": false,
+      "entity": "Office of Community Investment and Infrastructure",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Bayview-Hunters Point",
+      "neighborhood_canonical": "Bayview-Hunters Point",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7299,
+      "longitude": -122.3843,
+      "promised_date": "2023-05-01",
+      "due_date": "2025-12-31",
+      "promise_made_date": "2023-05-01",
+      "deadline_date": "2025-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 1, 2023",
+      "due_date_display": "Dec 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "OCII report dated April 28, 2023 supports the commitment, the date and the 2025 target (2025-12-31). Hunters Point Shipyard maps to Bayview-Hunters Point. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:24:42.187776+00:00",
+      "factual_outcome": "OCII report dated April 28, 2023 supports the commitment, the date and the 2025 target (2025-12-31). Hunters Point Shipyard maps to Bayview-Hunters Point. No delivery or survival sentence supplied.",
+      "source_id": "S5697df3736cf",
+      "source_url": "https://www.sf.gov/sites/default/files/2023-05/OCII.PAIP_.Initial.letter.050123.pdf",
+      "source_file_path": "5697df3736cf4c4e98d699ea10e51360e6c42b65f166fd64a115d9fdcf23548d.md",
+      "source_hash": "5697df3736cf4c4e98d699ea10e51360e6c42b65f166fd64a115d9fdcf23548d",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Two affordable projects totaling 185 units (including a total of \nthree manager\u2019s units) in Hunters Point Shipyard Phase 1 are starting construction \nthis May and will be completed in 2025.",
+      "title": "Hunters Point Shipyard Phase 1 affordable housing",
+      "document_title": "Office of Community Investment and Infrastructure Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:24:42.187776+00:00",
+          "reason": "OCII report dated April 28, 2023 supports the commitment, the date and the 2025 target (2025-12-31). Hunters Point Shipyard maps to Bayview-Hunters Point. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.187776+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.187776+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.187776+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.187776+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.187776+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.187776+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:24:42.583246+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/sites/default/files/2023-05/OCII.PAIP_.Initial.letter.050123.pdf",
+          "published_date": "2023-05-01T20:11:31Z",
+          "source_hash": "5697df3736cf4c4e98d699ea10e51360e6c42b65f166fd64a115d9fdcf23548d",
+          "source_file_path": "5697df3736cf4c4e98d699ea10e51360e6c42b65f166fd64a115d9fdcf23548d.md",
+          "quote": "Two affordable projects totaling 185 units (including a total of \nthree manager\u2019s units) in Hunters Point Shipyard Phase 1 are starting construction \nthis May and will be completed in 2025."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 131,
+      "display_no": 131,
+      "entity_canonical_name": "Office of Community Investment and Infrastructure",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-2f06de8ced-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-2f06de8ced-2",
+      "promise_text": "By the end of FY22-23, given resources already operating or under development, San Francisco\u2019s \nhomelessness response system will include 12,813 permanent housing units/slots for adult \nhouseholds and 2,947 units for families with children.",
+      "promise_text_expanded": false,
+      "entity": "Department of Homelessness and Supportive Housing",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-03-24",
+      "due_date": "2023-06-30",
+      "promise_made_date": "2023-03-24",
+      "deadline_date": "2023-06-30",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Mar 24, 2023",
+      "due_date_display": "Jun 30, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "HSH report states the system will include the stated unit counts by end of FY22-23 (2023-06-30). Derived date from publication supported. Citywide system scope. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:18:27.771579+00:00",
+      "factual_outcome": "HSH report states the system will include the stated unit counts by end of FY22-23 (2023-06-30). Derived date from publication supported. Citywide system scope. No delivery or survival sentence supplied.",
+      "source_id": "S60942631abc4",
+      "source_url": "https://media.api.sf.gov/documents/Final-APFA-Report_Revised-03.24.2023_OfJPLyv.pdf",
+      "source_file_path": "60942631abc476a01e575dd1bd70a5ee537872ad7b239537aaf7765f02c987b8.md",
+      "source_hash": "60942631abc476a01e575dd1bd70a5ee537872ad7b239537aaf7765f02c987b8",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "By the end of FY22-23, given resources already operating or under development, San Francisco\u2019s \nhomelessness response system will include 12,813 permanent housing units/slots for adult \nhouseholds and 2,947 units for families with children.",
+      "title": "San Francisco homeless response permanent housing units",
+      "document_title": "Department of Homelessness and Supportive Housing Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:18:27.771579+00:00",
+          "reason": "HSH report states the system will include the stated unit counts by end of FY22-23 (2023-06-30). Derived date from publication supported. Citywide system scope. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:27.771579+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:27.771579+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:27.771579+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:27.771579+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:27.771579+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:27.771579+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:27.940711+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/Final-APFA-Report_Revised-03.24.2023_OfJPLyv.pdf",
+          "published_date": "2023-03-24T23:35:06Z",
+          "source_hash": "60942631abc476a01e575dd1bd70a5ee537872ad7b239537aaf7765f02c987b8",
+          "source_file_path": "60942631abc476a01e575dd1bd70a5ee537872ad7b239537aaf7765f02c987b8.md",
+          "quote": "By the end of FY22-23, given resources already operating or under development, San Francisco\u2019s \nhomelessness response system will include 12,813 permanent housing units/slots for adult \nhouseholds and 2,947 units for families with children."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 132,
+      "display_no": 132,
+      "entity_canonical_name": "Department of Homelessness and Supportive Housing",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-ec65ab0dad-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-ec65ab0dad-1",
+      "promise_text": "Pending environmental review and SFPUC Commission approvals, \nconstruction is anticipated to start in 2025 with an expected duration \nof 3 years.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2022-06-30",
+      "due_date": "2025-12-31",
+      "promise_made_date": "2022-06-30",
+      "deadline_date": "2025-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 30, 2022",
+      "due_date_display": "Dec 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "SFPUC factsheet as of June 2022 states construction is anticipated to start in 2025 pending approvals; 2025-12-31 is the stated start year. SFPUC is the responsible agency and the source names no neighborhood from the label set. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:26:03.052479+00:00",
+      "factual_outcome": "SFPUC factsheet as of June 2022 states construction is anticipated to start in 2025 pending approvals; 2025-12-31 is the stated start year. SFPUC is the responsible agency and the source names no neighborhood from the label set. No delivery or survival sentence supplied.",
+      "source_id": "S1de66d4a16a2",
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/SSIP_LowerAlemany_FactSheet_063022_EN.pdf",
+      "source_file_path": "1de66d4a16a214bd6e50399a96da20dbd23936d24f81d4c15af94ce0de2faa79.md",
+      "source_hash": "1de66d4a16a214bd6e50399a96da20dbd23936d24f81d4c15af94ce0de2faa79",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "Pending environmental review and SFPUC Commission approvals, \nconstruction is anticipated to start in 2025 with an expected duration \nof 3 years.",
+      "title": "Lower Alemany stormwater project construction",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:26:03.052479+00:00",
+          "reason": "SFPUC factsheet as of June 2022 states construction is anticipated to start in 2025 pending approvals; 2025-12-31 is the stated start year. SFPUC is the responsible agency and the source names no neighborhood from the label set. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:26:03.052479+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:26:03.052479+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:26:03.052479+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:26:03.052479+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:26:03.052479+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:26:03.052479+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:26:03.474620+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/sites/default/files/documents/SSIP_LowerAlemany_FactSheet_063022_EN.pdf",
+          "published_date": "2022-06-30T19:26:18Z",
+          "source_hash": "1de66d4a16a214bd6e50399a96da20dbd23936d24f81d4c15af94ce0de2faa79",
+          "source_file_path": "1de66d4a16a214bd6e50399a96da20dbd23936d24f81d4c15af94ce0de2faa79.md",
+          "quote": "Pending environmental review and SFPUC Commission approvals, \nconstruction is anticipated to start in 2025 with an expected duration \nof 3 years."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 133,
+      "display_no": 133,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 11,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-e4551cb3e8-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-e4551cb3e8-1",
+      "promise_text": "SFMTA has informed SFPUC that they will restart the design effort for Phase 2 in 2022.",
+      "promise_text_expanded": false,
+      "entity": "SFMTA",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2022-01-03",
+      "due_date": "2022-12-31",
+      "promise_made_date": "2022-01-03",
+      "deadline_date": "2022-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jan 3, 2022",
+      "due_date_display": "Dec 31, 2022",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Memo dated January 3, 2022 supports the commitment date; 2022 maps to 2022-12-31. SFMTA is the responsible agency and no neighborhood is named. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:14:54.030235+00:00",
+      "factual_outcome": "Memo dated January 3, 2022 supports the commitment date; 2022 maps to 2022-12-31. SFMTA is the responsible agency and no neighborhood is named. No delivery or survival sentence supplied.",
+      "source_id": "S2a393a4db646",
+      "source_url": "https://sfpuc.gov/sites/default/files/documents/Q1FY21-22%20WWE%20Quarterly%20Report%204%20Web.pdf",
+      "source_file_path": "2a393a4db6463abc46dc30fa8c474521ddf71152c5850bd6ee603109cf9fe059.md",
+      "source_hash": "2a393a4db6463abc46dc30fa8c474521ddf71152c5850bd6ee603109cf9fe059",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "SFMTA has informed SFPUC that they will restart the design effort for Phase 2 in 2022.",
+      "title": "Phase 2 design restart for SFMTA and SFPUC project",
+      "document_title": "SFMTA Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:14:54.030235+00:00",
+          "reason": "Memo dated January 3, 2022 supports the commitment date; 2022 maps to 2022-12-31. SFMTA is the responsible agency and no neighborhood is named. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:54.030235+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:54.030235+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:54.030235+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:54.030235+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:54.030235+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:54.030235+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:54.271866+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfpuc.gov/sites/default/files/documents/Q1FY21-22%20WWE%20Quarterly%20Report%204%20Web.pdf",
+          "published_date": "2022-01-03T16:25:09Z",
+          "source_hash": "2a393a4db6463abc46dc30fa8c474521ddf71152c5850bd6ee603109cf9fe059",
+          "source_file_path": "2a393a4db6463abc46dc30fa8c474521ddf71152c5850bd6ee603109cf9fe059.md",
+          "quote": "SFMTA has informed SFPUC that they will restart the design effort for Phase 2 in 2022."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 134,
+      "display_no": 134,
+      "entity_canonical_name": "SFMTA",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-56dd8e8d02-3",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-56dd8e8d02-3",
+      "promise_text": "Green\ninfrastructure support included development of\nmaterials for a residential green infrastructure\n(downspout disconnect) grant pilot, expected to launch\nby Q1 FY21-22.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Environment & Energy",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2021-03-02",
+      "due_date": "2021-09-30",
+      "promise_made_date": "2021-03-02",
+      "deadline_date": "2021-09-30",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Mar 2, 2021",
+      "due_date_display": "Sep 30, 2021",
+      "due_date_status": "present",
+      "completion_date_status": "not_applicable",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "broken",
+      "verdict_reason": "Memo of March 2, 2021 supports the Q1 FY21-22 target (2021-09-30). The December 16, 2021 report, issued after that deadline, still says the pilot is expected to launch at end of Q2 FY21-22, which shows it had not launched by the Q1 target. No survival sentence supplied; residential grant pilot is citywide in scope.",
+      "decided_at": "2026-11-25T01:33:15.531500+00:00",
+      "factual_outcome": "Memo of March 2, 2021 supports the Q1 FY21-22 target (2021-09-30). The December 16, 2021 report, issued after that deadline, still says the pilot is expected to launch at end of Q2 FY21-22, which shows it had not launched by the Q1 target. No survival sentence supplied; residential grant pilot is citywide in scope.",
+      "source_id": "Se411ed2dac03",
+      "source_url": "https://www.sfpuc.gov/sites/default/files/documents/Q2FY21_WWE_Qtrly_Report_4_Web.pdf",
+      "source_file_path": "e411ed2dac03a89b97b8b1d9d547e4148e2954c0899c98f95b155aa773ebcfce.md",
+      "source_hash": "e411ed2dac03a89b97b8b1d9d547e4148e2954c0899c98f95b155aa773ebcfce",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "Green\ninfrastructure support included development of\nmaterials for a residential green infrastructure\n(downspout disconnect) grant pilot, expected to launch\nby Q1 FY21-22.",
+      "title": "Residential downspout disconnect grant pilot",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: DELIVERY."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "broken",
+          "decided_at": "2026-11-25T01:33:15.531500+00:00",
+          "reason": "Memo of March 2, 2021 supports the Q1 FY21-22 target (2021-09-30). The December 16, 2021 report, issued after that deadline, still says the pilot is expected to launch at end of Q2 FY21-22, which shows it had not launched by the Q1 target. No survival sentence supplied; residential grant pilot is citywide in scope."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:15.531500+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:15.531500+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:15.531500+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:15.531500+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:15.531500+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:15.531500+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:15.756330+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/sites/default/files/documents/Q2FY21_WWE_Qtrly_Report_4_Web.pdf",
+          "published_date": "2021-03-02T21:11:54Z",
+          "source_hash": "e411ed2dac03a89b97b8b1d9d547e4148e2954c0899c98f95b155aa773ebcfce",
+          "source_file_path": "e411ed2dac03a89b97b8b1d9d547e4148e2954c0899c98f95b155aa773ebcfce.md",
+          "quote": "Green\ninfrastructure support included development of\nmaterials for a residential green infrastructure\n(downspout disconnect) grant pilot, expected to launch\nby Q1 FY21-22."
+        },
+        {
+          "phase": "DELIVERY",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/sites/default/files/documents/Q1FY21-22%20WWE%20Quarterly%20Report%204%20Web.pdf",
+          "published_date": "2021-12-16T22:44:03Z",
+          "source_hash": "ad58ff228084330ce82c9dffc4acda07031505213713ed32f36073aca032d2ed",
+          "source_file_path": "ad58ff228084330ce82c9dffc4acda07031505213713ed32f36073aca032d2ed.md",
+          "quote": "Green \ninfrastructure support included development of materials for a residential green infrastructure \n(downspout disconnect) grant pilot, expected to launch end of Q2 FY21-22, and the project \nevaluation of the Buchanan Street Mall Neighborhood GI project."
+        }
+      ],
+      "has_contradictory_evidence": true,
+      "supporting_evidence_summary": "Green infrastructure support included development of materials for a residential green infrastructure (downspout disconnect) grant pilot, expected to launch end of Q2 FY21-22, and the project evaluation of the Buchanan Street Mall Neighborhood GI project.",
+      "contradicting_evidence_summary": "The original commitment: Green infrastructure support included development of materials for a residential green infrastructure (downspout disconnect) grant pilot, expected to launch by Q1 FY21-22.",
+      "arbitration_rule_explanation": "The deadline passed and a source published on or after the deadline reports the commitment was not delivered. deadline passed and the outcome source says not delivered",
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 1,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 1,
+      "record_type": "promise",
+      "impact_rank": 135,
+      "display_no": 135,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 12,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [],
+        "outcome_rule": "CONTRARY",
+        "open_ended": false,
+        "reason": "deadline passed and the outcome source says not delivered",
+        "relied_on": [
+          "DELIVERY"
+        ],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-38b1130e47-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-38b1130e47-1",
+      "promise_text": "Phase I project construction is scheduled \nto start in 2022 with completion by 2026.",
+      "promise_text_expanded": false,
+      "entity": "Port of San Francisco",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "The Embarcadero",
+      "neighborhood_canonical": "The Embarcadero",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7955,
+      "longitude": -122.3937,
+      "promised_date": "2018-04-18",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2018-04-18",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Apr 18, 2018",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Port Seawall report of April 2018 states Phase I construction scheduled to start in 2022 with completion by 2026 (2026-12-31). Port of San Francisco on the Embarcadero seawall. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:27:25.415463+00:00",
+      "factual_outcome": "Port Seawall report of April 2018 states Phase I construction scheduled to start in 2022 with completion by 2026 (2026-12-31). Port of San Francisco on the Embarcadero seawall. No delivery or survival sentence supplied.",
+      "source_id": "Sf95131a5339f",
+      "source_url": "https://sfelections.sfgov.org/sites/default/files/Documents/BSC/2018%20Nov/1-Seawall_Earthquake_Safety_Bond_Report%E2%80%94Port_of_%20San_Francisco_April_2018.pdf",
+      "source_file_path": "f95131a5339f5fb16daa3a7144dc1bdd2dfd03e84335df82f4d696dcd93eb96c.md",
+      "source_hash": "f95131a5339f5fb16daa3a7144dc1bdd2dfd03e84335df82f4d696dcd93eb96c",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Phase I project construction is scheduled \nto start in 2022 with completion by 2026.",
+      "title": "Embarcadero seawall Phase I construction",
+      "document_title": "Port of San Francisco Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:27:25.415463+00:00",
+          "reason": "Port Seawall report of April 2018 states Phase I construction scheduled to start in 2022 with completion by 2026 (2026-12-31). Port of San Francisco on the Embarcadero seawall. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:25.415463+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:25.415463+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:25.415463+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:25.415463+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:25.415463+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:25.415463+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:27:25.561337+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfelections.sfgov.org/sites/default/files/Documents/BSC/2018%20Nov/1-Seawall_Earthquake_Safety_Bond_Report%E2%80%94Port_of_%20San_Francisco_April_2018.pdf",
+          "published_date": "2018-04-18T22:12:25Z",
+          "source_hash": "f95131a5339f5fb16daa3a7144dc1bdd2dfd03e84335df82f4d696dcd93eb96c",
+          "source_file_path": "f95131a5339f5fb16daa3a7144dc1bdd2dfd03e84335df82f4d696dcd93eb96c.md",
+          "quote": "Phase I project construction is scheduled \nto start in 2022 with completion by 2026."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 136,
+      "display_no": 136,
+      "entity_canonical_name": "Port of San Francisco",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 4,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'today' resolved against publication date 2018-04-18",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-095afff3cc-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-095afff3cc-1",
+      "promise_text": "The Board is expected to review a draft policy in March 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Unified School District",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Education & Youth",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-10-13",
+      "due_date": "2027-03-31",
+      "promise_made_date": "2026-10-13",
+      "deadline_date": "2027-03-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 13, 2026",
+      "due_date_display": "Mar 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Release dated October 13, 2026 says the Board of Education is expected to review a draft policy in March 2027 (2027-03-31). SFUSD, citywide student assignment. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:28:22.703523+00:00",
+      "factual_outcome": "Release dated October 13, 2026 says the Board of Education is expected to review a draft policy in March 2027 (2027-03-31). SFUSD, citywide student assignment. No delivery or survival sentence supplied.",
+      "source_id": "S74e8095ea6e1",
+      "source_url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-10-13-san-francisco-board-education-approves-resolution-move-sfusd-toward-neighborhood-based-student",
+      "source_file_path": "74e8095ea6e156c00243da8d924bbbb587ee1cc6eb01319e0b9882521a9f13f0.md",
+      "source_hash": "74e8095ea6e156c00243da8d924bbbb587ee1cc6eb01319e0b9882521a9f13f0",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "The Board is expected to review a draft policy in March 2027.",
+      "title": "Neighborhood-based student assignment draft policy",
+      "document_title": "San Francisco Unified School District Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:28:22.703523+00:00",
+          "reason": "Release dated October 13, 2026 says the Board of Education is expected to review a draft policy in March 2027 (2027-03-31). SFUSD, citywide student assignment. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:22.703523+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:22.703523+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:22.703523+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:22.703523+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:22.703523+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:22.703523+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:28:22.851134+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-10-13-san-francisco-board-education-approves-resolution-move-sfusd-toward-neighborhood-based-student",
+          "published_date": "2026-10-13T00:00:00Z",
+          "source_hash": "74e8095ea6e156c00243da8d924bbbb587ee1cc6eb01319e0b9882521a9f13f0",
+          "source_file_path": "74e8095ea6e156c00243da8d924bbbb587ee1cc6eb01319e0b9882521a9f13f0.md",
+          "quote": "The Board is expected to review a draft policy in March 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 137,
+      "display_no": 137,
+      "entity_canonical_name": "San Francisco Unified School District",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-25b9a963c5-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-25b9a963c5-1",
+      "promise_text": "After successfully hosting six FIFA World Cup matches this summer, the Super Bowl in February, and NBA All-Star Weekend last year, San Francisco will welcome the [WNBA All-Star](https://www.sf.gov/news-mayor-luries-statement-on-san-francisco-winning-2027-wnba-all-star-game) and [MLB All-Star](https://www.sf.gov/news-mayor-luries-statement-on-san-francisco-winning-2028-mlb-all-star-game) games in 2027 and 2028.",
+      "promise_text_expanded": false,
+      "entity": "Office of the Mayor",
+      "role": null,
+      "entity_type": "politician",
+      "entity_type_legacy": "Mayor / Executive",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-10-13",
+      "due_date": "2028-12-31",
+      "promise_made_date": "2026-10-13",
+      "deadline_date": "2028-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 13, 2026",
+      "due_date_display": "Dec 31, 2028",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin sentence says SF will welcome WNBA and MLB All-Star games in 2027 and 2028, in a mayor release dated October 13, 2026. Target year 2028 gives 2028-12-31. Entity is the Office of the Mayor, citywide event hosting. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:12:57.713991+00:00",
+      "factual_outcome": "Origin sentence says SF will welcome WNBA and MLB All-Star games in 2027 and 2028, in a mayor release dated October 13, 2026. Target year 2028 gives 2028-12-31. Entity is the Office of the Mayor, citywide event hosting. No delivery or survival sentence supplied.",
+      "source_id": "S05babe1adc6f",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-celebrates-major-events-surpassing-1-billion-in-economic-impact-for-san-francisco-following-successful-fleet-week",
+      "source_file_path": "05babe1adc6fe204d1ef73f75cae311e8bd72131b695e54ff32a6fb815cf461d.md",
+      "source_hash": "05babe1adc6fe204d1ef73f75cae311e8bd72131b695e54ff32a6fb815cf461d",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "After successfully hosting six FIFA World Cup matches this summer, the Super Bowl in February, and NBA All-Star Weekend last year, San Francisco will welcome the [WNBA All-Star](https://www.sf.gov/news-mayor-luries-statement-on-san-francisco-winning-2027-wnba-all-star-game) and [MLB All-Star](https://www.sf.gov/news-mayor-luries-statement-on-san-francisco-winning-2028-mlb-all-star-game) games in 2027 and 2028.",
+      "title": "WNBA and MLB All-Star games in San Francisco",
+      "document_title": "Office of the Mayor Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:12:57.713991+00:00",
+          "reason": "Origin sentence says SF will welcome WNBA and MLB All-Star games in 2027 and 2028, in a mayor release dated October 13, 2026. Target year 2028 gives 2028-12-31. Entity is the Office of the Mayor, citywide event hosting. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:57.713991+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:57.713991+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:57.713991+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:57.713991+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:57.713991+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:57.713991+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:12:58.076885+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-celebrates-major-events-surpassing-1-billion-in-economic-impact-for-san-francisco-following-successful-fleet-week",
+          "published_date": "2026-10-13T00:00:00Z",
+          "source_hash": "05babe1adc6fe204d1ef73f75cae311e8bd72131b695e54ff32a6fb815cf461d",
+          "source_file_path": "05babe1adc6fe204d1ef73f75cae311e8bd72131b695e54ff32a6fb815cf461d.md",
+          "quote": "After successfully hosting six FIFA World Cup matches this summer, the Super Bowl in February, and NBA All-Star Weekend last year, San Francisco will welcome the [WNBA All-Star](https://www.sf.gov/news-mayor-luries-statement-on-san-francisco-winning-2027-wnba-all-star-game) and [MLB All-Star](https://www.sf.gov/news-mayor-luries-statement-on-san-francisco-winning-2028-mlb-all-star-game) games in 2027 and 2028."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 138,
+      "display_no": 138,
+      "entity_canonical_name": "Office of the Mayor",
+      "entity_category": "politician",
+      "entity_category_canonical": "politician",
+      "entity_promise_count": 5,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-656e827202-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-656e827202-1",
+      "promise_text": "It will be on view at Civic Center Plaza from September 28, 2026 through April \n4, 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Mid-Market & Civic Center",
+      "neighborhood_canonical": "Mid-Market & Civic Center",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7793,
+      "longitude": -122.4167,
+      "promised_date": "2026-07-10",
+      "due_date": "2027-04-04",
+      "promise_made_date": "2026-07-10",
+      "deadline_date": "2027-04-04",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jul 10, 2026",
+      "due_date_display": "Apr 4, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Memo dated July 10, 2026 says the Arts Commission will show Akua at Civic Center Plaza from September 28, 2026 through April 4, 2027. Entity and location match. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:30:48.754758+00:00",
+      "factual_outcome": "Memo dated July 10, 2026 says the Arts Commission will show Akua at Civic Center Plaza from September 28, 2026 through April 4, 2027. Entity and location match. No delivery or survival sentence supplied.",
+      "source_id": "S09283ca897c0",
+      "source_url": "https://media.api.sf.gov/documents/OHOH_Civic_Center_Sole_Source_Staff_Memo_and_Contractor_Cost_Proposal_VAC_7.15.2026.pdf",
+      "source_file_path": "09283ca897c02676752f92b3bbf6795b82ee5f15ddc5534d99f699578799388d.md",
+      "source_hash": "09283ca897c02676752f92b3bbf6795b82ee5f15ddc5534d99f699578799388d",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "It will be on view at Civic Center Plaza from September 28, 2026 through April \n4, 2027.",
+      "title": "Akua sculpture at Civic Center Plaza",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:30:48.754758+00:00",
+          "reason": "Memo dated July 10, 2026 says the Arts Commission will show Akua at Civic Center Plaza from September 28, 2026 through April 4, 2027. Entity and location match. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:48.754758+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:48.754758+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:48.754758+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:48.754758+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:48.754758+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:48.754758+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:30:48.901388+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/OHOH_Civic_Center_Sole_Source_Staff_Memo_and_Contractor_Cost_Proposal_VAC_7.15.2026.pdf",
+          "published_date": "2026-07-10T15:09:50Z",
+          "source_hash": "09283ca897c02676752f92b3bbf6795b82ee5f15ddc5534d99f699578799388d",
+          "source_file_path": "09283ca897c02676752f92b3bbf6795b82ee5f15ddc5534d99f699578799388d.md",
+          "quote": "It will be on view at Civic Center Plaza from September 28, 2026 through April \n4, 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 139,
+      "display_no": 139,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 10,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-cd33f5c813-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-cd33f5c813-1",
+      "promise_text": "In August of 2026, Zum will deploy 104 electric school buses with bidirectional charging infrastructure in San Francisco.",
+      "promise_text_expanded": false,
+      "entity": "Zum",
+      "role": null,
+      "entity_type": "corporation",
+      "entity_type_legacy": "Private Corporation",
+      "sector": "Environment & Energy",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-05-21",
+      "due_date": "2026-08-31",
+      "promise_made_date": "2026-05-21",
+      "deadline_date": "2026-08-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 21, 2026",
+      "due_date_display": "Aug 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_captured",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "delayed_or_partial",
+      "verdict_reason": "Origin dated May 21, 2026 commits Zum to deploy 104 buses in August 2026. The Sept 3, 2026 sentence says first buses are now being deployed and more will be phased in through fall, which supports partial delivery after the deadline. Zum is a private corporation serving SFUSD citywide. (current status not checked)",
+      "decided_at": "2026-11-25T01:23:35.902709+00:00",
+      "factual_outcome": "Origin dated May 21, 2026 commits Zum to deploy 104 buses in August 2026. The Sept 3, 2026 sentence says first buses are now being deployed and more will be phased in through fall, which supports partial delivery after the deadline. Zum is a private corporation serving SFUSD citywide. (current status not checked)",
+      "source_id": "Sa1667bc3b2a3",
+      "source_url": "https://www.prnewswire.com/news-releases/zum-and-sfusd-announce-largest-electric-school-bus-deployment-in-the-nation-302779557.html",
+      "source_file_path": "a1667bc3b2a302921b4610392ada9b72025a6189dae257655aaafb9862620ecd.md",
+      "source_hash": "a1667bc3b2a302921b4610392ada9b72025a6189dae257655aaafb9862620ecd",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "In August of 2026, Zum will deploy 104 electric school buses with bidirectional charging infrastructure in San Francisco.",
+      "title": "Zum electric school buses for SFUSD",
+      "document_title": "Zum Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: DELIVERY."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "delayed_or_partial",
+          "decided_at": "2026-11-25T01:23:35.902709+00:00",
+          "reason": "Origin dated May 21, 2026 commits Zum to deploy 104 buses in August 2026. The Sept 3, 2026 sentence says first buses are now being deployed and more will be phased in through fall, which supports partial delivery after the deadline. Zum is a private corporation serving SFUSD citywide. (current status not checked)"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:23:35.902709+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:23:35.902709+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:23:35.902709+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:23:35.902709+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:23:35.902709+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:23:35.902709+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:23:36.875365+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.prnewswire.com/news-releases/zum-and-sfusd-announce-largest-electric-school-bus-deployment-in-the-nation-302779557.html",
+          "published_date": "2026-05-21T20:26:00Z",
+          "source_hash": "a1667bc3b2a302921b4610392ada9b72025a6189dae257655aaafb9862620ecd",
+          "source_file_path": "a1667bc3b2a302921b4610392ada9b72025a6189dae257655aaafb9862620ecd.md",
+          "quote": "In August of 2026, Zum will deploy 104 electric school buses with bidirectional charging infrastructure in San Francisco."
+        },
+        {
+          "phase": "DELIVERY",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.prnewswire.com/news-releases/zum-begins-historic-electric-school-bus-rollout-in-san-francisco-302869413.html",
+          "published_date": "2026-09-03T19:25:00Z",
+          "source_hash": "7e0661ac91cea0d98339ba50ba86f87de9fb839bb4fabb99272e0d93c8364ebf",
+          "source_file_path": "7e0661ac91cea0d98339ba50ba86f87de9fb839bb4fabb99272e0d93c8364ebf.md",
+          "quote": "The first buses are now being deployed and additional electric buses will be phased in throughout the fall as they are provided by the manufacturer."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 3,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 3,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 140,
+      "display_no": 140,
+      "entity_canonical_name": "Zum",
+      "entity_category": "corporation",
+      "entity_category_canonical": "corporation",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R4"
+        ],
+        "outcome_rule": "R4",
+        "open_ended": false,
+        "reason": "current status not checked",
+        "relied_on": [
+          "DELIVERY"
+        ],
+        "status_not_checked": true
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-886648be04-3",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-886648be04-3",
+      "promise_text": "Mission Bay Elementary is planned to grow into a full TK\u20135 school with Preschool by 2032.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Unified School District",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Education & Youth",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Mission Bay & Mission Rock",
+      "neighborhood_canonical": "Mission Bay & Mission Rock",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7706,
+      "longitude": -122.3897,
+      "promised_date": "2025-10-02",
+      "due_date": "2032-12-31",
+      "promise_made_date": "2025-10-02",
+      "deadline_date": "2032-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 2, 2025",
+      "due_date_display": "Dec 31, 2032",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Release dated October 2, 2025 says Mission Bay Elementary is planned to grow into full TK-5 with Preschool by 2032 (2032-12-31). SFUSD, Mission Bay. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:15:15.327263+00:00",
+      "factual_outcome": "Release dated October 2, 2025 says Mission Bay Elementary is planned to grow into full TK-5 with Preschool by 2032 (2032-12-31). SFUSD, Mission Bay. No delivery or survival sentence supplied.",
+      "source_id": "S8adef8b4105e",
+      "source_url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2025-10-02-sfusd-opening-new-elementary-school-one-citys-fastest-growing-neighborhoods",
+      "source_file_path": "8adef8b4105eaaea69382a1582e72a0cff1bf36abf4170b1e243ec27bd38b725.md",
+      "source_hash": "8adef8b4105eaaea69382a1582e72a0cff1bf36abf4170b1e243ec27bd38b725",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "Mission Bay Elementary is planned to grow into a full TK\u20135 school with Preschool by 2032.",
+      "title": "Mission Bay Elementary growth to TK\u20135",
+      "document_title": "San Francisco Unified School District Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:15:15.327263+00:00",
+          "reason": "Release dated October 2, 2025 says Mission Bay Elementary is planned to grow into full TK-5 with Preschool by 2032 (2032-12-31). SFUSD, Mission Bay. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:15.327263+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:15.327263+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:15.327263+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:15.327263+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:15.327263+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:15.327263+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:15:15.472713+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2025-10-02-sfusd-opening-new-elementary-school-one-citys-fastest-growing-neighborhoods",
+          "published_date": "2025-10-02T00:00:00Z",
+          "source_hash": "8adef8b4105eaaea69382a1582e72a0cff1bf36abf4170b1e243ec27bd38b725",
+          "source_file_path": "8adef8b4105eaaea69382a1582e72a0cff1bf36abf4170b1e243ec27bd38b725.md",
+          "quote": "Mission Bay Elementary is planned to grow into a full TK\u20135 school with Preschool by 2032."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 141,
+      "display_no": 141,
+      "entity_canonical_name": "San Francisco Unified School District",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 4,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-967a3df5a8-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-967a3df5a8-2",
+      "promise_text": "SFTP 2050+ will be released in 2026 and will include updated modeling and a focused look\nat transportation within the Housing Opportunity Areas.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco County Transportation Authority",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2025-09-23",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2025-09-23",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 23, 2025",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Report says SFCTA releases the SFTP and SFTP 2050+ will be released in 2026 (2026-12-31). Citywide transportation plan. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:20:49.212144+00:00",
+      "factual_outcome": "Report says SFCTA releases the SFTP and SFTP 2050+ will be released in 2026 (2026-12-31). Citywide transportation plan. No delivery or survival sentence supplied.",
+      "source_id": "Sd6730f38d10e",
+      "source_url": "https://sfplanning.org/sites/default/files/documents/citywide/housing-choice/2025-Racial-and-Social-Equity-Analysis-San-Francisco-Family-Zoning-Plan.pdf",
+      "source_file_path": "d6730f38d10ec078dd22aa09b8cca7dc2097373f3fe2a67d16c1eb479e117e6f.md",
+      "source_hash": "d6730f38d10ec078dd22aa09b8cca7dc2097373f3fe2a67d16c1eb479e117e6f",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "SFTP 2050+ will be released in 2026 and will include updated modeling and a focused look\nat transportation within the Housing Opportunity Areas.",
+      "title": "San Francisco Transportation Plan 2050+",
+      "document_title": "San Francisco County Transportation Authority Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:20:49.212144+00:00",
+          "reason": "Report says SFCTA releases the SFTP and SFTP 2050+ will be released in 2026 (2026-12-31). Citywide transportation plan. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:49.212144+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:49.212144+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:49.212144+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:49.212144+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:49.212144+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:49.212144+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:20:49.407085+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfplanning.org/sites/default/files/documents/citywide/housing-choice/2025-Racial-and-Social-Equity-Analysis-San-Francisco-Family-Zoning-Plan.pdf",
+          "published_date": "2025-09-23T17:24:41Z",
+          "source_hash": "d6730f38d10ec078dd22aa09b8cca7dc2097373f3fe2a67d16c1eb479e117e6f",
+          "source_file_path": "d6730f38d10ec078dd22aa09b8cca7dc2097373f3fe2a67d16c1eb479e117e6f.md",
+          "quote": "SFTP 2050+ will be released in 2026 and will include updated modeling and a focused look\nat transportation within the Housing Opportunity Areas."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 142,
+      "display_no": 142,
+      "entity_canonical_name": "San Francisco County Transportation Authority",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-31e31d2523-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-31e31d2523-1",
+      "promise_text": "The schedule shows a $340 million general obligation bond for affordable housing\nand shelters will be requested for voter approval in March 2024.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-10-27",
+      "due_date": "2024-03-31",
+      "promise_made_date": "2023-10-27",
+      "deadline_date": "2024-03-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 27, 2023",
+      "due_date_display": "Mar 31, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Memo dated October 27, 2023 says the capital plan schedule shows a $340M affordable housing and shelter GO bond to be requested in March 2024. MOHCD is the housing bond agency in the memo; the bond is citywide. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:18:16.348766+00:00",
+      "factual_outcome": "Memo dated October 27, 2023 says the capital plan schedule shows a $340M affordable housing and shelter GO bond to be requested in March 2024. MOHCD is the housing bond agency in the memo; the bond is citywide. No delivery or survival sentence supplied.",
+      "source_id": "Sc4892056dcac",
+      "source_url": "https://sfgov.legistar.com/Calendar.aspx",
+      "source_file_path": "c4892056dcacf33982f11b532c4f6bacc7129b049ad3962006148116928b51fa.md",
+      "source_hash": "c4892056dcacf33982f11b532c4f6bacc7129b049ad3962006148116928b51fa",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The schedule shows a $340 million general obligation bond for affordable housing\nand shelters will be requested for voter approval in March 2024.",
+      "title": "2024 affordable housing and shelter bond",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:18:16.348766+00:00",
+          "reason": "Memo dated October 27, 2023 says the capital plan schedule shows a $340M affordable housing and shelter GO bond to be requested in March 2024. MOHCD is the housing bond agency in the memo; the bond is citywide. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:16.348766+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:16.348766+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:16.348766+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:16.348766+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:16.348766+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:16.348766+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:18:16.497142+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfgov.legistar.com/Calendar.aspx",
+          "published_date": "2023-10-27T22:16:57Z",
+          "source_hash": "c4892056dcacf33982f11b532c4f6bacc7129b049ad3962006148116928b51fa",
+          "source_file_path": "c4892056dcacf33982f11b532c4f6bacc7129b049ad3962006148116928b51fa.md",
+          "quote": "The schedule shows a $340 million general obligation bond for affordable housing\nand shelters will be requested for voter approval in March 2024."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 143,
+      "display_no": 143,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 8,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-aeb2b2a12c-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-aeb2b2a12c-2",
+      "promise_text": "Potrero Block B is expected to welcome its first residents in fall 2024 and will be the second new affordable housing project to break ground as part of the Potrero Hill Master Plan.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Potrero Hill",
+      "neighborhood_canonical": "Potrero Hill",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7587,
+      "longitude": -122.401,
+      "promised_date": "2022-11-03",
+      "due_date": "2024-12-31",
+      "promise_made_date": "2022-11-03",
+      "deadline_date": "2024-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Nov 3, 2022",
+      "due_date_display": "Dec 31, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Release published 2022-11-03 says Potrero Block B is expected to welcome first residents in fall 2024 (2024-12-31). MOHCD project in Potrero Hill, which the source names. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:33:32.897549+00:00",
+      "factual_outcome": "Release published 2022-11-03 says Potrero Block B is expected to welcome first residents in fall 2024 (2024-12-31). MOHCD project in Potrero Hill, which the source names. No delivery or survival sentence supplied.",
+      "source_id": "Sd026f2a68a1e",
+      "source_url": "https://www.sf.gov/news--city-breaks-ground-157-new-affordable-homes-and-childcare-center-potrero-hope-sf",
+      "source_file_path": "d026f2a68a1e1d3f6b016a18c90c61ba08951261031a95ad406c33f343b0148e.md",
+      "source_hash": "d026f2a68a1e1d3f6b016a18c90c61ba08951261031a95ad406c33f343b0148e",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Potrero Block B is expected to welcome its first residents in fall 2024 and will be the second new affordable housing project to break ground as part of the Potrero Hill Master Plan.",
+      "title": "Potrero Block B affordable housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:33:32.897549+00:00",
+          "reason": "Release published 2022-11-03 says Potrero Block B is expected to welcome first residents in fall 2024 (2024-12-31). MOHCD project in Potrero Hill, which the source names. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:32.897549+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:32.897549+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:32.897549+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:32.897549+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:32.897549+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:32.897549+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:33:33.040570+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--city-breaks-ground-157-new-affordable-homes-and-childcare-center-potrero-hope-sf",
+          "published_date": "2022-11-03T00:00:00Z",
+          "source_hash": "d026f2a68a1e1d3f6b016a18c90c61ba08951261031a95ad406c33f343b0148e",
+          "source_file_path": "d026f2a68a1e1d3f6b016a18c90c61ba08951261031a95ad406c33f343b0148e.md",
+          "quote": "Potrero Block B is expected to welcome its first residents in fall 2024 and will be the second new affordable housing project to break ground as part of the Potrero Hill Master Plan."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 144,
+      "display_no": 144,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 9,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-0ca4979ffe-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-0ca4979ffe-1",
+      "promise_text": "Detail design will wrap at the end of this year, and construction is expected to begin by December 2023 once necessary permits are received.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Unified School District",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Education & Youth",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Mission Bay & Mission Rock",
+      "neighborhood_canonical": "Mission Bay & Mission Rock",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7706,
+      "longitude": -122.3897,
+      "promised_date": "2022-06-17",
+      "due_date": "2023-12-31",
+      "promise_made_date": "2022-06-17",
+      "deadline_date": "2023-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 17, 2022",
+      "due_date_display": "Dec 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Release dated June 17, 2022 states construction expected to begin by December 2023 (month-end 2023-12-31). SFUSD in Mission Bay. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:14:09.841875+00:00",
+      "factual_outcome": "Release dated June 17, 2022 states construction expected to begin by December 2023 (month-end 2023-12-31). SFUSD in Mission Bay. No delivery or survival sentence supplied.",
+      "source_id": "S0dc4498a8459",
+      "source_url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2022-06-17-new-school-mission-bay-moves-forward",
+      "source_file_path": "0dc4498a845912811bc0f1cb6c9b19defec9d149ce96f21e44e5e56974d675d8.md",
+      "source_hash": "0dc4498a845912811bc0f1cb6c9b19defec9d149ce96f21e44e5e56974d675d8",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "Detail design will wrap at the end of this year, and construction is expected to begin by December 2023 once necessary permits are received.",
+      "title": "Mission Bay school detailed design and construction",
+      "document_title": "San Francisco Unified School District Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:14:09.841875+00:00",
+          "reason": "Release dated June 17, 2022 states construction expected to begin by December 2023 (month-end 2023-12-31). SFUSD in Mission Bay. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:09.841875+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:09.841875+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:09.841875+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:09.841875+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:09.841875+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:09.841875+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:14:10.042227+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2022-06-17-new-school-mission-bay-moves-forward",
+          "published_date": "2022-06-17T00:00:00Z",
+          "source_hash": "0dc4498a845912811bc0f1cb6c9b19defec9d149ce96f21e44e5e56974d675d8",
+          "source_file_path": "0dc4498a845912811bc0f1cb6c9b19defec9d149ce96f21e44e5e56974d675d8.md",
+          "quote": "Detail design will wrap at the end of this year, and construction is expected to begin by December 2023 once necessary permits are received."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 145,
+      "display_no": 145,
+      "entity_canonical_name": "San Francisco Unified School District",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 5,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-6054cd932b-3",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-6054cd932b-3",
+      "promise_text": "Starting in 2025, we will only purchase all-electric buses in an effort to meet the goal for an all-\nelectric bus fleet by 2035.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2019-01-29",
+      "due_date": "2035-12-31",
+      "promise_made_date": "2019-01-29",
+      "deadline_date": "2035-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jan 29, 2019",
+      "due_date_display": "Dec 31, 2035",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Annual report dated 2019-01-29 commits SFMTA to buy only all-electric buses from 2025 toward an all-electric fleet by 2035. SFMTA is a city agency; citywide fleet. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:25:54.986048+00:00",
+      "factual_outcome": "Annual report dated 2019-01-29 commits SFMTA to buy only all-electric buses from 2025 toward an all-electric fleet by 2035. SFMTA is a city agency; citywide fleet. No delivery or survival sentence supplied.",
+      "source_id": "Sdbaf22e4adb5",
+      "source_url": "https://www.sfmta.com/sites/default/files/reports-and-documents/2019/01/a_year_of_movement_fy_2018_sfmta_annual_report_-_accessible_version_final_2.pdf",
+      "source_file_path": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2.md",
+      "source_hash": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Starting in 2025, we will only purchase all-electric buses in an effort to meet the goal for an all-\nelectric bus fleet by 2035.",
+      "title": "Muni all-electric bus purchases from 2025",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:25:54.986048+00:00",
+          "reason": "Annual report dated 2019-01-29 commits SFMTA to buy only all-electric buses from 2025 toward an all-electric fleet by 2035. SFMTA is a city agency; citywide fleet. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:54.986048+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:54.986048+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:54.986048+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:54.986048+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:54.986048+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:54.986048+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:25:56.351895+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfmta.com/sites/default/files/reports-and-documents/2019/01/a_year_of_movement_fy_2018_sfmta_annual_report_-_accessible_version_final_2.pdf",
+          "published_date": "2019-01-29T19:38:44Z",
+          "source_hash": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2",
+          "source_file_path": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2.md",
+          "quote": "Starting in 2025, we will only purchase all-electric buses in an effort to meet the goal for an all-\nelectric bus fleet by 2035."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 146,
+      "display_no": 146,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 11,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'today' resolved against publication date 2019-01-29",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-dcdafdaaec-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-dcdafdaaec-2",
+      "promise_text": "She reported that the artwork is scheduled to be on view November 2017 through November 2018.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Chinatown & North Beach",
+      "neighborhood_canonical": "Chinatown & North Beach",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7975,
+      "longitude": -122.4078,
+      "promised_date": "2017-09-20",
+      "due_date": "2018-11-30",
+      "promise_made_date": "2017-09-20",
+      "deadline_date": "2018-11-30",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 20, 2017",
+      "due_date_display": "Nov 30, 2018",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Visual Arts Committee meeting of September 20, 2017: the artwork is scheduled to be on view November 2017 through November 2018. The project is the Central Subway Chinatown Station barricades mural, so Chinatown is supported. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:36:33.763108+00:00",
+      "factual_outcome": "Visual Arts Committee meeting of September 20, 2017: the artwork is scheduled to be on view November 2017 through November 2018. The project is the Central Subway Chinatown Station barricades mural, so Chinatown is supported. No delivery or survival sentence supplied.",
+      "source_id": "S7a13ac6bdf9a",
+      "source_url": "https://www.sfgov.org/arts/meeting/visual-arts-committee-september-20-2017-minutes",
+      "source_file_path": "7a13ac6bdf9acec845d81bccc70b3e50858516672c44f917c91ca78e76f5ef1b.md",
+      "source_hash": "7a13ac6bdf9acec845d81bccc70b3e50858516672c44f917c91ca78e76f5ef1b",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "She reported that the artwork is scheduled to be on view November 2017 through November 2018.",
+      "title": "Chinatown Station artwork display",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:36:33.763108+00:00",
+          "reason": "Visual Arts Committee meeting of September 20, 2017: the artwork is scheduled to be on view November 2017 through November 2018. The project is the Central Subway Chinatown Station barricades mural, so Chinatown is supported. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:33.763108+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:33.763108+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:33.763108+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:33.763108+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:33.763108+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:33.763108+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:36:34.062893+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfgov.org/arts/meeting/visual-arts-committee-september-20-2017-minutes",
+          "published_date": "2017-09-20T22:00:00Z",
+          "source_hash": "7a13ac6bdf9acec845d81bccc70b3e50858516672c44f917c91ca78e76f5ef1b",
+          "source_file_path": "7a13ac6bdf9acec845d81bccc70b3e50858516672c44f917c91ca78e76f5ef1b.md",
+          "quote": "She reported that the artwork is scheduled to be on view November 2017 through November 2018."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 147,
+      "display_no": 147,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 11,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-9ed0a111eb-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-9ed0a111eb-1",
+      "promise_text": "The work is expected to be completed in fall 2026.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Utilities Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Energy & Infrastructure",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "SoMa",
+      "neighborhood_canonical": "SoMa",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7785,
+      "longitude": -122.4056,
+      "promised_date": "2026-05-19",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2026-05-19",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 19, 2026",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "SFPUC release dated May 19, 2026 covers West SoMa, Panhandle and Inner Sunset sewer work; SFPUC is the entity and SoMa is among the named neighborhoods. Fall 2026 target gives Dec 31 2026. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:56:38.245519+00:00",
+      "factual_outcome": "SFPUC release dated May 19, 2026 covers West SoMa, Panhandle and Inner Sunset sewer work; SFPUC is the entity and SoMa is among the named neighborhoods. Fall 2026 target gives Dec 31 2026. No delivery or survival sentence supplied.",
+      "source_id": "Se5baf4f75916",
+      "source_url": "https://www.sfpuc.gov/about-us/news/sfpuc-marks-infrastructure-week-highlighting-projects-keep-san-francisco-running",
+      "source_file_path": "e5baf4f75916c61c111814ba54ec9a467a9e4be93e1dd394f6977376e0a16eb3.md",
+      "source_hash": "e5baf4f75916c61c111814ba54ec9a467a9e4be93e1dd394f6977376e0a16eb3",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "The work is expected to be completed in fall 2026.",
+      "title": "Sewer improvement project completion",
+      "document_title": "San Francisco Public Utilities Commission Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:56:38.245519+00:00",
+          "reason": "SFPUC release dated May 19, 2026 covers West SoMa, Panhandle and Inner Sunset sewer work; SFPUC is the entity and SoMa is among the named neighborhoods. Fall 2026 target gives Dec 31 2026. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:38.245519+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:38.245519+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:38.245519+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:38.245519+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:38.245519+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:38.245519+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:38.387645+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfpuc.gov/about-us/news/sfpuc-marks-infrastructure-week-highlighting-projects-keep-san-francisco-running",
+          "published_date": "2026-05-19T12:00:00Z",
+          "source_hash": "e5baf4f75916c61c111814ba54ec9a467a9e4be93e1dd394f6977376e0a16eb3",
+          "source_file_path": "e5baf4f75916c61c111814ba54ec9a467a9e4be93e1dd394f6977376e0a16eb3.md",
+          "quote": "The work is expected to be completed in fall 2026."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 148,
+      "display_no": 148,
+      "entity_canonical_name": "San Francisco Public Utilities Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 13,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-d0829b9acb-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-d0829b9acb-1",
+      "promise_text": "By the end \nof the summer, Bay Wheels bikeshare services will be available on both islands, with new public \ntransportation connections and enhancements in pedestrian and cycling pathways in progress to be \ncompleted in 2027.",
+      "promise_text_expanded": false,
+      "entity": "Treasure Island Development Authority",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Treasure Island",
+      "neighborhood_canonical": "Treasure Island",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.8235,
+      "longitude": -122.3706,
+      "promised_date": "2026-05-07",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-05-07",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 7, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Release from the Office of the City Administrator dated May 7, 2026 about Treasure Island and Yerba Buena Island; TIDA is the relevant agency. Deadline year 2027 stated. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:47:44.608765+00:00",
+      "factual_outcome": "Release from the Office of the City Administrator dated May 7, 2026 about Treasure Island and Yerba Buena Island; TIDA is the relevant agency. Deadline year 2027 stated. No delivery or survival sentence supplied.",
+      "source_id": "Sec40a3e49d4c",
+      "source_url": "https://media.api.sf.gov/documents/05_InaHbLv.13.26_Directors_Report.pdf",
+      "source_file_path": "ec40a3e49d4c77ecf7d03f25224637f1c00b84a514d0ca5f6aa61796b9942109.md",
+      "source_hash": "ec40a3e49d4c77ecf7d03f25224637f1c00b84a514d0ca5f6aa61796b9942109",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "By the end \nof the summer, Bay Wheels bikeshare services will be available on both islands, with new public \ntransportation connections and enhancements in pedestrian and cycling pathways in progress to be \ncompleted in 2027.",
+      "title": "Treasure Island transit and bikeshare connections",
+      "document_title": "Treasure Island Development Authority Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:47:44.608765+00:00",
+          "reason": "Release from the Office of the City Administrator dated May 7, 2026 about Treasure Island and Yerba Buena Island; TIDA is the relevant agency. Deadline year 2027 stated. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:47:44.608765+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:47:44.608765+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:47:44.608765+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:47:44.608765+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:47:44.608765+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:47:44.608765+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:47:44.752077+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/05_InaHbLv.13.26_Directors_Report.pdf",
+          "published_date": "2026-05-11T21:30:47Z",
+          "source_hash": "ec40a3e49d4c77ecf7d03f25224637f1c00b84a514d0ca5f6aa61796b9942109",
+          "source_file_path": "ec40a3e49d4c77ecf7d03f25224637f1c00b84a514d0ca5f6aa61796b9942109.md",
+          "quote": "By the end \nof the summer, Bay Wheels bikeshare services will be available on both islands, with new public \ntransportation connections and enhancements in pedestrian and cycling pathways in progress to be \ncompleted in 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 149,
+      "display_no": 149,
+      "entity_canonical_name": "Treasure Island Development Authority",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 4,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-101ed58d52-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-101ed58d52-1",
+      "promise_text": "A fifth behavioral health building on Treasure Island, \n\nslated to break ground in late 2026 and open in 2028\n\n4\n\n1660 Mission Street",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Department of Public Health",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Treasure Island",
+      "neighborhood_canonical": "Treasure Island",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.8235,
+      "longitude": -122.3706,
+      "promised_date": "2026-01-22",
+      "due_date": "2028-12-31",
+      "promise_made_date": "2026-01-22",
+      "deadline_date": "2028-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jan 22, 2026",
+      "due_date_display": "Dec 31, 2028",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Slide from SF DPH dated January 22, 2026 states the Treasure Island building is slated to open in 2028. Entity is DPH and location Treasure Island is in the source. Fields delivery and survival are not evaluated.",
+      "decided_at": "2026-11-25T01:41:08.647920+00:00",
+      "factual_outcome": "Slide from SF DPH dated January 22, 2026 states the Treasure Island building is slated to open in 2028. Entity is DPH and location Treasure Island is in the source. Fields delivery and survival are not evaluated.",
+      "source_id": "Se227377474c5",
+      "source_url": "https://media.api.sf.gov/documents/DPH_Prop_C_Budget_Update_Revised_1.22.26_FINAL.pdf",
+      "source_file_path": "e227377474c5d55c92a679d4fe62327611267dbf36285fa4eaee3d851bf27a62.md",
+      "source_hash": "e227377474c5d55c92a679d4fe62327611267dbf36285fa4eaee3d851bf27a62",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "A fifth behavioral health building on Treasure Island, \n\nslated to break ground in late 2026 and open in 2028\n\n4\n\n1660 Mission Street",
+      "title": "Treasure Island Behavioral Health Building",
+      "document_title": "San Francisco Department of Public Health Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:41:08.647920+00:00",
+          "reason": "Slide from SF DPH dated January 22, 2026 states the Treasure Island building is slated to open in 2028. Entity is DPH and location Treasure Island is in the source. Fields delivery and survival are not evaluated."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:08.647920+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:08.647920+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:08.647920+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:08.647920+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:08.647920+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:08.647920+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:08.797094+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/DPH_Prop_C_Budget_Update_Revised_1.22.26_FINAL.pdf",
+          "published_date": "2026-01-23T00:37:56Z",
+          "source_hash": "e227377474c5d55c92a679d4fe62327611267dbf36285fa4eaee3d851bf27a62",
+          "source_file_path": "e227377474c5d55c92a679d4fe62327611267dbf36285fa4eaee3d851bf27a62.md",
+          "quote": "A fifth behavioral health building on Treasure Island, \n\nslated to break ground in late 2026 and open in 2028\n\n4\n\n1660 Mission Street"
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 150,
+      "display_no": 150,
+      "entity_canonical_name": "San Francisco Department of Public Health",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 5,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-af6a2f9785-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-af6a2f9785-1",
+      "promise_text": "Release a 2025 High Injury Network draft plan to enhance safety with tools such as providing separation, signal timing optimization, physical barriers, and additional deployment of turn and traffic calming tools.",
+      "promise_text_expanded": false,
+      "entity": "Office of the Mayor",
+      "role": null,
+      "entity_type": "politician",
+      "entity_type_legacy": "Mayor / Executive",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2025-12-15",
+      "due_date": null,
+      "promise_made_date": "2025-12-15",
+      "deadline_date": null,
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "not_applicable",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Dec 15, 2025",
+      "due_date_display": "No fixed deadline",
+      "due_date_status": "not_applicable",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Mayor Lurie directive lists releasing a 2025 High Injury Network draft plan with no firm date; no deadline is correct. Office of the Mayor, citywide street safety. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:58:38.136554+00:00",
+      "factual_outcome": "Mayor Lurie directive lists releasing a 2025 High Injury Network draft plan with no firm date; no deadline is correct. Office of the Mayor, citywide street safety. No delivery or survival sentence supplied.",
+      "source_id": "S2d4ab9b435a4",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-signs-street-safety-executive-directive-in-major-step-to-improve-public-safety-in-san-francisco",
+      "source_file_path": "2d4ab9b435a491089cf9a53075aafc9e49b20214a71d5b2bfae5eccd3655c4c8.md",
+      "source_hash": "2d4ab9b435a491089cf9a53075aafc9e49b20214a71d5b2bfae5eccd3655c4c8",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Release a 2025 High Injury Network draft plan to enhance safety with tools such as providing separation, signal timing optimization, physical barriers, and additional deployment of turn and traffic calming tools.",
+      "title": "2025 High Injury Network draft plan",
+      "document_title": "Office of the Mayor Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:58:38.136554+00:00",
+          "reason": "Mayor Lurie directive lists releasing a 2025 High Injury Network draft plan with no firm date; no deadline is correct. Office of the Mayor, citywide street safety. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:38.136554+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:38.136554+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:38.136554+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:38.136554+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:38.136554+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:38.136554+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:38.210215+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-signs-street-safety-executive-directive-in-major-step-to-improve-public-safety-in-san-francisco",
+          "published_date": "2025-12-15T00:00:00Z",
+          "source_hash": "2d4ab9b435a491089cf9a53075aafc9e49b20214a71d5b2bfae5eccd3655c4c8",
+          "source_file_path": "2d4ab9b435a491089cf9a53075aafc9e49b20214a71d5b2bfae5eccd3655c4c8.md",
+          "quote": "Release a 2025 High Injury Network draft plan to enhance safety with tools such as providing separation, signal timing optimization, physical barriers, and additional deployment of turn and traffic calming tools."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 151,
+      "display_no": 151,
+      "entity_canonical_name": "Office of the Mayor",
+      "entity_category": "politician",
+      "entity_category_canonical": "politician",
+      "entity_promise_count": 6,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R1",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": true,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-392a9b448c-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-392a9b448c-1",
+      "promise_text": "This ground lease will be in effect until the City accepts the\ninfrastructure through a Board of Supervisors action, which is expected in 2024.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Housing Authority",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2023-10-13",
+      "due_date": "2024-12-31",
+      "promise_made_date": "2023-10-13",
+      "deadline_date": "2024-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 13, 2023",
+      "due_date_display": "Dec 31, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin states the SFHA ground lease lasts until City acceptance via Board action expected in 2024. SFHA is the landowner and lessor; no neighborhood is named. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:37:51.439637+00:00",
+      "factual_outcome": "Origin states the SFHA ground lease lasts until City acceptance via Board action expected in 2024. SFHA is the landowner and lessor; no neighborhood is named. No delivery or survival sentence supplied.",
+      "source_id": "S53697ac59064",
+      "source_url": "https://media.api.sf.gov/documents/Approved_Sunnydale_Infrastructure_Phase_1A3__Additional_Gap_Loan_Request_Loan__iZbEjCs.pdf",
+      "source_file_path": "53697ac59064d1130f36de384bb470ac2df5263a1eae609f42f7c6d240754b1c.md",
+      "source_hash": "53697ac59064d1130f36de384bb470ac2df5263a1eae609f42f7c6d240754b1c",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "This ground lease will be in effect until the City accepts the\ninfrastructure through a Board of Supervisors action, which is expected in 2024.",
+      "title": "Potrero HOPE SF Phase 1A3 ground lease",
+      "document_title": "San Francisco Housing Authority Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:37:51.439637+00:00",
+          "reason": "Origin states the SFHA ground lease lasts until City acceptance via Board action expected in 2024. SFHA is the landowner and lessor; no neighborhood is named. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:51.439637+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:51.439637+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:51.439637+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:51.439637+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:51.439637+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:51.439637+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:37:51.659033+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/Approved_Sunnydale_Infrastructure_Phase_1A3__Additional_Gap_Loan_Request_Loan__iZbEjCs.pdf",
+          "published_date": "2023-10-13T19:27:24Z",
+          "source_hash": "53697ac59064d1130f36de384bb470ac2df5263a1eae609f42f7c6d240754b1c",
+          "source_file_path": "53697ac59064d1130f36de384bb470ac2df5263a1eae609f42f7c6d240754b1c.md",
+          "quote": "This ground lease will be in effect until the City accepts the\ninfrastructure through a Board of Supervisors action, which is expected in 2024."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 152,
+      "display_no": 152,
+      "entity_canonical_name": "San Francisco Housing Authority",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-3ac5dc2e98-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-3ac5dc2e98-2",
+      "promise_text": "The next GO bond is expected to be presented to San Francisco voters in 2024.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Unified School District",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Education & Youth",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-03-07",
+      "due_date": "2024-12-31",
+      "promise_made_date": "2023-03-07",
+      "deadline_date": "2024-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Mar 7, 2023",
+      "due_date_display": "Dec 31, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "SFUSD release dated March 7, 2023 expects the next GO bond before voters in 2024. SFUSD is the entity; citywide school bond. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:42:08.364473+00:00",
+      "factual_outcome": "SFUSD release dated March 7, 2023 expects the next GO bond before voters in 2024. SFUSD is the entity; citywide school bond. No delivery or survival sentence supplied.",
+      "source_id": "S845940af2aac",
+      "source_url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2023-03-07-sfusd-releases-draft-facilities-master-plan",
+      "source_file_path": "845940af2aaca292d83a960f9a9848f1ca3353c7d5e8d923cb7950bc25a9587f.md",
+      "source_hash": "845940af2aaca292d83a960f9a9848f1ca3353c7d5e8d923cb7950bc25a9587f",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "The next GO bond is expected to be presented to San Francisco voters in 2024.",
+      "title": "SFUSD facilities master plan and next GO bond",
+      "document_title": "San Francisco Unified School District Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:42:08.364473+00:00",
+          "reason": "SFUSD release dated March 7, 2023 expects the next GO bond before voters in 2024. SFUSD is the entity; citywide school bond. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:42:08.364473+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:42:08.364473+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:42:08.364473+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:42:08.364473+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:42:08.364473+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:42:08.364473+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:42:08.642198+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2023-03-07-sfusd-releases-draft-facilities-master-plan",
+          "published_date": "2023-03-07T00:00:00Z",
+          "source_hash": "845940af2aaca292d83a960f9a9848f1ca3353c7d5e8d923cb7950bc25a9587f",
+          "source_file_path": "845940af2aaca292d83a960f9a9848f1ca3353c7d5e8d923cb7950bc25a9587f.md",
+          "quote": "The next GO bond is expected to be presented to San Francisco voters in 2024."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 153,
+      "display_no": 153,
+      "entity_canonical_name": "San Francisco Unified School District",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 6,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-c33ab68592-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-c33ab68592-1",
+      "promise_text": "Predevelopment activity is expected to begin by the end of 2022.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2022-02-15",
+      "due_date": "2022-12-31",
+      "promise_made_date": "2022-02-15",
+      "deadline_date": "2022-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Feb 15, 2022",
+      "due_date_display": "Dec 31, 2022",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin sentence (seen in the numbered source, beyond the excerpt) says predevelopment activity is expected to begin by end of 2022 for Block R and Q in the 2015 Affordable Housing Bond report. No neighborhood named in the shown text, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:51:31.310105+00:00",
+      "factual_outcome": "Origin sentence (seen in the numbered source, beyond the excerpt) says predevelopment activity is expected to begin by end of 2022 for Block R and Q in the 2015 Affordable Housing Bond report. No neighborhood named in the shown text, so Not stated is accepted. No delivery or survival sentence supplied.",
+      "source_id": "Scd8e6519e30e",
+      "source_url": "https://media.api.sf.gov/documents/CGOBOC_2015_Housing_Bond_Report_123121.pdf",
+      "source_file_path": "cd8e6519e30ed1c6b46e3b4e375dbc18fd1e3814f9941db28dcb5e5c6ad3efcf.md",
+      "source_hash": "cd8e6519e30ed1c6b46e3b4e375dbc18fd1e3814f9941db28dcb5e5c6ad3efcf",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Predevelopment activity is expected to begin by the end of 2022.",
+      "title": "Potrero HOPE SF Block R and Q predevelopment",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:51:31.310105+00:00",
+          "reason": "Origin sentence (seen in the numbered source, beyond the excerpt) says predevelopment activity is expected to begin by end of 2022 for Block R and Q in the 2015 Affordable Housing Bond report. No neighborhood named in the shown text, so Not stated is accepted. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:31.310105+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:31.310105+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:31.310105+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:31.310105+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:31.310105+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:31.310105+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:31.386458+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/CGOBOC_2015_Housing_Bond_Report_123121.pdf",
+          "published_date": "2022-02-15T19:02:32Z",
+          "source_hash": "cd8e6519e30ed1c6b46e3b4e375dbc18fd1e3814f9941db28dcb5e5c6ad3efcf",
+          "source_file_path": "cd8e6519e30ed1c6b46e3b4e375dbc18fd1e3814f9941db28dcb5e5c6ad3efcf.md",
+          "quote": "Predevelopment activity is expected to begin by the end of 2022."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 154,
+      "display_no": 154,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 10,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-60da3f8b65-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-60da3f8b65-2",
+      "promise_text": "These pilots will be installed and evaluated at eight intersections by early 2020.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2019-08-29",
+      "due_date": "2020-12-31",
+      "promise_made_date": "2019-08-29",
+      "deadline_date": "2020-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Aug 29, 2019",
+      "due_date_display": "Dec 31, 2020",
+      "due_date_status": "present",
+      "completion_date_status": "not_captured",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "delayed_or_partial",
+      "verdict_reason": "Origin: SFMTA left-turn calming pilots at eight intersections by early 2020. Delivery sentence says SFMTA piloted turn-slowing designs in Fall 2020, which supports a partial delivery with timing within 2020; it does not state eight intersections or evaluation. (current status not checked)",
+      "decided_at": "2026-11-25T01:50:18.406574+00:00",
+      "factual_outcome": "Origin: SFMTA left-turn calming pilots at eight intersections by early 2020. Delivery sentence says SFMTA piloted turn-slowing designs in Fall 2020, which supports a partial delivery with timing within 2020; it does not state eight intersections or evaluation. (current status not checked)",
+      "source_id": "S52698f59e87a",
+      "source_url": "https://www.sf.gov/news--mayor-london-breed-announces-new-vision-zero-initiatives-improve-safety-intersections",
+      "source_file_path": "52698f59e87a38fb49c3e76ad15fed24b65112f9974ffd1deeb1cd695bc5e957.md",
+      "source_hash": "52698f59e87a38fb49c3e76ad15fed24b65112f9974ffd1deeb1cd695bc5e957",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "These pilots will be installed and evaluated at eight intersections by early 2020.",
+      "title": "Left-turn traffic calming pilot evaluations",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: DELIVERY."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "delayed_or_partial",
+          "decided_at": "2026-11-25T01:50:18.406574+00:00",
+          "reason": "Origin: SFMTA left-turn calming pilots at eight intersections by early 2020. Delivery sentence says SFMTA piloted turn-slowing designs in Fall 2020, which supports a partial delivery with timing within 2020; it does not state eight intersections or evaluation. (current status not checked)"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:50:18.406574+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:50:18.406574+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:50:18.406574+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:50:18.406574+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:50:18.406574+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:50:18.406574+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:50:18.702328+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--mayor-london-breed-announces-new-vision-zero-initiatives-improve-safety-intersections",
+          "published_date": "2019-08-29T00:00:00Z",
+          "source_hash": "52698f59e87a38fb49c3e76ad15fed24b65112f9974ffd1deeb1cd695bc5e957",
+          "source_file_path": "52698f59e87a38fb49c3e76ad15fed24b65112f9974ffd1deeb1cd695bc5e957.md",
+          "quote": "These pilots will be installed and evaluated at eight intersections by early 2020."
+        },
+        {
+          "phase": "DELIVERY",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--mayor-breed-and-city-officials-mark-10-years-vision-zero-and-next-steps-street-safety",
+          "published_date": "2024-03-28T00:00:00Z",
+          "source_hash": "cd0f7f076f0b3ac0a1228c068a661cc759d0a32dc56f55af285531d0ab85b276",
+          "source_file_path": "cd0f7f076f0b3ac0a1228c068a661cc759d0a32dc56f55af285531d0ab85b276.md",
+          "quote": "SFMTA conducted a pilot in Fall 2020, where they installed designs to force driver to turn more slowly, which allows them to drive more carefully."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 3,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 3,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 155,
+      "display_no": 155,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 12,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R4"
+        ],
+        "outcome_rule": "R4",
+        "open_ended": false,
+        "reason": "current status not checked",
+        "relied_on": [
+          "DELIVERY"
+        ],
+        "status_not_checked": true
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-34451e7df8-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-34451e7df8-1",
+      "promise_text": "The Shoreline Plan will begin in 2026 and is anticipated to be completed by late 2028, plus local adoptions\nand regulatory approval by both CCC and BCDC in early 2029.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Planning Department",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Environment & Energy",
+      "category": "Environment & Energy",
+      "category_l1": "Environment & Energy",
+      "pillar": "Weather & Environment",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-07-16",
+      "due_date": "2028-12-31",
+      "promise_made_date": "2026-07-16",
+      "deadline_date": "2028-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jul 16, 2026",
+      "due_date_display": "Dec 31, 2028",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin memo states the Shoreline Plan will begin in 2026 and be completed by late 2028; it is a citywide plan led by SF Planning. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:40:32.927294+00:00",
+      "factual_outcome": "Origin memo states the Shoreline Plan will begin in 2026 and be completed by late 2028; it is a citywide plan led by SF Planning. No delivery or survival sentence supplied.",
+      "source_id": "Sdc6d436ca5ba",
+      "source_url": "https://sfplanning.org/sites/default/files/documents/citywide/sf-shoreline-adaptation-plan-cpc-memo-072326.pdf",
+      "source_file_path": "dc6d436ca5ba01db2d777f90bb0934b10fb19004792cc933d2f54f76be477ba1.md",
+      "source_hash": "dc6d436ca5ba01db2d777f90bb0934b10fb19004792cc933d2f54f76be477ba1",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "The Shoreline Plan will begin in 2026 and is anticipated to be completed by late 2028, plus local adoptions\nand regulatory approval by both CCC and BCDC in early 2029.",
+      "title": "Shoreline Adaptation Plan",
+      "document_title": "San Francisco Planning Department Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:40:32.927294+00:00",
+          "reason": "Origin memo states the Shoreline Plan will begin in 2026 and be completed by late 2028; it is a citywide plan led by SF Planning. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:32.927294+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:32.927294+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:32.927294+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:32.927294+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:32.927294+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:32.927294+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:33.271988+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfplanning.org/sites/default/files/documents/citywide/sf-shoreline-adaptation-plan-cpc-memo-072326.pdf",
+          "published_date": "2026-07-16T16:45:23Z",
+          "source_hash": "dc6d436ca5ba01db2d777f90bb0934b10fb19004792cc933d2f54f76be477ba1",
+          "source_file_path": "dc6d436ca5ba01db2d777f90bb0934b10fb19004792cc933d2f54f76be477ba1.md",
+          "quote": "The Shoreline Plan will begin in 2026 and is anticipated to be completed by late 2028, plus local adoptions\nand regulatory approval by both CCC and BCDC in early 2029."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 156,
+      "display_no": 156,
+      "entity_canonical_name": "San Francisco Planning Department",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-d0829b9acb-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-d0829b9acb-2",
+      "promise_text": "Bristol Below Market Rate Condominium is for sale now\n\u2022 The Senior Housing Building will have 60 Affordable Units for rent in 2028\n\u2022 IC4.3 will have 59 Affordable Units for rent in 2028",
+      "promise_text_expanded": false,
+      "entity": "Treasure Island Development Authority",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Treasure Island",
+      "neighborhood_canonical": "Treasure Island",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.8235,
+      "longitude": -122.3706,
+      "promised_date": "2026-05-11",
+      "due_date": "2028-12-31",
+      "promise_made_date": "2026-05-11",
+      "deadline_date": "2028-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 11, 2026",
+      "due_date_display": "Dec 31, 2028",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin is a Treasure Island Development Authority engagement summary (May 2026) stating affordable units for rent in 2028 on Treasure Island. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:48:55.103299+00:00",
+      "factual_outcome": "Origin is a Treasure Island Development Authority engagement summary (May 2026) stating affordable units for rent in 2028 on Treasure Island. No delivery or survival sentence supplied.",
+      "source_id": "Sec40a3e49d4c",
+      "source_url": "https://media.api.sf.gov/documents/05_InaHbLv.13.26_Directors_Report.pdf",
+      "source_file_path": "ec40a3e49d4c77ecf7d03f25224637f1c00b84a514d0ca5f6aa61796b9942109.md",
+      "source_hash": "ec40a3e49d4c77ecf7d03f25224637f1c00b84a514d0ca5f6aa61796b9942109",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Bristol Below Market Rate Condominium is for sale now\n\u2022 The Senior Housing Building will have 60 Affordable Units for rent in 2028\n\u2022 IC4.3 will have 59 Affordable Units for rent in 2028",
+      "title": "Treasure Island senior and below-market housing for rent",
+      "document_title": "Treasure Island Development Authority Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:48:55.103299+00:00",
+          "reason": "Origin is a Treasure Island Development Authority engagement summary (May 2026) stating affordable units for rent in 2028 on Treasure Island. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:55.103299+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:55.103299+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:55.103299+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:55.103299+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:55.103299+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:55.103299+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:55.313627+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/05_InaHbLv.13.26_Directors_Report.pdf",
+          "published_date": "2026-05-11T21:30:47Z",
+          "source_hash": "ec40a3e49d4c77ecf7d03f25224637f1c00b84a514d0ca5f6aa61796b9942109",
+          "source_file_path": "ec40a3e49d4c77ecf7d03f25224637f1c00b84a514d0ca5f6aa61796b9942109.md",
+          "quote": "Bristol Below Market Rate Condominium is for sale now\n\u2022 The Senior Housing Building will have 60 Affordable Units for rent in 2028\n\u2022 IC4.3 will have 59 Affordable Units for rent in 2028"
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 157,
+      "display_no": 157,
+      "entity_canonical_name": "Treasure Island Development Authority",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 5,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-e589ef7892-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-e589ef7892-1",
+      "promise_text": "The project, which is scheduled to be completed in 2029, is expected to create more than 450 construction jobs, with local residents performing 30% of the work hours and 50% of the apprentice work hours.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Works",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Public Safety & Justice",
+      "category": "Public Safety & Justice",
+      "category_l1": "Public Safety & Justice",
+      "pillar": "Civic Life",
+      "neighborhood": "Bayview-Hunters Point",
+      "neighborhood_canonical": "Bayview-Hunters Point",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7299,
+      "longitude": -122.3843,
+      "promised_date": "2026-04-16",
+      "due_date": "2029-12-31",
+      "promise_made_date": "2026-04-16",
+      "deadline_date": "2029-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Apr 16, 2026",
+      "due_date_display": "Dec 31, 2029",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin release is headlined as a Bayview-Hunters Point groundbreaking; Public Works provides project management for the SFFD training facility. Completion in 2029 normalizes to 2029-12-31. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:59:26.735660+00:00",
+      "factual_outcome": "Origin release is headlined as a Bayview-Hunters Point groundbreaking; Public Works provides project management for the SFFD training facility. Completion in 2029 normalizes to 2029-12-31. No delivery or survival sentence supplied.",
+      "source_id": "Sb3438585edd6",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-new-fire-department-training-campus-in-bayview-hunters-point",
+      "source_file_path": "b3438585edd6f80ff514b7227bd7484ab277b38ff0907533901a0cddab081c35.md",
+      "source_hash": "b3438585edd6f80ff514b7227bd7484ab277b38ff0907533901a0cddab081c35",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The project, which is scheduled to be completed in 2029, is expected to create more than 450 construction jobs, with local residents performing 30% of the work hours and 50% of the apprentice work hours.",
+      "title": "Bayview Hunters Point fire department training campus",
+      "document_title": "San Francisco Public Works Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:59:26.735660+00:00",
+          "reason": "Origin release is headlined as a Bayview-Hunters Point groundbreaking; Public Works provides project management for the SFFD training facility. Completion in 2029 normalizes to 2029-12-31. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:59:26.735660+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:59:26.735660+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:59:26.735660+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:59:26.735660+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:59:26.735660+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:59:26.735660+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:59:26.882339+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-new-fire-department-training-campus-in-bayview-hunters-point",
+          "published_date": "2026-04-16T00:00:00Z",
+          "source_hash": "b3438585edd6f80ff514b7227bd7484ab277b38ff0907533901a0cddab081c35",
+          "source_file_path": "b3438585edd6f80ff514b7227bd7484ab277b38ff0907533901a0cddab081c35.md",
+          "quote": "The project, which is scheduled to be completed in 2029, is expected to create more than 450 construction jobs, with local residents performing 30% of the work hours and 50% of the apprentice work hours."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 158,
+      "display_no": 158,
+      "entity_canonical_name": "San Francisco Public Works",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 2,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-a0d6122cb1-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-a0d6122cb1-1",
+      "promise_text": "The bond is expected to be on the June 2026 ballot and is being advanced from 2028 to 2026 to address urgent seismic needs.",
+      "promise_text_expanded": false,
+      "entity": "Office of the Mayor",
+      "role": null,
+      "entity_type": "politician",
+      "entity_type_legacy": "Mayor / Executive",
+      "sector": "Public Safety & Justice",
+      "category": "Public Safety & Justice",
+      "category_l1": "Public Safety & Justice",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-01-14",
+      "due_date": "2026-06-30",
+      "promise_made_date": "2026-01-14",
+      "deadline_date": "2026-06-30",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jan 14, 2026",
+      "due_date_display": "Jun 30, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Mayor release (Jan 14, 2026) expects the citywide ESER bond on the June 2026 ballot. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:56:15.093256+00:00",
+      "factual_outcome": "Mayor release (Jan 14, 2026) expects the citywide ESER bond on the June 2026 ballot. No delivery or survival sentence supplied.",
+      "source_id": "S9afd605dffde",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-and-president-mandelman-announce-2026-earthquake-safety-and-emergency-response-bond-to-modernize-infrastructure-and-support-public-safety",
+      "source_file_path": "9afd605dffde26b8d833afc2df7bf59790079e6f3bf41f2dc2dcbfba50771e22.md",
+      "source_hash": "9afd605dffde26b8d833afc2df7bf59790079e6f3bf41f2dc2dcbfba50771e22",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The bond is expected to be on the June 2026 ballot and is being advanced from 2028 to 2026 to address urgent seismic needs.",
+      "title": "Public safety and infrastructure bond for June 2026 ballot",
+      "document_title": "Office of the Mayor Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:56:15.093256+00:00",
+          "reason": "Mayor release (Jan 14, 2026) expects the citywide ESER bond on the June 2026 ballot. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:15.093256+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:15.093256+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:15.093256+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:15.093256+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:15.093256+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:15.093256+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:56:15.307771+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-and-president-mandelman-announce-2026-earthquake-safety-and-emergency-response-bond-to-modernize-infrastructure-and-support-public-safety",
+          "published_date": "2026-01-14T00:00:00Z",
+          "source_hash": "9afd605dffde26b8d833afc2df7bf59790079e6f3bf41f2dc2dcbfba50771e22",
+          "source_file_path": "9afd605dffde26b8d833afc2df7bf59790079e6f3bf41f2dc2dcbfba50771e22.md",
+          "quote": "The bond is expected to be on the June 2026 ballot and is being advanced from 2028 to 2026 to address urgent seismic needs."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 159,
+      "display_no": 159,
+      "entity_canonical_name": "Office of the Mayor",
+      "entity_category": "politician",
+      "entity_category_canonical": "politician",
+      "entity_promise_count": 7,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-6358923c2f-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-6358923c2f-1",
+      "promise_text": "The department plans to receive 1,100 sets of non-PFAS turnout gear, one set for every frontline suppression member, by December 31, 2025.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Fire Department",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Public Safety & Justice",
+      "category": "Public Safety & Justice",
+      "category_l1": "Public Safety & Justice",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2025-12-11",
+      "due_date": "2025-12-31",
+      "promise_made_date": "2025-12-11",
+      "deadline_date": "2025-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Dec 11, 2025",
+      "due_date_display": "Dec 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin (Dec 11, 2025 release) says SFFD plans to receive 1,100 sets of non-PFAS gear by Dec 31, 2025; department-wide, citywide. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:51:12.599872+00:00",
+      "factual_outcome": "Origin (Dec 11, 2025 release) says SFFD plans to receive 1,100 sets of non-PFAS gear by Dec 31, 2025; department-wide, citywide. No delivery or survival sentence supplied.",
+      "source_id": "Sfb8ae83a7637",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-announces-san-francisco-fire-department-will-become-largest-in-us-to-adopt-safe-firefighting-gear",
+      "source_file_path": "fb8ae83a7637efd71e7c2bcc9647e4bf368058712028c2d7c66bbf8d1d88a648.md",
+      "source_hash": "fb8ae83a7637efd71e7c2bcc9647e4bf368058712028c2d7c66bbf8d1d88a648",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The department plans to receive 1,100 sets of non-PFAS turnout gear, one set for every frontline suppression member, by December 31, 2025.",
+      "title": "Fire Department non-PFAS turnout gear",
+      "document_title": "San Francisco Fire Department Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:51:12.599872+00:00",
+          "reason": "Origin (Dec 11, 2025 release) says SFFD plans to receive 1,100 sets of non-PFAS gear by Dec 31, 2025; department-wide, citywide. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:12.599872+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:12.599872+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:12.599872+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:12.599872+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:12.599872+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:12.599872+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:51:12.884570+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-announces-san-francisco-fire-department-will-become-largest-in-us-to-adopt-safe-firefighting-gear",
+          "published_date": "2025-12-11T00:00:00Z",
+          "source_hash": "fb8ae83a7637efd71e7c2bcc9647e4bf368058712028c2d7c66bbf8d1d88a648",
+          "source_file_path": "fb8ae83a7637efd71e7c2bcc9647e4bf368058712028c2d7c66bbf8d1d88a648.md",
+          "quote": "The department plans to receive 1,100 sets of non-PFAS turnout gear, one set for every frontline suppression member, by December 31, 2025."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 160,
+      "display_no": 160,
+      "entity_canonical_name": "San Francisco Fire Department",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R2",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-b1a708e4cd-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-b1a708e4cd-2",
+      "promise_text": "The project is currently in the \nconstruction phase, and with full funding is expected to be completed in early 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2025-09-10",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2025-09-10",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 10, 2025",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin SFMTA calendar item gives early 2027 completion for the 13th Street Safety Project (Folsom to Valencia) and names no neighborhood, so Not stated fits. Delivery and survival are not evaluated here.",
+      "decided_at": "2026-11-25T01:57:10.568088+00:00",
+      "factual_outcome": "Origin SFMTA calendar item gives early 2027 completion for the 13th Street Safety Project (Folsom to Valencia) and names no neighborhood, so Not stated fits. Delivery and survival are not evaluated here.",
+      "source_id": "Sbee9a86bb845",
+      "source_url": "https://www.sfmta.com/tl/media/43284/download?inline=",
+      "source_file_path": "bee9a86bb845533356aac67b54451014404b0273ef919119afdc67507c022c83.md",
+      "source_hash": "bee9a86bb845533356aac67b54451014404b0273ef919119afdc67507c022c83",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The project is currently in the \nconstruction phase, and with full funding is expected to be completed in early 2027.",
+      "title": "13th Street Safety Project",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:57:10.568088+00:00",
+          "reason": "Origin SFMTA calendar item gives early 2027 completion for the 13th Street Safety Project (Folsom to Valencia) and names no neighborhood, so Not stated fits. Delivery and survival are not evaluated here."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:57:10.568088+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:57:10.568088+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:57:10.568088+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:57:10.568088+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:57:10.568088+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:57:10.568088+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:57:10.713350+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfmta.com/tl/media/43284/download?inline=",
+          "published_date": "2025-09-10T20:48:58Z",
+          "source_hash": "bee9a86bb845533356aac67b54451014404b0273ef919119afdc67507c022c83",
+          "source_file_path": "bee9a86bb845533356aac67b54451014404b0273ef919119afdc67507c022c83.md",
+          "quote": "The project is currently in the \nconstruction phase, and with full funding is expected to be completed in early 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 161,
+      "display_no": 161,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 13,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-a51f7c79f2-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-a51f7c79f2-1",
+      "promise_text": "The agency is currently\nworking on a data-driven proactive traffic calming program that\ndelivers the greatest safety benefits and aims to have it\nimplemented by December 2026.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2025-08-18",
+      "due_date": "2026-12-31",
+      "promise_made_date": "2025-08-18",
+      "deadline_date": "2026-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Aug 18, 2025",
+      "due_date_display": "Dec 31, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin says SFMTA aims to have the proactive traffic calming program implemented by December 2026; letter dated August 18, 2025. Citywide program. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:41:22.085266+00:00",
+      "factual_outcome": "Origin says SFMTA aims to have the proactive traffic calming program implemented by December 2026; letter dated August 18, 2025. Citywide program. No delivery or survival sentence supplied.",
+      "source_id": "Sf47b3059d93e",
+      "source_url": "https://media.api.sf.gov/documents/Civil_Grand_Jury_Vision_Zero_Report_Response_Package_8.18.2025_FzkVlwG.pdf",
+      "source_file_path": "f47b3059d93e50110f5e1a28892d1984c16ca080f75ffcc66b6f717f6879840a.md",
+      "source_hash": "f47b3059d93e50110f5e1a28892d1984c16ca080f75ffcc66b6f717f6879840a",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "The agency is currently\nworking on a data-driven proactive traffic calming program that\ndelivers the greatest safety benefits and aims to have it\nimplemented by December 2026.",
+      "title": "Data-driven proactive traffic calming program",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:41:22.085266+00:00",
+          "reason": "Origin says SFMTA aims to have the proactive traffic calming program implemented by December 2026; letter dated August 18, 2025. Citywide program. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:22.085266+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:22.085266+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:22.085266+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:22.085266+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:22.085266+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:22.085266+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:22.402576+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/Civil_Grand_Jury_Vision_Zero_Report_Response_Package_8.18.2025_FzkVlwG.pdf",
+          "published_date": "2025-08-18T19:00:46Z",
+          "source_hash": "f47b3059d93e50110f5e1a28892d1984c16ca080f75ffcc66b6f717f6879840a",
+          "source_file_path": "f47b3059d93e50110f5e1a28892d1984c16ca080f75ffcc66b6f717f6879840a.md",
+          "quote": "The agency is currently\nworking on a data-driven proactive traffic calming program that\ndelivers the greatest safety benefits and aims to have it\nimplemented by December 2026."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 162,
+      "display_no": 162,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 14,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-0a1dd8db5e-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-0a1dd8db5e-2",
+      "promise_text": "She noted the \nartwork is currently scheduled to be installed in spring of 2024 with \nthe terminal opening to the public in Summer 2024.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Arts Commission",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2023-10-02",
+      "due_date": "2024-12-31",
+      "promise_made_date": "2023-10-02",
+      "deadline_date": "2024-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 2, 2023",
+      "due_date_display": "Dec 31, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Arts Commission minutes of Oct 2, 2023 say the mural is scheduled for spring 2024 with terminal opening Summer 2024; the source names SFO Terminal 1 and no neighborhood, so Not stated fits. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:53:09.811389+00:00",
+      "factual_outcome": "Arts Commission minutes of Oct 2, 2023 say the mural is scheduled for spring 2024 with terminal opening Summer 2024; the source names SFO Terminal 1 and no neighborhood, so Not stated fits. No delivery or survival sentence supplied.",
+      "source_id": "Sae0080f37096",
+      "source_url": "https://media.api.sf.gov/documents/October_2_2023_Full_Commission_Meeting_Draft_Minutes.pdf",
+      "source_file_path": "ae0080f3709638afdc3751dbb9f56d8a227a0a8806ba37bbd82234ca10ed53a7.md",
+      "source_hash": "ae0080f3709638afdc3751dbb9f56d8a227a0a8806ba37bbd82234ca10ed53a7",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "She noted the \nartwork is currently scheduled to be installed in spring of 2024 with \nthe terminal opening to the public in Summer 2024.",
+      "title": "Harvey Milk Terminal 1 atrium mural",
+      "document_title": "San Francisco Arts Commission Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:53:09.811389+00:00",
+          "reason": "Arts Commission minutes of Oct 2, 2023 say the mural is scheduled for spring 2024 with terminal opening Summer 2024; the source names SFO Terminal 1 and no neighborhood, so Not stated fits. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:09.811389+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:09.811389+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:09.811389+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:09.811389+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:09.811389+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:09.811389+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:10.022570+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/October_2_2023_Full_Commission_Meeting_Draft_Minutes.pdf",
+          "published_date": "2023-10-17T05:06:49Z",
+          "source_hash": "ae0080f3709638afdc3751dbb9f56d8a227a0a8806ba37bbd82234ca10ed53a7",
+          "source_file_path": "ae0080f3709638afdc3751dbb9f56d8a227a0a8806ba37bbd82234ca10ed53a7.md",
+          "quote": "She noted the \nartwork is currently scheduled to be installed in spring of 2024 with \nthe terminal opening to the public in Summer 2024."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 163,
+      "display_no": 163,
+      "entity_canonical_name": "San Francisco Arts Commission",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 12,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-ca50dfee8e-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-ca50dfee8e-1",
+      "promise_text": "It is anticipated that 78 Haight will be move-in ready by late 2023.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Hayes Valley",
+      "neighborhood_canonical": "Hayes Valley",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7759,
+      "longitude": -122.4245,
+      "promised_date": "2022-04-28",
+      "due_date": "2023-12-31",
+      "promise_made_date": "2022-04-28",
+      "deadline_date": "2023-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Apr 28, 2022",
+      "due_date_display": "Dec 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_captured",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "delayed_or_partial",
+      "verdict_reason": "Origin anticipates move-in ready by late 2023; the 2026-06-30 release reports the grand opening of the 64-unit community in Hayes Valley, well after 2023-12-31, so delivered late. No survival sentence supplied. (current status not checked)",
+      "decided_at": "2026-11-25T01:52:25.237846+00:00",
+      "factual_outcome": "Origin anticipates move-in ready by late 2023; the 2026-06-30 release reports the grand opening of the 64-unit community in Hayes Valley, well after 2023-12-31, so delivered late. No survival sentence supplied. (current status not checked)",
+      "source_id": "S02f8a3673fd6",
+      "source_url": "https://sf.gov/news--city-celebrates-groundbreaking-new-affordable-housing-hayes-valley",
+      "source_file_path": "02f8a3673fd63fabda9fbe03c940e81b062bf3ee58474e6a04b1eb12eeea13b4.md",
+      "source_hash": "02f8a3673fd63fabda9fbe03c940e81b062bf3ee58474e6a04b1eb12eeea13b4",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "It is anticipated that 78 Haight will be move-in ready by late 2023.",
+      "title": "78 Haight Street affordable housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: DELIVERY."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "delayed_or_partial",
+          "decided_at": "2026-11-25T01:52:25.237846+00:00",
+          "reason": "Origin anticipates move-in ready by late 2023; the 2026-06-30 release reports the grand opening of the 64-unit community in Hayes Valley, well after 2023-12-31, so delivered late. No survival sentence supplied. (current status not checked)"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:25.237846+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:25.237846+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:25.237846+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:25.237846+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:25.237846+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:25.237846+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:25.531929+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sf.gov/news--city-celebrates-groundbreaking-new-affordable-housing-hayes-valley",
+          "published_date": "2022-04-28T10:38:10Z",
+          "source_hash": "02f8a3673fd63fabda9fbe03c940e81b062bf3ee58474e6a04b1eb12eeea13b4",
+          "source_file_path": "02f8a3673fd63fabda9fbe03c940e81b062bf3ee58474e6a04b1eb12eeea13b4.md",
+          "quote": "It is anticipated that 78 Haight will be move-in ready by late 2023."
+        },
+        {
+          "phase": "DELIVERY",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-opens-64-new-affordable-homes-for-transitional-age-youth-low-income-families",
+          "published_date": "2026-06-30T00:00:00Z",
+          "source_hash": "7ff1bffd12049802c594cd083bda39557e92abf93051139b11bdd2fc14f4d2f1",
+          "source_file_path": "7ff1bffd12049802c594cd083bda39557e92abf93051139b11bdd2fc14f4d2f1.md",
+          "quote": "SAN FRANCISCO** \u2013 Mayor Daniel Lurie today celebrated the grand opening of 78 Haight Street, a new 64\u2011unit affordable housing community in Hayes Valley that provides permanent homes and comprehensive support services for transitional\u2011age youth and low\u2011income families."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 3,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 3,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 164,
+      "display_no": 164,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 11,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R4"
+        ],
+        "outcome_rule": "R4",
+        "open_ended": false,
+        "reason": "current status not checked",
+        "relied_on": [
+          "DELIVERY"
+        ],
+        "status_not_checked": true
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'today' resolved against publication date 2022-04-28",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-c33ab68592-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-c33ab68592-2",
+      "promise_text": "Third issuance expenditure \nschedule is largely driven by $25M allocation to educator housing at 43rd & Irving now expected \nto begin construction in the fall of 2022.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2022-02-15",
+      "due_date": "2022-12-31",
+      "promise_made_date": "2022-02-15",
+      "deadline_date": "2022-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Feb 15, 2022",
+      "due_date_display": "Dec 31, 2022",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin bond report expects educator housing at 43rd & Irving to begin construction in fall 2022; MOHCD runs the program and the source names no neighborhood. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:58:07.817186+00:00",
+      "factual_outcome": "Origin bond report expects educator housing at 43rd & Irving to begin construction in fall 2022; MOHCD runs the program and the source names no neighborhood. No delivery or survival sentence supplied.",
+      "source_id": "Scd8e6519e30e",
+      "source_url": "https://media.api.sf.gov/documents/CGOBOC_2015_Housing_Bond_Report_123121.pdf",
+      "source_file_path": "cd8e6519e30ed1c6b46e3b4e375dbc18fd1e3814f9941db28dcb5e5c6ad3efcf.md",
+      "source_hash": "cd8e6519e30ed1c6b46e3b4e375dbc18fd1e3814f9941db28dcb5e5c6ad3efcf",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Third issuance expenditure \nschedule is largely driven by $25M allocation to educator housing at 43rd & Irving now expected \nto begin construction in the fall of 2022.",
+      "title": "Educator housing at 43rd and Irving",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:58:07.817186+00:00",
+          "reason": "Origin bond report expects educator housing at 43rd & Irving to begin construction in fall 2022; MOHCD runs the program and the source names no neighborhood. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:07.817186+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:07.817186+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:07.817186+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:07.817186+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:07.817186+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:07.817186+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:08.028301+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/CGOBOC_2015_Housing_Bond_Report_123121.pdf",
+          "published_date": "2022-02-15T19:02:32Z",
+          "source_hash": "cd8e6519e30ed1c6b46e3b4e375dbc18fd1e3814f9941db28dcb5e5c6ad3efcf",
+          "source_file_path": "cd8e6519e30ed1c6b46e3b4e375dbc18fd1e3814f9941db28dcb5e5c6ad3efcf.md",
+          "quote": "Third issuance expenditure \nschedule is largely driven by $25M allocation to educator housing at 43rd & Irving now expected \nto begin construction in the fall of 2022."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 165,
+      "display_no": 165,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 12,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-50e2015917-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-50e2015917-1",
+      "promise_text": "Following Board approval, the Airport\u2019s Director of Revenue Development & Management, \nCheryl Nashir, expects ProperFood SFO Airport will begin its estimated five-month construction \nperiod sometime in January 2022 or February 2022, and ultimately open the store between June \n2022 and July 2022.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco International Airport",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2021-09-03",
+      "due_date": "2022-07-31",
+      "promise_made_date": "2021-09-03",
+      "deadline_date": "2022-07-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 3, 2021",
+      "due_date_display": "Jul 31, 2022",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin states the Airport expects ProperFood to open the store between June 2022 and July 2022, dated September 3, 2021. No delivery or survival sentence was supplied. The origin names the Airport (Harvey Milk Terminal 1) and no neighborhood.",
+      "decided_at": "2026-11-25T01:38:59.982670+00:00",
+      "factual_outcome": "Origin states the Airport expects ProperFood to open the store between June 2022 and July 2022, dated September 3, 2021. No delivery or survival sentence was supplied. The origin names the Airport (Harvey Milk Terminal 1) and no neighborhood.",
+      "source_id": "S0c9a8d07c745",
+      "source_url": "https://sfgov.legistar.com/View.ashx?GUID=F26B6853-722F-4A02-A423-897A45CD8555&ID=9785350&M=F",
+      "source_file_path": "0c9a8d07c745fa60aff95023623b8b2dce122b27223de87e7a0d73e03144b442.md",
+      "source_hash": "0c9a8d07c745fa60aff95023623b8b2dce122b27223de87e7a0d73e03144b442",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Following Board approval, the Airport\u2019s Director of Revenue Development & Management, \nCheryl Nashir, expects ProperFood SFO Airport will begin its estimated five-month construction \nperiod sometime in January 2022 or February 2022, and ultimately open the store between June \n2022 and July 2022.",
+      "title": "ProperFood SFO Terminal 1 store",
+      "document_title": "San Francisco International Airport Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:38:59.982670+00:00",
+          "reason": "Origin states the Airport expects ProperFood to open the store between June 2022 and July 2022, dated September 3, 2021. No delivery or survival sentence was supplied. The origin names the Airport (Harvey Milk Terminal 1) and no neighborhood."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:59.982670+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:59.982670+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:59.982670+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:59.982670+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:59.982670+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:38:59.982670+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:39:00.129645+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfgov.legistar.com/View.ashx?GUID=F26B6853-722F-4A02-A423-897A45CD8555&ID=9785350&M=F",
+          "published_date": "2021-09-03T21:09:08Z",
+          "source_hash": "0c9a8d07c745fa60aff95023623b8b2dce122b27223de87e7a0d73e03144b442",
+          "source_file_path": "0c9a8d07c745fa60aff95023623b8b2dce122b27223de87e7a0d73e03144b442.md",
+          "quote": "Following Board approval, the Airport\u2019s Director of Revenue Development & Management, \nCheryl Nashir, expects ProperFood SFO Airport will begin its estimated five-month construction \nperiod sometime in January 2022 or February 2022, and ultimately open the store between June \n2022 and July 2022."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 166,
+      "display_no": 166,
+      "entity_canonical_name": "San Francisco International Airport",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-42ad85df0c-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-42ad85df0c-1",
+      "promise_text": "Construction started in June 2021, and residents are anticipated to begin moving in Spring 2023, once the building is complete.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "SoMa",
+      "neighborhood_canonical": "SoMa",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7785,
+      "longitude": -122.4056,
+      "promised_date": "2021-08-26",
+      "due_date": "2023-12-31",
+      "promise_made_date": "2021-08-26",
+      "deadline_date": "2023-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Aug 26, 2021",
+      "due_date_display": "Dec 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin release (2021-08-26) places 921 Howard in the South of Market (SOMA) neighborhood, a MOHCD-financed project, with move-in anticipated Spring 2023. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:53:59.379719+00:00",
+      "factual_outcome": "Origin release (2021-08-26) places 921 Howard in the South of Market (SOMA) neighborhood, a MOHCD-financed project, with move-in anticipated Spring 2023. No delivery or survival sentence supplied.",
+      "source_id": "S13ebf93cbeb8",
+      "source_url": "https://sf.gov/news--city-announces-groundbreaking-18-story-affordable-housing-development-soma",
+      "source_file_path": "13ebf93cbeb8d454855c0c00a2b58b778cf73c2a8734ec98f1ebbbabf5e58e30.md",
+      "source_hash": "13ebf93cbeb8d454855c0c00a2b58b778cf73c2a8734ec98f1ebbbabf5e58e30",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Construction started in June 2021, and residents are anticipated to begin moving in Spring 2023, once the building is complete.",
+      "title": "921 Howard Street affordable housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:53:59.379719+00:00",
+          "reason": "Origin release (2021-08-26) places 921 Howard in the South of Market (SOMA) neighborhood, a MOHCD-financed project, with move-in anticipated Spring 2023. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:59.379719+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:59.379719+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:59.379719+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:59.379719+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:59.379719+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:59.379719+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:53:59.663764+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sf.gov/news--city-announces-groundbreaking-18-story-affordable-housing-development-soma",
+          "published_date": "2021-08-26T15:53:55Z",
+          "source_hash": "13ebf93cbeb8d454855c0c00a2b58b778cf73c2a8734ec98f1ebbbabf5e58e30",
+          "source_file_path": "13ebf93cbeb8d454855c0c00a2b58b778cf73c2a8734ec98f1ebbbabf5e58e30.md",
+          "quote": "Construction started in June 2021, and residents are anticipated to begin moving in Spring 2023, once the building is complete."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 167,
+      "display_no": 167,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 13,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'today' resolved against publication date 2021-08-26",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-3b5fab3a63-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-3b5fab3a63-1",
+      "promise_text": "Once completed in late 2021, 1064 Mission will also house the City\u2019s new Homeless Services Center, including the San Francisco Homeless Outreach Team, the Street Medicine Team, and the relocated Department of Public Health Urgent Care Clinic.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2020-09-24",
+      "due_date": "2021-12-31",
+      "promise_made_date": "2020-09-24",
+      "deadline_date": "2021-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 24, 2020",
+      "due_date_display": "Dec 31, 2021",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin press release (2020-09-24) states the Homeless Services Center will be housed at 1064 Mission once completed in late 2021. It names the address and District 6 but no neighborhood, so Not stated fits. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:43:30.690944+00:00",
+      "factual_outcome": "Origin press release (2020-09-24) states the Homeless Services Center will be housed at 1064 Mission once completed in late 2021. It names the address and District 6 but no neighborhood, so Not stated fits. No delivery or survival sentence supplied.",
+      "source_id": "Se274b663a95a",
+      "source_url": "https://www.sf.gov/news--city-celebrates-groundbreaking-new-permanent-supportive-housing-1064-mission",
+      "source_file_path": "e274b663a95a72a8c6dd806420fbc184f02b2e64734333a0b4890e981277eb9f.md",
+      "source_hash": "e274b663a95a72a8c6dd806420fbc184f02b2e64734333a0b4890e981277eb9f",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Once completed in late 2021, 1064 Mission will also house the City\u2019s new Homeless Services Center, including the San Francisco Homeless Outreach Team, the Street Medicine Team, and the relocated Department of Public Health Urgent Care Clinic.",
+      "title": "1064 Mission Street supportive housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:43:30.690944+00:00",
+          "reason": "Origin press release (2020-09-24) states the Homeless Services Center will be housed at 1064 Mission once completed in late 2021. It names the address and District 6 but no neighborhood, so Not stated fits. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:43:30.690944+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:43:30.690944+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:43:30.690944+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:43:30.690944+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:43:30.690944+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:43:30.690944+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:43:30.837474+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--city-celebrates-groundbreaking-new-permanent-supportive-housing-1064-mission",
+          "published_date": "2020-09-24T00:00:00Z",
+          "source_hash": "e274b663a95a72a8c6dd806420fbc184f02b2e64734333a0b4890e981277eb9f",
+          "source_file_path": "e274b663a95a72a8c6dd806420fbc184f02b2e64734333a0b4890e981277eb9f.md",
+          "quote": "Once completed in late 2021, 1064 Mission will also house the City\u2019s new Homeless Services Center, including the San Francisco Homeless Outreach Team, the Street Medicine Team, and the relocated Department of Public Health Urgent Care Clinic."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 168,
+      "display_no": 168,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 14,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "relative",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: 'today' resolved against publication date 2020-09-24",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-6054cd932b-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-6054cd932b-2",
+      "promise_text": "By the end of 2019, we will have expanded the fleet by 68 additional vehicles.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Municipal Transportation Agency",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2019-01-29",
+      "due_date": "2019-12-31",
+      "promise_made_date": "2019-01-29",
+      "deadline_date": "2019-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jan 29, 2019",
+      "due_date_display": "Dec 31, 2019",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin SFMTA annual report states fleet will be expanded by 68 vehicles by end of 2019; SFMTA runs Muni citywide. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:44:28.343397+00:00",
+      "factual_outcome": "Origin SFMTA annual report states fleet will be expanded by 68 vehicles by end of 2019; SFMTA runs Muni citywide. No delivery or survival sentence supplied.",
+      "source_id": "Sdbaf22e4adb5",
+      "source_url": "https://www.sfmta.com/sites/default/files/reports-and-documents/2019/01/a_year_of_movement_fy_2018_sfmta_annual_report_-_accessible_version_final_2.pdf",
+      "source_file_path": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2.md",
+      "source_hash": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "By the end of 2019, we will have expanded the fleet by 68 additional vehicles.",
+      "title": "Muni Siemens light-rail vehicle fleet expansion",
+      "document_title": "San Francisco Municipal Transportation Agency Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:44:28.343397+00:00",
+          "reason": "Origin SFMTA annual report states fleet will be expanded by 68 vehicles by end of 2019; SFMTA runs Muni citywide. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:28.343397+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:28.343397+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:28.343397+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:28.343397+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:28.343397+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:28.343397+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:28.703123+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfmta.com/sites/default/files/reports-and-documents/2019/01/a_year_of_movement_fy_2018_sfmta_annual_report_-_accessible_version_final_2.pdf",
+          "published_date": "2019-01-29T19:38:44Z",
+          "source_hash": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2",
+          "source_file_path": "dbaf22e4adb54b401de55cb4c3292de71e4223014ccdb0617850e8a0588e76e2.md",
+          "quote": "By the end of 2019, we will have expanded the fleet by 68 additional vehicles."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 169,
+      "display_no": 169,
+      "entity_canonical_name": "San Francisco Municipal Transportation Agency",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 15,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-b705703118-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-b705703118-2",
+      "promise_text": "\uf0a7 Four Port land parcels (Parcels A, B, F, and K) will be conveyed in 75\u2010year ground leases \nto developers (see Exhibit 6 below) and the ground lease payments will be prepaid in \n2019 and 2020.",
+      "promise_text_expanded": false,
+      "entity": "Port of San Francisco",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Mission Bay & Mission Rock",
+      "neighborhood_canonical": "Mission Bay & Mission Rock",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7706,
+      "longitude": -122.3897,
+      "promised_date": "2018-02-02",
+      "due_date": "2020-12-31",
+      "promise_made_date": "2018-02-02",
+      "deadline_date": "2020-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Feb 2, 2018",
+      "due_date_display": "Dec 31, 2020",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin states Port parcels will be conveyed in 75-year ground leases with payments prepaid in 2019 and 2020, at Mission Rock (parcels A, B, F, K). Port is the landowner. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:48:06.441454+00:00",
+      "factual_outcome": "Origin states Port parcels will be conveyed in 75-year ground leases with payments prepaid in 2019 and 2020, at Mission Rock (parcels A, B, F, K). Port is the landowner. No delivery or survival sentence supplied.",
+      "source_id": "S34505d446d6e",
+      "source_url": "https://sfgov.legistar.com/View.ashx?GUID=1D2DC44D-8AA8-4540-8BFA-AC379A0E5D1B&ID=5784855&M=F",
+      "source_file_path": "34505d446d6ed48cb1d513c16b8574e172ac7cfed4b1ac1016c5bb6903317a4e.md",
+      "source_hash": "34505d446d6ed48cb1d513c16b8574e172ac7cfed4b1ac1016c5bb6903317a4e",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "\uf0a7 Four Port land parcels (Parcels A, B, F, and K) will be conveyed in 75\u2010year ground leases \nto developers (see Exhibit 6 below) and the ground lease payments will be prepaid in \n2019 and 2020.",
+      "title": "Port land parcels ground leases for development",
+      "document_title": "Port of San Francisco Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:48:06.441454+00:00",
+          "reason": "Origin states Port parcels will be conveyed in 75-year ground leases with payments prepaid in 2019 and 2020, at Mission Rock (parcels A, B, F, K). Port is the landowner. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:06.441454+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:06.441454+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:06.441454+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:06.441454+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:06.441454+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:06.441454+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:48:06.518453+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://sfgov.legistar.com/View.ashx?GUID=1D2DC44D-8AA8-4540-8BFA-AC379A0E5D1B&ID=5784855&M=F",
+          "published_date": "2018-02-02T19:29:50Z",
+          "source_hash": "34505d446d6ed48cb1d513c16b8574e172ac7cfed4b1ac1016c5bb6903317a4e",
+          "source_file_path": "34505d446d6ed48cb1d513c16b8574e172ac7cfed4b1ac1016c5bb6903317a4e.md",
+          "quote": "\uf0a7 Four Port land parcels (Parcels A, B, F, and K) will be conveyed in 75\u2010year ground leases \nto developers (see Exhibit 6 below) and the ground lease payments will be prepaid in \n2019 and 2020."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 170,
+      "display_no": 170,
+      "entity_canonical_name": "Port of San Francisco",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 5,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-43ae667868-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-43ae667868-1",
+      "promise_text": "It will open for Pre-K, TK, and Kindergarten students on the first day of the new school year, August 17, 2026, and grow to a 550-student elementary school serving Pre-K through 5th grade.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Unified School District",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Education & Youth",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Mission Bay & Mission Rock",
+      "neighborhood_canonical": "Mission Bay & Mission Rock",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7706,
+      "longitude": -122.3897,
+      "promised_date": "2026-08-07",
+      "due_date": "2026-08-17",
+      "promise_made_date": "2026-08-07",
+      "deadline_date": "2026-08-17",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Aug 7, 2026",
+      "due_date_display": "Aug 17, 2026",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Release dated August 7, 2026 states the Aug 17, 2026 opening. SFUSD and Mission Bay fit. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:58:13.429271+00:00",
+      "factual_outcome": "Release dated August 7, 2026 states the Aug 17, 2026 opening. SFUSD and Mission Bay fit. No delivery or survival sentence supplied.",
+      "source_id": "Sc8ae3d270ae0",
+      "source_url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-08-07-sfusd-celebrates-milestone-opening-long-awaited-new-school-mission-bay-neighborhood",
+      "source_file_path": "c8ae3d270ae042d5266525171dea940e3539dd333e9b163d3cf8468826f56a7a.md",
+      "source_hash": "c8ae3d270ae042d5266525171dea940e3539dd333e9b163d3cf8468826f56a7a",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "It will open for Pre-K, TK, and Kindergarten students on the first day of the new school year, August 17, 2026, and grow to a 550-student elementary school serving Pre-K through 5th grade.",
+      "title": "Mission Bay School opening",
+      "document_title": "San Francisco Unified School District Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:58:13.429271+00:00",
+          "reason": "Release dated August 7, 2026 states the Aug 17, 2026 opening. SFUSD and Mission Bay fit. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:13.429271+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:13.429271+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:13.429271+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:13.429271+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:13.429271+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:13.429271+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:58:13.641085+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-08-07-sfusd-celebrates-milestone-opening-long-awaited-new-school-mission-bay-neighborhood",
+          "published_date": "2026-08-07T00:00:00Z",
+          "source_hash": "c8ae3d270ae042d5266525171dea940e3539dd333e9b163d3cf8468826f56a7a",
+          "source_file_path": "c8ae3d270ae042d5266525171dea940e3539dd333e9b163d3cf8468826f56a7a.md",
+          "quote": "It will open for Pre-K, TK, and Kindergarten students on the first day of the new school year, August 17, 2026, and grow to a 550-student elementary school serving Pre-K through 5th grade."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 171,
+      "display_no": 171,
+      "entity_canonical_name": "San Francisco Unified School District",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 7,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R2",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-a58ebf362c-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-a58ebf362c-1",
+      "promise_text": "From 2026 to 2030, an additional 200 beds will be opened to further strengthen the continuum of care and enhance access to critical services.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Department of Public Health",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2026-06-15",
+      "due_date": "2030-12-31",
+      "promise_made_date": "2026-06-15",
+      "deadline_date": "2030-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Jun 15, 2026",
+      "due_date_display": "Dec 31, 2030",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin says SFDPH document: 200 additional beds opened from 2026 to 2030, deadline 2030-12-31. Citywide behavioral health system. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T02:02:37.114534+00:00",
+      "factual_outcome": "Origin says SFDPH document: 200 additional beds opened from 2026 to 2030, deadline 2030-12-31. Citywide behavioral health system. No delivery or survival sentence supplied.",
+      "source_id": "S07c319f6dad4",
+      "source_url": "https://media.api.sf.gov/documents/061826_BHC_Directors_Update_9V5zgT2.cleaned.pdf",
+      "source_file_path": "07c319f6dad46e6f5e2bf387104db1f34fffef40c204e411538fd178503d591d.md",
+      "source_hash": "07c319f6dad46e6f5e2bf387104db1f34fffef40c204e411538fd178503d591d",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "From 2026 to 2030, an additional 200 beds will be opened to further strengthen the continuum of care and enhance access to critical services.",
+      "title": "DPH 200 additional treatment and care beds",
+      "document_title": "San Francisco Department of Public Health Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T02:02:37.114534+00:00",
+          "reason": "Origin says SFDPH document: 200 additional beds opened from 2026 to 2030, deadline 2030-12-31. Citywide behavioral health system. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T02:02:37.114534+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T02:02:37.114534+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T02:02:37.114534+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T02:02:37.114534+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T02:02:37.114534+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T02:02:37.114534+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T02:02:37.325780+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/061826_BHC_Directors_Update_9V5zgT2.cleaned.pdf",
+          "published_date": "2026-06-15T16:43:42Z",
+          "source_hash": "07c319f6dad46e6f5e2bf387104db1f34fffef40c204e411538fd178503d591d",
+          "source_file_path": "07c319f6dad46e6f5e2bf387104db1f34fffef40c204e411538fd178503d591d.md",
+          "quote": "From 2026 to 2030, an additional 200 beds will be opened to further strengthen the continuum of care and enhance access to critical services."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 172,
+      "display_no": 172,
+      "entity_canonical_name": "San Francisco Department of Public Health",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 6,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-d91603e6dc-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-d91603e6dc-1",
+      "promise_text": "Construction at 2970 16th Street is expected to be completed in late 2027, with full occupancy expected by mid-2028.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Mission",
+      "neighborhood_canonical": "Mission",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7599,
+      "longitude": -122.4148,
+      "promised_date": "2026-04-23",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2026-04-23",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Apr 23, 2026",
+      "due_date_display": "Dec 31, 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "Origin dated April 23, 2026 gives late 2027 completion target. MOHCD and the Mission District location are stated. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:54:14.040450+00:00",
+      "factual_outcome": "Origin dated April 23, 2026 gives late 2027 completion target. MOHCD and the Mission District location are stated. No delivery or survival sentence supplied.",
+      "source_id": "S540877564a59",
+      "source_url": "https://www.sf.gov/news-mayors-office-of-housing-community-development-breaks-ground-on-la-maravilla-a-new-affordable-housing-community-in-san-franciscos-mission-district",
+      "source_file_path": "540877564a59ca0ae18d1d9346dd1122793e925a91e00429909b3ed447a079ab.md",
+      "source_hash": "540877564a59ca0ae18d1d9346dd1122793e925a91e00429909b3ed447a079ab",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Construction at 2970 16th Street is expected to be completed in late 2027, with full occupancy expected by mid-2028.",
+      "title": "2970 16th Street affordable housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T01:54:14.040450+00:00",
+          "reason": "Origin dated April 23, 2026 gives late 2027 completion target. MOHCD and the Mission District location are stated. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:54:14.040450+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:54:14.040450+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:54:14.040450+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:54:14.040450+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:54:14.040450+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:54:14.040450+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:54:14.139513+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayors-office-of-housing-community-development-breaks-ground-on-la-maravilla-a-new-affordable-housing-community-in-san-franciscos-mission-district",
+          "published_date": "2026-04-23T00:00:00Z",
+          "source_hash": "540877564a59ca0ae18d1d9346dd1122793e925a91e00429909b3ed447a079ab",
+          "source_file_path": "540877564a59ca0ae18d1d9346dd1122793e925a91e00429909b3ed447a079ab.md",
+          "quote": "Construction at 2970 16th Street is expected to be completed in late 2027, with full occupancy expected by mid-2028."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 173,
+      "display_no": 173,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 15,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "deadline in the future",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-a51f7c79f2-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-a51f7c79f2-2",
+      "promise_text": "Looking ahead, this data will be compiled into a single\ndashboard location by December 2025.",
+      "promise_text_expanded": false,
+      "entity": "SFMTA",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2025-08-18",
+      "due_date": "2025-12-31",
+      "promise_made_date": "2025-08-18",
+      "deadline_date": "2025-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Aug 18, 2025",
+      "due_date_display": "Dec 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "SFMTA response states data will be compiled into a single dashboard by December 2025, letter dated August 18, 2025. SFMTA, citywide street safety fits. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:41:19.685819+00:00",
+      "factual_outcome": "SFMTA response states data will be compiled into a single dashboard by December 2025, letter dated August 18, 2025. SFMTA, citywide street safety fits. No delivery or survival sentence supplied.",
+      "source_id": "Sf47b3059d93e",
+      "source_url": "https://media.api.sf.gov/documents/Civil_Grand_Jury_Vision_Zero_Report_Response_Package_8.18.2025_FzkVlwG.pdf",
+      "source_file_path": "f47b3059d93e50110f5e1a28892d1984c16ca080f75ffcc66b6f717f6879840a.md",
+      "source_hash": "f47b3059d93e50110f5e1a28892d1984c16ca080f75ffcc66b6f717f6879840a",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Looking ahead, this data will be compiled into a single\ndashboard location by December 2025.",
+      "title": "Safe Streets Evaluation dashboard",
+      "document_title": "SFMTA Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:41:19.685819+00:00",
+          "reason": "SFMTA response states data will be compiled into a single dashboard by December 2025, letter dated August 18, 2025. SFMTA, citywide street safety fits. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:19.685819+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:19.685819+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:19.685819+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:19.685819+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:19.685819+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:19.685819+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:41:20.009589+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/Civil_Grand_Jury_Vision_Zero_Report_Response_Package_8.18.2025_FzkVlwG.pdf",
+          "published_date": "2025-08-18T19:00:46Z",
+          "source_hash": "f47b3059d93e50110f5e1a28892d1984c16ca080f75ffcc66b6f717f6879840a",
+          "source_file_path": "f47b3059d93e50110f5e1a28892d1984c16ca080f75ffcc66b6f717f6879840a.md",
+          "quote": "Looking ahead, this data will be compiled into a single\ndashboard location by December 2025."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 174,
+      "display_no": 174,
+      "entity_canonical_name": "SFMTA",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-4f23bff21f-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-4f23bff21f-1",
+      "promise_text": "Long-Term Hiring Goals*: Create funding to hire 220 new officers in the next two years, with an initial goal of reaching at least 1,800 sworn officers by 2024.",
+      "promise_text_expanded": false,
+      "entity": "Office of the Mayor",
+      "role": null,
+      "entity_type": "politician",
+      "entity_type_legacy": "Mayor / Executive",
+      "sector": "Public Safety & Justice",
+      "category": "Public Safety & Justice",
+      "category_l1": "Public Safety & Justice",
+      "pillar": "Civic Life",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2023-05-26",
+      "due_date": "2024-12-31",
+      "promise_made_date": "2023-05-26",
+      "deadline_date": "2024-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "May 26, 2023",
+      "due_date_display": "Dec 31, 2024",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin states funding for 220 officers and a goal of 1,800 sworn officers by 2024. Release dated 2023-05-26. Mayor office and citywide public safety fit. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:40:28.735760+00:00",
+      "factual_outcome": "Origin states funding for 220 officers and a goal of 1,800 sworn officers by 2024. Release dated 2023-05-26. Mayor office and citywide public safety fit. No delivery or survival sentence supplied.",
+      "source_id": "Sd4130ca16e4b",
+      "source_url": "https://www.sf.gov/news--mayor-breed-prioritize-police-staffing-and-public-safety-upcoming-budget",
+      "source_file_path": "d4130ca16e4b1d07d01c0ca04e14a498acfe08fb714eda80f268e2e7528a492b.md",
+      "source_hash": "d4130ca16e4b1d07d01c0ca04e14a498acfe08fb714eda80f268e2e7528a492b",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Long-Term Hiring Goals*: Create funding to hire 220 new officers in the next two years, with an initial goal of reaching at least 1,800 sworn officers by 2024.",
+      "title": "SFPD hiring to 1,800 sworn officers by 2024",
+      "document_title": "Office of the Mayor Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:40:28.735760+00:00",
+          "reason": "Origin states funding for 220 officers and a goal of 1,800 sworn officers by 2024. Release dated 2023-05-26. Mayor office and citywide public safety fit. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:28.735760+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:28.735760+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:28.735760+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:28.735760+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:28.735760+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:28.735760+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:40:28.951552+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--mayor-breed-prioritize-police-staffing-and-public-safety-upcoming-budget",
+          "published_date": "2023-05-26T00:00:00Z",
+          "source_hash": "d4130ca16e4b1d07d01c0ca04e14a498acfe08fb714eda80f268e2e7528a492b",
+          "source_file_path": "d4130ca16e4b1d07d01c0ca04e14a498acfe08fb714eda80f268e2e7528a492b.md",
+          "quote": "Long-Term Hiring Goals*: Create funding to hire 220 new officers in the next two years, with an initial goal of reaching at least 1,800 sworn officers by 2024."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 175,
+      "display_no": 175,
+      "entity_canonical_name": "Office of the Mayor",
+      "entity_category": "politician",
+      "entity_category_canonical": "politician",
+      "entity_promise_count": 8,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-66a7af5d03-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-66a7af5d03-2",
+      "promise_text": "Seismic Hose Tower Removal at Fire Station 15:  Bidding is currently anticipated to commence \nby mid-2023 with a target construction start date by late 2023.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Public Works",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Public Safety & Justice",
+      "category": "Public Safety & Justice",
+      "category_l1": "Public Safety & Justice",
+      "pillar": "Civic Life",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2022-12-05",
+      "due_date": "2023-12-31",
+      "promise_made_date": "2022-12-05",
+      "deadline_date": "2023-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Dec 5, 2022",
+      "due_date_display": "Dec 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin states bidding anticipated mid-2023 and construction start by late 2023 for FS 15 hose tower removal. Public Works as delivery agency is consistent with the bond report. Source names no neighborhood. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T01:52:52.972084+00:00",
+      "factual_outcome": "Origin states bidding anticipated mid-2023 and construction start by late 2023 for FS 15 hose tower removal. Public Works as delivery agency is consistent with the bond report. Source names no neighborhood. No delivery or survival sentence supplied.",
+      "source_id": "S90962e57a6aa",
+      "source_url": "https://media.api.sf.gov/documents/06._PHS_CGOBOC_Quarterly_Status_Report-2022.12.Final_.pdf",
+      "source_file_path": "90962e57a6aae6d02ab847855fe903ca1301bdf1ee6fdbb4d9625c19c3949602.md",
+      "source_hash": "90962e57a6aae6d02ab847855fe903ca1301bdf1ee6fdbb4d9625c19c3949602",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Seismic Hose Tower Removal at Fire Station 15:  Bidding is currently anticipated to commence \nby mid-2023 with a target construction start date by late 2023.",
+      "title": "Fire Station 15 seismic hose tower removal",
+      "document_title": "San Francisco Public Works Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T01:52:52.972084+00:00",
+          "reason": "Origin states bidding anticipated mid-2023 and construction start by late 2023 for FS 15 hose tower removal. Public Works as delivery agency is consistent with the bond report. Source names no neighborhood. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:52.972084+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:52.972084+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:52.972084+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:52.972084+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:52.972084+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:52.972084+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:52:53.048121+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/06._PHS_CGOBOC_Quarterly_Status_Report-2022.12.Final_.pdf",
+          "published_date": "2022-12-05T19:29:31Z",
+          "source_hash": "90962e57a6aae6d02ab847855fe903ca1301bdf1ee6fdbb4d9625c19c3949602",
+          "source_file_path": "90962e57a6aae6d02ab847855fe903ca1301bdf1ee6fdbb4d9625c19c3949602.md",
+          "quote": "Seismic Hose Tower Removal at Fire Station 15:  Bidding is currently anticipated to commence \nby mid-2023 with a target construction start date by late 2023."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 176,
+      "display_no": 176,
+      "entity_canonical_name": "San Francisco Public Works",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-6a0e39fcfd-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-6a0e39fcfd-1",
+      "promise_text": "SFUSD is working with design-build team [McCarthy Building Companies, Inc.](https://protect-us.mimecast.com/s/Wi7nClYXWAHRV7YKHG3zYx) and[ DLR Group](https://protect-us.mimecast.com/s/JYVqCmZ8WBiyg2QYtOF_Li) to deliver the new school project, which is anticipated to open in August of 2025.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Unified School District",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Education & Youth",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Mission Bay & Mission Rock",
+      "neighborhood_canonical": "Mission Bay & Mission Rock",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7706,
+      "longitude": -122.3897,
+      "promised_date": "2022-10-27",
+      "due_date": "2025-08-31",
+      "promise_made_date": "2022-10-27",
+      "deadline_date": "2025-08-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 27, 2022",
+      "due_date_display": "Aug 31, 2025",
+      "due_date_status": "present",
+      "completion_date_status": "not_captured",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "delayed_or_partial",
+      "verdict_reason": "Origin dated Oct. 27, 2022 targets August 2025 opening. Delivery sentence states Mission Bay School opened August 6, 2026, after the deadline, so late. No survival sentence supplied. (current status not checked)",
+      "decided_at": "2026-11-25T01:45:24.869529+00:00",
+      "factual_outcome": "Origin dated Oct. 27, 2022 targets August 2025 opening. Delivery sentence states Mission Bay School opened August 6, 2026, after the deadline, so late. No survival sentence supplied. (current status not checked)",
+      "source_id": "S00ebc0530986",
+      "source_url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2022-10-27-construction-set-begin-new-sfusd-school-mission-bay",
+      "source_file_path": "00ebc053098654765b60bc9628f2b1464b431f00d1463c285eee1eb8a7f310fc.md",
+      "source_hash": "00ebc053098654765b60bc9628f2b1464b431f00d1463c285eee1eb8a7f310fc",
+      "source_type": "official_record",
+      "source_tier": "News",
+      "fetched_at": null,
+      "verbatim_quote": "SFUSD is working with design-build team [McCarthy Building Companies, Inc.](https://protect-us.mimecast.com/s/Wi7nClYXWAHRV7YKHG3zYx) and[ DLR Group](https://protect-us.mimecast.com/s/JYVqCmZ8WBiyg2QYtOF_Li) to deliver the new school project, which is anticipated to open in August of 2025.",
+      "title": "Mission Bay school design-build delivery",
+      "document_title": "San Francisco Unified School District Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: DELIVERY."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "delayed_or_partial",
+          "decided_at": "2026-11-25T01:45:24.869529+00:00",
+          "reason": "Origin dated Oct. 27, 2022 targets August 2025 opening. Delivery sentence states Mission Bay School opened August 6, 2026, after the deadline, so late. No survival sentence supplied. (current status not checked)"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:45:24.869529+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:45:24.869529+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:45:24.869529+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:45:24.869529+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:45:24.869529+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:45:24.869529+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:45:25.165403+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2022-10-27-construction-set-begin-new-sfusd-school-mission-bay",
+          "published_date": "2022-10-27T00:00:00Z",
+          "source_hash": "00ebc053098654765b60bc9628f2b1464b431f00d1463c285eee1eb8a7f310fc",
+          "source_file_path": "00ebc053098654765b60bc9628f2b1464b431f00d1463c285eee1eb8a7f310fc.md",
+          "quote": "SFUSD is working with design-build team [McCarthy Building Companies, Inc.](https://protect-us.mimecast.com/s/Wi7nClYXWAHRV7YKHG3zYx) and[ DLR Group](https://protect-us.mimecast.com/s/JYVqCmZ8WBiyg2QYtOF_Li) to deliver the new school project, which is anticipated to open in August of 2025."
+        },
+        {
+          "phase": "DELIVERY",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sfusd.edu/about-sfusd/sfusd-news/press-releases/2026-08-07-sfusd-celebrates-milestone-opening-long-awaited-new-school-mission-bay-neighborhood",
+          "published_date": "2026-08-07T00:00:00Z",
+          "source_hash": "c8ae3d270ae042d5266525171dea940e3539dd333e9b163d3cf8468826f56a7a",
+          "source_file_path": "c8ae3d270ae042d5266525171dea940e3539dd333e9b163d3cf8468826f56a7a.md",
+          "quote": "San Francisco (August 7, 2026) -** The San Francisco Unified School District (SFUSD) celebrated the opening of Mission Bay School on August 6, with a ribbon cutting event to commemorate the grand opening of the school."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 3,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 3,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 177,
+      "display_no": 177,
+      "entity_canonical_name": "San Francisco Unified School District",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 8,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R4"
+        ],
+        "outcome_rule": "R4",
+        "open_ended": false,
+        "reason": "current status not checked",
+        "relied_on": [
+          "DELIVERY"
+        ],
+        "status_not_checked": true
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-eace4dc256-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-eace4dc256-2",
+      "promise_text": "These shovel-ready projects are expected to begin construction in early 2023.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Citywide",
+      "neighborhood_canonical": "Citywide",
+      "geographic_scope": "citywide",
+      "is_citywide": true,
+      "is_centroid": true,
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "promised_date": "2022-09-30",
+      "due_date": "2023-12-31",
+      "promise_made_date": "2022-09-30",
+      "deadline_date": "2023-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 30, 2022",
+      "due_date_display": "Dec 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_applicable",
+      "supervisor_district": null,
+      "district_status": "not_applicable",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Release dated September 30, 2022 from the Mayor and MOHCD: three shovel-ready housing projects expected to begin construction in early 2023, bound 2023-12-31. Projects span several sites so citywide is acceptable. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T02:10:55.511075+00:00",
+      "factual_outcome": "Release dated September 30, 2022 from the Mayor and MOHCD: three shovel-ready housing projects expected to begin construction in early 2023, bound 2023-12-31. Projects span several sites so citywide is acceptable. No delivery or survival sentence supplied.",
+      "source_id": "Saa409b60e431",
+      "source_url": "https://www.sf.gov/news--san-francisco-secures-over-117-million-state-funding-affordable-housing",
+      "source_file_path": "aa409b60e43121c2672ba539cdb32ae6f1bd58e568833d6e5ce3ee7353c8e728.md",
+      "source_hash": "aa409b60e43121c2672ba539cdb32ae6f1bd58e568833d6e5ce3ee7353c8e728",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "These shovel-ready projects are expected to begin construction in early 2023.",
+      "title": "Early 2023 construction starts for affordable housing projects",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T02:10:55.511075+00:00",
+          "reason": "Release dated September 30, 2022 from the Mayor and MOHCD: three shovel-ready housing projects expected to begin construction in early 2023, bound 2023-12-31. Projects span several sites so citywide is acceptable. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T02:10:55.511075+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T02:10:55.511075+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T02:10:55.511075+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T02:10:55.511075+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T02:10:55.511075+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T02:10:55.511075+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T02:10:55.655773+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--san-francisco-secures-over-117-million-state-funding-affordable-housing",
+          "published_date": "2022-09-30T00:00:00Z",
+          "source_hash": "aa409b60e43121c2672ba539cdb32ae6f1bd58e568833d6e5ce3ee7353c8e728",
+          "source_file_path": "aa409b60e43121c2672ba539cdb32ae6f1bd58e568833d6e5ce3ee7353c8e728.md",
+          "quote": "These shovel-ready projects are expected to begin construction in early 2023."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 178,
+      "display_no": 178,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 16,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-c3f8f2b9bf-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-c3f8f2b9bf-1",
+      "promise_text": "Victoria\u2019s House is scheduled to open and begin receiving clients on August 8, 2022.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco Department of Public Health",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Homelessness & Behavioral Health",
+      "category": "Civic Governance",
+      "category_l1": "Civic Governance",
+      "pillar": "Civic Life",
+      "neighborhood": "Mission",
+      "neighborhood_canonical": "Mission",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7599,
+      "longitude": -122.4148,
+      "promised_date": "2022-08-02",
+      "due_date": "2022-08-08",
+      "promise_made_date": "2022-08-02",
+      "deadline_date": "2022-08-08",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Aug 2, 2022",
+      "due_date_display": "Aug 8, 2022",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Release dated August 2, 2022 states opening on August 8, 2022. Origin places Victoria House at 658 Shotwell Street in the Mission. SFDPH runs it. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T02:08:36.167867+00:00",
+      "factual_outcome": "Release dated August 2, 2022 states opening on August 8, 2022. Origin places Victoria House at 658 Shotwell Street in the Mission. SFDPH runs it. No delivery or survival sentence supplied.",
+      "source_id": "S9607c3692d33",
+      "source_url": "https://www.sf.gov/news--mayor-london-breed-announces-opening-victorias-house-new-residential-and-treatment-care",
+      "source_file_path": "9607c3692d339ec6636970e4ee56f8fde6a943fd7aad6c430bdf26ff2f3a6bc1.md",
+      "source_hash": "9607c3692d339ec6636970e4ee56f8fde6a943fd7aad6c430bdf26ff2f3a6bc1",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Victoria\u2019s House is scheduled to open and begin receiving clients on August 8, 2022.",
+      "title": "Victoria's House residential treatment opening",
+      "document_title": "San Francisco Department of Public Health Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T02:08:36.167867+00:00",
+          "reason": "Release dated August 2, 2022 states opening on August 8, 2022. Origin places Victoria House at 658 Shotwell Street in the Mission. SFDPH runs it. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T02:08:36.167867+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T02:08:36.167867+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T02:08:36.167867+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T02:08:36.167867+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T02:08:36.167867+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T02:08:36.167867+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T02:08:36.314011+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--mayor-london-breed-announces-opening-victorias-house-new-residential-and-treatment-care",
+          "published_date": "2022-08-02T00:00:00Z",
+          "source_hash": "9607c3692d339ec6636970e4ee56f8fde6a943fd7aad6c430bdf26ff2f3a6bc1",
+          "source_file_path": "9607c3692d339ec6636970e4ee56f8fde6a943fd7aad6c430bdf26ff2f3a6bc1.md",
+          "quote": "Victoria\u2019s House is scheduled to open and begin receiving clients on August 8, 2022."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 179,
+      "display_no": 179,
+      "entity_canonical_name": "San Francisco Department of Public Health",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 7,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R2",
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": "stated in the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-4108de94ac-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-4108de94ac-1",
+      "promise_text": "Potrero\u2019s first vertical development, 1101 Connecticut (Block X), is complete and fully\nleased; Block B, with approximately 157 units, is in predevelopment and will start construction in 2021.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Potrero Hill",
+      "neighborhood_canonical": "Potrero Hill",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7587,
+      "longitude": -122.401,
+      "promised_date": "2021-03-01",
+      "due_date": "2021-12-31",
+      "promise_made_date": "2021-03-01",
+      "deadline_date": "2021-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Mar 1, 2021",
+      "due_date_display": "Dec 31, 2021",
+      "due_date_status": "present",
+      "completion_date_status": "not_captured",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "kept",
+      "verdict_reason": "Block B construction target 2021 (deadline 2021-12-31). Sentence after the Potrero Block B heading says construction began June 2021, which is on time. No survival sentence supplied. MOHCD, Potrero fits. (current status not checked)",
+      "decided_at": "2026-11-25T01:44:27.614424+00:00",
+      "factual_outcome": "Block B construction target 2021 (deadline 2021-12-31). Sentence after the Potrero Block B heading says construction began June 2021, which is on time. No survival sentence supplied. MOHCD, Potrero fits. (current status not checked)",
+      "source_id": "Sab97d4654c0f",
+      "source_url": "https://media.api.sf.gov/documents/CGOBOC_2015_Housing_Bond_Report_123120_final_Dec_2020.pdf",
+      "source_file_path": "ab97d4654c0f17c0ce788ac4019419ab73ca70ff096f4e337862c03654bf3dbb.md",
+      "source_hash": "ab97d4654c0f17c0ce788ac4019419ab73ca70ff096f4e337862c03654bf3dbb",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Potrero\u2019s first vertical development, 1101 Connecticut (Block X), is complete and fully\nleased; Block B, with approximately 157 units, is in predevelopment and will start construction in 2021.",
+      "title": "Potrero Block B construction start",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: DELIVERY."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "kept",
+          "decided_at": "2026-11-25T01:44:27.614424+00:00",
+          "reason": "Block B construction target 2021 (deadline 2021-12-31). Sentence after the Potrero Block B heading says construction began June 2021, which is on time. No survival sentence supplied. MOHCD, Potrero fits. (current status not checked)"
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:27.614424+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:27.614424+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:27.614424+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:27.614424+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:27.614424+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:27.614424+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T01:44:27.906847+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/CGOBOC_2015_Housing_Bond_Report_123120_final_Dec_2020.pdf",
+          "published_date": "2021-03-01T18:52:29Z",
+          "source_hash": "ab97d4654c0f17c0ce788ac4019419ab73ca70ff096f4e337862c03654bf3dbb",
+          "source_file_path": "ab97d4654c0f17c0ce788ac4019419ab73ca70ff096f4e337862c03654bf3dbb.md",
+          "quote": "Potrero\u2019s first vertical development, 1101 Connecticut (Block X), is complete and fully\nleased; Block B, with approximately 157 units, is in predevelopment and will start construction in 2021."
+        },
+        {
+          "phase": "DELIVERY",
+          "source_tier": "TIER1_GOV",
+          "url": "https://media.api.sf.gov/documents/CGOBOC_2019_Affordable_Housing_Bond_123125.pdf",
+          "published_date": "2026-01-27T17:57:54Z",
+          "source_hash": "6471d343d16c623ebdeed95fb672369efd1e606680047906f49fb4836e3c6a6f",
+          "source_file_path": "6471d343d16c623ebdeed95fb672369efd1e606680047906f49fb4836e3c6a6f.md",
+          "quote": "Building permits were issued for the project in June 2020 and construction began in June 2021."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 3,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 3,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 180,
+      "display_no": 180,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 17,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R4"
+        ],
+        "outcome_rule": "R4",
+        "open_ended": false,
+        "reason": "current status not checked",
+        "relied_on": [
+          "DELIVERY"
+        ],
+        "status_not_checked": true
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
+    },
+    {
+      "promise_id": "R3-b6f198d745-2",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-b6f198d745-2",
+      "promise_text": "Construction is expected to start in 2023.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": null,
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Sunset/Parkside",
+      "neighborhood_canonical": "Sunset/Parkside",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7479,
+      "longitude": -122.4945,
+      "promised_date": "2020-12-18",
+      "due_date": "2023-12-31",
+      "promise_made_date": "2020-12-18",
+      "deadline_date": "2023-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "day",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Dec 18, 2020",
+      "due_date_display": "Dec 31, 2023",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "undecided",
+      "verdict_reason": "Origin dated 2020-12-18 says construction at 2550 Irving Street is expected to start in 2023. MOHCD and the Mid-Sunset location fit. No delivery or survival sentence supplied.",
+      "decided_at": "2026-11-25T02:05:27.615428+00:00",
+      "factual_outcome": "Origin dated 2020-12-18 says construction at 2550 Irving Street is expected to start in 2023. MOHCD and the Mid-Sunset location fit. No delivery or survival sentence supplied.",
+      "source_id": "Sf1256b536987",
+      "source_url": "https://www.sf.gov/news--city-takes-major-step-toward-100-affordable-housing-mid-sunset",
+      "source_file_path": "f1256b536987c7f9e652ec6cd25be4a76782a8dd6f3b3cab5ab66aff56780f20.md",
+      "source_hash": "f1256b536987c7f9e652ec6cd25be4a76782a8dd6f3b3cab5ab66aff56780f20",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": null,
+      "verbatim_quote": "Construction is expected to start in 2023.",
+      "title": "Mid-Sunset Irving Street affordable housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {},
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "Source domain and tier re-screened at export."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "SHA-256 of every cited saved source re-computed at export and matched."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Every cited quote found verbatim in the saved source text at export."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date is consistent with the promise date and deadline."
+        },
+        {
+          "check": "verdict_evidence",
+          "passed": true,
+          "reason": "Evidence phases required by the verdict are present: none beyond the origin."
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "reason": "A passed independent verifier row is recorded for this promise."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "undecided",
+          "decided_at": "2026-11-25T02:05:27.615428+00:00",
+          "reason": "Origin dated 2020-12-18 says construction at 2550 Irving Street is expected to start in 2023. MOHCD and the Mid-Sunset location fit. No delivery or survival sentence supplied."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "advocate_kept",
+          "passed": true,
+          "checked_at": "2026-11-25T02:05:27.615428+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "advocate_broken",
+          "passed": true,
+          "checked_at": "2026-11-25T02:05:27.615428+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "origin_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T02:05:27.615428+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "independent_verifier",
+          "passed": true,
+          "checked_at": "2026-11-25T02:05:27.615428+00:00",
+          "model_id": "obvious-agent"
+        },
+        {
+          "check": "promise_date_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T02:05:27.615428+00:00"
+        },
+        {
+          "check": "outcome_basis",
+          "passed": true,
+          "checked_at": "2026-11-25T02:05:27.615428+00:00"
+        },
+        {
+          "check": "preliminary_source",
+          "passed": true,
+          "checked_at": "2026-11-25T02:05:27.909055+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news--city-takes-major-step-toward-100-affordable-housing-mid-sunset",
+          "published_date": "2020-12-18T00:00:00Z",
+          "source_hash": "f1256b536987c7f9e652ec6cd25be4a76782a8dd6f3b3cab5ab66aff56780f20",
+          "source_file_path": "f1256b536987c7f9e652ec6cd25be4a76782a8dd6f3b3cab5ab66aff56780f20.md",
+          "quote": "Construction is expected to start in 2023."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 181,
+      "display_no": 181,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 18,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R5"
+        ],
+        "outcome_rule": "R5",
+        "open_ended": false,
+        "reason": "no outcome evidence found",
+        "relied_on": [],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "publication",
+      "promise_date_derived": true,
+      "promised_date_note": "derived: publication date of the source",
+      "title_source": "editorial"
     }
   ],
   "quarantined": [
