@@ -2929,6 +2929,10 @@
     const relRecorded = typeof rel.score === 'number' && isFinite(rel.score);
     const relScore = relRecorded ? rel.score : null;
     const outcomes = window.SFPDrawer.drawerCheckOutcomes(p);
+    const recordedSummary = window.SFPDrawer.drawerChecksSummary(outcomes, p);
+    const summaryLabel = document.querySelector('#inspect-drawer-backdrop .checks-summary-label');
+    if (summaryLabel) summaryLabel.textContent = `${recordedSummary.passed}/7 Verification Checks Recorded as Passed`;
+
 
     const rawChecks = p.checks || [];
     const checkMap = {};
@@ -3009,7 +3013,7 @@
     const copyReceiptBtn = document.getElementById('btn-copy-receipt');
     // Receipt is built from exported fields; the run id comes from the
     // snapshot's recorded integration run, never a hardcoded literal.
-    const runId = (demoData && demoData.database_status &&
+    const runId = p.review_id || (demoData && demoData.database_status &&
       ((demoData.database_status.latest_run || {}).run_id ||
        (demoData.database_status.integration_run || {}).run_id)) || 'RUN_UNRECORDED';
     const receiptText = `COMMITMENT #${rank} (${p.promise_id}) · VERDICT=${(p.verdict || 'undecided').toUpperCase()} · HASH=${(p.source_hash || '').slice(0, 16)}… · RUN=${runId}`;
