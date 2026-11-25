@@ -1,20 +1,14 @@
-"""Story-card media test: featured-story cards surface the export's source media
-opt-in only (issue #44).
+"""Story-card media test: featured-story cards show the export's source media
+inline (issue #44; owner decision 2026-11-25 removed the "Show source photo" step).
 
 The story-card media HTML builders live in a marked pure block of docs/app.js
 (SFPSTORY_PURE_START .. SFPSTORY_PURE_END). This test executes that block with
 node over docs/data.json and asserts:
 
-- the initial card markup is an opt-in button with the export URL/caption in
-  escaped data-* attributes: it contains NO src=/srcset= reference, so viewing
-  or scrolling the page issues no third-party requests (the pre-existing
-  request boundary: remote media loads only after an explicit user action);
-- every static story card in docs/index.html whose record carries an image in
-  the export gets a button with the byte-identical export URL and an
-  aria-label naming the promise;
-- the loaded state (built only after the reader taps the button) carries the
-  byte-identical src, loading="lazy", a non-empty alt, and the caption only
-  when the export records media_caption;
+- a card whose record carries an image renders it inline: one <figure> with an
+  <img> whose src is the byte-identical export URL, loading="lazy",
+  referrerpolicy="no-referrer", a non-empty alt, the caption only when the
+  export records media_caption, and NO button;
 - records without images (or pids that are not exported promises) get '' and
   keep their text-only layout;
 - URLs, captions, titles and alt text are HTML-escaped in both builders.
@@ -103,50 +97,33 @@ class TestStoryCardMedia(unittest.TestCase):
         self.out = run_harness(self.pids)
         self.by_card = {c["pid"]: c for c in self.out["perCard"]}
 
-    def test_initial_markup_issues_no_third_party_request(self):
-        # The opt-in boundary: before any tap, no card markup may reference a
-        # remote resource. data-* attributes carry the URL as inert text.
-        for card in self.out["perCard"]:
-            self.assertNotIn("src=", card["html"], card["pid"])
-            self.assertNotIn("srcset", card["html"], card["pid"])
-            self.assertNotIn("<img", card["html"], card["pid"])
-            self.assertNotIn("url(", card["html"], card["pid"])
-
-    def test_every_exported_image_url_carried_byte_identical(self):
-        for card in self.out["perCard"]:
-            if card["exportUrl"]:
-                self.assertIn(
-                    f'data-img-url="{card["exportUrl"]}"', card["html"],
-                    f'{card["pid"]}: carried URL must be the export URL, unrewritten',
-                )
-                self.assertIn(
-                    f'src="{card["exportUrl"]}"', card["loaded"],
-                    f'{card["pid"]}: loaded src must be the export URL, unrewritten',
-                )
-
-    def test_imaged_cards_render_opt_in_button_with_label(self):
+    def test_imaged_cards_render_photo_inline_without_button(self):
         imaged = [c for c in self.out["perCard"] if c["exportUrl"]]
         self.assertGreaterEqual(len(imaged), 1, "at least one story card carries an export image")
         for card in imaged:
-            self.assertIn('class="story-card-media"', card["html"])
-            self.assertIn('class="btn-story-media"', card["html"], card["pid"])
-            self.assertIn('type="button"', card["html"], card["pid"])
-            label = re.search(r'aria-label="([^"]*)"', card["html"])
-            self.assertIsNotNone(label, card["pid"])
-            self.assertIn(html.escape(card["exportTitle"] or "", quote=True), label.group(1), card["pid"])
+            self.assertTrue(card["html"].startswith('<figure class="story-card-media">'), card["pid"])
+            self.assertNotIn("<button", card["html"], card["pid"])
+            self.assertNotIn("Show source photo", card["html"], card["pid"])
+            self.assertIn(f'src="{card["exportUrl"]}"', card["html"],
+                          f'{card["pid"]}: src must be the export URL, unrewritten')
+            self.assertEqual(card["html"].count("<img"), 1, card["pid"])
 
-    def test_loaded_state_lazy_alt_and_caption_rules(self):
+    def test_inline_photo_lazy_alt_referrer_and_caption_rules(self):
         for card in self.out["perCard"]:
             if not card["exportUrl"]:
                 continue
-            self.assertIn('loading="lazy"', card["loaded"], card["pid"])
-            alt = re.search(r'alt="([^"]*)"', card["loaded"])
+            self.assertIn('loading="lazy"', card["html"], card["pid"])
+            self.assertIn('referrerpolicy="no-referrer"', card["html"], card["pid"])
+            alt = re.search(r'alt="([^"]*)"', card["html"])
             self.assertIsNotNone(alt, card["pid"])
             self.assertTrue(alt.group(1).strip(), f'{card["pid"]}: alt must not be empty')
-            has_cap = 'story-card-media-caption' in card["loaded"]
+            has_cap = 'story-card-media-caption' in card["html"]
             self.assertEqual(bool(card["exportCaption"]), has_cap, card["pid"])
-            if has_cap:
-                self.assertIn(card["exportCaption"], card["loaded"])
+
+    def test_no_button_remains_anywhere(self):
+        src = APP_JS.read_text(encoding="utf-8")
+        self.assertNotIn("Show source photo", src)
+        self.assertNotIn("btn-story-media", src)
 
     def test_imageless_and_unknown_cards_keep_text_only_layout(self):
         for card in self.out["perCard"]:
@@ -155,7 +132,7 @@ class TestStoryCardMedia(unittest.TestCase):
         self.assertEqual("", self.out["noRecord"])
         self.assertEqual("", self.out["emptyRecord"])
 
-    def test_data_attributes_and_label_are_html_escaped(self):
+    def test_urls_captions_and_alt_are_html_escaped(self):
         evil = self.out["evil"]
         self.assertNotIn("<script>", evil)
         self.assertNotIn('cap">', evil)
