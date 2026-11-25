@@ -9,13 +9,13 @@ window.__DEMO_DATA__ = {
     "commit_sha": "2e5621eff82f6b917a79ce2994d7f3dcf581055f",
     "sqlite_file": "promises.db",
     "sqlite_tables": 20,
-    "exported_at": "2026-11-24T19:58:35Z",
-    "v2_promises_added": 29,
+    "exported_at": "2026-11-25T03:20:00.941372+00:00",
+    "v2_promises_added": 32,
     "legacy_promises": 54
   },
   "database_status": {
     "commit_sha": "2e5621eff82f6b917a79ce2994d7f3dcf581055f",
-    "tracked_count": 83,
+    "tracked_count": 86,
     "seed_promises_count": 12,
     "total_db_promises": 62,
     "total_db_verdicts": 87,
@@ -3790,7 +3790,7 @@ window.__DEMO_DATA__ = {
       "S8",
       "S9"
     ],
-    "id_reconciliation": "83 published (29 from v2 pipeline) \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
+    "id_reconciliation": "86 published (32 from v2 pipeline) \u00b7 13 in quarantine registry \u00b7 38 seeds awaiting intake",
     "id_scheme": "Ranked #1\u2013#{len(all_promises)} by civic impact, public interest, and verifiability. Gaps reflect quarantined test cases or pending intake.",
     "acceptance_verified": true,
     "acceptance_status_label": "Acceptance verified by harness run F-20261111-045601 on 2026-11-11 (separated processes, not Firecracker)",
@@ -3798,7 +3798,7 @@ window.__DEMO_DATA__ = {
       "kept": 25,
       "broken": 18,
       "kept_then_reversed": 1,
-      "in_progress": 33,
+      "in_progress": 36,
       "undecided": 6
     },
     "integration_run": {
@@ -7522,13 +7522,13 @@ window.__DEMO_DATA__ = {
         }
       }
     },
-    "v2_promises_added": 29,
+    "v2_promises_added": 32,
     "v2_merge": {
       "databases": 4,
-      "added": 29,
+      "added": 32,
       "added_by_verdict": {
         "broken": 1,
-        "in_progress": 23,
+        "in_progress": 26,
         "kept": 1,
         "undecided": 4
       },
@@ -7536,6 +7536,16 @@ window.__DEMO_DATA__ = {
       "rejected": 0,
       "legacy_promises": 54,
       "funnel_scope": "Funnel and DB totals count the legacy database only."
+    },
+    "qualified_batch_1": {
+      "added": [
+        "R3-2143a83728-1",
+        "R3-702dcfdd28-1",
+        "R3-d25b34d666-1"
+      ],
+      "reviewed_at": "2026-11-25T03:20:00.941372+00:00",
+      "evidence_file": "discovery-batch-1-evidence.json",
+      "scope": "Three independently rechecked records only. The other 95 provisional records are not published or certified. Earlier source archive was inaccessible; these captures have new hashes."
     }
   },
   "p02": {
@@ -25447,6 +25457,545 @@ window.__DEMO_DATA__ = {
       "promise_date_basis": "publication",
       "promise_date_derived": true,
       "promised_date_note": "derived: publication date of the source"
+    },
+    {
+      "promise_id": "R3-2143a83728-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-2143a83728-1",
+      "promise_text": "Construction is expected to be completed in early 2027.",
+      "promise_text_expanded": false,
+      "entity": "Mayor's Office of Housing and Community Development",
+      "role": "Housing agency",
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Housing & Land Use",
+      "category": "Housing & Neighborhoods",
+      "category_l1": "Housing & Neighborhoods",
+      "pillar": "Housing & Neighborhoods",
+      "neighborhood": "Mission",
+      "neighborhood_canonical": "Mission",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.7599,
+      "longitude": -122.4148,
+      "promised_date": "2025-04-16",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2025-04-16",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "year",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Apr 16, 2025",
+      "due_date_display": "Early 2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "The April 16, 2025 city announcement promises 168 affordable homes at 1515 South Van Ness, with construction expected to finish in early 2027. The project team September 30, 2026 update reports interior finishes, commissioning and courtyard work still underway. In progress, not delivered. Early 2027 is the stated target; December 31 is only a year-level sort bound, not the promised date.",
+      "decided_at": "2026-11-25T03:20:00.941372+00:00",
+      "factual_outcome": "The April 16, 2025 city announcement promises 168 affordable homes at 1515 South Van Ness, with construction expected to finish in early 2027. The project team September 30, 2026 update reports interior finishes, commissioning and courtyard work still underway. In progress, not delivered. Early 2027 is the stated target; December 31 is only a year-level sort bound, not the promised date.",
+      "source_id": "S67528f8db9e7",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-new-100-affordable-housing-for-mission-families",
+      "source_file_path": "discovery-batch-1-evidence.json#R3-2143a83728-1",
+      "source_hash": "7e311a7ac8ace6f4559551b6843fa737df604376693966befe2e9efbf3946326",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": "2026-11-25T03:20:00.941372+00:00",
+      "verbatim_quote": "Construction is expected to be completed in early 2027.",
+      "title": "1515 South Van Ness affordable housing",
+      "document_title": "Mayor's Office of Housing and Community Development Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {
+        "kept": {
+          "claims": [
+            {
+              "quote": "On the residential floors, crews are continuing with flooring, cabinetry, painting, and other finish work inside the future homes.",
+              "source_url": "https://1515svn.org/newsletter-%2321-9%2F30%2F26-1"
+            }
+          ],
+          "note": "Progress evidence, not proof of completed delivery."
+        },
+        "broken": {
+          "claims": [],
+          "note": "No conclusion of delivery failure; target remains in the future."
+        }
+      },
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "City or airport official origin domain independently fetched."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "Fresh capture SHA-256 independently recomputed; receipt retains captured text. Earlier archive not accessible."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Origin quote re-found in fresh captured source text."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date confirmed. Deadline is year precision, not a promised December 31."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T03:20:00.941372+00:00",
+          "reason": "The April 16, 2025 city announcement promises 168 affordable homes at 1515 South Van Ness, with construction expected to finish in early 2027. The project team September 30, 2026 update reports interior finishes, commissioning and courtyard work still underway. In progress, not delivered. Early 2027 is the stated target; December 31 is only a year-level sort bound, not the promised date."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-breaks-ground-on-new-100-affordable-housing-for-mission-families",
+          "published_date": "2025-04-16T00:00:00Z",
+          "source_hash": "7e311a7ac8ace6f4559551b6843fa737df604376693966befe2e9efbf3946326",
+          "source_file_path": "discovery-batch-1-evidence.json#R3-2143a83728-1",
+          "quote": "Construction is expected to be completed in early 2027."
+        },
+        {
+          "phase": "STATUS",
+          "source_tier": "PROJECT_OWNER",
+          "url": "https://1515svn.org/newsletter-%2321-9%2F30%2F26-1",
+          "published_date": "2026-09-30",
+          "fetched_at": "2026-11-25T03:20:00.941372+00:00",
+          "source_hash": "5e76d65fe19b3f17dcb72671e5c902cf4361cb0ef2ae89dc378ce23856ae71de",
+          "source_file_path": "discovery-batch-1-evidence.json#R3-2143a83728-1",
+          "quote": "On the residential floors, crews are continuing with flooring, cabinetry, painting, and other finish work inside the future homes."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 84,
+      "display_no": 84,
+      "entity_canonical_name": "Mayor's Office of Housing and Community Development",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 3,
+      "entity_sample_warning": false,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "Future deadline plus fresh project-owner construction evidence; not delivered.",
+        "relied_on": [
+          "https://1515svn.org/newsletter-%2321-9%2F30%2F26-1"
+        ],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": null,
+      "title_source": "editorial",
+      "review_id": "SOURCE-REVIEW-20261124-BATCH1"
+    },
+    {
+      "promise_id": "R3-702dcfdd28-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-702dcfdd28-1",
+      "promise_text": "The AirTrain station currently serving Terminal 3 will close until the new facility opens in 2027.",
+      "promise_text_expanded": false,
+      "entity": "San Francisco International Airport",
+      "role": "Airport operator",
+      "entity_type": "city_department",
+      "entity_type_legacy": "City Agency",
+      "sector": "Transit & Streets",
+      "category": "Transit & Streets",
+      "category_l1": "Transit & Streets",
+      "pillar": "Transit & Movement",
+      "neighborhood": "Location not stated",
+      "neighborhood_canonical": "Not stated",
+      "geographic_scope": "citywide",
+      "location_status": "not_stated",
+      "is_citywide": false,
+      "is_centroid": true,
+      "promised_date": "2025-10-30",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2025-10-30",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "year",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Oct 30, 2025",
+      "due_date_display": "2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "The October 30, 2025 SFO release commits to the replacement Terminal 3 AirTrain facility opening in 2027. The current SFO construction advisory still reports the station closed pending the new facility. In progress, not delivered. The source specifies a year, not December 31.",
+      "decided_at": "2026-11-25T03:20:00.941372+00:00",
+      "factual_outcome": "The October 30, 2025 SFO release commits to the replacement Terminal 3 AirTrain facility opening in 2027. The current SFO construction advisory still reports the station closed pending the new facility. In progress, not delivered. The source specifies a year, not December 31.",
+      "source_id": "S795fc9f3b478",
+      "source_url": "https://www.flysfo.com/about/media/press-releases/sfo-outlines-changes-coming-next-phase-terminal-3-west-project",
+      "source_file_path": "discovery-batch-1-evidence.json#R3-702dcfdd28-1",
+      "source_hash": "e885d4a3447fcd865d84172649b224eb1391f36444ebef73240a27d4fb94d61f",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": "2026-11-25T03:20:00.941372+00:00",
+      "verbatim_quote": "The AirTrain station currently serving Terminal 3 will close until the new facility opens in 2027.",
+      "title": "SFO Terminal 3 AirTrain station",
+      "document_title": "San Francisco International Airport Commitment",
+      "relevance": {
+        "score": 8,
+        "real": 2,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {
+        "kept": {
+          "claims": [
+            {
+              "quote": "The AirTrain station currently serving Terminal 3 is closed until the new facility opens in 2027.",
+              "source_url": "https://www.flysfo.com/flight-info/alerts-advisories/terminal-3-construction-closures-passenger-impacts"
+            }
+          ],
+          "note": "Progress evidence, not proof of completed delivery."
+        },
+        "broken": {
+          "claims": [],
+          "note": "No conclusion of delivery failure; target remains in the future."
+        }
+      },
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "City or airport official origin domain independently fetched."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "Fresh capture SHA-256 independently recomputed; receipt retains captured text. Earlier archive not accessible."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Origin quote re-found in fresh captured source text."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date confirmed. Deadline is year precision, not a promised December 31."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T03:20:00.941372+00:00",
+          "reason": "The October 30, 2025 SFO release commits to the replacement Terminal 3 AirTrain facility opening in 2027. The current SFO construction advisory still reports the station closed pending the new facility. In progress, not delivered. The source specifies a year, not December 31."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.flysfo.com/about/media/press-releases/sfo-outlines-changes-coming-next-phase-terminal-3-west-project",
+          "published_date": "2025-10-30T17:26:39Z",
+          "source_hash": "e885d4a3447fcd865d84172649b224eb1391f36444ebef73240a27d4fb94d61f",
+          "source_file_path": "discovery-batch-1-evidence.json#R3-702dcfdd28-1",
+          "quote": "The AirTrain station currently serving Terminal 3 will close until the new facility opens in 2027."
+        },
+        {
+          "phase": "STATUS",
+          "source_tier": "PROJECT_OWNER",
+          "url": "https://www.flysfo.com/flight-info/alerts-advisories/terminal-3-construction-closures-passenger-impacts",
+          "published_date": null,
+          "fetched_at": "2026-11-25T03:20:00.941372+00:00",
+          "source_hash": "11c23f8838bd6e2cb58e383d3bf0d2c43116e4e339db95b3abcf3c8441a33722",
+          "source_file_path": "discovery-batch-1-evidence.json#R3-702dcfdd28-1",
+          "quote": "The AirTrain station currently serving Terminal 3 is closed until the new facility opens in 2027."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 85,
+      "display_no": 85,
+      "entity_canonical_name": "San Francisco International Airport",
+      "entity_category": "city_department",
+      "entity_category_canonical": "city_department",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "Future deadline plus fresh project-owner construction evidence; not delivered.",
+        "relied_on": [
+          "https://www.flysfo.com/flight-info/alerts-advisories/terminal-3-construction-closures-passenger-impacts"
+        ],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": null,
+      "title_source": "editorial",
+      "review_id": "SOURCE-REVIEW-20261124-BATCH1"
+    },
+    {
+      "promise_id": "R3-d25b34d666-1",
+      "pipeline": "v2",
+      "v2_promise_id": "R3-d25b34d666-1",
+      "promise_text": "The Bay Area women\u2019s professional soccer team, Bay FC, will soon break ground on a training facility on Treasure Island that will open in 2027.",
+      "promise_text_expanded": false,
+      "entity": "Bay FC",
+      "role": "Sports franchise",
+      "entity_type": "sports_team",
+      "entity_type_legacy": "Sports Franchise",
+      "sector": "Sports, Culture & Retail",
+      "category": "Sports, Culture & Retail",
+      "category_l1": "Sports, Culture & Retail",
+      "pillar": "Culture & Social Life",
+      "neighborhood": "Treasure Island",
+      "neighborhood_canonical": "Treasure Island",
+      "geographic_scope": "neighborhood",
+      "is_citywide": false,
+      "is_centroid": true,
+      "latitude": 37.8235,
+      "longitude": -122.3706,
+      "promised_date": "2025-09-13",
+      "due_date": "2027-12-31",
+      "promise_made_date": "2025-09-13",
+      "deadline_date": "2027-12-31",
+      "completion_date": null,
+      "promise_date_precision": "day",
+      "due_date_precision": "year",
+      "completion_date_precision": "not_recorded",
+      "promised_date_display": "Sep 13, 2025",
+      "due_date_display": "2027",
+      "due_date_status": "present",
+      "completion_date_status": "not_yet_known",
+      "address_full": null,
+      "address_status": "not_captured",
+      "supervisor_district": null,
+      "district_status": "not_captured",
+      "page_number": null,
+      "verdict": "in_progress",
+      "verdict_reason": "The September 13, 2025 city announcement promises a Bay FC training facility on Treasure Island opening in 2027. Bay FC now documents September 2025 groundbreaking, May 2026 foundation work, June 2026 topping out and October 2026 pitch installation, with opening expected early 2027. In progress, not delivered. The original commitment specifies a year, not December 31.",
+      "decided_at": "2026-11-25T03:20:00.941372+00:00",
+      "factual_outcome": "The September 13, 2025 city announcement promises a Bay FC training facility on Treasure Island opening in 2027. Bay FC now documents September 2025 groundbreaking, May 2026 foundation work, June 2026 topping out and October 2026 pitch installation, with opening expected early 2027. In progress, not delivered. The original commitment specifies a year, not December 31.",
+      "source_id": "Scdadcca5bcfe",
+      "source_url": "https://www.sf.gov/news-mayor-lurie-cuts-ribbon-at-san-franciscos-newest-park-celebrates-activation-of-another-public-space",
+      "source_file_path": "discovery-batch-1-evidence.json#R3-d25b34d666-1",
+      "source_hash": "dbe26e42c523987842b7940f9f08130e6548b474f173d27dfcd53752f2fc5a66",
+      "source_type": "official_record",
+      "source_tier": "Official",
+      "fetched_at": "2026-11-25T03:20:00.941372+00:00",
+      "verbatim_quote": "The Bay Area women\u2019s professional soccer team, Bay FC, will soon break ground on a training facility on Treasure Island that will open in 2027.",
+      "title": "Bay FC Treasure Island training facility",
+      "document_title": "Bay FC Commitment",
+      "relevance": {
+        "score": 7,
+        "real": 1,
+        "measurable": 2,
+        "sf": 2,
+        "interesting": 2
+      },
+      "advocate_bundles": {
+        "kept": {
+          "claims": [
+            {
+              "quote": "Bay FC began pitch installation, laying three training fields that will support daily training and player development.",
+              "source_url": "https://bayfc.com/lp/performance-center/"
+            }
+          ],
+          "note": "Progress evidence, not proof of completed delivery."
+        },
+        "broken": {
+          "claims": [],
+          "note": "No conclusion of delivery failure; target remains in the future."
+        }
+      },
+      "checks": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "reason": "City or airport official origin domain independently fetched."
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "reason": "Fresh capture SHA-256 independently recomputed; receipt retains captured text. Earlier archive not accessible."
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "reason": "Origin quote re-found in fresh captured source text."
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "reason": "Origin publication date confirmed. Deadline is year precision, not a promised December 31."
+        }
+      ],
+      "all_checks_passed": true,
+      "failed_check_count": 0,
+      "failed_check_names": [],
+      "verdict_history": [
+        {
+          "verdict": "in_progress",
+          "decided_at": "2026-11-25T03:20:00.941372+00:00",
+          "reason": "The September 13, 2025 city announcement promises a Bay FC training facility on Treasure Island opening in 2027. Bay FC now documents September 2025 groundbreaking, May 2026 foundation work, June 2026 topping out and October 2026 pitch installation, with opening expected early 2027. In progress, not delivered. The original commitment specifies a year, not December 31."
+        }
+      ],
+      "verification_history": [
+        {
+          "check": "authenticity_domain",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        },
+        {
+          "check": "authenticity_hash",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        },
+        {
+          "check": "accuracy_quote",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        },
+        {
+          "check": "accuracy_date",
+          "passed": true,
+          "checked_at": "2026-11-25T03:20:00.941372+00:00"
+        }
+      ],
+      "evidence": [
+        {
+          "phase": "ORIGIN",
+          "source_tier": "TIER1_GOV",
+          "url": "https://www.sf.gov/news-mayor-lurie-cuts-ribbon-at-san-franciscos-newest-park-celebrates-activation-of-another-public-space",
+          "published_date": "2025-09-13T00:00:00Z",
+          "source_hash": "dbe26e42c523987842b7940f9f08130e6548b474f173d27dfcd53752f2fc5a66",
+          "source_file_path": "discovery-batch-1-evidence.json#R3-d25b34d666-1",
+          "quote": "The Bay Area women\u2019s professional soccer team, Bay FC, will soon break ground on a training facility on Treasure Island that will open in 2027."
+        },
+        {
+          "phase": "STATUS",
+          "source_tier": "PROJECT_OWNER",
+          "url": "https://bayfc.com/lp/performance-center/",
+          "published_date": null,
+          "fetched_at": "2026-11-25T03:20:00.941372+00:00",
+          "source_hash": "519c2c5fb98388abea0e48f5d5451f378fecbd4dcf732e946ecefc6218fb0659",
+          "source_file_path": "discovery-batch-1-evidence.json#R3-d25b34d666-1",
+          "quote": "Bay FC began pitch installation, laying three training fields that will support daily training and player development."
+        }
+      ],
+      "has_contradictory_evidence": false,
+      "verdict_supporting_evidence_count": 2,
+      "verdict_contradicting_evidence_count": 0,
+      "affirming_evidence_count": 2,
+      "refuting_evidence_count": 0,
+      "record_type": "promise",
+      "impact_rank": 86,
+      "display_no": 86,
+      "entity_canonical_name": "Bay FC",
+      "entity_category": "sports_team",
+      "entity_category_canonical": "sports_team",
+      "entity_promise_count": 1,
+      "entity_sample_warning": true,
+      "outcome_basis": {
+        "rules": [
+          "R3"
+        ],
+        "outcome_rule": "R3",
+        "open_ended": false,
+        "reason": "Future deadline plus fresh project-owner construction evidence; not delivered.",
+        "relied_on": [
+          "https://bayfc.com/lp/performance-center/"
+        ],
+        "status_not_checked": false
+      },
+      "promise_date_basis": "stated",
+      "promise_date_derived": false,
+      "promised_date_note": null,
+      "title_source": "editorial",
+      "review_id": "SOURCE-REVIEW-20261124-BATCH1"
     }
   ],
   "quarantined": [

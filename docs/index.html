@@ -94,16 +94,16 @@
           <span class="bar-header-count" id="outcome-dist-verified">54 VERIFIED</span>
         </div>
         <div class="proportional-stacked-bar interactive-bar" id="hero-stacked-bar" role="group" aria-label="Outcome breakdown: tap a segment to filter promises">
-          <button type="button" class="bar-segment seg-kept" id="bar-seg-kept" data-verdict="kept" style="width: 30.1%;" title="Filter Kept (25)" aria-label="Filter Kept (25)"></button>
-          <button type="button" class="bar-segment seg-progress" id="bar-seg-progress" data-verdict="in_progress" style="width: 39.8%;" title="Filter In progress (33)" aria-label="Filter In progress (33)"></button>
-          <button type="button" class="bar-segment seg-broken" id="bar-seg-broken" data-verdict="broken" style="width: 21.7%;" title="Filter Broken (18)" aria-label="Filter Broken (18)"></button>
-          <button type="button" class="bar-segment seg-undecided" id="bar-seg-undecided" data-verdict="undecided" style="width: 7.2%;" title="Filter Undecided (6)" aria-label="Filter Undecided (6)"></button>
+          <button type="button" class="bar-segment seg-kept" id="bar-seg-kept" data-verdict="kept" style="width: 29.1%;" title="Filter Kept (25)" aria-label="Filter Kept (25)"></button>
+          <button type="button" class="bar-segment seg-progress" id="bar-seg-progress" data-verdict="in_progress" style="width: 41.9%;" title="Filter In progress (36)" aria-label="Filter In progress (36)"></button>
+          <button type="button" class="bar-segment seg-broken" id="bar-seg-broken" data-verdict="broken" style="width: 20.9%;" title="Filter Broken (18)" aria-label="Filter Broken (18)"></button>
+          <button type="button" class="bar-segment seg-undecided" id="bar-seg-undecided" data-verdict="undecided" style="width: 7.0%;" title="Filter Undecided (6)" aria-label="Filter Undecided (6)"></button>
           <button type="button" class="bar-segment seg-reversed" id="bar-seg-reversed" data-verdict="kept_then_reversed" style="width: 1.2%;" title="Filter Later closed / reversed (1)" aria-label="Filter Later closed / reversed (1)"></button>
         </div>
         <div class="stacked-legend-grid">
-          <button type="button" class="legend-btn" data-verdict="kept"><span class="legend-swatch seg-kept"></span> <span id="legend-text-kept">25 Kept (30%)</span></button>
-          <button type="button" class="legend-btn" data-verdict="in_progress"><span class="legend-swatch seg-progress"></span> <span id="legend-text-progress">33 In progress (40%)</span></button>
-          <button type="button" class="legend-btn" data-verdict="broken"><span class="legend-swatch seg-broken"></span> <span id="legend-text-broken">18 Broken (22%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="kept"><span class="legend-swatch seg-kept"></span> <span id="legend-text-kept">25 Kept (29%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="in_progress"><span class="legend-swatch seg-progress"></span> <span id="legend-text-progress">36 In progress (42%)</span></button>
+          <button type="button" class="legend-btn" data-verdict="broken"><span class="legend-swatch seg-broken"></span> <span id="legend-text-broken">18 Broken (21%)</span></button>
           <button type="button" class="legend-btn" data-verdict="undecided"><span class="legend-swatch seg-undecided"></span> <span id="legend-text-undecided">6 Undecided (7%)</span></button>
           <button type="button" class="legend-btn" data-verdict="kept_then_reversed"><span class="legend-swatch seg-reversed"></span> <span id="legend-text-reversed">1 Later closed / reversed (1%)</span></button>
         </div>
@@ -120,9 +120,9 @@
           <p class="verdict-legend-note">A verdict describes the outcome as of its date. The history of when a promise was made and checked is shown separately in each record, so a past verdict is never rewritten silently.</p>
         </details>
         <div class="tally-hero-line font-mono" id="tally-hero-line" style="display: none;">
-          <strong id="tally-total">83</strong>
+          <strong id="tally-total">86</strong>
           <strong id="tally-kept">25</strong>
-          <strong id="tally-progress">33</strong>
+          <strong id="tally-progress">36</strong>
           <strong id="tally-broken">18</strong>
           <strong id="tally-undecided">6</strong>
         </div>
@@ -285,13 +285,13 @@
       <section class="explore-section table-section" id="explore" aria-label="Explore all promises">
         <div class="section-heading-group">
           <h2>Explore all promises</h2>
-          <p class="section-lead">Search and filter the 54 published commitments, or switch to the rejected and test records that never reached the registry.</p>
+          <p class="section-lead">Search and filter the 86 published commitments, or switch to the rejected and test records that never reached the registry.</p>
         </div>
 
         <div class="tabs-container" role="tablist" aria-label="Commitments view options">
           <div class="tab-buttons-group">
             <button type="button" class="tab-nav-btn active" id="tab-btn-promises" role="tab" aria-selected="true" aria-controls="promises-table-container">
-              Commitment Registry <span class="tab-badge font-mono" id="tab-count-promises">83</span>
+              Commitment Registry <span class="tab-badge font-mono" id="tab-count-promises">86</span>
             </button>
             <button type="button" class="tab-nav-btn" id="tab-btn-quarantine" role="tab" aria-selected="false" aria-controls="quarantine-table-container">
               Rejected &amp; Test Records <span class="tab-badge font-mono" id="tab-count-quarantine">13</span>
@@ -314,9 +314,9 @@
           </div>
 
           <div class="segmented-verdict-control" id="segmented-verdict-control" role="group" aria-label="Filter by verdict">
-            <button type="button" class="btn-seg-verdict active" data-verdict="all" aria-pressed="true">All (83)</button>
+            <button type="button" class="btn-seg-verdict active" data-verdict="all" aria-pressed="true">All (86)</button>
             <button type="button" class="btn-seg-verdict" data-verdict="kept" aria-pressed="false">Kept (25)</button>
-            <button type="button" class="btn-seg-verdict" data-verdict="in_progress" aria-pressed="false">In progress (33)</button>
+            <button type="button" class="btn-seg-verdict" data-verdict="in_progress" aria-pressed="false">In progress (36)</button>
             <button type="button" class="btn-seg-verdict" data-verdict="broken" aria-pressed="false">Broken (18)</button>
             <button type="button" class="btn-seg-verdict" data-verdict="undecided" aria-pressed="false">Undecided (6)</button>
             <button type="button" class="btn-seg-verdict" data-verdict="kept_then_reversed" aria-pressed="false">Later closed / reversed (1)</button>
@@ -413,7 +413,7 @@
 
         <!-- Status Line -->
         <div class="explore-status-line" id="table-showing-status">
-          <span id="table-showing-text">Showing <strong id="table-showing-count">10</strong> of <span id="table-total-count">83</span> commitments</span>
+          <span id="table-showing-text">Showing <strong id="table-showing-count">10</strong> of <span id="table-total-count">86</span> commitments</span>
           <span class="status-sep" aria-hidden="true">&middot;</span>
           <span id="table-sort-text">Sorted by most significant</span>
           <span class="status-sep" aria-hidden="true">&middot;</span>
@@ -2703,6 +2703,93 @@
                   <span class="table-card-action">Inspect &rarr;</span>
                 </td>
               </tr>
+              <tr class="promise-row paged-row hidden-page-row" id="promise-R3-2143a83728-1" data-promise-id="R3-2143a83728-1" tabindex="0" role="button" aria-label="Inspect #84 Mayor's Office of Housing and Community Development: Construction is expected to be completed in early 2027.">
+                <td class="table-entity-cell">
+                  <div class="entity-headline-row">
+                    <span class="table-entity-name">Mayor's Office of Housing and Community Development</span>
+                  </div>
+                  <div class="entity-sub-row font-mono">
+                    <span class="table-role-tag">Housing agency</span>
+                  </div>
+                  <div class="entity-geo-tag font-mono">Mission</div>
+                </td>
+                <td class="table-quote-cell">
+                  <div class="table-promise-block">
+                    <blockquote class="table-quote-text font-serif">&ldquo;Construction is expected to be completed in early 2027.&rdquo;</blockquote>
+                  </div>
+                  <div class="table-outcome-block">
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-text">The April 16, 2025 city announcement promises 168 affordable homes at 1515 South Van Ness, with construction expected to finish in early 2027. The project team September 30, 2026 update reports interior finishes, commissioning and courtyard work still underway. In progress, not delivered. Early 2027 is the stated target; December 31 is only a year-level sort bound, not the promised date.</span>
+                  </div>
+                </td>
+                <td class="table-verdict-cell">
+                  <span class="verdict-chip in_progress">In Progress</span>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2025-04-16</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">2027</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">—</span></div>
+                  <span class="table-card-action">Inspect &rarr;</span>
+                </td>
+              </tr>
+              <tr class="promise-row paged-row hidden-page-row" id="promise-R3-702dcfdd28-1" data-promise-id="R3-702dcfdd28-1" tabindex="0" role="button" aria-label="Inspect #85 San Francisco International Airport: The AirTrain station currently serving Terminal 3 will close until the new facility opens in 2027.">
+                <td class="table-entity-cell">
+                  <div class="entity-headline-row">
+                    <span class="table-entity-name">San Francisco International Airport</span>
+                  </div>
+                  <div class="entity-sub-row font-mono">
+                    <span class="table-role-tag">Airport operator</span>
+                  </div>
+                  <div class="entity-geo-tag font-mono">Location not stated</div>
+                </td>
+                <td class="table-quote-cell">
+                  <div class="table-promise-block">
+                    <blockquote class="table-quote-text font-serif">&ldquo;The AirTrain station currently serving Terminal 3 will close until the new facility opens in 2027.&rdquo;</blockquote>
+                  </div>
+                  <div class="table-outcome-block">
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-text">The October 30, 2025 SFO release commits to the replacement Terminal 3 AirTrain facility opening in 2027. The current SFO construction advisory still reports the station closed pending the new facility. In progress, not delivered. The source specifies a year, not December 31.</span>
+                  </div>
+                </td>
+                <td class="table-verdict-cell">
+                  <span class="verdict-chip in_progress">In Progress</span>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2025-10-30</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">2027</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">—</span></div>
+                  <span class="table-card-action">Inspect &rarr;</span>
+                </td>
+              </tr>
+              <tr class="promise-row paged-row hidden-page-row" id="promise-R3-d25b34d666-1" data-promise-id="R3-d25b34d666-1" tabindex="0" role="button" aria-label="Inspect #86 Bay FC: The Bay Area women’s professional soccer team, Bay FC, will soon break ground on a training facility on Treasure Island that will open in 2027.">
+                <td class="table-entity-cell">
+                  <div class="entity-headline-row">
+                    <span class="table-entity-name">Bay FC</span>
+                  </div>
+                  <div class="entity-sub-row font-mono">
+                    <span class="table-role-tag">Sports franchise</span>
+                  </div>
+                  <div class="entity-geo-tag font-mono">Treasure Island</div>
+                </td>
+                <td class="table-quote-cell">
+                  <div class="table-promise-block">
+                    <blockquote class="table-quote-text font-serif">&ldquo;The Bay Area women’s professional soccer team, Bay FC, will soon break ground on a training facility on Treasure Island that will open in 2027.&rdquo;</blockquote>
+                  </div>
+                  <div class="table-outcome-block">
+                    <span class="table-outcome-kicker font-mono">WHAT HAPPENED:</span>
+                    <span class="table-outcome-text">The September 13, 2025 city announcement promises a Bay FC training facility on Treasure Island opening in 2027. Bay FC now documents September 2025 groundbreaking, May 2026 foundation work, June 2026 topping out and October 2026 pitch installation, with opening expected early 2027. In progress, not delivered. The original commitment specifies a year, not December 31.</span>
+                  </div>
+                </td>
+                <td class="table-verdict-cell">
+                  <span class="verdict-chip in_progress">In Progress</span>
+                </td>
+                <td class="table-timeline-cell font-mono">
+                  <div class="timeline-row"><span class="timeline-label">Said:</span> <span class="timeline-val">2025-09-13</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Due:</span> <span class="timeline-val">2027</span></div>
+                  <div class="timeline-row"><span class="timeline-label">Done:</span> <span class="timeline-val">—</span></div>
+                  <span class="table-card-action">Inspect &rarr;</span>
+                </td>
+              </tr>
             </tbody>
           </table>
           <!-- Rendered by app.js when the active filters match zero records. -->
@@ -3222,7 +3309,7 @@
           <h2>Methodology and limitations</h2>
         </div>
         <ul class="methodology-list">
-          <li><strong>Small, curated sample.</strong> The 83 commitments were selected from sources that could be saved and hashed. They are not a census of every promise made in San Francisco, so the Kept and Broken shares should not be read as a city-wide success rate.</li>
+          <li><strong>Small, curated sample.</strong> The 86 commitments were selected from sources that could be saved and hashed. They are not a census of every promise made in San Francisco, so the Kept and Broken shares should not be read as a city-wide success rate.</li>
           <li><strong>Evidence-limited.</strong> A verdict reflects the saved sources available at the time. Missing documentation leads to Undecided, not Broken.</li>
           <li><strong>Dated.</strong> Each record shows when the promise was made and when its checks last ran. The dataset was last checked on <span id="methodology-last-checked">Nov 14, 2026</span>.</li>
         </ul>
