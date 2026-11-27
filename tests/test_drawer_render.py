@@ -130,8 +130,9 @@ class TestContradictionBanner(unittest.TestCase):
     def test_no_banner_when_record_says_no_conflict(self):
         self.assertIsNone(self.out["contraNone"])
 
-    def test_banner_counts_use_refuting_when_verdict_count_is_zero(self):
-        self.assertEqual(self.out["contraOld"], {"supporting": 4, "contradicting": 4})
+    def test_refuting_count_never_stands_in_for_verdict_contradicting(self):
+        # refuting_evidence_count is the broken-side count: the supporting side on a broken verdict.
+        self.assertEqual(self.out["contraOld"], {"supporting": 4, "contradicting": 0})
 
     def test_recorded_contradicting_count_keeps_the_banner(self):
         self.assertEqual(self.out["contraCount"], {"supporting": 2, "contradicting": 2})

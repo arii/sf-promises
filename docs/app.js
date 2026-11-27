@@ -2317,7 +2317,7 @@
           priority: 'P3 · CONTRA',
           promise_id: p.promise_id,
           entity: p.entity_canonical_name || p.entity || '',
-          reason: `Contradictory evidence (${p.verdict_supporting_evidence_count || 0} supporting vs ${p.verdict_contradicting_evidence_count || 0} refuting)`
+          reason: `Contradictory evidence (${p.verdict_supporting_evidence_count || 0} supporting the verdict vs ${p.verdict_contradicting_evidence_count || 0} contradicting it)`
         });
       }
     });
@@ -2578,10 +2578,55 @@
       throw new Error(`drawerContradictionView: record ${p.promise_id} has no has_contradictory_evidence flag`);
     }
     const supporting = p.verdict_supporting_evidence_count || 0;
-    const contradicting = Math.max(p.verdict_contradicting_evidence_count || 0, p.refuting_evidence_count || 0);
+    // Verdict-relative only: refuting_evidence_count is the broken-side count, which is the
+    // SUPPORTING side on a broken verdict, so it must not stand in for the contradicting count.
+    const contradicting = p.verdict_contradicting_evidence_count || 0;
     // P64 carries 2 contradicting claims with the flag false, so a recorded contradicting count also qualifies.
     if (!p.has_contradictory_evidence && contradicting === 0) return null;
     return { supporting, contradicting };
+  }
+
+  // Banner heading. A record whose conflict flag is set but whose verdict-contradicting count
+  // is 0 is not an adjudicated contradiction: say what is recorded, nothing more.
+  function drawerBannerHeading(view, verdict) {
+    const v = verdict || 'recorded';
+    if (view.contradicting === 0) {
+      return `Recorded verdict evidence (${view.supporting} supporting the ${v} verdict, 0 contradicting it; conflict flag set in the record)`;
+    }
+    return `Contradictory Evidence Adjudicated (${view.supporting} supporting the ${v} verdict vs ${view.contradicting} contradicting it)`;
+  }
+
+  // Banner semantics: verdict_supporting_* and *_summary are relative to the VERDICT
+  // (scripts/enrich_dataset.py ~1796-1826: for a broken verdict the supporting side is the
+  // broken-side claims). The drawer columns "Evidence of progress/shortfall" are relative to
+  // the PROMISE, so the banner must say "verdict", not just supporting/contradicting.
+  // Count disclosure: the banner counts are recorded values. When the export lists
+  // fewer individual claims than those counts, say so; the counts stay as recorded.
+  function drawerCountDisclosure(p) {
+    const view = drawerContradictionView(p);
+    if (view === null) return null;
+    const bundles = p.advocate_bundles || {};
+    const keptListed = ((bundles.kept && bundles.kept.claims) || []).length;
+    const brokenListed = ((bundles.broken && bundles.broken.claims) || []).length;
+    // Verdict-relative sides (scripts/enrich_dataset.py ~1800-1810): for a broken verdict the
+    // supporting side is the broken-side claims; for kept/in_progress it is the kept-side claims.
+    // Compare per side so a gap on one side cannot be hidden by a surplus on the other.
+    const v = String(p.verdict || '').toLowerCase();
+    let supListed, conListed;
+    if (v === 'broken') { supListed = brokenListed; conListed = keptListed; }
+    else if (v === 'kept' || v === 'in_progress') { supListed = keptListed; conListed = brokenListed; }
+    else {
+      // Mixed-side verdicts (undecided, kept_then_reversed) pool both sides; only the total is comparable.
+      const recorded = view.supporting + view.contradicting;
+      const listed = keptListed + brokenListed;
+      if (listed >= recorded) return null;
+      return `Counts are recorded values. This export lists ${listed} individual claim${listed === 1 ? '' : 's'} (kept ${keptListed}, broken ${brokenListed}) for ${recorded} counted, so the counts cannot be traced to listed claims here.`;
+    }
+    const gaps = [];
+    if (supListed < view.supporting) gaps.push(`supporting side ${supListed} listed of ${view.supporting} counted`);
+    if (conListed < view.contradicting) gaps.push(`contradicting side ${conListed} listed of ${view.contradicting} counted`);
+    if (!gaps.length) return null;
+    return `Counts are recorded values. This export lists fewer claims than counted (${gaps.join('; ')}), so those counts cannot be traced to listed claims here.`;
   }
 
   // Entity avatar (issue #83): same-origin relative path from the media
@@ -2650,7 +2695,7 @@
   const SFPDrawer = {
     verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth, entityAvatarHtml,
     entityNameKey, entityMediaFromManifest, entityMediaFor,
-    drawerCheckOutcomes, drawerChecksSummary, drawerChecksSummaryView, drawerContradictionView, outcomeBasisText
+    drawerCheckOutcomes, drawerChecksSummary, drawerChecksSummaryView, drawerContradictionView, drawerCountDisclosure, drawerBannerHeading, outcomeBasisText
   };
   window.SFPDrawer = SFPDrawer;
   /* SFPDRAWER_PURE_END */
@@ -2850,13 +2895,15 @@
         const conCount = contra.contradicting;
         const supSum = p.supporting_evidence_summary || '';
         const conSum = p.contradicting_evidence_summary || '';
+        const countNote = window.SFPDrawer.drawerCountDisclosure(p);
         const arbRule = p.arbitration_rule_explanation || (p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id));
         contradictionBanner.innerHTML = `
           <div class="contradiction-adjudication-box font-mono">
-            <h4>&#9878; Contradictory Evidence Adjudicated (${supCount} supporting vs ${conCount} contradicting)</h4>
-            ${supSum ? `<p><strong>Supporting case:</strong> ${escapeHtml(supSum)}</p>` : ''}
-            ${conSum ? `<p><strong>Contradicting case:</strong> ${escapeHtml(conSum)}</p>` : ''}
+            <h4>&#9878; ${escapeHtml(window.SFPDrawer.drawerBannerHeading(contra, p.verdict))}</h4>
+            ${supSum ? `<p><strong>Supports the verdict:</strong> ${escapeHtml(supSum)}</p>` : ''}
+            ${conSum && conCount > 0 ? `<p><strong>Contradicts the verdict:</strong> ${escapeHtml(conSum)}</p>` : ''}
             <p><strong>Arbitration ruling:</strong> ${escapeHtml(arbRule)}</p>
+            ${countNote ? `<p class="count-disclosure"><em>${escapeHtml(countNote)}</em></p>` : ''}
           </div>
         `;
         contradictionBanner.style.display = 'block';
