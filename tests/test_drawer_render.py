@@ -83,6 +83,7 @@ console.log(JSON.stringify({
   viewPartial: SFPDrawer.drawerChecksSummaryView({ kind: 'partial', passed: 2, failures: 0, unrecorded: 5 }),
   viewFail: SFPDrawer.drawerChecksSummaryView({ kind: 'fail', passed: 5, failures: 2, unrecorded: 0 }),
   viewPass: SFPDrawer.drawerChecksSummaryView({ kind: 'pass', passed: 7, failures: 0, unrecorded: 0 }),
+  viewUnknown: (() => { try { SFPDrawer.drawerChecksSummaryView({ kind: 'mystery', passed: 7 }); return 'no throw'; } catch (e) { return String(e.message); } })(),
   lowRelevance: SFPDrawer.drawerCheckOutcomes({ checks: [], relevance: { score: 3 } }).relevance_gate
 }));
 """
@@ -113,6 +114,9 @@ class TestChecksSummaryView(unittest.TestCase):
         )
         self.assertIn("2 failed", self.out["viewFail"]["label"])
         self.assertEqual(self.out["viewPass"]["label"], "7/7 Verification Checks Recorded as Passed")
+
+    def test_unknown_kind_fails_loudly_not_green(self):
+        self.assertIn("unknown summary kind mystery", self.out["viewUnknown"])
 
 
 class TestDrawerTimeline(unittest.TestCase):
