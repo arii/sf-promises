@@ -54,9 +54,10 @@ class CountDisclosure(unittest.TestCase):
             gap = sup < o["view"]["supporting"] or con < o["view"]["contradicting"]
             self.assertEqual(o["note"] is not None, gap, pid)
 
-    def test_opposite_side_surplus_cannot_cancel_a_gap(self):
-        # P83 kept_then_reversed pools sides; P11 (broken) lists 0 kept vs 4 contradicting counted.
-        self.assertIn("contradicting side 0 listed of 4 counted", self.out["P11"]["note"])
+    def test_p11_counts_now_trace_to_listed_sides(self):
+        # broken: supporting 4 = 4 broken claims listed, contradicting 0 = 0 kept listed.
+        self.assertIsNone(self.out["P11"]["note"])
+        self.assertEqual(self.out["P11"]["listed"], [0, 4])
 
     def test_banner_labels_are_verdict_relative(self):
         src = (REPO_ROOT / "docs/app.js").read_text()
@@ -72,8 +73,25 @@ class CountDisclosure(unittest.TestCase):
         self.assertIn("prohibiting the City", p["supporting_evidence_summary"])
         self.assertIn("voters approved", p["contradicting_evidence_summary"])
 
+    def test_contradicting_is_verdict_contradicting_never_refuting(self):
+        data = json.loads((REPO_ROOT / "docs/data.json").read_text())
+        for p in data["promises"]:
+            o = self.out[p["promise_id"]]
+            if o["view"] is not None:
+                self.assertEqual(o["view"]["contradicting"], p["verdict_contradicting_evidence_count"] or 0, p["promise_id"])
+
+    def test_explicit_conflict_flags_and_p64_keep_their_banner(self):
+        data = json.loads((REPO_ROOT / "docs/data.json").read_text())
+        for p in data["promises"]:
+            if p["has_contradictory_evidence"] or (p["verdict_contradicting_evidence_count"] or 0) > 0:
+                self.assertIsNotNone(self.out[p["promise_id"]]["view"], p["promise_id"])
+            else:
+                self.assertIsNone(self.out[p["promise_id"]]["view"], p["promise_id"])
+        self.assertEqual(self.out["P64"]["view"], {"supporting": 2, "contradicting": 2})
+        self.assertEqual(sum(1 for o in self.out.values() if o["view"] is not None), 23)
+
     def test_recorded_counts_are_not_altered(self):
-        self.assertEqual(self.out["P11"]["view"], {"supporting": 4, "contradicting": 4})
+        self.assertEqual(self.out["P11"]["view"], {"supporting": 4, "contradicting": 0})
         self.assertIsNone(self.out["P26"]["note"])
 
 
