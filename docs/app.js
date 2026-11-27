@@ -2577,9 +2577,10 @@
     if (typeof p.has_contradictory_evidence !== 'boolean') {
       throw new Error(`drawerContradictionView: record ${p.promise_id} has no has_contradictory_evidence flag`);
     }
-    if (!p.has_contradictory_evidence) return null;
     const supporting = p.verdict_supporting_evidence_count || 0;
     const contradicting = Math.max(p.verdict_contradicting_evidence_count || 0, p.refuting_evidence_count || 0);
+    // P64 carries 2 contradicting claims with the flag false, so a recorded contradicting count also qualifies.
+    if (!p.has_contradictory_evidence && contradicting === 0) return null;
     return { supporting, contradicting };
   }
 
