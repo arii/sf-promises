@@ -3,6 +3,7 @@
 .bar-segment.seg-progress, .legend-swatch.seg-progress { background: var(--verdict-progress); }
 .bar-segment.seg-undecided, .legend-swatch.seg-undecided { background: var(--verdict-undecided); }
 .bar-segment.seg-reversed, .legend-swatch.seg-reversed { background: #F97316; }
+.bar-segment.seg-delayed, .legend-swatch.seg-delayed { background: #F59E0B; }
 #viz-verdict-bars .viz-bar-label { white-space: normal; overflow: visible; line-height: 1.3; }
 
 @media (max-width: 767px) {

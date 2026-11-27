@@ -1,0 +1,718 @@
+{
+  "added_reason": "Round 3 discovery: reviewed SF actors x topics query plan. Queries use commitment phrasing so pages with forward-looking sentences and deadlines rank first; official domains get an extra site= query.",
+  "added_by": "discovery-round-3",
+  "added_at": "2026-11-24",
+  "max_results": 50,
+  "windows": {
+    "recent": {
+      "label": "recent forward-looking",
+      "default_start": "2025-01-01",
+      "years_ahead": [
+        1,
+        2,
+        3
+      ]
+    },
+    "historical": {
+      "label": "historical (deadlines passed)",
+      "default_start": "2016-01-01",
+      "default_end": "2023-12-31",
+      "years": [
+        2018,
+        2020,
+        2022,
+        2024
+      ]
+    }
+  },
+  "templates": [
+    "{actor} {noun} expected to be completed by",
+    "{actor} will {verb} by {year}",
+    "{actor} plans to {verb}"
+  ],
+  "topics": [
+    {
+      "id": "housing_units",
+      "verb": "build affordable housing units",
+      "noun": "housing units"
+    },
+    {
+      "id": "shelter_beds",
+      "verb": "add shelter beds",
+      "noun": "shelter beds"
+    },
+    {
+      "id": "opening",
+      "verb": "open a new facility",
+      "noun": "new facility opening"
+    },
+    {
+      "id": "reopening",
+      "verb": "reopen",
+      "noun": "reopening"
+    },
+    {
+      "id": "construction_start",
+      "verb": "begin construction",
+      "noun": "construction start"
+    },
+    {
+      "id": "construction_completion",
+      "verb": "complete construction",
+      "noun": "construction project"
+    },
+    {
+      "id": "service_expansion",
+      "verb": "expand service",
+      "noun": "service expansion"
+    },
+    {
+      "id": "climate_emissions",
+      "verb": "cut greenhouse gas emissions",
+      "noun": "emissions target"
+    },
+    {
+      "id": "stormwater_seawall",
+      "verb": "upgrade stormwater and seawall protections",
+      "noun": "stormwater and seawall project"
+    },
+    {
+      "id": "street_safety",
+      "verb": "complete Vision Zero street safety projects",
+      "noun": "Vision Zero street safety project"
+    },
+    {
+      "id": "parks_playgrounds",
+      "verb": "renovate parks and playgrounds",
+      "noun": "park and playground renovation"
+    },
+    {
+      "id": "schools",
+      "verb": "open or modernize schools",
+      "noun": "school project"
+    },
+    {
+      "id": "transit_projects",
+      "verb": "deliver transit projects",
+      "noun": "transit project"
+    },
+    {
+      "id": "budget_funding",
+      "verb": "commit funding for projects",
+      "noun": "funding commitment"
+    },
+    {
+      "id": "hiring_targets",
+      "verb": "hire more staff",
+      "noun": "hiring target"
+    },
+    {
+      "id": "downtown_recovery",
+      "verb": "revitalize downtown",
+      "noun": "downtown recovery effort"
+    },
+    {
+      "id": "public_safety",
+      "verb": "expand public safety staffing",
+      "noun": "public safety initiative"
+    },
+    {
+      "id": "events_venues",
+      "verb": "host events at the venue",
+      "noun": "venue and events plan"
+    }
+  ],
+  "actors": [
+    {
+      "id": "mayors_office",
+      "name": "San Francisco Mayor's Office",
+      "aliases": [
+        "Mayor Lurie",
+        "Mayor's Office",
+        "Mayor Daniel Lurie",
+        "Lurie"
+      ],
+      "domains": [
+        "sf.gov",
+        "daniellurie.com"
+      ],
+      "topics": [
+        "housing_units",
+        "shelter_beds",
+        "downtown_recovery",
+        "public_safety",
+        "budget_funding",
+        "opening",
+        "hiring_targets",
+        "climate_emissions"
+      ],
+      "entity": "Mayor's Office"
+    },
+    {
+      "id": "board_of_supervisors",
+      "name": "San Francisco Board of Supervisors",
+      "aliases": [
+        "Board of Supervisors",
+        "Supervisor"
+      ],
+      "domains": [
+        "sfbos.org",
+        "sfgov.legistar.com"
+      ],
+      "topics": [
+        "housing_units",
+        "budget_funding",
+        "public_safety",
+        "street_safety",
+        "parks_playgrounds",
+        "shelter_beds"
+      ]
+    },
+    {
+      "id": "sfmta",
+      "name": "SFMTA",
+      "aliases": [
+        "SFMTA",
+        "Municipal Transportation Agency"
+      ],
+      "domains": [
+        "sfmta.com"
+      ],
+      "topics": [
+        "street_safety",
+        "transit_projects",
+        "service_expansion",
+        "construction_start",
+        "construction_completion",
+        "budget_funding",
+        "hiring_targets"
+      ]
+    },
+    {
+      "id": "sfpuc",
+      "name": "SFPUC",
+      "aliases": [
+        "SFPUC",
+        "Public Utilities Commission"
+      ],
+      "domains": [
+        "sfpuc.org",
+        "sfpuc.gov"
+      ],
+      "topics": [
+        "stormwater_seawall",
+        "climate_emissions",
+        "construction_start",
+        "construction_completion",
+        "budget_funding"
+      ]
+    },
+    {
+      "id": "port_of_sf",
+      "name": "Port of San Francisco",
+      "aliases": [
+        "Port of San Francisco",
+        "Port of SF"
+      ],
+      "domains": [
+        "sfport.com"
+      ],
+      "topics": [
+        "stormwater_seawall",
+        "construction_start",
+        "construction_completion",
+        "opening",
+        "reopening",
+        "events_venues"
+      ],
+      "entity": "Port of San Francisco"
+    },
+    {
+      "id": "sfo",
+      "name": "San Francisco International Airport",
+      "aliases": [
+        "SFO",
+        "San Francisco International Airport"
+      ],
+      "domains": [
+        "flysfo.com"
+      ],
+      "topics": [
+        "construction_start",
+        "construction_completion",
+        "opening",
+        "reopening",
+        "service_expansion",
+        "climate_emissions"
+      ],
+      "entity": "San Francisco International Airport"
+    },
+    {
+      "id": "rec_and_park",
+      "name": "San Francisco Recreation and Parks",
+      "aliases": [
+        "Recreation and Park",
+        "Rec and Park",
+        "Rec & Park"
+      ],
+      "domains": [
+        "sfrecpark.org"
+      ],
+      "topics": [
+        "parks_playgrounds",
+        "reopening",
+        "construction_start",
+        "construction_completion",
+        "opening",
+        "events_venues"
+      ]
+    },
+    {
+      "id": "sfusd",
+      "name": "San Francisco Unified School District",
+      "aliases": [
+        "SFUSD",
+        "San Francisco Unified School District"
+      ],
+      "domains": [
+        "sfusd.edu"
+      ],
+      "topics": [
+        "schools",
+        "budget_funding",
+        "hiring_targets",
+        "construction_completion",
+        "opening"
+      ]
+    },
+    {
+      "id": "hsh",
+      "name": "San Francisco Department of Homelessness and Supportive Housing",
+      "aliases": [
+        "HSH",
+        "Homelessness and Supportive Housing"
+      ],
+      "domains": [
+        "hsh.sfgov.org",
+        "sf.gov"
+      ],
+      "topics": [
+        "shelter_beds",
+        "housing_units",
+        "opening",
+        "budget_funding"
+      ],
+      "entity": "Department of Homelessness and Supportive Housing"
+    },
+    {
+      "id": "dph",
+      "name": "San Francisco Department of Public Health",
+      "aliases": [
+        "DPH",
+        "Department of Public Health",
+        "Public Health"
+      ],
+      "domains": [
+        "sfdph.org",
+        "sf.gov"
+      ],
+      "topics": [
+        "opening",
+        "hiring_targets",
+        "service_expansion",
+        "budget_funding",
+        "construction_completion",
+        "public_safety"
+      ],
+      "entity": "Department of Public Health"
+    },
+    {
+      "id": "mohcd",
+      "name": "San Francisco Mayor's Office of Housing and Community Development",
+      "aliases": [
+        "MOHCD",
+        "Mayor's Office of Housing"
+      ],
+      "domains": [
+        "sf.gov"
+      ],
+      "topics": [
+        "housing_units",
+        "construction_start",
+        "construction_completion",
+        "budget_funding"
+      ],
+      "entity": "MOHCD"
+    },
+    {
+      "id": "planning",
+      "name": "San Francisco Planning Department",
+      "aliases": [
+        "Planning Department",
+        "Planning Commission",
+        "SF Planning"
+      ],
+      "domains": [
+        "sfplanning.org"
+      ],
+      "topics": [
+        "housing_units",
+        "downtown_recovery",
+        "construction_start",
+        "budget_funding"
+      ]
+    },
+    {
+      "id": "public_works",
+      "name": "San Francisco Public Works",
+      "aliases": [
+        "Public Works"
+      ],
+      "domains": [
+        "sfpublicworks.org"
+      ],
+      "topics": [
+        "construction_start",
+        "construction_completion",
+        "street_safety",
+        "parks_playgrounds",
+        "stormwater_seawall"
+      ]
+    },
+    {
+      "id": "sfpd",
+      "name": "San Francisco Police Department",
+      "aliases": [
+        "SFPD",
+        "Police Department"
+      ],
+      "domains": [
+        "sanfranciscopolice.org"
+      ],
+      "topics": [
+        "public_safety",
+        "hiring_targets",
+        "budget_funding"
+      ]
+    },
+    {
+      "id": "sf_fire",
+      "name": "San Francisco Fire Department",
+      "aliases": [
+        "SFFD",
+        "Fire Department",
+        "SF Fire"
+      ],
+      "domains": [
+        "sf-fire.org"
+      ],
+      "topics": [
+        "hiring_targets",
+        "public_safety",
+        "construction_completion",
+        "opening",
+        "budget_funding"
+      ]
+    },
+    {
+      "id": "sf_library",
+      "name": "San Francisco Public Library",
+      "aliases": [
+        "Public Library",
+        "SFPL"
+      ],
+      "domains": [
+        "sfpl.org"
+      ],
+      "topics": [
+        "reopening",
+        "opening",
+        "construction_completion",
+        "service_expansion"
+      ]
+    },
+    {
+      "id": "arts_commission",
+      "name": "San Francisco Arts Commission",
+      "aliases": [
+        "Arts Commission"
+      ],
+      "domains": [
+        "sfartscommission.org"
+      ],
+      "topics": [
+        "opening",
+        "events_venues",
+        "budget_funding",
+        "construction_completion"
+      ]
+    },
+    {
+      "id": "oewd",
+      "name": "San Francisco Office of Economic and Workforce Development",
+      "aliases": [
+        "OEWD",
+        "Office of Economic and Workforce Development"
+      ],
+      "domains": [
+        "oewd.org"
+      ],
+      "topics": [
+        "downtown_recovery",
+        "hiring_targets",
+        "budget_funding",
+        "opening"
+      ]
+    },
+    {
+      "id": "sf_environment",
+      "name": "San Francisco Department of the Environment",
+      "aliases": [
+        "Department of the Environment",
+        "SF Environment"
+      ],
+      "domains": [
+        "sfenvironment.org"
+      ],
+      "topics": [
+        "climate_emissions",
+        "budget_funding",
+        "service_expansion"
+      ]
+    },
+    {
+      "id": "tida",
+      "name": "Treasure Island Development Authority",
+      "aliases": [
+        "Treasure Island",
+        "TIDA"
+      ],
+      "domains": [
+        "sftreasureisland.org"
+      ],
+      "topics": [
+        "housing_units",
+        "construction_start",
+        "construction_completion",
+        "opening",
+        "transit_projects"
+      ],
+      "entity": "Treasure Island Development Authority"
+    },
+    {
+      "id": "bart",
+      "name": "BART San Francisco",
+      "aliases": [
+        "BART"
+      ],
+      "domains": [
+        "bart.gov"
+      ],
+      "topics": [
+        "service_expansion",
+        "construction_completion",
+        "transit_projects",
+        "reopening",
+        "public_safety"
+      ],
+      "entity": "BART"
+    },
+    {
+      "id": "caltrain",
+      "name": "Caltrain San Francisco",
+      "aliases": [
+        "Caltrain"
+      ],
+      "domains": [
+        "caltrain.com"
+      ],
+      "topics": [
+        "service_expansion",
+        "construction_completion",
+        "transit_projects",
+        "budget_funding"
+      ],
+      "entity": "Caltrain"
+    },
+    {
+      "id": "muni",
+      "name": "Muni San Francisco",
+      "aliases": [
+        "Muni"
+      ],
+      "domains": [
+        "sfmta.com"
+      ],
+      "topics": [
+        "service_expansion",
+        "transit_projects",
+        "reopening",
+        "street_safety",
+        "hiring_targets"
+      ],
+      "entity": "Muni"
+    },
+    {
+      "id": "warriors_chase_center",
+      "name": "Golden State Warriors Chase Center San Francisco",
+      "aliases": [
+        "Warriors",
+        "Chase Center"
+      ],
+      "domains": [
+        "chasecenter.com",
+        "nba.com"
+      ],
+      "topics": [
+        "events_venues",
+        "opening",
+        "construction_completion",
+        "downtown_recovery"
+      ],
+      "entity": "Golden State Warriors"
+    },
+    {
+      "id": "giants",
+      "name": "San Francisco Giants Oracle Park",
+      "aliases": [
+        "Giants",
+        "Oracle Park"
+      ],
+      "domains": [
+        "sfgiants.com",
+        "mlb.com"
+      ],
+      "topics": [
+        "events_venues",
+        "construction_completion",
+        "opening",
+        "downtown_recovery"
+      ],
+      "entity": "San Francisco Giants"
+    },
+    {
+      "id": "49ers",
+      "name": "San Francisco 49ers Levi's Stadium",
+      "aliases": [
+        "49ers"
+      ],
+      "domains": [
+        "49ers.com",
+        "nfl.com"
+      ],
+      "topics": [
+        "events_venues",
+        "construction_completion",
+        "opening"
+      ],
+      "entity": "San Francisco 49ers"
+    },
+    {
+      "id": "salesforce",
+      "name": "Salesforce San Francisco",
+      "aliases": [
+        "Salesforce"
+      ],
+      "domains": [
+        "salesforce.com"
+      ],
+      "topics": [
+        "downtown_recovery",
+        "hiring_targets",
+        "budget_funding",
+        "climate_emissions",
+        "schools"
+      ],
+      "entity": "Salesforce"
+    },
+    {
+      "id": "waymo",
+      "name": "Waymo San Francisco",
+      "aliases": [
+        "Waymo"
+      ],
+      "domains": [
+        "waymo.com"
+      ],
+      "topics": [
+        "service_expansion",
+        "opening",
+        "hiring_targets"
+      ],
+      "entity": "Waymo"
+    },
+    {
+      "id": "cruise",
+      "name": "Cruise San Francisco",
+      "aliases": [
+        "Cruise"
+      ],
+      "domains": [
+        "getcruise.com"
+      ],
+      "topics": [
+        "service_expansion",
+        "opening",
+        "hiring_targets"
+      ],
+      "entity": "Cruise"
+    },
+    {
+      "id": "pge",
+      "name": "PG&E San Francisco",
+      "aliases": [
+        "PG&E",
+        "Pacific Gas and Electric"
+      ],
+      "domains": [
+        "pge.com",
+        "investor.pgecorp.com"
+      ],
+      "topics": [
+        "climate_emissions",
+        "construction_start",
+        "construction_completion",
+        "budget_funding"
+      ],
+      "entity": "PG&E"
+    },
+    {
+      "id": "ucsf",
+      "name": "UCSF San Francisco",
+      "aliases": [
+        "UCSF",
+        "University of California, San Francisco"
+      ],
+      "domains": [
+        "ucsf.edu"
+      ],
+      "topics": [
+        "opening",
+        "construction_completion",
+        "housing_units",
+        "hiring_targets"
+      ],
+      "entity": "UCSF"
+    },
+    {
+      "id": "ccsf",
+      "name": "City College of San Francisco",
+      "aliases": [
+        "CCSF",
+        "City College of San Francisco",
+        "City College"
+      ],
+      "domains": [
+        "ccsf.edu"
+      ],
+      "topics": [
+        "construction_completion",
+        "opening",
+        "budget_funding",
+        "schools",
+        "hiring_targets"
+      ]
+    }
+  ],
+  "site_combos_per_actor": 6
+}

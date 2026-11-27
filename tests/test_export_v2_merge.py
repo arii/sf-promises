@@ -519,3 +519,16 @@ def test_contradictory_v2_record_gets_inspectable_summaries():
     assert out["contradicting_evidence_summary"].endswith("The plaza will reopen in 2023.")
     assert "deadline passed" in out["arbitration_rule_explanation"]
     assert _evidence_summaries(item, False) == {}
+
+
+def test_editorial_titles_and_exclusions_are_valid():
+    from src.site_merge import load_editorial
+    ed = load_editorial()
+    assert ed["titles"], "config/v2_editorial.json carries titles"
+    assert set(ed["exclude"]) <= set(ed["titles"])
+    assert all(0 < len(t) <= 70 for t in ed["titles"].values())
+
+
+def test_missing_editorial_file_is_empty(tmp_path):
+    from src.site_merge import load_editorial
+    assert load_editorial(tmp_path / "absent.json") == {"titles": {}, "exclude": {}}

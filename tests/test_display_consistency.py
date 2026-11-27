@@ -57,3 +57,22 @@ class TestDisplayConsistency(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class TestPublishedCountSentences(unittest.TestCase):
+    def test_every_published_count_in_the_page_matches_data_json(self):
+        total = len(json.loads((ROOT / "docs/data.json").read_text())["promises"])
+        html = (ROOT / "docs/index.html").read_text()
+        patterns = [
+            r"Search and filter the (\d+) published commitments",
+            r"All Commitments \((\d+)\)",
+            r"A sourced record of (\d+) San Francisco public commitments",
+            r"outcome distribution of (\d+) verified promises",
+            r'id="outcome-dist-verified"[^>]*>(\d+) VERIFIED',
+            r"This site tracks (\d+) such commitments",
+            r'id="tally-total">(\d+)<',
+        ]
+        for pattern in patterns:
+            found = re.findall(pattern, html)
+            self.assertTrue(found, f"count sentence missing from index.html: {pattern}")
+            self.assertEqual(set(found), {str(total)}, f"stale count for {pattern}: {found}")
