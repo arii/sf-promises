@@ -1716,6 +1716,10 @@ def _arbitration_explanation_for(verdict, reason_code, verdict_reason, k_claims,
     return "Insufficient primary outcome metrics recorded; conflicting claims remain unresolved pending source retrieval."
 
 
+# Shown when a record is flagged contradictory but lists no contradicting claim to quote.
+NO_LISTED_CONTRADICTION = "The record flags contradicting evidence, but no contradicting claim is listed for it."
+
+
 def enrich_promise(p):
     pid = p.get("promise_id")
     geo = GEOGRAPHY_DATA.get(pid, {
@@ -1812,20 +1816,20 @@ def enrich_promise(p):
     contradicting_summary = ""
     arbitration_rule = ""
     # A contradicting summary is shown as evidence, so it comes only from a listed claim.
-    # With no claim to quote it stays empty; it is never filled with generic prose.
+    # With no claim to quote it says so; it is never filled with generic prose.
     if has_contradictions:
         if verdict_lower == "broken":
             supporting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else (p.get("factual_outcome") or p.get("verdict_reason") or "Outcome record verified commitment missed.")
-            contradicting_summary = (k_claims[0].get("claim") or k_claims[0].get("quote") or "") if k_claims else ""
+            contradicting_summary = (k_claims[0].get("claim") or k_claims[0].get("quote") or "") if k_claims else NO_LISTED_CONTRADICTION
         elif verdict_lower == "kept":
             supporting_summary = (k_claims[0].get("claim") or k_claims[0].get("quote") or "") if k_claims else (p.get("factual_outcome") or "Official record verified completion.")
-            contradicting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else ""
+            contradicting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else NO_LISTED_CONTRADICTION
         elif verdict_lower == "in_progress":
             supporting_summary = (k_claims[0].get("claim") or k_claims[0].get("quote") or "") if k_claims else (p.get("factual_outcome") or "Adopted legislation and active phased delivery recorded.")
-            contradicting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else ""
+            contradicting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else NO_LISTED_CONTRADICTION
         else:
             supporting_summary = p.get("factual_outcome") or "Verified outcome records insufficient to settle numerical threshold."
-            contradicting_summary = ""
+            contradicting_summary = NO_LISTED_CONTRADICTION
         arbitration_rule = _arbitration_explanation_for(
             verdict_lower, vm.get("verdict_reason_code"), p.get("verdict_reason"), k_claims, b_claims
         )
