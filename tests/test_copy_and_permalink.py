@@ -32,10 +32,12 @@ class TestCopy(unittest.TestCase):
             self.assertIn(f"<dt>{v}</dt>", HTML)
         self.assertIn('id="methodology"', HTML)
 
-    def test_stage_explainers(self):
-        block = HTML[HTML.index('id="stage-explainers"'):]
-        for stage in ("Fetch", "Extract", "Gate", "Argue", "Decide", "Publish"):
-            self.assertIn(f"<dt>{stage}</dt>", block.split("</dl>")[0])
+    def test_watch_has_no_intro_or_stage_descriptions(self):
+        # #100: Watch is a compact six-stage timeline; no intro paragraph, no per-stage descriptions.
+        self.assertNotIn('id="stage-explainers"', HTML)
+        self.assertNotIn("Follow a public commitment from its original source", HTML)
+        for n, stage in enumerate(("Fetch", "Extract", "Gate", "Argue", "Decide", "Publish"), start=1):
+            self.assertIn(f'data-stage="{n}">{stage}</span>', HTML)
 
     def test_hash_permalink_opens_drawer(self):
         self.assertIn("#promise-", JS)
