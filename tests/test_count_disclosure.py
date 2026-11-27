@@ -46,6 +46,20 @@ class CountDisclosure(unittest.TestCase):
                 self.assertIn(f"lists {sum(o['listed'])} individual claim", o["note"], pid)
                 self.assertIn(f"for {recorded} counted", o["note"], pid)
 
+    def test_banner_labels_are_verdict_relative(self):
+        src = (REPO_ROOT / "docs/app.js").read_text()
+        self.assertIn("Supports the verdict:", src)
+        self.assertIn("Contradicts the verdict:", src)
+        self.assertNotIn("<strong>Supporting case:</strong>", src)
+        self.assertNotIn("<strong>Contradicting case:</strong>", src)
+
+    def test_p26_broken_verdict_summaries_come_from_the_broken_side(self):
+        data = json.loads((REPO_ROOT / "docs/data.json").read_text())
+        p = next(x for x in data["promises"] if x["promise_id"] == "P26")
+        self.assertEqual(p["verdict"], "broken")
+        self.assertIn("prohibiting the City", p["supporting_evidence_summary"])
+        self.assertIn("voters approved", p["contradicting_evidence_summary"])
+
     def test_recorded_counts_are_not_altered(self):
         self.assertEqual(self.out["P11"]["view"], {"supporting": 4, "contradicting": 4})
         self.assertIn("kept 0, broken 4", self.out["P11"]["note"])
