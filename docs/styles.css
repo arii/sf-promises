@@ -6979,6 +6979,9 @@ a:hover {
   font-size: 0.9rem;
 }
 
+.checks-summary-icon[data-kind="partial"] { color: #D97706; }
+.checks-summary-icon[data-kind="fail"] { color: #DC2626; }
+
 .checks-summary-label {
   flex: 1;
 }
