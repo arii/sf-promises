@@ -19,22 +19,22 @@
   },
   "per_style": {
     "capital_project": {
-      "n": 63,
-      "pass_before": 59,
-      "pass_after": 59,
-      "pass_rate_before": 0.9365,
-      "pass_rate_after": 0.9365,
-      "mean_total_before": 7.238,
-      "mean_total_after": 7.222
+      "n": 64,
+      "pass_before": 60,
+      "pass_after": 60,
+      "pass_rate_before": 0.9375,
+      "pass_rate_after": 0.9375,
+      "mean_total_before": 7.25,
+      "mean_total_after": 7.234
     },
     "service_program": {
-      "n": 84,
-      "pass_before": 69,
-      "pass_after": 69,
-      "pass_rate_before": 0.8214,
-      "pass_rate_after": 0.8214,
-      "mean_total_before": 6.75,
-      "mean_total_after": 6.869
+      "n": 168,
+      "pass_before": 153,
+      "pass_after": 153,
+      "pass_rate_before": 0.9107,
+      "pass_rate_after": 0.9107,
+      "mean_total_before": 7.179,
+      "mean_total_after": 7.238
     }
   },
   "flips_up": [],
