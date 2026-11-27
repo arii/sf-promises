@@ -8150,23 +8150,6 @@ a:hover {
   color: var(--muted);
 }
 
-.stage-explainers {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 10px 16px;
-  margin: 14px 0 0;
-  font-size: 0.85rem;
-}
-
-.stage-explainers dt {
-  font-weight: 700;
-}
-
-.stage-explainers dd {
-  margin: 2px 0 0;
-  color: var(--muted);
-}
-
 .methodology-section {
   margin: 40px auto;
   max-width: 900px;
