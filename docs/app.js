@@ -2317,7 +2317,7 @@
           priority: 'P3 · CONTRA',
           promise_id: p.promise_id,
           entity: p.entity_canonical_name || p.entity || '',
-          reason: `Contradictory evidence (${p.verdict_supporting_evidence_count || 0} supporting vs ${p.verdict_contradicting_evidence_count || 0} refuting)`
+          reason: `Contradictory evidence (${p.verdict_supporting_evidence_count || 0} supporting the verdict vs ${p.verdict_contradicting_evidence_count || 0} contradicting it)`
         });
       }
     });
@@ -2584,6 +2584,10 @@
     return { supporting, contradicting };
   }
 
+  // Banner semantics: verdict_supporting_* and *_summary are relative to the VERDICT
+  // (scripts/enrich_dataset.py ~1796-1826: for a broken verdict the supporting side is the
+  // broken-side claims). The drawer columns "Evidence of progress/shortfall" are relative to
+  // the PROMISE, so the banner must say "verdict", not just supporting/contradicting.
   // Count disclosure: the banner counts are recorded values. When the export lists
   // fewer individual claims than those counts, say so; the counts stay as recorded.
   function drawerCountDisclosure(p) {
@@ -2868,9 +2872,9 @@
         const arbRule = p.arbitration_rule_explanation || (p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id));
         contradictionBanner.innerHTML = `
           <div class="contradiction-adjudication-box font-mono">
-            <h4>&#9878; Contradictory Evidence Adjudicated (${supCount} supporting vs ${conCount} contradicting)</h4>
-            ${supSum ? `<p><strong>Supporting case:</strong> ${escapeHtml(supSum)}</p>` : ''}
-            ${conSum ? `<p><strong>Contradicting case:</strong> ${escapeHtml(conSum)}</p>` : ''}
+            <h4>&#9878; Contradictory Evidence Adjudicated (${supCount} supporting the ${escapeHtml(p.verdict || 'recorded')} verdict vs ${conCount} contradicting it)</h4>
+            ${supSum ? `<p><strong>Supports the verdict:</strong> ${escapeHtml(supSum)}</p>` : ''}
+            ${conSum ? `<p><strong>Contradicts the verdict:</strong> ${escapeHtml(conSum)}</p>` : ''}
             <p><strong>Arbitration ruling:</strong> ${escapeHtml(arbRule)}</p>
             ${countNote ? `<p class="count-disclosure"><em>${escapeHtml(countNote)}</em></p>` : ''}
           </div>
