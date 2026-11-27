@@ -2578,7 +2578,9 @@
       throw new Error(`drawerContradictionView: record ${p.promise_id} has no has_contradictory_evidence flag`);
     }
     const supporting = p.verdict_supporting_evidence_count || 0;
-    const contradicting = Math.max(p.verdict_contradicting_evidence_count || 0, p.refuting_evidence_count || 0);
+    // Verdict-relative only: refuting_evidence_count is the broken-side count, which is the
+    // SUPPORTING side on a broken verdict, so it must not stand in for the contradicting count.
+    const contradicting = p.verdict_contradicting_evidence_count || 0;
     // P64 carries 2 contradicting claims with the flag false, so a recorded contradicting count also qualifies.
     if (!p.has_contradictory_evidence && contradicting === 0) return null;
     return { supporting, contradicting };
