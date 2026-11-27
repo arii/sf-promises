@@ -36,9 +36,9 @@ from src.evidence import (
 # web.archive.org), government 7→9 and primary 24→26 (the two gov hosts).
 # Local news review added five publishers to checks_allowlist and news.
 EXPECTED_GROUP_SIZES = {
-    "checks_allowlist": 48,
+    "checks_allowlist": 58,  # +10 SF agency sites for discovery round 3 (2026-11-24)
     "government": 9,
-    "primary": 26,
+    "primary": 30,  # +4 first-party sites for discovery round 3 (2026-11-24)
     "news": 42,
 }
 EXPECTED_CANARY_COUNT = 11

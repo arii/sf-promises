@@ -1,5 +1,17 @@
 [
   {
+    "domain": "49ers.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "First-party statements by the promising entity: San Francisco 49ers (first-party). Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "abc7news.com",
     "source_type": "news",
     "groups": [
@@ -165,6 +177,18 @@
     "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
     "added_by": "build-migration",
     "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "chasecenter.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "First-party statements by the promising entity: Chase Center / Golden State Warriors (first-party). Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
     "review_status": "approved",
     "canary": false
   },
@@ -371,6 +395,18 @@
     "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
     "added_by": "build-migration",
     "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "getcruise.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "First-party statements by the promising entity: Cruise (first-party). Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
     "review_status": "approved",
     "canary": false
   },
@@ -626,6 +662,18 @@
     "canary": false
   },
   {
+    "domain": "oewd.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Official SF city agency site: SF Office of Economic and Workforce Development. Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "pge.com",
     "source_type": "primary_source",
     "groups": [
@@ -698,6 +746,42 @@
     "canary": false
   },
   {
+    "domain": "salesforce.com",
+    "source_type": "primary_source",
+    "groups": [
+      "primary"
+    ],
+    "added_reason": "First-party statements by the promising entity: Salesforce (first-party). Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sanfranciscopolice.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Official SF city agency site: San Francisco Police Department. Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sf-fire.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Official SF city agency site: San Francisco Fire Department. Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "sf.eater.com",
     "source_type": "news",
     "groups": [
@@ -731,6 +815,18 @@
     "added_reason": "Parent decision: legit SF news source (P21 vote)",
     "added_by": "code-owner-decision",
     "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfartscommission.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Official SF city agency site: San Francisco Arts Commission. Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
     "review_status": "approved",
     "canary": false
   },
@@ -773,16 +869,15 @@
     "canary": false
   },
   {
-    "domain": "sfgov.legistar.com",
-    "source_type": "official_government",
+    "domain": "sfchronicle.com",
+    "source_type": "news",
     "groups": [
       "checks_allowlist",
-      "government",
-      "primary"
+      "news"
     ],
-    "added_reason": "Reviewed: official SF Board of Supervisors legislative record (Legistar) — the planner and harvester already target this host, so the allowlist was the missing half of that latent inconsistency",
-    "added_by": "code-owner-decision",
-    "added_at": "2026-11-15",
+    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
+    "added_by": "build-migration",
+    "added_at": "2026-11-13",
     "review_status": "approved",
     "canary": false
   },
@@ -801,15 +896,14 @@
     "canary": false
   },
   {
-    "domain": "sfchronicle.com",
-    "source_type": "news",
+    "domain": "sfdph.org",
+    "source_type": "official_government",
     "groups": [
-      "checks_allowlist",
-      "news"
+      "checks_allowlist"
     ],
-    "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
-    "added_by": "build-migration",
-    "added_at": "2026-11-13",
+    "added_reason": "Official SF city agency site: San Francisco Department of Public Health. Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
     "review_status": "approved",
     "canary": false
   },
@@ -859,6 +953,20 @@
     "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
     "added_by": "build-migration",
     "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfgov.legistar.com",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist",
+      "government",
+      "primary"
+    ],
+    "added_reason": "Reviewed: official SF Board of Supervisors legislative record (Legistar) — the planner and harvester already target this host, so the allowlist was the missing half of that latent inconsistency",
+    "added_by": "code-owner-decision",
+    "added_at": "2026-11-15",
     "review_status": "approved",
     "canary": false
   },
@@ -914,6 +1022,18 @@
     "canary": false
   },
   {
+    "domain": "sfpl.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Official SF city agency site: San Francisco Public Library. Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "sfplanning.org",
     "source_type": "official_government",
     "groups": [
@@ -927,6 +1047,18 @@
     "canary": false
   },
   {
+    "domain": "sfport.com",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Official SF city agency site: Port of San Francisco. Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "sfpublicpress.org",
     "source_type": "news",
     "groups": [
@@ -936,6 +1068,18 @@
     "added_reason": "San Francisco Public Press nonprofit newsroom, identified in discovery denials for local ballot measures and housing",
     "added_by": "devin-local-news-review",
     "added_at": "2026-11-18",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sfpublicworks.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Official SF city agency site: San Francisco Public Works. Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
     "review_status": "approved",
     "canary": false
   },
@@ -977,6 +1121,18 @@
     "canary": false
   },
   {
+    "domain": "sfrecpark.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Official SF city agency site: San Francisco Recreation and Parks Department. Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
     "domain": "sfstandard.com",
     "source_type": "news",
     "groups": [
@@ -986,6 +1142,18 @@
     "added_reason": "Initial hand-curated source-tier host set (migrated from src/evidence.py)",
     "added_by": "build-migration",
     "added_at": "2026-11-13",
+    "review_status": "approved",
+    "canary": false
+  },
+  {
+    "domain": "sftreasureisland.org",
+    "source_type": "official_government",
+    "groups": [
+      "checks_allowlist"
+    ],
+    "added_reason": "Official SF city agency site: Treasure Island Development Authority (city agency). Needed for discovery round 3.",
+    "added_by": "discovery-round-3",
+    "added_at": "2026-11-24",
     "review_status": "approved",
     "canary": false
   },
