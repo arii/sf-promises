@@ -40,13 +40,16 @@ class TestCopy(unittest.TestCase):
         for n, stage in enumerate(("Fetch", "Extract", "Gate", "Argue", "Decide", "Publish"), start=1):
             self.assertIn(f'data-stage="{n}">{stage}</span>', HTML)
 
-    def test_story_cards_fit_content_and_show_full_outcome(self):
-        # Featured cards: no stretched empty gaps, and the "what happened" outcome shows up to 4 lines.
+    def test_story_cards_have_no_empty_gaps_and_show_full_outcome(self):
+        # Featured cards flow in masonry columns (no empty grid cells), photos are a compact crop,
+        # and the "what happened" outcome shows up to 4 lines.
         grid = re.search(r"\.featured-stories-grid \{(.*?)\}", CSS, re.S).group(1)
-        self.assertIn("align-items: start", grid)
+        self.assertIn("columns: 320px 3", grid)
         card = re.search(r"\.story-card \{(.*?)\}", CSS, re.S).group(1)
+        self.assertIn("break-inside: avoid", card)
         self.assertNotIn("space-between", card)
-        self.assertIn("align-items: stretch", CSS)  # mobile carousel keeps equal-height cards
+        img = re.search(r"\.story-card-media img \{(.*?)\}", CSS, re.S).group(1)
+        self.assertIn("aspect-ratio: 5 / 2", img)
         outcome = re.search(r"\.story-outcome-text \{(.*?)\}", CSS, re.S).group(1)
         self.assertIn("-webkit-line-clamp: 4", outcome)
 

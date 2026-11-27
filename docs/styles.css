@@ -5249,13 +5249,14 @@ a:hover {
 }
 
 .featured-stories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 16px;
-  align-items: start;
+  display: block;
+  columns: 320px 3;
+  column-gap: 16px;
 }
 
 .story-card {
+  break-inside: avoid;
+  margin: 0 0 16px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -5312,9 +5313,12 @@ a:hover {
   outline-offset: 2px;
 }
 
+/* Compact crop so photo cards are not much taller than text-only cards. */
 .story-card-media img {
   width: 100%;
   height: auto;
+  aspect-ratio: 5 / 2;
+  object-fit: cover;
   display: block;
   border-radius: 8px;
   border: 1px solid var(--line);
@@ -6106,7 +6110,7 @@ a:hover {
 
   .featured-stories-grid {
     display: flex !important;
-    align-items: stretch;
+    align-items: flex-start;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
     gap: 14px;
