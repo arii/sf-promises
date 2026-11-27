@@ -2569,6 +2569,20 @@
     throw new Error(`drawerChecksSummaryView: unknown summary kind ${summary.kind}`);
   }
 
+  // The contradiction banner shows only when the record itself says its evidence
+  // conflicts. Claim lists and free-text notes do not count: a note such as
+  // "no contradicting hiring count" used to trip a regex and put a
+  // "contradictory evidence" banner on a record with zero contradicting items.
+  function drawerContradictionView(p) {
+    if (typeof p.has_contradictory_evidence !== 'boolean') {
+      throw new Error(`drawerContradictionView: record ${p.promise_id} has no has_contradictory_evidence flag`);
+    }
+    if (!p.has_contradictory_evidence) return null;
+    const supporting = p.verdict_supporting_evidence_count || 0;
+    const contradicting = Math.max(p.verdict_contradicting_evidence_count || 0, p.refuting_evidence_count || 0);
+    return { supporting, contradicting };
+  }
+
   // Entity avatar (issue #83): same-origin relative path from the media
   // manifest, shown with a visible credit. '' when the export carries no entity
   // image or the path is not a plain relative one, so the card is unchanged.
@@ -2635,7 +2649,7 @@
   const SFPDrawer = {
     verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth, entityAvatarHtml,
     entityNameKey, entityMediaFromManifest, entityMediaFor,
-    drawerCheckOutcomes, drawerChecksSummary, drawerChecksSummaryView, outcomeBasisText
+    drawerCheckOutcomes, drawerChecksSummary, drawerChecksSummaryView, drawerContradictionView, outcomeBasisText
   };
   window.SFPDrawer = SFPDrawer;
   /* SFPDRAWER_PURE_END */
@@ -2828,10 +2842,11 @@
     // Contradiction banner
     const contradictionBanner = document.getElementById('drawer-contradiction-banner');
     if (contradictionBanner) {
-      const hasContra = Boolean(p.has_contradictory_evidence) || (kClaims.length > 0 && bClaims.length > 0) || (bundles.broken && bundles.broken.note && /interim|conflict|competing|contradict/i.test(bundles.broken.note));
+      const contra = window.SFPDrawer.drawerContradictionView(p);
+      const hasContra = contra !== null;
       if (hasContra) {
-        const supCount = p.verdict_supporting_evidence_count !== undefined ? p.verdict_supporting_evidence_count : kClaims.length;
-        const conCount = p.verdict_contradicting_evidence_count !== undefined ? p.verdict_contradicting_evidence_count : bClaims.length;
+        const supCount = contra.supporting;
+        const conCount = contra.contradicting;
         const supSum = p.supporting_evidence_summary || '';
         const conSum = p.contradicting_evidence_summary || '';
         const arbRule = p.arbitration_rule_explanation || (p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id));
