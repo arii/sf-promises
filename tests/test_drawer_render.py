@@ -80,6 +80,10 @@ console.log(JSON.stringify({
   avatarNone: SFPDrawer.entityAvatarHtml({ entityImagePath: '' }),
   avatarRemote: SFPDrawer.entityAvatarHtml({ entityImagePath: 'https://evil.example/x.png' }),
   avatarTraversal: SFPDrawer.entityAvatarHtml({ entityImagePath: '../x.png' }),
+  viewPartial: SFPDrawer.drawerChecksSummaryView({ kind: 'partial', passed: 2, failures: 0, unrecorded: 5 }),
+  viewFail: SFPDrawer.drawerChecksSummaryView({ kind: 'fail', passed: 5, failures: 2, unrecorded: 0 }),
+  viewPass: SFPDrawer.drawerChecksSummaryView({ kind: 'pass', passed: 7, failures: 0, unrecorded: 0 }),
+  viewUnknown: (() => { try { SFPDrawer.drawerChecksSummaryView({ kind: 'mystery', passed: 7 }); return 'no throw'; } catch (e) { return String(e.message); } })(),
   lowRelevance: SFPDrawer.drawerCheckOutcomes({ checks: [], relevance: { score: 3 } }).relevance_gate
 }));
 """
@@ -92,6 +96,27 @@ def run_harness():
     if proc.returncode != 0:
         raise AssertionError(f"node drawer harness failed: {proc.stderr.strip()}")
     return json.loads(proc.stdout)
+
+
+class TestChecksSummaryView(unittest.TestCase):
+    def setUp(self):
+        self.out = run_harness()
+
+    def test_only_a_full_pass_gets_the_green_check(self):
+        self.assertEqual(self.out["viewPass"]["icon"], "\u2713")
+        self.assertNotEqual(self.out["viewPartial"]["icon"], "\u2713")
+        self.assertNotEqual(self.out["viewFail"]["icon"], "\u2713")
+
+    def test_partial_and_fail_labels_state_the_gap(self):
+        self.assertEqual(
+            self.out["viewPartial"]["label"],
+            "2/7 Verification Checks Recorded as Passed \u00b7 5 not recorded",
+        )
+        self.assertIn("2 failed", self.out["viewFail"]["label"])
+        self.assertEqual(self.out["viewPass"]["label"], "7/7 Verification Checks Recorded as Passed")
+
+    def test_unknown_kind_fails_loudly_not_green(self):
+        self.assertIn("unknown summary kind mystery", self.out["viewUnknown"])
 
 
 class TestDrawerTimeline(unittest.TestCase):

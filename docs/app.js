@@ -2554,6 +2554,21 @@
     return { kind: 'pass', failures: 0, passed, unrecorded: 0 };
   }
 
+  // Header line for the checks accordion: the icon and tone must match what
+  // was actually recorded, so a record with 2 of 7 passed never shows a
+  // green check.
+  function drawerChecksSummaryView(summary) {
+    const base = `${summary.passed}/7 Verification Checks Recorded as Passed`;
+    if (summary.kind === 'fail') {
+      return { kind: 'fail', icon: '\u2715', label: `${base} \u00b7 ${summary.failures} failed` };
+    }
+    if (summary.kind === 'partial') {
+      return { kind: 'partial', icon: '!', label: `${base} \u00b7 ${summary.unrecorded} not recorded` };
+    }
+    if (summary.kind === 'pass') return { kind: 'pass', icon: '\u2713', label: base };
+    throw new Error(`drawerChecksSummaryView: unknown summary kind ${summary.kind}`);
+  }
+
   // Entity avatar (issue #83): same-origin relative path from the media
   // manifest, shown with a visible credit. '' when the export carries no entity
   // image or the path is not a plain relative one, so the card is unchanged.
@@ -2620,7 +2635,7 @@
   const SFPDrawer = {
     verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth, entityAvatarHtml,
     entityNameKey, entityMediaFromManifest, entityMediaFor,
-    drawerCheckOutcomes, drawerChecksSummary, outcomeBasisText
+    drawerCheckOutcomes, drawerChecksSummary, drawerChecksSummaryView, outcomeBasisText
   };
   window.SFPDrawer = SFPDrawer;
   /* SFPDRAWER_PURE_END */
@@ -2931,7 +2946,13 @@
     const outcomes = window.SFPDrawer.drawerCheckOutcomes(p);
     const recordedSummary = window.SFPDrawer.drawerChecksSummary(outcomes, p);
     const summaryLabel = document.querySelector('#inspect-drawer-backdrop .checks-summary-label');
-    if (summaryLabel) summaryLabel.textContent = `${recordedSummary.passed}/7 Verification Checks Recorded as Passed`;
+    const summaryIcon = document.querySelector('#inspect-drawer-backdrop .checks-summary-icon');
+    const summaryView = window.SFPDrawer.drawerChecksSummaryView(recordedSummary);
+    if (summaryLabel) summaryLabel.textContent = summaryView.label;
+    if (summaryIcon) {
+      summaryIcon.textContent = summaryView.icon;
+      summaryIcon.dataset.kind = summaryView.kind;
+    }
 
 
     const rawChecks = p.checks || [];
