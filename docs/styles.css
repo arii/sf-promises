@@ -5287,31 +5287,6 @@ a:hover {
   margin: 0 0 12px;
 }
 
-.btn-story-media {
-  display: block;
-  width: 100%;
-  min-height: 38px;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px dashed var(--line);
-  border-radius: 8px;
-  color: var(--muted);
-  font-size: 0.84rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-
-.btn-story-media:hover {
-  background: var(--surface-alt);
-  border-color: var(--blue);
-  color: var(--ink);
-}
-
-.btn-story-media:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 2px;
-}
 
 /* Compact crop so photo cards are not much taller than text-only cards. */
 .story-card-media img {
@@ -8403,7 +8378,6 @@ body { overflow-x: clip; }
 .data-table tbody tr.promise-row .table-outcome-kicker,
 .data-table tbody tr.promise-row td.table-timeline-cell .table-card-action,
 .data-table tbody tr.promise-row .table-card-action { font-size: max(0.75rem, 12px); }
-.btn-story-media,
 .btn-story-evidence { min-height: 44px; }
 
 /* Card layout: chips, expander and Inspect share one wrapping line box, so a

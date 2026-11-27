@@ -2036,6 +2036,7 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     # Keep every visible count and filter on the same latest-verdict snapshot.
     summary = [
         ("kept", "kept", "Kept"),
+        ("delayed_or_partial", "delayed", "Delivered late / partial"),
         ("in_progress", "progress", "In progress"),
         ("broken", "broken", "Broken"),
         ("undecided", "undecided", "Undecided"),
@@ -2069,7 +2070,13 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     html = re.sub(r'(<strong id="tally-undecided">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("undecided", 0)}\g<2>', html)
     html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-promises">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
     html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-quarantine">)[^<]*(</span>)', rf'\g<1>{len(quarantined)}\g<2>', html)
-    html = re.sub(r'(<span id="outcome-dist-verified">)[^<]*(</span>)', rf'\g<1>{len(promises)} VERIFIED\g<2>', html)
+    html = re.sub(r'(<span[^>]*id="outcome-dist-verified"[^>]*>)[^<]*(</span>)', rf'\g<1>{len(promises)} VERIFIED\g<2>', html)
+    # Every other published-count sentence must follow the same total.
+    html = re.sub(r'(Search and filter the )\d+( published commitments)', rf'\g<1>{total}\g<2>', html)
+    html = re.sub(r'(All Commitments \()\d+(\))', rf'\g<1>{total}\g<2>', html)
+    html = re.sub(r'(A sourced record of )\d+( San Francisco public commitments)', rf'\g<1>{total}\g<2>', html)
+    html = re.sub(r'(This site tracks )\d+( such commitments)', rf'\g<1>{total}\g<2>', html)
+    html = re.sub(r'(outcome distribution of )\d+( verified promises)', rf'\g<1>{total}\g<2>', html)
     html = re.sub(r'(<strong id="table-showing-count">)[^<]*(</strong>)', r'\g<1>10\g<2>', html)
     html = re.sub(r'(<span id="table-total-count">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
 
