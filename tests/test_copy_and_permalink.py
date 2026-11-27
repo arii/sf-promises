@@ -53,6 +53,16 @@ class TestCopy(unittest.TestCase):
         outcome = re.search(r"\.story-outcome-text \{(.*?)\}", CSS, re.S).group(1)
         self.assertIn("-webkit-line-clamp: 4", outcome)
 
+    def test_limits_sit_with_methodology_not_after_how_it_is_built(self):
+        # #100: all limitations are one block (methodology, then "What this can't tell you"), before How it's built.
+        m = HTML.index('id="methodology"')
+        l = HTML.index('id="limits"')
+        h = HTML.index('id="how-it-works"')
+        self.assertLess(m, l)
+        self.assertLess(l, h)
+        block = re.search(r"\.methodology-section \{(.*?)\}", CSS, re.S).group(1)
+        self.assertNotIn("auto", block)  # aligned with the page column, not centered 120px in
+
     def test_hash_permalink_opens_drawer(self):
         self.assertIn("#promise-", JS)
         self.assertIn("openPermalinkDrawer", JS)
