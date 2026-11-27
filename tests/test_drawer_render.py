@@ -84,6 +84,9 @@ console.log(JSON.stringify({
   viewFail: SFPDrawer.drawerChecksSummaryView({ kind: 'fail', passed: 5, failures: 2, unrecorded: 0 }),
   viewPass: SFPDrawer.drawerChecksSummaryView({ kind: 'pass', passed: 7, failures: 0, unrecorded: 0 }),
   viewUnknown: (() => { try { SFPDrawer.drawerChecksSummaryView({ kind: 'mystery', passed: 7 }); return 'no throw'; } catch (e) { return String(e.message); } })(),
+  contraNone: SFPDrawer.drawerContradictionView({ promise_id: 'X', has_contradictory_evidence: false, verdict_supporting_evidence_count: 2, verdict_contradicting_evidence_count: 0 }),
+  contraOld: SFPDrawer.drawerContradictionView({ promise_id: 'X', has_contradictory_evidence: true, verdict_supporting_evidence_count: 4, verdict_contradicting_evidence_count: 0, refuting_evidence_count: 4 }),
+  contraMissing: (() => { try { SFPDrawer.drawerContradictionView({ promise_id: 'Y' }); return 'no throw'; } catch (e) { return String(e.message); } })(),
   lowRelevance: SFPDrawer.drawerCheckOutcomes({ checks: [], relevance: { score: 3 } }).relevance_gate
 }));
 """
@@ -117,6 +120,27 @@ class TestChecksSummaryView(unittest.TestCase):
 
     def test_unknown_kind_fails_loudly_not_green(self):
         self.assertIn("unknown summary kind mystery", self.out["viewUnknown"])
+
+
+class TestContradictionBanner(unittest.TestCase):
+    def setUp(self):
+        self.out = run_harness()
+
+    def test_no_banner_when_record_says_no_conflict(self):
+        self.assertIsNone(self.out["contraNone"])
+
+    def test_banner_counts_use_refuting_when_verdict_count_is_zero(self):
+        self.assertEqual(self.out["contraOld"], {"supporting": 4, "contradicting": 4})
+
+    def test_missing_flag_fails_loudly(self):
+        self.assertIn("has no has_contradictory_evidence flag", self.out["contraMissing"])
+
+    def test_published_records_banner_only_when_flagged(self):
+        import json
+        records = json.loads(DATA_JSON.read_text())
+        records = records.get("promises", records)
+        for p in records:
+            self.assertIsInstance(p.get("has_contradictory_evidence"), bool, p["promise_id"])
 
 
 class TestDrawerTimeline(unittest.TestCase):
