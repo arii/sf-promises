@@ -2586,6 +2586,16 @@
     return { supporting, contradicting };
   }
 
+  // Banner heading. A record whose conflict flag is set but whose verdict-contradicting count
+  // is 0 is not an adjudicated contradiction: say what is recorded, nothing more.
+  function drawerBannerHeading(view, verdict) {
+    const v = verdict || 'recorded';
+    if (view.contradicting === 0) {
+      return `Recorded verdict evidence (${view.supporting} supporting the ${v} verdict, 0 contradicting it; conflict flag set in the record)`;
+    }
+    return `Contradictory Evidence Adjudicated (${view.supporting} supporting the ${v} verdict vs ${view.contradicting} contradicting it)`;
+  }
+
   // Banner semantics: verdict_supporting_* and *_summary are relative to the VERDICT
   // (scripts/enrich_dataset.py ~1796-1826: for a broken verdict the supporting side is the
   // broken-side claims). The drawer columns "Evidence of progress/shortfall" are relative to
@@ -2685,7 +2695,7 @@
   const SFPDrawer = {
     verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth, entityAvatarHtml,
     entityNameKey, entityMediaFromManifest, entityMediaFor,
-    drawerCheckOutcomes, drawerChecksSummary, drawerChecksSummaryView, drawerContradictionView, drawerCountDisclosure, outcomeBasisText
+    drawerCheckOutcomes, drawerChecksSummary, drawerChecksSummaryView, drawerContradictionView, drawerCountDisclosure, drawerBannerHeading, outcomeBasisText
   };
   window.SFPDrawer = SFPDrawer;
   /* SFPDRAWER_PURE_END */
@@ -2889,9 +2899,9 @@
         const arbRule = p.arbitration_rule_explanation || (p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id));
         contradictionBanner.innerHTML = `
           <div class="contradiction-adjudication-box font-mono">
-            <h4>&#9878; Contradictory Evidence Adjudicated (${supCount} supporting the ${escapeHtml(p.verdict || 'recorded')} verdict vs ${conCount} contradicting it)</h4>
+            <h4>&#9878; ${escapeHtml(window.SFPDrawer.drawerBannerHeading(contra, p.verdict))}</h4>
             ${supSum ? `<p><strong>Supports the verdict:</strong> ${escapeHtml(supSum)}</p>` : ''}
-            ${conSum ? `<p><strong>Contradicts the verdict:</strong> ${escapeHtml(conSum)}</p>` : ''}
+            ${conSum && conCount > 0 ? `<p><strong>Contradicts the verdict:</strong> ${escapeHtml(conSum)}</p>` : ''}
             <p><strong>Arbitration ruling:</strong> ${escapeHtml(arbRule)}</p>
             ${countNote ? `<p class="count-disclosure"><em>${escapeHtml(countNote)}</em></p>` : ''}
           </div>
