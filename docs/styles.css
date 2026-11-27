@@ -8157,9 +8157,9 @@ a:hover {
 }
 
 .methodology-section {
-  margin: 40px auto;
+  margin: 40px 0 0;
   max-width: 900px;
-  padding: 0 16px;
+  padding: 0;
 }
 
 .methodology-list {
