@@ -86,6 +86,7 @@ console.log(JSON.stringify({
   viewUnknown: (() => { try { SFPDrawer.drawerChecksSummaryView({ kind: 'mystery', passed: 7 }); return 'no throw'; } catch (e) { return String(e.message); } })(),
   contraNone: SFPDrawer.drawerContradictionView({ promise_id: 'X', has_contradictory_evidence: false, verdict_supporting_evidence_count: 2, verdict_contradicting_evidence_count: 0 }),
   contraOld: SFPDrawer.drawerContradictionView({ promise_id: 'X', has_contradictory_evidence: true, verdict_supporting_evidence_count: 4, verdict_contradicting_evidence_count: 0, refuting_evidence_count: 4 }),
+  contraCount: SFPDrawer.drawerContradictionView({ promise_id: 'Z', has_contradictory_evidence: false, verdict_supporting_evidence_count: 2, verdict_contradicting_evidence_count: 2, refuting_evidence_count: 2 }),
   contraMissing: (() => { try { SFPDrawer.drawerContradictionView({ promise_id: 'Y' }); return 'no throw'; } catch (e) { return String(e.message); } })(),
   lowRelevance: SFPDrawer.drawerCheckOutcomes({ checks: [], relevance: { score: 3 } }).relevance_gate
 }));
@@ -131,6 +132,9 @@ class TestContradictionBanner(unittest.TestCase):
 
     def test_banner_counts_use_refuting_when_verdict_count_is_zero(self):
         self.assertEqual(self.out["contraOld"], {"supporting": 4, "contradicting": 4})
+
+    def test_recorded_contradicting_count_keeps_the_banner(self):
+        self.assertEqual(self.out["contraCount"], {"supporting": 2, "contradicting": 2})
 
     def test_missing_flag_fails_loudly(self):
         self.assertIn("has no has_contradictory_evidence flag", self.out["contraMissing"])
