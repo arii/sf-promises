@@ -2584,6 +2584,20 @@
     return { supporting, contradicting };
   }
 
+  // Count disclosure: the banner counts are recorded values. When the export lists
+  // fewer individual claims than those counts, say so; the counts stay as recorded.
+  function drawerCountDisclosure(p) {
+    const view = drawerContradictionView(p);
+    if (view === null) return null;
+    const bundles = p.advocate_bundles || {};
+    const keptListed = ((bundles.kept && bundles.kept.claims) || []).length;
+    const brokenListed = ((bundles.broken && bundles.broken.claims) || []).length;
+    const recorded = view.supporting + view.contradicting;
+    const listed = keptListed + brokenListed;
+    if (listed >= recorded) return null;
+    return `Counts are recorded values. This export lists ${listed} individual claim${listed === 1 ? '' : 's'} (kept ${keptListed}, broken ${brokenListed}) for ${recorded} counted, so the counts cannot be traced to listed claims here.`;
+  }
+
   // Entity avatar (issue #83): same-origin relative path from the media
   // manifest, shown with a visible credit. '' when the export carries no entity
   // image or the path is not a plain relative one, so the card is unchanged.
@@ -2650,7 +2664,7 @@
   const SFPDrawer = {
     verdictTimelineHtml, checkProvenanceHtml, formatHistoryMonth, entityAvatarHtml,
     entityNameKey, entityMediaFromManifest, entityMediaFor,
-    drawerCheckOutcomes, drawerChecksSummary, drawerChecksSummaryView, drawerContradictionView, outcomeBasisText
+    drawerCheckOutcomes, drawerChecksSummary, drawerChecksSummaryView, drawerContradictionView, drawerCountDisclosure, outcomeBasisText
   };
   window.SFPDrawer = SFPDrawer;
   /* SFPDRAWER_PURE_END */
@@ -2850,6 +2864,7 @@
         const conCount = contra.contradicting;
         const supSum = p.supporting_evidence_summary || '';
         const conSum = p.contradicting_evidence_summary || '';
+        const countNote = window.SFPDrawer.drawerCountDisclosure(p);
         const arbRule = p.arbitration_rule_explanation || (p.factual_outcome || formatPlainVerdictReason(p.verdict_reason, p.verdict, p.promise_id));
         contradictionBanner.innerHTML = `
           <div class="contradiction-adjudication-box font-mono">
@@ -2857,6 +2872,7 @@
             ${supSum ? `<p><strong>Supporting case:</strong> ${escapeHtml(supSum)}</p>` : ''}
             ${conSum ? `<p><strong>Contradicting case:</strong> ${escapeHtml(conSum)}</p>` : ''}
             <p><strong>Arbitration ruling:</strong> ${escapeHtml(arbRule)}</p>
+            ${countNote ? `<p class="count-disclosure"><em>${escapeHtml(countNote)}</em></p>` : ''}
           </div>
         `;
         contradictionBanner.style.display = 'block';
