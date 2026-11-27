@@ -5,6 +5,7 @@ import unittest
 
 HTML = Path("docs/index.html").read_text()
 JS = Path("docs/app.js").read_text()
+CSS = Path("docs/styles.css").read_text()
 
 
 def visible(html):
@@ -38,6 +39,16 @@ class TestCopy(unittest.TestCase):
         self.assertNotIn("Follow a public commitment from its original source", HTML)
         for n, stage in enumerate(("Fetch", "Extract", "Gate", "Argue", "Decide", "Publish"), start=1):
             self.assertIn(f'data-stage="{n}">{stage}</span>', HTML)
+
+    def test_story_cards_fit_content_and_show_full_outcome(self):
+        # Featured cards: no stretched empty gaps, and the "what happened" outcome shows up to 4 lines.
+        grid = re.search(r"\.featured-stories-grid \{(.*?)\}", CSS, re.S).group(1)
+        self.assertIn("align-items: start", grid)
+        card = re.search(r"\.story-card \{(.*?)\}", CSS, re.S).group(1)
+        self.assertNotIn("space-between", card)
+        self.assertIn("align-items: stretch", CSS)  # mobile carousel keeps equal-height cards
+        outcome = re.search(r"\.story-outcome-text \{(.*?)\}", CSS, re.S).group(1)
+        self.assertIn("-webkit-line-clamp: 4", outcome)
 
     def test_hash_permalink_opens_drawer(self):
         self.assertIn("#promise-", JS)

@@ -5252,6 +5252,7 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 16px;
+  align-items: start;
 }
 
 .story-card {
@@ -5261,7 +5262,7 @@ a:hover {
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   transition: border-color 0.15s ease;
 }
 
@@ -5381,7 +5382,7 @@ a:hover {
   color: var(--ink);
   margin: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -5392,7 +5393,7 @@ a:hover {
   align-items: center;
   gap: 8px;
   width: 100%;
-  margin-top: 6px;
+  margin-top: auto;
   padding-top: 8px;
   border-top: 1px solid var(--line-soft);
 }
@@ -6105,6 +6106,7 @@ a:hover {
 
   .featured-stories-grid {
     display: flex !important;
+    align-items: stretch;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
     gap: 14px;
