@@ -2565,7 +2565,8 @@
     if (summary.kind === 'partial') {
       return { kind: 'partial', icon: '!', label: `${base} \u00b7 ${summary.unrecorded} not recorded` };
     }
-    return { kind: 'pass', icon: '\u2713', label: base };
+    if (summary.kind === 'pass') return { kind: 'pass', icon: '\u2713', label: base };
+    throw new Error(`drawerChecksSummaryView: unknown summary kind ${summary.kind}`);
   }
 
   // Entity avatar (issue #83): same-origin relative path from the media
