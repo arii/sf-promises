@@ -35,16 +35,28 @@ class CountDisclosure(unittest.TestCase):
             if o["view"] is None:
                 self.assertIsNone(o["note"], pid)
 
-    def test_disclosure_iff_counts_exceed_listed_claims(self):
+    def test_disclosure_is_per_verdict_side(self):
+        data = json.loads((REPO_ROOT / "docs/data.json").read_text())
+        verd = {p["promise_id"]: p["verdict"] for p in data["promises"]}
         for pid, o in self.out.items():
             if o["view"] is None:
                 continue
-            recorded = o["view"]["supporting"] + o["view"]["contradicting"]
-            if sum(o["listed"]) >= recorded:
-                self.assertIsNone(o["note"], pid)
+            kept, broken = o["listed"]
+            v = verd[pid]
+            if v == "broken":
+                sup, con = broken, kept
+            elif v in ("kept", "in_progress"):
+                sup, con = kept, broken
             else:
-                self.assertIn(f"lists {sum(o['listed'])} individual claim", o["note"], pid)
-                self.assertIn(f"for {recorded} counted", o["note"], pid)
+                total_gap = kept + broken < o["view"]["supporting"] + o["view"]["contradicting"]
+                self.assertEqual(o["note"] is not None, total_gap, pid)
+                continue
+            gap = sup < o["view"]["supporting"] or con < o["view"]["contradicting"]
+            self.assertEqual(o["note"] is not None, gap, pid)
+
+    def test_opposite_side_surplus_cannot_cancel_a_gap(self):
+        # P83 kept_then_reversed pools sides; P11 (broken) lists 0 kept vs 4 contradicting counted.
+        self.assertIn("contradicting side 0 listed of 4 counted", self.out["P11"]["note"])
 
     def test_banner_labels_are_verdict_relative(self):
         src = (REPO_ROOT / "docs/app.js").read_text()
@@ -62,7 +74,6 @@ class CountDisclosure(unittest.TestCase):
 
     def test_recorded_counts_are_not_altered(self):
         self.assertEqual(self.out["P11"]["view"], {"supporting": 4, "contradicting": 4})
-        self.assertIn("kept 0, broken 4", self.out["P11"]["note"])
         self.assertIsNone(self.out["P26"]["note"])
 
 
