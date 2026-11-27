@@ -2596,10 +2596,25 @@
     const bundles = p.advocate_bundles || {};
     const keptListed = ((bundles.kept && bundles.kept.claims) || []).length;
     const brokenListed = ((bundles.broken && bundles.broken.claims) || []).length;
-    const recorded = view.supporting + view.contradicting;
-    const listed = keptListed + brokenListed;
-    if (listed >= recorded) return null;
-    return `Counts are recorded values. This export lists ${listed} individual claim${listed === 1 ? '' : 's'} (kept ${keptListed}, broken ${brokenListed}) for ${recorded} counted, so the counts cannot be traced to listed claims here.`;
+    // Verdict-relative sides (scripts/enrich_dataset.py ~1800-1810): for a broken verdict the
+    // supporting side is the broken-side claims; for kept/in_progress it is the kept-side claims.
+    // Compare per side so a gap on one side cannot be hidden by a surplus on the other.
+    const v = String(p.verdict || '').toLowerCase();
+    let supListed, conListed;
+    if (v === 'broken') { supListed = brokenListed; conListed = keptListed; }
+    else if (v === 'kept' || v === 'in_progress') { supListed = keptListed; conListed = brokenListed; }
+    else {
+      // Mixed-side verdicts (undecided, kept_then_reversed) pool both sides; only the total is comparable.
+      const recorded = view.supporting + view.contradicting;
+      const listed = keptListed + brokenListed;
+      if (listed >= recorded) return null;
+      return `Counts are recorded values. This export lists ${listed} individual claim${listed === 1 ? '' : 's'} (kept ${keptListed}, broken ${brokenListed}) for ${recorded} counted, so the counts cannot be traced to listed claims here.`;
+    }
+    const gaps = [];
+    if (supListed < view.supporting) gaps.push(`supporting side ${supListed} listed of ${view.supporting} counted`);
+    if (conListed < view.contradicting) gaps.push(`contradicting side ${conListed} listed of ${view.contradicting} counted`);
+    if (!gaps.length) return null;
+    return `Counts are recorded values. This export lists fewer claims than counted (${gaps.join('; ')}), so those counts cannot be traced to listed claims here.`;
   }
 
   // Entity avatar (issue #83): same-origin relative path from the media
