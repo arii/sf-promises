@@ -1811,19 +1811,21 @@ def enrich_promise(p):
     supporting_summary = ""
     contradicting_summary = ""
     arbitration_rule = ""
+    # A contradicting summary is shown as evidence, so it comes only from a listed claim.
+    # With no claim to quote it stays empty; it is never filled with generic prose.
     if has_contradictions:
         if verdict_lower == "broken":
             supporting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else (p.get("factual_outcome") or p.get("verdict_reason") or "Outcome record verified commitment missed.")
-            contradicting_summary = (k_claims[0].get("claim") or k_claims[0].get("quote") or "") if k_claims else "Initial public announcement or interim milestone report cited active launch progress."
+            contradicting_summary = (k_claims[0].get("claim") or k_claims[0].get("quote") or "") if k_claims else ""
         elif verdict_lower == "kept":
             supporting_summary = (k_claims[0].get("claim") or k_claims[0].get("quote") or "") if k_claims else (p.get("factual_outcome") or "Official record verified completion.")
-            contradicting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else "Subsequent operational disruption or temporary suspension reported after initial delivery."
+            contradicting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else ""
         elif verdict_lower == "in_progress":
             supporting_summary = (k_claims[0].get("claim") or k_claims[0].get("quote") or "") if k_claims else (p.get("factual_outcome") or "Adopted legislation and active phased delivery recorded.")
-            contradicting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else "Independent housing or schedule oversight flagged delivery pace risks."
+            contradicting_summary = (b_claims[0].get("claim") or b_claims[0].get("quote") or "") if b_claims else ""
         else:
             supporting_summary = p.get("factual_outcome") or "Verified outcome records insufficient to settle numerical threshold."
-            contradicting_summary = "Public announcements cited launch activity without verifiable post-deadline target counts."
+            contradicting_summary = ""
         arbitration_rule = _arbitration_explanation_for(
             verdict_lower, vm.get("verdict_reason_code"), p.get("verdict_reason"), k_claims, b_claims
         )
