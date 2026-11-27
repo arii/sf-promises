@@ -104,6 +104,12 @@ class CountDisclosure(unittest.TestCase):
         for pid in ("P11", "P08", "P25", "P07", "P20", "P65"):
             self.assertEqual(self.out[pid]["view"]["contradicting"], 0, pid)
 
+    def test_banner_template_gates_contradicting_row_and_escapes_heading(self):
+        src = (REPO_ROOT / "docs/app.js").read_text()
+        self.assertIn("${conSum && conCount > 0 ? `<p><strong>Contradicts the verdict:</strong>", src)
+        self.assertIn("escapeHtml(window.SFPDrawer.drawerBannerHeading(contra, p.verdict))", src)
+        self.assertIn("escapeHtml(countNote)", src)
+
     def test_recorded_counts_are_not_altered(self):
         self.assertEqual(self.out["P11"]["view"], {"supporting": 4, "contradicting": 0})
         self.assertIsNone(self.out["P26"]["note"])
