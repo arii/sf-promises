@@ -18,6 +18,7 @@ const out = {};
 for (const p of data.promises) out[p.promise_id] = {
   note: window.SFPDrawer.drawerCountDisclosure(p),
   view: window.SFPDrawer.drawerContradictionView(p),
+  heading: (() => { const v = window.SFPDrawer.drawerContradictionView(p); return v && window.SFPDrawer.drawerBannerHeading(v, p.verdict); })(),
   listed: ['kept', 'broken'].map(k => (((p.advocate_bundles || {})[k] || {}).claims || []).length),
 };
 console.log(JSON.stringify(out));
@@ -89,6 +90,19 @@ class CountDisclosure(unittest.TestCase):
                 self.assertIsNone(self.out[p["promise_id"]]["view"], p["promise_id"])
         self.assertEqual(self.out["P64"]["view"], {"supporting": 2, "contradicting": 2})
         self.assertEqual(sum(1 for o in self.out.values() if o["view"] is not None), 23)
+
+    def test_zero_contradicting_is_not_headlined_as_adjudicated(self):
+        for pid, o in self.out.items():
+            if o["view"] is None:
+                continue
+            if o["view"]["contradicting"] == 0:
+                self.assertTrue(o["heading"].startswith("Recorded verdict evidence"), pid)
+                self.assertIn("0 contradicting it", o["heading"], pid)
+                self.assertNotIn("Adjudicated", o["heading"], pid)
+            else:
+                self.assertTrue(o["heading"].startswith("Contradictory Evidence Adjudicated"), pid)
+        for pid in ("P11", "P08", "P25", "P07", "P20", "P65"):
+            self.assertEqual(self.out[pid]["view"]["contradicting"], 0, pid)
 
     def test_recorded_counts_are_not_altered(self):
         self.assertEqual(self.out["P11"]["view"], {"supporting": 4, "contradicting": 0})
