@@ -115,7 +115,7 @@ class TestUICounts(unittest.TestCase):
     def test_featured_stories_contract(self):
         """Featured stories must contain exactly 6 stories matching expected IDs."""
         story_cards = re.findall(r'class="story-card"[^>]*data-story-pid="([^"]+)"', self.html)
-        expected_ids = ["P02", "SFO-01", "P05", "P06", "P37", "Q-N01"]
+        expected_ids = ["P02", "SFO-01", "P05", "P06", "P37", "P10"]
         self.assertEqual(len(story_cards), 6, f"Expected 6 story cards, found {len(story_cards)}")
         self.assertEqual(story_cards, expected_ids, f"Story cards IDs mismatch: {story_cards}")
 

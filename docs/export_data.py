@@ -1847,52 +1847,22 @@ def generate_promise_row_html(p, idx=0):
               </tr>'''
 
 
+FEATURED_IDS = ["P02", "SFO-01", "P05", "P06", "P37", "P10"]
+
+
 def generate_featured_stories_html(promises, quarantined):
-    FEATURED_IDS = ["P02", "SFO-01", "P05", "P06", "P37", "Q-N01"]
-    
+    """Featured cards come only from published promises.
+
+    Quarantined or test records are never featured, even if listed by id.
+    """
     promise_map = {p.get("promise_id"): p for p in promises}
-    quarantine_map = {q.get("quarantine_id"): q for q in quarantined}
+    held_ids = set()
     for q in quarantined:
-        if q.get("promise_id"):
-            quarantine_map[q.get("promise_id")] = q
+        held_ids.update(x for x in (q.get("quarantine_id"), q.get("promise_id")) if x)
 
     cards_html = []
     for fid in FEATURED_IDS:
-        if fid in quarantine_map or fid.startswith("Q-") or fid == "N01":
-            q = quarantine_map.get(fid) or quarantine_map.get("Q-N01") or quarantine_map.get("N01")
-            qid = q.get("quarantine_id", "Q-N01")
-            speaker_display = "WATCHDOG VERIFICATION"
-            title = "Quote Mutation Detection"
-            quote_raw = q.get("planted_claim") or "The city added 1,500 new shelter units within six months."
-            quote_text = clean_quote_text(quote_raw)
-            quote_clamped = html_esc(quote_text[:140] + ("…" if len(quote_text) > 140 else ""))
-            dates_str = f"Tested {html_esc(q.get('quarantined_date', 'Nov 10, 2026'))}"
-            outcome_str = "Altered quote 'shelter units' detected against saved source. Row immediately diverted to Quarantine."
-            tier = "Official"
-            failing_plain = "Quote mutation diverted"
-
-            cards_html.append(f'''          <div class="story-card" data-story-pid="{qid}">
-            <div class="story-card-top">
-              <span class="story-entity font-mono">{html_esc(speaker_display)}</span>
-              <span class="verdict-chip quarantined">QUARANTINED</span>
-            </div>
-            <h3 class="story-title">{html_esc(title)}</h3>
-            <p class="story-promise-quote font-serif">&ldquo;{quote_clamped}&rdquo;</p>
-            <div class="story-dates-row font-mono">{dates_str}</div>
-            <div class="story-outcome-box">
-              <div class="story-outcome-kicker font-mono">WHAT HAPPENED</div>
-              <p class="story-outcome-text">{html_esc(outcome_str)}</p>
-            </div>
-            <div class="story-card-bottom">
-              <div class="story-provenance-info font-mono">
-                <span class="story-evidence-count">{failing_plain}</span>
-              </div>
-              <button type="button" class="btn-story-evidence btn-quarantine-link" data-qid="{qid}" aria-label="See evidence for {html_esc(title)} in Quarantine">
-                Inspect &rarr;
-              </button>
-            </div>
-          </div>''')
-        else:
+        if fid not in held_ids:
             p = promise_map.get(fid)
             if not p:
                 continue
@@ -2061,6 +2031,20 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     html = re.sub(r'(<strong>Small, curated sample\.</strong> The )\d+( commitments)',
                   lambda m: f'{m[1]}{total}{m[2]}', html)
 
+    # Every hard-coded published count in the page must follow the dataset.
+    html = re.sub(r'(A sourced record of )\d+( San Francisco public commitments)',
+                  lambda m: f'{m[1]}{total}{m[2]}', html)
+    html = re.sub(r'(This site tracks )\d+( such commitments)',
+                  lambda m: f'{m[1]}{total}{m[2]}', html)
+    html = re.sub(r'(<span class="bar-header-count" id="outcome-dist-verified">)[^<]*(</span>)',
+                  lambda m: f'{m[1]}{total} PUBLISHED{m[2]}', html)
+    html = re.sub(r'(<option value="all">All Commitments \()\d+(\)</option>)',
+                  lambda m: f'{m[1]}{total}{m[2]}', html)
+    html = re.sub(r'(id="btn-show-all">\s*Show all )\d+',
+                  lambda m: f'{m[1]}{total}', html)
+    html = re.sub(r'(<span id="viz-total" class="font-mono">)\d+(</span>)',
+                  lambda m: f'{m[1]}{total}{m[2]}', html)
+
     # Update tally numbers in hero & bar
     html = re.sub(r'(<strong id="tally-total">)[^<]*(</strong>)', rf'\g<1>{len(promises)}\g<2>', html)
     html = re.sub(r'(<strong id="tally-kept">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("kept", 0)}\g<2>', html)
@@ -2069,7 +2053,7 @@ def pre_render_index_html(promises, quarantined, verdict_counts, commit_sha):
     html = re.sub(r'(<strong id="tally-undecided">)[^<]*(</strong>)', rf'\g<1>{verdict_counts.get("undecided", 0)}\g<2>', html)
     html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-promises">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
     html = re.sub(r'(<span class="tab-badge font-mono" id="tab-count-quarantine">)[^<]*(</span>)', rf'\g<1>{len(quarantined)}\g<2>', html)
-    html = re.sub(r'(<span id="outcome-dist-verified">)[^<]*(</span>)', rf'\g<1>{len(promises)} VERIFIED\g<2>', html)
+    html = re.sub(r'(<span id="outcome-dist-verified">)[^<]*(</span>)', rf'\g<1>{len(promises)} PUBLISHED\g<2>', html)
     html = re.sub(r'(<strong id="table-showing-count">)[^<]*(</strong>)', r'\g<1>10\g<2>', html)
     html = re.sub(r'(<span id="table-total-count">)[^<]*(</span>)', rf'\g<1>{len(promises)}\g<2>', html)
 

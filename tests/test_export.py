@@ -544,14 +544,12 @@ class CandidateExportTests(unittest.TestCase):
         self.assertEqual(meta.get("sqlite_file"), "promises.db")
 
         # 11. Featured stories configuration integrity
-        featured_ids = ["P02", "SFO-01", "P05", "P06", "P37", "Q-N01"]
+        featured_ids = ["P02", "SFO-01", "P05", "P06", "P37", "P10"]
         p_map = {p.get("promise_id"): p for p in promises}
-        q_map = {q.get("quarantine_id"): q for q in data.get("quarantined", [])}
+        q_ids = {q.get("quarantine_id") for q in data.get("quarantined", [])}
         for fid in featured_ids:
-            if fid.startswith("Q-") or fid.startswith("N"):
-                self.assertIn(fid, q_map, f"Missing featured quarantine story {fid}")
-            else:
-                self.assertIn(fid, p_map, f"Missing featured promise story {fid}")
+            self.assertIn(fid, p_map, f"Missing featured promise story {fid}")
+            self.assertNotIn(fid, q_ids, f"Featured story {fid} is a quarantined record")
 
         # 12. Quarantine registry entries have required audit fields
         for q in data.get("quarantined", []):
