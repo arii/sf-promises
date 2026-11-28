@@ -40,7 +40,7 @@ class TestCiMetadataGate(unittest.TestCase):
         self.assertNotIn('paths-ignore:', workflow)
         self.assertIn('  test:\n', workflow)
         self.assertIn('cancel-in-progress: ${{ github.event_name == \'pull_request\' }}', workflow)
-        self.assertEqual(workflow.count("if: steps.changes.outputs.run_tests != 'false'"), 4)
+        self.assertEqual(workflow.count("if: steps.changes.outputs.run_tests != 'false'"), 5)
         for command in ['python-version: "3.11"', 'node -c docs/app.js', 'pytest tests/ -v --timeout=120', 'timeout-minutes: 10', 'PYTHONUNBUFFERED: "1"']:
             self.assertIn(command, workflow)
 

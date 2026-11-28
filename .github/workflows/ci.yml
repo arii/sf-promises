@@ -49,6 +49,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Set up Node (browser geometry check needs Node 22+)
+        if: steps.changes.outputs.run_tests != 'false'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
       - name: Verify JavaScript syntax
         if: steps.changes.outputs.run_tests != 'false'
         timeout-minutes: 1
@@ -70,6 +76,10 @@ jobs:
         timeout-minutes: 5
         env:
           PYTHONUNBUFFERED: "1"
+          # The headless-Chrome geometry check must run here, never skip.
+          REQUIRE_BROWSER_TESTS: "1"
         run: |
           pip install pytest-timeout
-          pytest tests/ -v --timeout=120
+          google-chrome --version
+          node --version
+          pytest tests/ -v --timeout=120 -rs

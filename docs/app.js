@@ -3711,7 +3711,33 @@
       const storyCards = storiesContainer.querySelectorAll('.story-card');
       const totalStories = storyCards.length;
 
+      // On the mobile swipe layout the row is as tall as its tallest card, which
+      // leaves a blank band under shorter cards. Size the row to the active card.
+      let activeIdx = 0;
+      const fitRowToActiveCard = () => {
+        const swipeLayout = getComputedStyle(storiesContainer).display === 'flex';
+        if (!swipeLayout) {
+          storiesContainer.style.height = '';
+          storiesContainer.style.overflowY = '';
+          return;
+        }
+        const card = storyCards[activeIdx];
+        if (!card) return;
+        const cs = getComputedStyle(storiesContainer);
+        const pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+        storiesContainer.style.overflowY = 'hidden';
+        storiesContainer.style.height = `${Math.ceil(card.offsetHeight + pad)}px`;
+      };
+      window.addEventListener('resize', fitRowToActiveCard);
+      // Fonts and card images change card heights after first paint.
+      if ('ResizeObserver' in window) {
+        const cardObserver = new ResizeObserver(fitRowToActiveCard);
+        storyCards.forEach((c) => cardObserver.observe(c));
+      }
+
       const updateActiveDot = (idx) => {
+        activeIdx = idx;
+        fitRowToActiveCard();
         dots.forEach((d, i) => {
           if (i === idx) {
             d.classList.add('active');
@@ -3752,6 +3778,8 @@
           scrollToIndex(Math.min(totalStories - 1, cur + 1));
         });
       }
+
+      fitRowToActiveCard();
 
       // Track scroll position to update active dot
       let scrollTimer = null;
